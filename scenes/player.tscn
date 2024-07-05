@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://b2aqgfi8s00jx"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_o076y"]
+[ext_resource type="Texture2D" uid="uid://dcijs8gxv3fke" path="res://kenney_platformer-characters/PNG/Player/Poses/player_idle.png" id="1_xq217"]
+[ext_resource type="Texture2D" uid="uid://dao6b2xjs6hdm" path="res://kenney_platformer-characters/PNG/Player/Poses/player_jump.png" id="2_pcprb"]
+[ext_resource type="Texture2D" uid="uid://dt0cih865juyl" path="res://kenney_platformer-characters/PNG/Player/Poses/player_kick.png" id="3_17apl"]
+[ext_resource type="Texture2D" uid="uid://cwwhvm6u6yju5" path="res://kenney_platformer-characters/PNG/Player/Poses/player_walk1.png" id="4_tcxye"]
+[ext_resource type="Texture2D" uid="uid://dkcoksef4jqun" path="res://kenney_platformer-characters/PNG/Player/Poses/player_walk2.png" id="5_4paxp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1m37y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xq217")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_pcprb")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": ExtResource("3_17apl")
+}],
+"loop": false,
+"name": &"kick",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_tcxye")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_4paxp")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0kd7u"]
+radius = 22.0
+height = 88.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_stdbr"]
+radius = 19.0
+height = 56.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_o076y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -55)
+sprite_frames = SubResource("SpriteFrames_1m37y")
+animation = &"kick"
+frame_progress = 1.0
+
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -44)
+shape = SubResource("CapsuleShape2D_0kd7u")
+
+[node name="KickZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="KickCollider" type="CollisionShape2D" parent="KickZone"]
+position = Vector2(18, -19)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_stdbr")
+
+[connection signal="body_entered" from="KickZone" to="." method="_on_kick_zone_body_entered"]
+[connection signal="body_exited" from="KickZone" to="." method="_on_kick_zone_body_exited"]
