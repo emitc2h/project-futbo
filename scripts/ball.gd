@@ -87,6 +87,11 @@ func clamp_aim_angle(angle: float) -> float:
 		return -PI/2
 
 
+func jump(vy: float) -> void:
+	if mode == Mode.CHAR_MODE:
+		$CharNode.velocity.y = vy
+
+
 func _on_face_right_state_entered() -> void:
 	if mode == Mode.CHAR_MODE:
 		$CharNode.global_position = player_dribble_marker_position

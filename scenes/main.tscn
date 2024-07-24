@@ -210,4 +210,6 @@ position = Vector2(304, 489)
 [node name="RigidNode" parent="BaseNode/Ball" index="1"]
 position = Vector2(451, 468)
 
+[connection signal="did_jump" from="BaseNode/Player" to="BaseNode" method="_on_player_did_jump"]
+
 [editable path="BaseNode"]

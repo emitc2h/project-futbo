@@ -80,3 +80,7 @@ func _on_player_left_kickzone() -> void:
 
 func _on_player_did_headbutt() -> void:
 	ball_state.send_event("no_headbutt_to_headbutt")
+
+
+func _on_player_did_jump(vy: float) -> void:
+	ball.jump(vy)

@@ -19,6 +19,7 @@ signal dribble_marker_position(pos: Vector2)
 signal entered_kickzone()
 signal left_kickzone()
 signal did_headbutt()
+signal did_jump(vy: float)
 
 
 func _physics_process(delta: float) -> void:
@@ -61,6 +62,7 @@ func _on_kick_state_processing(delta: float) -> void:
 
 func _on_jump_state_entered() -> void:
 	velocity.y = JUMP_VELOCITY
+	did_jump.emit(JUMP_VELOCITY)
 	$StateChart.send_event("jump_to_in_the_air")
 	$StateChart.send_event("cannot_headbutt_to_can_headbutt")
 
