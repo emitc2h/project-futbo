@@ -5,7 +5,8 @@ extends CharacterBody2D
 @onready var kickzone_x: float = $KickZone/KickCollider.transform.origin.x
 @onready var dribble_marker_x: float = $DribbleMarker.transform.origin.x
 
-const RUN_VELOCITY = 500.0
+const RUN_FORWARD_VELOCITY = 500.0
+const RUN_BACKWARD_VELOCITY = 300.00
 const JUMP_VELOCITY = -300.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -13,6 +14,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var direction: float
 var direction_faced: float = 1.0
+var is_dribbling: bool = false
 
 signal velocity_x(vx: float)
 signal dribble_marker_position(pos: Vector2)
@@ -20,6 +22,8 @@ signal entered_kickzone()
 signal left_kickzone()
 signal did_headbutt()
 signal did_jump(vy: float)
+signal started_dribbling()
+signal ended_dribbling()
 
 
 func _physics_process(delta: float) -> void:
@@ -40,15 +44,27 @@ func _on_headbutt_zone_body_entered(_body: Node2D) -> void:
 	$StateChart.send_event("can_headbutt_to_headbutt")
 
 
-func _on_running_state_processing(_delta: float) -> void:
-	velocity.x = direction * RUN_VELOCITY
+func running_state_base(run_velocity: float) -> void:
+	velocity.x = direction * run_velocity
 	animated_sprite.play("walk")
 	if not is_on_floor():
 		$StateChart.send_event("running_to_in_the_air")
+		
+		
+func is_running_forward() -> bool:
+	return (sign(direction) + direction_faced) != 0.0
+
+
+func _on_running_state_processing(_delta: float) -> void:
+	if is_running_forward():
+		running_state_base(RUN_FORWARD_VELOCITY)
+	else:
+		running_state_base(RUN_BACKWARD_VELOCITY)
 
 
 func _on_idle_state_processing(_delta: float) -> void:
-	velocity.x = move_toward(velocity.x, 0, RUN_VELOCITY)
+	var run_velocity: float = RUN_FORWARD_VELOCITY
+	velocity.x = move_toward(velocity.x, 0, run_velocity)
 	animated_sprite.play("idle")
 
 
@@ -104,3 +120,10 @@ func _on_dribble_state_physics_processing(delta: float) -> void:
 
 func _on_dribble_state_entered() -> void:
 	dribble_marker_position.emit($DribbleMarker.global_position)
+	is_dribbling = true
+	started_dribbling.emit()
+
+
+func _on_dribble_state_exited() -> void:
+	is_dribbling = false
+	ended_dribbling.emit()

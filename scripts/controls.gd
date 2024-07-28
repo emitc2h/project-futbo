@@ -10,6 +10,8 @@ extends Node2D
 @onready var player_state: StateChart = player.get_node("StateChart")
 @onready var ball_state: StateChart = ball.get_node("StateChart")
 
+var is_dribbling: bool = false
+
 func _physics_process(delta: float) -> void:
 		
 	var direction: float = Input.get_axis("move_left", "move_right")
@@ -26,17 +28,32 @@ func _physics_process(delta: float) -> void:
 	else:
 		ball_state.send_event("idle_to_pointing")
 		ball.aim = aim
-	
+
+
+	# If the player is dribbling, the direction the player faces is controlled
+	# with the right joystick
+	if is_dribbling:
+		if Input.is_action_just_pressed("aim_left"):
+			player_state.send_event("right_to_left")
+			ball_state.send_event("right_to_left")
+			
+		if Input.is_action_just_pressed("aim_right"):
+			player_state.send_event("left_to_right")
+			ball_state.send_event("left_to_right")
+
+
+	# The moving direction is independent from where the player faces when dribbling
+	# When the player is not dribbling, movement and direction faced are synced.
+	if not is_dribbling:
+		if Input.is_action_just_pressed("move_left"):
+			player_state.send_event("right_to_left")
+			ball_state.send_event("right_to_left")
+			ball.player_direction_faced = -1.0
 		
-	if Input.is_action_just_pressed("move_left"):
-		player_state.send_event("right_to_left")
-		ball_state.send_event("right_to_left")
-		ball.player_direction_faced = -1.0
-		
-	if Input.is_action_just_pressed("move_right"):
-		player_state.send_event("left_to_right")
-		ball_state.send_event("left_to_right")
-		ball.player_direction_faced = 1.0
+		if Input.is_action_just_pressed("move_right"):
+			player_state.send_event("left_to_right")
+			ball_state.send_event("left_to_right")
+			ball.player_direction_faced = 1.0
 		
 	if Input.is_action_just_pressed("jump"):
 		player_state.send_event("idle_to_jump")
@@ -84,3 +101,11 @@ func _on_player_did_headbutt() -> void:
 
 func _on_player_did_jump(vy: float) -> void:
 	ball.jump(vy)
+
+
+func _on_player_started_dribbling() -> void:
+	is_dribbling = true
+
+
+func _on_player_ended_dribbling() -> void:
+	is_dribbling = false

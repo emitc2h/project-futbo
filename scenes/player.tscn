@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b2aqgfi8s00jx"]
+[gd_scene load_steps=26 format=3 uid="uid://b2aqgfi8s00jx"]
 
 [ext_resource type="Script" path="res://scripts/controls.gd" id="1_mfbfb"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_o076y"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://dt0cih865juyl" path="res://kenney_platformer-characters/PNG/Player/Poses/player_kick.png" id="3_17apl"]
 [ext_resource type="Texture2D" uid="uid://cwwhvm6u6yju5" path="res://kenney_platformer-characters/PNG/Player/Poses/player_walk1.png" id="4_tcxye"]
 [ext_resource type="Texture2D" uid="uid://dkcoksef4jqun" path="res://kenney_platformer-characters/PNG/Player/Poses/player_walk2.png" id="5_4paxp"]
+[ext_resource type="Texture2D" uid="uid://bxbj15t0xs7ut" path="res://kenney_platformer-characters/PNG/Player/Poses/player_fall.png" id="6_pdhxe"]
+[ext_resource type="Texture2D" uid="uid://hj10arhyubon" path="res://kenney_platformer-characters/PNG/Player/Poses/player_stand.png" id="7_0iykw"]
+[ext_resource type="Texture2D" uid="uid://bnsrawjlq63il" path="res://kenney_platformer-characters/PNG/Player/Poses/player_skid.png" id="8_oj2rl"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="8_th0b1"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="9_abl5v"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="9_uhhh3"]
@@ -41,6 +44,20 @@ animations = [{
 "loop": false,
 "name": &"kick",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_pdhxe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_0iykw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_oj2rl")
+}],
+"loop": true,
+"name": &"turn",
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -97,7 +114,8 @@ script = ExtResource("1_o076y")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(0, -55)
 sprite_frames = SubResource("SpriteFrames_1m37y")
-animation = &"idle"
+animation = &"turn"
+frame_progress = 0.0797175
 
 [node name="PlayerCollider" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, -44)
@@ -124,6 +142,10 @@ debug_color = Color(0.801051, 0.26373, 0.812251, 0.42)
 
 [node name="DribbleMarker" type="Marker2D" parent="Player"]
 position = Vector2(56, -20)
+
+[node name="TurnTimer" type="Timer" parent="Player"]
+process_callback = 0
+wait_time = 0.429
 
 [node name="StateChart" type="Node" parent="Player"]
 script = ExtResource("8_th0b1")
@@ -260,6 +282,12 @@ to = NodePath("../../Face Left")
 event = &"right_to_left"
 delay_in_seconds = "0.0"
 
+[node name="To Turn Left" type="Node" parent="Player/StateChart/Root/Direction/Face Right"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Turn Left")
+event = &"face_right_to_turn_left"
+delay_in_seconds = "0.0"
+
 [node name="Face Left" type="Node" parent="Player/StateChart/Root/Direction"]
 script = ExtResource("10_fh065")
 
@@ -267,6 +295,30 @@ script = ExtResource("10_fh065")
 script = ExtResource("11_g0bsk")
 to = NodePath("../../Face Right")
 event = &"left_to_right"
+delay_in_seconds = "0.0"
+
+[node name="To Turn Right" type="Node" parent="Player/StateChart/Root/Direction/Face Left"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Turn Right")
+event = &"face_left_to_turn_right"
+delay_in_seconds = "0.0"
+
+[node name="Turn Left" type="Node" parent="Player/StateChart/Root/Direction"]
+script = ExtResource("10_fh065")
+
+[node name="To Face Left" type="Node" parent="Player/StateChart/Root/Direction/Turn Left"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Face Left")
+event = &"turn_left_to_face_left"
+delay_in_seconds = "0.0"
+
+[node name="Turn Right" type="Node" parent="Player/StateChart/Root/Direction"]
+script = ExtResource("10_fh065")
+
+[node name="To Face Right" type="Node" parent="Player/StateChart/Root/Direction/Turn Right"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Face Right")
+event = &"turn_right_to_face_right"
 delay_in_seconds = "0.0"
 
 [node name="Headbutting" type="Node" parent="Player/StateChart/Root"]
@@ -471,8 +523,10 @@ delay_in_seconds = "0.0"
 
 [connection signal="did_headbutt" from="Player" to="." method="_on_player_did_headbutt"]
 [connection signal="dribble_marker_position" from="Player" to="." method="_on_player_dribble_marker_position"]
+[connection signal="ended_dribbling" from="Player" to="." method="_on_player_ended_dribbling"]
 [connection signal="entered_kickzone" from="Player" to="." method="_on_player_entered_kickzone"]
 [connection signal="left_kickzone" from="Player" to="." method="_on_player_left_kickzone"]
+[connection signal="started_dribbling" from="Player" to="." method="_on_player_started_dribbling"]
 [connection signal="velocity_x" from="Player" to="." method="_on_player_velocity_x"]
 [connection signal="body_entered" from="Player/KickZone" to="Player" method="_on_kick_zone_body_entered"]
 [connection signal="body_exited" from="Player/KickZone" to="Player" method="_on_kick_zone_body_exited"]
@@ -484,11 +538,10 @@ delay_in_seconds = "0.0"
 [connection signal="state_entered" from="Player/StateChart/Root/Kicking/Kick" to="Player" method="_on_kick_state_entered"]
 [connection signal="state_processing" from="Player/StateChart/Root/Kicking/Kick" to="Player" method="_on_kick_state_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Kicking/Dribble" to="Player" method="_on_dribble_state_entered"]
+[connection signal="state_exited" from="Player/StateChart/Root/Kicking/Dribble" to="Player" method="_on_dribble_state_exited"]
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Kicking/Dribble" to="Player" method="_on_dribble_state_physics_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Direction/Face Right" to="Player" method="_on_face_right_state_entered"]
-[connection signal="state_physics_processing" from="Player/StateChart/Root/Direction/Face Right" to="Player" method="_on_face_right_state_physics_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Direction/Face Left" to="Player" method="_on_face_left_state_entered"]
-[connection signal="state_physics_processing" from="Player/StateChart/Root/Direction/Face Left" to="Player" method="_on_face_left_state_physics_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Headbutting/Headbutt" to="Player" method="_on_headbutt_state_entered"]
 [connection signal="state_entered" from="Ball/StateChart/Root/Direction/Face Right" to="Ball" method="_on_face_right_state_entered"]
 [connection signal="state_physics_processing" from="Ball/StateChart/Root/Direction/Face Right" to="Ball" method="_on_face_right_state_physics_processing"]
