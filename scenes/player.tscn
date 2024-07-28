@@ -317,7 +317,7 @@ script = ExtResource("16_aspwb")
 [node name="CharNode" type="CharacterBody2D" parent="Ball"]
 position = Vector2(116, -21)
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball/CharNode"]
 shape = SubResource("CircleShape2D_1567a")
@@ -325,7 +325,7 @@ shape = SubResource("CircleShape2D_1567a")
 [node name="RigidNode" type="RigidBody2D" parent="Ball"]
 position = Vector2(116, -21)
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 physics_material_override = SubResource("PhysicsMaterial_6qyd0")
 
 [node name="DirectionRay" type="Sprite2D" parent="Ball/RigidNode"]

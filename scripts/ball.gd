@@ -3,9 +3,10 @@ extends Node
 
 const KICK_FORCE: float = 700.0
 const HEADBUTT_FORCE: float = 1000.0
-const DRIBBLE_ROTATION_SPEED = 6.0
-const DRIBBLE_AMPLITUDE = 15.0
-const DRIBBLE_FREQUENCY = 8.0
+const DRIBBLE_ROTATION_SPEED = 5.0
+const DRIBBLE_AMPLITUDE = 200.0
+const DRIBBLE_FREQUENCY = 10.0
+const DRIBBLE_VELOCITY_OFFSET = 0.63662
 
 var player_dribble_marker_position: Vector2
 
@@ -26,17 +27,13 @@ enum Mode {RIGID_MODE, CHAR_MODE}
 var mode: Mode = Mode.RIGID_MODE
 
 
-func _physics_process(delta: float) -> void:
-	#print("aim: ", aim, "clamped_aim_angle: ", clamped_aim_angle)
-	pass
-
-
 func sync_transform_from_rigid_to_char() -> void:
 	$CharNode.transform = $RigidNode.transform
 
 
 func sync_transform_from_char_to_rigid() -> void:
 	$RigidNode.transform = $CharNode.transform
+	$RigidNode.linear_velocity = $CharNode.velocity
 	
 	
 func move_nodes_to_char() -> void:
@@ -133,11 +130,21 @@ func _on_dribbled_state_entered() -> void:
 
 
 func _on_dribbled_state_physics_processing(delta: float) -> void:
+	## Dribbling animation
 	dribble_time += delta
-	$CharNode.velocity.x = player_velocity_x
+	var dribble_delta: float = player_direction_faced * DRIBBLE_AMPLITUDE * (abs(sin(dribble_time * DRIBBLE_FREQUENCY)) - DRIBBLE_VELOCITY_OFFSET)
+	
+	## Match player velocity
+	$CharNode.velocity.x = player_velocity_x + dribble_delta
+	
+	## Use gravity when not touching the ground
 	if not $CharNode.is_on_floor():
 		$CharNode.velocity.y += gravity * delta
+	
+	## Compute colliding behavior
 	$CharNode.move_and_slide()
+	
+	## Ball spinning animation
 	$CharNode.rotation += player_direction_faced * DRIBBLE_ROTATION_SPEED * delta * PI
 
 
