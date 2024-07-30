@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b2aqgfi8s00jx"]
+[gd_scene load_steps=27 format=3 uid="uid://b2aqgfi8s00jx"]
 
 [ext_resource type="Script" path="res://scripts/controls.gd" id="1_mfbfb"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_o076y"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dt0cih865juyl" path="res://kenney_platformer-characters/PNG/Player/Poses/player_kick.png" id="3_17apl"]
 [ext_resource type="Texture2D" uid="uid://cwwhvm6u6yju5" path="res://kenney_platformer-characters/PNG/Player/Poses/player_walk1.png" id="4_tcxye"]
 [ext_resource type="Texture2D" uid="uid://dkcoksef4jqun" path="res://kenney_platformer-characters/PNG/Player/Poses/player_walk2.png" id="5_4paxp"]
-[ext_resource type="Texture2D" uid="uid://bxbj15t0xs7ut" path="res://kenney_platformer-characters/PNG/Player/Poses/player_fall.png" id="6_pdhxe"]
+[ext_resource type="Texture2D" uid="uid://ckp3x8dvlmt3q" path="res://kenney_platformer-characters/PNG/Player/Poses/player_action2.png" id="5_iqs7i"]
 [ext_resource type="Texture2D" uid="uid://hj10arhyubon" path="res://kenney_platformer-characters/PNG/Player/Poses/player_stand.png" id="7_0iykw"]
 [ext_resource type="Texture2D" uid="uid://bnsrawjlq63il" path="res://kenney_platformer-characters/PNG/Player/Poses/player_skid.png" id="8_oj2rl"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="8_th0b1"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://ct55n5aqijgey" path="res://kenney_sports-pack/PNG/Elements/element (1).png" id="14_l14tq"]
 [ext_resource type="Texture2D" uid="uid://bghnoo23prkx3" path="res://kenney_sports-pack/PNG/Equipment/ball_soccer2.png" id="15_rbgne"]
 [ext_resource type="Script" path="res://scripts/ball.gd" id="16_aspwb"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="16_lue32"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1m37y"]
 animations = [{
@@ -39,25 +40,25 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("5_iqs7i")
+}, {
+"duration": 1.0,
 "texture": ExtResource("3_17apl")
 }],
 "loop": false,
 "name": &"kick",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("6_pdhxe")
-}, {
 "duration": 1.0,
 "texture": ExtResource("7_0iykw")
 }, {
 "duration": 1.0,
 "texture": ExtResource("8_oj2rl")
 }],
-"loop": true,
+"loop": false,
 "name": &"turn",
-"speed": 7.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -115,7 +116,6 @@ script = ExtResource("1_o076y")
 position = Vector2(0, -55)
 sprite_frames = SubResource("SpriteFrames_1m37y")
 animation = &"turn"
-frame_progress = 0.0797175
 
 [node name="PlayerCollider" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, -44)
@@ -143,9 +143,17 @@ debug_color = Color(0.801051, 0.26373, 0.812251, 0.42)
 [node name="DribbleMarker" type="Marker2D" parent="Player"]
 position = Vector2(56, -20)
 
-[node name="TurnTimer" type="Timer" parent="Player"]
+[node name="IdleTimer" type="Timer" parent="Player"]
 process_callback = 0
-wait_time = 0.429
+wait_time = 0.05
+
+[node name="TurnLeftTimer" type="Timer" parent="Player"]
+process_callback = 0
+wait_time = 0.3
+
+[node name="TurnRightTimer" type="Timer" parent="Player"]
+process_callback = 0
+wait_time = 0.3
 
 [node name="StateChart" type="Node" parent="Player"]
 script = ExtResource("8_th0b1")
@@ -209,6 +217,43 @@ script = ExtResource("10_fh065")
 script = ExtResource("11_g0bsk")
 to = NodePath("../../Running")
 event = &"in_the_air_to_running"
+delay_in_seconds = "0.0"
+
+[node name="MetaMovement" type="Node" parent="Player/StateChart/Root"]
+script = ExtResource("9_uhhh3")
+initial_state = NodePath("Counting Down")
+
+[node name="Moving" type="Node" parent="Player/StateChart/Root/MetaMovement"]
+script = ExtResource("10_fh065")
+
+[node name="To Counting Down" type="Node" parent="Player/StateChart/Root/MetaMovement/Moving"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Counting Down")
+event = &"moving_to_counting_down"
+delay_in_seconds = "0.0"
+
+[node name="Counting Down" type="Node" parent="Player/StateChart/Root/MetaMovement"]
+script = ExtResource("10_fh065")
+
+[node name="To Not Moving" type="Node" parent="Player/StateChart/Root/MetaMovement/Counting Down"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Not Moving")
+event = &"counting_down_to_not_moving"
+delay_in_seconds = "0.0"
+
+[node name="To Moving" type="Node" parent="Player/StateChart/Root/MetaMovement/Counting Down"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Moving")
+event = &"counting_down_to_moving"
+delay_in_seconds = "0.0"
+
+[node name="Not Moving" type="Node" parent="Player/StateChart/Root/MetaMovement"]
+script = ExtResource("10_fh065")
+
+[node name="To Moving" type="Node" parent="Player/StateChart/Root/MetaMovement/Not Moving"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Moving")
+event = &"not_moving_to_moving"
 delay_in_seconds = "0.0"
 
 [node name="Kicking" type="Node" parent="Player/StateChart/Root"]
@@ -362,6 +407,13 @@ delay_in_seconds = "0.0"
 position = Vector2(0, -164)
 zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
+
+[node name="StateChartDebugger" parent="Player" instance=ExtResource("16_lue32")]
+offset_left = -162.0
+offset_top = -521.0
+offset_right = 256.0
+offset_bottom = -98.0
+initial_node_to_watch = NodePath("../StateChart")
 
 [node name="Ball" type="Node" parent="."]
 script = ExtResource("16_aspwb")
@@ -531,17 +583,36 @@ delay_in_seconds = "0.0"
 [connection signal="body_entered" from="Player/KickZone" to="Player" method="_on_kick_zone_body_entered"]
 [connection signal="body_exited" from="Player/KickZone" to="Player" method="_on_kick_zone_body_exited"]
 [connection signal="body_entered" from="Player/HeadbuttZone" to="Player" method="_on_headbutt_zone_body_entered"]
+[connection signal="timeout" from="Player/IdleTimer" to="Player" method="_on_idle_timer_timeout"]
+[connection signal="timeout" from="Player/TurnLeftTimer" to="." method="_on_turn_left_timer_timeout"]
+[connection signal="timeout" from="Player/TurnRightTimer" to="." method="_on_turn_right_timer_timeout"]
+[connection signal="state_exited" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_exited"]
+[connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_physics_processing"]
 [connection signal="state_processing" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_processing"]
+[connection signal="state_exited" from="Player/StateChart/Root/Movement/Idle" to="Player" method="_on_idle_state_exited"]
+[connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/Idle" to="Player" method="_on_idle_state_physics_processing"]
 [connection signal="state_processing" from="Player/StateChart/Root/Movement/Idle" to="Player" method="_on_idle_state_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Movement/Jump" to="Player" method="_on_jump_state_entered"]
+[connection signal="state_exited" from="Player/StateChart/Root/Movement/Jump" to="Player" method="_on_jump_state_exited"]
+[connection signal="state_entered" from="Player/StateChart/Root/Movement/In The Air" to="Player" method="_on_in_the_air_state_entered"]
+[connection signal="state_exited" from="Player/StateChart/Root/Movement/In The Air" to="Player" method="_on_in_the_air_state_exited"]
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/In The Air" to="Player" method="_on_in_the_air_state_physics_processing"]
+[connection signal="state_entered" from="Player/StateChart/Root/MetaMovement/Moving" to="Player" method="_on_moving_state_entered"]
+[connection signal="state_entered" from="Player/StateChart/Root/MetaMovement/Counting Down" to="Player" method="_on_counting_down_state_entered"]
+[connection signal="state_entered" from="Player/StateChart/Root/MetaMovement/Not Moving" to="Player" method="_on_not_moving_state_entered"]
 [connection signal="state_entered" from="Player/StateChart/Root/Kicking/Kick" to="Player" method="_on_kick_state_entered"]
-[connection signal="state_processing" from="Player/StateChart/Root/Kicking/Kick" to="Player" method="_on_kick_state_processing"]
+[connection signal="state_exited" from="Player/StateChart/Root/Kicking/Kick" to="Player" method="_on_kick_state_exited"]
 [connection signal="state_entered" from="Player/StateChart/Root/Kicking/Dribble" to="Player" method="_on_dribble_state_entered"]
 [connection signal="state_exited" from="Player/StateChart/Root/Kicking/Dribble" to="Player" method="_on_dribble_state_exited"]
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Kicking/Dribble" to="Player" method="_on_dribble_state_physics_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Direction/Face Right" to="Player" method="_on_face_right_state_entered"]
 [connection signal="state_entered" from="Player/StateChart/Root/Direction/Face Left" to="Player" method="_on_face_left_state_entered"]
+[connection signal="state_entered" from="Player/StateChart/Root/Direction/Turn Left" to="Player" method="_on_turn_left_state_entered"]
+[connection signal="state_exited" from="Player/StateChart/Root/Direction/Turn Left" to="Player" method="_on_turn_left_state_exited"]
+[connection signal="state_physics_processing" from="Player/StateChart/Root/Direction/Turn Left" to="Player" method="_on_turn_left_state_physics_processing"]
+[connection signal="state_entered" from="Player/StateChart/Root/Direction/Turn Right" to="Player" method="_on_turn_right_state_entered"]
+[connection signal="state_exited" from="Player/StateChart/Root/Direction/Turn Right" to="Player" method="_on_turn_right_state_exited"]
+[connection signal="state_physics_processing" from="Player/StateChart/Root/Direction/Turn Right" to="Player" method="_on_turn_right_state_physics_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Headbutting/Headbutt" to="Player" method="_on_headbutt_state_entered"]
 [connection signal="state_entered" from="Ball/StateChart/Root/Direction/Face Right" to="Ball" method="_on_face_right_state_entered"]
 [connection signal="state_physics_processing" from="Ball/StateChart/Root/Direction/Face Right" to="Ball" method="_on_face_right_state_physics_processing"]

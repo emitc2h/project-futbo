@@ -17,10 +17,12 @@ func _physics_process(delta: float) -> void:
 	var direction: float = Input.get_axis("move_left", "move_right")
 	if abs(direction) > 0.0:
 		player_state.send_event("idle_to_running")
+		player_state.send_event("not_moving_to_moving")
+		player_state.send_event("counting_down_to_moving")
 		player.direction = direction
 		ball.player_velocity_x = player.velocity.x
 	else:
-		player_state.send_event("running_to_idle")
+		player_state.send_event("moving_to_counting_down")
 		
 	var aim: Vector2 = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
 	if aim.is_zero_approx():
@@ -34,11 +36,11 @@ func _physics_process(delta: float) -> void:
 	# with the right joystick
 	if is_dribbling:
 		if Input.is_action_just_pressed("aim_left"):
-			player_state.send_event("right_to_left")
+			player_state.send_event("face_right_to_turn_left")
 			ball_state.send_event("right_to_left")
 			
 		if Input.is_action_just_pressed("aim_right"):
-			player_state.send_event("left_to_right")
+			player_state.send_event("face_left_to_turn_right")
 			ball_state.send_event("left_to_right")
 
 
@@ -46,12 +48,12 @@ func _physics_process(delta: float) -> void:
 	# When the player is not dribbling, movement and direction faced are synced.
 	if not is_dribbling:
 		if Input.is_action_just_pressed("move_left"):
-			player_state.send_event("right_to_left")
+			player_state.send_event("face_right_to_turn_left")
 			ball_state.send_event("right_to_left")
 			ball.player_direction_faced = -1.0
 		
 		if Input.is_action_just_pressed("move_right"):
-			player_state.send_event("left_to_right")
+			player_state.send_event("face_left_to_turn_right")
 			ball_state.send_event("left_to_right")
 			ball.player_direction_faced = 1.0
 		
@@ -109,3 +111,11 @@ func _on_player_started_dribbling() -> void:
 
 func _on_player_ended_dribbling() -> void:
 	is_dribbling = false
+
+
+func _on_turn_left_timer_timeout() -> void:
+	player_state.send_event("turn_left_to_face_left")
+
+
+func _on_turn_right_timer_timeout() -> void:
+	player_state.send_event("turn_right_to_face_right")
