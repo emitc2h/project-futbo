@@ -11,6 +11,8 @@ extends Node2D
 @onready var ball_state: StateChart = ball.get_node("StateChart")
 
 var is_dribbling: bool = false
+var previous_direction: float = 0.0
+var previous_aim: Vector2 = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 		
@@ -21,15 +23,19 @@ func _physics_process(delta: float) -> void:
 		player_state.send_event("counting_down_to_moving")
 		player.direction = direction
 		ball.player_velocity_x = player.velocity.x
-	else:
-		player_state.send_event("moving_to_counting_down")
 		
 	var aim: Vector2 = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
-	if aim.is_zero_approx():
-		ball_state.send_event("pointing_to_idle")
-	else:
+	if not aim.is_zero_approx():
 		ball_state.send_event("idle_to_pointing")
 		ball.aim = aim
+	
+	# Is direction released
+	if abs(previous_direction) > 0.0 and direction == 0:
+		player_state.send_event("moving_to_counting_down")
+	
+	# Is aim released
+	if not previous_aim.is_zero_approx() and aim.is_zero_approx():
+		ball_state.send_event("pointing_to_idle")
 
 
 	# If the player is dribbling, the direction the player faces is controlled
@@ -69,11 +75,15 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("dribble"):
 		player_state.send_event("can_kick_to_dribble")
+		player_state.send_event("cannot_kick_to_ready_to_dribble")
 		ball_state.send_event("kickable_to_dribbled")
+		ball_state.send_event("not_kickable_to_dribble_ready")
 		
 	if Input.is_action_just_released("dribble"):
 		player_state.send_event("dribble_to_can_kick")
+		player_state.send_event("ready_to_dribble_to_cannot_kick")
 		ball_state.send_event("dribbled_to_kickable")
+		ball_state.send_event("dribble_ready_to_not_kickable")
 
 
 ## Signal processing between siblings
@@ -90,6 +100,8 @@ func _on_player_dribble_marker_position(pos: Vector2) -> void:
 
 
 func _on_player_entered_kickzone() -> void:
+	player_state.send_event("ready_to_dribble_to_dribble")
+	ball_state.send_event("dribble_ready_to_dribbled")
 	ball_state.send_event("not_kickable_to_kickable")
 
 
@@ -114,8 +126,13 @@ func _on_player_ended_dribbling() -> void:
 
 
 func _on_turn_left_timer_timeout() -> void:
+	print("turn left timer time out")
 	player_state.send_event("turn_left_to_face_left")
 
 
 func _on_turn_right_timer_timeout() -> void:
 	player_state.send_event("turn_right_to_face_right")
+
+
+func _on_player_player_velocity(v: Vector2) -> void:
+	ball.player_velocity = v

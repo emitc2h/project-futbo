@@ -3,10 +3,11 @@ extends Node
 
 const KICK_FORCE: float = 700.0
 const HEADBUTT_FORCE: float = 1000.0
-const DRIBBLE_ROTATION_SPEED = 5.0
-const DRIBBLE_AMPLITUDE = 200.0
-const DRIBBLE_FREQUENCY = 10.0
-const DRIBBLE_VELOCITY_OFFSET = 0.63662
+const DRIBBLE_ROTATION_SPEED: float = 4.0
+const DRIBBLE_AMPLITUDE: float = 150.0
+const DRIBBLE_FREQUENCY: float = 8.0
+const DRIBBLE_VELOCITY_OFFSET: float = 0.63662
+const BALL_SNAP_VELOCITY: float = 600.0
 
 var player_dribble_marker_position: Vector2
 
@@ -14,6 +15,7 @@ var dribble_time: float
 
 var player_direction_faced: float
 var player_velocity_x: float
+var player_velocity: Vector2
 
 var aim: Vector2
 var clamped_aim_angle: float
@@ -91,7 +93,8 @@ func jump(vy: float) -> void:
 
 func _on_face_right_state_entered() -> void:
 	if mode == Mode.CHAR_MODE:
-		$CharNode.global_position = player_dribble_marker_position
+		#$CharNode.global_position = player_dribble_marker_position
+		pass
 
 
 func _on_face_right_state_physics_processing(delta: float) -> void:
@@ -104,7 +107,8 @@ func _on_face_right_state_physics_processing(delta: float) -> void:
 
 func _on_face_left_state_entered() -> void:
 	if mode == Mode.CHAR_MODE:
-		$CharNode.global_position = player_dribble_marker_position
+		#$CharNode.global_position = player_dribble_marker_position
+		pass
 
 
 func _on_face_left_state_physics_processing(delta: float) -> void:
@@ -125,17 +129,24 @@ func _on_kickable_state_exited() -> void:
 	
 func _on_dribbled_state_entered() -> void:
 	self.set_mode(Mode.CHAR_MODE)
-	$CharNode.global_position = player_dribble_marker_position
+	#$CharNode.global_position = player_dribble_marker_position
 	dribble_time = 0.0
 
 
 func _on_dribbled_state_physics_processing(delta: float) -> void:
 	## Dribbling animation
 	dribble_time += delta
-	var dribble_delta: float = player_direction_faced * DRIBBLE_AMPLITUDE * (abs(sin(dribble_time * DRIBBLE_FREQUENCY)) - DRIBBLE_VELOCITY_OFFSET)
+	#var dribble_velocity_delta: float = player_direction_faced * DRIBBLE_AMPLITUDE * (abs(sin(dribble_time * DRIBBLE_FREQUENCY)) - DRIBBLE_VELOCITY_OFFSET)
+	var a: float = player_dribble_marker_position.x
+	var b: float = $CharNode.global_position.x
+	var dribble_marker_distance: float = abs(a - b)
+	var dribble_marker_position_delta: float = (a - b)/dribble_marker_distance
 	
 	## Match player velocity
-	$CharNode.velocity.x = player_velocity_x + dribble_delta
+	$CharNode.velocity.x = player_velocity_x
+	#$CharNode.velocity.x += dribble_velocity_delta
+	if dribble_marker_distance > 5.0:
+		$CharNode.velocity.x += dribble_marker_position_delta * BALL_SNAP_VELOCITY
 	
 	## Use gravity when not touching the ground
 	if not $CharNode.is_on_floor():
@@ -149,6 +160,7 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 
 
 func _on_dribbled_state_exited() -> void:
+	$CharNode.velocity = player_velocity
 	self.set_mode(Mode.RIGID_MODE)
 
 

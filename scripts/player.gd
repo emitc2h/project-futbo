@@ -27,9 +27,11 @@ signal did_headbutt()
 signal did_jump(vy: float)
 signal started_dribbling()
 signal ended_dribbling()
+signal player_velocity(v: Vector2)
 
 
 func _physics_process(delta: float) -> void:
+	print("Time Left: ", $TurnLeftTimer.time_left)
 	move_and_slide()
 
 
@@ -49,7 +51,7 @@ func _on_headbutt_zone_body_entered(_body: Node2D) -> void:
 
 func running_state_base(run_velocity: float) -> void:
 	velocity.x = direction * run_velocity
-	if not (is_dribbling or from_idle):
+	if not (from_idle or is_dribbling):
 		velocity.x *= (1.0 - turning_time_left)
 	if not is_on_floor():
 		$StateChart.send_event("running_to_in_the_air")
@@ -90,6 +92,7 @@ func _on_idle_state_exited() -> void:
 
 
 func _on_kick_state_entered() -> void:
+	player_velocity.emit(self.velocity)
 	$StateChart.send_event("kick_to_cannot_kick")
 	animated_sprite.play("kick")
 	is_playing_animation = true
@@ -117,11 +120,10 @@ func _on_in_the_air_state_entered() -> void:
 
 func _on_in_the_air_state_physics_processing(delta: float) -> void:
 	if is_on_floor():
-		$StateChart.send_event("in_the_air_to_running")
+		$StateChart.send_event("in_the_air_to_idle")
 		$StateChart.send_event("can_headbutt_to_cannot_headbutt")
 	else:
 		velocity.y += gravity * delta
-		$StateChart.send_event("not_moving_to_moving")
 
 
 func _on_in_the_air_state_exited() -> void:
@@ -129,19 +131,19 @@ func _on_in_the_air_state_exited() -> void:
 
 
 func _on_face_left_state_entered() -> void:
+	$TurnLeftTimer.stop()
 	animated_sprite.flip_h = true
 	$KickZone/KickCollider.transform.origin.x = -kickzone_x
 	direction_faced = -1.0
 	$DribbleMarker.transform.origin.x = -dribble_marker_x
-	dribble_marker_position.emit($DribbleMarker.global_position)
 
 
 func _on_face_right_state_entered() -> void:
+	$TurnRightTimer.stop()
 	animated_sprite.flip_h = false
 	$KickZone/KickCollider.transform.origin.x = kickzone_x
 	direction_faced = 1.0
 	$DribbleMarker.transform.origin.x = dribble_marker_x
-	dribble_marker_position.emit($DribbleMarker.global_position)
 
 
 func _on_turn_left_state_entered() -> void:
@@ -151,7 +153,6 @@ func _on_turn_left_state_entered() -> void:
 	animated_sprite.play("turn")
 	direction_faced = -1.0
 	$DribbleMarker.transform.origin.x = -dribble_marker_x
-	dribble_marker_position.emit($DribbleMarker.global_position)
 
 
 func _on_turn_left_state_physics_processing(delta: float) -> void:
@@ -171,7 +172,6 @@ func _on_turn_right_state_entered() -> void:
 	animated_sprite.play("turn")
 	direction_faced = 1.0
 	$DribbleMarker.transform.origin.x = dribble_marker_x
-	dribble_marker_position.emit($DribbleMarker.global_position)
 	
 	
 func _on_turn_right_state_physics_processing(delta: float) -> void:
@@ -192,16 +192,17 @@ func _on_headbutt_state_entered() -> void:
 
 func _on_dribble_state_physics_processing(delta: float) -> void:
 	velocity_x.emit(self.velocity.x)
+	dribble_marker_position.emit($DribbleMarker.global_position)
 
 
 func _on_dribble_state_entered() -> void:
-	dribble_marker_position.emit($DribbleMarker.global_position)
 	is_dribbling = true
 	started_dribbling.emit()
 
 
 func _on_dribble_state_exited() -> void:
 	is_dribbling = false
+	player_velocity.emit(self.velocity)
 	ended_dribbling.emit()
 
 
