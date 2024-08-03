@@ -17,21 +17,24 @@ var previous_aim: Vector2 = Vector2.ZERO
 func _physics_process(delta: float) -> void:
 		
 	var direction: float = Input.get_axis("move_left", "move_right")
+	player.direction = direction
+	
 	if abs(direction) > 0.0:
 		player_state.send_event("idle_to_running")
-		player_state.send_event("not_moving_to_moving")
-		player_state.send_event("counting_down_to_moving")
-		player.direction = direction
 		ball.player_velocity_x = player.velocity.x
 		
 	var aim: Vector2 = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
 	if not aim.is_zero_approx():
 		ball_state.send_event("idle_to_pointing")
 		ball.aim = aim
+		
+	# Is direction pressed
+	if previous_direction == 0 and direction != 0:
+		player_state.send_event("pre_idle_to_running")
 	
 	# Is direction released
-	if abs(previous_direction) > 0.0 and direction == 0:
-		player_state.send_event("moving_to_counting_down")
+	if previous_direction != 0.0 and direction == 0.0:
+		player_state.send_event("running_to_pre_idle")
 	
 	# Is aim released
 	if not previous_aim.is_zero_approx() and aim.is_zero_approx():
@@ -84,6 +87,9 @@ func _physics_process(delta: float) -> void:
 		player_state.send_event("ready_to_dribble_to_cannot_kick")
 		ball_state.send_event("dribbled_to_kickable")
 		ball_state.send_event("dribble_ready_to_not_kickable")
+		
+	previous_direction = direction
+	previous_aim = aim
 
 
 ## Signal processing between siblings
@@ -126,7 +132,6 @@ func _on_player_ended_dribbling() -> void:
 
 
 func _on_turn_left_timer_timeout() -> void:
-	print("turn left timer time out")
 	player_state.send_event("turn_left_to_face_left")
 
 

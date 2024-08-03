@@ -168,10 +168,10 @@ initial_state = NodePath("Idle")
 [node name="Running" type="Node" parent="Player/StateChart/Root/Movement"]
 script = ExtResource("10_fh065")
 
-[node name="To Idle" type="Node" parent="Player/StateChart/Root/Movement/Running"]
+[node name="To Pre Idle" type="Node" parent="Player/StateChart/Root/Movement/Running"]
 script = ExtResource("11_g0bsk")
-to = NodePath("../../Idle")
-event = &"running_to_idle"
+to = NodePath("../../Pre Idle")
+event = &"running_to_pre_idle"
 delay_in_seconds = "0.0"
 
 [node name="To Jump" type="Node" parent="Player/StateChart/Root/Movement/Running"]
@@ -184,6 +184,21 @@ delay_in_seconds = "0.0"
 script = ExtResource("11_g0bsk")
 to = NodePath("../../In The Air")
 event = &"running_to_in_the_air"
+delay_in_seconds = "0.0"
+
+[node name="Pre Idle" type="Node" parent="Player/StateChart/Root/Movement"]
+script = ExtResource("10_fh065")
+
+[node name="To Running" type="Node" parent="Player/StateChart/Root/Movement/Pre Idle"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Running")
+event = &"pre_idle_to_running"
+delay_in_seconds = "0.0"
+
+[node name="To Idle" type="Node" parent="Player/StateChart/Root/Movement/Pre Idle"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Idle")
+event = &"pre_idle_to_idle"
 delay_in_seconds = "0.0"
 
 [node name="Idle" type="Node" parent="Player/StateChart/Root/Movement"]
@@ -213,47 +228,10 @@ delay_in_seconds = "0.0"
 [node name="In The Air" type="Node" parent="Player/StateChart/Root/Movement"]
 script = ExtResource("10_fh065")
 
-[node name="To Idle" type="Node" parent="Player/StateChart/Root/Movement/In The Air"]
+[node name="To Running" type="Node" parent="Player/StateChart/Root/Movement/In The Air"]
 script = ExtResource("11_g0bsk")
-to = NodePath("../../Idle")
-event = &"in_the_air_to_idle"
-delay_in_seconds = "0.0"
-
-[node name="MetaMovement" type="Node" parent="Player/StateChart/Root"]
-script = ExtResource("9_uhhh3")
-initial_state = NodePath("Counting Down")
-
-[node name="Moving" type="Node" parent="Player/StateChart/Root/MetaMovement"]
-script = ExtResource("10_fh065")
-
-[node name="To Counting Down" type="Node" parent="Player/StateChart/Root/MetaMovement/Moving"]
-script = ExtResource("11_g0bsk")
-to = NodePath("../../Counting Down")
-event = &"moving_to_counting_down"
-delay_in_seconds = "0.0"
-
-[node name="Counting Down" type="Node" parent="Player/StateChart/Root/MetaMovement"]
-script = ExtResource("10_fh065")
-
-[node name="To Not Moving" type="Node" parent="Player/StateChart/Root/MetaMovement/Counting Down"]
-script = ExtResource("11_g0bsk")
-to = NodePath("../../Not Moving")
-event = &"counting_down_to_not_moving"
-delay_in_seconds = "0.0"
-
-[node name="To Moving" type="Node" parent="Player/StateChart/Root/MetaMovement/Counting Down"]
-script = ExtResource("11_g0bsk")
-to = NodePath("../../Moving")
-event = &"counting_down_to_moving"
-delay_in_seconds = "0.0"
-
-[node name="Not Moving" type="Node" parent="Player/StateChart/Root/MetaMovement"]
-script = ExtResource("10_fh065")
-
-[node name="To Moving" type="Node" parent="Player/StateChart/Root/MetaMovement/Not Moving"]
-script = ExtResource("11_g0bsk")
-to = NodePath("../../Moving")
-event = &"not_moving_to_moving"
+to = NodePath("../../Running")
+event = &"in_the_air_to_running"
 delay_in_seconds = "0.0"
 
 [node name="Kicking" type="Node" parent="Player/StateChart/Root"]
@@ -636,9 +614,13 @@ delay_in_seconds = "0.0"
 [connection signal="timeout" from="Player/IdleTimer" to="Player" method="_on_idle_timer_timeout"]
 [connection signal="timeout" from="Player/TurnLeftTimer" to="." method="_on_turn_left_timer_timeout"]
 [connection signal="timeout" from="Player/TurnRightTimer" to="." method="_on_turn_right_timer_timeout"]
+[connection signal="state_entered" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_entered"]
 [connection signal="state_exited" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_exited"]
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_physics_processing"]
 [connection signal="state_processing" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_processing"]
+[connection signal="state_entered" from="Player/StateChart/Root/Movement/Pre Idle" to="Player" method="_on_pre_idle_state_entered"]
+[connection signal="state_exited" from="Player/StateChart/Root/Movement/Pre Idle" to="Player" method="_on_pre_idle_state_exited"]
+[connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/Pre Idle" to="Player" method="_on_pre_idle_state_physics_processing"]
 [connection signal="state_exited" from="Player/StateChart/Root/Movement/Idle" to="Player" method="_on_idle_state_exited"]
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/Idle" to="Player" method="_on_idle_state_physics_processing"]
 [connection signal="state_processing" from="Player/StateChart/Root/Movement/Idle" to="Player" method="_on_idle_state_processing"]
@@ -647,9 +629,6 @@ delay_in_seconds = "0.0"
 [connection signal="state_entered" from="Player/StateChart/Root/Movement/In The Air" to="Player" method="_on_in_the_air_state_entered"]
 [connection signal="state_exited" from="Player/StateChart/Root/Movement/In The Air" to="Player" method="_on_in_the_air_state_exited"]
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/In The Air" to="Player" method="_on_in_the_air_state_physics_processing"]
-[connection signal="state_entered" from="Player/StateChart/Root/MetaMovement/Moving" to="Player" method="_on_moving_state_entered"]
-[connection signal="state_entered" from="Player/StateChart/Root/MetaMovement/Counting Down" to="Player" method="_on_counting_down_state_entered"]
-[connection signal="state_entered" from="Player/StateChart/Root/MetaMovement/Not Moving" to="Player" method="_on_not_moving_state_entered"]
 [connection signal="state_entered" from="Player/StateChart/Root/Kicking/Kick" to="Player" method="_on_kick_state_entered"]
 [connection signal="state_exited" from="Player/StateChart/Root/Kicking/Kick" to="Player" method="_on_kick_state_exited"]
 [connection signal="state_entered" from="Player/StateChart/Root/Kicking/Dribble" to="Player" method="_on_dribble_state_entered"]

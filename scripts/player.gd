@@ -31,7 +31,6 @@ signal player_velocity(v: Vector2)
 
 
 func _physics_process(delta: float) -> void:
-	print("Time Left: ", $TurnLeftTimer.time_left)
 	move_and_slide()
 
 
@@ -59,6 +58,13 @@ func running_state_base(run_velocity: float) -> void:
 
 func is_running_forward() -> bool:
 	return (sign(direction) + direction_faced) != 0.0
+	
+	
+func running() -> void:
+	if is_running_forward():
+		running_state_base(RUN_FORWARD_VELOCITY)
+	else:
+		running_state_base(RUN_BACKWARD_VELOCITY)
 
 
 func _on_running_state_processing(_delta: float) -> void:
@@ -67,10 +73,7 @@ func _on_running_state_processing(_delta: float) -> void:
 
 
 func _on_running_state_physics_processing(delta: float) -> void:
-	if is_running_forward():
-		running_state_base(RUN_FORWARD_VELOCITY)
-	else:
-		running_state_base(RUN_BACKWARD_VELOCITY)
+	self.running()
 
 
 func _on_running_state_exited() -> void:
@@ -120,7 +123,7 @@ func _on_in_the_air_state_entered() -> void:
 
 func _on_in_the_air_state_physics_processing(delta: float) -> void:
 	if is_on_floor():
-		$StateChart.send_event("in_the_air_to_idle")
+		$StateChart.send_event("in_the_air_to_running")
 		$StateChart.send_event("can_headbutt_to_cannot_headbutt")
 	else:
 		velocity.y += gravity * delta
@@ -204,20 +207,24 @@ func _on_dribble_state_exited() -> void:
 	is_dribbling = false
 	player_velocity.emit(self.velocity)
 	ended_dribbling.emit()
-
-
-func _on_counting_down_state_entered() -> void:
-	$IdleTimer.start()
-
-
-func _on_not_moving_state_entered() -> void:
-	$IdleTimer.stop()
 	
 	
 func _on_idle_timer_timeout() -> void:
-	$StateChart.send_event("running_to_idle")
-	$StateChart.send_event("counting_down_to_not_moving")
+	$StateChart.send_event("pre_idle_to_idle")
 
 
-func _on_moving_state_entered() -> void:
+func _on_pre_idle_state_entered() -> void:
+	$IdleTimer.start()
+
+
+func _on_pre_idle_state_exited() -> void:
 	$IdleTimer.stop()
+
+
+func _on_pre_idle_state_physics_processing(delta: float) -> void:
+	self.running()
+
+
+func _on_running_state_entered() -> void:
+	if direction == 0.0:
+		$StateChart.send_event("running_to_pre_idle")
