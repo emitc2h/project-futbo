@@ -88,9 +88,7 @@ radius = 19.0
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6qyd0"]
 friction = 0.53
-rough = true
-bounce = 2.0
-absorbent = true
+bounce = 0.5
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eqy5v"]
 animations = [{
@@ -143,9 +141,15 @@ debug_color = Color(0.801051, 0.26373, 0.812251, 0.42)
 [node name="DribbleMarker" type="Marker2D" parent="Player"]
 position = Vector2(56, -20)
 
+[node name="DribbleCast" type="RayCast2D" parent="Player"]
+position = Vector2(0, -19)
+target_position = Vector2(56, 0)
+collision_mask = 14
+hit_from_inside = true
+
 [node name="IdleTimer" type="Timer" parent="Player"]
 process_callback = 0
-wait_time = 0.05
+wait_time = 0.1
 
 [node name="TurnLeftTimer" type="Timer" parent="Player"]
 process_callback = 0
@@ -156,6 +160,9 @@ process_callback = 0
 wait_time = 0.3
 
 [node name="StateChart" type="Node" parent="Player"]
+process_thread_group = 1
+process_thread_group_order = 0
+process_thread_messages = 0
 script = ExtResource("8_th0b1")
 
 [node name="Root" type="Node" parent="Player/StateChart"]
@@ -163,7 +170,7 @@ script = ExtResource("9_abl5v")
 
 [node name="Movement" type="Node" parent="Player/StateChart/Root"]
 script = ExtResource("9_uhhh3")
-initial_state = NodePath("Idle")
+initial_state = NodePath("In The Air")
 
 [node name="Running" type="Node" parent="Player/StateChart/Root/Movement"]
 script = ExtResource("10_fh065")
@@ -216,6 +223,12 @@ to = NodePath("../../Jump")
 event = &"idle_to_jump"
 delay_in_seconds = "0.0"
 
+[node name="To In The Air" type="Node" parent="Player/StateChart/Root/Movement/Idle"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../In The Air")
+event = &"idle_to_in_the_air"
+delay_in_seconds = "0.0"
+
 [node name="Jump" type="Node" parent="Player/StateChart/Root/Movement"]
 script = ExtResource("10_fh065")
 
@@ -223,7 +236,7 @@ script = ExtResource("10_fh065")
 script = ExtResource("11_g0bsk")
 to = NodePath("../../In The Air")
 event = &"jump_to_in_the_air"
-delay_in_seconds = "0.0"
+delay_in_seconds = ""
 
 [node name="In The Air" type="Node" parent="Player/StateChart/Root/Movement"]
 script = ExtResource("10_fh065")
@@ -313,9 +326,15 @@ to = NodePath("../../Can Kick")
 event = &"dribble_to_can_kick"
 delay_in_seconds = "0.0"
 
+[node name="To Cannot Kick" type="Node" parent="Player/StateChart/Root/Kicking/Dribble"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Cannot Kick")
+event = &"dribble_to_cannot_kick"
+delay_in_seconds = "0.0"
+
 [node name="Direction" type="Node" parent="Player/StateChart/Root"]
 script = ExtResource("9_uhhh3")
-initial_state = NodePath("Face Left")
+initial_state = NodePath("Face Right")
 
 [node name="Face Right" type="Node" parent="Player/StateChart/Root/Direction"]
 script = ExtResource("10_fh065")
@@ -547,6 +566,12 @@ to = NodePath("../../Kickable")
 event = &"dribbled_to_kickable"
 delay_in_seconds = "0.0"
 
+[node name="To Not Kickable" type="Node" parent="Ball/StateChart/Root/Player Kicking/Dribbled"]
+script = ExtResource("11_g0bsk")
+to = NodePath("../../Not Kickable")
+event = &"dribbled_to_not_kickable"
+delay_in_seconds = "0.0"
+
 [node name="Kick" type="Node" parent="Ball/StateChart/Root/Player Kicking"]
 script = ExtResource("10_fh065")
 
@@ -601,10 +626,10 @@ event = &"pointing_to_idle"
 delay_in_seconds = "0.0"
 
 [connection signal="did_headbutt" from="Player" to="." method="_on_player_did_headbutt"]
-[connection signal="dribble_marker_position" from="Player" to="." method="_on_player_dribble_marker_position"]
 [connection signal="ended_dribbling" from="Player" to="." method="_on_player_ended_dribbling"]
 [connection signal="entered_kickzone" from="Player" to="." method="_on_player_entered_kickzone"]
 [connection signal="left_kickzone" from="Player" to="." method="_on_player_left_kickzone"]
+[connection signal="lost_ball" from="Player" to="." method="_on_player_lost_ball"]
 [connection signal="player_velocity" from="Player" to="." method="_on_player_player_velocity"]
 [connection signal="started_dribbling" from="Player" to="." method="_on_player_started_dribbling"]
 [connection signal="velocity_x" from="Player" to="." method="_on_player_velocity_x"]
@@ -615,7 +640,6 @@ delay_in_seconds = "0.0"
 [connection signal="timeout" from="Player/TurnLeftTimer" to="." method="_on_turn_left_timer_timeout"]
 [connection signal="timeout" from="Player/TurnRightTimer" to="." method="_on_turn_right_timer_timeout"]
 [connection signal="state_entered" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_entered"]
-[connection signal="state_exited" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_exited"]
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_physics_processing"]
 [connection signal="state_processing" from="Player/StateChart/Root/Movement/Running" to="Player" method="_on_running_state_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Movement/Pre Idle" to="Player" method="_on_pre_idle_state_entered"]
@@ -625,7 +649,6 @@ delay_in_seconds = "0.0"
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/Idle" to="Player" method="_on_idle_state_physics_processing"]
 [connection signal="state_processing" from="Player/StateChart/Root/Movement/Idle" to="Player" method="_on_idle_state_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Movement/Jump" to="Player" method="_on_jump_state_entered"]
-[connection signal="state_exited" from="Player/StateChart/Root/Movement/Jump" to="Player" method="_on_jump_state_exited"]
 [connection signal="state_entered" from="Player/StateChart/Root/Movement/In The Air" to="Player" method="_on_in_the_air_state_entered"]
 [connection signal="state_exited" from="Player/StateChart/Root/Movement/In The Air" to="Player" method="_on_in_the_air_state_exited"]
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Movement/In The Air" to="Player" method="_on_in_the_air_state_physics_processing"]
@@ -643,9 +666,7 @@ delay_in_seconds = "0.0"
 [connection signal="state_exited" from="Player/StateChart/Root/Direction/Turn Right" to="Player" method="_on_turn_right_state_exited"]
 [connection signal="state_physics_processing" from="Player/StateChart/Root/Direction/Turn Right" to="Player" method="_on_turn_right_state_physics_processing"]
 [connection signal="state_entered" from="Player/StateChart/Root/Headbutting/Headbutt" to="Player" method="_on_headbutt_state_entered"]
-[connection signal="state_entered" from="Ball/StateChart/Root/Direction/Face Right" to="Ball" method="_on_face_right_state_entered"]
 [connection signal="state_physics_processing" from="Ball/StateChart/Root/Direction/Face Right" to="Ball" method="_on_face_right_state_physics_processing"]
-[connection signal="state_entered" from="Ball/StateChart/Root/Direction/Face Left" to="Ball" method="_on_face_left_state_entered"]
 [connection signal="state_physics_processing" from="Ball/StateChart/Root/Direction/Face Left" to="Ball" method="_on_face_left_state_physics_processing"]
 [connection signal="state_entered" from="Ball/StateChart/Root/Player Kicking/Kickable" to="Ball" method="_on_kickable_state_entered"]
 [connection signal="state_exited" from="Ball/StateChart/Root/Player Kicking/Kickable" to="Ball" method="_on_kickable_state_exited"]

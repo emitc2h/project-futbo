@@ -15,44 +15,52 @@ var previous_direction: float = 0.0
 var previous_aim: Vector2 = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
-		
 	var direction: float = Input.get_axis("move_left", "move_right")
 	player.direction = direction
+	ball.player_velocity_x = player.velocity.x
 	
-	if abs(direction) > 0.0:
+	if direction != 0.0:
 		player_state.send_event("idle_to_running")
-		ball.player_velocity_x = player.velocity.x
-		
+	
 	var aim: Vector2 = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
 	if not aim.is_zero_approx():
 		ball_state.send_event("idle_to_pointing")
 		ball.aim = aim
 		
-	# Is direction pressed
-	if previous_direction == 0 and direction != 0:
+	player.direction_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	
+	# Detect press and releases on joystick axes 
+	var is_direction_just_pressed: bool = previous_direction == 0 and direction != 0
+	var is_direction_just_released: bool = previous_direction != 0.0 and direction == 0.0
+	var is_aim_just_released: bool = not previous_aim.is_zero_approx() and aim.is_zero_approx()
+		
+	previous_direction = direction
+	previous_aim = aim
+	
+	if is_direction_just_pressed:
 		player_state.send_event("pre_idle_to_running")
 	
-	# Is direction released
-	if previous_direction != 0.0 and direction == 0.0:
+	if is_direction_just_released:
 		player_state.send_event("running_to_pre_idle")
 	
-	# Is aim released
-	if not previous_aim.is_zero_approx() and aim.is_zero_approx():
+	if is_aim_just_released:
 		ball_state.send_event("pointing_to_idle")
-
-
+	
+	
 	# If the player is dribbling, the direction the player faces is controlled
 	# with the right joystick
 	if is_dribbling:
 		if Input.is_action_just_pressed("aim_left"):
-			player_state.send_event("face_right_to_turn_left")
+			player_state.send_event("right_to_left")
 			ball_state.send_event("right_to_left")
+			ball.player_direction_faced = -1.0
 			
 		if Input.is_action_just_pressed("aim_right"):
-			player_state.send_event("face_left_to_turn_right")
+			player_state.send_event("left_to_right")
 			ball_state.send_event("left_to_right")
-
-
+			ball.player_direction_faced = 1.0
+	
+	
 	# The moving direction is independent from where the player faces when dribbling
 	# When the player is not dribbling, movement and direction faced are synced.
 	if not is_dribbling:
@@ -87,9 +95,6 @@ func _physics_process(delta: float) -> void:
 		player_state.send_event("ready_to_dribble_to_cannot_kick")
 		ball_state.send_event("dribbled_to_kickable")
 		ball_state.send_event("dribble_ready_to_not_kickable")
-		
-	previous_direction = direction
-	previous_aim = aim
 
 
 ## Signal processing between siblings
@@ -99,10 +104,6 @@ func _on_player_ball_state_chart_event(event: String) -> void:
 
 func _on_player_velocity_x(vx: float) -> void:
 	ball.player_velocity_x = vx
-
-
-func _on_player_dribble_marker_position(pos: Vector2) -> void:
-	ball.player_dribble_marker_position = pos
 
 
 func _on_player_entered_kickzone() -> void:
@@ -141,3 +142,7 @@ func _on_turn_right_timer_timeout() -> void:
 
 func _on_player_player_velocity(v: Vector2) -> void:
 	ball.player_velocity = v
+
+
+func _on_player_lost_ball() -> void:
+	ball_state.send_event("dribbled_to_not_kickable")

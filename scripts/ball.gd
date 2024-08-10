@@ -28,7 +28,6 @@ enum Mode {RIGID_MODE, CHAR_MODE}
 
 var mode: Mode = Mode.RIGID_MODE
 
-
 func sync_transform_from_rigid_to_char() -> void:
 	$CharNode.transform = $RigidNode.transform
 
@@ -36,25 +35,42 @@ func sync_transform_from_rigid_to_char() -> void:
 func sync_transform_from_char_to_rigid() -> void:
 	$RigidNode.transform = $CharNode.transform
 	$RigidNode.linear_velocity = $CharNode.velocity
-	
-	
+	$CharNode.velocity = Vector2.ZERO
+
+
 func move_nodes_to_char() -> void:
 	$RigidNode/DirectionRay.reparent($CharNode)
 	$RigidNode/AnimatedSprite2D.reparent($CharNode)
-	
+
+
 func move_nodes_to_rigid() -> void:
 	$CharNode/DirectionRay.reparent($RigidNode)
 	$CharNode/AnimatedSprite2D.reparent($RigidNode)
-	
-	
+
+
+func set_rigid_to_collide() -> void:
+	$RigidNode.set_collision_layer_value(3, true)
+	$CharNode.set_collision_layer_value(3, false)
+
+
+func set_char_to_collide() -> void:
+	$RigidNode.set_collision_layer_value(3, false)
+	$CharNode.set_collision_layer_value(3, true)
+
+
 func set_mode(input_mode: Mode) -> void:
 	if input_mode == Mode.RIGID_MODE:
 		sync_transform_from_char_to_rigid()
 		move_nodes_to_rigid()
+		set_rigid_to_collide()
+		$RigidNode.sleeping = false
 		$RigidNode.set_freeze_enabled(false)
-		
+	
+	
 	elif input_mode == Mode.CHAR_MODE:
+		set_char_to_collide()
 		$RigidNode.set_freeze_enabled(true)
+		$RigidNode.sleeping = true
 		sync_transform_from_rigid_to_char()
 		move_nodes_to_char()
 		
@@ -77,6 +93,15 @@ func get_animated_sprite_2d() -> AnimatedSprite2D:
 		return $CharNode/AnimatedSprite2D
 	else:
 		return null
+		
+		
+func get_driver_node() -> Node2D:
+	if self.mode == Mode.RIGID_MODE:
+		return $RigidNode
+	elif self.mode == Mode.CHAR_MODE:
+		return $CharNode
+	else:
+		return null
 
 
 func clamp_aim_angle(angle: float) -> float:
@@ -91,24 +116,12 @@ func jump(vy: float) -> void:
 		$CharNode.velocity.y = vy
 
 
-func _on_face_right_state_entered() -> void:
-	if mode == Mode.CHAR_MODE:
-		#$CharNode.global_position = player_dribble_marker_position
-		pass
-
-
 func _on_face_right_state_physics_processing(delta: float) -> void:
 	var raw_angle: float = aim.angle()
 	if abs(raw_angle) > PI/2:
 		clamped_aim_angle = clamp_aim_angle(raw_angle)
 	else:
 		clamped_aim_angle = raw_angle
-
-
-func _on_face_left_state_entered() -> void:
-	if mode == Mode.CHAR_MODE:
-		#$CharNode.global_position = player_dribble_marker_position
-		pass
 
 
 func _on_face_left_state_physics_processing(delta: float) -> void:
@@ -129,14 +142,12 @@ func _on_kickable_state_exited() -> void:
 	
 func _on_dribbled_state_entered() -> void:
 	self.set_mode(Mode.CHAR_MODE)
-	#$CharNode.global_position = player_dribble_marker_position
 	dribble_time = 0.0
 
 
 func _on_dribbled_state_physics_processing(delta: float) -> void:
 	## Dribbling animation
 	dribble_time += delta
-	#var dribble_velocity_delta: float = player_direction_faced * DRIBBLE_AMPLITUDE * (abs(sin(dribble_time * DRIBBLE_FREQUENCY)) - DRIBBLE_VELOCITY_OFFSET)
 	var a: float = player_dribble_marker_position.x
 	var b: float = $CharNode.global_position.x
 	var dribble_marker_distance: float = abs(a - b)
@@ -144,7 +155,6 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 	
 	## Match player velocity
 	$CharNode.velocity.x = player_velocity_x
-	#$CharNode.velocity.x += dribble_velocity_delta
 	if dribble_marker_distance > 5.0:
 		$CharNode.velocity.x += dribble_marker_position_delta * BALL_SNAP_VELOCITY
 	
