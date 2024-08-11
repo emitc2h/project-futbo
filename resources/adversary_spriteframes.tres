@@ -1,0 +1,62 @@
+[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://b5y2k0oe4jdi6"]
+
+[ext_resource type="Texture2D" uid="uid://dhvnt0e3ypa8u" path="res://kenney_platformer-characters/PNG/Female/Poses/female_idle.png" id="1_hmhvf"]
+[ext_resource type="Texture2D" uid="uid://dhf43uy7ypbnm" path="res://kenney_platformer-characters/PNG/Female/Poses/female_jump.png" id="2_xqayv"]
+[ext_resource type="Texture2D" uid="uid://c175minrpr3t0" path="res://kenney_platformer-characters/PNG/Female/Poses/female_action2.png" id="3_ffev7"]
+[ext_resource type="Texture2D" uid="uid://cm2jrlaifjnnh" path="res://kenney_platformer-characters/PNG/Female/Poses/female_kick.png" id="4_8h1dv"]
+[ext_resource type="Texture2D" uid="uid://b6m6pidcdy4ka" path="res://kenney_platformer-characters/PNG/Female/Poses/female_stand.png" id="5_3v6we"]
+[ext_resource type="Texture2D" uid="uid://dwmimpuw3bn3d" path="res://kenney_platformer-characters/PNG/Female/Poses/female_skid.png" id="6_8rtmg"]
+[ext_resource type="Texture2D" uid="uid://bayvris616m45" path="res://kenney_platformer-characters/PNG/Female/Poses/female_walk1.png" id="7_g857i"]
+[ext_resource type="Texture2D" uid="uid://bb4b7oecfto1n" path="res://kenney_platformer-characters/PNG/Female/Poses/female_walk2.png" id="8_w6i3w"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hmhvf")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_xqayv")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ffev7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8h1dv")
+}],
+"loop": false,
+"name": &"kick",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_3v6we")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8rtmg")
+}],
+"loop": false,
+"name": &"turn",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_g857i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_w6i3w")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 9.0
+}]

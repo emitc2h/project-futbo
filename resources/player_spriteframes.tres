@@ -1,0 +1,62 @@
+[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://c0xj6n41r3c1j"]
+
+[ext_resource type="Texture2D" uid="uid://dcijs8gxv3fke" path="res://kenney_platformer-characters/PNG/Player/Poses/player_idle.png" id="1_xpa34"]
+[ext_resource type="Texture2D" uid="uid://dao6b2xjs6hdm" path="res://kenney_platformer-characters/PNG/Player/Poses/player_jump.png" id="2_h8wdi"]
+[ext_resource type="Texture2D" uid="uid://ckp3x8dvlmt3q" path="res://kenney_platformer-characters/PNG/Player/Poses/player_action2.png" id="3_hk4e8"]
+[ext_resource type="Texture2D" uid="uid://dt0cih865juyl" path="res://kenney_platformer-characters/PNG/Player/Poses/player_kick.png" id="4_rvwl6"]
+[ext_resource type="Texture2D" uid="uid://hj10arhyubon" path="res://kenney_platformer-characters/PNG/Player/Poses/player_stand.png" id="5_6wq2y"]
+[ext_resource type="Texture2D" uid="uid://bnsrawjlq63il" path="res://kenney_platformer-characters/PNG/Player/Poses/player_skid.png" id="6_o8jly"]
+[ext_resource type="Texture2D" uid="uid://cwwhvm6u6yju5" path="res://kenney_platformer-characters/PNG/Player/Poses/player_walk1.png" id="7_36l0m"]
+[ext_resource type="Texture2D" uid="uid://dkcoksef4jqun" path="res://kenney_platformer-characters/PNG/Player/Poses/player_walk2.png" id="8_g3vwv"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xpa34")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_h8wdi")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_hk4e8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rvwl6")
+}],
+"loop": false,
+"name": &"kick",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_6wq2y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_o8jly")
+}],
+"loop": false,
+"name": &"turn",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_36l0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_g3vwv")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 9.0
+}]
