@@ -899,10 +899,12 @@ to = NodePath("../../Idle")
 event = &"pointing_to_idle"
 delay_in_seconds = "0.0"
 
-[node name="AIController" type="Node" parent="." node_paths=PackedStringArray("home_goal", "away_goal")]
+[node name="AIController" type="Node" parent="." node_paths=PackedStringArray("home_goal", "away_goal", "player", "ball")]
 script = ExtResource("21_2atb1")
 home_goal = NodePath("../World/GoalBlue")
 away_goal = NodePath("../World/GoalRed")
+player = NodePath("../PlayerControls/Player")
+ball = NodePath("../Ball")
 
 [node name="Adversary" type="CharacterBody2D" parent="AIController"]
 position = Vector2(1088, 484)
