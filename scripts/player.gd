@@ -255,3 +255,11 @@ func _on_headbutt_state_entered() -> void:
 	velocity_x.emit(self.velocity.x)
 	did_headbutt.emit()
 	$StateChart.send_event("headbutt_to_cannot_headbutt")
+	
+	
+func _on_turn_left_timer_timeout() -> void:
+	$StateChart.send_event("turn_left_to_face_left")
+
+
+func _on_turn_right_timer_timeout() -> void:
+	$StateChart.send_event("turn_right_to_face_right")

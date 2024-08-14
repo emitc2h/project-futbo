@@ -133,14 +133,6 @@ func _on_player_ended_dribbling() -> void:
 	is_dribbling = false
 
 
-func _on_turn_left_timer_timeout() -> void:
-	player_state.send_event("turn_left_to_face_left")
-
-
-func _on_turn_right_timer_timeout() -> void:
-	player_state.send_event("turn_right_to_face_right")
-
-
 func _on_player_player_velocity(v: Vector2) -> void:
 	ball.player_velocity = v
 
