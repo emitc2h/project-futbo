@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cg52j0i272cki"]
+[gd_scene load_steps=17 format=3 uid="uid://cg52j0i272cki"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_dknuf"]
 [ext_resource type="Texture2D" uid="uid://cffkj2xgw7gfe" path="res://kenney_platformer-art-extended-tileset/PNG Grass/Spritesheet/sheet.png" id="1_pnhvn"]
@@ -9,7 +9,9 @@
 [ext_resource type="Script" path="res://scripts/ui.gd" id="7_tnj2d"]
 [ext_resource type="Texture2D" uid="uid://dk5lv81bnl5vp" path="res://kenney_sports-pack/goalfront-blue.png" id="8_y5hhm"]
 [ext_resource type="PackedScene" uid="uid://6wc3n1pyfhco" path="res://scenes/controller_player.tscn" id="9_5cfub"]
+[ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="10_61452"]
 [ext_resource type="PackedScene" uid="uid://bs2iy2u8uq4gx" path="res://scenes/ball.tscn" id="18_fsj6p"]
+[ext_resource type="SpriteFrames" uid="uid://b5y2k0oe4jdi6" path="res://resources/adversary_spriteframes.tres" id="20_st3cb"]
 [ext_resource type="PackedScene" uid="uid://iqoiw2siwxeq" path="res://scenes/ai_player.tscn" id="21_faijy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5in52"]
@@ -322,14 +324,32 @@ position = Vector2(3, -3)
 polygon = PackedVector2Array(0, 0, -14, 0, -61, -155, -75, -167, -151, -167, -151, -182, -70, -182, -47, -160)
 
 [node name="ControllerPlayer" parent="." node_paths=PackedStringArray("ball") instance=ExtResource("9_5cfub")]
+position = Vector2(512, 486)
 ball = NodePath("../Ball")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ControllerPlayer/Player" index="0"]
+position = Vector2(0, -55)
+sprite_frames = ExtResource("10_61452")
+animation = &"idle"
+
+[node name="Camera2D" type="Camera2D" parent="ControllerPlayer/Player" index="10"]
+position = Vector2(0, -100)
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+
 [node name="Ball" parent="." instance=ExtResource("18_fsj6p")]
+position = Vector2(1000, 468)
 
 [node name="AIPlayer" parent="." node_paths=PackedStringArray("home_goal", "away_goal", "ball") instance=ExtResource("21_faijy")]
+position = Vector2(2419, 275)
 home_goal = NodePath("../World/GoalBlue")
 away_goal = NodePath("../World/GoalRed")
 ball = NodePath("../Ball")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AIPlayer/Player" index="0"]
+position = Vector2(0, -55)
+sprite_frames = ExtResource("20_st3cb")
+animation = &"walk"
 
 [connection signal="scored" from="World/GoalRed" to="." method="_on_goal_red_scored"]
 [connection signal="body_entered" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_entered"]
@@ -337,3 +357,8 @@ ball = NodePath("../Ball")
 [connection signal="scored" from="World/GoalBlue" to="." method="_on_goal_blue_scored"]
 [connection signal="body_entered" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_exited"]
+
+[editable path="ControllerPlayer"]
+[editable path="ControllerPlayer/Player"]
+[editable path="AIPlayer"]
+[editable path="AIPlayer/Player"]

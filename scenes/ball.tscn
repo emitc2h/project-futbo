@@ -27,11 +27,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Ball" type="Node"]
+[node name="Ball" type="Node2D"]
 script = ExtResource("1_abhvw")
 
 [node name="CharNode" type="CharacterBody2D" parent="."]
-position = Vector2(1153, 469)
 collision_layer = 4
 collision_mask = 10
 
@@ -39,7 +38,6 @@ collision_mask = 10
 shape = SubResource("CircleShape2D_vyver")
 
 [node name="RigidNode" type="RigidBody2D" parent="."]
-position = Vector2(1154, 470)
 collision_layer = 4
 collision_mask = 10
 physics_material_override = SubResource("PhysicsMaterial_iqjnh")

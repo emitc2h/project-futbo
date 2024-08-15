@@ -1,5 +1,5 @@
 class_name Ball
-extends Node
+extends Node2D
 
 const KICK_FORCE: float = 700.0
 const HEADBUTT_FORCE: float = 1000.0

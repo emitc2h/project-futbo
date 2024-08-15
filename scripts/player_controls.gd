@@ -1,5 +1,5 @@
-class_name PlayerControls
-extends Node
+class_name ControllerPlayer
+extends Node2D
 
 ################################################
 # A file that maps inputs to state transitions #

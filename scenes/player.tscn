@@ -1,0 +1,363 @@
+[gd_scene load_steps=10 format=3 uid="uid://ckm8c4tdyuss5"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_grrdm"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_30r65"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="4_m2fpu"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_bgu6e"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_uohkk"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_b3xkc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o1btc"]
+radius = 22.0
+height = 88.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q5gc4"]
+radius = 19.0
+height = 56.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eicxj"]
+radius = 22.0227
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_grrdm")
+
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -44)
+shape = SubResource("CapsuleShape2D_o1btc")
+
+[node name="KickZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="KickCollider" type="CollisionShape2D" parent="KickZone"]
+position = Vector2(18, -19)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_q5gc4")
+
+[node name="HeadbuttZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeadbuttZone"]
+position = Vector2(0, -69)
+rotation = 3.13224
+shape = SubResource("CircleShape2D_eicxj")
+debug_color = Color(0.801051, 0.26373, 0.812251, 0.42)
+
+[node name="DribbleMarker" type="Marker2D" parent="."]
+position = Vector2(56, -20)
+
+[node name="DribbleCast" type="RayCast2D" parent="."]
+position = Vector2(0, -19)
+target_position = Vector2(56, 0)
+collision_mask = 14
+hit_from_inside = true
+
+[node name="IdleTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.1
+
+[node name="TurnLeftTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.3
+
+[node name="TurnRightTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.3
+
+[node name="StateChart" type="Node" parent="."]
+process_thread_group = 1
+process_thread_group_order = 0
+process_thread_messages = 0
+script = ExtResource("3_30r65")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("4_m2fpu")
+
+[node name="Movement" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_bgu6e")
+initial_state = NodePath("In The Air")
+
+[node name="Running" type="Node" parent="StateChart/Root/Movement"]
+script = ExtResource("6_uohkk")
+
+[node name="To Pre Idle" type="Node" parent="StateChart/Root/Movement/Running"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Pre Idle")
+event = &"running_to_pre_idle"
+delay_in_seconds = "0.0"
+
+[node name="To Jump" type="Node" parent="StateChart/Root/Movement/Running"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Jump")
+event = &"running_to_jump"
+delay_in_seconds = "0.0"
+
+[node name="To In The Air" type="Node" parent="StateChart/Root/Movement/Running"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../In The Air")
+event = &"running_to_in_the_air"
+delay_in_seconds = "0.0"
+
+[node name="Pre Idle" type="Node" parent="StateChart/Root/Movement"]
+script = ExtResource("6_uohkk")
+
+[node name="To Running" type="Node" parent="StateChart/Root/Movement/Pre Idle"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Running")
+event = &"pre_idle_to_running"
+delay_in_seconds = "0.0"
+
+[node name="To Idle" type="Node" parent="StateChart/Root/Movement/Pre Idle"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Idle")
+event = &"pre_idle_to_idle"
+delay_in_seconds = "0.0"
+
+[node name="Idle" type="Node" parent="StateChart/Root/Movement"]
+script = ExtResource("6_uohkk")
+
+[node name="To Running" type="Node" parent="StateChart/Root/Movement/Idle"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Running")
+event = &"idle_to_running"
+delay_in_seconds = "0.0"
+
+[node name="To Jump" type="Node" parent="StateChart/Root/Movement/Idle"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Jump")
+event = &"idle_to_jump"
+delay_in_seconds = "0.0"
+
+[node name="To In The Air" type="Node" parent="StateChart/Root/Movement/Idle"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../In The Air")
+event = &"idle_to_in_the_air"
+delay_in_seconds = "0.0"
+
+[node name="Jump" type="Node" parent="StateChart/Root/Movement"]
+script = ExtResource("6_uohkk")
+
+[node name="To In The Air" type="Node" parent="StateChart/Root/Movement/Jump"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../In The Air")
+event = &"jump_to_in_the_air"
+delay_in_seconds = ""
+
+[node name="In The Air" type="Node" parent="StateChart/Root/Movement"]
+script = ExtResource("6_uohkk")
+
+[node name="To Running" type="Node" parent="StateChart/Root/Movement/In The Air"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Running")
+event = &"in_the_air_to_running"
+delay_in_seconds = "0.0"
+
+[node name="Kicking" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_bgu6e")
+initial_state = NodePath("Cannot Kick")
+
+[node name="Cannot Kick" type="Node" parent="StateChart/Root/Kicking"]
+script = ExtResource("6_uohkk")
+
+[node name="To Can Kick" type="Node" parent="StateChart/Root/Kicking/Cannot Kick"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Can Kick")
+event = &"cannot_kick_to_can_kick"
+delay_in_seconds = "0.0"
+
+[node name="To Ready To Dribble" type="Node" parent="StateChart/Root/Kicking/Cannot Kick"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Ready To Dribble")
+event = &"cannot_kick_to_ready_to_dribble"
+delay_in_seconds = "0.0"
+
+[node name="Can Kick" type="Node" parent="StateChart/Root/Kicking"]
+script = ExtResource("6_uohkk")
+
+[node name="To Cannot Kick" type="Node" parent="StateChart/Root/Kicking/Can Kick"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Cannot Kick")
+event = &"can_kick_to_cannot_kick"
+delay_in_seconds = "0.0"
+
+[node name="To Kick" type="Node" parent="StateChart/Root/Kicking/Can Kick"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Kick")
+event = &"can_kick_to_kick"
+delay_in_seconds = "0.0"
+
+[node name="To Dribble" type="Node" parent="StateChart/Root/Kicking/Can Kick"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Dribble")
+event = &"can_kick_to_dribble"
+delay_in_seconds = "0.0"
+
+[node name="Kick" type="Node" parent="StateChart/Root/Kicking"]
+script = ExtResource("6_uohkk")
+
+[node name="To Cannot Kick" type="Node" parent="StateChart/Root/Kicking/Kick"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Cannot Kick")
+event = &"kick_to_cannot_kick"
+delay_in_seconds = "0.2"
+
+[node name="Ready To Dribble" type="Node" parent="StateChart/Root/Kicking"]
+script = ExtResource("6_uohkk")
+
+[node name="To Cannot Kick" type="Node" parent="StateChart/Root/Kicking/Ready To Dribble"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Cannot Kick")
+event = &"ready_to_dribble_to_cannot_kick"
+delay_in_seconds = "0.0"
+
+[node name="To Dribble" type="Node" parent="StateChart/Root/Kicking/Ready To Dribble"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Dribble")
+event = &"ready_to_dribble_to_dribble"
+delay_in_seconds = "0.0"
+
+[node name="Dribble" type="Node" parent="StateChart/Root/Kicking"]
+script = ExtResource("6_uohkk")
+
+[node name="To Kick" type="Node" parent="StateChart/Root/Kicking/Dribble"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Kick")
+event = &"dribble_to_kick"
+delay_in_seconds = "0.0"
+
+[node name="To Can Kick" type="Node" parent="StateChart/Root/Kicking/Dribble"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Can Kick")
+event = &"dribble_to_can_kick"
+delay_in_seconds = "0.0"
+
+[node name="To Cannot Kick" type="Node" parent="StateChart/Root/Kicking/Dribble"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Cannot Kick")
+event = &"dribble_to_cannot_kick"
+delay_in_seconds = "0.0"
+
+[node name="Direction" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_bgu6e")
+initial_state = NodePath("Face Right")
+
+[node name="Face Right" type="Node" parent="StateChart/Root/Direction"]
+script = ExtResource("6_uohkk")
+
+[node name="To Face Left" type="Node" parent="StateChart/Root/Direction/Face Right"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Face Left")
+event = &"right_to_left"
+delay_in_seconds = "0.0"
+
+[node name="To Turn Left" type="Node" parent="StateChart/Root/Direction/Face Right"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Turn Left")
+event = &"face_right_to_turn_left"
+delay_in_seconds = "0.0"
+
+[node name="Face Left" type="Node" parent="StateChart/Root/Direction"]
+script = ExtResource("6_uohkk")
+
+[node name="To Face Right" type="Node" parent="StateChart/Root/Direction/Face Left"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Face Right")
+event = &"left_to_right"
+delay_in_seconds = "0.0"
+
+[node name="To Turn Right" type="Node" parent="StateChart/Root/Direction/Face Left"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Turn Right")
+event = &"face_left_to_turn_right"
+delay_in_seconds = "0.0"
+
+[node name="Turn Left" type="Node" parent="StateChart/Root/Direction"]
+script = ExtResource("6_uohkk")
+
+[node name="To Face Left" type="Node" parent="StateChart/Root/Direction/Turn Left"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Face Left")
+event = &"turn_left_to_face_left"
+delay_in_seconds = "0.0"
+
+[node name="Turn Right" type="Node" parent="StateChart/Root/Direction"]
+script = ExtResource("6_uohkk")
+
+[node name="To Face Right" type="Node" parent="StateChart/Root/Direction/Turn Right"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Face Right")
+event = &"turn_right_to_face_right"
+delay_in_seconds = "0.0"
+
+[node name="Headbutting" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_bgu6e")
+initial_state = NodePath("Cannot Headbutt")
+
+[node name="Cannot Headbutt" type="Node" parent="StateChart/Root/Headbutting"]
+script = ExtResource("6_uohkk")
+
+[node name="To Can Headbutt" type="Node" parent="StateChart/Root/Headbutting/Cannot Headbutt"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Can Headbutt")
+event = &"cannot_headbutt_to_can_headbutt"
+delay_in_seconds = "0.0"
+
+[node name="Can Headbutt" type="Node" parent="StateChart/Root/Headbutting"]
+script = ExtResource("6_uohkk")
+
+[node name="To Headbutt" type="Node" parent="StateChart/Root/Headbutting/Can Headbutt"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Headbutt")
+event = &"can_headbutt_to_headbutt"
+delay_in_seconds = "0.0"
+
+[node name="To Cannot Headbutt" type="Node" parent="StateChart/Root/Headbutting/Can Headbutt"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Cannot Headbutt")
+event = &"can_headbutt_to_cannot_headbutt"
+delay_in_seconds = "0.0"
+
+[node name="Headbutt" type="Node" parent="StateChart/Root/Headbutting"]
+script = ExtResource("6_uohkk")
+
+[node name="To Cannot Headbutt" type="Node" parent="StateChart/Root/Headbutting/Headbutt"]
+script = ExtResource("7_b3xkc")
+to = NodePath("../../Cannot Headbutt")
+event = &"headbutt_to_cannot_headbutt"
+delay_in_seconds = "0.0"
+
+[connection signal="body_entered" from="KickZone" to="." method="_on_kick_zone_body_entered"]
+[connection signal="body_exited" from="KickZone" to="." method="_on_kick_zone_body_exited"]
+[connection signal="body_entered" from="HeadbuttZone" to="." method="_on_headbutt_zone_body_entered"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
+[connection signal="timeout" from="TurnLeftTimer" to="." method="_on_turn_left_timer_timeout"]
+[connection signal="timeout" from="TurnRightTimer" to="." method="_on_turn_right_timer_timeout"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Running" to="." method="_on_running_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Running" to="." method="_on_running_state_physics_processing"]
+[connection signal="state_processing" from="StateChart/Root/Movement/Running" to="." method="_on_running_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Pre Idle" to="." method="_on_pre_idle_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Movement/Pre Idle" to="." method="_on_pre_idle_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Pre Idle" to="." method="_on_pre_idle_state_physics_processing"]
+[connection signal="state_exited" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_physics_processing"]
+[connection signal="state_processing" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Jump" to="." method="_on_jump_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Movement/In The Air" to="." method="_on_in_the_air_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Movement/In The Air" to="." method="_on_in_the_air_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/In The Air" to="." method="_on_in_the_air_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Kicking/Kick" to="." method="_on_kick_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Kicking/Kick" to="." method="_on_kick_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Kicking/Dribble" to="." method="_on_dribble_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Kicking/Dribble" to="." method="_on_dribble_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Kicking/Dribble" to="." method="_on_dribble_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Direction/Face Right" to="." method="_on_face_right_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Direction/Face Left" to="." method="_on_face_left_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Direction/Turn Left" to="." method="_on_turn_left_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Direction/Turn Left" to="." method="_on_turn_left_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Direction/Turn Left" to="." method="_on_turn_left_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Direction/Turn Right" to="." method="_on_turn_right_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Direction/Turn Right" to="." method="_on_turn_right_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Direction/Turn Right" to="." method="_on_turn_right_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Headbutting/Headbutt" to="." method="_on_headbutt_state_entered"]

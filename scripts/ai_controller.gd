@@ -1,4 +1,5 @@
-extends Node
+class_name AIPlayer
+extends Node2D
 
 @export var home_goal: Goal
 @export var away_goal: Goal
