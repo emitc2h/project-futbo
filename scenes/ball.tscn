@@ -1,0 +1,227 @@
+[gd_scene load_steps=12 format=3 uid="uid://bs2iy2u8uq4gx"]
+
+[ext_resource type="Script" path="res://scripts/ball.gd" id="1_abhvw"]
+[ext_resource type="Texture2D" uid="uid://ct55n5aqijgey" path="res://kenney_sports-pack/PNG/Elements/element (1).png" id="2_6bwba"]
+[ext_resource type="Texture2D" uid="uid://bghnoo23prkx3" path="res://kenney_sports-pack/PNG/Equipment/ball_soccer2.png" id="3_ua33n"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="4_ehfk7"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="5_wi2h8"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="6_2db2b"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="7_06nvp"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="8_w4tij"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vyver"]
+radius = 19.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iqjnh"]
+friction = 0.53
+bounce = 0.5
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sg2ho"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ua33n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Ball" type="Node"]
+script = ExtResource("1_abhvw")
+
+[node name="CharNode" type="CharacterBody2D" parent="."]
+position = Vector2(1153, 469)
+collision_layer = 4
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharNode"]
+shape = SubResource("CircleShape2D_vyver")
+
+[node name="RigidNode" type="RigidBody2D" parent="."]
+position = Vector2(1154, 470)
+collision_layer = 4
+collision_mask = 10
+physics_material_override = SubResource("PhysicsMaterial_iqjnh")
+
+[node name="DirectionRay" type="Sprite2D" parent="RigidNode"]
+texture = ExtResource("2_6bwba")
+offset = Vector2(0, -32)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RigidNode"]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_sg2ho")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidNode"]
+shape = SubResource("CircleShape2D_vyver")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("4_ehfk7")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("5_wi2h8")
+
+[node name="Direction" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_2db2b")
+initial_state = NodePath("Face Right")
+
+[node name="Face Right" type="Node" parent="StateChart/Root/Direction"]
+script = ExtResource("7_06nvp")
+
+[node name="To Face Left" type="Node" parent="StateChart/Root/Direction/Face Right"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Face Left")
+event = &"right_to_left"
+delay_in_seconds = "0.0"
+
+[node name="Face Left" type="Node" parent="StateChart/Root/Direction"]
+script = ExtResource("7_06nvp")
+
+[node name="To Face Right" type="Node" parent="StateChart/Root/Direction/Face Left"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Face Right")
+event = &"left_to_right"
+delay_in_seconds = "0.0"
+
+[node name="Player Kicking" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_2db2b")
+initial_state = NodePath("Not Kickable")
+
+[node name="Not Kickable" type="Node" parent="StateChart/Root/Player Kicking"]
+script = ExtResource("7_06nvp")
+
+[node name="To Kickable" type="Node" parent="StateChart/Root/Player Kicking/Not Kickable"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Kickable")
+event = &"not_kickable_to_kickable"
+delay_in_seconds = "0.0"
+
+[node name="To Dribble Ready" type="Node" parent="StateChart/Root/Player Kicking/Not Kickable"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Dribble Ready")
+event = &"not_kickable_to_dribble_ready"
+delay_in_seconds = "0.0"
+
+[node name="Kickable" type="Node" parent="StateChart/Root/Player Kicking"]
+script = ExtResource("7_06nvp")
+
+[node name="To Kick" type="Node" parent="StateChart/Root/Player Kicking/Kickable"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Kick")
+event = &"kickable_to_kick"
+delay_in_seconds = "0.0"
+
+[node name="To Dribbled" type="Node" parent="StateChart/Root/Player Kicking/Kickable"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Dribbled")
+event = &"kickable_to_dribbled"
+delay_in_seconds = "0.0"
+
+[node name="To Not Kickable" type="Node" parent="StateChart/Root/Player Kicking/Kickable"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Not Kickable")
+event = &"kickable_to_not_kickable"
+delay_in_seconds = "0.0"
+
+[node name="Dribble Ready" type="Node" parent="StateChart/Root/Player Kicking"]
+script = ExtResource("7_06nvp")
+
+[node name="To Not Kickable" type="Node" parent="StateChart/Root/Player Kicking/Dribble Ready"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Not Kickable")
+event = &"dribble_ready_to_not_kickable"
+delay_in_seconds = "0.0"
+
+[node name="To Dribbled" type="Node" parent="StateChart/Root/Player Kicking/Dribble Ready"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Dribbled")
+event = &"dribble_ready_to_dribbled"
+delay_in_seconds = "0.0"
+
+[node name="Dribbled" type="Node" parent="StateChart/Root/Player Kicking"]
+script = ExtResource("7_06nvp")
+
+[node name="To Kick" type="Node" parent="StateChart/Root/Player Kicking/Dribbled"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Kick")
+event = &"dribbled_to_kick"
+delay_in_seconds = "0.0"
+
+[node name="To Kickable" type="Node" parent="StateChart/Root/Player Kicking/Dribbled"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Kickable")
+event = &"dribbled_to_kickable"
+delay_in_seconds = "0.0"
+
+[node name="To Not Kickable" type="Node" parent="StateChart/Root/Player Kicking/Dribbled"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Not Kickable")
+event = &"dribbled_to_not_kickable"
+delay_in_seconds = "0.0"
+
+[node name="Kick" type="Node" parent="StateChart/Root/Player Kicking"]
+script = ExtResource("7_06nvp")
+
+[node name="Transition" type="Node" parent="StateChart/Root/Player Kicking/Kick"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Not Kickable")
+event = &"kick_to_not_kickable"
+delay_in_seconds = "0.0"
+
+[node name="Player Headbutting" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_2db2b")
+initial_state = NodePath("No Headbutt")
+
+[node name="No Headbutt" type="Node" parent="StateChart/Root/Player Headbutting"]
+script = ExtResource("7_06nvp")
+
+[node name="To Headbutt" type="Node" parent="StateChart/Root/Player Headbutting/No Headbutt"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Headbutt")
+event = &"no_headbutt_to_headbutt"
+delay_in_seconds = "0.0"
+
+[node name="Headbutt" type="Node" parent="StateChart/Root/Player Headbutting"]
+script = ExtResource("7_06nvp")
+
+[node name="To No Headbutt" type="Node" parent="StateChart/Root/Player Headbutting/Headbutt"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../No Headbutt")
+event = &"headbutt_to_no_headbutt"
+delay_in_seconds = "0.0"
+
+[node name="Direction Ray" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_2db2b")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root/Direction Ray"]
+script = ExtResource("7_06nvp")
+
+[node name="To Pointing" type="Node" parent="StateChart/Root/Direction Ray/Idle"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Pointing")
+event = &"idle_to_pointing"
+delay_in_seconds = "0.0"
+
+[node name="Pointing" type="Node" parent="StateChart/Root/Direction Ray"]
+script = ExtResource("7_06nvp")
+
+[node name="To Idle" type="Node" parent="StateChart/Root/Direction Ray/Pointing"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Idle")
+event = &"pointing_to_idle"
+delay_in_seconds = "0.0"
+
+[connection signal="state_physics_processing" from="StateChart/Root/Direction/Face Right" to="." method="_on_face_right_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/Root/Direction/Face Left" to="." method="_on_face_left_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Player Kicking/Kickable" to="." method="_on_kickable_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Player Kicking/Kickable" to="." method="_on_kickable_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Player Kicking/Dribbled" to="." method="_on_dribbled_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Player Kicking/Dribbled" to="." method="_on_dribbled_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Player Kicking/Dribbled" to="." method="_on_dribbled_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Player Kicking/Kick" to="." method="_on_kick_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Player Headbutting/Headbutt" to="." method="_on_headbutt_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Direction Ray/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Direction Ray/Idle" to="." method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Direction Ray/Pointing" to="." method="_on_pointing_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Direction Ray/Pointing" to="." method="_on_pointing_state_physics_processing"]

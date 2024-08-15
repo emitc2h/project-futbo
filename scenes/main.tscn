@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cg52j0i272cki"]
+[gd_scene load_steps=26 format=3 uid="uid://cg52j0i272cki"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_dknuf"]
 [ext_resource type="Texture2D" uid="uid://cffkj2xgw7gfe" path="res://kenney_platformer-art-extended-tileset/PNG Grass/Spritesheet/sheet.png" id="1_pnhvn"]
@@ -17,9 +17,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="14_x7d0o"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="15_lcaqf"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="16_dgjs0"]
-[ext_resource type="Script" path="res://scripts/ball.gd" id="17_0vhma"]
-[ext_resource type="Texture2D" uid="uid://ct55n5aqijgey" path="res://kenney_sports-pack/PNG/Elements/element (1).png" id="18_1ootp"]
-[ext_resource type="Texture2D" uid="uid://bghnoo23prkx3" path="res://kenney_sports-pack/PNG/Equipment/ball_soccer2.png" id="19_nxh8a"]
+[ext_resource type="PackedScene" uid="uid://bs2iy2u8uq4gx" path="res://scenes/ball.tscn" id="18_fsj6p"]
 [ext_resource type="PackedScene" uid="uid://iqoiw2siwxeq" path="res://scenes/ai_player.tscn" id="21_faijy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5in52"]
@@ -229,24 +227,6 @@ height = 56.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eicxj"]
 radius = 22.0227
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vyver"]
-radius = 19.0
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iqjnh"]
-friction = 0.53
-bounce = 0.5
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_sg2ho"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("19_nxh8a")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_dknuf")
@@ -702,190 +682,7 @@ offset_right = 642.0
 offset_bottom = 192.0
 initial_node_to_watch = NodePath("../../../AIPlayer/Player/StateChart")
 
-[node name="Ball" type="Node" parent="."]
-script = ExtResource("17_0vhma")
-
-[node name="CharNode" type="CharacterBody2D" parent="Ball"]
-position = Vector2(1153, 469)
-collision_layer = 4
-collision_mask = 10
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball/CharNode"]
-shape = SubResource("CircleShape2D_vyver")
-
-[node name="RigidNode" type="RigidBody2D" parent="Ball"]
-position = Vector2(1154, 470)
-collision_layer = 4
-collision_mask = 10
-physics_material_override = SubResource("PhysicsMaterial_iqjnh")
-
-[node name="DirectionRay" type="Sprite2D" parent="Ball/RigidNode"]
-texture = ExtResource("18_1ootp")
-offset = Vector2(0, -32)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ball/RigidNode"]
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_sg2ho")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball/RigidNode"]
-shape = SubResource("CircleShape2D_vyver")
-
-[node name="StateChart" type="Node" parent="Ball"]
-script = ExtResource("11_n5s2b")
-
-[node name="Root" type="Node" parent="Ball/StateChart"]
-script = ExtResource("12_ilyar")
-
-[node name="Direction" type="Node" parent="Ball/StateChart/Root"]
-script = ExtResource("13_6t458")
-initial_state = NodePath("Face Right")
-
-[node name="Face Right" type="Node" parent="Ball/StateChart/Root/Direction"]
-script = ExtResource("14_x7d0o")
-
-[node name="To Face Left" type="Node" parent="Ball/StateChart/Root/Direction/Face Right"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Face Left")
-event = &"right_to_left"
-delay_in_seconds = "0.0"
-
-[node name="Face Left" type="Node" parent="Ball/StateChart/Root/Direction"]
-script = ExtResource("14_x7d0o")
-
-[node name="To Face Right" type="Node" parent="Ball/StateChart/Root/Direction/Face Left"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Face Right")
-event = &"left_to_right"
-delay_in_seconds = "0.0"
-
-[node name="Player Kicking" type="Node" parent="Ball/StateChart/Root"]
-script = ExtResource("13_6t458")
-initial_state = NodePath("Not Kickable")
-
-[node name="Not Kickable" type="Node" parent="Ball/StateChart/Root/Player Kicking"]
-script = ExtResource("14_x7d0o")
-
-[node name="To Kickable" type="Node" parent="Ball/StateChart/Root/Player Kicking/Not Kickable"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Kickable")
-event = &"not_kickable_to_kickable"
-delay_in_seconds = "0.0"
-
-[node name="To Dribble Ready" type="Node" parent="Ball/StateChart/Root/Player Kicking/Not Kickable"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Dribble Ready")
-event = &"not_kickable_to_dribble_ready"
-delay_in_seconds = "0.0"
-
-[node name="Kickable" type="Node" parent="Ball/StateChart/Root/Player Kicking"]
-script = ExtResource("14_x7d0o")
-
-[node name="To Kick" type="Node" parent="Ball/StateChart/Root/Player Kicking/Kickable"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Kick")
-event = &"kickable_to_kick"
-delay_in_seconds = "0.0"
-
-[node name="To Dribbled" type="Node" parent="Ball/StateChart/Root/Player Kicking/Kickable"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Dribbled")
-event = &"kickable_to_dribbled"
-delay_in_seconds = "0.0"
-
-[node name="To Not Kickable" type="Node" parent="Ball/StateChart/Root/Player Kicking/Kickable"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Not Kickable")
-event = &"kickable_to_not_kickable"
-delay_in_seconds = "0.0"
-
-[node name="Dribble Ready" type="Node" parent="Ball/StateChart/Root/Player Kicking"]
-script = ExtResource("14_x7d0o")
-
-[node name="To Not Kickable" type="Node" parent="Ball/StateChart/Root/Player Kicking/Dribble Ready"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Not Kickable")
-event = &"dribble_ready_to_not_kickable"
-delay_in_seconds = "0.0"
-
-[node name="To Dribbled" type="Node" parent="Ball/StateChart/Root/Player Kicking/Dribble Ready"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Dribbled")
-event = &"dribble_ready_to_dribbled"
-delay_in_seconds = "0.0"
-
-[node name="Dribbled" type="Node" parent="Ball/StateChart/Root/Player Kicking"]
-script = ExtResource("14_x7d0o")
-
-[node name="To Kick" type="Node" parent="Ball/StateChart/Root/Player Kicking/Dribbled"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Kick")
-event = &"dribbled_to_kick"
-delay_in_seconds = "0.0"
-
-[node name="To Kickable" type="Node" parent="Ball/StateChart/Root/Player Kicking/Dribbled"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Kickable")
-event = &"dribbled_to_kickable"
-delay_in_seconds = "0.0"
-
-[node name="To Not Kickable" type="Node" parent="Ball/StateChart/Root/Player Kicking/Dribbled"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Not Kickable")
-event = &"dribbled_to_not_kickable"
-delay_in_seconds = "0.0"
-
-[node name="Kick" type="Node" parent="Ball/StateChart/Root/Player Kicking"]
-script = ExtResource("14_x7d0o")
-
-[node name="Transition" type="Node" parent="Ball/StateChart/Root/Player Kicking/Kick"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Not Kickable")
-event = &"kick_to_not_kickable"
-delay_in_seconds = "0.0"
-
-[node name="Player Headbutting" type="Node" parent="Ball/StateChart/Root"]
-script = ExtResource("13_6t458")
-initial_state = NodePath("No Headbutt")
-
-[node name="No Headbutt" type="Node" parent="Ball/StateChart/Root/Player Headbutting"]
-script = ExtResource("14_x7d0o")
-
-[node name="To Headbutt" type="Node" parent="Ball/StateChart/Root/Player Headbutting/No Headbutt"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Headbutt")
-event = &"no_headbutt_to_headbutt"
-delay_in_seconds = "0.0"
-
-[node name="Headbutt" type="Node" parent="Ball/StateChart/Root/Player Headbutting"]
-script = ExtResource("14_x7d0o")
-
-[node name="To No Headbutt" type="Node" parent="Ball/StateChart/Root/Player Headbutting/Headbutt"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../No Headbutt")
-event = &"headbutt_to_no_headbutt"
-delay_in_seconds = "0.0"
-
-[node name="Direction Ray" type="Node" parent="Ball/StateChart/Root"]
-script = ExtResource("13_6t458")
-initial_state = NodePath("Idle")
-
-[node name="Idle" type="Node" parent="Ball/StateChart/Root/Direction Ray"]
-script = ExtResource("14_x7d0o")
-
-[node name="To Pointing" type="Node" parent="Ball/StateChart/Root/Direction Ray/Idle"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Pointing")
-event = &"idle_to_pointing"
-delay_in_seconds = "0.0"
-
-[node name="Pointing" type="Node" parent="Ball/StateChart/Root/Direction Ray"]
-script = ExtResource("14_x7d0o")
-
-[node name="To Idle" type="Node" parent="Ball/StateChart/Root/Direction Ray/Pointing"]
-script = ExtResource("15_lcaqf")
-to = NodePath("../../Idle")
-event = &"pointing_to_idle"
-delay_in_seconds = "0.0"
+[node name="Ball" parent="." instance=ExtResource("18_fsj6p")]
 
 [node name="AIPlayer" parent="." node_paths=PackedStringArray("home_goal", "away_goal", "opponent", "ball") instance=ExtResource("21_faijy")]
 home_goal = NodePath("../World/GoalBlue")
@@ -941,16 +738,3 @@ ball = NodePath("../Ball")
 [connection signal="state_exited" from="ControllerPlayer/Player/StateChart/Root/Direction/Turn Right" to="ControllerPlayer/Player" method="_on_turn_right_state_exited"]
 [connection signal="state_physics_processing" from="ControllerPlayer/Player/StateChart/Root/Direction/Turn Right" to="ControllerPlayer/Player" method="_on_turn_right_state_physics_processing"]
 [connection signal="state_entered" from="ControllerPlayer/Player/StateChart/Root/Headbutting/Headbutt" to="ControllerPlayer/Player" method="_on_headbutt_state_entered"]
-[connection signal="state_physics_processing" from="Ball/StateChart/Root/Direction/Face Right" to="Ball" method="_on_face_right_state_physics_processing"]
-[connection signal="state_physics_processing" from="Ball/StateChart/Root/Direction/Face Left" to="Ball" method="_on_face_left_state_physics_processing"]
-[connection signal="state_entered" from="Ball/StateChart/Root/Player Kicking/Kickable" to="Ball" method="_on_kickable_state_entered"]
-[connection signal="state_exited" from="Ball/StateChart/Root/Player Kicking/Kickable" to="Ball" method="_on_kickable_state_exited"]
-[connection signal="state_entered" from="Ball/StateChart/Root/Player Kicking/Dribbled" to="Ball" method="_on_dribbled_state_entered"]
-[connection signal="state_exited" from="Ball/StateChart/Root/Player Kicking/Dribbled" to="Ball" method="_on_dribbled_state_exited"]
-[connection signal="state_physics_processing" from="Ball/StateChart/Root/Player Kicking/Dribbled" to="Ball" method="_on_dribbled_state_physics_processing"]
-[connection signal="state_entered" from="Ball/StateChart/Root/Player Kicking/Kick" to="Ball" method="_on_kick_state_entered"]
-[connection signal="state_entered" from="Ball/StateChart/Root/Player Headbutting/Headbutt" to="Ball" method="_on_headbutt_state_entered"]
-[connection signal="state_entered" from="Ball/StateChart/Root/Direction Ray/Idle" to="Ball" method="_on_idle_state_entered"]
-[connection signal="state_physics_processing" from="Ball/StateChart/Root/Direction Ray/Idle" to="Ball" method="_on_idle_state_physics_processing"]
-[connection signal="state_entered" from="Ball/StateChart/Root/Direction Ray/Pointing" to="Ball" method="_on_pointing_state_entered"]
-[connection signal="state_physics_processing" from="Ball/StateChart/Root/Direction Ray/Pointing" to="Ball" method="_on_pointing_state_physics_processing"]
