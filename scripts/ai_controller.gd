@@ -2,7 +2,6 @@ extends Node
 
 @export var home_goal: Goal
 @export var away_goal: Goal
-@export var opponent: Player
 @export var ball: Ball
 
 @export var seek_stop_distance: float
