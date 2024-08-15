@@ -699,10 +699,12 @@ zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
 
 [node name="StateChartDebugger" parent="PlayerControls/Player" instance=ExtResource("16_dgjs0")]
+visible = false
 offset_left = -635.0
 offset_top = -521.0
 offset_right = -217.0
 offset_bottom = 190.0
+enabled = false
 initial_node_to_watch = NodePath("../../../AIController/Adversary/StateChart")
 
 [node name="StateChartDebugger2" parent="PlayerControls/Player" instance=ExtResource("16_dgjs0")]
@@ -905,9 +907,11 @@ home_goal = NodePath("../World/GoalBlue")
 away_goal = NodePath("../World/GoalRed")
 player = NodePath("../PlayerControls/Player")
 ball = NodePath("../Ball")
+seek_stop_distance = 80.0
+goal_attempt_distance = 400.0
 
 [node name="Adversary" type="CharacterBody2D" parent="AIController"]
-position = Vector2(1088, 484)
+position = Vector2(1805, 484)
 collision_mask = 2
 script = ExtResource("9_yqe1p")
 
@@ -1225,30 +1229,54 @@ delay_in_seconds = "0.0"
 [node name="PatrolTimer" type="Timer" parent="AIController"]
 process_callback = 0
 
-[node name="StateChart" type="Node" parent="."]
+[node name="StateChart" type="Node" parent="AIController"]
 script = ExtResource("11_n5s2b")
 
-[node name="Behavior" type="Node" parent="StateChart"]
+[node name="Behavior" type="Node" parent="AIController/StateChart"]
 script = ExtResource("13_6t458")
-initial_state = NodePath("Defend")
+initial_state = NodePath("Seek")
 
-[node name="Defend" type="Node" parent="StateChart/Behavior"]
+[node name="Defend" type="Node" parent="AIController/StateChart/Behavior"]
 script = ExtResource("14_x7d0o")
 
-[node name="To Seek" type="Node" parent="StateChart/Behavior/Defend"]
+[node name="To Seek" type="Node" parent="AIController/StateChart/Behavior/Defend"]
 script = ExtResource("15_lcaqf")
 to = NodePath("../../Seek")
 event = &"defend_to_seek"
 delay_in_seconds = "0.0"
 
-[node name="Seek" type="Node" parent="StateChart/Behavior"]
+[node name="Seek" type="Node" parent="AIController/StateChart/Behavior"]
 script = ExtResource("14_x7d0o")
 
-[node name="To Defend" type="Node" parent="StateChart/Behavior/Seek"]
+[node name="To Defend" type="Node" parent="AIController/StateChart/Behavior/Seek"]
 script = ExtResource("15_lcaqf")
 to = NodePath("../../Defend")
 event = &"seek_to_defend"
 delay_in_seconds = "0.0"
+
+[node name="To Attack" type="Node" parent="AIController/StateChart/Behavior/Seek"]
+script = ExtResource("15_lcaqf")
+to = NodePath("../../Attack")
+event = &"seek_to_attack"
+delay_in_seconds = "0.0"
+
+[node name="Attack" type="Node" parent="AIController/StateChart/Behavior"]
+script = ExtResource("14_x7d0o")
+
+[node name="To Seek" type="Node" parent="AIController/StateChart/Behavior/Attack"]
+script = ExtResource("15_lcaqf")
+to = NodePath("../../Seek")
+event = &"attack_to_seek"
+delay_in_seconds = "0.0"
+
+[node name="To Defend" type="Node" parent="AIController/StateChart/Behavior/Attack"]
+script = ExtResource("15_lcaqf")
+to = NodePath("../../Defend")
+event = &"attack_to_defend"
+delay_in_seconds = "0.0"
+
+[node name="Celebrate" type="Node" parent="AIController/StateChart/Behavior"]
+script = ExtResource("14_x7d0o")
 
 [connection signal="scored" from="World/GoalRed" to="." method="_on_goal_red_scored"]
 [connection signal="body_entered" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_entered"]
@@ -1345,4 +1373,7 @@ delay_in_seconds = "0.0"
 [connection signal="state_physics_processing" from="AIController/Adversary/StateChart/Root/Direction/Turn Right" to="AIController/Adversary" method="_on_turn_right_state_physics_processing"]
 [connection signal="state_entered" from="AIController/Adversary/StateChart/Root/Headbutting/Headbutt" to="AIController/Adversary" method="_on_headbutt_state_entered"]
 [connection signal="timeout" from="AIController/PatrolTimer" to="AIController" method="_on_patrol_timer_timeout"]
-[connection signal="state_entered" from="StateChart/Behavior/Defend" to="AIController" method="_on_defend_state_entered"]
+[connection signal="state_entered" from="AIController/StateChart/Behavior/Defend" to="AIController" method="_on_defend_state_entered"]
+[connection signal="state_physics_processing" from="AIController/StateChart/Behavior/Seek" to="AIController" method="_on_seek_state_physics_processing"]
+[connection signal="state_entered" from="AIController/StateChart/Behavior/Attack" to="AIController" method="_on_attack_state_entered"]
+[connection signal="state_physics_processing" from="AIController/StateChart/Behavior/Attack" to="AIController" method="_on_attack_state_physics_processing"]
