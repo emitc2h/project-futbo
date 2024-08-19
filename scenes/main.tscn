@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cg52j0i272cki"]
+[gd_scene load_steps=18 format=3 uid="uid://cg52j0i272cki"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_dknuf"]
 [ext_resource type="Texture2D" uid="uid://cffkj2xgw7gfe" path="res://kenney_platformer-art-extended-tileset/PNG Grass/Spritesheet/sheet.png" id="1_pnhvn"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dk5lv81bnl5vp" path="res://kenney_sports-pack/goalfront-blue.png" id="8_y5hhm"]
 [ext_resource type="PackedScene" uid="uid://6wc3n1pyfhco" path="res://scenes/controller_player.tscn" id="9_5cfub"]
 [ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="10_61452"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="16_dgjs0"]
 [ext_resource type="PackedScene" uid="uid://bs2iy2u8uq4gx" path="res://scenes/ball.tscn" id="18_fsj6p"]
 [ext_resource type="SpriteFrames" uid="uid://b5y2k0oe4jdi6" path="res://resources/adversary_spriteframes.tres" id="20_st3cb"]
 [ext_resource type="PackedScene" uid="uid://iqoiw2siwxeq" path="res://scenes/ai_player.tscn" id="21_faijy"]
@@ -330,12 +331,20 @@ ball = NodePath("../Ball")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ControllerPlayer/Player" index="0"]
 position = Vector2(0, -55)
 sprite_frames = ExtResource("10_61452")
-animation = &"idle"
+animation = &"celebrate"
+frame_progress = 0.571169
 
 [node name="Camera2D" type="Camera2D" parent="ControllerPlayer/Player" index="10"]
-position = Vector2(0, -100)
+position = Vector2(0, -180)
 zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
+
+[node name="StateChartDebugger" parent="ControllerPlayer/Player" index="11" instance=ExtResource("16_dgjs0")]
+offset_left = 206.0
+offset_top = -522.0
+offset_right = 625.0
+offset_bottom = 155.0
+initial_node_to_watch = NodePath("../../../AIPlayer/StateChart")
 
 [node name="Ball" parent="." instance=ExtResource("18_fsj6p")]
 position = Vector2(1000, 468)
@@ -349,7 +358,7 @@ ball = NodePath("../Ball")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AIPlayer/Player" index="0"]
 position = Vector2(0, -55)
 sprite_frames = ExtResource("20_st3cb")
-animation = &"walk"
+animation = &"celebrate"
 
 [connection signal="scored" from="World/GoalRed" to="." method="_on_goal_red_scored"]
 [connection signal="body_entered" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_entered"]

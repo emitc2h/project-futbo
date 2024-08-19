@@ -179,6 +179,8 @@ func _on_dribble_state_physics_processing(delta: float) -> void:
 	velocity_x.emit(self.velocity.x)
 	ball.player_dribble_marker_position = $DribbleMarker.global_position
 	$DribbleCast.target_position = ball.get_driver_node().global_position - (self.global_position + $DribbleCast.position)
+	$Line2D.points[0] = Vector2.ZERO
+	$Line2D.points[1] = $DribbleCast.target_position
 	if not dribblecast_hits_ball():
 		$StateChart.send_event("dribble_to_cannot_kick")
 		lost_ball.emit()
@@ -189,6 +191,8 @@ func _on_dribble_state_exited() -> void:
 	ball = null
 	player_velocity.emit(self.velocity)
 	ended_dribbling.emit()
+	$Line2D.points[0] = Vector2.ZERO
+	$Line2D.points[1] = Vector2(55, 0)
 
 
 func _on_face_left_state_entered() -> void:

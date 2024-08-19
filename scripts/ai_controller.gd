@@ -16,6 +16,11 @@ var is_dribbling: bool = false
 var ball_is_kickable: bool = false
 
 
+func _ready() -> void:
+	## In order to know when the player actually scores
+	away_goal.scored.connect(scored)
+
+
 func _on_defend_state_entered() -> void:
 	$PatrolTimer.start()
 	$StateChart.send_event("idle_to_move_left")
@@ -52,7 +57,10 @@ func dribble_ball_sync() -> void:
 
 
 func _on_attack_state_entered() -> void:
-	$StateChart.send_event("no_ball_to_dribble")
+	if ball_is_kickable:
+		$StateChart.send_event("no_ball_to_dribble")
+	else:
+		$StateChart.send_event("attack_to_seek")
 
 
 func _on_attack_state_physics_processing(delta: float) -> void:
@@ -108,7 +116,9 @@ func _on_player_velocity_x(vx: float) -> void:
 
 
 func _on_player_lost_ball() -> void:
+	print("lost ball")
 	ball_state.send_event("dribbled_to_not_kickable")
+	$StateChart.send_event("attack_to_seek")
 
 
 func _on_idle_state_entered() -> void:
@@ -146,3 +156,13 @@ func _on_kick_state_entered() -> void:
 	player_state.send_event("dribble_to_kick")
 	ball_state.send_event("dribbled_to_kick")
 	$StateChart.send_event("kick_to_no_ball")
+	
+	
+func scored() -> void:
+	$StateChart.send_event("attack_to_celebrate")
+
+
+func _on_celebrate_state_physics_processing(delta: float) -> void:
+	if player.is_on_floor():
+		player.velocity.y = -200.0
+		player.animated_sprite.play("celebrate")

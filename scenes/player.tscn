@@ -328,6 +328,12 @@ to = NodePath("../../Cannot Headbutt")
 event = &"headbutt_to_cannot_headbutt"
 delay_in_seconds = "0.0"
 
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2(0, -18)
+points = PackedVector2Array(0, 0, 55, 0)
+width = 3.0
+default_color = Color(1, 0, 0, 1)
+
 [connection signal="body_entered" from="KickZone" to="." method="_on_kick_zone_body_entered"]
 [connection signal="body_exited" from="KickZone" to="." method="_on_kick_zone_body_exited"]
 [connection signal="body_entered" from="HeadbuttZone" to="." method="_on_headbutt_zone_body_entered"]
