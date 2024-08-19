@@ -86,10 +86,11 @@ func _physics_process(delta: float) -> void:
 		ball_state.send_event("dribbled_to_kick")
 		
 	if Input.is_action_just_pressed("dribble"):
-		player_state.send_event("can_kick_to_dribble")
-		player_state.send_event("cannot_kick_to_ready_to_dribble")
-		ball_state.send_event("kickable_to_dribbled")
-		ball_state.send_event("not_kickable_to_dribble_ready")
+		if not ball.is_being_dribbled:
+			player_state.send_event("can_kick_to_dribble")
+			player_state.send_event("cannot_kick_to_ready_to_dribble")
+			ball_state.send_event("kickable_to_dribbled")
+			ball_state.send_event("not_kickable_to_dribble_ready")
 		
 	if Input.is_action_just_released("dribble"):
 		player_state.send_event("dribble_to_can_kick")
@@ -108,13 +109,16 @@ func _on_player_velocity_x(vx: float) -> void:
 
 
 func _on_player_entered_kickzone() -> void:
-	player_state.send_event("ready_to_dribble_to_dribble")
-	ball_state.send_event("dribble_ready_to_dribbled")
+	if not ball.is_being_dribbled:
+		player_state.send_event("ready_to_dribble_to_dribble")
+		ball_state.send_event("dribble_ready_to_dribbled")
 	ball_state.send_event("not_kickable_to_kickable")
+	ball.get_animated_sprite_2d().modulate = Color.GREEN
 
 
 func _on_player_left_kickzone() -> void:
 	ball_state.send_event("kickable_to_not_kickable")
+	ball.get_animated_sprite_2d().modulate = Color.WHITE
 
 
 func _on_player_did_headbutt() -> void:

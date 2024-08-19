@@ -340,11 +340,18 @@ zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
 
 [node name="StateChartDebugger" parent="ControllerPlayer/Player" index="11" instance=ExtResource("16_dgjs0")]
-offset_left = 206.0
+offset_left = 226.0
 offset_top = -522.0
 offset_right = 625.0
 offset_bottom = 155.0
 initial_node_to_watch = NodePath("../../../AIPlayer/StateChart")
+
+[node name="StateChartDebugger2" parent="ControllerPlayer/Player" index="13" instance=ExtResource("16_dgjs0")]
+offset_left = -618.0
+offset_top = -514.0
+offset_right = -239.0
+offset_bottom = 156.0
+initial_node_to_watch = NodePath("../../../AIPlayer/Player/StateChart")
 
 [node name="Ball" parent="." instance=ExtResource("18_fsj6p")]
 position = Vector2(1000, 468)

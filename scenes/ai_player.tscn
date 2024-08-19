@@ -12,6 +12,7 @@
 script = ExtResource("1_o0qyq")
 seek_stop_distance = 50.0
 goal_attempt_distance = 400.0
+reset_distance = 800.0
 
 [node name="Player" parent="." instance=ExtResource("2_f55ff")]
 
@@ -129,6 +130,12 @@ to = NodePath("../../Seek")
 event = &"defend_to_seek"
 delay_in_seconds = "0.0"
 
+[node name="To Reset" type="Node" parent="StateChart/Root/Behavior/Defend"]
+script = ExtResource("8_152tu")
+to = NodePath("../../Reset")
+event = &"defend_to_reset"
+delay_in_seconds = "0.0"
+
 [node name="Seek" type="Node" parent="StateChart/Root/Behavior"]
 script = ExtResource("7_46emj")
 
@@ -142,6 +149,12 @@ delay_in_seconds = "0.0"
 script = ExtResource("8_152tu")
 to = NodePath("../../Attack")
 event = &"seek_to_attack"
+delay_in_seconds = "0.0"
+
+[node name="To Reset" type="Node" parent="StateChart/Root/Behavior/Seek"]
+script = ExtResource("8_152tu")
+to = NodePath("../../Reset")
+event = &"seek_to_reset"
 delay_in_seconds = "0.0"
 
 [node name="Attack" type="Node" parent="StateChart/Root/Behavior"]
@@ -165,8 +178,29 @@ to = NodePath("../../Celebrate")
 event = &"attack_to_celebrate"
 delay_in_seconds = "0.0"
 
+[node name="To Reset" type="Node" parent="StateChart/Root/Behavior/Attack"]
+script = ExtResource("8_152tu")
+to = NodePath("../../Reset")
+event = &"attack_to_reset"
+delay_in_seconds = "0.0"
+
 [node name="Celebrate" type="Node" parent="StateChart/Root/Behavior"]
 script = ExtResource("7_46emj")
+
+[node name="To Reset" type="Node" parent="StateChart/Root/Behavior/Celebrate"]
+script = ExtResource("8_152tu")
+to = NodePath("../../Reset")
+event = &"celebrate_to_reset"
+delay_in_seconds = "3.0"
+
+[node name="Reset" type="Node" parent="StateChart/Root/Behavior"]
+script = ExtResource("7_46emj")
+
+[node name="To Seek" type="Node" parent="StateChart/Root/Behavior/Reset"]
+script = ExtResource("8_152tu")
+to = NodePath("../../Seek")
+event = &"reset_to_seek"
+delay_in_seconds = "1.0"
 
 [connection signal="did_headbutt" from="Player" to="." method="_on_player_did_headbutt"]
 [connection signal="did_jump" from="Player" to="." method="_on_player_did_jump"]
@@ -189,3 +223,4 @@ script = ExtResource("7_46emj")
 [connection signal="state_entered" from="StateChart/Root/Behavior/Attack" to="." method="_on_attack_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Behavior/Attack" to="." method="_on_attack_state_physics_processing"]
 [connection signal="state_physics_processing" from="StateChart/Root/Behavior/Celebrate" to="." method="_on_celebrate_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/Root/Behavior/Reset" to="." method="_on_reset_state_physics_processing"]

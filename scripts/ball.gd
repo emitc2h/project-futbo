@@ -12,6 +12,7 @@ const BALL_SNAP_VELOCITY: float = 600.0
 var player_dribble_marker_position: Vector2
 
 var dribble_time: float
+var is_being_dribbled: bool
 
 var player_direction_faced: float
 var player_velocity_x: float
@@ -27,6 +28,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 enum Mode {RIGID_MODE, CHAR_MODE}
 
 var mode: Mode = Mode.RIGID_MODE
+
 
 func sync_transform_from_rigid_to_char() -> void:
 	$CharNode.transform = $RigidNode.transform
@@ -132,16 +134,9 @@ func _on_face_left_state_physics_processing(delta: float) -> void:
 		clamped_aim_angle = raw_angle
 
 
-func _on_kickable_state_entered() -> void:
-	get_animated_sprite_2d().modulate = Color.GREEN
-
-
-func _on_kickable_state_exited() -> void:
-	get_animated_sprite_2d().modulate = Color.WHITE
-	
-	
 func _on_dribbled_state_entered() -> void:
 	self.set_mode(Mode.CHAR_MODE)
+	is_being_dribbled = true
 	dribble_time = 0.0
 
 
@@ -171,6 +166,7 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 
 func _on_dribbled_state_exited() -> void:
 	$CharNode.velocity = player_velocity
+	is_being_dribbled = false
 	self.set_mode(Mode.RIGID_MODE)
 
 

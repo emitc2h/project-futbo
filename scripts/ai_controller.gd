@@ -1,4 +1,4 @@
-class_name AIPlayer
+class_name AIController
 extends Node2D
 
 @export var home_goal: Goal
@@ -7,6 +7,7 @@ extends Node2D
 
 @export var seek_stop_distance: float
 @export var goal_attempt_distance: float
+@export var reset_distance: float
 
 @onready var ball_state: StateChart = ball.get_node("StateChart")
 @onready var player: Player = $Player
@@ -21,6 +22,14 @@ func _ready() -> void:
 	away_goal.scored.connect(scored)
 
 
+func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("debug"):
+		$StateChart.send_event("attack_to_reset")
+		$StateChart.send_event("seek_to_reset")
+		$StateChart.send_event("celebrate_to_reset")
+		$StateChart.send_event("defend_to_reset")
+
+
 func _on_defend_state_entered() -> void:
 	$PatrolTimer.start()
 	$StateChart.send_event("idle_to_move_left")
@@ -32,19 +41,22 @@ func _on_patrol_timer_timeout() -> void:
 	elif sign(player.direction) == 1.0:
 		$StateChart.send_event("move_right_to_move_left")
 	$PatrolTimer.start()
+	
+	
+func seek_target(target_global_position: Vector2) -> void:
+	var direction_to_target: float = sign(target_global_position.x - player.global_position.x)
+	if direction_to_target == 1.0:
+		$StateChart.send_event("idle_to_move_right")
+		$StateChart.send_event("move_left_to_move_right")
+	elif direction_to_target == -1.0:
+		$StateChart.send_event("idle_to_move_left")
+		$StateChart.send_event("move_right_to_move_left")
 
 
 func _on_seek_state_physics_processing(delta: float) -> void:
-	# Find out where the ball is
-	var distance_to_ball: float = ball.get_driver_node().global_position.x - player.global_position.x
+
 	if not ball_is_kickable:
-		var direction_to_ball: float = sign(distance_to_ball)
-		if direction_to_ball == 1.0:
-			$StateChart.send_event("idle_to_move_right")
-			$StateChart.send_event("move_left_to_move_right")
-		elif direction_to_ball == -1.0:
-			$StateChart.send_event("idle_to_move_left")
-			$StateChart.send_event("move_right_to_move_left")
+		seek_target(ball.get_driver_node().global_position)
 	else:
 		$StateChart.send_event("move_left_to_idle")
 		$StateChart.send_event("move_right_to_idle")
@@ -57,7 +69,7 @@ func dribble_ball_sync() -> void:
 
 
 func _on_attack_state_entered() -> void:
-	if ball_is_kickable:
+	if ball_is_kickable and not ball.is_being_dribbled:
 		$StateChart.send_event("no_ball_to_dribble")
 	else:
 		$StateChart.send_event("attack_to_seek")
@@ -66,13 +78,7 @@ func _on_attack_state_entered() -> void:
 func _on_attack_state_physics_processing(delta: float) -> void:
 	var distance_to_goal: float = away_goal.global_position.x - player.global_position.x
 	if abs(distance_to_goal) > goal_attempt_distance:
-		var direction_to_goal: float = sign(distance_to_goal)
-		if direction_to_goal == 1.0:
-			$StateChart.send_event("idle_to_move_right")
-			$StateChart.send_event("move_left_to_move_right")
-		elif direction_to_goal == -1.0:
-			$StateChart.send_event("idle_to_move_left")
-			$StateChart.send_event("move_right_to_move_left")
+		seek_target(away_goal.global_position)
 	else:
 		$StateChart.send_event("dribble_to_kick")
 		$StateChart.send_event("move_left_to_idle")
@@ -166,3 +172,14 @@ func _on_celebrate_state_physics_processing(delta: float) -> void:
 	if player.is_on_floor():
 		player.velocity.y = -200.0
 		player.animated_sprite.play("celebrate")
+	$StateChart.send_event("celebrate_to_reset")
+
+
+func _on_reset_state_physics_processing(delta: float) -> void:
+	var distance_to_goal: float = home_goal.global_position.x - player.global_position.x
+	if abs(distance_to_goal) > reset_distance:
+		seek_target(home_goal.global_position)
+	else:
+		$StateChart.send_event("move_left_to_idle")
+		$StateChart.send_event("move_right_to_idle")
+		$StateChart.send_event("reset_to_seek")
