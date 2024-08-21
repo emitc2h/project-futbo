@@ -20,6 +20,7 @@ var ball_is_kickable: bool = false
 func _ready() -> void:
 	## In order to know when the player actually scores
 	away_goal.scored.connect(scored)
+	process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func _physics_process(delta: float) -> void:
@@ -103,14 +104,10 @@ func _on_player_ended_dribbling() -> void:
 
 func _on_player_entered_kickzone() -> void:
 	ball_is_kickable = true
-	player_state.send_event("ready_to_dribble_to_dribble")
-	ball_state.send_event("dribble_ready_to_dribbled")
-	ball_state.send_event("not_kickable_to_kickable")
 
 
 func _on_player_left_kickzone() -> void:
 	ball_is_kickable = false
-	ball_state.send_event("kickable_to_not_kickable")
 
 
 func _on_player_player_velocity(v: Vector2) -> void:
@@ -123,7 +120,7 @@ func _on_player_velocity_x(vx: float) -> void:
 
 func _on_player_lost_ball() -> void:
 	print("lost ball")
-	ball_state.send_event("dribbled_to_not_kickable")
+	ball_state.send_event("dribbled_to_inert")
 	$StateChart.send_event("attack_to_seek")
 
 
@@ -148,7 +145,8 @@ func _on_move_right_state_entered() -> void:
 
 func _on_dribble_state_entered() -> void:
 	player_state.send_event("can_kick_to_dribble")
-	ball_state.send_event("kickable_to_dribbled")
+	if ball_is_kickable and not ball.is_being_dribbled:
+		ball_state.send_event("inert_to_dribbled")
 	dribble_ball_sync()
 
 

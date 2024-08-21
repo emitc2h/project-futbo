@@ -10,15 +10,12 @@ const DRIBBLE_VELOCITY_OFFSET: float = 0.63662
 const BALL_SNAP_VELOCITY: float = 600.0
 
 var player_dribble_marker_position: Vector2
-
 var dribble_time: float
 var is_being_dribbled: bool
-
 var player_direction_faced: float
 var player_velocity_x: float
 var player_velocity: Vector2
 
-var aim: Vector2
 var clamped_aim_angle: float
 var clamped_aim_vector: Vector2
 
@@ -106,32 +103,9 @@ func get_driver_node() -> Node2D:
 		return null
 
 
-func clamp_aim_angle(angle: float) -> float:
-	if angle > 0.0:
-		return PI/2
-	else:
-		return -PI/2
-
-
 func jump(vy: float) -> void:
 	if mode == Mode.CHAR_MODE:
 		$CharNode.velocity.y = vy
-
-
-func _on_face_right_state_physics_processing(delta: float) -> void:
-	var raw_angle: float = aim.angle()
-	if abs(raw_angle) > PI/2:
-		clamped_aim_angle = clamp_aim_angle(raw_angle)
-	else:
-		clamped_aim_angle = raw_angle
-
-
-func _on_face_left_state_physics_processing(delta: float) -> void:
-	var raw_angle: float = aim.angle()
-	if abs(raw_angle) < PI/2:
-		clamped_aim_angle = clamp_aim_angle(raw_angle)
-	else:
-		clamped_aim_angle = raw_angle
 
 
 func _on_dribbled_state_entered() -> void:
@@ -173,7 +147,7 @@ func _on_dribbled_state_exited() -> void:
 func _on_kick_state_entered() -> void:
 	var force: Vector2 = KICK_FORCE * clamped_aim_vector.normalized()
 	$RigidNode.apply_central_impulse(force)
-	$StateChart.send_event("kick_to_not_kickable")
+	$StateChart.send_event("kick_to_inert")
 
 
 func _on_headbutt_state_entered() -> void:
@@ -197,3 +171,15 @@ func _on_pointing_state_entered() -> void:
 func _on_pointing_state_physics_processing(delta: float) -> void:
 	clamped_aim_vector = Vector2.from_angle(clamped_aim_angle)
 	get_direction_ray().global_rotation = clamped_aim_angle + PI/2
+
+
+func _on_controller_player_clamped_aim_angle(angle: float) -> void:
+	clamped_aim_angle = angle
+
+
+func _on_controller_player_send_ball_state(transition: String) -> void:
+	$StateChart.send_event(transition)
+
+
+func _on_controller_player_player_direction_faced(direction: float) -> void:
+	player_direction_faced = direction

@@ -344,14 +344,14 @@ offset_left = 226.0
 offset_top = -522.0
 offset_right = 625.0
 offset_bottom = 155.0
-initial_node_to_watch = NodePath("../../../AIPlayer/StateChart")
+initial_node_to_watch = NodePath("../StateChart")
 
 [node name="StateChartDebugger2" parent="ControllerPlayer/Player" index="13" instance=ExtResource("16_dgjs0")]
 offset_left = -618.0
 offset_top = -514.0
 offset_right = -239.0
 offset_bottom = 156.0
-initial_node_to_watch = NodePath("../../../AIPlayer/Player/StateChart")
+initial_node_to_watch = NodePath("../../../Ball/StateChart")
 
 [node name="Ball" parent="." instance=ExtResource("18_fsj6p")]
 position = Vector2(1000, 468)
@@ -373,8 +373,12 @@ animation = &"celebrate"
 [connection signal="scored" from="World/GoalBlue" to="." method="_on_goal_blue_scored"]
 [connection signal="body_entered" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_exited"]
+[connection signal="clamped_aim_angle" from="ControllerPlayer" to="Ball" method="_on_controller_player_clamped_aim_angle"]
+[connection signal="player_direction_faced" from="ControllerPlayer" to="Ball" method="_on_controller_player_player_direction_faced"]
+[connection signal="send_ball_state" from="ControllerPlayer" to="Ball" method="_on_controller_player_send_ball_state"]
 
 [editable path="ControllerPlayer"]
 [editable path="ControllerPlayer/Player"]
+[editable path="Ball"]
 [editable path="AIPlayer"]
 [editable path="AIPlayer/Player"]

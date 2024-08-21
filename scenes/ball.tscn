@@ -59,124 +59,9 @@ script = ExtResource("4_ehfk7")
 [node name="Root" type="Node" parent="StateChart"]
 script = ExtResource("5_wi2h8")
 
-[node name="Direction" type="Node" parent="StateChart/Root"]
-script = ExtResource("6_2db2b")
-initial_state = NodePath("Face Right")
-
-[node name="Face Right" type="Node" parent="StateChart/Root/Direction"]
-script = ExtResource("7_06nvp")
-
-[node name="To Face Left" type="Node" parent="StateChart/Root/Direction/Face Right"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Face Left")
-event = &"right_to_left"
-delay_in_seconds = "0.0"
-
-[node name="Face Left" type="Node" parent="StateChart/Root/Direction"]
-script = ExtResource("7_06nvp")
-
-[node name="To Face Right" type="Node" parent="StateChart/Root/Direction/Face Left"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Face Right")
-event = &"left_to_right"
-delay_in_seconds = "0.0"
-
 [node name="Player Interactions" type="Node" parent="StateChart/Root"]
 script = ExtResource("6_2db2b")
-initial_state = NodePath("Not Kickable")
-
-[node name="Not Kickable" type="Node" parent="StateChart/Root/Player Interactions"]
-script = ExtResource("7_06nvp")
-
-[node name="To Kickable" type="Node" parent="StateChart/Root/Player Interactions/Not Kickable"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Kickable")
-event = &"not_kickable_to_kickable"
-delay_in_seconds = "0.0"
-
-[node name="To Dribble Ready" type="Node" parent="StateChart/Root/Player Interactions/Not Kickable"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Dribble Ready")
-event = &"not_kickable_to_dribble_ready"
-delay_in_seconds = "0.0"
-
-[node name="Kickable" type="Node" parent="StateChart/Root/Player Interactions"]
-script = ExtResource("7_06nvp")
-
-[node name="To Kick" type="Node" parent="StateChart/Root/Player Interactions/Kickable"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Kick")
-event = &"kickable_to_kick"
-delay_in_seconds = "0.0"
-
-[node name="To Dribbled" type="Node" parent="StateChart/Root/Player Interactions/Kickable"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Dribbled")
-event = &"kickable_to_dribbled"
-delay_in_seconds = "0.0"
-
-[node name="To Not Kickable" type="Node" parent="StateChart/Root/Player Interactions/Kickable"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Not Kickable")
-event = &"kickable_to_not_kickable"
-delay_in_seconds = "0.0"
-
-[node name="Dribble Ready" type="Node" parent="StateChart/Root/Player Interactions"]
-script = ExtResource("7_06nvp")
-
-[node name="To Not Kickable" type="Node" parent="StateChart/Root/Player Interactions/Dribble Ready"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Not Kickable")
-event = &"dribble_ready_to_not_kickable"
-delay_in_seconds = "0.0"
-
-[node name="To Dribbled" type="Node" parent="StateChart/Root/Player Interactions/Dribble Ready"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Dribbled")
-event = &"dribble_ready_to_dribbled"
-delay_in_seconds = "0.0"
-
-[node name="Dribbled" type="Node" parent="StateChart/Root/Player Interactions"]
-script = ExtResource("7_06nvp")
-
-[node name="To Kick" type="Node" parent="StateChart/Root/Player Interactions/Dribbled"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Kick")
-event = &"dribbled_to_kick"
-delay_in_seconds = "0.0"
-
-[node name="To Kickable" type="Node" parent="StateChart/Root/Player Interactions/Dribbled"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Kickable")
-event = &"dribbled_to_kickable"
-delay_in_seconds = "0.0"
-
-[node name="To Not Kickable" type="Node" parent="StateChart/Root/Player Interactions/Dribbled"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Not Kickable")
-event = &"dribbled_to_not_kickable"
-delay_in_seconds = "0.0"
-
-[node name="To Inert" type="Node" parent="StateChart/Root/Player Interactions/Dribbled"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Inert")
-event = &"dribbled_to_inert"
-delay_in_seconds = "0.0"
-
-[node name="Kick" type="Node" parent="StateChart/Root/Player Interactions"]
-script = ExtResource("7_06nvp")
-
-[node name="To Not Kickable" type="Node" parent="StateChart/Root/Player Interactions/Kick"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Not Kickable")
-event = &"kick_to_not_kickable"
-delay_in_seconds = "0.0"
-
-[node name="To Inert" type="Node" parent="StateChart/Root/Player Interactions/Kick"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Inert")
-event = &"kick_to_inert"
-delay_in_seconds = "0.0"
+initial_state = NodePath("Inert")
 
 [node name="Inert" type="Node" parent="StateChart/Root/Player Interactions"]
 script = ExtResource("7_06nvp")
@@ -192,6 +77,30 @@ script = ExtResource("8_w4tij")
 to = NodePath("../../Kick")
 event = &"inert_to_kick"
 delay_in_seconds = "0.0"
+
+[node name="Dribbled" type="Node" parent="StateChart/Root/Player Interactions"]
+script = ExtResource("7_06nvp")
+
+[node name="To Kick" type="Node" parent="StateChart/Root/Player Interactions/Dribbled"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Kick")
+event = &"dribbled_to_kick"
+delay_in_seconds = "0.0"
+
+[node name="To Inert" type="Node" parent="StateChart/Root/Player Interactions/Dribbled"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Inert")
+event = &"dribbled_to_inert"
+delay_in_seconds = "0.0"
+
+[node name="Kick" type="Node" parent="StateChart/Root/Player Interactions"]
+script = ExtResource("7_06nvp")
+
+[node name="To Inert" type="Node" parent="StateChart/Root/Player Interactions/Kick"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Inert")
+event = &"kick_to_inert"
+delay_in_seconds = "0.1"
 
 [node name="Player Headbutting" type="Node" parent="StateChart/Root"]
 script = ExtResource("6_2db2b")
@@ -237,8 +146,6 @@ to = NodePath("../../Idle")
 event = &"pointing_to_idle"
 delay_in_seconds = "0.0"
 
-[connection signal="state_physics_processing" from="StateChart/Root/Direction/Face Right" to="." method="_on_face_right_state_physics_processing"]
-[connection signal="state_physics_processing" from="StateChart/Root/Direction/Face Left" to="." method="_on_face_left_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Player Interactions/Dribbled" to="." method="_on_dribbled_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Player Interactions/Dribbled" to="." method="_on_dribbled_state_exited"]
 [connection signal="state_physics_processing" from="StateChart/Root/Player Interactions/Dribbled" to="." method="_on_dribbled_state_physics_processing"]
