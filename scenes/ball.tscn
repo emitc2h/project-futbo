@@ -81,16 +81,16 @@ delay_in_seconds = "0.0"
 [node name="Dribbled" type="Node" parent="StateChart/Root/Player Interactions"]
 script = ExtResource("7_06nvp")
 
-[node name="To Kick" type="Node" parent="StateChart/Root/Player Interactions/Dribbled"]
-script = ExtResource("8_w4tij")
-to = NodePath("../../Kick")
-event = &"dribbled_to_kick"
-delay_in_seconds = "0.0"
-
 [node name="To Inert" type="Node" parent="StateChart/Root/Player Interactions/Dribbled"]
 script = ExtResource("8_w4tij")
 to = NodePath("../../Inert")
 event = &"dribbled_to_inert"
+delay_in_seconds = "0.0"
+
+[node name="To Kick" type="Node" parent="StateChart/Root/Player Interactions/Dribbled"]
+script = ExtResource("8_w4tij")
+to = NodePath("../../Kick")
+event = &"dribbled_to_kick"
 delay_in_seconds = "0.0"
 
 [node name="Kick" type="Node" parent="StateChart/Root/Player Interactions"]

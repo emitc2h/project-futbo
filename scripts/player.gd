@@ -23,8 +23,8 @@ var from_idle: bool = false
 var ball: Ball
 
 signal velocity_x(vx: float)
-signal entered_kickzone()
-signal left_kickzone()
+signal entered_kickzone(ball_ref: Ball)
+signal left_kickzone(ball_ref: Ball)
 signal did_headbutt()
 signal did_jump(vy: float)
 signal started_dribbling()
@@ -40,14 +40,14 @@ func _physics_process(delta: float) -> void:
 func _on_kick_zone_body_entered(body: Node2D) -> void:
 	$StateChart.send_event("cannot_kick_to_can_kick")
 	ball = body.get_parent()
-	entered_kickzone.emit()
+	entered_kickzone.emit(ball)
 
 
-func _on_kick_zone_body_exited(_body: Node2D) -> void:
+func _on_kick_zone_body_exited(body: Node2D) -> void:
 	$StateChart.send_event("can_kick_to_cannot_kick")
 	if not is_dribbling:
 		ball = null
-	left_kickzone.emit()
+	left_kickzone.emit(body.get_parent())
 	
 	
 func _on_headbutt_zone_body_entered(_body: Node2D) -> void:
@@ -119,7 +119,6 @@ func _on_idle_state_exited() -> void:
 
 
 func _on_kick_state_entered() -> void:
-	player_velocity.emit(self.velocity)
 	$StateChart.send_event("kick_to_cannot_kick")
 	animated_sprite.play("kick")
 	is_playing_animation = true

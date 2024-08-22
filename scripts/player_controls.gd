@@ -6,10 +6,10 @@ extends Node2D
 ################################################
 
 @export var player: Player
-@export var ball: Ball
-
 @onready var player_state: StateChart = player.get_node("StateChart")
-@onready var ball_state: StateChart = ball.get_node("StateChart")
+
+var ball: Ball
+var ball_state: StateChart
 
 var ball_is_kickable: bool = false
 var is_ready_to_dribble: bool = false
@@ -23,6 +23,8 @@ var direction_faced: DirectionFaced
 signal clamped_aim_angle(angle: float)
 signal send_ball_state(transition: String)
 signal player_direction_faced(direction: float)
+
+signal kick(kick_vector: Vector2)
 
 
 func clamp_aim_angle(angle: float) -> float:
@@ -47,13 +49,18 @@ func aim_angle_face_left(aim_vector: Vector2) -> float:
 	else:
 		return raw_angle
 
-func emit_clamped_aim_angle(aim_vector: Vector2, direction: DirectionFaced) -> void:
+
+func compute_clamped_aim_angle(aim_vector: Vector2, direction: DirectionFaced) -> float:
 	if direction == DirectionFaced.LEFT:
-		clamped_aim_angle.emit(aim_angle_face_left(aim_vector))
-	elif direction == DirectionFaced.RIGHT:
-		clamped_aim_angle.emit(aim_angle_face_right(aim_vector))
+		if aim_vector.is_zero_approx():
+			return Vector2.LEFT.angle()
+		else:
+			return aim_angle_face_left(aim_vector)
 	else:
-		pass
+		if aim_vector.is_zero_approx():
+			return Vector2.RIGHT.angle()
+		else:
+			return aim_angle_face_right(aim_vector)
 
 
 func _physics_process(delta: float) -> void:
@@ -117,49 +124,56 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		player_state.send_event("idle_to_jump")
 		player_state.send_event("running_to_jump")
-		
+	
+	var aim_angle: float = compute_clamped_aim_angle(aim, direction_faced)
+	clamped_aim_angle.emit(aim_angle)
+	
 	if Input.is_action_just_pressed("kick"):
-		player_state.send_event("can_kick_to_kick")
-		# This doesn't work for some reason
-		if ball_is_kickable:
-			ball_state.send_event("inert_to_kick")
-		if is_dribbling:
-			ball_state.send_event("dribbled_to_kick")
-			player_state.send_event("dribble_to_kick")
+		if ball_is_kickable or is_dribbling:
+			kick.emit(Vector2.from_angle(aim_angle))
+			if is_dribbling:
+				player_state.send_event("dribble_to_kick")
+			else:
+				player_state.send_event("can_kick_to_kick")
+
 		
 	if Input.is_action_just_pressed("dribble"):
 		is_ready_to_dribble = true
 		player_state.send_event("cannot_kick_to_ready_to_dribble")
-		if not ball.is_being_dribbled and ball_is_kickable:
+		if ball and ball.mode == ball.Mode.RIGID_MODE and ball_is_kickable:
 			player_state.send_event("can_kick_to_dribble")
 			ball_state.send_event("inert_to_dribbled")
 		
 	if Input.is_action_just_released("dribble"):
 		is_ready_to_dribble = false
 		# You can cause other players to drop the ball just by releasing the button
-		ball_state.send_event("dribbled_to_inert")
+		if ball_state:
+			ball_state.send_event("dribbled_to_inert")
 		player_state.send_event("dribble_to_can_kick")
 		player_state.send_event("ready_to_dribble_to_cannot_kick")
-		
-	emit_clamped_aim_angle(aim, direction_faced)
 
 
 func _on_player_velocity_x(vx: float) -> void:
 	ball.player_velocity_x = vx
 
 
-func _on_player_entered_kickzone() -> void:
+func _on_player_entered_kickzone(ball_ref: Ball) -> void:
+	ball = ball_ref
+	ball_state = ball.get_node("StateChart")
+	player_state.send_event("ready_to_dribble_to_dribble")
+	if is_ready_to_dribble:
+		ball_state.send_event("inert_to_dribbled")
+			
 	ball_is_kickable = true
-	if not ball.is_being_dribbled:
-		player_state.send_event("ready_to_dribble_to_dribble")
-		if is_ready_to_dribble:
-			ball_state.send_event("inert_to_dribbled")
 	ball.get_animated_sprite_2d().modulate = Color.GREEN
 
 
-func _on_player_left_kickzone() -> void:
+func _on_player_left_kickzone(ball_ref: Ball) -> void:
 	ball_is_kickable = false
-	ball.get_animated_sprite_2d().modulate = Color.WHITE
+	ball_ref.get_animated_sprite_2d().modulate = Color.WHITE
+	if not is_dribbling:
+		ball = null
+		ball_state = null
 
 
 func _on_player_did_headbutt() -> void:
@@ -176,6 +190,8 @@ func _on_player_started_dribbling() -> void:
 
 func _on_player_ended_dribbling() -> void:
 	is_dribbling = false
+	ball = null
+	ball_state = null
 
 
 func _on_player_player_velocity(v: Vector2) -> void:
@@ -184,3 +200,5 @@ func _on_player_player_velocity(v: Vector2) -> void:
 
 func _on_player_lost_ball() -> void:
 	ball_state.send_event("dribbled_to_inert")
+	ball = null
+	ball_state = null

@@ -38,13 +38,17 @@ func sync_transform_from_char_to_rigid() -> void:
 
 
 func move_nodes_to_char() -> void:
-	$RigidNode/DirectionRay.reparent($CharNode)
-	$RigidNode/AnimatedSprite2D.reparent($CharNode)
+	if $RigidNode.has_node("DirectionRay"):
+		$RigidNode/DirectionRay.reparent($CharNode)
+	if $RigidNode.has_node("AnimatedSprite2D"):
+		$RigidNode/AnimatedSprite2D.reparent($CharNode)
 
 
 func move_nodes_to_rigid() -> void:
-	$CharNode/DirectionRay.reparent($RigidNode)
-	$CharNode/AnimatedSprite2D.reparent($RigidNode)
+	if $CharNode.has_node("DirectionRay"):
+		$CharNode/DirectionRay.reparent($RigidNode)
+	if $CharNode.has_node("AnimatedSprite2D"):
+		$CharNode/AnimatedSprite2D.reparent($RigidNode)
 
 
 func set_rigid_to_collide() -> void:
@@ -144,12 +148,6 @@ func _on_dribbled_state_exited() -> void:
 	self.set_mode(Mode.RIGID_MODE)
 
 
-func _on_kick_state_entered() -> void:
-	var force: Vector2 = KICK_FORCE * clamped_aim_vector.normalized()
-	$RigidNode.apply_central_impulse(force)
-	$StateChart.send_event("kick_to_inert")
-
-
 func _on_headbutt_state_entered() -> void:
 	$RigidNode.apply_central_impulse(HEADBUTT_FORCE * Vector2.UP + Vector2(player_velocity_x, 0.0))
 	$StateChart.send_event("headbutt_to_no_headbutt")
@@ -183,3 +181,16 @@ func _on_controller_player_send_ball_state(transition: String) -> void:
 
 func _on_controller_player_player_direction_faced(direction: float) -> void:
 	player_direction_faced = direction
+
+
+func _on_kick(kick_vector: Vector2) -> void:
+	$StateChart.send_event("dribbled_to_kick")
+	$StateChart.send_event("inert_to_kick")
+	var force: Vector2 = KICK_FORCE * kick_vector.normalized()
+	print(force)
+	$RigidNode.apply_central_impulse(force)
+
+
+func _on_kick_state_entered() -> void:
+	set_mode(Mode.RIGID_MODE)
+	$StateChart.send_event("kick_to_inert")

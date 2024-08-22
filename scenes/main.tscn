@@ -324,9 +324,8 @@ physics_material_override = SubResource("PhysicsMaterial_nrksw")
 position = Vector2(3, -3)
 polygon = PackedVector2Array(0, 0, -14, 0, -61, -155, -75, -167, -151, -167, -151, -182, -70, -182, -47, -160)
 
-[node name="ControllerPlayer" parent="." node_paths=PackedStringArray("ball") instance=ExtResource("9_5cfub")]
+[node name="ControllerPlayer" parent="." instance=ExtResource("9_5cfub")]
 position = Vector2(512, 486)
-ball = NodePath("../Ball")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ControllerPlayer/Player" index="0"]
 position = Vector2(0, -55)
@@ -374,6 +373,7 @@ animation = &"celebrate"
 [connection signal="body_entered" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_exited"]
 [connection signal="clamped_aim_angle" from="ControllerPlayer" to="Ball" method="_on_controller_player_clamped_aim_angle"]
+[connection signal="kick" from="ControllerPlayer" to="Ball" method="_on_kick"]
 [connection signal="player_direction_faced" from="ControllerPlayer" to="Ball" method="_on_controller_player_player_direction_faced"]
 [connection signal="send_ball_state" from="ControllerPlayer" to="Ball" method="_on_controller_player_send_ball_state"]
 
