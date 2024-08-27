@@ -9,6 +9,8 @@ const RUN_FORWARD_VELOCITY = 500.0
 const RUN_BACKWARD_VELOCITY = 300.00
 const RUN_DECELERATION = 40.0
 const JUMP_VELOCITY = -300.0
+const HEADBUTT_FORCE: float = 1000.0
+const KICK_FORCE: float = 700.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -25,11 +27,10 @@ var ball: Ball
 signal velocity_x(vx: float)
 signal entered_kickzone(ball_ref: Ball)
 signal left_kickzone(ball_ref: Ball)
-signal did_headbutt()
+signal headbutt(force: Vector2)
 signal did_jump(vy: float)
 signal started_dribbling()
 signal ended_dribbling()
-signal player_velocity(v: Vector2)
 signal lost_ball()
 
 
@@ -188,7 +189,6 @@ func _on_dribble_state_physics_processing(delta: float) -> void:
 func _on_dribble_state_exited() -> void:
 	is_dribbling = false
 	ball = null
-	player_velocity.emit(self.velocity)
 	ended_dribbling.emit()
 	$Line2D.points[0] = Vector2.ZERO
 	$Line2D.points[1] = Vector2(55, 0)
@@ -255,8 +255,7 @@ func _on_turn_right_state_exited() -> void:
 
 
 func _on_headbutt_state_entered() -> void:
-	velocity_x.emit(self.velocity.x)
-	did_headbutt.emit()
+	headbutt.emit(Vector2.UP * HEADBUTT_FORCE + velocity)
 	$StateChart.send_event("headbutt_to_cannot_headbutt")
 	
 	

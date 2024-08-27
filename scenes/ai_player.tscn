@@ -202,13 +202,12 @@ to = NodePath("../../Seek")
 event = &"reset_to_seek"
 delay_in_seconds = "1.0"
 
-[connection signal="did_headbutt" from="Player" to="." method="_on_player_did_headbutt"]
 [connection signal="did_jump" from="Player" to="." method="_on_player_did_jump"]
 [connection signal="ended_dribbling" from="Player" to="." method="_on_player_ended_dribbling"]
 [connection signal="entered_kickzone" from="Player" to="." method="_on_player_entered_kickzone"]
+[connection signal="headbutt" from="Player" to="." method="_on_player_headbutt"]
 [connection signal="left_kickzone" from="Player" to="." method="_on_player_left_kickzone"]
 [connection signal="lost_ball" from="Player" to="." method="_on_player_lost_ball"]
-[connection signal="player_velocity" from="Player" to="." method="_on_player_player_velocity"]
 [connection signal="started_dribbling" from="Player" to="." method="_on_player_started_dribbling"]
 [connection signal="velocity_x" from="Player" to="." method="_on_player_velocity_x"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]

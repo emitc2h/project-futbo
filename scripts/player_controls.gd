@@ -25,6 +25,7 @@ signal send_ball_state(transition: String)
 signal player_direction_faced(direction: float)
 
 signal kick(kick_vector: Vector2)
+signal headbutt(headbutt_vector: Vector2)
 
 
 func clamp_aim_angle(angle: float) -> float:
@@ -129,12 +130,16 @@ func _physics_process(delta: float) -> void:
 	clamped_aim_angle.emit(aim_angle)
 	
 	if Input.is_action_just_pressed("kick"):
-		if ball_is_kickable or is_dribbling:
-			kick.emit(Vector2.from_angle(aim_angle))
+		if ball and (ball_is_kickable or is_dribbling):
+			## The kick signal triggers the ball leaving the dribbled state,
+			## so it must receive the player velocity before that
+			ball.velocity = player.velocity
+			kick.emit(Vector2.from_angle(aim_angle).normalized() * player.KICK_FORCE)
 			if is_dribbling:
 				player_state.send_event("dribble_to_kick")
 			else:
 				player_state.send_event("can_kick_to_kick")
+			disown_ball(ball)
 
 		
 	if Input.is_action_just_pressed("dribble"):
@@ -146,42 +151,50 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_released("dribble"):
 		is_ready_to_dribble = false
-		# You can cause other players to drop the ball just by releasing the button
-		if ball_state:
+		# You can only transition the ball to inert if
+		#    1. the ball is owned by a player (is_owned)
+		#    2. that player is this one since it has a reference to the ball
+		if ball and ball.is_owned and ball_state:
+			# Make sure that when the ball is released from dribbling, it just
+			# inherits the velocity of the player who's been dribbling it
+			# Also this needs to be done before leaving the ball leaves the
+			# dribbling state cause that's when the velocity is applied
+			ball.velocity = player.velocity
 			ball_state.send_event("dribbled_to_inert")
+		
 		player_state.send_event("dribble_to_can_kick")
 		player_state.send_event("ready_to_dribble_to_cannot_kick")
 
 
+# Used when dribbling to match the player movement
 func _on_player_velocity_x(vx: float) -> void:
 	ball.player_velocity_x = vx
 
 
 func _on_player_entered_kickzone(ball_ref: Ball) -> void:
-	ball = ball_ref
-	ball_state = ball.get_node("StateChart")
-	player_state.send_event("ready_to_dribble_to_dribble")
-	if is_ready_to_dribble:
+	print("player own ball enter kickzone")
+	own_ball(ball_ref)
+	if is_ready_to_dribble and ball_state:
+		player_state.send_event("ready_to_dribble_to_dribble")
 		ball_state.send_event("inert_to_dribbled")
-			
+		
+	if ball:
+		ball.get_animated_sprite_2d().modulate = Color.GREEN
+		
 	ball_is_kickable = true
-	ball.get_animated_sprite_2d().modulate = Color.GREEN
 
 
 func _on_player_left_kickzone(ball_ref: Ball) -> void:
 	ball_is_kickable = false
 	ball_ref.get_animated_sprite_2d().modulate = Color.WHITE
 	if not is_dribbling:
-		ball = null
-		ball_state = null
-
-
-func _on_player_did_headbutt() -> void:
-	ball_state.send_event("no_headbutt_to_headbutt")
+		print("player disown ball left kickzone")
+		disown_ball(ball_ref)
 
 
 func _on_player_did_jump(vy: float) -> void:
-	ball.jump(vy)
+	if ball:
+		ball.jump(vy)
 
 
 func _on_player_started_dribbling() -> void:
@@ -190,15 +203,31 @@ func _on_player_started_dribbling() -> void:
 
 func _on_player_ended_dribbling() -> void:
 	is_dribbling = false
-	ball = null
-	ball_state = null
-
-
-func _on_player_player_velocity(v: Vector2) -> void:
-	ball.player_velocity = v
+	print("player disown ball ended dribbling")
+	disown_ball(ball)
 
 
 func _on_player_lost_ball() -> void:
-	ball_state.send_event("dribbled_to_inert")
-	ball = null
-	ball_state = null
+	if ball_state:
+		ball_state.send_event("dribbled_to_inert")
+	print("player disown ball lost ball")
+	disown_ball(ball)
+
+
+func own_ball(ball_ref: Ball) -> void:
+	if not ball_ref.is_owned:
+		print("player succesfully own ball")
+		ball = ball_ref
+		ball_state = ball.get_node("StateChart")
+	else:
+		print("player fails to own ball")
+
+
+func disown_ball(ball_ref: Ball) -> void:
+	if ball and ball_state:
+		ball = null
+		ball_state = null
+
+
+func _on_player_headbutt(force: Vector2) -> void:
+	headbutt.emit(force)

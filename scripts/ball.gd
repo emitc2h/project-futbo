@@ -1,8 +1,6 @@
 class_name Ball
 extends Node2D
 
-const KICK_FORCE: float = 700.0
-const HEADBUTT_FORCE: float = 1000.0
 const DRIBBLE_ROTATION_SPEED: float = 4.0
 const DRIBBLE_AMPLITUDE: float = 150.0
 const DRIBBLE_FREQUENCY: float = 8.0
@@ -11,11 +9,11 @@ const BALL_SNAP_VELOCITY: float = 600.0
 
 var player_dribble_marker_position: Vector2
 var dribble_time: float
-var is_being_dribbled: bool
+# Tracks if a controller possesses a reference to the ball.
+var is_owned: bool = false
 var player_direction_faced: float
 var player_velocity_x: float
-var player_velocity: Vector2
-
+var velocity: Vector2
 var clamped_aim_angle: float
 var clamped_aim_vector: Vector2
 
@@ -62,7 +60,7 @@ func set_char_to_collide() -> void:
 
 
 func set_mode(input_mode: Mode) -> void:
-	if input_mode == Mode.RIGID_MODE:
+	if input_mode == Mode.RIGID_MODE and mode == Mode.CHAR_MODE:
 		sync_transform_from_char_to_rigid()
 		move_nodes_to_rigid()
 		set_rigid_to_collide()
@@ -70,7 +68,7 @@ func set_mode(input_mode: Mode) -> void:
 		$RigidNode.set_freeze_enabled(false)
 	
 	
-	elif input_mode == Mode.CHAR_MODE:
+	elif input_mode == Mode.CHAR_MODE and mode == Mode.RIGID_MODE:
 		set_char_to_collide()
 		$RigidNode.set_freeze_enabled(true)
 		$RigidNode.sleeping = true
@@ -112,9 +110,13 @@ func jump(vy: float) -> void:
 		$CharNode.velocity.y = vy
 
 
+func _physics_process(delta: float) -> void:
+	print("ball is owned: ", is_owned)
+
+
 func _on_dribbled_state_entered() -> void:
+	is_owned = true
 	self.set_mode(Mode.CHAR_MODE)
-	is_being_dribbled = true
 	dribble_time = 0.0
 
 
@@ -143,14 +145,9 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 
 
 func _on_dribbled_state_exited() -> void:
-	$CharNode.velocity = player_velocity
-	is_being_dribbled = false
+	is_owned = false
+	$CharNode.velocity = velocity
 	self.set_mode(Mode.RIGID_MODE)
-
-
-func _on_headbutt_state_entered() -> void:
-	$RigidNode.apply_central_impulse(HEADBUTT_FORCE * Vector2.UP + Vector2(player_velocity_x, 0.0))
-	$StateChart.send_event("headbutt_to_no_headbutt")
 
 
 func _on_idle_state_entered() -> void:
@@ -186,11 +183,18 @@ func _on_controller_player_player_direction_faced(direction: float) -> void:
 func _on_kick(kick_vector: Vector2) -> void:
 	$StateChart.send_event("dribbled_to_kick")
 	$StateChart.send_event("inert_to_kick")
-	var force: Vector2 = KICK_FORCE * kick_vector.normalized()
-	print(force)
-	$RigidNode.apply_central_impulse(force)
+	$RigidNode.apply_central_impulse(kick_vector)
 
 
 func _on_kick_state_entered() -> void:
+	is_owned = true
 	set_mode(Mode.RIGID_MODE)
 	$StateChart.send_event("kick_to_inert")
+
+
+func _on_headbutt(headbutt_vector: Vector2) -> void:
+	$RigidNode.apply_central_impulse(headbutt_vector)
+
+
+func _on_kick_state_exited() -> void:
+	is_owned = false
