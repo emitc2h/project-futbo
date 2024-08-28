@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwd4xnrevg2m"]
+
+[ext_resource type="Script" path="res://scripts/controlled_player.gd" id="1_lynec"]
+[ext_resource type="PackedScene" uid="uid://bus0201utlp35" path="res://scenes/player_2.tscn" id="2_jyeir"]
+[ext_resource type="Script" path="res://scripts/player_basic_movement_controller.gd" id="2_t4bcf"]
+
+[node name="ControlledPlayer" type="Node2D"]
+script = ExtResource("1_lynec")
+
+[node name="PlayerBasicMovementController" type="Node2D" parent="." node_paths=PackedStringArray("player_basic_movement")]
+script = ExtResource("2_t4bcf")
+player_basic_movement = NodePath("../Player2/PlayerBasicMovement")
+
+[node name="Player2" parent="." instance=ExtResource("2_jyeir")]
+collision_mask = 2
+
+[editable path="Player2"]

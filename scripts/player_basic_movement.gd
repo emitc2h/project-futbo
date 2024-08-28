@@ -3,12 +3,12 @@ extends Node
 
 # Nodes controlled by this node
 @export var body: CharacterBody2D
-@export var sprite: AnimatedSprite2D
 
 # Internal references
 @onready var state: StateChart = $State
-@onready var idle_buffer_timer: Timer = $IdleBufferTimer
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
+@onready var turn_right_timer: Timer = $TurnRightTimer
+@onready var turn_left_timer: Timer = $TurnLeftTimer
 
 # Movement configurable properties
 @export var run_forward_velocity: float
@@ -34,13 +34,22 @@ var direction_faced: DirectionFaced
 # Track the time left in turning state for skidding
 var turning_time_left: float = 0.0
 
+# State tracking
+var in_run_state: bool = false
+var in_idle_state: bool = false
+var in_run_buffer_state: bool = false
+
 
 #=======================================================
 # MOVEMENT STATES
 #=======================================================
 
-# 1. idle state
+# idle state
 #----------------------------------------
+func _on_idle_state_entered() -> void:
+	in_idle_state = true
+
+
 func _on_idle_state_physics_processing(delta: float) -> void:
 	# Instead of stopping abruptly, decelerate
 	body.velocity.x = move_toward(body.velocity.x, 0, run_deceleration)
@@ -48,15 +57,17 @@ func _on_idle_state_physics_processing(delta: float) -> void:
 	# If the floor falls from under the player
 	if not body.is_on_floor():
 		state.send_event("idle to in the air")
+	
+	# Needs to be called in every movement state
+	body.move_and_slide()
 
 
-# 2. run state
+func _on_idle_state_exited() -> void:
+	in_idle_state = false
+
+
+# run state
 #----------------------------------------
-func run(direction: float) -> void:
-	left_right_axis = direction
-	state.send_event("idle to run")
-	state.send_event("idle buffer to run")
-
 func is_running_forward() -> bool:
 	# If the player faces in the opposite direction that they're running,
 	# those quantities will cancel out
@@ -71,58 +82,85 @@ func run_process() -> void:
 	
 	# Apply the velocity to the body
 	body.velocity.x = left_right_axis * max_velocity
-	
-	# when turning, slow down and accelerate in the opposite direction
-	# turning_time_left should go from 2.0 to 0.0 over the course of the timer
-	if turning_time_left > 0.0:
-		body.velocity.x *= (1.0 - turning_time_left)
+
+
+func _on_run_state_entered() -> void:
+	in_run_state = true
+
 
 func _on_run_state_physics_processing(delta: float) -> void:
 	run_process()
 	
 	# Running off a ledge transitions to in the air state
 	if not body.is_on_floor():
-		state.send_event("running to in the air")
-
-
-# 3. idle buffer state
-#----------------------------------------
-func _on_idle_buffer_state_entered() -> void:
-	idle_buffer_timer.start()
-
-
-func _on_idle_buffer_state_physics_processing(delta: float) -> void:
-	run_process()
+		state.send_event("run to in the air")
 	
-	# Get back to running state if input is received
-	if abs(left_right_axis) > 0.0:
-		state.send_event("idle buffer to run")
+	# Releasing the control while on the floor goes to idle
+	if left_right_axis == 0.0:
+		state.send_event("run to idle")
+	
+	# Needs to be called in every movement state
+	body.move_and_slide()
+
+
+func _on_run_state_exited() -> void:
+	in_run_state = false
+
+
+# skid state
+#----------------------------------------
+func skid_process() -> void:
+		# when turning, slow down and accelerate in the opposite direction
+	# turning_time_left should go from 2.0 to 0.0 over the course of the timer
+	if turning_time_left > 0.0:
+		body.velocity.x *= (1.0 - turning_time_left)
+
+
+func _on_skid_state_physics_processing(delta: float) -> void:
+	run_process()
+	skid_process()
+	
+	# Skidding off a ledge transitions to in the air state
+	if not body.is_on_floor():
+		state.send_event("skid to in the air")
+	
+	# Needs to be called in every movement state
+	body.move_and_slide()
+
+
+
+# run buffer state
+# Offers a brief time window when starting to run for the player to
+# change direction without skidding
+#----------------------------------------
+func _on_run_buffer_state_entered() -> void:
+	in_run_buffer_state = true
+	state.send_event("run buffer to run")
+
+
+func _on_run_buffer_state_physics_processing(delta: float) -> void:
+	run_process()
 	
 	# Running off a ledge transitions to in the air state
 	if not body.is_on_floor():
-		state.send_event("idle buffer to in the air")
+		state.send_event("run buffer to in the air")
+	
+	# Releasing the control while on the floor goes to idle
+	if left_right_axis == 0.0:
+		state.send_event("run buffer to idle")
+	
+	# Needs to be called in every movement state
+	body.move_and_slide()
 
 
-func _on_idle_buffer_timeout() -> void:
-	state.send_event("idle buffer to idle")
+func _on_run_buffer_state_exited() -> void:
+	in_run_buffer_state = false
 
 
-func _on_idle_buffer_state_exited() -> void:
-	idle_buffer_timer.stop()
-
-
-# 4. jump state
+# jump state
 #----------------------------------------
-func jump() -> void:
-	if body.is_on_floor():
-		state.send_event("idle to jump")
-		state.send_event("run to jump")
-		state.send_event("idle buffer to jump")
-	else:
-		state.send_event("in the air to jump buffer")
-
-
 func _on_jump_state_entered() -> void:
+	run_process()
 	body.velocity.y = jump_momentum
 	state.send_event("jump to in the air")
 
@@ -131,18 +169,24 @@ func _on_jump_state_physics_processing(delta: float) -> void:
 	# Extend the run process into the first 50 milliseconds of the jump so
 	# it's easier to jump sideways when idle
 	run_process()
+	
+	# Needs to be called in every movement state
+	body.move_and_slide()
 
 
-# 5. in the air state
+# in the air state
 #----------------------------------------
 func _on_in_the_air_state_physics_processing(delta: float) -> void:
 	if body.is_on_floor():
 		state.send_event("in the air to run")
 	else:
 		body.velocity.y += gravity * delta
+	
+	# Needs to be called in every movement state
+	body.move_and_slide()
 
 
-# 6. jump buffer state
+# jump buffer state
 #----------------------------------------
 func _on_jump_buffer_state_entered() -> void:
 	jump_buffer_timer.start()
@@ -153,6 +197,9 @@ func _on_jump_buffer_state_physics_processing(delta: float) -> void:
 		state.send_event("jump buffer to jump")
 	else:
 		body.velocity.y += gravity * delta
+	
+	# Needs to be called in every movement state
+	body.move_and_slide()
 
 
 func _on_jump_buffer_timer_timeout() -> void:
@@ -161,3 +208,107 @@ func _on_jump_buffer_timer_timeout() -> void:
 
 func _on_jump_buffer_state_exited() -> void:
 	jump_buffer_timer.stop()
+
+
+#=======================================================
+# DIRECTION STATES
+#=======================================================
+
+# 1. face right state
+#----------------------------------------
+func _on_face_right_state_entered() -> void:
+	direction_faced = DirectionFaced.RIGHT
+
+
+func _on_face_right_state_physics_processing(delta: float) -> void:
+	if left_right_axis < 0.0:
+		if in_run_buffer_state:
+			state.send_event("face right to face left")
+		else:
+			state.send_event("run to skid")
+			state.send_event("face right to turn left")
+
+
+# 2. face left state
+#----------------------------------------
+func _on_face_left_state_entered() -> void:
+	direction_faced = DirectionFaced.LEFT
+
+
+func _on_face_left_state_physics_processing(delta: float) -> void:
+	if left_right_axis > 0.0:
+		if in_run_buffer_state:
+			state.send_event("face left to face right")
+		else:
+			state.send_event("run to skid")
+			state.send_event("face left to turn right")
+
+
+# 3. turn right state
+#----------------------------------------
+func _on_turn_right_state_entered() -> void:
+	turn_right_timer.start()
+	turning_time_left = 2.0
+	direction_faced = DirectionFaced.RIGHT
+
+
+func _on_turn_right_state_physics_processing(delta: float) -> void:
+	turning_time_left = 2 * turn_right_timer.time_left / turn_right_timer.wait_time
+
+
+func _on_turn_right_timer_timeout() -> void:
+	state.send_event("turn right to face right")
+	state.send_event("skid to run")
+
+
+func _on_turn_right_state_exited() -> void:
+	turn_right_timer.stop()
+	turning_time_left = 0.0
+
+
+# 4. turn left state
+#----------------------------------------
+func _on_turn_left_state_entered() -> void:
+	turn_left_timer.start()
+	turning_time_left = 2.0
+	direction_faced = DirectionFaced.LEFT
+
+
+func _on_turn_left_state_physics_processing(delta: float) -> void:
+	turning_time_left = 2 * turn_left_timer.time_left / turn_left_timer.wait_time
+
+
+func _on_turn_left_timer_timeout() -> void:
+	state.send_event("turn left to face left")
+	state.send_event("skid to run")
+
+
+func _on_turn_left_state_exited() -> void:
+	turn_left_timer.stop()
+	turning_time_left = 0.0
+
+
+#=======================================================
+# CONTROL FUNCTIONS
+#=======================================================
+
+# is meant to be called every frame (joystick non-zero input)
+func run(direction: float) -> void:
+	left_right_axis = direction
+	if abs(left_right_axis) > 0.01:
+		# This logic isn't functionally necessary, but it cleans up the state
+		# history
+		if in_idle_state:
+			state.send_event("idle to run buffer")
+
+
+# is meant to be call on button press
+func jump() -> void:
+	if body.is_on_floor():
+		state.send_event("idle to jump")
+		state.send_event("run to jump")
+		state.send_event("skid to jump")
+		state.send_event("run buffer to jump")
+	else:
+		state.send_event("in the air to jump buffer")
+

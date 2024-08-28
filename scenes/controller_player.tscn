@@ -9,8 +9,6 @@ player = NodePath("Player")
 
 [node name="Player" parent="." instance=ExtResource("2_7hasc")]
 
-[node name="Node" type="Node" parent="."]
-
 [connection signal="did_jump" from="Player" to="." method="_on_player_did_jump"]
 [connection signal="ended_dribbling" from="Player" to="." method="_on_player_ended_dribbling"]
 [connection signal="entered_kickzone" from="Player" to="." method="_on_player_entered_kickzone"]

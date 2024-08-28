@@ -15,21 +15,15 @@ height = 88.0
 [node name="Player2" type="CharacterBody2D"]
 script = ExtResource("1_pj68o")
 
-[node name="PlayerCollider" type="CollisionShape2D" parent="."]
-position = Vector2(0, -44)
-shape = SubResource("CapsuleShape2D_ovy16")
-
-[node name="PlayerBasicMovement" type="Node" parent="."]
+[node name="PlayerBasicMovement" type="Node" parent="." node_paths=PackedStringArray("body")]
 script = ExtResource("2_t8don")
-
-[node name="IdleBufferTimer" type="Timer" parent="PlayerBasicMovement"]
-process_callback = 0
-wait_time = 0.1
+body = NodePath("..")
+run_forward_velocity = 500.0
+run_backward_velocity = 500.0
+run_deceleration = 40.0
+jump_momentum = -300.0
 
 [node name="JumpBufferTimer" type="Timer" parent="PlayerBasicMovement"]
-wait_time = 0.05
-
-[node name="CoyoteTimer" type="Timer" parent="PlayerBasicMovement"]
 wait_time = 0.05
 
 [node name="TurnLeftTimer" type="Timer" parent="PlayerBasicMovement"]
@@ -48,15 +42,15 @@ script = ExtResource("3_1regx")
 
 [node name="Movement" type="Node" parent="PlayerBasicMovement/State/Root"]
 script = ExtResource("4_jycft")
-initial_state = NodePath("idle")
+initial_state = NodePath("in the air")
 
 [node name="idle" type="Node" parent="PlayerBasicMovement/State/Root/Movement"]
 script = ExtResource("5_esjxv")
 
-[node name="to run" type="Node" parent="PlayerBasicMovement/State/Root/Movement/idle"]
+[node name="to run buffer" type="Node" parent="PlayerBasicMovement/State/Root/Movement/idle"]
 script = ExtResource("6_je2vt")
-to = NodePath("../../run")
-event = &"idle to run"
+to = NodePath("../../run buffer")
+event = &"idle to run buffer"
 delay_in_seconds = "0.0"
 
 [node name="to jump" type="Node" parent="PlayerBasicMovement/State/Root/Movement/idle"]
@@ -80,43 +74,64 @@ to = NodePath("../../jump")
 event = &"run to jump"
 delay_in_seconds = "0.0"
 
-[node name="to idle buffer" type="Node" parent="PlayerBasicMovement/State/Root/Movement/run"]
-script = ExtResource("6_je2vt")
-to = NodePath("../../idle buffer")
-event = &"run to idle buffer"
-delay_in_seconds = "0.0"
-
 [node name="to in the air" type="Node" parent="PlayerBasicMovement/State/Root/Movement/run"]
 script = ExtResource("6_je2vt")
 to = NodePath("../../in the air")
 event = &"run to in the air"
 delay_in_seconds = "0.0"
 
-[node name="idle buffer" type="Node" parent="PlayerBasicMovement/State/Root/Movement"]
-script = ExtResource("5_esjxv")
-
-[node name="to run" type="Node" parent="PlayerBasicMovement/State/Root/Movement/idle buffer"]
+[node name="to skid" type="Node" parent="PlayerBasicMovement/State/Root/Movement/run"]
 script = ExtResource("6_je2vt")
-to = NodePath("../../run")
-event = &"idle buffer to run"
+to = NodePath("../../skid")
+event = &"run to skid"
 delay_in_seconds = "0.0"
 
-[node name="to idle" type="Node" parent="PlayerBasicMovement/State/Root/Movement/idle buffer"]
+[node name="to idle" type="Node" parent="PlayerBasicMovement/State/Root/Movement/run"]
 script = ExtResource("6_je2vt")
 to = NodePath("../../idle")
-event = &"idle buffer to idle"
+event = &"run to idle"
+delay_in_seconds = "0.1"
+
+[node name="skid" type="Node" parent="PlayerBasicMovement/State/Root/Movement"]
+script = ExtResource("5_esjxv")
+
+[node name="to run" type="Node" parent="PlayerBasicMovement/State/Root/Movement/skid"]
+script = ExtResource("6_je2vt")
+to = NodePath("../../run")
+event = &"skid to run"
 delay_in_seconds = "0.0"
 
-[node name="to in the air" type="Node" parent="PlayerBasicMovement/State/Root/Movement/idle buffer"]
+[node name="to in the air" type="Node" parent="PlayerBasicMovement/State/Root/Movement/skid"]
 script = ExtResource("6_je2vt")
 to = NodePath("../../in the air")
-event = &"idle buffer to in the air"
+event = &"skid to in the air"
 delay_in_seconds = "0.0"
 
-[node name="to jump" type="Node" parent="PlayerBasicMovement/State/Root/Movement/idle buffer"]
+[node name="to jump" type="Node" parent="PlayerBasicMovement/State/Root/Movement/skid"]
 script = ExtResource("6_je2vt")
 to = NodePath("../../jump")
-event = &"idle buffer to jump"
+event = &"skid to jump"
+delay_in_seconds = "0.0"
+
+[node name="run buffer" type="Node" parent="PlayerBasicMovement/State/Root/Movement"]
+script = ExtResource("5_esjxv")
+
+[node name="to run" type="Node" parent="PlayerBasicMovement/State/Root/Movement/run buffer"]
+script = ExtResource("6_je2vt")
+to = NodePath("../../run")
+event = &"run buffer to run"
+delay_in_seconds = "0.1"
+
+[node name="to jump" type="Node" parent="PlayerBasicMovement/State/Root/Movement/run buffer"]
+script = ExtResource("6_je2vt")
+to = NodePath("../../jump")
+event = &"run buffer to jump"
+delay_in_seconds = "0.0"
+
+[node name="to in the air" type="Node" parent="PlayerBasicMovement/State/Root/Movement/run buffer"]
+script = ExtResource("6_je2vt")
+to = NodePath("../../in the air")
+event = &"run buffer to in the air"
 delay_in_seconds = "0.0"
 
 [node name="jump" type="Node" parent="PlayerBasicMovement/State/Root/Movement"]
@@ -177,15 +192,6 @@ to = NodePath("../../turn left")
 event = &"face right to turn left"
 delay_in_seconds = "0.0"
 
-[node name="turn right" type="Node" parent="PlayerBasicMovement/State/Root/Direction"]
-script = ExtResource("5_esjxv")
-
-[node name="to face right" type="Node" parent="PlayerBasicMovement/State/Root/Direction/turn right"]
-script = ExtResource("6_je2vt")
-to = NodePath("../../face right")
-event = &"turn right to face right"
-delay_in_seconds = "0.0"
-
 [node name="face left" type="Node" parent="PlayerBasicMovement/State/Root/Direction"]
 script = ExtResource("5_esjxv")
 
@@ -201,6 +207,15 @@ to = NodePath("../../turn right")
 event = &"face left to turn right"
 delay_in_seconds = "0.0"
 
+[node name="turn right" type="Node" parent="PlayerBasicMovement/State/Root/Direction"]
+script = ExtResource("5_esjxv")
+
+[node name="to face right" type="Node" parent="PlayerBasicMovement/State/Root/Direction/turn right"]
+script = ExtResource("6_je2vt")
+to = NodePath("../../face right")
+event = &"turn right to face right"
+delay_in_seconds = "0.0"
+
 [node name="turn left" type="Node" parent="PlayerBasicMovement/State/Root/Direction"]
 script = ExtResource("5_esjxv")
 
@@ -210,16 +225,36 @@ to = NodePath("../../face left")
 event = &"turn left to face left"
 delay_in_seconds = "0.0"
 
-[connection signal="timeout" from="PlayerBasicMovement/IdleBufferTimer" to="PlayerBasicMovement" method="_on_idle_buffer_timeout"]
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -44)
+shape = SubResource("CapsuleShape2D_ovy16")
+
 [connection signal="timeout" from="PlayerBasicMovement/JumpBufferTimer" to="PlayerBasicMovement" method="_on_jump_buffer_timer_timeout"]
+[connection signal="timeout" from="PlayerBasicMovement/TurnLeftTimer" to="PlayerBasicMovement" method="_on_turn_left_timer_timeout"]
+[connection signal="timeout" from="PlayerBasicMovement/TurnRightTimer" to="PlayerBasicMovement" method="_on_turn_right_timer_timeout"]
+[connection signal="state_entered" from="PlayerBasicMovement/State/Root/Movement/idle" to="PlayerBasicMovement" method="_on_idle_state_entered"]
+[connection signal="state_exited" from="PlayerBasicMovement/State/Root/Movement/idle" to="PlayerBasicMovement" method="_on_idle_state_exited"]
 [connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Movement/idle" to="PlayerBasicMovement" method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="PlayerBasicMovement/State/Root/Movement/run" to="PlayerBasicMovement" method="_on_run_state_entered"]
+[connection signal="state_exited" from="PlayerBasicMovement/State/Root/Movement/run" to="PlayerBasicMovement" method="_on_run_state_exited"]
 [connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Movement/run" to="PlayerBasicMovement" method="_on_run_state_physics_processing"]
-[connection signal="state_entered" from="PlayerBasicMovement/State/Root/Movement/idle buffer" to="PlayerBasicMovement" method="_on_idle_buffer_state_entered"]
-[connection signal="state_exited" from="PlayerBasicMovement/State/Root/Movement/idle buffer" to="PlayerBasicMovement" method="_on_idle_buffer_state_exited"]
-[connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Movement/idle buffer" to="PlayerBasicMovement" method="_on_idle_buffer_state_physics_processing"]
+[connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Movement/skid" to="PlayerBasicMovement" method="_on_skid_state_physics_processing"]
+[connection signal="state_entered" from="PlayerBasicMovement/State/Root/Movement/run buffer" to="PlayerBasicMovement" method="_on_run_buffer_state_entered"]
+[connection signal="state_exited" from="PlayerBasicMovement/State/Root/Movement/run buffer" to="PlayerBasicMovement" method="_on_run_buffer_state_exited"]
+[connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Movement/run buffer" to="PlayerBasicMovement" method="_on_run_buffer_state_physics_processing"]
 [connection signal="state_entered" from="PlayerBasicMovement/State/Root/Movement/jump" to="PlayerBasicMovement" method="_on_jump_state_entered"]
 [connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Movement/jump" to="PlayerBasicMovement" method="_on_jump_state_physics_processing"]
 [connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Movement/in the air" to="PlayerBasicMovement" method="_on_in_the_air_state_physics_processing"]
 [connection signal="state_entered" from="PlayerBasicMovement/State/Root/Movement/jump buffer" to="PlayerBasicMovement" method="_on_jump_buffer_state_entered"]
 [connection signal="state_exited" from="PlayerBasicMovement/State/Root/Movement/jump buffer" to="PlayerBasicMovement" method="_on_jump_buffer_state_exited"]
 [connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Movement/jump buffer" to="PlayerBasicMovement" method="_on_jump_buffer_state_physics_processing"]
+[connection signal="state_entered" from="PlayerBasicMovement/State/Root/Direction/face right" to="PlayerBasicMovement" method="_on_face_right_state_entered"]
+[connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Direction/face right" to="PlayerBasicMovement" method="_on_face_right_state_physics_processing"]
+[connection signal="state_entered" from="PlayerBasicMovement/State/Root/Direction/face left" to="PlayerBasicMovement" method="_on_face_left_state_entered"]
+[connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Direction/face left" to="PlayerBasicMovement" method="_on_face_left_state_physics_processing"]
+[connection signal="state_entered" from="PlayerBasicMovement/State/Root/Direction/turn right" to="PlayerBasicMovement" method="_on_turn_right_state_entered"]
+[connection signal="state_exited" from="PlayerBasicMovement/State/Root/Direction/turn right" to="PlayerBasicMovement" method="_on_turn_right_state_exited"]
+[connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Direction/turn right" to="PlayerBasicMovement" method="_on_turn_right_state_physics_processing"]
+[connection signal="state_entered" from="PlayerBasicMovement/State/Root/Direction/turn left" to="PlayerBasicMovement" method="_on_turn_left_state_entered"]
+[connection signal="state_exited" from="PlayerBasicMovement/State/Root/Direction/turn left" to="PlayerBasicMovement" method="_on_turn_left_state_exited"]
+[connection signal="state_physics_processing" from="PlayerBasicMovement/State/Root/Direction/turn left" to="PlayerBasicMovement" method="_on_turn_left_state_physics_processing"]

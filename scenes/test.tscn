@@ -1,0 +1,156 @@
+[gd_scene load_steps=12 format=3 uid="uid://l3hsegfmu56j"]
+
+[ext_resource type="Script" path="res://scripts/ui.gd" id="1_n23dp"]
+[ext_resource type="Script" path="res://scripts/goal.gd" id="3_d5sel"]
+[ext_resource type="Texture2D" uid="uid://bj6gbj2puyjhs" path="res://kenney_sports-pack/goalback.png" id="4_4cldj"]
+[ext_resource type="Texture2D" uid="uid://dng5mhl6s5bqk" path="res://kenney_sports-pack/goalfront.png" id="5_3vaap"]
+[ext_resource type="Texture2D" uid="uid://bfyvyupe8be4r" path="res://kenney_sports-pack/goalback-blue.png" id="6_8tb5v"]
+[ext_resource type="TileSet" uid="uid://kwmyxvxqybfd" path="res://resources/tileset.tres" id="7_qd4rk"]
+[ext_resource type="Texture2D" uid="uid://dk5lv81bnl5vp" path="res://kenney_sports-pack/goalfront-blue.png" id="7_qsica"]
+[ext_resource type="PackedScene" uid="uid://bwd4xnrevg2m" path="res://scenes/controlled_player.tscn" id="8_8w20w"]
+[ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="9_30qni"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="9_38exh"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s4o3c"]
+rough = true
+absorbent = true
+
+[node name="Test" type="Node"]
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("1_n23dp")
+
+[node name="ScoreRed" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 299.0
+offset_bottom = 108.0
+theme_override_colors/font_color = Color(1, 0.172549, 0.192157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 64
+text = "Score: 0"
+
+[node name="ScoreBlue" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -299.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 108.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.17, 0.432833, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 64
+text = "Score: 0"
+
+[node name="World" type="Node" parent="."]
+
+[node name="GoalRed" type="Node2D" parent="World"]
+position = Vector2(155, 490)
+script = ExtResource("3_d5sel")
+
+[node name="GoalArea" type="Area2D" parent="World/GoalRed"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/GoalRed/GoalArea"]
+polygon = PackedVector2Array(15, 0, 152, 0, 152, -167, 65, -167)
+
+[node name="GoalBack" type="Sprite2D" parent="World/GoalRed"]
+z_index = -1
+position = Vector2(91, -91)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("4_4cldj")
+
+[node name="GoalFront" type="Sprite2D" parent="World/GoalRed"]
+z_index = 1
+position = Vector2(91, -91)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("5_3vaap")
+
+[node name="FrameCollider" type="StaticBody2D" parent="World/GoalRed"]
+position = Vector2(-2, 3)
+collision_layer = 8
+collision_mask = 4
+physics_material_override = SubResource("PhysicsMaterial_s4o3c")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/GoalRed/FrameCollider"]
+position = Vector2(3, -3)
+polygon = PackedVector2Array(0, 0, 14, 0, 61, -155, 75, -167, 151, -167, 151, -182, 70, -182, 47, -160)
+
+[node name="GoalBlue" type="Node2D" parent="World"]
+position = Vector2(4715, 980)
+script = ExtResource("3_d5sel")
+
+[node name="GoalArea" type="Area2D" parent="World/GoalBlue"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/GoalBlue/GoalArea"]
+polygon = PackedVector2Array(-15, 0, -152, 0, -152, -167, -65, -167)
+
+[node name="GoalBack" type="Sprite2D" parent="World/GoalBlue"]
+z_index = -1
+position = Vector2(-90.2002, -90.2)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_8tb5v")
+flip_h = true
+
+[node name="GoalFront" type="Sprite2D" parent="World/GoalBlue"]
+z_index = 1
+position = Vector2(-90.2002, -90.2)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("7_qsica")
+flip_h = true
+
+[node name="FrameCollider" type="StaticBody2D" parent="World/GoalBlue"]
+position = Vector2(-2, 3)
+collision_layer = 8
+collision_mask = 4
+physics_material_override = SubResource("PhysicsMaterial_s4o3c")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/GoalBlue/FrameCollider"]
+position = Vector2(3, -3)
+polygon = PackedVector2Array(0, 0, -14, 0, -61, -155, -75, -167, -151, -167, -151, -182, -70, -182, -47, -160)
+
+[node name="TileMap" type="TileMap" parent="World"]
+position = Vector2(1, 0)
+tile_set = ExtResource("7_qd4rk")
+format = 2
+layer_0/tile_data = PackedInt32Array(458752, 65536, 5, 458753, 131072, 2, 458754, 262144, 3, 458755, 262144, 3, 458756, 262144, 3, 458758, 262144, 3, 458757, 262144, 3, 458759, 262144, 3, 458761, 262144, 3, 458760, 262144, 3, 458762, 262144, 3, 458763, 262144, 3, 458764, 262144, 3, 458765, 262144, 3, 458766, 262144, 3, 458767, 262144, 3, 393216, 131072, 2, 327680, 131072, 0, 262144, 131072, 0, 196608, 131072, 4, 393217, 262144, 0, 458768, 262144, 3, 458769, 262144, 3, 458770, 262144, 3, 458771, 262144, 3, 458772, 262144, 3, 458773, 262144, 3, 458774, 262144, 3, 458775, 262144, 3, 458776, 262144, 3, 458777, 262144, 3, 458778, 262144, 3, 458779, 262144, 3, 458780, 262144, 3, 393245, 196608, 6, 327710, 196608, 6, 262175, 196608, 6, 262176, 262144, 3, 262177, 262144, 3, 262178, 262144, 3, 262179, 262144, 3, 262180, 262144, 3, 262181, 262144, 3, 262182, 262144, 3, 327711, 327680, 0, 393246, 327680, 0, 458781, 327680, 0, 262143, 196608, 3, 458782, 65536, 6, 393247, 65536, 6, 327712, 65536, 6, 262183, 262144, 3, 262184, 262144, 3, 262185, 262144, 3, 262186, 262144, 3, 262187, 262144, 3, 262188, 262144, 3, 262189, 262144, 3, 262190, 262144, 3, 262191, 262144, 0, 327728, 262144, 0, 393265, 262144, 0, 458802, 262144, 0, 524339, 262144, 0, 589876, 262144, 0, 655413, 262144, 0, 720950, 262144, 3, 720951, 262144, 3, 720952, 262144, 3, 720953, 262144, 3, 720954, 262144, 0, 786491, 262144, 0, 852028, 262144, 0, 917565, 262144, 3, 917566, 262144, 3, 917567, 262144, 3, 917568, 262144, 3, 917569, 262144, 3, 917570, 262144, 3, 917571, 262144, 3, 917572, 262144, 3, 917573, 262144, 3, 917574, 262144, 3, 852039, 196608, 6, 786504, 196608, 6, 720969, 131072, 1, 655433, 131072, 1, 589897, 131072, 1, 524361, 131072, 1, 458825, 131072, 1, 393289, 131072, 5, 393290, 196608, 2, 786505, 327680, 0, 852040, 327680, 0, 917575, 327680, 0, 917576, 65536, 6, 852041, 65536, 6, 786490, 65536, 4, 852027, 65536, 4, 917564, 65536, 4, 786489, 65536, 5, 852026, 65536, 5, 917563, 65536, 5, 327727, 65536, 5, 393264, 65536, 5, 458801, 65536, 5, 524338, 65536, 5, 589875, 65536, 5, 655412, 65536, 5, 720949, 65536, 5)
+
+[node name="ControlledPlayer" parent="." instance=ExtResource("8_8w20w")]
+position = Vector2(605, 479)
+
+[node name="Camera2D" type="Camera2D" parent="ControlledPlayer/Player2" index="2"]
+position = Vector2(0, -180)
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+
+[node name="StateChartDebugger" parent="ControlledPlayer/Player2" index="3" instance=ExtResource("9_38exh")]
+offset_left = -627.0
+offset_top = -527.0
+offset_right = -207.0
+offset_bottom = 166.0
+initial_node_to_watch = NodePath("../PlayerBasicMovement/State")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ControlledPlayer/Player2" index="4"]
+position = Vector2(0, -55)
+sprite_frames = ExtResource("9_30qni")
+animation = &"celebrate"
+frame_progress = 0.571169
+
+[connection signal="body_entered" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_entered"]
+[connection signal="body_exited" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_exited"]
+[connection signal="body_entered" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_entered"]
+[connection signal="body_exited" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_exited"]
+
+[editable path="ControlledPlayer"]
+[editable path="ControlledPlayer/Player2"]
