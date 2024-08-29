@@ -129,6 +129,9 @@ layer_0/tile_data = PackedInt32Array(458752, 65536, 5, 458753, 131072, 2, 458754
 [node name="ControlledPlayer" parent="." instance=ExtResource("8_8w20w")]
 position = Vector2(605, 479)
 
+[node name="PlayerBasicMovement" parent="ControlledPlayer/Player2" index="0" node_paths=PackedStringArray("sprite")]
+sprite = NodePath("../AnimatedSprite2D")
+
 [node name="Camera2D" type="Camera2D" parent="ControlledPlayer/Player2" index="2"]
 position = Vector2(0, -180)
 zoom = Vector2(1.5, 1.5)
@@ -144,8 +147,7 @@ initial_node_to_watch = NodePath("../PlayerBasicMovement/State")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ControlledPlayer/Player2" index="4"]
 position = Vector2(0, -55)
 sprite_frames = ExtResource("9_30qni")
-animation = &"celebrate"
-frame_progress = 0.571169
+animation = &"skid"
 
 [connection signal="body_entered" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_exited"]

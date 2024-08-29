@@ -12,6 +12,5 @@ script = ExtResource("2_t4bcf")
 player_basic_movement = NodePath("../Player2/PlayerBasicMovement")
 
 [node name="Player2" parent="." instance=ExtResource("2_jyeir")]
-collision_mask = 2
 
 [editable path="Player2"]

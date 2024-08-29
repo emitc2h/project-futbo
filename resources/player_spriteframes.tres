@@ -59,23 +59,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_6wq2y")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_o8jly")
-}],
-"loop": false,
-"name": &"turn",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("7_36l0m")
 }, {
 "duration": 1.0,
 "texture": ExtResource("8_g3vwv")
 }],
 "loop": true,
-"name": &"walk",
+"name": &"run",
 "speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_6wq2y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_o8jly")
+}],
+"loop": false,
+"name": &"skid",
+"speed": 10.0
 }]

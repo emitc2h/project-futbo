@@ -3,6 +3,7 @@ extends Node
 
 # Nodes controlled by this node
 @export var body: CharacterBody2D
+@export var sprite: AnimatedSprite2D
 
 # Internal references
 @onready var state: StateChart = $State
@@ -48,6 +49,7 @@ var in_run_buffer_state: bool = false
 #----------------------------------------
 func _on_idle_state_entered() -> void:
 	in_idle_state = true
+	sprite.play("idle")
 
 
 func _on_idle_state_physics_processing(delta: float) -> void:
@@ -86,6 +88,7 @@ func run_process() -> void:
 
 func _on_run_state_entered() -> void:
 	in_run_state = true
+	sprite.play("run")
 
 
 func _on_run_state_physics_processing(delta: float) -> void:
@@ -116,6 +119,10 @@ func skid_process() -> void:
 		body.velocity.x *= (1.0 - turning_time_left)
 
 
+func _on_skid_state_entered() -> void:
+	sprite.play("skid")
+
+
 func _on_skid_state_physics_processing(delta: float) -> void:
 	run_process()
 	skid_process()
@@ -136,6 +143,7 @@ func _on_skid_state_physics_processing(delta: float) -> void:
 func _on_run_buffer_state_entered() -> void:
 	in_run_buffer_state = true
 	state.send_event("run buffer to run")
+	sprite.play("run")
 
 
 func _on_run_buffer_state_physics_processing(delta: float) -> void:
@@ -163,6 +171,7 @@ func _on_jump_state_entered() -> void:
 	run_process()
 	body.velocity.y = jump_momentum
 	state.send_event("jump to in the air")
+	sprite.play("jump")
 
 
 func _on_jump_state_physics_processing(delta: float) -> void:
@@ -218,6 +227,7 @@ func _on_jump_buffer_state_exited() -> void:
 #----------------------------------------
 func _on_face_right_state_entered() -> void:
 	direction_faced = DirectionFaced.RIGHT
+	sprite.flip_h = false
 
 
 func _on_face_right_state_physics_processing(delta: float) -> void:
@@ -233,6 +243,7 @@ func _on_face_right_state_physics_processing(delta: float) -> void:
 #----------------------------------------
 func _on_face_left_state_entered() -> void:
 	direction_faced = DirectionFaced.LEFT
+	sprite.flip_h = true
 
 
 func _on_face_left_state_physics_processing(delta: float) -> void:
