@@ -39,6 +39,11 @@ var turning_time_left: float = 0.0
 var in_run_state: bool = false
 var in_idle_state: bool = false
 var in_run_buffer_state: bool = false
+var in_in_the_air_state: bool = false
+
+# Signals
+signal facing_left()
+signal facing_right()
 
 
 #=======================================================
@@ -58,6 +63,7 @@ func _on_idle_state_physics_processing(delta: float) -> void:
 	
 	# If the floor falls from under the player
 	if not body.is_on_floor():
+		sprite.play("fall")
 		state.send_event("idle to in the air")
 	
 	# Needs to be called in every movement state
@@ -96,6 +102,7 @@ func _on_run_state_physics_processing(delta: float) -> void:
 	
 	# Running off a ledge transitions to in the air state
 	if not body.is_on_floor():
+		sprite.play("fall")
 		state.send_event("run to in the air")
 	
 	# Releasing the control while on the floor goes to idle
@@ -129,6 +136,7 @@ func _on_skid_state_physics_processing(delta: float) -> void:
 	
 	# Skidding off a ledge transitions to in the air state
 	if not body.is_on_floor():
+		sprite.play("fall")
 		state.send_event("skid to in the air")
 	
 	# Needs to be called in every movement state
@@ -151,6 +159,7 @@ func _on_run_buffer_state_physics_processing(delta: float) -> void:
 	
 	# Running off a ledge transitions to in the air state
 	if not body.is_on_floor():
+		sprite.play("fall")
 		state.send_event("run buffer to in the air")
 	
 	# Releasing the control while on the floor goes to idle
@@ -185,6 +194,10 @@ func _on_jump_state_physics_processing(delta: float) -> void:
 
 # in the air state
 #----------------------------------------
+func _on_in_the_air_state_entered() -> void:
+	in_in_the_air_state = true
+
+
 func _on_in_the_air_state_physics_processing(delta: float) -> void:
 	if body.is_on_floor():
 		state.send_event("in the air to run")
@@ -193,6 +206,10 @@ func _on_in_the_air_state_physics_processing(delta: float) -> void:
 	
 	# Needs to be called in every movement state
 	body.move_and_slide()
+
+
+func _on_in_the_air_state_exited() -> void:
+	in_in_the_air_state = false
 
 
 # jump buffer state
@@ -223,15 +240,16 @@ func _on_jump_buffer_state_exited() -> void:
 # DIRECTION STATES
 #=======================================================
 
-# 1. face right state
+# face right state
 #----------------------------------------
 func _on_face_right_state_entered() -> void:
 	direction_faced = DirectionFaced.RIGHT
 	sprite.flip_h = false
+	facing_right.emit()
 
 
 func _on_face_right_state_physics_processing(delta: float) -> void:
-	if left_right_axis < 0.0:
+	if left_right_axis < 0.0 and not in_in_the_air_state:
 		if in_run_buffer_state:
 			state.send_event("face right to face left")
 		else:
@@ -239,15 +257,16 @@ func _on_face_right_state_physics_processing(delta: float) -> void:
 			state.send_event("face right to turn left")
 
 
-# 2. face left state
+# face left state
 #----------------------------------------
 func _on_face_left_state_entered() -> void:
 	direction_faced = DirectionFaced.LEFT
 	sprite.flip_h = true
+	facing_left.emit()
 
 
 func _on_face_left_state_physics_processing(delta: float) -> void:
-	if left_right_axis > 0.0:
+	if left_right_axis > 0.0 and not in_in_the_air_state:
 		if in_run_buffer_state:
 			state.send_event("face left to face right")
 		else:
@@ -255,7 +274,7 @@ func _on_face_left_state_physics_processing(delta: float) -> void:
 			state.send_event("face left to turn right")
 
 
-# 3. turn right state
+# turn right state
 #----------------------------------------
 func _on_turn_right_state_entered() -> void:
 	turn_right_timer.start()
@@ -264,6 +283,8 @@ func _on_turn_right_state_entered() -> void:
 
 
 func _on_turn_right_state_physics_processing(delta: float) -> void:
+	if in_in_the_air_state:
+		state.send_event("turn right to face right")
 	turning_time_left = 2 * turn_right_timer.time_left / turn_right_timer.wait_time
 
 
@@ -277,7 +298,7 @@ func _on_turn_right_state_exited() -> void:
 	turning_time_left = 0.0
 
 
-# 4. turn left state
+# turn left state
 #----------------------------------------
 func _on_turn_left_state_entered() -> void:
 	turn_left_timer.start()
@@ -286,6 +307,8 @@ func _on_turn_left_state_entered() -> void:
 
 
 func _on_turn_left_state_physics_processing(delta: float) -> void:
+	if in_in_the_air_state:
+		state.send_event("turn left to face left")
 	turning_time_left = 2 * turn_left_timer.time_left / turn_left_timer.wait_time
 
 

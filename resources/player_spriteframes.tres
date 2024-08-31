@@ -1,10 +1,11 @@
-[gd_resource type="SpriteFrames" load_steps=11 format=3 uid="uid://c0xj6n41r3c1j"]
+[gd_resource type="SpriteFrames" load_steps=12 format=3 uid="uid://c0xj6n41r3c1j"]
 
 [ext_resource type="Texture2D" uid="uid://dcijs8gxv3fke" path="res://kenney_platformer-characters/PNG/Player/Poses/player_idle.png" id="1_xpa34"]
 [ext_resource type="Texture2D" uid="uid://dao6b2xjs6hdm" path="res://kenney_platformer-characters/PNG/Player/Poses/player_jump.png" id="2_h8wdi"]
 [ext_resource type="Texture2D" uid="uid://sg1bg4im6nld" path="res://kenney_platformer-characters/PNG/Player/Poses/player_cheer1.png" id="2_s25i1"]
 [ext_resource type="Texture2D" uid="uid://ckp3x8dvlmt3q" path="res://kenney_platformer-characters/PNG/Player/Poses/player_action2.png" id="3_hk4e8"]
 [ext_resource type="Texture2D" uid="uid://b4jdujk1p12xo" path="res://kenney_platformer-characters/PNG/Player/Poses/player_cheer2.png" id="3_ma203"]
+[ext_resource type="Texture2D" uid="uid://bxbj15t0xs7ut" path="res://kenney_platformer-characters/PNG/Player/Poses/player_fall.png" id="4_8fgoa"]
 [ext_resource type="Texture2D" uid="uid://dt0cih865juyl" path="res://kenney_platformer-characters/PNG/Player/Poses/player_kick.png" id="4_rvwl6"]
 [ext_resource type="Texture2D" uid="uid://hj10arhyubon" path="res://kenney_platformer-characters/PNG/Player/Poses/player_stand.png" id="5_6wq2y"]
 [ext_resource type="Texture2D" uid="uid://bnsrawjlq63il" path="res://kenney_platformer-characters/PNG/Player/Poses/player_skid.png" id="6_o8jly"]
@@ -29,6 +30,14 @@ animations = [{
 "loop": true,
 "name": &"celebrate",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_8fgoa")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

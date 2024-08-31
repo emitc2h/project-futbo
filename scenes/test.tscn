@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://l3hsegfmu56j"]
+[gd_scene load_steps=13 format=3 uid="uid://l3hsegfmu56j"]
 
 [ext_resource type="Script" path="res://scripts/ui.gd" id="1_n23dp"]
 [ext_resource type="Script" path="res://scripts/goal.gd" id="3_d5sel"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bwd4xnrevg2m" path="res://scenes/controlled_player.tscn" id="8_8w20w"]
 [ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="9_30qni"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="9_38exh"]
+[ext_resource type="PackedScene" uid="uid://buoegut2xlkro" path="res://scenes/ball_2.tscn" id="11_1jd3t"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s4o3c"]
 rough = true
@@ -142,17 +143,27 @@ offset_left = -627.0
 offset_top = -527.0
 offset_right = -207.0
 offset_bottom = 166.0
-initial_node_to_watch = NodePath("../PlayerBasicMovement/State")
+initial_node_to_watch = NodePath("../PlayerKickAbility/State")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ControlledPlayer/Player2" index="4"]
 position = Vector2(0, -55)
 sprite_frames = ExtResource("9_30qni")
-animation = &"skid"
+animation = &"fall"
+
+[node name="PlayerKickAbility" parent="ControlledPlayer/Player2" index="5" node_paths=PackedStringArray("sprite")]
+sprite = NodePath("../AnimatedSprite2D")
+
+[node name="Ball2" parent="." instance=ExtResource("11_1jd3t")]
+position = Vector2(800, 467)
 
 [connection signal="body_entered" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_exited"]
 [connection signal="body_entered" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_exited"]
+[connection signal="facing_left" from="ControlledPlayer/Player2/PlayerBasicMovement" to="Ball2" method="_on_facing_left"]
+[connection signal="facing_right" from="ControlledPlayer/Player2/PlayerBasicMovement" to="Ball2" method="_on_facing_right"]
 
 [editable path="ControlledPlayer"]
 [editable path="ControlledPlayer/Player2"]
+[editable path="ControlledPlayer/Player2/PlayerKickAbility"]
+[editable path="Ball2"]

@@ -1,0 +1,2 @@
+class_name PlayerHeadbuttAbility
+extends Node2D

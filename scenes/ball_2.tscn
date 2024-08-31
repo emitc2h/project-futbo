@@ -1,0 +1,116 @@
+[gd_scene load_steps=13 format=3 uid="uid://buoegut2xlkro"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://besahl7f6jbkx" path="res://resources/ball_physics_material.tres" id="1_7al4n"]
+[ext_resource type="Script" path="res://scripts/ball_2.gd" id="1_gv8xq"]
+[ext_resource type="Texture2D" uid="uid://ct55n5aqijgey" path="res://kenney_sports-pack/PNG/Elements/element (1).png" id="1_nhogf"]
+[ext_resource type="Script" path="res://scripts/direction_ray.gd" id="2_ox4mu"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_ueett"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_o6urp"]
+[ext_resource type="PackedScene" uid="uid://ckkrgdu0r0bu3" path="res://scenes/clamped_aim.tscn" id="5_fxfts"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_q4fa3"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_khimi"]
+[ext_resource type="Texture2D" uid="uid://bghnoo23prkx3" path="res://kenney_sports-pack/PNG/Equipment/ball_soccer2.png" id="7_ou3kn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_shbsj"]
+radius = 19.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j20ad"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_ou3kn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Ball2" type="Node2D"]
+script = ExtResource("1_gv8xq")
+
+[node name="InertNode" type="RigidBody2D" parent="."]
+collision_layer = 4
+collision_mask = 10
+physics_material_override = ExtResource("1_7al4n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InertNode"]
+shape = SubResource("CircleShape2D_shbsj")
+
+[node name="DribbledNode" type="CharacterBody2D" parent="."]
+collision_layer = 4
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DribbledNode"]
+shape = SubResource("CircleShape2D_shbsj")
+
+[node name="DirectionRay" type="Sprite2D" parent="."]
+texture = ExtResource("1_nhogf")
+offset = Vector2(0, -32)
+script = ExtResource("2_ox4mu")
+
+[node name="ClampedAim" parent="DirectionRay" instance=ExtResource("5_fxfts")]
+
+[node name="State" type="Node" parent="DirectionRay"]
+script = ExtResource("3_ueett")
+
+[node name="Root" type="Node" parent="DirectionRay/State"]
+script = ExtResource("4_o6urp")
+initial_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="DirectionRay/State/Root"]
+script = ExtResource("5_q4fa3")
+
+[node name="to pointing" type="Node" parent="DirectionRay/State/Root/idle"]
+script = ExtResource("6_khimi")
+to = NodePath("../../pointing")
+event = &"idle to pointing"
+delay_in_seconds = "0.0"
+
+[node name="pointing" type="Node" parent="DirectionRay/State/Root"]
+script = ExtResource("5_q4fa3")
+
+[node name="to idle" type="Node" parent="DirectionRay/State/Root/pointing"]
+script = ExtResource("6_khimi")
+to = NodePath("../../idle")
+event = &"pointing to idle"
+delay_in_seconds = "0.0"
+
+[node name="SpriteContainer" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteContainer"]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_j20ad")
+
+[node name="State" type="Node" parent="."]
+script = ExtResource("3_ueett")
+
+[node name="Root" type="Node" parent="State"]
+script = ExtResource("4_o6urp")
+initial_state = NodePath("inert")
+
+[node name="inert" type="Node" parent="State/Root"]
+script = ExtResource("5_q4fa3")
+
+[node name="to dribbled" type="Node" parent="State/Root/inert"]
+script = ExtResource("6_khimi")
+to = NodePath("../../dribbled")
+event = &"inert to dribbled"
+delay_in_seconds = "0.0"
+
+[node name="dribbled" type="Node" parent="State/Root"]
+script = ExtResource("5_q4fa3")
+
+[node name="to inert" type="Node" parent="State/Root/dribbled"]
+script = ExtResource("6_khimi")
+to = NodePath("../../inert")
+event = &"dribbled to inert"
+delay_in_seconds = "0.0"
+
+[connection signal="state_physics_processing" from="DirectionRay/State/Root/idle" to="DirectionRay" method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="DirectionRay/State/Root/pointing" to="DirectionRay" method="_on_pointing_state_entered"]
+[connection signal="state_exited" from="DirectionRay/State/Root/pointing" to="DirectionRay" method="_on_pointing_state_exited"]
+[connection signal="state_processing" from="DirectionRay/State/Root/pointing" to="DirectionRay" method="_on_pointing_state_processing"]
+[connection signal="state_entered" from="State/Root/inert" to="." method="_on_inert_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/inert" to="." method="_on_inert_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/dribbled" to="." method="_on_dribbled_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/dribbled" to="." method="_on_dribbled_state_physics_processing"]

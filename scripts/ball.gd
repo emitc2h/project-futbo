@@ -110,10 +110,6 @@ func jump(vy: float) -> void:
 		$CharNode.velocity.y = vy
 
 
-func _physics_process(delta: float) -> void:
-	print("ball is owned: ", is_owned)
-
-
 func _on_dribbled_state_entered() -> void:
 	is_owned = true
 	self.set_mode(Mode.CHAR_MODE)

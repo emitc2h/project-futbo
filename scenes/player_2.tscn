@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bus0201utlp35"]
+[gd_scene load_steps=7 format=3 uid="uid://bus0201utlp35"]
 
 [ext_resource type="Script" path="res://scripts/player_2.gd" id="1_pj68o"]
 [ext_resource type="PackedScene" uid="uid://eh1ats0q42w6" path="res://scenes/player_basic_movement.tscn" id="2_p5nec"]
+[ext_resource type="PackedScene" uid="uid://cpvgflmewlfne" path="res://scenes/player_kick_ability.tscn" id="3_nm3re"]
+[ext_resource type="PackedScene" uid="uid://br5qjcpuptdi1" path="res://scenes/player_headbutt_ability.tscn" id="4_j3ifr"]
+[ext_resource type="PackedScene" uid="uid://dxui5vsqw8mu5" path="res://scenes/player_dribble_ability.tscn" id="5_0d3jd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ovy16"]
 radius = 22.0
@@ -17,3 +20,12 @@ body = NodePath("..")
 [node name="PlayerCollider" type="CollisionShape2D" parent="."]
 position = Vector2(0, -44)
 shape = SubResource("CapsuleShape2D_ovy16")
+
+[node name="PlayerKickAbility" parent="." instance=ExtResource("3_nm3re")]
+
+[node name="PlayerHeadbuttAbility" parent="." instance=ExtResource("4_j3ifr")]
+
+[node name="PlayerDribbleAbility" parent="." instance=ExtResource("5_0d3jd")]
+
+[connection signal="facing_left" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_facing_left"]
+[connection signal="facing_right" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_facing_right"]

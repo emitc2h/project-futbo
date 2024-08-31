@@ -1,0 +1,2 @@
+class_name PlayerDribbleAbility
+extends Node2D
