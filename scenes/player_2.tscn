@@ -22,8 +22,11 @@ position = Vector2(0, -44)
 shape = SubResource("CapsuleShape2D_ovy16")
 
 [node name="PlayerKickAbility" parent="." instance=ExtResource("3_nm3re")]
+position = Vector2(18, -19)
 
-[node name="PlayerHeadbuttAbility" parent="." instance=ExtResource("4_j3ifr")]
+[node name="PlayerHeadbuttAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_j3ifr")]
+position = Vector2(0, -66)
+player = NodePath("..")
 
 [node name="PlayerDribbleAbility" parent="." instance=ExtResource("5_0d3jd")]
 

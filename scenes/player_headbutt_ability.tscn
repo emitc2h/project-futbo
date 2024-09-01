@@ -17,7 +17,6 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HeadbuttZone"]
-position = Vector2(0, -69)
 rotation = 3.13224
 shape = SubResource("CircleShape2D_6pkyy")
 debug_color = Color(0.801051, 0.26373, 0.812251, 0.42)
@@ -60,4 +59,11 @@ script = ExtResource("4_ajwkf")
 script = ExtResource("5_ii0jo")
 to = NodePath("../../not ready")
 event = &"headbutting to not ready"
-delay_in_seconds = "0.0"
+delay_in_seconds = "0.1"
+
+[connection signal="body_entered" from="HeadbuttZone" to="." method="_on_headbutt_zone_body_entered"]
+[connection signal="state_physics_processing" from="State/root/not ready" to="." method="_on_not_ready_state_physics_processing"]
+[connection signal="state_entered" from="State/root/ready" to="." method="_on_ready_state_entered"]
+[connection signal="state_exited" from="State/root/ready" to="." method="_on_ready_state_exited"]
+[connection signal="state_physics_processing" from="State/root/ready" to="." method="_on_ready_state_physics_processing"]
+[connection signal="state_entered" from="State/root/headbutting" to="." method="_on_headbutting_state_entered"]

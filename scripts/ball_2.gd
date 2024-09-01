@@ -87,7 +87,3 @@ func _on_facing_right() -> void:
 func kick(force_vector: Vector2) -> void:
 	state.send_event("dribbled to inert")
 	inert_node.apply_central_impulse(force_vector)
-
-
-func _on_on_state_physics_processing(delta: float) -> void:
-	pass # Replace with function body.

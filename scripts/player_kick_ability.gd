@@ -11,11 +11,19 @@ extends Node2D
 # Configurables
 @export var kick_force: float = 700.0
 
+# Static/Internal properties
+var kickzone_position_x: float
+
 # Dynamic properties
 var aim: Vector2
 var ball: Ball2
 var direction: Enums.Direction = Enums.Direction.RIGHT
 var previous_sprite_animation: String
+
+
+# Record kickzone offset to flip the zone when the player faces left
+func _ready() -> void:
+	kickzone_position_x = self.position.x
 
 
 #=======================================================
@@ -67,10 +75,12 @@ func _on_kick_zone_body_exited(body: Node2D) -> void:
 #----------------------------------------
 func _on_facing_left() -> void:
 	direction = Enums.Direction.LEFT
+	self.position.x = -kickzone_position_x
 
 
 func _on_facing_right() -> void:
 	direction = Enums.Direction.RIGHT
+	self.position.x = kickzone_position_x
 
 
 #=======================================================
