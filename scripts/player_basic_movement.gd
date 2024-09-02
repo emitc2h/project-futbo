@@ -2,7 +2,7 @@ class_name PlayerBasicMovement
 extends Node
 
 # Nodes controlled by this node
-@export var body: CharacterBody2D
+@export var player: Player2
 @export var sprite: AnimatedSprite2D
 
 # Internal references
@@ -59,15 +59,15 @@ func _on_idle_state_entered() -> void:
 
 func _on_idle_state_physics_processing(delta: float) -> void:
 	# Instead of stopping abruptly, decelerate
-	body.velocity.x = move_toward(body.velocity.x, 0, run_deceleration)
+	player.velocity.x = move_toward(player.velocity.x, 0, run_deceleration)
 	
 	# If the floor falls from under the player
-	if not body.is_on_floor():
+	if not player.is_on_floor():
 		sprite.play("fall")
 		state.send_event("idle to in the air")
 	
 	# Needs to be called in every movement state
-	body.move_and_slide()
+	player.move_and_slide()
 
 
 func _on_idle_state_exited() -> void:
@@ -88,8 +88,8 @@ func run_process() -> void:
 	if is_running_forward():
 		max_velocity = run_forward_velocity
 	
-	# Apply the velocity to the body
-	body.velocity.x = left_right_axis * max_velocity
+	# Apply the velocity to the player
+	player.velocity.x = left_right_axis * max_velocity
 
 
 func _on_run_state_entered() -> void:
@@ -101,7 +101,7 @@ func _on_run_state_physics_processing(delta: float) -> void:
 	run_process()
 	
 	# Running off a ledge transitions to in the air state
-	if not body.is_on_floor():
+	if not player.is_on_floor():
 		sprite.play("fall")
 		state.send_event("run to in the air")
 	
@@ -110,7 +110,7 @@ func _on_run_state_physics_processing(delta: float) -> void:
 		state.send_event("run to idle")
 	
 	# Needs to be called in every movement state
-	body.move_and_slide()
+	player.move_and_slide()
 
 
 func _on_run_state_exited() -> void:
@@ -123,7 +123,7 @@ func skid_process() -> void:
 		# when turning, slow down and accelerate in the opposite direction
 	# turning_time_left should go from 2.0 to 0.0 over the course of the timer
 	if turning_time_left > 0.0:
-		body.velocity.x *= (1.0 - turning_time_left)
+		player.velocity.x *= (1.0 - turning_time_left)
 
 
 func _on_skid_state_entered() -> void:
@@ -135,12 +135,12 @@ func _on_skid_state_physics_processing(delta: float) -> void:
 	skid_process()
 	
 	# Skidding off a ledge transitions to in the air state
-	if not body.is_on_floor():
+	if not player.is_on_floor():
 		sprite.play("fall")
 		state.send_event("skid to in the air")
 	
 	# Needs to be called in every movement state
-	body.move_and_slide()
+	player.move_and_slide()
 
 
 
@@ -158,7 +158,7 @@ func _on_run_buffer_state_physics_processing(delta: float) -> void:
 	run_process()
 	
 	# Running off a ledge transitions to in the air state
-	if not body.is_on_floor():
+	if not player.is_on_floor():
 		sprite.play("fall")
 		state.send_event("run buffer to in the air")
 	
@@ -167,7 +167,7 @@ func _on_run_buffer_state_physics_processing(delta: float) -> void:
 		state.send_event("run buffer to idle")
 	
 	# Needs to be called in every movement state
-	body.move_and_slide()
+	player.move_and_slide()
 
 
 func _on_run_buffer_state_exited() -> void:
@@ -178,7 +178,7 @@ func _on_run_buffer_state_exited() -> void:
 #----------------------------------------
 func _on_jump_state_entered() -> void:
 	run_process()
-	body.velocity.y = jump_momentum
+	player.velocity.y = jump_momentum
 	state.send_event("jump to in the air")
 	sprite.play("jump")
 
@@ -189,7 +189,7 @@ func _on_jump_state_physics_processing(delta: float) -> void:
 	run_process()
 	
 	# Needs to be called in every movement state
-	body.move_and_slide()
+	player.move_and_slide()
 
 
 # in the air state
@@ -199,13 +199,13 @@ func _on_in_the_air_state_entered() -> void:
 
 
 func _on_in_the_air_state_physics_processing(delta: float) -> void:
-	if body.is_on_floor():
+	if player.is_on_floor():
 		state.send_event("in the air to run")
 	else:
-		body.velocity.y += gravity * delta
+		player.velocity.y += gravity * delta
 	
 	# Needs to be called in every movement state
-	body.move_and_slide()
+	player.move_and_slide()
 
 
 func _on_in_the_air_state_exited() -> void:
@@ -219,13 +219,13 @@ func _on_jump_buffer_state_entered() -> void:
 
 
 func _on_jump_buffer_state_physics_processing(delta: float) -> void:
-	if body.is_on_floor():
+	if player.is_on_floor():
 		state.send_event("jump buffer to jump")
 	else:
-		body.velocity.y += gravity * delta
+		player.velocity.y += gravity * delta
 	
 	# Needs to be called in every movement state
-	body.move_and_slide()
+	player.move_and_slide()
 
 
 func _on_jump_buffer_timer_timeout() -> void:
@@ -249,7 +249,9 @@ func _on_face_right_state_entered() -> void:
 
 
 func _on_face_right_state_physics_processing(delta: float) -> void:
-	if left_right_axis < 0.0 and not in_in_the_air_state:
+	if left_right_axis < 0.0 and not in_in_the_air_state \
+		and not player.can_run_backward:
+			
 		if in_run_buffer_state:
 			state.send_event("face right to face left")
 		else:
@@ -266,7 +268,8 @@ func _on_face_left_state_entered() -> void:
 
 
 func _on_face_left_state_physics_processing(delta: float) -> void:
-	if left_right_axis > 0.0 and not in_in_the_air_state:
+	if left_right_axis > 0.0 and not in_in_the_air_state \
+		and not player.can_run_backward:
 		if in_run_buffer_state:
 			state.send_event("face left to face right")
 		else:
@@ -338,7 +341,7 @@ func run(direction: float) -> void:
 
 # is meant to be call on button press
 func jump() -> void:
-	if body.is_on_floor():
+	if player.is_on_floor():
 		state.send_event("idle to jump")
 		state.send_event("run to jump")
 		state.send_event("skid to jump")

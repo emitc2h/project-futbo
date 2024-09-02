@@ -15,6 +15,27 @@ var mode: Mode = Mode.INERT
 @onready var direction_ray: DirectionRay = $DirectionRay
 @onready var sprite: Node2D = $SpriteContainer
 
+# Static/Internal properties
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+# Dynamic properties
+var direction_faced: Enums.Direction = Enums.Direction.RIGHT
+
+var dribbler_id: int
+var is_owned: bool = false
+
+var dribble_time: float
+var player_dribble_marker_position: Vector2
+var player_velocity: Vector2
+var dribble_rotation_speed: float
+var dribble_velocity_offset: float
+var ball_snap_velocity: float
+
+
+func _physics_process(delta: float) -> void:
+	print("inert node position: ", inert_node.position)
+	print("dribbled node position: ", dribbled_node.position)
+
 #=======================================================
 # STATES
 #=======================================================
@@ -22,6 +43,7 @@ var mode: Mode = Mode.INERT
 # inert state
 #----------------------------------------
 func _on_inert_state_entered() -> void:
+	print("inert state entered")
 	# inert node takes ownership of transform
 	inert_node.transform = dribbled_node.transform
 	inert_node.linear_velocity = dribbled_node.velocity
@@ -61,12 +83,44 @@ func _on_dribbled_state_entered() -> void:
 	
 	# set mode
 	mode = Mode.DRIBBLED
+	
+	# set dribble time to 0
+	dribble_time = 0.0
 
 
 func _on_dribbled_state_physics_processing(delta: float) -> void:
 	# transfer transform to other nodes
 	direction_ray.position = dribbled_node.position
 	sprite.transform = dribbled_node.transform
+	
+	## Dribbling animation
+	dribble_time += delta
+	var a: float = player_dribble_marker_position.x
+	var b: float = dribbled_node.global_position.x
+	var dribble_marker_distance: float = abs(a - b)
+	var dribble_marker_position_delta: float = (a - b)/dribble_marker_distance
+	
+	## Match player velocity
+	dribbled_node.velocity.x = player_velocity.x
+	if dribble_marker_distance > 5.0:
+		dribbled_node.velocity.x += dribble_marker_position_delta * ball_snap_velocity
+	
+	## Use gravity when not touching the ground
+	if not dribbled_node.is_on_floor():
+		dribbled_node.velocity.y += gravity * delta
+	
+	## Compute colliding behavior
+	dribbled_node.move_and_slide()
+	
+	## Ball spinning animation
+	dribbled_node.rotation = dribble_time * direction_faced * \
+		 dribble_rotation_speed * PI
+
+
+func _on_dribbled_state_exited() -> void:
+	print("dribble state exited")
+	dribbler_id = 0
+	is_owned = false
 
 
 #=======================================================
@@ -74,16 +128,40 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 #=======================================================
 # Signals from player indicating which direction they're facing
 func _on_facing_left() -> void:
+	direction_faced = Enums.Direction.LEFT
 	direction_ray.direction_faced = Enums.Direction.LEFT
 
 
 func _on_facing_right() -> void:
+	direction_faced = Enums.Direction.RIGHT
 	direction_ray.direction_faced = Enums.Direction.RIGHT
 
 
 #=======================================================
 # CONTROL FUNCTIONS
 #=======================================================
-func kick(force_vector: Vector2) -> void:
+func impulse(force_vector: Vector2) -> void:
+	print("send transition: dribbled to inert")
 	state.send_event("dribbled to inert")
+	print("apply impulse")
 	inert_node.apply_central_impulse(force_vector)
+
+
+func own(player_id: int) -> void:
+	if not is_owned:
+		dribbler_id = player_id
+		is_owned = true
+
+
+func disown(player_id: int) -> void:
+	if dribbler_id == player_id:
+		dribbler_id = 0
+		is_owned = false
+
+
+func start_dribbling() -> void:
+	state.send_event("inert to dribbled")
+
+
+func end_dribbling() -> void:
+	state.send_event("dribbled to inert")

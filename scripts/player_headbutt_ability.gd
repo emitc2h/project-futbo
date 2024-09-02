@@ -54,5 +54,5 @@ func _on_headbutting_state_entered() -> void:
 func _on_headbutt_zone_body_entered(body: Node2D) -> void:
 	if is_ready:
 		var ball: Ball2 = body.get_parent() as Ball2
-		ball.kick(Vector2.UP * headbutt_force + Vector2.RIGHT * player.velocity.x)
+		ball.impulse(Vector2.UP * headbutt_force + Vector2.RIGHT * player.velocity.x)
 		state.send_event("ready to headbutting")

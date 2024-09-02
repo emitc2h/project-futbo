@@ -20,6 +20,9 @@ var ball: Ball2
 var direction: Enums.Direction = Enums.Direction.RIGHT
 var previous_sprite_animation: String
 
+# State tracking
+var is_ready: bool
+
 
 # Record kickzone offset to flip the zone when the player faces left
 func _ready() -> void:
@@ -38,17 +41,18 @@ func _on_not_ready_state_entered() -> void:
 
 # ready state
 #----------------------------------------
-func _on_ready_state_physics_processing(delta: float) -> void:
-	# Listen to the aim vector
-	aim = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
-	if Input.is_action_just_pressed("kick"):
-		state.send_event("ready to kicking")
+func _on_ready_state_entered() -> void:
+	is_ready = true
+
+
+func _on_ready_state_exited() -> void:
+	is_ready = false
 
 
 # kicking state
 #----------------------------------------
 func _on_kicking_state_entered() -> void:
-	ball.kick(clamped_aim.get_vector(aim, direction) * kick_force)
+	ball.impulse(clamped_aim.get_vector(aim, direction) * kick_force)
 	state.send_event("kicking to not ready")
 
 
@@ -87,5 +91,6 @@ func _on_facing_right() -> void:
 # CONTROL FUNCTIONS
 #=======================================================
 func kick() -> void:
+	state.send_event("ready to kicking")
 	previous_sprite_animation = sprite.animation
 	sprite.play("kick")

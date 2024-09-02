@@ -165,4 +165,3 @@ position = Vector2(800, 467)
 
 [editable path="ControlledPlayer"]
 [editable path="ControlledPlayer/Player2"]
-[editable path="ControlledPlayer/Player2/PlayerHeadbuttAbility"]

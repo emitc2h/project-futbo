@@ -14,8 +14,8 @@ height = 88.0
 collision_mask = 2
 script = ExtResource("1_pj68o")
 
-[node name="PlayerBasicMovement" parent="." node_paths=PackedStringArray("body") instance=ExtResource("2_p5nec")]
-body = NodePath("..")
+[node name="PlayerBasicMovement" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_p5nec")]
+player = NodePath("..")
 
 [node name="PlayerCollider" type="CollisionShape2D" parent="."]
 position = Vector2(0, -44)
@@ -28,7 +28,11 @@ position = Vector2(18, -19)
 position = Vector2(0, -66)
 player = NodePath("..")
 
-[node name="PlayerDribbleAbility" parent="." instance=ExtResource("5_0d3jd")]
+[node name="PlayerDribbleAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_0d3jd")]
+position = Vector2(0, -19)
+player = NodePath("..")
 
 [connection signal="facing_left" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_facing_left"]
+[connection signal="facing_left" from="PlayerBasicMovement" to="PlayerDribbleAbility" method="_on_facing_left"]
 [connection signal="facing_right" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_facing_right"]
+[connection signal="facing_right" from="PlayerBasicMovement" to="PlayerDribbleAbility" method="_on_facing_right"]
