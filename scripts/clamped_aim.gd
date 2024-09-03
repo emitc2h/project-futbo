@@ -2,7 +2,6 @@ class_name ClampedAim
 extends Node2D
 
 
-# Compute the clamped aim angle
 func clamp_aim_angle(angle: float) -> float:
 	if angle > 0.0:
 		return PI/2

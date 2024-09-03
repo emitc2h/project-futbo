@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxui5vsqw8mu5"]
+[gd_scene load_steps=8 format=3 uid="uid://dxui5vsqw8mu5"]
 
 [ext_resource type="Script" path="res://scripts/player_dribble_ability.gd" id="1_u7j5s"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_6tl5j"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_xnrg8"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_3njhf"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_ynqty"]
+[ext_resource type="PackedScene" uid="uid://dpdewwupi78yf" path="res://scenes/dribble_cast.tscn" id="6_o82qt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b6h1h"]
 radius = 19.0
@@ -12,23 +13,6 @@ height = 56.0
 
 [node name="PlayerDribbleAbility" type="Node2D"]
 script = ExtResource("1_u7j5s")
-
-[node name="PickupZone" type="Area2D" parent="."]
-position = Vector2(18, 0)
-collision_layer = 0
-collision_mask = 4
-
-[node name="KickCollider" type="CollisionShape2D" parent="PickupZone"]
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_b6h1h")
-
-[node name="DribbleMarker" type="Marker2D" parent="."]
-position = Vector2(56, 0)
-
-[node name="DribbleCast" type="RayCast2D" parent="."]
-target_position = Vector2(56, 0)
-collision_mask = 14
-hit_from_inside = true
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_6tl5j")
@@ -44,6 +28,27 @@ script = ExtResource("4_3njhf")
 script = ExtResource("5_ynqty")
 to = NodePath("../../ready")
 event = &"not ready to ready"
+delay_in_seconds = "0.0"
+
+[node name="to standby" type="Node" parent="State/root/not ready"]
+script = ExtResource("5_ynqty")
+to = NodePath("../../standby")
+event = &"not ready to standby"
+delay_in_seconds = "0.0"
+
+[node name="standby" type="Node" parent="State/root"]
+script = ExtResource("4_3njhf")
+
+[node name="to not ready" type="Node" parent="State/root/standby"]
+script = ExtResource("5_ynqty")
+to = NodePath("../../not ready")
+event = &"standby to not ready"
+delay_in_seconds = "0.0"
+
+[node name="to dribbling" type="Node" parent="State/root/standby"]
+script = ExtResource("5_ynqty")
+to = NodePath("../../dribbling")
+event = &"standby to dribbling"
 delay_in_seconds = "0.0"
 
 [node name="ready" type="Node" parent="State/root"]
@@ -76,11 +81,26 @@ to = NodePath("../../not ready")
 event = &"dribbling to not ready"
 delay_in_seconds = "0.0"
 
-[connection signal="body_entered" from="PickupZone" to="." method="_on_pickup_zone_body_entered"]
-[connection signal="body_exited" from="PickupZone" to="." method="_on_pickup_zone_body_exited"]
+[node name="PickupZone" type="Area2D" parent="."]
+position = Vector2(18, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="KickCollider" type="CollisionShape2D" parent="PickupZone"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_b6h1h")
+
+[node name="DribbleMarker" type="Marker2D" parent="."]
+position = Vector2(56, 0)
+
+[node name="DribbleCast" parent="." node_paths=PackedStringArray("player_dribble_ability") instance=ExtResource("6_o82qt")]
+player_dribble_ability = NodePath("..")
+
 [connection signal="state_entered" from="State/root/not ready" to="." method="_on_not_ready_state_entered"]
 [connection signal="state_entered" from="State/root/ready" to="." method="_on_ready_state_entered"]
 [connection signal="state_exited" from="State/root/ready" to="." method="_on_ready_state_exited"]
 [connection signal="state_entered" from="State/root/dribbling" to="." method="_on_dribbling_state_entered"]
 [connection signal="state_exited" from="State/root/dribbling" to="." method="_on_dribbling_state_exited"]
 [connection signal="state_physics_processing" from="State/root/dribbling" to="." method="_on_dribbling_state_physics_processing"]
+[connection signal="body_entered" from="PickupZone" to="." method="_on_pickup_zone_body_entered"]
+[connection signal="body_exited" from="PickupZone" to="." method="_on_pickup_zone_body_exited"]

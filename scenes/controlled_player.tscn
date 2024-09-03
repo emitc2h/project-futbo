@@ -13,9 +13,10 @@ script = ExtResource("1_lynec")
 script = ExtResource("2_t4bcf")
 player_basic_movement = NodePath("../Player2/PlayerBasicMovement")
 
-[node name="PlayerKickAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("player_kick_ability")]
+[node name="PlayerKickAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("player_kick_ability", "player_dribble_ability")]
 script = ExtResource("3_b86n1")
 player_kick_ability = NodePath("../Player2/PlayerKickAbility")
+player_dribble_ability = NodePath("../Player2/PlayerDribbleAbility")
 
 [node name="PlayerDribbleAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("player_dribble_ability")]
 script = ExtResource("4_f0b00")

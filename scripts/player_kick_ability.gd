@@ -72,7 +72,10 @@ func _on_kick_zone_body_entered(body: Node2D) -> void:
 
 
 func _on_kick_zone_body_exited(body: Node2D) -> void:
-	state.send_event("ready to not ready")
+	ball = body.get_parent() as Ball2
+	# prevent ball from being unkickable while dribbling, even if it falls out of the kick zone
+	if not ball.is_owned:
+		state.send_event("ready to not ready")
 
 
 # from PlayerBasicMovement

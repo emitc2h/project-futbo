@@ -13,8 +13,6 @@ texture = ExtResource("1_xn0e6")
 offset = Vector2(0, -32)
 script = ExtResource("2_d7ot0")
 
-[node name="ClampedAim" parent="." instance=ExtResource("3_bpijk")]
-
 [node name="State" type="Node" parent="."]
 script = ExtResource("4_a5co3")
 
@@ -39,6 +37,8 @@ script = ExtResource("7_6g8f2")
 to = NodePath("../../idle")
 event = &"pointing to idle"
 delay_in_seconds = "0.0"
+
+[node name="ClampedAim" parent="." instance=ExtResource("3_bpijk")]
 
 [connection signal="state_physics_processing" from="State/Root/idle" to="." method="_on_idle_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/pointing" to="." method="_on_pointing_state_entered"]
