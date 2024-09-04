@@ -37,4 +37,6 @@ to = NodePath("../../idle")
 event = &"tracking to idle"
 delay_in_seconds = "0.0"
 
+[connection signal="state_entered" from="State/root/tracking" to="." method="_on_tracking_state_entered"]
+[connection signal="state_exited" from="State/root/tracking" to="." method="_on_tracking_state_exited"]
 [connection signal="state_physics_processing" from="State/root/tracking" to="." method="_on_tracking_state_physics_processing"]

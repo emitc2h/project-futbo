@@ -21,8 +21,9 @@ player = NodePath("..")
 position = Vector2(0, -44)
 shape = SubResource("CapsuleShape2D_ovy16")
 
-[node name="PlayerKickAbility" parent="." instance=ExtResource("3_nm3re")]
+[node name="PlayerKickAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_nm3re")]
 position = Vector2(18, -19)
+player = NodePath("..")
 
 [node name="PlayerHeadbuttAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_j3ifr")]
 position = Vector2(0, -66)
@@ -31,8 +32,13 @@ player = NodePath("..")
 [node name="PlayerDribbleAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_0d3jd")]
 position = Vector2(0, -19)
 player = NodePath("..")
+dribble_rotation_speed = null
+dribble_velocity_offset = null
+ball_snap_velocity = null
 
+[connection signal="facing_left" from="PlayerBasicMovement" to="." method="_on_facing_left"]
 [connection signal="facing_left" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_facing_left"]
 [connection signal="facing_left" from="PlayerBasicMovement" to="PlayerDribbleAbility" method="_on_facing_left"]
+[connection signal="facing_right" from="PlayerBasicMovement" to="." method="_on_facing_right"]
 [connection signal="facing_right" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_facing_right"]
 [connection signal="facing_right" from="PlayerBasicMovement" to="PlayerDribbleAbility" method="_on_facing_right"]

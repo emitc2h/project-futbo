@@ -2,7 +2,7 @@ class_name PlayerHeadbuttAbility
 extends Node2D
 
 # External references (player)
-@export var player: CharacterBody2D
+@export var player: Player2
 
 # Internal references
 @onready var state: StateChart = $State
@@ -53,6 +53,6 @@ func _on_headbutting_state_entered() -> void:
 #----------------------------------------
 func _on_headbutt_zone_body_entered(body: Node2D) -> void:
 	if is_ready:
-		var ball: Ball2 = body.get_parent() as Ball2
+		var ball: Ball = body.get_parent() as Ball
 		ball.impulse(Vector2.UP * headbutt_force + Vector2.RIGHT * player.velocity.x)
 		state.send_event("ready to headbutting")

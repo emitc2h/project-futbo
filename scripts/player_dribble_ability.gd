@@ -18,12 +18,11 @@ extends Node2D
 # Static/Internal properties
 var pickup_zone_position_x: float
 var dribble_marker_position_x: float
-var dribble_cast_position_x: float
 
 # Dynamic properties
-var ball: Ball2
+var ball: Ball
 var player_id: int
-
+var direction_faced: Enums.Direction = Enums.Direction.RIGHT
 
 # State tracking
 var is_ready: bool = false
@@ -39,7 +38,6 @@ signal player_dribbling(id: int,
 func _ready() -> void:
 	pickup_zone_position_x = pickup_zone.position.x
 	dribble_marker_position_x = dribble_marker.position.x
-	dribble_cast_position_x = dribble_cast.target_position.x
 
 
 #=======================================================
@@ -97,7 +95,7 @@ func _on_dribbling_state_exited() -> void:
 		ball.disown(player_id)
 		
 		# stop tracking the ball with the DribbleCast
-		dribble_cast.end_tracking()
+		dribble_cast.end_tracking(direction_faced)
 
 
 #=======================================================
@@ -121,13 +119,15 @@ func _on_pickup_zone_body_exited(body: Node2D) -> void:
 func _on_facing_left() -> void:
 	pickup_zone.position.x = -pickup_zone_position_x
 	dribble_marker.position.x = -dribble_marker_position_x
-	#dribble_cast.target_position.x = -dribble_cast_position_x
+	direction_faced = Enums.Direction.LEFT
+	dribble_cast.face_left()
 
 
 func _on_facing_right() -> void:
 	pickup_zone.position.x = pickup_zone_position_x
 	dribble_marker.position.x = dribble_marker_position_x
-	#dribble_cast.target_position.x = dribble_cast_position_x
+	direction_faced = Enums.Direction.RIGHT
+	dribble_cast.face_right()
 
 
 #=======================================================

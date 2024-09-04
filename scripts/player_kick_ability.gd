@@ -2,7 +2,10 @@ class_name PlayerKickAbility
 extends Node2D
 
 # Nodes controlled by this node
-@export var sprite: AnimatedSprite2D
+@export var player: Player2
+
+# Nodes controlled by this node
+var sprite: AnimatedSprite2D
 
 # Internal references
 @onready var state: StateChart = $State
@@ -16,7 +19,7 @@ var kickzone_position_x: float
 
 # Dynamic properties
 var aim: Vector2
-var ball: Ball2
+var ball: Ball
 var direction: Enums.Direction = Enums.Direction.RIGHT
 var previous_sprite_animation: String
 
@@ -27,6 +30,7 @@ var is_ready: bool
 # Record kickzone offset to flip the zone when the player faces left
 func _ready() -> void:
 	kickzone_position_x = self.position.x
+	sprite = player.sprite
 
 
 #=======================================================
@@ -67,12 +71,12 @@ func _on_kicking_state_exited() -> void:
 # from KickZone
 #----------------------------------------
 func _on_kick_zone_body_entered(body: Node2D) -> void:
-	ball = body.get_parent() as Ball2
+	ball = body.get_parent() as Ball
 	state.send_event("not ready to ready")
 
 
 func _on_kick_zone_body_exited(body: Node2D) -> void:
-	ball = body.get_parent() as Ball2
+	ball = body.get_parent() as Ball
 	# prevent ball from being unkickable while dribbling, even if it falls out of the kick zone
 	if not ball.is_owned:
 		state.send_event("ready to not ready")

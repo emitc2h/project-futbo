@@ -3,7 +3,7 @@ extends Node
 
 # Nodes controlled by this node
 @export var player: Player2
-@export var sprite: AnimatedSprite2D
+var sprite: AnimatedSprite2D
 
 # Internal references
 @onready var state: StateChart = $State
@@ -44,6 +44,10 @@ var in_in_the_air_state: bool = false
 # Signals
 signal facing_left()
 signal facing_right()
+
+
+func _ready() -> void:
+	sprite = player.sprite
 
 
 #=======================================================

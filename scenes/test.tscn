@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bwd4xnrevg2m" path="res://scenes/controlled_player.tscn" id="8_8w20w"]
 [ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="9_30qni"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="9_38exh"]
-[ext_resource type="PackedScene" uid="uid://buoegut2xlkro" path="res://scenes/ball_2.tscn" id="11_1jd3t"]
+[ext_resource type="PackedScene" uid="uid://buoegut2xlkro" path="res://scenes/ball.tscn" id="11_1jd3t"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s4o3c"]
 rough = true
@@ -130,9 +130,6 @@ layer_0/tile_data = PackedInt32Array(458752, 65536, 5, 458753, 131072, 2, 458754
 [node name="ControlledPlayer" parent="." instance=ExtResource("8_8w20w")]
 position = Vector2(605, 479)
 
-[node name="PlayerBasicMovement" parent="ControlledPlayer/Player2" index="0" node_paths=PackedStringArray("sprite")]
-sprite = NodePath("../AnimatedSprite2D")
-
 [node name="Camera2D" type="Camera2D" parent="ControlledPlayer/Player2" index="2"]
 position = Vector2(0, -180)
 zoom = Vector2(1.5, 1.5)
@@ -149,9 +146,6 @@ initial_node_to_watch = NodePath("../PlayerDribbleAbility/State")
 position = Vector2(0, -55)
 sprite_frames = ExtResource("9_30qni")
 animation = &"fall"
-
-[node name="PlayerKickAbility" parent="ControlledPlayer/Player2" index="5" node_paths=PackedStringArray("sprite")]
-sprite = NodePath("../AnimatedSprite2D")
 
 [node name="Ball2" parent="." instance=ExtResource("11_1jd3t")]
 position = Vector2(800, 467)

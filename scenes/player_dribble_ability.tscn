@@ -13,6 +13,9 @@ height = 56.0
 
 [node name="PlayerDribbleAbility" type="Node2D"]
 script = ExtResource("1_u7j5s")
+dribble_rotation_speed = null
+dribble_velocity_offset = null
+ball_snap_velocity = null
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_6tl5j")

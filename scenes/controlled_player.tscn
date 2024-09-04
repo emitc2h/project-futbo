@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwd4xnrevg2m"]
+[gd_scene load_steps=5 format=3 uid="uid://bwd4xnrevg2m"]
 
 [ext_resource type="Script" path="res://scripts/controlled_player.gd" id="1_lynec"]
-[ext_resource type="PackedScene" uid="uid://bus0201utlp35" path="res://scenes/player_2.tscn" id="2_jyeir"]
 [ext_resource type="Script" path="res://scripts/player_basic_movement_controller.gd" id="2_t4bcf"]
 [ext_resource type="Script" path="res://scripts/player_kick_ability_controller.gd" id="3_b86n1"]
 [ext_resource type="Script" path="res://scripts/player_dribble_ability_controller.gd" id="4_f0b00"]
@@ -9,19 +8,14 @@
 [node name="ControlledPlayer" type="Node2D"]
 script = ExtResource("1_lynec")
 
-[node name="PlayerBasicMovementController" type="Node2D" parent="." node_paths=PackedStringArray("player_basic_movement")]
+[node name="PlayerBasicMovementController" type="Node2D" parent="." node_paths=PackedStringArray("controlled_player")]
 script = ExtResource("2_t4bcf")
-player_basic_movement = NodePath("../Player2/PlayerBasicMovement")
+controlled_player = NodePath("..")
 
-[node name="PlayerKickAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("player_kick_ability", "player_dribble_ability")]
+[node name="PlayerKickAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("controlled_player")]
 script = ExtResource("3_b86n1")
-player_kick_ability = NodePath("../Player2/PlayerKickAbility")
-player_dribble_ability = NodePath("../Player2/PlayerDribbleAbility")
+controlled_player = NodePath("..")
 
-[node name="PlayerDribbleAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("player_dribble_ability")]
+[node name="PlayerDribbleAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("controlled_player")]
 script = ExtResource("4_f0b00")
-player_dribble_ability = NodePath("../Player2/PlayerDribbleAbility")
-
-[node name="Player2" parent="." instance=ExtResource("2_jyeir")]
-
-[editable path="Player2"]
+controlled_player = NodePath("..")

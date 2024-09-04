@@ -1,11 +1,22 @@
 class_name PlayerDribbleAbilityController
 extends Node2D
 
-@export var player_dribble_ability: PlayerDribbleAbility
+@export var controlled_player: ControlledPlayer
+var player_dribble_ability: PlayerDribbleAbility
+
+var enabled: bool = false
+
+
+func _ready() -> void:
+	player_dribble_ability = controlled_player.player.get_node("PlayerDribbleAbility")
+	if player_dribble_ability:
+		enabled = true
+
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("dribble"):
-		player_dribble_ability.start_dribble()
+	if enabled:
+		if Input.is_action_just_pressed("dribble"):
+			player_dribble_ability.start_dribble()
 	
-	if Input.is_action_just_released("dribble"):
-		player_dribble_ability.end_dribble()
+		if Input.is_action_just_released("dribble"):
+			player_dribble_ability.end_dribble()

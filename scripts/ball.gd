@@ -1,196 +1,161 @@
 class_name Ball
 extends Node2D
 
-const DRIBBLE_ROTATION_SPEED: float = 4.0
-const DRIBBLE_AMPLITUDE: float = 150.0
-const DRIBBLE_FREQUENCY: float = 8.0
-const DRIBBLE_VELOCITY_OFFSET: float = 0.63662
-const BALL_SNAP_VELOCITY: float = 600.0
+enum Mode {INERT, DRIBBLED}
+var mode: Mode = Mode.INERT
 
-var player_dribble_marker_position: Vector2
-var dribble_time: float
-# Tracks if a controller possesses a reference to the ball.
-var is_owned: bool = false
-var player_direction_faced: float
-var player_velocity_x: float
-var velocity: Vector2
-var clamped_aim_angle: float
-var clamped_aim_vector: Vector2
+# Internal references
+@onready var state: StateChart = $State
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
+# physics nodes
+@onready var inert_node: InertNode = $InertNode
+@onready var dribbled_node: CharacterBody2D = $DribbledNode
+
+# controlled nodes
+@onready var direction_ray: DirectionRay = $DirectionRay
+@onready var sprite: Node2D = $SpriteContainer
+
+# Static/Internal properties
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-enum Mode {RIGID_MODE, CHAR_MODE}
+# Dynamic properties
+var direction_faced: Enums.Direction = Enums.Direction.RIGHT
 
-var mode: Mode = Mode.RIGID_MODE
+var dribbler_id: int
+var is_owned: bool = false
 
+var dribble_time: float
+var player_dribble_marker_position: Vector2
+var player_velocity: Vector2
+var dribble_rotation_speed: float
+var dribble_velocity_offset: float
+var ball_snap_velocity: float
 
-func sync_transform_from_rigid_to_char() -> void:
-	$CharNode.transform = $RigidNode.transform
+#=======================================================
+# STATES
+#=======================================================
 
-
-func sync_transform_from_char_to_rigid() -> void:
-	$RigidNode.transform = $CharNode.transform
-	$RigidNode.linear_velocity = $CharNode.velocity
-	$CharNode.velocity = Vector2.ZERO
-
-
-func move_nodes_to_char() -> void:
-	if $RigidNode.has_node("DirectionRay"):
-		$RigidNode/DirectionRay.reparent($CharNode)
-	if $RigidNode.has_node("AnimatedSprite2D"):
-		$RigidNode/AnimatedSprite2D.reparent($CharNode)
-
-
-func move_nodes_to_rigid() -> void:
-	if $CharNode.has_node("DirectionRay"):
-		$CharNode/DirectionRay.reparent($RigidNode)
-	if $CharNode.has_node("AnimatedSprite2D"):
-		$CharNode/AnimatedSprite2D.reparent($RigidNode)
-
-
-func set_rigid_to_collide() -> void:
-	$RigidNode.set_collision_layer_value(3, true)
-	$CharNode.set_collision_layer_value(3, false)
-
-
-func set_char_to_collide() -> void:
-	$RigidNode.set_collision_layer_value(3, false)
-	$CharNode.set_collision_layer_value(3, true)
-
-
-func set_mode(input_mode: Mode) -> void:
-	if input_mode == Mode.RIGID_MODE and mode == Mode.CHAR_MODE:
-		sync_transform_from_char_to_rigid()
-		move_nodes_to_rigid()
-		set_rigid_to_collide()
-		$RigidNode.sleeping = false
-		$RigidNode.set_freeze_enabled(false)
+# inert state
+#----------------------------------------
+func _on_inert_state_physics_processing(delta: float) -> void:
+	# transfer transform to other nodes
+	direction_ray.position = inert_node.position
+	sprite.transform = inert_node.transform
 	
-	
-	elif input_mode == Mode.CHAR_MODE and mode == Mode.RIGID_MODE:
-		set_char_to_collide()
-		$RigidNode.set_freeze_enabled(true)
-		$RigidNode.sleeping = true
-		sync_transform_from_rigid_to_char()
-		move_nodes_to_char()
-		
-	self.mode = input_mode
+	# dribbled follows inert node
+	dribbled_node.transform = inert_node.transform
 
 
-func get_direction_ray() -> Sprite2D:
-	if self.mode == Mode.RIGID_MODE:
-		return $RigidNode/DirectionRay
-	elif self.mode == Mode.CHAR_MODE:
-		return $CharNode/DirectionRay
-	else:
-		return null
-
-
-func get_animated_sprite_2d() -> AnimatedSprite2D:
-	if self.mode == Mode.RIGID_MODE:
-		return $RigidNode/AnimatedSprite2D
-	elif self.mode == Mode.CHAR_MODE:
-		return $CharNode/AnimatedSprite2D
-	else:
-		return null
-		
-		
-func get_driver_node() -> Node2D:
-	if self.mode == Mode.RIGID_MODE:
-		return $RigidNode
-	elif self.mode == Mode.CHAR_MODE:
-		return $CharNode
-	else:
-		return null
-
-
-func jump(vy: float) -> void:
-	if mode == Mode.CHAR_MODE:
-		$CharNode.velocity.y = vy
-
-
+# dribbled state
+#----------------------------------------
 func _on_dribbled_state_entered() -> void:
-	is_owned = true
-	self.set_mode(Mode.CHAR_MODE)
+	# dribbled node collides, inert node does not
+	dribbled_node.set_collision_layer_value(3, true)
+	inert_node.set_collision_layer_value(3, false)
+	
+	# freeze the inert node
+	inert_node.sleeping = true
+	inert_node.set_freeze_enabled(true)
+	
+	# dribbled node takes ownership of transform
+	dribbled_node.transform = inert_node.transform
+	
+	# set mode
+	mode = Mode.DRIBBLED
+	
+	# set dribble time to 0
 	dribble_time = 0.0
 
 
 func _on_dribbled_state_physics_processing(delta: float) -> void:
-	## Dribbling animation
+	# Dribbling animation
 	dribble_time += delta
 	var a: float = player_dribble_marker_position.x
-	var b: float = $CharNode.global_position.x
+	var b: float = dribbled_node.global_position.x
 	var dribble_marker_distance: float = abs(a - b)
 	var dribble_marker_position_delta: float = (a - b)/dribble_marker_distance
 	
-	## Match player velocity
-	$CharNode.velocity.x = player_velocity_x
+	# Match player velocity
+	dribbled_node.velocity.x = player_velocity.x
 	if dribble_marker_distance > 5.0:
-		$CharNode.velocity.x += dribble_marker_position_delta * BALL_SNAP_VELOCITY
+		dribbled_node.velocity.x += dribble_marker_position_delta * ball_snap_velocity
 	
-	## Use gravity when not touching the ground
-	if not $CharNode.is_on_floor():
-		$CharNode.velocity.y += gravity * delta
+	# Use gravity when not touching the ground
+	if not dribbled_node.is_on_floor():
+		dribbled_node.velocity.y += gravity * delta
 	
-	## Compute colliding behavior
-	$CharNode.move_and_slide()
+	# Compute colliding behavior
+	dribbled_node.move_and_slide()
 	
-	## Ball spinning animation
-	$CharNode.rotation += player_direction_faced * DRIBBLE_ROTATION_SPEED * delta * PI
+	# Ball spinning animation
+	dribbled_node.rotation = dribble_time * direction_faced * \
+		 dribble_rotation_speed * PI
+		
+	# transfer transform to other nodes
+	direction_ray.position = dribbled_node.position
+	sprite.transform = dribbled_node.transform
+		
+	# inert node follows dribbled node
+	inert_node.transform = dribbled_node.transform
+	inert_node.linear_velocity = dribbled_node.velocity
 
 
 func _on_dribbled_state_exited() -> void:
+	dribbler_id = 0
 	is_owned = false
-	$CharNode.velocity = velocity
-	self.set_mode(Mode.RIGID_MODE)
+	
+		# wake up the inert node
+	inert_node.set_freeze_enabled(false)
+	inert_node.sleeping = false
+	
+	# inert node takes ownership of transform
+	inert_node.set_transform_and_velocity(dribbled_node.global_transform, dribbled_node.velocity)
+	dribbled_node.velocity = Vector2.ZERO
+	
+	# inert node collides, dribbled node does not
+	inert_node.set_collision_layer_value(3, true)
+	dribbled_node.set_collision_layer_value(3, false)
+	
+	# set mode
+	mode = Mode.INERT
 
 
-func _on_idle_state_entered() -> void:
-	get_direction_ray().visible = false
+#=======================================================
+# RECEIVED SIGNALS
+#=======================================================
+# Signals from player indicating which direction they're facing
+func _on_facing_left() -> void:
+	direction_faced = Enums.Direction.LEFT
+	direction_ray.direction_faced = Enums.Direction.LEFT
 
 
-func _on_idle_state_physics_processing(delta: float) -> void:
-	clamped_aim_vector = Vector2(player_direction_faced, 0)
-	get_direction_ray().global_rotation = clamped_aim_vector.angle() + PI/2
+func _on_facing_right() -> void:
+	direction_faced = Enums.Direction.RIGHT
+	direction_ray.direction_faced = Enums.Direction.RIGHT
 
 
-func _on_pointing_state_entered() -> void:
-	get_direction_ray().visible = true
+#=======================================================
+# CONTROL FUNCTIONS
+#=======================================================
+func impulse(force_vector: Vector2) -> void:
+	inert_node.set_impulse(force_vector)
 
 
-func _on_pointing_state_physics_processing(delta: float) -> void:
-	clamped_aim_vector = Vector2.from_angle(clamped_aim_angle)
-	get_direction_ray().global_rotation = clamped_aim_angle + PI/2
+func own(player_id: int) -> void:
+	if not is_owned:
+		dribbler_id = player_id
+		is_owned = true
 
 
-func _on_controller_player_clamped_aim_angle(angle: float) -> void:
-	clamped_aim_angle = angle
+func disown(player_id: int) -> void:
+	if dribbler_id == player_id:
+		dribbler_id = 0
+		is_owned = false
 
 
-func _on_controller_player_send_ball_state(transition: String) -> void:
-	$StateChart.send_event(transition)
+func start_dribbling() -> void:
+	state.send_event("inert to dribbled")
 
 
-func _on_controller_player_player_direction_faced(direction: float) -> void:
-	player_direction_faced = direction
-
-
-func _on_kick(kick_vector: Vector2) -> void:
-	$StateChart.send_event("dribbled_to_kick")
-	$StateChart.send_event("inert_to_kick")
-	$RigidNode.apply_central_impulse(kick_vector)
-
-
-func _on_kick_state_entered() -> void:
-	is_owned = true
-	set_mode(Mode.RIGID_MODE)
-	$StateChart.send_event("kick_to_inert")
-
-
-func _on_headbutt(headbutt_vector: Vector2) -> void:
-	$RigidNode.apply_central_impulse(headbutt_vector)
-
-
-func _on_kick_state_exited() -> void:
-	is_owned = false
+func end_dribbling() -> void:
+	state.send_event("dribbled to inert")
