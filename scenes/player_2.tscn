@@ -32,9 +32,9 @@ player = NodePath("..")
 [node name="PlayerDribbleAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_0d3jd")]
 position = Vector2(0, -19)
 player = NodePath("..")
-dribble_rotation_speed = null
-dribble_velocity_offset = null
-ball_snap_velocity = null
+dribble_rotation_speed = 4.0
+dribble_velocity_offset = 0.63662
+ball_snap_velocity = 600.0
 
 [connection signal="facing_left" from="PlayerBasicMovement" to="." method="_on_facing_left"]
 [connection signal="facing_left" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_facing_left"]

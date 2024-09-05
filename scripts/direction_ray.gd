@@ -9,6 +9,11 @@ extends Sprite2D
 var aim: Vector2
 var direction_faced: Enums.Direction = Enums.Direction.RIGHT
 
+
+func _ready() -> void:
+	self.visible = false
+
+
 # Listen to the aim vector at all times
 func _physics_process(delta: float) -> void:
 	aim = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")

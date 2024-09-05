@@ -27,6 +27,7 @@ var direction_faced: Enums.Direction = Enums.Direction.RIGHT
 # State tracking
 var is_ready: bool = false
 
+
 # Signals
 signal own_ball(player_id: int)
 signal release_ball(player_id: int)
@@ -143,6 +144,11 @@ func start_dribble() -> void:
 func end_dribble() -> void:
 	state.send_event("dribbling to ready")
 	state.send_event("standby to not ready")
+
+
+func ball_jump(jump_velocity_y: float) -> void:
+	if ball and player_id == ball.dribbler_id:
+		ball.dribbled_node.velocity.y += jump_velocity_y
 
 
 
