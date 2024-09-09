@@ -121,3 +121,7 @@ debug={
 2d_physics/layer_3="Ball"
 2d_physics/layer_4="Goal"
 2d_physics/layer_32="void"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.3458, 0.646707, 0.91, 1)
