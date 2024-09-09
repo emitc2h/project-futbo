@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://thoxaas4qsn2"]
+
+[ext_resource type="Script" path="res://scripts/ai_player.gd" id="1_1rtat"]
+
+[node name="AI" type="Node2D"]
+script = ExtResource("1_1rtat")
+
+[node name="Decider" type="Node2D" parent="."]
+
+[node name="Behaviors" type="Node2D" parent="."]

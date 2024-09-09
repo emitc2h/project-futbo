@@ -1,10 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://cg52j0i272cki"]
+[gd_scene load_steps=15 format=3 uid="uid://cg52j0i272cki"]
 
-[ext_resource type="PackedScene" uid="uid://bwd4xnrevg2m" path="res://scenes/controlled_player.tscn" id="2_ix4b0"]
+[ext_resource type="PackedScene" uid="uid://bwd4xnrevg2m" path="res://scenes/controller.tscn" id="2_ix4b0"]
 [ext_resource type="PackedScene" uid="uid://bus0201utlp35" path="res://scenes/player_2.tscn" id="3_7khvi"]
 [ext_resource type="Texture2D" uid="uid://bj6gbj2puyjhs" path="res://kenney_sports-pack/goalback.png" id="3_xblxb"]
 [ext_resource type="Texture2D" uid="uid://dng5mhl6s5bqk" path="res://kenney_sports-pack/goalfront.png" id="4_3ctr5"]
 [ext_resource type="Script" path="res://scripts/goal.gd" id="4_fp7pi"]
+[ext_resource type="PackedScene" uid="uid://thoxaas4qsn2" path="res://scenes/ai.tscn" id="6_egnei"]
+[ext_resource type="SpriteFrames" uid="uid://b5y2k0oe4jdi6" path="res://resources/adversary_spriteframes.tres" id="7_6s64y"]
 [ext_resource type="Texture2D" uid="uid://bfyvyupe8be4r" path="res://kenney_sports-pack/goalback-blue.png" id="7_h5lyv"]
 [ext_resource type="Script" path="res://scripts/ui.gd" id="7_tnj2d"]
 [ext_resource type="Texture2D" uid="uid://dk5lv81bnl5vp" path="res://kenney_sports-pack/goalfront-blue.png" id="8_y5hhm"]
@@ -51,22 +53,34 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 64
 text = "Score: 0"
 
-[node name="ControlledPlayer" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_ix4b0")]
+[node name="Player" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("3_7khvi")]
 position = Vector2(644, 489)
-player = NodePath("Player2")
-
-[node name="Player2" parent="ControlledPlayer" node_paths=PackedStringArray("sprite") instance=ExtResource("3_7khvi")]
 sprite = NodePath("AnimatedSprite2D")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ControlledPlayer/Player2"]
+[node name="Controller" parent="Player" node_paths=PackedStringArray("player") instance=ExtResource("2_ix4b0")]
+player = NodePath("..")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(0, -55)
 sprite_frames = ExtResource("10_61452")
 animation = &"celebrate"
 
-[node name="Camera2D" type="Camera2D" parent="ControlledPlayer/Player2"]
+[node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, -180)
 zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
+
+[node name="Player2" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("3_7khvi")]
+position = Vector2(1586, 489)
+sprite = NodePath("AnimatedSprite2D")
+
+[node name="AI" parent="Player2" node_paths=PackedStringArray("player") instance=ExtResource("6_egnei")]
+player = NodePath("..")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player2"]
+position = Vector2(0, -55)
+sprite_frames = ExtResource("7_6s64y")
+animation = &"celebrate"
 
 [node name="Ball" parent="." instance=ExtResource("18_fsj6p")]
 position = Vector2(1165, 468)
@@ -77,7 +91,7 @@ position = Vector2(1165, 468)
 position = Vector2(1, 0)
 tile_set = ExtResource("9_tpp2a")
 format = 2
-layer_0/tile_data = PackedInt32Array(458752, 65536, 5, 458753, 131072, 2, 458754, 262144, 3, 458755, 262144, 3, 458756, 262144, 3, 458758, 262144, 3, 458757, 262144, 3, 458759, 262144, 3, 458761, 262144, 3, 458760, 262144, 3, 458762, 262144, 3, 458763, 262144, 3, 458764, 262144, 3, 458765, 262144, 3, 458766, 262144, 3, 458767, 262144, 3, 393216, 131072, 2, 327680, 131072, 0, 262144, 131072, 0, 196608, 131072, 4, 393217, 262144, 0, 458768, 262144, 3, 458769, 262144, 3, 458770, 262144, 3, 458771, 262144, 3, 458772, 262144, 3, 458773, 262144, 3, 458774, 262144, 3, 458775, 262144, 3, 458776, 262144, 3, 458777, 262144, 3, 458778, 262144, 3, 458779, 262144, 3, 458780, 262144, 3, 393245, 196608, 6, 327710, 196608, 6, 262175, 196608, 6, 262176, 262144, 3, 262177, 262144, 3, 262178, 262144, 3, 262179, 262144, 3, 262180, 262144, 3, 262181, 262144, 3, 262182, 262144, 3, 327711, 327680, 0, 393246, 327680, 0, 458781, 327680, 0, 262143, 196608, 3, 458782, 65536, 6, 393247, 65536, 6, 327712, 65536, 6, 262183, 262144, 3, 262184, 262144, 3, 262185, 262144, 3, 262186, 262144, 3, 262187, 262144, 3, 262188, 262144, 3, 262189, 262144, 3, 262190, 262144, 3, 262191, 262144, 0, 327728, 262144, 0, 393265, 262144, 0, 458802, 262144, 0, 524339, 262144, 0, 589876, 262144, 0, 655413, 262144, 0, 720950, 262144, 3, 720951, 262144, 3, 720952, 262144, 3, 720953, 262144, 3, 720954, 262144, 0, 786491, 262144, 0, 852028, 262144, 0, 917565, 262144, 3, 917566, 262144, 3, 917567, 262144, 3, 917568, 262144, 3, 917569, 262144, 3, 917570, 262144, 3, 917571, 262144, 3, 917572, 262144, 3, 917573, 262144, 3, 917574, 262144, 3, 852039, 196608, 6, 786504, 196608, 6, 720969, 131072, 1, 655433, 131072, 1, 589897, 131072, 1, 524361, 131072, 1, 458825, 131072, 1, 393289, 131072, 5, 393290, 196608, 2, 786505, 327680, 0, 852040, 327680, 0, 917575, 327680, 0, 917576, 65536, 6, 852041, 65536, 6, 786490, 65536, 4, 852027, 65536, 4, 917564, 65536, 4, 786489, 65536, 5, 852026, 65536, 5, 917563, 65536, 5, 327727, 65536, 5, 393264, 65536, 5, 458801, 65536, 5, 524338, 65536, 5, 589875, 65536, 5, 655412, 65536, 5, 720949, 65536, 5)
+layer_0/tile_data = PackedInt32Array(458752, 0, 5, 458753, 131072, 2, 458754, 262144, 3, 458755, 262144, 3, 458756, 262144, 3, 458758, 262144, 3, 458757, 262144, 3, 458759, 262144, 3, 458761, 262144, 3, 458760, 262144, 3, 458762, 262144, 3, 458763, 262144, 3, 458764, 262144, 3, 458765, 262144, 3, 458766, 262144, 3, 458767, 262144, 3, 393216, 131072, 2, 327680, 131072, 0, 262144, 131072, 0, 196608, 131072, 0, 393217, 262144, 0, 458768, 262144, 3, 458769, 262144, 3, 458770, 262144, 3, 458771, 262144, 3, 458772, 262144, 3, 458773, 262144, 3, 458774, 262144, 3, 458775, 262144, 3, 458776, 262144, 3, 458777, 262144, 3, 458778, 262144, 3, 458779, 262144, 3, 458780, 262144, 3, 458781, 262144, 3, 262143, 327680, 1, 458782, 262144, 3, 458802, 262144, 3, 524339, 0, 5, 458801, 262144, 3, 524338, 0, 5, 458784, 262144, 3, 458785, 262144, 3, 458786, 262144, 3, 458787, 262144, 3, 458788, 262144, 3, 458789, 262144, 3, 458790, 262144, 3, 458791, 262144, 3, 458792, 262144, 3, 458793, 262144, 3, 458794, 262144, 3, 458795, 262144, 3, 458796, 262144, 3, 458797, 262144, 3, 458798, 262144, 3, 458799, 262144, 3, 458783, 262144, 3, 458800, 262144, 3, 458803, 262144, 3, 458804, 262144, 3, 458805, 262144, 3, 458806, 262144, 3, 458807, 262144, 3, 458808, 262144, 3, 458809, 262144, 3, 458810, 262144, 3, 458811, 262144, 3, 458812, 262144, 3, 458813, 262144, 3, 458814, 262144, 3, 458815, 262144, 3, 458816, 262144, 3, 458817, 262144, 3, 458818, 262144, 3, 458824, 262144, 3, 458819, 262144, 3, 458820, 262144, 3, 458821, 262144, 3, 458822, 262144, 3, 458823, 262144, 3, 524288, 0, 5, 524289, 0, 5, 524290, 0, 5, 524291, 0, 5, 524292, 0, 5, 524293, 0, 5, 524294, 0, 5, 524295, 0, 5, 524296, 0, 5, 524297, 0, 5, 524298, 0, 5, 524299, 0, 5, 524337, 0, 5, 524336, 0, 5, 524335, 0, 5, 524334, 0, 5, 524333, 0, 5, 524332, 0, 5, 524331, 0, 5, 524330, 0, 5, 524329, 0, 5, 524328, 0, 5, 524327, 0, 5, 524326, 0, 5, 524325, 0, 5, 524324, 0, 5, 524323, 0, 5, 524322, 0, 5, 524321, 0, 5, 524320, 0, 5, 524319, 0, 5, 524318, 0, 5, 524317, 0, 5, 524316, 0, 5, 524315, 0, 5, 524314, 0, 5, 524313, 0, 5, 524312, 0, 5, 524311, 0, 5, 524310, 0, 5, 524309, 0, 5, 524308, 0, 5, 524307, 0, 5, 524306, 0, 5, 524305, 0, 5, 524304, 0, 5, 524303, 0, 5, 524302, 0, 5, 524301, 0, 5, 524300, 0, 5, 524340, 0, 5, 524341, 0, 5, 524342, 0, 5, 524343, 0, 5, 524344, 0, 5, 524345, 0, 5, 524346, 0, 5, 524347, 0, 5, 524348, 0, 5, 524349, 0, 5, 524350, 0, 5, 524351, 0, 5, 524352, 0, 5, 524353, 0, 5, 524354, 0, 5, 524355, 0, 5, 524356, 0, 5, 524357, 0, 5, 524358, 0, 5, 524359, 0, 5, 524360, 0, 5, 393289, 196608, 6, 327754, 196608, 6, 262219, 196608, 6, 196684, 196608, 6, 196685, 262144, 3, 196686, 262144, 3, 196687, 262144, 3, 196688, 262144, 3, 196689, 262144, 3, 196690, 262144, 3, 196691, 262144, 3, 196692, 262144, 3, 131157, 196608, 6, 458825, 327680, 0, 393290, 327680, 0, 327755, 327680, 0, 262220, 327680, 0, 524361, 65536, 6, 458826, 65536, 6, 393291, 65536, 6, 327756, 65536, 6, 262221, 0, 5, 262222, 0, 5, 262223, 0, 5, 262224, 0, 5, 262225, 0, 5, 262226, 0, 5, 262227, 0, 5, 262228, 0, 5, 65622, 131072, 1, 86, 131072, 1, -65450, 131072, 1, -130986, 131072, 1, -196522, 131072, 1, -262058, 131072, 1, -327594, 131072, 1, -393130, 131072, 5, 131158, 131072, 6, 196693, 131072, 6, 262229, 65536, 6, 196694, 65536, 6, -393129, 262144, 2, -327593, 65536, 6, 131072, 131072, 0, 65536, 131072, 0, 0, 131072, 0, -65536, 131072, 0, -65537, 196608, 3, -131072, 262144, 0)
 
 [node name="GoalRed" type="Node2D" parent="World"]
 position = Vector2(155, 490)
@@ -113,7 +127,7 @@ position = Vector2(3, -3)
 polygon = PackedVector2Array(0, 0, 14, 0, 61, -155, 75, -167, 151, -167, 151, -182, 70, -182, 47, -160)
 
 [node name="GoalBlue" type="Node2D" parent="World"]
-position = Vector2(4715, 980)
+position = Vector2(4715, 490)
 script = ExtResource("4_fp7pi")
 
 [node name="GoalArea" type="Area2D" parent="World/GoalBlue"]
@@ -147,8 +161,8 @@ physics_material_override = SubResource("PhysicsMaterial_eceke")
 position = Vector2(3, -3)
 polygon = PackedVector2Array(0, 0, -14, 0, -61, -155, -75, -167, -151, -167, -151, -182, -70, -182, -47, -160)
 
-[connection signal="facing_left" from="ControlledPlayer/Player2" to="Ball" method="_on_facing_left"]
-[connection signal="facing_right" from="ControlledPlayer/Player2" to="Ball" method="_on_facing_right"]
+[connection signal="facing_left" from="Player" to="Ball" method="_on_facing_left"]
+[connection signal="facing_right" from="Player" to="Ball" method="_on_facing_right"]
 [connection signal="body_entered" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_exited"]
 [connection signal="body_entered" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_entered"]

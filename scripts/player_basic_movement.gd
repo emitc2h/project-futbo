@@ -29,8 +29,7 @@ var left_right_axis: float
 # The direction faced is independent from where the player is going. It does
 # determine among other things, the maximum velocity as the player goes slower
 # facing backward than forward.
-enum DirectionFaced {LEFT = -1, RIGHT = 1}
-var direction_faced: DirectionFaced
+var direction_faced: Enums.Direction
 
 # Track the time left in turning state for skidding
 var turning_time_left: float = 0.0
@@ -247,7 +246,7 @@ func _on_jump_buffer_state_exited() -> void:
 # face right state
 #----------------------------------------
 func _on_face_right_state_entered() -> void:
-	direction_faced = DirectionFaced.RIGHT
+	direction_faced = Enums.Direction.RIGHT
 	sprite.flip_h = false
 	facing_right.emit()
 
@@ -266,7 +265,7 @@ func _on_face_right_state_physics_processing(delta: float) -> void:
 # face left state
 #----------------------------------------
 func _on_face_left_state_entered() -> void:
-	direction_faced = DirectionFaced.LEFT
+	direction_faced = Enums.Direction.LEFT
 	sprite.flip_h = true
 	facing_left.emit()
 
@@ -286,7 +285,7 @@ func _on_face_left_state_physics_processing(delta: float) -> void:
 func _on_turn_right_state_entered() -> void:
 	turn_right_timer.start()
 	turning_time_left = 2.0
-	direction_faced = DirectionFaced.RIGHT
+	direction_faced = Enums.Direction.RIGHT
 
 
 func _on_turn_right_state_physics_processing(delta: float) -> void:
@@ -310,7 +309,7 @@ func _on_turn_right_state_exited() -> void:
 func _on_turn_left_state_entered() -> void:
 	turn_left_timer.start()
 	turning_time_left = 2.0
-	direction_faced = DirectionFaced.LEFT
+	direction_faced = Enums.Direction.LEFT
 
 
 func _on_turn_left_state_physics_processing(delta: float) -> void:
