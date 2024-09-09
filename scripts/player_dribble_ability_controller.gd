@@ -1,7 +1,7 @@
 class_name PlayerDribbleAbilityController
 extends Node2D
 
-@export var controlled_player: ControlledPlayer
+@export var controller: Controller
 var player_dribble_ability: PlayerDribbleAbility
 var player_basic_movement: PlayerBasicMovement
 
@@ -9,8 +9,8 @@ var enabled: bool = false
 
 
 func _ready() -> void:
-	player_basic_movement = controlled_player.player.get_node("PlayerBasicMovement")
-	player_dribble_ability = controlled_player.player.get_node("PlayerDribbleAbility")
+	player_basic_movement = controller.player.get_node("PlayerBasicMovement")
+	player_dribble_ability = controller.player.get_node("PlayerDribbleAbility")
 	if player_dribble_ability:
 		enabled = true
 

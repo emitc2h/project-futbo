@@ -80,5 +80,3 @@ func face_left() -> void:
 func face_right() -> void:
 	if not is_tracking:
 		self.target_position.x = init_target_pos.x
-
-

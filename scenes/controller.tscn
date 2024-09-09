@@ -8,14 +8,14 @@
 [node name="Controller" type="Node2D"]
 script = ExtResource("1_lynec")
 
-[node name="PlayerBasicMovementController" type="Node2D" parent="." node_paths=PackedStringArray("controlled_player")]
+[node name="PlayerBasicMovementController" type="Node2D" parent="." node_paths=PackedStringArray("controller")]
 script = ExtResource("2_t4bcf")
-controlled_player = NodePath("..")
+controller = NodePath("..")
 
-[node name="PlayerKickAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("controlled_player")]
+[node name="PlayerKickAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("controller")]
 script = ExtResource("3_b86n1")
-controlled_player = NodePath("..")
+controller = NodePath("..")
 
-[node name="PlayerDribbleAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("controlled_player")]
+[node name="PlayerDribbleAbilityController" type="Node2D" parent="." node_paths=PackedStringArray("controller")]
 script = ExtResource("4_f0b00")
-controlled_player = NodePath("..")
+controller = NodePath("..")

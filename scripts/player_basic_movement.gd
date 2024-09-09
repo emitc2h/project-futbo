@@ -351,4 +351,3 @@ func jump() -> void:
 		state.send_event("run buffer to jump")
 	else:
 		state.send_event("in the air to jump buffer")
-

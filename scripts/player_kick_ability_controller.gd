@@ -1,7 +1,7 @@
 class_name PlayerKickAbilityController
 extends Node2D
 
-@export var controlled_player: ControlledPlayer
+@export var controller: Controller
 var player_kick_ability: PlayerKickAbility
 var player_dribble_ability: PlayerDribbleAbility
 
@@ -10,11 +10,11 @@ var dribble_enabled: bool = false
 
 
 func _ready() -> void:
-	player_kick_ability = controlled_player.player.get_node("PlayerKickAbility")
+	player_kick_ability = controller.player.get_node("PlayerKickAbility")
 	if player_kick_ability:
 		kick_enabled = true
 	
-	player_dribble_ability = controlled_player.player.get_node("PlayerDribbleAbility")
+	player_dribble_ability = controller.player.get_node("PlayerDribbleAbility")
 	if player_dribble_ability:
 		dribble_enabled = true
 

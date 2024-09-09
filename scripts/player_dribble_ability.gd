@@ -149,7 +149,3 @@ func end_dribble() -> void:
 func ball_jump(jump_velocity_y: float) -> void:
 	if ball and player_id == ball.dribbler_id:
 		ball.dribbled_node.velocity.y += jump_velocity_y
-
-
-
-
