@@ -56,11 +56,16 @@ func _on_seek_state_physics_processing(delta: float) -> void:
 #----------------------------------------
 func _on_attack_state_entered() -> void:
 	# If dribbling attempt is unsuccessful, return to seek state
-	if not dribble_skill.start_dribbling():
+	dribble_skill.start_dribbling()
+	if not dribble_skill.dribble_ability.is_dribbling:
 		state.send_event("attack to seek")
 
 
 func _on_attack_state_physics_processing(delta: float) -> void:
+	# If the ball was lost
+	if not dribble_skill.dribble_ability.is_dribbling:
+		state.send_event("attack to confused")
+	
 	# Head toward the away goal
 	var distance_to_away_goal: float = CalcPhys.distance_x_positions(
 		player.global_position, away_goal_position)
@@ -102,6 +107,15 @@ func _on_reset_state_physics_processing(delta: float) -> void:
 		seek_skill.seek_target(home_goal_position)
 	else:
 		state.send_event("reset to seek")
+
+
+# confused state
+#----------------------------------------
+func _on_confused_state_entered() -> void:
+	seek_skill.stop_seeking()
+	seek_skill.basic_movement.idle_with_custom_animation("confused")
+	state.send_event("confused to seek")
+	
 	
 
 #=======================================================

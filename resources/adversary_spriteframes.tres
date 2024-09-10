@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=12 format=3 uid="uid://b5y2k0oe4jdi6"]
+[gd_resource type="SpriteFrames" load_steps=13 format=3 uid="uid://b5y2k0oe4jdi6"]
 
 [ext_resource type="Texture2D" uid="uid://dhvnt0e3ypa8u" path="res://kenney_platformer-characters/PNG/Female/Poses/female_idle.png" id="1_hmhvf"]
 [ext_resource type="Texture2D" uid="uid://cpdfxhmp0vcbo" path="res://kenney_platformer-characters/PNG/Female/Poses/female_cheer1.png" id="2_atohp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cwmwxjkmyd3qb" path="res://kenney_platformer-characters/PNG/Female/Poses/female_cheer2.png" id="3_6mxuv"]
 [ext_resource type="Texture2D" uid="uid://c175minrpr3t0" path="res://kenney_platformer-characters/PNG/Female/Poses/female_action2.png" id="3_ffev7"]
 [ext_resource type="Texture2D" uid="uid://cm2jrlaifjnnh" path="res://kenney_platformer-characters/PNG/Female/Poses/female_kick.png" id="4_8h1dv"]
+[ext_resource type="Texture2D" uid="uid://c07gwwxdi2ryb" path="res://kenney_platformer-characters/PNG/Female/Poses/female_hurt.png" id="4_pu7g5"]
 [ext_resource type="Texture2D" uid="uid://dbyb1ojyu8onx" path="res://kenney_platformer-characters/PNG/Female/Poses/female_fall.png" id="4_qa344"]
 [ext_resource type="Texture2D" uid="uid://b6m6pidcdy4ka" path="res://kenney_platformer-characters/PNG/Female/Poses/female_stand.png" id="5_3v6we"]
 [ext_resource type="Texture2D" uid="uid://dwmimpuw3bn3d" path="res://kenney_platformer-characters/PNG/Female/Poses/female_skid.png" id="6_8rtmg"]
@@ -29,6 +30,20 @@ animations = [{
 }],
 "loop": true,
 "name": &"celebrate",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_pu7g5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qa344")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_hmhvf")
+}],
+"loop": false,
+"name": &"confused",
 "speed": 5.0
 }, {
 "frames": [{

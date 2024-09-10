@@ -139,6 +139,7 @@ func _on_facing_right() -> void:
 # CONTROL FUNCTIONS
 #=======================================================
 func impulse(force_vector: Vector2) -> void:
+	end_dribbling()
 	inert_node.set_impulse(force_vector)
 
 

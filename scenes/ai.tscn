@@ -64,6 +64,12 @@ to = NodePath("../../seek")
 event = &"attack to seek"
 delay_in_seconds = "0.0"
 
+[node name="to confused" type="Node" parent="Behaviors/State/root/attack"]
+script = ExtResource("7_shp3v")
+to = NodePath("../../confused")
+event = &"attack to confused"
+delay_in_seconds = "0.0"
+
 [node name="celebrate" type="Node" parent="Behaviors/State/root"]
 script = ExtResource("6_yp4tx")
 
@@ -97,6 +103,15 @@ to = NodePath("../../reset")
 event = &"idle to reset"
 delay_in_seconds = "0.0"
 
+[node name="confused" type="Node" parent="Behaviors/State/root"]
+script = ExtResource("6_yp4tx")
+
+[node name="to seek" type="Node" parent="Behaviors/State/root/confused"]
+script = ExtResource("7_shp3v")
+to = NodePath("../../seek")
+event = &"confused to seek"
+delay_in_seconds = "0.8"
+
 [node name="SeekSkill" type="Node" parent="Behaviors"]
 script = ExtResource("7_c40bk")
 
@@ -118,4 +133,5 @@ wait_time = 4.0
 [connection signal="state_entered" from="Behaviors/State/root/celebrate" to="Behaviors" method="_on_celebrate_state_entered"]
 [connection signal="state_physics_processing" from="Behaviors/State/root/celebrate" to="Behaviors" method="_on_celebrate_state_physics_processing"]
 [connection signal="state_physics_processing" from="Behaviors/State/root/reset" to="Behaviors" method="_on_reset_state_physics_processing"]
+[connection signal="state_entered" from="Behaviors/State/root/confused" to="Behaviors" method="_on_confused_state_entered"]
 [connection signal="timeout" from="Behaviors/CelebrationTimer" to="Behaviors" method="_on_celebration_timer_timeout"]

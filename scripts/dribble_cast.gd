@@ -47,6 +47,7 @@ func _on_tracking_state_entered() -> void:
 
 func _on_tracking_state_physics_processing(delta: float) -> void:
 	self.target_position = tracked_ball.dribbled_node.global_position - self.global_position
+	self.force_raycast_update()
 	if not hits_ball():
 		player_dribble_ability.end_dribble()
 

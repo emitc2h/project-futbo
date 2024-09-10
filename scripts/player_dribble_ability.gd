@@ -96,8 +96,8 @@ func _on_dribbling_state_exited() -> void:
 		ball.end_dribbling()
 		ball.disown(player_id)
 		
-		# stop tracking the ball with the DribbleCast
-		dribble_cast.end_tracking(direction_faced)
+	# stop tracking the ball with the DribbleCast
+	dribble_cast.end_tracking(direction_faced)
 	
 	is_dribbling = false
 

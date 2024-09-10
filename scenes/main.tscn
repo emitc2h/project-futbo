@@ -153,26 +153,30 @@ zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
 
 [node name="StateChartDebugger" parent="Main Player" instance=ExtResource("12_a65ht")]
+visible = false
 offset_left = 272.0
 offset_top = -519.0
 offset_right = 620.0
 offset_bottom = 173.0
+enabled = false
 initial_node_to_watch = NodePath("../../Opponent Player/AI/Behaviors/State")
 
 [node name="StateChartDebugger2" parent="Main Player" instance=ExtResource("12_a65ht")]
+visible = false
 offset_left = -622.0
 offset_top = -527.0
 offset_right = -254.0
 offset_bottom = 179.0
+enabled = false
 initial_node_to_watch = NodePath("../../Opponent Player/PlayerDribbleAbility/State")
 
 [node name="Opponent Player" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("3_7khvi")]
-position = Vector2(1586, 489)
+position = Vector2(2200, 489)
 sprite = NodePath("AnimatedSprite2D")
 
 [node name="PlayerBasicMovement" parent="Opponent Player" index="0"]
-run_forward_velocity = 450.0
-run_backward_velocity = 320.0
+run_forward_velocity = 400.0
+run_backward_velocity = 300.0
 
 [node name="AI" parent="Opponent Player" node_paths=PackedStringArray("player", "ball", "home_goal", "away_goal") instance=ExtResource("6_egnei")]
 player = NodePath("..")
@@ -183,7 +187,7 @@ away_goal = NodePath("../../World/GoalRed")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Opponent Player"]
 position = Vector2(0, -55)
 sprite_frames = ExtResource("7_6s64y")
-animation = &"celebrate"
+animation = &"confused"
 
 [node name="Ball" parent="." instance=ExtResource("18_fsj6p")]
 position = Vector2(1165, 468)
@@ -200,5 +204,3 @@ position = Vector2(1165, 468)
 
 [editable path="Main Player"]
 [editable path="Opponent Player"]
-[editable path="Opponent Player/PlayerDribbleAbility"]
-[editable path="Opponent Player/AI"]

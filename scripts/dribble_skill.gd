@@ -3,9 +3,8 @@ extends AiSkill
 
 var dribble_ability: PlayerDribbleAbility
 
-func start_dribbling() -> bool:
+func start_dribbling() -> void:
 	dribble_ability.start_dribble()
-	return dribble_ability.is_dribbling
 
 
 func end_dribbling() -> void:

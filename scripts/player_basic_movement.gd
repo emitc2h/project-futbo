@@ -34,9 +34,12 @@ var direction_faced: Enums.Direction
 # Track the time left in turning state for skidding
 var turning_time_left: float = 0.0
 
-# jump animation
+# animation overrides
 const DEFAULT_JUMP_ANIMATION: String = "jump"
 var jump_animation: String = DEFAULT_JUMP_ANIMATION
+
+const DEFAULT_IDLE_ANIMATION: String = "idle"
+var idle_animation: String = DEFAULT_IDLE_ANIMATION
 
 # State tracking
 var in_run_state: bool = false
@@ -61,7 +64,7 @@ func _ready() -> void:
 #----------------------------------------
 func _on_idle_state_entered() -> void:
 	in_idle_state = true
-	sprite.play("idle")
+	sprite.play(idle_animation)
 
 
 func _on_idle_state_physics_processing(delta: float) -> void:
@@ -79,6 +82,7 @@ func _on_idle_state_physics_processing(delta: float) -> void:
 
 func _on_idle_state_exited() -> void:
 	in_idle_state = false
+	idle_animation = DEFAULT_IDLE_ANIMATION
 
 
 # run state
@@ -362,3 +366,8 @@ func jump() -> void:
 func jump_with_custom_animation(animation: String) -> void:
 	jump_animation = animation
 	jump()
+
+
+func idle_with_custom_animation(animation: String) -> void:
+	idle_animation = animation
+	state.send_event("run to idle")
