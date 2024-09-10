@@ -127,11 +127,15 @@ script = ExtResource("10_btpul")
 [node name="CelebrationTimer" type="Timer" parent="Behaviors"]
 wait_time = 4.0
 
+[node name="IdleTimer" type="Timer" parent="Behaviors"]
+
 [connection signal="state_physics_processing" from="Behaviors/State/root/seek" to="Behaviors" method="_on_seek_state_physics_processing"]
 [connection signal="state_entered" from="Behaviors/State/root/attack" to="Behaviors" method="_on_attack_state_entered"]
 [connection signal="state_physics_processing" from="Behaviors/State/root/attack" to="Behaviors" method="_on_attack_state_physics_processing"]
 [connection signal="state_entered" from="Behaviors/State/root/celebrate" to="Behaviors" method="_on_celebrate_state_entered"]
 [connection signal="state_physics_processing" from="Behaviors/State/root/celebrate" to="Behaviors" method="_on_celebrate_state_physics_processing"]
 [connection signal="state_physics_processing" from="Behaviors/State/root/reset" to="Behaviors" method="_on_reset_state_physics_processing"]
+[connection signal="state_entered" from="Behaviors/State/root/idle" to="Behaviors" method="_on_idle_state_entered"]
 [connection signal="state_entered" from="Behaviors/State/root/confused" to="Behaviors" method="_on_confused_state_entered"]
 [connection signal="timeout" from="Behaviors/CelebrationTimer" to="Behaviors" method="_on_celebration_timer_timeout"]
+[connection signal="timeout" from="Behaviors/IdleTimer" to="Behaviors" method="_on_idle_timer_timeout"]

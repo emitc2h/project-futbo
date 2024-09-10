@@ -4,6 +4,7 @@ extends Node2D
 # Internal references
 @onready var state: StateChart = $State
 @onready var celebration_timer: Timer = $CelebrationTimer
+@onready var idle_timer: Timer = $IdleTimer
 
 # Controlled Node
 var player: Player
@@ -24,6 +25,7 @@ var away_goal_position: Vector2
 # Constants
 const GOAL_ATTEMPT_DISTANCE: float = 400.0
 const RESET_DISTANCE: float = 500.0
+const ODDS_OF_STEALING: float = 0.5
 
 
 func initialize() -> void:
@@ -35,6 +37,7 @@ func initialize() -> void:
 	
 	kick_skill.player = player
 	kick_skill.kick_ability = player.get_node("PlayerKickAbility")
+	kick_skill.basic_movement = player.get_node("PlayerBasicMovement")
 	
 	jump_skill.player = player
 	jump_skill.basic_movement = player.get_node("PlayerBasicMovement")
@@ -58,7 +61,15 @@ func _on_attack_state_entered() -> void:
 	# If dribbling attempt is unsuccessful, return to seek state
 	dribble_skill.start_dribbling()
 	if not dribble_skill.dribble_ability.is_dribbling:
-		state.send_event("attack to seek")
+		# If dribbling missed, this means another player has the ball
+		# Try to kick
+		var roll: float = randf()
+		print(roll)
+		if roll > ODDS_OF_STEALING:
+			kick_skill.kick_where_faced(0.5)
+		# If kick fails, go back to seeking
+		else:
+			state.send_event("attack to seek")
 
 
 func _on_attack_state_physics_processing(delta: float) -> void:
@@ -107,6 +118,17 @@ func _on_reset_state_physics_processing(delta: float) -> void:
 		seek_skill.seek_target(home_goal_position)
 	else:
 		state.send_event("reset to seek")
+
+
+# reset state
+#----------------------------------------
+func _on_idle_state_entered() -> void:
+	idle_timer.start()
+
+
+func _on_idle_timer_timeout() -> void:
+	state.send_event("idle to reset")
+	idle_timer.stop()
 
 
 # confused state
