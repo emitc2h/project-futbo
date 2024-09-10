@@ -2,7 +2,7 @@ class_name AI
 extends Node2D
 
 # Nodes observed
-@export var player: Player2
+@export var player: Player
 @export var ball: Ball
 @export var home_goal: Goal
 @export var away_goal: Goal
@@ -21,3 +21,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	behaviors.ball_position = ball.get_control_node_position()
 	behaviors.ball_velocity = ball.get_control_mode_velocity()
+
+
+#=======================================================
+# RECEIVED SIGNALS
+#=======================================================
+func _on_away_scored() -> void:
+	behaviors.celebrate()

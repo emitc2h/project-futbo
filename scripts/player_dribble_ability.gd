@@ -2,7 +2,7 @@ class_name PlayerDribbleAbility
 extends Node2D
 
 # Nodes controlled by this node
-@export var player: Player2
+@export var player: Player
 
 # Internal references
 @onready var state: StateChart = $State
@@ -26,19 +26,20 @@ var direction_faced: Enums.Direction = Enums.Direction.RIGHT
 
 # State tracking
 var is_ready: bool = false
+var is_dribbling: bool = false
 
 
 # Signals
 signal own_ball(player_id: int)
 signal release_ball(player_id: int)
-signal player_dribbling(id: int,
-	marker_position: Vector2, player_velocity: Vector2)
+signal player_dribbling(id: int, marker_position: Vector2, player_velocity: Vector2)
 
 
 # Record PickupZone, DribbleMarker & DribbleCast position so they can be flipped
 func _ready() -> void:
 	pickup_zone_position_x = pickup_zone.position.x
 	dribble_marker_position_x = dribble_marker.position.x
+	player_id = player.get_instance_id()
 
 
 #=======================================================
@@ -65,7 +66,6 @@ func _on_ready_state_exited() -> void:
 #----------------------------------------
 func _on_dribbling_state_entered() -> void:
 	# make the ball identify the player dribbling
-	player_id = player.get_instance_id()
 	ball.own(player_id)
 	
 	# If the ball accepts ownership, start dribbling
@@ -77,6 +77,7 @@ func _on_dribbling_state_entered() -> void:
 		
 		#start tracking the ball with the DribbleCast
 		dribble_cast.start_tracking(ball)
+		is_dribbling = true
 	else:
 		state.send_event("dribbling to not ready")
 
@@ -97,6 +98,8 @@ func _on_dribbling_state_exited() -> void:
 		
 		# stop tracking the ball with the DribbleCast
 		dribble_cast.end_tracking(direction_faced)
+	
+	is_dribbling = false
 
 
 #=======================================================

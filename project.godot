@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Enums="*res://scripts/enums.gd"
+AiSkill="*res://scripts/ai_skill.gd"
+CalcPhys="*res://calc_phys.gd"
 
 [debug]
 

@@ -16,6 +16,9 @@ func set_transform_and_velocity(transform: Transform2D, velocity: Vector2) -> vo
 
 
 func set_impulse(impulse: Vector2) -> void:
+	# Make sure the node wakes up when an impulse is applied, otherwise
+	# _integrate_forces won't be calleds
+	self.sleeping = false
 	do_set_impulse = true
 	impulse_to_set = impulse
 

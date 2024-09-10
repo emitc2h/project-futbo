@@ -2,7 +2,7 @@ class_name PlayerKickAbility
 extends Node2D
 
 # Nodes controlled by this node
-@export var player: Player2
+@export var player: Player
 
 # Nodes controlled by this node
 var sprite: AnimatedSprite2D
@@ -10,12 +10,14 @@ var sprite: AnimatedSprite2D
 # Internal references
 @onready var state: StateChart = $State
 @onready var clamped_aim: ClampedAim = $ClampedAim
+@onready var kickzone: Area2D = $KickZone
 
 # Configurables
 @export var kick_force: float = 700.0
 
 # Static/Internal properties
 var kickzone_position_x: float
+var player_id: int
 
 # Dynamic properties
 var aim: Vector2
@@ -31,6 +33,7 @@ var is_ready: bool
 func _ready() -> void:
 	kickzone_position_x = self.position.x
 	sprite = player.sprite
+	player_id = player.get_instance_id()
 
 
 #=======================================================
@@ -46,6 +49,9 @@ func _on_not_ready_state_entered() -> void:
 # ready state
 #----------------------------------------
 func _on_ready_state_entered() -> void:
+	# Sometimes the ball leaves the kickzone before the transition to not ready can be effected
+	if kickzone.get_overlapping_bodies().is_empty():
+		state.send_event("ready to not ready")
 	is_ready = true
 
 
@@ -57,7 +63,9 @@ func _on_ready_state_exited() -> void:
 #----------------------------------------
 func _on_kicking_state_entered() -> void:
 	ball.impulse(clamped_aim.get_vector(aim, direction) * kick_force)
-	state.send_event("kicking to not ready")
+	# if the kick doesn't work for some reason, stay in ready state
+	# ready state will be dropped once the ball has exited the kick zone
+	state.send_event("kicking to ready")
 
 
 func _on_kicking_state_exited() -> void:
@@ -77,8 +85,8 @@ func _on_kick_zone_body_entered(body: Node2D) -> void:
 
 func _on_kick_zone_body_exited(body: Node2D) -> void:
 	ball = body.get_parent() as Ball
-	# prevent ball from being unkickable while dribbling, even if it falls out of the kick zone
-	if not ball.is_owned:
+	# prevents ball from being unkickable while dribbling, even if it falls out of the kick zone
+	if player_id != ball.dribbler_id:
 		state.send_event("ready to not ready")
 
 

@@ -2,7 +2,7 @@ class_name PlayerHeadbuttAbility
 extends Node2D
 
 # External references (player)
-@export var player: Player2
+@export var player: Player
 
 # Internal references
 @onready var state: StateChart = $State

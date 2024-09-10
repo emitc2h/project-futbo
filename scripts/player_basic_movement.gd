@@ -2,7 +2,7 @@ class_name PlayerBasicMovement
 extends Node
 
 # Nodes controlled by this node
-@export var player: Player2
+@export var player: Player
 var sprite: AnimatedSprite2D
 
 # Internal references
@@ -33,6 +33,10 @@ var direction_faced: Enums.Direction
 
 # Track the time left in turning state for skidding
 var turning_time_left: float = 0.0
+
+# jump animation
+const DEFAULT_JUMP_ANIMATION: String = "jump"
+var jump_animation: String = DEFAULT_JUMP_ANIMATION
 
 # State tracking
 var in_run_state: bool = false
@@ -183,7 +187,7 @@ func _on_jump_state_entered() -> void:
 	run_process()
 	player.velocity.y = jump_momentum
 	state.send_event("jump to in the air")
-	sprite.play("jump")
+	sprite.play(jump_animation)
 
 
 func _on_jump_state_physics_processing(delta: float) -> void:
@@ -213,6 +217,8 @@ func _on_in_the_air_state_physics_processing(delta: float) -> void:
 
 func _on_in_the_air_state_exited() -> void:
 	in_in_the_air_state = false
+	# Reset jump animation
+	jump_animation = DEFAULT_JUMP_ANIMATION
 
 
 # jump buffer state
@@ -351,3 +357,8 @@ func jump() -> void:
 		state.send_event("run buffer to jump")
 	else:
 		state.send_event("in the air to jump buffer")
+
+
+func jump_with_custom_animation(animation: String) -> void:
+	jump_animation = animation
+	jump()

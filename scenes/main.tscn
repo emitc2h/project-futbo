@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=4 uid="uid://cg52j0i272cki"]
+[gd_scene load_steps=18 format=4 uid="uid://cg52j0i272cki"]
 
 [ext_resource type="PackedScene" uid="uid://pun56by8ddak" path="res://scenes/sky.tscn" id="1_abuub"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_pet0h"]
 [ext_resource type="PackedScene" uid="uid://bwd4xnrevg2m" path="res://scenes/controller.tscn" id="2_ix4b0"]
-[ext_resource type="PackedScene" uid="uid://bus0201utlp35" path="res://scenes/player_2.tscn" id="3_7khvi"]
+[ext_resource type="PackedScene" uid="uid://bus0201utlp35" path="res://scenes/player.tscn" id="3_7khvi"]
 [ext_resource type="Texture2D" uid="uid://bj6gbj2puyjhs" path="res://kenney_sports-pack/goalback.png" id="3_xblxb"]
 [ext_resource type="Texture2D" uid="uid://dng5mhl6s5bqk" path="res://kenney_sports-pack/goalfront.png" id="4_3ctr5"]
 [ext_resource type="Script" path="res://scripts/goal.gd" id="4_fp7pi"]
@@ -13,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dk5lv81bnl5vp" path="res://kenney_sports-pack/goalfront-blue.png" id="8_y5hhm"]
 [ext_resource type="TileSet" uid="uid://kwmyxvxqybfd" path="res://resources/tileset.tres" id="9_tpp2a"]
 [ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="10_61452"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="12_a65ht"]
 [ext_resource type="PackedScene" uid="uid://buoegut2xlkro" path="res://scenes/ball.tscn" id="18_fsj6p"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eceke"]
@@ -20,6 +22,7 @@ rough = true
 absorbent = true
 
 [node name="Main" type="Node"]
+script = ExtResource("1_pet0h")
 
 [node name="World" type="Node" parent="."]
 
@@ -132,44 +135,70 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 64
 text = "Score: 0"
 
-[node name="Player" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("3_7khvi")]
+[node name="Main Player" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("3_7khvi")]
 position = Vector2(644, 489)
 sprite = NodePath("AnimatedSprite2D")
 
-[node name="Controller" parent="Player" node_paths=PackedStringArray("player") instance=ExtResource("2_ix4b0")]
+[node name="Controller" parent="Main Player" node_paths=PackedStringArray("player") instance=ExtResource("2_ix4b0")]
 player = NodePath("..")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Main Player"]
 position = Vector2(0, -55)
 sprite_frames = ExtResource("10_61452")
-animation = &"jump"
+animation = &"celebrate"
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Main Player"]
 position = Vector2(0, -180)
 zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
 
-[node name="Player2" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("3_7khvi")]
+[node name="StateChartDebugger" parent="Main Player" instance=ExtResource("12_a65ht")]
+offset_left = 272.0
+offset_top = -519.0
+offset_right = 620.0
+offset_bottom = 173.0
+initial_node_to_watch = NodePath("../../Opponent Player/AI/Behaviors/State")
+
+[node name="StateChartDebugger2" parent="Main Player" instance=ExtResource("12_a65ht")]
+offset_left = -622.0
+offset_top = -527.0
+offset_right = -254.0
+offset_bottom = 179.0
+initial_node_to_watch = NodePath("../../Opponent Player/PlayerDribbleAbility/State")
+
+[node name="Opponent Player" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("3_7khvi")]
 position = Vector2(1586, 489)
 sprite = NodePath("AnimatedSprite2D")
 
-[node name="AI" parent="Player2" node_paths=PackedStringArray("player", "ball", "home_goal", "away_goal") instance=ExtResource("6_egnei")]
+[node name="PlayerBasicMovement" parent="Opponent Player" index="0"]
+run_forward_velocity = 450.0
+run_backward_velocity = 320.0
+
+[node name="AI" parent="Opponent Player" node_paths=PackedStringArray("player", "ball", "home_goal", "away_goal") instance=ExtResource("6_egnei")]
 player = NodePath("..")
 ball = NodePath("../../Ball")
 home_goal = NodePath("../../World/GoalBlue")
 away_goal = NodePath("../../World/GoalRed")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player2"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Opponent Player"]
 position = Vector2(0, -55)
 sprite_frames = ExtResource("7_6s64y")
-animation = &"fall"
+animation = &"celebrate"
 
 [node name="Ball" parent="." instance=ExtResource("18_fsj6p")]
 position = Vector2(1165, 468)
 
+[connection signal="scored" from="World/GoalRed" to="." method="_on_goal_red_scored"]
+[connection signal="scored" from="World/GoalRed" to="Opponent Player/AI" method="_on_away_scored"]
 [connection signal="body_entered" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="World/GoalRed/GoalArea" to="World/GoalRed" method="_on_goal_area_body_exited"]
+[connection signal="scored" from="World/GoalBlue" to="." method="_on_goal_blue_scored"]
 [connection signal="body_entered" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="World/GoalBlue/GoalArea" to="World/GoalBlue" method="_on_goal_area_body_exited"]
-[connection signal="facing_left" from="Player" to="Ball" method="_on_facing_left"]
-[connection signal="facing_right" from="Player" to="Ball" method="_on_facing_right"]
+[connection signal="facing_left" from="Main Player" to="Ball" method="_on_facing_left"]
+[connection signal="facing_right" from="Main Player" to="Ball" method="_on_facing_right"]
+
+[editable path="Main Player"]
+[editable path="Opponent Player"]
+[editable path="Opponent Player/PlayerDribbleAbility"]
+[editable path="Opponent Player/AI"]

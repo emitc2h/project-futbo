@@ -29,7 +29,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"celebrate",
-"speed": 8.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

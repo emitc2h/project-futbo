@@ -48,11 +48,11 @@ delay_in_seconds = "0.0"
 [node name="kicking" type="Node" parent="State/root"]
 script = ExtResource("4_14865")
 
-[node name="to not ready" type="Node" parent="State/root/kicking"]
+[node name="to ready" type="Node" parent="State/root/kicking"]
 script = ExtResource("5_ixm4p")
-to = NodePath("../../not ready")
-event = &"kicking to not ready"
-delay_in_seconds = "0.1"
+to = NodePath("../../ready")
+event = &"kicking to ready"
+delay_in_seconds = "0.05"
 
 [node name="ClampedAim" parent="." instance=ExtResource("2_m50jt")]
 
