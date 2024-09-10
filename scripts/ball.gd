@@ -159,3 +159,17 @@ func start_dribbling() -> void:
 
 func end_dribbling() -> void:
 	state.send_event("dribbled to inert")
+
+
+func get_control_node_position() -> Vector2:
+	if mode == Mode.INERT:
+		return inert_node.global_position
+	else:
+		return dribbled_node.global_position
+
+
+func get_control_mode_velocity() -> Vector2:
+	if mode == Mode.INERT:
+		return inert_node.linear_velocity
+	else:
+		return dribbled_node.velocity
