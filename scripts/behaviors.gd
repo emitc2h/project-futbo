@@ -64,7 +64,6 @@ func _on_attack_state_entered() -> void:
 		# If dribbling missed, this means another player has the ball
 		# Try to kick
 		var roll: float = randf()
-		print(roll)
 		if roll > ODDS_OF_STEALING:
 			kick_skill.kick_where_faced(0.5)
 		# If kick fails, go back to seeking
