@@ -26,7 +26,7 @@ script = ExtResource("1_pet0h")
 [node name="World" parent="." instance=ExtResource("2_rp3kn")]
 
 [node name="GoalRed" type="Node2D" parent="World"]
-position = Vector2(155, 722)
+position = Vector2(155, 728)
 script = ExtResource("4_fp7pi")
 
 [node name="GoalArea" type="Area2D" parent="World/GoalRed"]
@@ -140,6 +140,7 @@ animation = &"celebrate"
 
 [node name="Camera2D" type="Camera2D" parent="Main Player"]
 position = Vector2(0, -180)
+zoom = Vector2(1.4, 1.4)
 position_smoothing_enabled = true
 
 [node name="StateChartDebugger" parent="Main Player" instance=ExtResource("12_a65ht")]

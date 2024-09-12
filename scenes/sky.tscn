@@ -16,7 +16,7 @@ texture = ExtResource("1_d5ktx")
 
 [node name="Cloud Farthest" type="Parallax2D" parent="."]
 z_index = -2
-scroll_scale = Vector2(0.05, 0.05)
+scroll_scale = Vector2(0.02, 0.02)
 repeat_size = Vector2(2000, 0)
 autoscroll = Vector2(5, 0)
 repeat_times = 2
@@ -36,9 +36,29 @@ position = Vector2(1104, 591)
 scale = Vector2(0.2, 0.12)
 texture = ExtResource("2_iv304")
 
+[node name="Cloud4" type="Sprite2D" parent="Cloud Farthest"]
+position = Vector2(488, 605)
+scale = Vector2(0.2, 0.12)
+texture = ExtResource("2_iv304")
+
+[node name="Cloud5" type="Sprite2D" parent="Cloud Farthest"]
+position = Vector2(883, 578)
+scale = Vector2(0.26, 0.16)
+texture = ExtResource("2_iv304")
+
+[node name="Cloud6" type="Sprite2D" parent="Cloud Farthest"]
+position = Vector2(1305, 639)
+scale = Vector2(0.34, 0.17)
+texture = ExtResource("2_iv304")
+
+[node name="Cloud7" type="Sprite2D" parent="Cloud Farthest"]
+position = Vector2(689.8, 624.28)
+scale = Vector2(0.176172, 0.0932031)
+texture = ExtResource("2_iv304")
+
 [node name="Cloud Far" type="Parallax2D" parent="."]
 z_index = -2
-scroll_scale = Vector2(0.1, 0.1)
+scroll_scale = Vector2(0.03, 0.03)
 repeat_size = Vector2(2000, 0)
 autoscroll = Vector2(5, 0)
 repeat_times = 2
@@ -58,9 +78,19 @@ position = Vector2(753.5, 514.5)
 scale = Vector2(0.260742, 0.260742)
 texture = ExtResource("2_iv304")
 
+[node name="Cloud4" type="Sprite2D" parent="Cloud Far"]
+position = Vector2(1828, 511)
+scale = Vector2(0.260742, 0.260742)
+texture = ExtResource("2_iv304")
+
+[node name="Cloud5" type="Sprite2D" parent="Cloud Far"]
+position = Vector2(1084, 468)
+scale = Vector2(0.39, 0.28)
+texture = ExtResource("2_iv304")
+
 [node name="Clouds Near" type="Parallax2D" parent="."]
 z_index = -2
-scroll_scale = Vector2(0.15, 0.15)
+scroll_scale = Vector2(0.04, 0.04)
 repeat_size = Vector2(2000, 0)
 autoscroll = Vector2(10, 0)
 repeat_times = 2
@@ -82,7 +112,7 @@ texture = ExtResource("2_iv304")
 
 [node name="Clouds Nearest" type="Parallax2D" parent="."]
 z_index = -2
-scroll_scale = Vector2(0.2, 0.2)
+scroll_scale = Vector2(0.05, 0.05)
 repeat_size = Vector2(2000, 0)
 autoscroll = Vector2(10, 0)
 repeat_times = 2
