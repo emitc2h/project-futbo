@@ -8,7 +8,6 @@
 [node name="World" type="Node3D"]
 
 [node name="Soccer Field" parent="." instance=ExtResource("1_ppmb8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.361286, -1.19209e-07, -5.54837)
 
 [node name="GroundCollider" type="StaticBody3D" parent="Soccer Field"]
 collision_layer = 2

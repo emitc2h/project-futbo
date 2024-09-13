@@ -1,5 +1,5 @@
-class_name ClampedAim3D
-extends Node3D
+class_name ClampedAim
+extends Node2D
 
 
 func clamp_aim_angle(angle: float) -> float:

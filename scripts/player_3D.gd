@@ -11,9 +11,6 @@ var can_run_backward: bool = false
 signal facing_left()
 signal facing_right()
 
-func _physics_process(delta: float) -> void:
-	print(self.global_position)
-
 
 #=======================================================
 # RECEIVED SIGNALS
