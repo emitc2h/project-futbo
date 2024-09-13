@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dd7y7f0ti7n53"]
+
+[ext_resource type="Script" path="res://scripts/player_3D.gd" id="1_hgcnn"]
+[ext_resource type="PackedScene" uid="uid://huxnga0mwwl3" path="res://scenes/player_basic_movement_3D.tscn" id="2_xplsy"]
+[ext_resource type="Script" path="res://scripts/player_basic_movement_3D.gd" id="3_k2xyc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_untnw"]
+radius = 0.291466
+height = 1.25961
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3dkdr"]
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 2
+axis_lock_linear_z = true
+script = ExtResource("1_hgcnn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.445752, 0)
+shape = SubResource("CapsuleShape3D_untnw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.7, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_3dkdr")
+
+[node name="PlayerBasicMovement" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_xplsy")]
+script = ExtResource("3_k2xyc")
+player = NodePath("..")
+run_forward_velocity = 5.0
+run_backward_velocity = 3.5
+run_deceleration = 0.4
+jump_momentum = 3.0

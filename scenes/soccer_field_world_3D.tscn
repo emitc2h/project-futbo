@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq8d4kwgig1w8"]
+
+[ext_resource type="PackedScene" uid="uid://cxhelbd0yiwh1" path="res://assets/3D/soccer_field.blend" id="1_ppmb8"]
+[ext_resource type="PhysicsMaterial" uid="uid://bfyxfjhrtf4nm" path="res://resources/grass_physics_material.tres" id="2_g8eke"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_dicqu"]
+
+[node name="World" type="Node3D"]
+
+[node name="Soccer Field" parent="." instance=ExtResource("1_ppmb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.361286, -1.19209e-07, -5.54837)
+
+[node name="GroundCollider" type="StaticBody3D" parent="Soccer Field"]
+collision_layer = 2
+collision_mask = 5
+physics_material_override = ExtResource("2_g8eke")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Soccer Field/GroundCollider"]
+shape = SubResource("WorldBoundaryShape3D_dicqu")

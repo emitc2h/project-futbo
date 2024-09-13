@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://ci6nhkx4w6kqs"]
+
+[ext_resource type="PackedScene" uid="uid://dq8d4kwgig1w8" path="res://scenes/soccer_field_world_3D.tscn" id="1_engib"]
+[ext_resource type="PackedScene" uid="uid://dd7y7f0ti7n53" path="res://scenes/player_3D.tscn" id="2_v5mux"]
+[ext_resource type="PackedScene" uid="uid://bhkj1mdxm4ft2" path="res://scenes/controller3D.tscn" id="3_bnhxr"]
+[ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="4_3i3o6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_78dkw"]
+sky_top_color = Color(0.34, 0.572333, 0.68, 1)
+sky_horizon_color = Color(0.6375, 0.690071, 0.704125, 1)
+ground_bottom_color = Color(0.21, 0.18795, 0.1365, 1)
+ground_horizon_color = Color(0.6375, 0.690071, 0.704125, 1)
+
+[sub_resource type="Sky" id="Sky_kjnwx"]
+sky_material = SubResource("ProceduralSkyMaterial_78dkw")
+
+[sub_resource type="Environment" id="Environment_wvpa0"]
+background_mode = 2
+sky = SubResource("Sky_kjnwx")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wvpa0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.909961, -0.0648723, 0.409588, 0, 0.987688, 0.156434, -0.414693, 0.142349, -0.898758, 0, 0, 0)
+light_color = Color(1, 0.959167, 0.65, 1)
+shadow_enabled = true
+
+[node name="World" parent="." instance=ExtResource("1_engib")]
+
+[node name="Player" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("2_v5mux")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07692, 0)
+sprite = NodePath("AnimatedSprite3D")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49048, 8.55917)
+current = true
+fov = 45.0
+
+[node name="Controller" parent="Player" node_paths=PackedStringArray("player") instance=ExtResource("3_bnhxr")]
+player = NodePath("..")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56633, 0)
+gi_mode = 0
+sprite_frames = ExtResource("4_3i3o6")
+animation = &"celebrate"

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bwd4xnrevg2m"]
 
-[ext_resource type="Script" path="res://scripts/controlled_player.gd" id="1_lynec"]
+[ext_resource type="Script" path="res://scripts/controller.gd" id="1_lynec"]
 [ext_resource type="Script" path="res://scripts/player_basic_movement_controller.gd" id="2_t4bcf"]
 [ext_resource type="Script" path="res://scripts/player_kick_ability_controller.gd" id="3_b86n1"]
 [ext_resource type="Script" path="res://scripts/player_dribble_ability_controller.gd" id="4_f0b00"]

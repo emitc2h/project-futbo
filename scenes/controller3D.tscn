@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhkj1mdxm4ft2"]
+
+[ext_resource type="Script" path="res://scripts/controller3D.gd" id="1_u16yq"]
+[ext_resource type="Script" path="res://scripts/player_basic_movement_controller3D.gd" id="2_ie7jl"]
+
+[node name="Controller" type="Node3D"]
+script = ExtResource("1_u16yq")
+
+[node name="PlayerBasicMovementController" type="Node3D" parent="." node_paths=PackedStringArray("controller")]
+script = ExtResource("2_ie7jl")
+controller = NodePath("..")
