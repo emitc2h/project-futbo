@@ -31,3 +31,6 @@ run_forward_velocity = 5.0
 run_backward_velocity = 3.5
 run_deceleration = 0.4
 jump_momentum = 3.0
+
+[connection signal="facing_left" from="PlayerBasicMovement" to="." method="_on_facing_left"]
+[connection signal="facing_right" from="PlayerBasicMovement" to="." method="_on_facing_right"]

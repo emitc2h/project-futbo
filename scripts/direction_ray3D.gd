@@ -16,7 +16,8 @@ func _ready() -> void:
 
 # Listen to the aim vector at all times
 func _physics_process(delta: float) -> void:
-	aim = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+	aim = Converters.vec2_from(
+		Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down"))
 
 
 #=======================================================
@@ -37,7 +38,7 @@ func _on_pointing_state_entered() -> void:
 
 
 func _on_pointing_state_processing(delta: float) -> void:
-	self.global_rotation.z = clamped_aim.get_angle(aim, direction_faced) + PI/2
+	self.global_rotation.z = clamped_aim.get_angle(aim, direction_faced) - PI/2
 	if aim.is_zero_approx():
 		state.send_event("pointing to idle")
 

@@ -53,3 +53,6 @@ animation = &"celebrate"
 
 [node name="Ball" parent="." instance=ExtResource("5_oacrh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0338862, 0.871806, 0)
+
+[connection signal="facing_left" from="Player" to="Ball" method="_on_facing_left"]
+[connection signal="facing_right" from="Player" to="Ball" method="_on_facing_right"]

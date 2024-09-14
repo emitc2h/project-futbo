@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/clamped_aim3D.tscn" id="7_5lu38"]
 
 [node name="DirectionRay" type="Sprite3D"]
-offset = Vector2(0, -32)
+offset = Vector2(0, 32)
 texture = ExtResource("1_dgj8u")
 script = ExtResource("2_f10p2")
 
