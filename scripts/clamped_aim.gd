@@ -11,7 +11,6 @@ func clamp_aim_angle(angle: float) -> float:
 
 func aim_angle_face_right(aim_vector: Vector2) -> float:
 	var raw_angle: float = aim_vector.angle()
-	print("raw_angle: ", raw_angle * (180.0/PI))
 	if abs(raw_angle) > PI/2:
 		return clamp_aim_angle(raw_angle)
 	else:
@@ -19,9 +18,7 @@ func aim_angle_face_right(aim_vector: Vector2) -> float:
 
 
 func aim_angle_face_left(aim_vector: Vector2) -> float:
-	print("aim_angle_face_left")
 	var raw_angle: float = aim_vector.angle()
-	print("raw_angle: ", raw_angle * (180.0/PI))
 	if abs(raw_angle) < PI/2:
 		return clamp_aim_angle(raw_angle)
 	else:
