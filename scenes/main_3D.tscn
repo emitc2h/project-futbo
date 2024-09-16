@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ci6nhkx4w6kqs"]
+[gd_scene load_steps=10 format=3 uid="uid://ci6nhkx4w6kqs"]
 
 [ext_resource type="PackedScene" uid="uid://dq8d4kwgig1w8" path="res://scenes/soccer_field_world_3D.tscn" id="1_engib"]
 [ext_resource type="PackedScene" uid="uid://dd7y7f0ti7n53" path="res://scenes/player_3D.tscn" id="2_v5mux"]
 [ext_resource type="PackedScene" uid="uid://bhkj1mdxm4ft2" path="res://scenes/controller3D.tscn" id="3_bnhxr"]
 [ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="4_3i3o6"]
 [ext_resource type="PackedScene" uid="uid://bk8wo5fenailq" path="res://scenes/ball3D.tscn" id="5_oacrh"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="6_afgw7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_78dkw"]
 sky_top_color = Color(0.34, 0.572333, 0.68, 1)
@@ -54,5 +55,15 @@ animation = &"celebrate"
 [node name="Ball" parent="." instance=ExtResource("5_oacrh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.034, 0.872, 0)
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="StateChartDebugger" parent="CanvasLayer" instance=ExtResource("6_afgw7")]
+offset_right = -1395.0
+offset_bottom = -33.0
+initial_node_to_watch = NodePath("../../Player/PlayerHeadbuttAbility/State")
+
 [connection signal="facing_left" from="Player" to="Ball" method="_on_facing_left"]
 [connection signal="facing_right" from="Player" to="Ball" method="_on_facing_right"]
+
+[editable path="Player"]
+[editable path="Player/PlayerHeadbuttAbility"]

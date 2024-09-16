@@ -16,7 +16,7 @@ var mode: Mode = Mode.INERT
 @onready var sprite: Node3D = $SpriteContainer
 
 # Static/Internal properties
-var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # Dynamic properties
 var direction_faced: Enums.Direction = Enums.Direction.RIGHT
@@ -25,8 +25,8 @@ var dribbler_id: int
 var is_owned: bool = false
 
 var dribble_time: float
-var player_dribble_marker_position: Vector2
-var player_velocity: Vector2
+var player_dribble_marker_position: Vector3
+var player_velocity: Vector3
 var dribble_rotation_speed: float
 var dribble_velocity_offset: float
 var ball_snap_velocity: float
@@ -78,7 +78,7 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 	
 	# Match player velocity
 	dribbled_node.velocity.x = player_velocity.x
-	if dribble_marker_distance > 5.0:
+	if dribble_marker_distance > 0.05:
 		dribbled_node.velocity.x += dribble_marker_position_delta * ball_snap_velocity
 	
 	# Use gravity when not touching the ground
@@ -89,7 +89,7 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 	dribbled_node.move_and_slide()
 	
 	# Ball spinning animation
-	dribbled_node.rotation.z = dribble_time * direction_faced * \
+	dribbled_node.rotation.z = -dribble_time * direction_faced * \
 		 dribble_rotation_speed * PI
 		
 	# transfer transform to other nodes

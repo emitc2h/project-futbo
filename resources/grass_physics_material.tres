@@ -1,6 +1,6 @@
 [gd_resource type="PhysicsMaterial" format=3 uid="uid://bfyxfjhrtf4nm"]
 
 [resource]
-friction = 0.68
+friction = 0.81
 rough = true
 absorbent = true

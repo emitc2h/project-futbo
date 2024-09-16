@@ -21,6 +21,7 @@ Enums="*res://scripts/enums.gd"
 AiSkill="*res://scripts/ai_skill.gd"
 CalcPhys="*res://scripts/calc_phys.gd"
 Converters="*res://scripts/converters.gd"
+CastUtils="*res://scripts/cast_utils.gd"
 
 [debug]
 

@@ -23,9 +23,9 @@ position = Vector2(0, -44)
 shape = SubResource("CapsuleShape2D_ovy16")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="PlayerKickAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_nm3re")]
+[node name="PlayerKickAbility" parent="." instance=ExtResource("3_nm3re")]
 position = Vector2(18, -19)
-player = NodePath("..")
+script = null
 
 [node name="PlayerHeadbuttAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_j3ifr")]
 position = Vector2(0, -66)

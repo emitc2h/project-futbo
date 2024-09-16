@@ -1,5 +1,5 @@
-class_name ClampedAim
-extends Node2D
+class_name ClampedAim3D
+extends Node3D
 
 
 func clamp_aim_angle(angle: float) -> float:
@@ -38,5 +38,6 @@ func get_angle(aim_vector: Vector2, direction: Enums.Direction) -> float:
 			return aim_angle_face_right(aim_vector)
 
 
-func get_vector(aim_vector: Vector2, direction: Enums.Direction) -> Vector2:
-	return Vector2.from_angle(get_angle(aim_vector, direction))
+func get_vector(aim_vector: Vector2, direction: Enums.Direction) -> Vector3:
+	return Converters.vec3_from(
+		Vector2.from_angle(get_angle(aim_vector, direction)))

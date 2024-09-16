@@ -1,38 +1,38 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3opgh5kq0a1c"]
+[gd_scene load_steps=6 format=3 uid="uid://dpdewwupi78yf"]
 
-[ext_resource type="Script" path="res://scripts/dribble_cast.gd" id="1_4stwo"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_tmmcb"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_33l6a"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_lg73y"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_gbukf"]
+[ext_resource type="Script" path="res://scripts/dribble_cast3D.gd" id="1_fqkgq"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_ank02"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_u7t25"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_ay2d5"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_88hrh"]
 
-[node name="DribbleCast" type="RayCast2D"]
-target_position = Vector2(56, 0)
+[node name="DribbleCast" type="RayCast3D"]
+target_position = Vector3(56, 0, 0)
 collision_mask = 14
 hit_from_inside = true
-script = ExtResource("1_4stwo")
+script = ExtResource("1_fqkgq")
 
 [node name="State" type="Node" parent="."]
-script = ExtResource("2_tmmcb")
+script = ExtResource("2_ank02")
 
 [node name="root" type="Node" parent="State"]
-script = ExtResource("3_33l6a")
+script = ExtResource("3_u7t25")
 initial_state = NodePath("idle")
 
 [node name="idle" type="Node" parent="State/root"]
-script = ExtResource("4_lg73y")
+script = ExtResource("4_ay2d5")
 
 [node name="to tracking" type="Node" parent="State/root/idle"]
-script = ExtResource("5_gbukf")
+script = ExtResource("5_88hrh")
 to = NodePath("../../tracking")
 event = &"idle to tracking"
 delay_in_seconds = "0.0"
 
 [node name="tracking" type="Node" parent="State/root"]
-script = ExtResource("4_lg73y")
+script = ExtResource("4_ay2d5")
 
 [node name="to idle" type="Node" parent="State/root/tracking"]
-script = ExtResource("5_gbukf")
+script = ExtResource("5_88hrh")
 to = NodePath("../../idle")
 event = &"tracking to idle"
 delay_in_seconds = "0.0"
