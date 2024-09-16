@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bhkj1mdxm4ft2" path="res://scenes/controller3D.tscn" id="3_bnhxr"]
 [ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="4_3i3o6"]
 [ext_resource type="PackedScene" uid="uid://bk8wo5fenailq" path="res://scenes/ball3D.tscn" id="5_oacrh"]
-[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="6_afgw7"]
+[ext_resource type="PackedScene" uid="uid://pun56by8ddak" path="res://scenes/sky.tscn" id="7_ye3og"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_78dkw"]
 sky_top_color = Color(0.34, 0.572333, 0.68, 1)
@@ -17,8 +17,11 @@ ground_horizon_color = Color(0.6375, 0.690071, 0.704125, 1)
 sky_material = SubResource("ProceduralSkyMaterial_78dkw")
 
 [sub_resource type="Environment" id="Environment_wvpa0"]
-background_mode = 2
+background_mode = 3
+background_energy_multiplier = 0.9
+background_canvas_max_layer = 1
 sky = SubResource("Sky_kjnwx")
+ambient_light_color = Color(0.118176, 0.274496, 0.454383, 1)
 tonemap_mode = 2
 glow_enabled = true
 
@@ -29,7 +32,8 @@ environment = SubResource("Environment_wvpa0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.909961, -0.0648723, 0.409588, 0, 0.987688, 0.156434, -0.414693, 0.142349, -0.898758, 0, 0, 0)
-light_color = Color(1, 0.959167, 0.65, 1)
+light_color = Color(1, 0.985009, 0.857745, 1)
+light_energy = 0.8
 shadow_enabled = true
 
 [node name="World" parent="." instance=ExtResource("1_engib")]
@@ -57,13 +61,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.034, 0.872, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="StateChartDebugger" parent="CanvasLayer" instance=ExtResource("6_afgw7")]
-offset_right = -1395.0
-offset_bottom = -33.0
-initial_node_to_watch = NodePath("../../Player/PlayerHeadbuttAbility/State")
+[node name="Sky" parent="CanvasLayer" instance=ExtResource("7_ye3og")]
 
 [connection signal="facing_left" from="Player" to="Ball" method="_on_facing_left"]
 [connection signal="facing_right" from="Player" to="Ball" method="_on_facing_right"]
-
-[editable path="Player"]
-[editable path="Player/PlayerHeadbuttAbility"]

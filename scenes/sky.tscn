@@ -17,6 +17,7 @@ texture = ExtResource("1_d5ktx")
 [node name="Cloud Farthest" type="Parallax2D" parent="."]
 z_index = -2
 scroll_scale = Vector2(0.02, 0.02)
+scroll_offset = Vector2(-3, -115)
 repeat_size = Vector2(2000, 0)
 autoscroll = Vector2(5, 0)
 repeat_times = 2
@@ -59,6 +60,7 @@ texture = ExtResource("2_iv304")
 [node name="Cloud Far" type="Parallax2D" parent="."]
 z_index = -2
 scroll_scale = Vector2(0.03, 0.03)
+scroll_offset = Vector2(-3, -115)
 repeat_size = Vector2(2000, 0)
 autoscroll = Vector2(5, 0)
 repeat_times = 2
@@ -91,6 +93,7 @@ texture = ExtResource("2_iv304")
 [node name="Clouds Near" type="Parallax2D" parent="."]
 z_index = -2
 scroll_scale = Vector2(0.04, 0.04)
+scroll_offset = Vector2(-3, -115)
 repeat_size = Vector2(2000, 0)
 autoscroll = Vector2(10, 0)
 repeat_times = 2
@@ -113,6 +116,7 @@ texture = ExtResource("2_iv304")
 [node name="Clouds Nearest" type="Parallax2D" parent="."]
 z_index = -2
 scroll_scale = Vector2(0.05, 0.05)
+scroll_offset = Vector2(-3, -115)
 repeat_size = Vector2(2000, 0)
 autoscroll = Vector2(10, 0)
 repeat_times = 2
