@@ -12,10 +12,10 @@ var sprite: AnimatedSprite3D
 @onready var turn_left_timer: Timer = $TurnLeftTimer
 
 # Movement configurable properties
-@export var run_forward_velocity: float
-@export var run_backward_velocity: float
-@export var run_deceleration: float
-@export var jump_momentum: float
+var run_forward_velocity: float
+var run_backward_velocity: float
+var run_deceleration: float
+var jump_momentum: float
 
 # Static/Internal properties
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -54,6 +54,10 @@ signal facing_right()
 
 func _ready() -> void:
 	sprite = player.sprite
+	run_forward_velocity = player.run_forward_velocity
+	run_backward_velocity = player.run_backward_velocity
+	run_deceleration = player.run_deceleration
+	jump_momentum = player.jump_momentum
 
 
 #=======================================================

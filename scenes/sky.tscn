@@ -6,6 +6,7 @@
 [node name="Sky" type="Node2D"]
 
 [node name="SkyBlue" type="Parallax2D" parent="."]
+visible = false
 scroll_scale = Vector2(0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="SkyBlue"]

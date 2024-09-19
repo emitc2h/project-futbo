@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://thoxaas4qsn2" path="res://scenes/ai.tscn" id="6_egnei"]
 [ext_resource type="SpriteFrames" uid="uid://b5y2k0oe4jdi6" path="res://resources/adversary_spriteframes.tres" id="7_6s64y"]
 [ext_resource type="Texture2D" uid="uid://bfyvyupe8be4r" path="res://kenney_sports-pack/goalback-blue.png" id="7_h5lyv"]
-[ext_resource type="Script" path="res://scripts/ui.gd" id="7_tnj2d"]
+[ext_resource type="PackedScene" uid="uid://3y4snk0eo4mp" path="res://scenes/ui.tscn" id="8_graoe"]
 [ext_resource type="Texture2D" uid="uid://dk5lv81bnl5vp" path="res://kenney_sports-pack/goalfront-blue.png" id="8_y5hhm"]
 [ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="10_61452"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="12_a65ht"]
@@ -93,38 +93,7 @@ physics_material_override = SubResource("PhysicsMaterial_eceke")
 position = Vector2(3, -3)
 polygon = PackedVector2Array(0, 0, -14, 0, -61, -155, -75, -167, -151, -167, -151, -182, -70, -182, -47, -160)
 
-[node name="UI" type="CanvasLayer" parent="."]
-script = ExtResource("7_tnj2d")
-
-[node name="ScoreRed" type="Label" parent="UI"]
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 299.0
-offset_bottom = 108.0
-theme_override_colors/font_color = Color(1, 0.172549, 0.192157, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 64
-text = "Score: 0"
-
-[node name="ScoreBlue" type="Label" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -299.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 108.0
-grow_horizontal = 0
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.17, 0.432833, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 64
-text = "Score: 0"
+[node name="UI" parent="." instance=ExtResource("8_graoe")]
 
 [node name="Main Player" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("3_7khvi")]
 position = Vector2(960, 720)

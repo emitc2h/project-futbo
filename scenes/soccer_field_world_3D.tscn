@@ -1,23 +1,138 @@
-[gd_scene load_steps=5 format=3 uid="uid://dq8d4kwgig1w8"]
+[gd_scene load_steps=6 format=3 uid="uid://dq8d4kwgig1w8"]
 
 [ext_resource type="PackedScene" uid="uid://cxhelbd0yiwh1" path="res://assets/3D/soccer_field.blend" id="1_ppmb8"]
-[ext_resource type="PhysicsMaterial" uid="uid://bfyxfjhrtf4nm" path="res://resources/grass_physics_material.tres" id="2_g8eke"]
+[ext_resource type="Texture2D" uid="uid://bek5iprvc0ra1" path="res://assets/3D/Textures/field_lines.png" id="2_qmqmp"]
 [ext_resource type="Texture2D" uid="uid://dxkvugcndj020" path="res://assets/school1.png" id="3_1nhj4"]
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_dicqu"]
+[ext_resource type="Texture2D" uid="uid://bluwrqw1byrep" path="res://assets/cedar1.png" id="3_bkv51"]
+[ext_resource type="Texture2D" uid="uid://dn8vyp0xocf8a" path="res://assets/tree1.png" id="4_526ji"]
 
 [node name="World" type="Node3D"]
 
-[node name="Soccer Field" parent="." instance=ExtResource("1_ppmb8")]
+[node name="soccer_field" parent="." instance=ExtResource("1_ppmb8")]
 
-[node name="GroundCollider" type="StaticBody3D" parent="Soccer Field"]
-collision_layer = 2
-collision_mask = 5
-physics_material_override = ExtResource("2_g8eke")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Soccer Field/GroundCollider"]
-shape = SubResource("WorldBoundaryShape3D_dicqu")
+[node name="Field lines" type="Decal" parent="soccer_field"]
+transform = Transform3D(25.0888, 0, 0, 0, 1, 0, 0, 0, 17.2538, 0, 0, 0.555)
+size = Vector3(2, 2, 2.29395)
+texture_albedo = ExtResource("2_qmqmp")
+cull_mask = 2
 
 [node name="SchoolGym" type="Sprite3D" parent="."]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, -21.6259)
 texture = ExtResource("3_1nhj4")
+
+[node name="TreeCluster1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7306, 0, -19.0858)
+
+[node name="Cedar1" type="Sprite3D" parent="TreeCluster1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.73098, -0.111697, 0.223839)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar2" type="Sprite3D" parent="TreeCluster1"]
+transform = Transform3D(1, 0, 0, 0, 0.836675, 0, 0, 0, 1, -0.579712, -0.111697, 0.913471)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar3" type="Sprite3D" parent="TreeCluster1"]
+transform = Transform3D(1, 0, 0, 0, 1.07353, 0, 0, 0, 1, 0.0181446, -0.111697, 0.223839)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar4" type="Sprite3D" parent="TreeCluster1"]
+transform = Transform3D(1.20608, 0, 0, 0, 0.83568, 0, 0, 0, 1, 1.10319, -0.111697, -1.11641)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar5" type="Sprite3D" parent="TreeCluster1"]
+transform = Transform3D(1.20608, 0, 0, 0, 0.83568, 0, 0, 0, 1, -2.73017, -0.128572, 1.22069)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Tree1" type="Sprite3D" parent="TreeCluster1"]
+transform = Transform3D(1.08873, 0, 0, 0, 0.83568, 0, 0, 0, 1, 2.43073, -0.128572, 1.02492)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("4_526ji")
+
+[node name="Tree2" type="Sprite3D" parent="TreeCluster1"]
+transform = Transform3D(1.39471, 0, 0, 0, 1.02305, 0, 0, 0, 1, -4.08541, -0.128572, 0.561581)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("4_526ji")
+
+[node name="TreeCluster2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.7463, 0, -19.0858)
+
+[node name="Cedar1" type="Sprite3D" parent="TreeCluster2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06322, -0.111697, 0.223839)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar2" type="Sprite3D" parent="TreeCluster2"]
+transform = Transform3D(1, 0, 0, 0, 0.836675, 0, 0, 0, 1, -0.579712, -0.111697, 0.913471)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar3" type="Sprite3D" parent="TreeCluster2"]
+transform = Transform3D(1, 0, 0, 0, 1.07353, 0, 0, 0, 1, 0.780045, -0.111697, 0.223839)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar4" type="Sprite3D" parent="TreeCluster2"]
+transform = Transform3D(1.20608, 0, 0, 0, 0.83568, 0, 0, 0, 1, -4.54502, -0.111697, -1.11641)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar5" type="Sprite3D" parent="TreeCluster2"]
+transform = Transform3D(1.20608, 0, 0, 0, 0.83568, 0, 0, 0, 1, -2.73017, -0.128572, 1.22069)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Tree1" type="Sprite3D" parent="TreeCluster2"]
+transform = Transform3D(1.08873, 0, 0, 0, 0.83568, 0, 0, 0, 1, 2.05563, -0.128572, 1.02492)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("4_526ji")
+
+[node name="Tree2" type="Sprite3D" parent="TreeCluster2"]
+transform = Transform3D(1.39471, 0, 0, 0, 1.02305, 0, 0, 0, 1, -1.21455, -0.128572, 0.561581)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("4_526ji")
+
+[node name="TreeCluster3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.08514, 0, -19.0858)
+
+[node name="Cedar1" type="Sprite3D" parent="TreeCluster3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.65123, -0.111697, 0.223839)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar3" type="Sprite3D" parent="TreeCluster3"]
+transform = Transform3D(1, 0, 0, 0, 1.07353, 0, 0, 0, 1, 0.780045, -0.111697, 0.223839)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Cedar5" type="Sprite3D" parent="TreeCluster3"]
+transform = Transform3D(1.20608, 0, 0, 0, 0.83568, 0, 0, 0, 1, -2.17102, -0.128572, 1.22069)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("3_bkv51")
+
+[node name="Tree2" type="Sprite3D" parent="TreeCluster3"]
+transform = Transform3D(1.39471, 0, 0, 0, 1.02305, 0, 0, 0, 1, -1.21455, -0.128572, 0.561581)
+sorting_use_aabb_center = false
+offset = Vector2(0, 256)
+texture = ExtResource("4_526ji")

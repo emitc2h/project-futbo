@@ -170,7 +170,7 @@ func get_control_node_position() -> Vector3:
 		return dribbled_node.global_position
 
 
-func get_control_mode_velocity() -> Vector3:
+func get_control_node_velocity() -> Vector3:
 	if mode == Mode.INERT:
 		return inert_node.linear_velocity
 	else:

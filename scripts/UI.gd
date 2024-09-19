@@ -2,9 +2,9 @@ class_name Ui
 extends CanvasLayer
 
 
-func set_score_red(score: int) -> void:
-	$ScoreRed.text = "Score: " + str(score)
+func set_score_left(score: int) -> void:
+	$ScoreLeft.text = str(score)
 	
 
-func set_score_blue(score: int) -> void:
-	$ScoreBlue.text = "Score: " + str(score)
+func set_score_right(score: int) -> void:
+	$ScoreRight.text = str(score)

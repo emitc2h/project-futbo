@@ -14,7 +14,13 @@ height = 1.25961
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 2
 axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
 script = ExtResource("1_hgcnn")
+run_forward_velocity = 5.0
+run_backward_velocity = 3.5
+run_deceleration = 0.4
+jump_momentum = 3.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.445752, 0)
@@ -23,10 +29,6 @@ shape = SubResource("CapsuleShape3D_untnw")
 [node name="PlayerBasicMovement" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_xplsy")]
 script = ExtResource("3_k2xyc")
 player = NodePath("..")
-run_forward_velocity = 5.0
-run_backward_velocity = 3.5
-run_deceleration = 0.4
-jump_momentum = 3.0
 
 [node name="PlayerKickAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_uehwc")]
 player = NodePath("..")

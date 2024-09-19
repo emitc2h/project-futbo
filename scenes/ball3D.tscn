@@ -45,8 +45,11 @@ delay_in_seconds = "0.0"
 collision_layer = 4
 collision_mask = 10
 axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
 physics_material_override = ExtResource("6_b7cd5")
 can_sleep = false
+angular_damp = 3.0
 script = ExtResource("7_vl0tx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InertNode"]
@@ -56,6 +59,8 @@ shape = SubResource("SphereShape3D_8bm52")
 collision_layer = 4
 collision_mask = 10
 axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DribbledNode"]
 shape = SubResource("SphereShape3D_8bm52")

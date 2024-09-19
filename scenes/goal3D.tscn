@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://de54qalm0kq4f"]
+
+[ext_resource type="Script" path="res://scripts/goal3D.gd" id="1_ll2ed"]
+[ext_resource type="PackedScene" uid="uid://c1ymu2h82no3g" path="res://assets/3D/goal.blend" id="2_4bxiw"]
+[ext_resource type="PackedScene" uid="uid://daqrsh2ouo10e" path="res://scenes/goal_area.tscn" id="3_xuhcq"]
+
+[node name="Goal" type="Node3D"]
+script = ExtResource("1_ll2ed")
+
+[node name="Goal Model" parent="." instance=ExtResource("2_4bxiw")]
+
+[node name="Goal Area" parent="Goal Model" instance=ExtResource("3_xuhcq")]
+collision_layer = 0
+collision_mask = 4
+
+[connection signal="body_entered" from="Goal Model/Goal Area" to="." method="_on_goal_area_body_entered"]
+[connection signal="body_exited" from="Goal Model/Goal Area" to="." method="_on_goal_area_body_exited"]
