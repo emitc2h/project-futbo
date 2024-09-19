@@ -16,11 +16,12 @@ turbidity = 4.0
 
 [sub_resource type="Sky" id="Sky_kkgna"]
 sky_material = SubResource("PhysicalSkyMaterial_gre6s")
+radiance_size = 1
 
 [sub_resource type="Environment" id="Environment_b8ld4"]
 background_mode = 2
 background_intensity = 20282.1
-background_canvas_max_layer = 1
+background_canvas_max_layer = -5
 sky = SubResource("Sky_kkgna")
 tonemap_mode = 2
 tonemap_exposure = 0.27
@@ -38,7 +39,6 @@ glow_blend_mode = 1
 fog_enabled = true
 fog_sun_scatter = 0.05
 fog_density = 0.001
-fog_aerial_perspective = 1.0
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_lbc5c"]
 
