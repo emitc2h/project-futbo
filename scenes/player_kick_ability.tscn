@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://c8bowai4pofe1"]
+
+[ext_resource type="Script" path="res://scripts/player_kick_ability.gd" id="1_mlbdn"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_4bk80"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_w2lss"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_14865"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_ixm4p"]
+[ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/clamped_aim.tscn" id="6_prlib"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tgrgb"]
+radius = 0.17767
+height = 0.659571
+
+[node name="PlayerKickAbility" type="Node3D"]
+script = ExtResource("1_mlbdn")
+
+[node name="State" type="Node" parent="."]
+script = ExtResource("2_4bk80")
+
+[node name="root" type="Node" parent="State"]
+script = ExtResource("3_w2lss")
+initial_state = NodePath("not ready")
+
+[node name="not ready" type="Node" parent="State/root"]
+script = ExtResource("4_14865")
+
+[node name="to ready" type="Node" parent="State/root/not ready"]
+script = ExtResource("5_ixm4p")
+to = NodePath("../../ready")
+event = &"not ready to ready"
+delay_in_seconds = "0.0"
+
+[node name="ready" type="Node" parent="State/root"]
+script = ExtResource("4_14865")
+
+[node name="to not ready" type="Node" parent="State/root/ready"]
+script = ExtResource("5_ixm4p")
+to = NodePath("../../not ready")
+event = &"ready to not ready"
+delay_in_seconds = "0.0"
+
+[node name="to kicking" type="Node" parent="State/root/ready"]
+script = ExtResource("5_ixm4p")
+to = NodePath("../../kicking")
+event = &"ready to kicking"
+delay_in_seconds = "0.0"
+
+[node name="kicking" type="Node" parent="State/root"]
+script = ExtResource("4_14865")
+
+[node name="to ready" type="Node" parent="State/root/kicking"]
+script = ExtResource("5_ixm4p")
+to = NodePath("../../ready")
+event = &"kicking to ready"
+delay_in_seconds = "0.05"
+
+[node name="ClampedAim" parent="." instance=ExtResource("6_prlib")]
+
+[node name="KickZone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.152, 0.18, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KickZone"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_tgrgb")
+
+[connection signal="state_entered" from="State/root/not ready" to="." method="_on_not_ready_state_entered"]
+[connection signal="state_entered" from="State/root/ready" to="." method="_on_ready_state_entered"]
+[connection signal="state_exited" from="State/root/ready" to="." method="_on_ready_state_exited"]
+[connection signal="state_entered" from="State/root/kicking" to="." method="_on_kicking_state_entered"]
+[connection signal="state_exited" from="State/root/kicking" to="." method="_on_kicking_state_exited"]
+[connection signal="body_entered" from="KickZone" to="." method="_on_kick_zone_body_entered"]
+[connection signal="body_exited" from="KickZone" to="." method="_on_kick_zone_body_exited"]

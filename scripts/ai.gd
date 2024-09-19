@@ -1,5 +1,5 @@
 class_name AI
-extends Node2D
+extends Node3D
 
 # Nodes observed
 @export var player: Player
@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	behaviors.ball_position = ball.get_control_node_position()
-	behaviors.ball_velocity = ball.get_control_mode_velocity()
+	behaviors.ball_velocity = ball.get_control_node_velocity()
 
 
 #=======================================================

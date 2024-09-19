@@ -17,9 +17,9 @@ func hits_ball(ray_cast: RayCast3D) -> bool:
 
 
 # Assumes the collision mask is set to detect the ball only
-func get_ball(ray_cast: RayCast3D) -> Ball3D:
+func get_ball(ray_cast: RayCast3D) -> Ball:
 	if ray_cast.is_colliding():
 		var colliding_object: Node3D = ray_cast.get_collider() as Node3D
-		return colliding_object.get_parent() as Ball3D
+		return colliding_object.get_parent() as Ball
 	else:
 		return null

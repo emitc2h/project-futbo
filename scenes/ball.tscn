@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://bk8wo5fenailq"]
+
+[ext_resource type="Script" path="res://scripts/ball.gd" id="1_61a74"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_1trhp"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_mm7cv"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_pbfvg"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_w3gn0"]
+[ext_resource type="PhysicsMaterial" uid="uid://besahl7f6jbkx" path="res://resources/ball_physics_material.tres" id="6_b7cd5"]
+[ext_resource type="Script" path="res://scripts/inert_node.gd" id="7_vl0tx"]
+[ext_resource type="PackedScene" uid="uid://caxwuwjjre3j2" path="res://scenes/direction_ray.tscn" id="8_xublo"]
+[ext_resource type="Texture2D" uid="uid://bghnoo23prkx3" path="res://kenney_sports-pack/PNG/Equipment/ball_soccer2.png" id="9_gdyv1"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8bm52"]
+radius = 0.19
+
+[node name="Ball" type="Node3D"]
+script = ExtResource("1_61a74")
+
+[node name="State" type="Node" parent="."]
+script = ExtResource("2_1trhp")
+
+[node name="Root" type="Node" parent="State"]
+script = ExtResource("3_mm7cv")
+initial_state = NodePath("inert")
+
+[node name="inert" type="Node" parent="State/Root"]
+script = ExtResource("4_pbfvg")
+
+[node name="to dribbled" type="Node" parent="State/Root/inert"]
+script = ExtResource("5_w3gn0")
+to = NodePath("../../dribbled")
+event = &"inert to dribbled"
+delay_in_seconds = "0.0"
+
+[node name="dribbled" type="Node" parent="State/Root"]
+script = ExtResource("4_pbfvg")
+
+[node name="to inert" type="Node" parent="State/Root/dribbled"]
+script = ExtResource("5_w3gn0")
+to = NodePath("../../inert")
+event = &"dribbled to inert"
+delay_in_seconds = "0.0"
+
+[node name="InertNode" type="RigidBody3D" parent="."]
+collision_layer = 4
+collision_mask = 10
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+physics_material_override = ExtResource("6_b7cd5")
+can_sleep = false
+angular_damp = 3.0
+script = ExtResource("7_vl0tx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InertNode"]
+shape = SubResource("SphereShape3D_8bm52")
+
+[node name="DribbledNode" type="CharacterBody3D" parent="."]
+collision_layer = 4
+collision_mask = 10
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DribbledNode"]
+shape = SubResource("SphereShape3D_8bm52")
+
+[node name="DirectionRay" parent="." instance=ExtResource("8_xublo")]
+
+[node name="SpriteContainer" type="Node3D" parent="."]
+
+[node name="Sprite3D" type="Sprite3D" parent="SpriteContainer"]
+sorting_offset = 1.0
+pixel_size = 0.02
+texture = ExtResource("9_gdyv1")
+
+[connection signal="state_physics_processing" from="State/Root/inert" to="." method="_on_inert_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/dribbled" to="." method="_on_dribbled_state_entered"]
+[connection signal="state_exited" from="State/Root/dribbled" to="." method="_on_dribbled_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/dribbled" to="." method="_on_dribbled_state_physics_processing"]

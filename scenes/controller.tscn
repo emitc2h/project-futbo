@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bhkj1mdxm4ft2"]
+
+[ext_resource type="Script" path="res://scripts/controller.gd" id="1_u16yq"]
+[ext_resource type="Script" path="res://scripts/player_basic_movement_controller.gd" id="2_ie7jl"]
+[ext_resource type="Script" path="res://scripts/player_kick_ability_controller.gd" id="3_whim6"]
+[ext_resource type="Script" path="res://scripts/player_dribble_ability_controller.gd" id="4_fvxjn"]
+
+[node name="Controller" type="Node3D"]
+script = ExtResource("1_u16yq")
+
+[node name="PlayerBasicMovementController" type="Node3D" parent="." node_paths=PackedStringArray("controller")]
+script = ExtResource("2_ie7jl")
+controller = NodePath("..")
+
+[node name="PlayerKickAbilityController" type="Node3D" parent="." node_paths=PackedStringArray("controller")]
+script = ExtResource("3_whim6")
+controller = NodePath("..")
+
+[node name="PlayerDribbleAbilityController" type="Node3D" parent="." node_paths=PackedStringArray("controller")]
+script = ExtResource("4_fvxjn")
+controller = NodePath("..")
