@@ -10,8 +10,12 @@ var sprite: AnimatedSprite3D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var turn_right_timer: Timer = $TurnRightTimer
 @onready var turn_left_timer: Timer = $TurnLeftTimer
+@onready var sprint_timer: Timer = $SprintTimer
+@onready var recover_timer: Timer = $RecoverTimer
 
 # Movement configurable properties
+var sprint_velocity: float
+var recovery_velocity: float
 var run_forward_velocity: float
 var run_backward_velocity: float
 var run_deceleration: float
@@ -43,9 +47,14 @@ var idle_animation: String = DEFAULT_IDLE_ANIMATION
 
 # State tracking
 var in_run_state: bool = false
+var in_sprint_state: bool = false
 var in_idle_state: bool = false
 var in_run_buffer_state: bool = false
 var in_in_the_air_state: bool = false
+
+# other tracking
+var sprint_button_pressed: bool = false
+var is_recovering: bool = false
 
 # Signals
 signal facing_left()
@@ -54,6 +63,8 @@ signal facing_right()
 
 func _ready() -> void:
 	sprite = player.sprite
+	sprint_velocity = player.sprint_velocity
+	recovery_velocity = player.recovery_velocity
 	run_forward_velocity = player.run_forward_velocity
 	run_backward_velocity = player.run_backward_velocity
 	run_deceleration = player.run_deceleration
@@ -102,6 +113,10 @@ func run_process() -> void:
 	var max_velocity: float = run_backward_velocity
 	if is_running_forward():
 		max_velocity = run_forward_velocity
+	if in_sprint_state:
+		max_velocity = sprint_velocity
+	if is_recovering:
+		max_velocity = recovery_velocity
 	
 	# Apply the velocity to the player
 	player.velocity.x = left_right_axis * max_velocity
@@ -110,6 +125,11 @@ func run_process() -> void:
 func _on_run_state_entered() -> void:
 	in_run_state = true
 	sprite.play("run")
+	
+	# Start sprinting immediately if sprint button is already pressed
+	# upon entering the run state
+	if sprint_button_pressed and not is_recovering:
+		state.send_event("run to sprint")
 
 
 func _on_run_state_physics_processing(delta: float) -> void:
@@ -130,6 +150,42 @@ func _on_run_state_physics_processing(delta: float) -> void:
 
 func _on_run_state_exited() -> void:
 	in_run_state = false
+
+
+# sprint state
+#----------------------------------------
+func _on_sprint_state_entered() -> void:
+	in_sprint_state = true
+	sprint_timer.start()
+
+
+func _on_sprint_state_physics_processing(delta: float) -> void:
+	run_process()
+	
+	# Delegate both scenarios to the run state
+	if (left_right_axis == 0.0) or (not player.is_on_floor()):
+		state.send_event("sprint to run")
+	
+	# Needs to be called in every movement state
+	player.move_and_slide()
+
+
+func _on_sprint_state_exited() -> void:
+	in_sprint_state = false
+	sprint_timer.stop()
+
+
+func _on_sprint_timer_timeout() -> void:
+	recover_timer.start()
+	is_recovering = true
+	state.send_event("sprint to run")
+
+
+func _on_recover_timer_timeout() -> void:
+	is_recovering = false
+	recover_timer.stop()
+	if sprint_button_pressed:
+		state.send_event("run to sprint")
 
 
 # skid state
@@ -355,6 +411,17 @@ func run(direction: float) -> void:
 		if in_idle_state:
 			state.send_event("idle to run buffer")
 
+
+func start_sprinting() -> void:
+	sprint_button_pressed = true
+	if not is_recovering:
+		state.send_event("run to sprint")
+
+
+func end_sprinting() -> void:
+	sprint_button_pressed = false
+	state.send_event("sprint to run")
+	
 
 # is meant to be call on button press
 func jump() -> void:

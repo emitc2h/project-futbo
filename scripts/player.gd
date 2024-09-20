@@ -12,6 +12,8 @@ signal facing_left()
 signal facing_right()
 
 # Basic movement configurable properties
+@export var sprint_velocity: float
+@export var recovery_velocity: float
 @export var run_forward_velocity: float
 @export var run_backward_velocity: float
 @export var run_deceleration: float

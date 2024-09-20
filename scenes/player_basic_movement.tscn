@@ -68,6 +68,21 @@ to = NodePath("../../idle")
 event = &"run to idle"
 delay_in_seconds = "0.1"
 
+[node name="to sprint" type="Node" parent="State/Root/Movement/run"]
+script = ExtResource("6_briu7")
+to = NodePath("../../sprint")
+event = &"run to sprint"
+delay_in_seconds = "0.0"
+
+[node name="sprint" type="Node" parent="State/Root/Movement"]
+script = ExtResource("5_cjn8p")
+
+[node name="to run" type="Node" parent="State/Root/Movement/sprint"]
+script = ExtResource("6_briu7")
+to = NodePath("../../run")
+event = &"sprint to run"
+delay_in_seconds = "0.0"
+
 [node name="skid" type="Node" parent="State/Root/Movement"]
 script = ExtResource("5_cjn8p")
 
@@ -212,12 +227,21 @@ wait_time = 0.3
 process_callback = 0
 wait_time = 0.3
 
+[node name="SprintTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="RecoverTimer" type="Timer" parent="."]
+wait_time = 4.0
+
 [connection signal="state_entered" from="State/Root/Movement/idle" to="." method="_on_idle_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/idle" to="." method="_on_idle_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/idle" to="." method="_on_idle_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Movement/run" to="." method="_on_run_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/run" to="." method="_on_run_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/run" to="." method="_on_run_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Movement/sprint" to="." method="_on_sprint_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/sprint" to="." method="_on_sprint_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Movement/sprint" to="." method="_on_sprint_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Movement/skid" to="." method="_on_skid_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Movement/skid" to="." method="_on_skid_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Movement/run buffer" to="." method="_on_run_buffer_state_entered"]
@@ -244,3 +268,5 @@ wait_time = 0.3
 [connection signal="timeout" from="JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="timeout" from="TurnLeftTimer" to="." method="_on_turn_left_timer_timeout"]
 [connection signal="timeout" from="TurnRightTimer" to="." method="_on_turn_right_timer_timeout"]
+[connection signal="timeout" from="SprintTimer" to="." method="_on_sprint_timer_timeout"]
+[connection signal="timeout" from="RecoverTimer" to="." method="_on_recover_timer_timeout"]

@@ -18,3 +18,11 @@ func _physics_process(delta: float) -> void:
 		
 		if Input.is_action_just_pressed("jump"):
 			player_basic_movement.jump()
+			
+		if Input.is_action_just_pressed("sprint"):
+			# Cannot sprint while dribbling
+			if not Input.is_action_pressed("dribble"):
+				player_basic_movement.start_sprinting()
+		
+		if Input.is_action_just_released("sprint"):
+			player_basic_movement.end_sprinting()
