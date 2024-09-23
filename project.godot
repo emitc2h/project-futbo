@@ -139,5 +139,6 @@ sprint={
 
 [rendering]
 
+textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/use_physical_light_units=true
 environment/defaults/default_clear_color=Color(0.3458, 0.646707, 0.91, 1)

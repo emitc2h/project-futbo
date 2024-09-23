@@ -1,9 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://3y4snk0eo4mp"]
+[gd_scene load_steps=4 format=3 uid="uid://3y4snk0eo4mp"]
 
 [ext_resource type="Script" path="res://scripts/ui.gd" id="1_mrayf"]
+[ext_resource type="Texture2D" uid="uid://bfox2h7pvj5mc" path="res://assets/3D/Textures/stamina_wheel_under.png" id="2_8lnaa"]
+[ext_resource type="Texture2D" uid="uid://ctlmd4laggb3m" path="res://assets/3D/Textures/stamina_wheel_progress.png" id="3_mi4vw"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_mrayf")
+stamina_offset = Vector2(-25, -220)
 
 [node name="ScoreLeft" type="Label" parent="."]
 offset_left = 43.0
@@ -35,3 +38,11 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 2
+
+[node name="StaminaProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.2, 0.2)
+fill_mode = 4
+texture_under = ExtResource("2_8lnaa")
+texture_progress = ExtResource("3_mi4vw")

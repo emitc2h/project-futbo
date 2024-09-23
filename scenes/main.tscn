@@ -37,7 +37,6 @@ glow_normalized = true
 glow_intensity = 0.9
 glow_bloom = 0.1
 glow_blend_mode = 1
-fog_enabled = true
 fog_sun_scatter = 0.05
 fog_density = 0.001
 
@@ -45,8 +44,6 @@ fog_density = 0.001
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_vdkql")
-
-[node name="UI" parent="." instance=ExtResource("2_0egkg")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_b8ld4")
@@ -110,8 +107,15 @@ animation = &"celebrate"
 [node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("11_rdakw")]
 subject = NodePath("../MainPlayer")
 
+[node name="UI" parent="." node_paths=PackedStringArray("camera_controller", "player") instance=ExtResource("2_0egkg")]
+camera_controller = NodePath("../CameraController")
+player = NodePath("../MainPlayer")
+
+[connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
 [connection signal="facing_left" from="MainPlayer" to="Ball" method="_on_facing_left"]
 [connection signal="facing_right" from="MainPlayer" to="Ball" method="_on_facing_right"]
+[connection signal="hide_stamina" from="MainPlayer" to="UI" method="_on_hide_stamina"]
+[connection signal="update_stamina_value" from="MainPlayer" to="UI" method="_on_update_stamina_value"]
 [connection signal="scored" from="GoalLeft" to="." method="_on_goal_left_scored"]
 [connection signal="scored" from="GoalLeft" to="OpponentPlayer/AI" method="_on_away_scored"]
 [connection signal="scored" from="GoalRight" to="." method="_on_goal_right_scored"]

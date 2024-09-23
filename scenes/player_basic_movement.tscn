@@ -216,6 +216,58 @@ to = NodePath("../../face left")
 event = &"turn left to face left"
 delay_in_seconds = "0.0"
 
+[node name="Stamina" type="Node" parent="State/Root"]
+script = ExtResource("4_70yeq")
+initial_state = NodePath("full")
+
+[node name="full" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("5_cjn8p")
+
+[node name="to draining" type="Node" parent="State/Root/Stamina/full"]
+script = ExtResource("6_briu7")
+to = NodePath("../../draining")
+event = &"full to draining"
+delay_in_seconds = "0.0"
+
+[node name="draining" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("5_cjn8p")
+
+[node name="to replenishing" type="Node" parent="State/Root/Stamina/draining"]
+script = ExtResource("6_briu7")
+to = NodePath("../../replenishing")
+event = &"draining to replenishing"
+delay_in_seconds = "0.0"
+
+[node name="to recovering" type="Node" parent="State/Root/Stamina/draining"]
+script = ExtResource("6_briu7")
+to = NodePath("../../recovering")
+event = &"draining to recovering"
+delay_in_seconds = "0.0"
+
+[node name="replenishing" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("5_cjn8p")
+
+[node name="to draining" type="Node" parent="State/Root/Stamina/replenishing"]
+script = ExtResource("6_briu7")
+to = NodePath("../../draining")
+event = &"replenishing to draining"
+delay_in_seconds = "0.0"
+
+[node name="to full" type="Node" parent="State/Root/Stamina/replenishing"]
+script = ExtResource("6_briu7")
+to = NodePath("../../full")
+event = &"replenishing to full"
+delay_in_seconds = "0.0"
+
+[node name="recovering" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("5_cjn8p")
+
+[node name="to full" type="Node" parent="State/Root/Stamina/recovering"]
+script = ExtResource("6_briu7")
+to = NodePath("../../full")
+event = &"recovering to full"
+delay_in_seconds = "0.0"
+
 [node name="JumpBufferTimer" type="Timer" parent="."]
 wait_time = 0.05
 
@@ -226,12 +278,6 @@ wait_time = 0.3
 [node name="TurnRightTimer" type="Timer" parent="."]
 process_callback = 0
 wait_time = 0.3
-
-[node name="SprintTimer" type="Timer" parent="."]
-wait_time = 2.0
-
-[node name="RecoverTimer" type="Timer" parent="."]
-wait_time = 4.0
 
 [connection signal="state_entered" from="State/Root/Movement/idle" to="." method="_on_idle_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/idle" to="." method="_on_idle_state_exited"]
@@ -265,8 +311,14 @@ wait_time = 4.0
 [connection signal="state_entered" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_entered"]
 [connection signal="state_exited" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Stamina/full" to="." method="_on_full_state_entered"]
+[connection signal="state_entered" from="State/Root/Stamina/draining" to="." method="_on_draining_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Stamina/draining" to="." method="_on_draining_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Stamina/replenishing" to="." method="_on_replenishing_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Stamina/replenishing" to="." method="_on_replenishing_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Stamina/recovering" to="." method="_on_recovering_state_entered"]
+[connection signal="state_exited" from="State/Root/Stamina/recovering" to="." method="_on_recovering_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Stamina/recovering" to="." method="_on_recovering_state_physics_processing"]
 [connection signal="timeout" from="JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="timeout" from="TurnLeftTimer" to="." method="_on_turn_left_timer_timeout"]
 [connection signal="timeout" from="TurnRightTimer" to="." method="_on_turn_right_timer_timeout"]
-[connection signal="timeout" from="SprintTimer" to="." method="_on_sprint_timer_timeout"]
-[connection signal="timeout" from="RecoverTimer" to="." method="_on_recover_timer_timeout"]

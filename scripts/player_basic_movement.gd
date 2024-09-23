@@ -10,12 +10,13 @@ var sprite: AnimatedSprite3D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var turn_right_timer: Timer = $TurnRightTimer
 @onready var turn_left_timer: Timer = $TurnLeftTimer
-@onready var sprint_timer: Timer = $SprintTimer
-@onready var recover_timer: Timer = $RecoverTimer
 
 # Movement configurable properties
 var sprint_velocity: float
 var recovery_velocity: float
+var stamina_limit: float # in secs
+var stamina_replenish_rate: float = 0.666
+
 var run_forward_velocity: float
 var run_backward_velocity: float
 var run_deceleration: float
@@ -29,6 +30,7 @@ var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
 # 1.0 to moving right. It controls how fast w.r.t. to the max velocity
 # the player is running.
 var left_right_axis: float
+var stamina: float
 
 # The direction faced is independent from where the player is going. It does
 # determine among other things, the maximum velocity as the player goes slower
@@ -54,16 +56,24 @@ var in_in_the_air_state: bool = false
 
 # other tracking
 var sprint_button_pressed: bool = false
-var is_recovering: bool = false
+var in_recovering_state: bool = false
 
 # Signals
 signal facing_left()
 signal facing_right()
 
+signal display_stamina(color: Color)
+signal hide_stamina()
+signal update_stamina_value(value: float)
+
 
 func _ready() -> void:
 	sprite = player.sprite
 	sprint_velocity = player.sprint_velocity
+	stamina_limit = player.stamina_limit
+	stamina_replenish_rate = player.stamina_replenish_rate
+	stamina = stamina_limit
+	
 	recovery_velocity = player.recovery_velocity
 	run_forward_velocity = player.run_forward_velocity
 	run_backward_velocity = player.run_backward_velocity
@@ -115,7 +125,7 @@ func run_process() -> void:
 		max_velocity = run_forward_velocity
 	if in_sprint_state:
 		max_velocity = sprint_velocity
-	if is_recovering:
+	if in_recovering_state:
 		max_velocity = recovery_velocity
 	
 	# Apply the velocity to the player
@@ -128,7 +138,7 @@ func _on_run_state_entered() -> void:
 	
 	# Start sprinting immediately if sprint button is already pressed
 	# upon entering the run state
-	if sprint_button_pressed and not is_recovering:
+	if sprint_button_pressed and not in_recovering_state:
 		state.send_event("run to sprint")
 
 
@@ -156,7 +166,8 @@ func _on_run_state_exited() -> void:
 #----------------------------------------
 func _on_sprint_state_entered() -> void:
 	in_sprint_state = true
-	sprint_timer.start()
+	state.send_event("full to draining")
+	state.send_event("replenishing to draining")
 
 
 func _on_sprint_state_physics_processing(delta: float) -> void:
@@ -172,20 +183,7 @@ func _on_sprint_state_physics_processing(delta: float) -> void:
 
 func _on_sprint_state_exited() -> void:
 	in_sprint_state = false
-	sprint_timer.stop()
-
-
-func _on_sprint_timer_timeout() -> void:
-	recover_timer.start()
-	is_recovering = true
-	state.send_event("sprint to run")
-
-
-func _on_recover_timer_timeout() -> void:
-	is_recovering = false
-	recover_timer.stop()
-	if sprint_button_pressed:
-		state.send_event("run to sprint")
+	state.send_event("draining to replenishing")
 
 
 # skid state
@@ -398,6 +396,61 @@ func _on_turn_left_state_exited() -> void:
 	turning_time_left = 0.0
 
 
+# full state
+#----------------------------------------
+func _on_full_state_entered() -> void:
+	hide_stamina.emit()
+	
+
+# draining state
+#----------------------------------------
+func _on_draining_state_entered() -> void:
+	display_stamina.emit(Color.YELLOW)
+
+
+func _on_draining_state_physics_processing(delta: float) -> void:
+	stamina -= delta
+	if stamina < 0:
+		stamina = 0
+		state.send_event("draining to recovering")
+	update_stamina_value.emit(stamina/stamina_limit)
+
+
+func refill_stamina(delta: float) -> void:
+	stamina += delta * stamina_replenish_rate
+	if stamina > stamina_limit:
+		stamina = stamina_limit
+		state.send_event("replenishing to full")
+		state.send_event("recovering to full")
+	update_stamina_value.emit(stamina/stamina_limit)
+
+
+# replenishing state
+#----------------------------------------
+func _on_replenishing_state_entered() -> void:
+	display_stamina.emit(Color.GREEN)
+
+
+
+func _on_replenishing_state_physics_processing(delta: float) -> void:
+	refill_stamina(delta)
+
+
+# recovering state
+#----------------------------------------
+func _on_recovering_state_entered() -> void:
+	in_recovering_state = true
+	display_stamina.emit(Color.DARK_RED)
+
+
+func _on_recovering_state_physics_processing(delta: float) -> void:
+	refill_stamina(delta)
+
+
+func _on_recovering_state_exited() -> void:
+	in_recovering_state = false
+
+
 #=======================================================
 # CONTROL FUNCTIONS
 #=======================================================
@@ -414,7 +467,7 @@ func run(direction: float) -> void:
 
 func start_sprinting() -> void:
 	sprint_button_pressed = true
-	if not is_recovering:
+	if not in_recovering_state:
 		state.send_event("run to sprint")
 
 

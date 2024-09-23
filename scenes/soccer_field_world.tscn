@@ -1,10 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://dq8d4kwgig1w8"]
+[gd_scene load_steps=9 format=3 uid="uid://dq8d4kwgig1w8"]
 
 [ext_resource type="PackedScene" uid="uid://cxhelbd0yiwh1" path="res://assets/3D/soccer_field.blend" id="1_ppmb8"]
 [ext_resource type="Texture2D" uid="uid://bek5iprvc0ra1" path="res://assets/3D/Textures/field_lines.png" id="2_qmqmp"]
 [ext_resource type="Texture2D" uid="uid://dxkvugcndj020" path="res://assets/school1.png" id="3_1nhj4"]
 [ext_resource type="Texture2D" uid="uid://bluwrqw1byrep" path="res://assets/cedar1.png" id="3_bkv51"]
 [ext_resource type="Texture2D" uid="uid://dn8vyp0xocf8a" path="res://assets/tree1.png" id="4_526ji"]
+[ext_resource type="PackedScene" uid="uid://csm18r05bso3r" path="res://assets/3D/spotlight.blend" id="6_4d8uc"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1avyq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spgyb"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("3_1nhj4")
 
 [node name="World" type="Node3D"]
 
@@ -15,10 +23,6 @@ transform = Transform3D(25.0888, 0, 0, 0, 1, 0, 0, 0, 17.2538, 0, 0, 0.555)
 size = Vector3(2, 2, 2.29395)
 texture_albedo = ExtResource("2_qmqmp")
 cull_mask = 2
-
-[node name="SchoolGym" type="Sprite3D" parent="."]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, -21.6259)
-texture = ExtResource("3_1nhj4")
 
 [node name="TreeCluster1" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7306, 0, -19.0858)
@@ -66,28 +70,28 @@ offset = Vector2(0, 256)
 texture = ExtResource("4_526ji")
 
 [node name="TreeCluster2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.7463, 0, -19.0858)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6855, 0, -19.0858)
 
 [node name="Cedar1" type="Sprite3D" parent="TreeCluster2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06322, -0.111697, 0.223839)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06322, -0.111697, -0.942486)
 sorting_use_aabb_center = false
 offset = Vector2(0, 256)
 texture = ExtResource("3_bkv51")
 
 [node name="Cedar2" type="Sprite3D" parent="TreeCluster2"]
-transform = Transform3D(1, 0, 0, 0, 0.836675, 0, 0, 0, 1, -0.579712, -0.111697, 0.913471)
+transform = Transform3D(1, 0, 0, 0, 0.836675, 0, 0, 0, 1, -0.579712, -0.111697, 1.45984)
 sorting_use_aabb_center = false
 offset = Vector2(0, 256)
 texture = ExtResource("3_bkv51")
 
 [node name="Cedar3" type="Sprite3D" parent="TreeCluster2"]
-transform = Transform3D(1, 0, 0, 0, 1.07353, 0, 0, 0, 1, 0.780045, -0.111697, 0.223839)
+transform = Transform3D(1, 0, 0, 0, 1.07353, 0, 0, 0, 1, 0.780045, -0.111697, 0.477085)
 sorting_use_aabb_center = false
 offset = Vector2(0, 256)
 texture = ExtResource("3_bkv51")
 
 [node name="Cedar4" type="Sprite3D" parent="TreeCluster2"]
-transform = Transform3D(1.20608, 0, 0, 0, 0.83568, 0, 0, 0, 1, -4.54502, -0.111697, -1.11641)
+transform = Transform3D(1.20608, 0, 0, 0, 0.83568, 0, 0, 0, 1, -4.54502, -0.111697, 0.237288)
 sorting_use_aabb_center = false
 offset = Vector2(0, 256)
 texture = ExtResource("3_bkv51")
@@ -99,13 +103,13 @@ offset = Vector2(0, 256)
 texture = ExtResource("3_bkv51")
 
 [node name="Tree1" type="Sprite3D" parent="TreeCluster2"]
-transform = Transform3D(1.08873, 0, 0, 0, 0.83568, 0, 0, 0, 1, 2.05563, -0.128572, 1.02492)
+transform = Transform3D(1.08873, 0, 0, 0, 0.83568, 0, 0, 0, 1, 2.05563, -0.128572, 0.947458)
 sorting_use_aabb_center = false
 offset = Vector2(0, 256)
 texture = ExtResource("4_526ji")
 
 [node name="Tree2" type="Sprite3D" parent="TreeCluster2"]
-transform = Transform3D(1.39471, 0, 0, 0, 1.02305, 0, 0, 0, 1, -1.21455, -0.128572, 0.561581)
+transform = Transform3D(1.39471, 0, 0, 0, 1.02305, 0, 0, 0, 1, -0.198101, -0.128572, -3.64991)
 sorting_use_aabb_center = false
 offset = Vector2(0, 256)
 texture = ExtResource("4_526ji")
@@ -136,3 +140,17 @@ transform = Transform3D(1.39471, 0, 0, 0, 1.02305, 0, 0, 0, 1, -1.21455, -0.1285
 sorting_use_aabb_center = false
 offset = Vector2(0, 256)
 texture = ExtResource("4_526ji")
+
+[node name="spotlight" parent="." instance=ExtResource("6_4d8uc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.727, 0, -18.0433)
+
+[node name="spotlight2" parent="." instance=ExtResource("6_4d8uc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.0433)
+
+[node name="spotlight3" parent="." instance=ExtResource("6_4d8uc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5627, 0, -18.0433)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(15.4, 0, 0, 0, -6.73155e-07, -15.4, 0, 15.4, -6.73155e-07, 0, 0.233693, -22.3923)
+mesh = SubResource("PlaneMesh_1avyq")
+surface_material_override/0 = SubResource("StandardMaterial3D_spgyb")
