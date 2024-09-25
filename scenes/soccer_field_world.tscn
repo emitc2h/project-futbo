@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dq8d4kwgig1w8"]
+[gd_scene load_steps=10 format=3 uid="uid://dq8d4kwgig1w8"]
 
+[ext_resource type="PackedScene" uid="uid://djuxc01fqb4hr" path="res://assets/3D/gym.blend" id="1_5t2cs"]
 [ext_resource type="PackedScene" uid="uid://cxhelbd0yiwh1" path="res://assets/3D/soccer_field.blend" id="1_ppmb8"]
 [ext_resource type="Texture2D" uid="uid://bek5iprvc0ra1" path="res://assets/3D/Textures/field_lines.png" id="2_qmqmp"]
 [ext_resource type="Texture2D" uid="uid://dxkvugcndj020" path="res://assets/school1.png" id="3_1nhj4"]
@@ -15,6 +16,9 @@ shading_mode = 0
 albedo_texture = ExtResource("3_1nhj4")
 
 [node name="World" type="Node3D"]
+
+[node name="gym" parent="." instance=ExtResource("1_5t2cs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30.2266)
 
 [node name="soccer_field" parent="." instance=ExtResource("1_ppmb8")]
 
@@ -150,7 +154,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.0433)
 [node name="spotlight3" parent="." instance=ExtResource("6_4d8uc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5627, 0, -18.0433)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="GymPlane" type="MeshInstance3D" parent="."]
 transform = Transform3D(15.4, 0, 0, 0, -6.73155e-07, -15.4, 0, 15.4, -6.73155e-07, 0, 0.233693, -22.3923)
+visible = false
 mesh = SubResource("PlaneMesh_1avyq")
 surface_material_override/0 = SubResource("StandardMaterial3D_spgyb")
