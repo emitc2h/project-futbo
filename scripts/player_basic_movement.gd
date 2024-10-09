@@ -66,6 +66,9 @@ signal display_stamina(color: Color)
 signal hide_stamina()
 signal update_stamina_value(value: float)
 
+signal started_sprinting()
+signal ended_sprinting()
+
 
 func _ready() -> void:
 	sprite = player.sprite
@@ -396,6 +399,10 @@ func _on_turn_left_state_exited() -> void:
 	turning_time_left = 0.0
 
 
+#=======================================================
+# STAMINA STATES
+#=======================================================
+
 # full state
 #----------------------------------------
 func _on_full_state_entered() -> void:
@@ -406,6 +413,7 @@ func _on_full_state_entered() -> void:
 #----------------------------------------
 func _on_draining_state_entered() -> void:
 	display_stamina.emit(Color.YELLOW)
+	started_sprinting.emit()
 
 
 func _on_draining_state_physics_processing(delta: float) -> void:
@@ -423,6 +431,10 @@ func refill_stamina(delta: float) -> void:
 		state.send_event("replenishing to full")
 		state.send_event("recovering to full")
 	update_stamina_value.emit(stamina/stamina_limit)
+
+
+func _on_draining_state_exited() -> void:
+	ended_sprinting.emit()
 
 
 # replenishing state

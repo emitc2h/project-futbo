@@ -14,6 +14,7 @@ var sprite: AnimatedSprite3D
 
 # Configurables
 @export var kick_force: float = 7.0
+@export var long_kick_force: float = 14.0
 
 # Static/Internal properties
 var kickzone_position_x: float
@@ -24,9 +25,11 @@ var aim: Vector2
 var ball: Ball
 var direction: Enums.Direction = Enums.Direction.RIGHT
 var previous_sprite_animation: String
+var is_sprinting: bool = false
+var kick_button_is_pressed: bool = false
 
 # State tracking
-var is_ready: bool
+var is_in_ready_state: bool = false
 
 
 # Record kickzone offset to flip the zone when the player faces left
@@ -46,30 +49,49 @@ func _on_not_ready_state_entered() -> void:
 	ball = null
 
 
+func _on_not_ready_state_physics_processing(delta: float) -> void:
+	if is_sprinting and kick_button_is_pressed:
+		state.send_event("not ready to standby")
+
+
+# standby state
+#----------------------------------------
+func _on_standby_state_physics_processing(delta: float) -> void:
+	if not (is_sprinting and kick_button_is_pressed):
+		state.send_event("standby to not ready")
+
+
 # ready state
 #----------------------------------------
 func _on_ready_state_entered() -> void:
 	# Sometimes the ball leaves the kickzone before the transition to not ready can be effected
 	if kickzone.get_overlapping_bodies().is_empty():
 		state.send_event("ready to not ready")
-	is_ready = true
+	is_in_ready_state = true
 
 
 func _on_ready_state_exited() -> void:
-	is_ready = false
+	is_in_ready_state = false
 
 
-# kicking state
+# kick state
 #----------------------------------------
-func _on_kicking_state_entered() -> void:
+func _on_kick_state_entered() -> void:
 	ball.impulse(clamped_aim.get_vector(aim, direction) * kick_force)
 	# if the kick doesn't work for some reason, stay in ready state
 	# ready state will be dropped once the ball has exited the kick zone
-	state.send_event("kicking to ready")
+	state.send_event("kick to ready")
 
 
-func _on_kicking_state_exited() -> void:
+func _on_kick_state_exited() -> void:
 	sprite.play(previous_sprite_animation)
+
+
+# long kick state
+#----------------------------------------
+func _on_long_kick_state_entered() -> void:
+	ball.impulse(Converters.vec3_from(Vector2(direction, -0.66).normalized()) * long_kick_force)
+	state.send_event("long kick to standby")
 
 
 #=======================================================
@@ -81,6 +103,7 @@ func _on_kicking_state_exited() -> void:
 func _on_kick_zone_body_entered(body: Node3D) -> void: 
 	ball = body.get_parent() as Ball
 	state.send_event("not ready to ready")
+	state.send_event("standby to long kick")
 
 
 func _on_kick_zone_body_exited(body: Node3D) -> void:
@@ -102,10 +125,28 @@ func _on_facing_right() -> void:
 	kickzone.position.x = kickzone_position_x
 
 
+func _on_started_sprinting() -> void:
+	is_sprinting = true
+
+
+func _on_ended_sprinting() -> void:
+	is_sprinting = false
+	state.send_event("standby to not ready")
+
+
 #=======================================================
 # CONTROL FUNCTIONS
 #=======================================================
 func kick() -> void:
-	state.send_event("ready to kicking")
+	# If the ball is already in the kick zone, kick it
+	state.send_event("ready to kick")
 	previous_sprite_animation = sprite.animation
 	sprite.play("kick")
+
+
+func kick_button_pressed() -> void:
+	kick_button_is_pressed = true
+
+
+func kick_button_released() -> void:
+	kick_button_is_pressed = false

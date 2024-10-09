@@ -41,9 +41,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.705509, 0)
 player = NodePath("..")
 
 [connection signal="display_stamina" from="PlayerBasicMovement" to="." method="_on_display_stamina"]
+[connection signal="ended_sprinting" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_ended_sprinting"]
 [connection signal="facing_left" from="PlayerBasicMovement" to="." method="_on_facing_left"]
+[connection signal="facing_left" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_facing_left"]
 [connection signal="facing_left" from="PlayerBasicMovement" to="PlayerDribbleAbility" method="_on_facing_left"]
 [connection signal="facing_right" from="PlayerBasicMovement" to="." method="_on_facing_right"]
+[connection signal="facing_right" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_facing_right"]
 [connection signal="facing_right" from="PlayerBasicMovement" to="PlayerDribbleAbility" method="_on_facing_right"]
 [connection signal="hide_stamina" from="PlayerBasicMovement" to="." method="_on_hide_stamina"]
+[connection signal="started_sprinting" from="PlayerBasicMovement" to="PlayerKickAbility" method="_on_started_sprinting"]
 [connection signal="update_stamina_value" from="PlayerBasicMovement" to="." method="_on_update_stamina_value"]

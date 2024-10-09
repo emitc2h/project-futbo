@@ -122,3 +122,5 @@ player = NodePath("../MainPlayer")
 [connection signal="scored" from="GoalLeft" to="." method="_on_goal_left_scored"]
 [connection signal="scored" from="GoalLeft" to="OpponentPlayer/AI" method="_on_away_scored"]
 [connection signal="scored" from="GoalRight" to="." method="_on_goal_right_scored"]
+[connection signal="facing_left" from="OpponentPlayer" to="Ball" method="_on_facing_left"]
+[connection signal="facing_right" from="OpponentPlayer" to="Ball" method="_on_facing_right"]

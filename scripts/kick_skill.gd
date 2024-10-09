@@ -10,5 +10,5 @@ func kick(aim: Vector2) -> void:
 
 
 func kick_where_faced(upward: float) -> void:
-	kick_ability.aim = Vector2(basic_movement.direction_faced, -upward)
+	kick_ability.aim = Vector2(basic_movement.direction_faced, -upward).normalized()
 	kick_ability.kick()

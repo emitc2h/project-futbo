@@ -6,3 +6,9 @@ addons/
 .DS_Store
 
 # Project ignores
+assets/
+clips/
+kenney*/
+
+# Artifacts ignores
+*.dmg

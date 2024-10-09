@@ -20,11 +20,20 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if kick_enabled and player_kick_ability.is_ready:
-		player_kick_ability.aim = \
-			Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+	if kick_enabled:
+		if player_kick_ability.is_in_ready_state:
+			player_kick_ability.aim = \
+				Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
 		
+			if Input.is_action_just_pressed("kick"):
+				if dribble_enabled:
+					player_dribble_ability.end_dribble()
+				player_kick_ability.kick()
+				
 		if Input.is_action_just_pressed("kick"):
-			if dribble_enabled:
-				player_dribble_ability.end_dribble()
-			player_kick_ability.kick()
+			player_kick_ability.kick_button_pressed()
+			
+		if Input.is_action_just_released("kick"):
+			player_kick_ability.kick_button_released()
+			
+		

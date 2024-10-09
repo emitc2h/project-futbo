@@ -1,32 +1,38 @@
-[gd_scene load_steps=10 format=3 uid="uid://dq8d4kwgig1w8"]
+[gd_scene load_steps=16 format=3 uid="uid://dq8d4kwgig1w8"]
 
 [ext_resource type="PackedScene" uid="uid://djuxc01fqb4hr" path="res://assets/3D/gym.blend" id="1_5t2cs"]
-[ext_resource type="PackedScene" uid="uid://cxhelbd0yiwh1" path="res://assets/3D/soccer_field.blend" id="1_ppmb8"]
 [ext_resource type="Texture2D" uid="uid://bek5iprvc0ra1" path="res://assets/3D/Textures/field_lines.png" id="2_qmqmp"]
-[ext_resource type="Texture2D" uid="uid://dxkvugcndj020" path="res://assets/school1.png" id="3_1nhj4"]
 [ext_resource type="Texture2D" uid="uid://bluwrqw1byrep" path="res://assets/cedar1.png" id="3_bkv51"]
 [ext_resource type="Texture2D" uid="uid://dn8vyp0xocf8a" path="res://assets/tree1.png" id="4_526ji"]
 [ext_resource type="PackedScene" uid="uid://csm18r05bso3r" path="res://assets/3D/spotlight.blend" id="6_4d8uc"]
+[ext_resource type="PackedScene" uid="uid://jhgare01iwet" path="res://scenes/imported/BaseMap.tscn" id="7_jgiw7"]
+[ext_resource type="Shader" path="res://shaders/SplatMap.gdshader" id="8_pisw0"]
+[ext_resource type="Texture2D" uid="uid://dasstxd5w1ais" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_OnlySand_normal.png" id="9_olt5o"]
+[ext_resource type="Texture2D" uid="uid://wh0qaqcjqyx1" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles_OnlySand_color.png" id="10_v7twt"]
+[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="11_v2dcp"]
+[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="12_wbnv8"]
+[ext_resource type="Texture2D" uid="uid://bcbqdvhjwpump" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_normal.png" id="13_w7av7"]
+[ext_resource type="Texture2D" uid="uid://2fpv8shpj0pd" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_color.png" id="14_2odwx"]
+[ext_resource type="Texture2D" uid="uid://lr6hxgl3we7g" path="res://assets/3D/Act1/Textures/BaseMap1A/BaseMap1A_splatmap.png" id="15_ubj3u"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_1avyq"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spgyb"]
-transparency = 1
-shading_mode = 0
-albedo_texture = ExtResource("3_1nhj4")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vbpcn"]
+render_priority = 0
+shader = ExtResource("8_pisw0")
+shader_parameter/red_tiling_factor = 6.0
+shader_parameter/green_tiling_factor = 5.0
+shader_parameter/blue_tiling_factor = 5.0
+shader_parameter/red_channel_texture = ExtResource("14_2odwx")
+shader_parameter/green_channel_texture = ExtResource("12_wbnv8")
+shader_parameter/blue_channel_texture = ExtResource("10_v7twt")
+shader_parameter/red_channel_normal = ExtResource("13_w7av7")
+shader_parameter/green_channel_normal = ExtResource("11_v2dcp")
+shader_parameter/blue_channel_normal = ExtResource("9_olt5o")
+shader_parameter/splatmap = ExtResource("15_ubj3u")
 
 [node name="World" type="Node3D"]
 
 [node name="gym" parent="." instance=ExtResource("1_5t2cs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30.2266)
-
-[node name="soccer_field" parent="." instance=ExtResource("1_ppmb8")]
-
-[node name="Field lines" type="Decal" parent="soccer_field"]
-transform = Transform3D(25.0888, 0, 0, 0, 1, 0, 0, 0, 17.2538, 0, 0, 0.555)
-size = Vector3(2, 2, 2.29395)
-texture_albedo = ExtResource("2_qmqmp")
-cull_mask = 2
 
 [node name="TreeCluster1" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7306, 0, -19.0858)
@@ -154,8 +160,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.0433)
 [node name="spotlight3" parent="." instance=ExtResource("6_4d8uc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5627, 0, -18.0433)
 
-[node name="GymPlane" type="MeshInstance3D" parent="."]
-transform = Transform3D(15.4, 0, 0, 0, -6.73155e-07, -15.4, 0, 15.4, -6.73155e-07, 0, 0.233693, -22.3923)
-visible = false
-mesh = SubResource("PlaneMesh_1avyq")
-surface_material_override/0 = SubResource("StandardMaterial3D_spgyb")
+[node name="BaseMap" parent="." instance=ExtResource("7_jgiw7")]
+transform = Transform3D(1.158, 0, 0, 0, 1.158, 0, 0, 0, 1.158, 3.58183, 0, -102.187)
+
+[node name="BaseMap1A" parent="BaseMap" index="1"]
+material_override = SubResource("ShaderMaterial_vbpcn")
+
+[node name="Field lines" type="Decal" parent="BaseMap"]
+transform = Transform3D(25.0888, 0, 0, 0, 1, 0, 0, 0, 17.2538, 0, 0, 88.5486)
+size = Vector3(2, 2, 2.29395)
+texture_albedo = ExtResource("2_qmqmp")
+cull_mask = 3
+
+[editable path="BaseMap"]
