@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dq8d4kwgig1w8"]
+[gd_scene load_steps=25 format=3 uid="uid://dq8d4kwgig1w8"]
 
 [ext_resource type="PackedScene" uid="uid://djuxc01fqb4hr" path="res://assets/3D/gym.blend" id="1_5t2cs"]
 [ext_resource type="Texture2D" uid="uid://bek5iprvc0ra1" path="res://assets/3D/Textures/field_lines.png" id="2_qmqmp"]
@@ -14,7 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://bcbqdvhjwpump" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_normal.png" id="13_w7av7"]
 [ext_resource type="Texture2D" uid="uid://2fpv8shpj0pd" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_color.png" id="14_2odwx"]
 [ext_resource type="Texture2D" uid="uid://tcjrvhpfpvym" path="res://assets/3D/Act1/Textures/BaseMap1C/BaseMap1C_splatmap.png" id="14_rm6sn"]
+[ext_resource type="Texture2D" uid="uid://cem5lh5jsoe0a" path="res://assets/3D/Act1/Textures/BaseMap1D/terrain/BaseMap1D.terain_splatmap.png" id="15_6lp8f"]
 [ext_resource type="Texture2D" uid="uid://lr6hxgl3we7g" path="res://assets/3D/Act1/Textures/BaseMap1A/BaseMap1A_splatmap.png" id="15_ubj3u"]
+[ext_resource type="Texture2D" uid="uid://yoy65rx3qx7a" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_normal.png" id="16_7ptfa"]
+[ext_resource type="Texture2D" uid="uid://dfvmyjp50vb2i" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_darker_color.png" id="17_5upuy"]
+[ext_resource type="Texture2D" uid="uid://blqis8nbt48n4" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_color.png" id="18_ux4no"]
+[ext_resource type="Texture2D" uid="uid://d1s3v5tcr382u" path="res://assets/3D/Act1/Textures/BaseMap1D/asphalt/BaseMap1D.asphalt_splatmap.png" id="19_kthcc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vbpcn"]
 render_priority = 0
@@ -22,8 +27,8 @@ shader = ExtResource("8_pisw0")
 shader_parameter/red_tiling_factor = 6.0
 shader_parameter/green_tiling_factor = 5.0
 shader_parameter/blue_tiling_factor = 5.0
-shader_parameter/specular = 0.5
-shader_parameter/roughness = 0.75
+shader_parameter/specular = 0.2
+shader_parameter/roughness = 0.95
 shader_parameter/red_channel_texture = ExtResource("14_2odwx")
 shader_parameter/green_channel_texture = ExtResource("12_wbnv8")
 shader_parameter/blue_channel_texture = ExtResource("10_v7twt")
@@ -38,8 +43,8 @@ shader = ExtResource("8_pisw0")
 shader_parameter/red_tiling_factor = 6.0
 shader_parameter/green_tiling_factor = 5.0
 shader_parameter/blue_tiling_factor = 5.0
-shader_parameter/specular = 0.5
-shader_parameter/roughness = 0.75
+shader_parameter/specular = 0.2
+shader_parameter/roughness = 0.95
 shader_parameter/red_channel_texture = ExtResource("14_2odwx")
 shader_parameter/green_channel_texture = ExtResource("12_wbnv8")
 shader_parameter/blue_channel_texture = ExtResource("10_v7twt")
@@ -47,6 +52,36 @@ shader_parameter/red_channel_normal = ExtResource("13_w7av7")
 shader_parameter/green_channel_normal = ExtResource("11_v2dcp")
 shader_parameter/blue_channel_normal = ExtResource("10_v7twt")
 shader_parameter/splatmap = ExtResource("14_rm6sn")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d5t80"]
+render_priority = 0
+shader = ExtResource("8_pisw0")
+shader_parameter/red_tiling_factor = 4.0
+shader_parameter/green_tiling_factor = 3.0
+shader_parameter/blue_tiling_factor = 3.0
+shader_parameter/specular = 0.2
+shader_parameter/roughness = 0.95
+shader_parameter/red_channel_texture = ExtResource("14_2odwx")
+shader_parameter/green_channel_texture = ExtResource("12_wbnv8")
+shader_parameter/blue_channel_texture = ExtResource("10_v7twt")
+shader_parameter/red_channel_normal = ExtResource("13_w7av7")
+shader_parameter/green_channel_normal = ExtResource("11_v2dcp")
+shader_parameter/blue_channel_normal = ExtResource("9_olt5o")
+shader_parameter/splatmap = ExtResource("15_6lp8f")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dfwc"]
+render_priority = 0
+shader = ExtResource("8_pisw0")
+shader_parameter/red_tiling_factor = 5.0
+shader_parameter/green_tiling_factor = 6.0
+shader_parameter/blue_tiling_factor = 10.0
+shader_parameter/specular = 0.8
+shader_parameter/roughness = 0.95
+shader_parameter/red_channel_texture = ExtResource("18_ux4no")
+shader_parameter/green_channel_texture = ExtResource("17_5upuy")
+shader_parameter/red_channel_normal = ExtResource("16_7ptfa")
+shader_parameter/green_channel_normal = ExtResource("16_7ptfa")
+shader_parameter/splatmap = ExtResource("19_kthcc")
 
 [node name="World" type="Node3D"]
 
@@ -185,13 +220,22 @@ transform = Transform3D(1.158, 0, 0, 0, 1.158, 0, 0, 0, 1.158, 3.58183, 0, -102.
 [node name="BaseMap1A" parent="BaseMap" index="1"]
 material_override = SubResource("ShaderMaterial_vbpcn")
 
+[node name="BaseMap1B" parent="BaseMap" index="2"]
+layers = 3
+
 [node name="BaseMap1C" parent="BaseMap" index="3"]
 material_override = SubResource("ShaderMaterial_c5jly")
 
+[node name="BaseMap1D_terain" parent="BaseMap" index="4"]
+material_override = SubResource("ShaderMaterial_d5t80")
+
+[node name="BaseMap1D_asphalt" parent="BaseMap" index="9"]
+material_override = SubResource("ShaderMaterial_8dfwc")
+
 [node name="Field lines" type="Decal" parent="BaseMap"]
-transform = Transform3D(25.0888, 0, 0, 0, 1, 0, 0, 0, 17.2538, 0, 0, 88.5486)
-size = Vector3(2, 2, 2.29395)
+transform = Transform3D(25.0888, 0, 0, 0, 1, 0, 0, 0, 17.2538, -3.00345, 0, 88.9138)
+size = Vector3(1.73009, 2, 2.62436)
 texture_albedo = ExtResource("2_qmqmp")
-cull_mask = 3
+cull_mask = 2
 
 [editable path="BaseMap"]
