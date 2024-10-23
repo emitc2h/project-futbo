@@ -43,7 +43,7 @@ func _post_import(scene: Node) -> Area3D:
 	# Create and save scene
 	var packed_scene: PackedScene = PackedScene.new()
 	packed_scene.pack(area3D)
-	var save_path: String = "res://scenes/" + area3D.name + ".tscn"
+	var save_path: String = "res://scenes/imported/" + area3D.name + ".tscn"
 	print("Saving scene... " + save_path)
 	ResourceSaver.save(packed_scene, save_path)
 	
