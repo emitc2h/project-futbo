@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmnaboavh4lbd"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qv22p"]
+points = PackedVector3Array(2.00155, 1.91949, -0.0227312, 2.00155, 1.91949, -0.518455, -1.99969, 1.91949, -0.0227312, 2.00155, 0.0106733, -0.00858235, 2.00155, 1.89538, -0.660072, -1.99969, 1.91949, -0.518455, -1.99969, 0.0106733, -0.00858235, 2.00155, 0.0106733, -1.32262, 2.00155, 1.82755, -0.776993, -1.99969, 1.89538, -0.660072, -1.99969, 0.0106733, -1.32262, 2.00155, 1.5878, -0.92054, 2.00155, 1.72272, -0.86523, -1.99969, 1.82755, -0.776993, -1.99969, 1.5878, -0.92054, -1.99969, 1.72272, -0.86523)
+
+[node name="goal_area" type="Area3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_qv22p")
