@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" path="res://scripts/goal.gd" id="1_ll2ed"]
 [ext_resource type="PackedScene" uid="uid://c1ymu2h82no3g" path="res://assets/3D/goal.blend" id="2_4bxiw"]
-[ext_resource type="PackedScene" uid="uid://daqrsh2ouo10e" path="res://scenes/goal_area.tscn" id="3_xuhcq"]
+[ext_resource type="PackedScene" uid="uid://cmnaboavh4lbd" path="res://scenes/imported/goal_area.tscn" id="3_5i643"]
 
 [node name="Goal" type="Node3D"]
 script = ExtResource("1_ll2ed")
 
 [node name="Goal Model" parent="." instance=ExtResource("2_4bxiw")]
 
-[node name="Goal Area" parent="Goal Model" instance=ExtResource("3_xuhcq")]
+[node name="Goal Area" parent="Goal Model" instance=ExtResource("3_5i643")]
 collision_layer = 0
 collision_mask = 4
 

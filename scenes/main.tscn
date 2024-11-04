@@ -66,7 +66,7 @@ directional_shadow_max_distance = 200.0
 [node name="World" parent="." instance=ExtResource("3_h7bk2")]
 
 [node name="MainPlayer" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("4_grrab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.11748, 0.077, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.4298, 0.077, 0)
 sprite = NodePath("AnimatedSprite3D")
 
 [node name="Controller" parent="MainPlayer" node_paths=PackedStringArray("player") instance=ExtResource("5_qa2st")]
