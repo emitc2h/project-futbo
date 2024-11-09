@@ -48,9 +48,9 @@ normal_texture = ExtResource("5_ujs58")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3wdgs"]
 render_priority = 0
 shader = ExtResource("8_pisw0")
-shader_parameter/red_tiling_factor = 10.0
-shader_parameter/green_tiling_factor = 10.0
-shader_parameter/blue_tiling_factor = 10.0
+shader_parameter/red_tiling_factor = 18.0
+shader_parameter/green_tiling_factor = 18.0
+shader_parameter/blue_tiling_factor = 18.0
 shader_parameter/specular = 0.2
 shader_parameter/roughness = 0.9
 shader_parameter/red_channel_texture = ExtResource("14_2odwx")
@@ -260,9 +260,9 @@ shadow_mesh = SubResource("ArrayMesh_t8vvw")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gegq8"]
 render_priority = 0
 shader = ExtResource("8_pisw0")
-shader_parameter/red_tiling_factor = 10.0
-shader_parameter/green_tiling_factor = 10.0
-shader_parameter/blue_tiling_factor = 10.0
+shader_parameter/red_tiling_factor = 18.0
+shader_parameter/green_tiling_factor = 18.0
+shader_parameter/blue_tiling_factor = 18.0
 shader_parameter/specular = 0.2
 shader_parameter/roughness = 0.9
 shader_parameter/red_channel_texture = ExtResource("14_2odwx")
