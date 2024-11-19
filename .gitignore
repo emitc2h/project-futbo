@@ -7,7 +7,7 @@ addons/
 
 # Project ignores
 assets/
-clips/
+demos/
 kenney*/
 
 # Artifacts ignores

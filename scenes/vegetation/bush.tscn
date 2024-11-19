@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://r42whxkucyjl"]
+
+[ext_resource type="PackedScene" uid="uid://djoujpff8bvcx" path="res://assets/3D/Act1/blend/Bush3.blend" id="1_he714"]
+[ext_resource type="Texture2D" uid="uid://bktgn7odifk61" path="res://assets/3D/Act1/Textures/Vegetation/Bush3/Bush3_color.png" id="2_630y4"]
+[ext_resource type="Texture2D" uid="uid://d38y5fulpxunj" path="res://assets/3D/Act1/Textures/Vegetation/Bush3/Bush3_transmission.png" id="3_fodok"]
+[ext_resource type="Texture2D" uid="uid://csd3powcir061" path="res://assets/3D/Act1/Textures/Vegetation/Bush3/Bush3_normal.png" id="4_jlaxa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bt4hs"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("2_630y4")
+metallic_specular = 0.05
+normal_enabled = true
+normal_texture = ExtResource("4_jlaxa")
+backlight_enabled = true
+backlight_texture = ExtResource("3_fodok")
+
+[node name="Bush" type="Node3D"]
+
+[node name="Bush3" parent="." instance=ExtResource("1_he714")]
+
+[node name="Plane" parent="Bush3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bt4hs")
+
+[node name="Plane_001" parent="Bush3" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bt4hs")
+
+[node name="Plane_002" parent="Bush3" index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bt4hs")
+
+[node name="Plane_003" parent="Bush3" index="3"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bt4hs")
+
+[node name="Plane_004" parent="Bush3" index="4"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bt4hs")
+
+[node name="Plane_005" parent="Bush3" index="5"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bt4hs")
+
+[node name="Plane_006" parent="Bush3" index="6"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bt4hs")
+
+[node name="Plane_007" parent="Bush3" index="7"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bt4hs")
+
+[node name="Plane_008" parent="Bush3" index="8"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bt4hs")
+
+[editable path="Bush3"]
