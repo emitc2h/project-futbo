@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=4 uid="uid://ckbxqfqfj1jqb"]
 
-[ext_resource type="Material" uid="uid://bc7ox7tpuk657" path="res://assets/3D/Act1/materials/grass_material.tres" id="1_v2tjh"]
+[ext_resource type="Material" uid="uid://bc7ox7tpuk657" path="res://assets/3D/Act1/materials/vegetation/grass/grass_material.tres" id="1_v2tjh"]
 [ext_resource type="Texture2D" uid="uid://55kej4h3xq8v" path="res://assets/3D/Act1/Textures/Vegetation/Grass2/Grass2_color.png" id="2_bdsp8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_87r52"]

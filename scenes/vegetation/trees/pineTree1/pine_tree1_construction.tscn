@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://ggo1xn5guhjd"]
+
+[ext_resource type="PackedScene" uid="uid://b51cmoi01d42w" path="res://assets/3D/Act1/blend/PineTree1.blend" id="1_6oq7i"]
+[ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="2_lidnu"]
+
+[node name="PineTree1Construction" type="Node3D"]
+
+[node name="PineTree1" parent="." instance=ExtResource("1_6oq7i")]
+
+[node name="Large Branch" parent="PineTree1" index="0"]
+visible = false
+
+[node name="Medium Branch" parent="PineTree1" index="1"]
+visible = false
+
+[node name="Small Branch" parent="PineTree1" index="2"]
+visible = false
+
+[node name="Large Composite Branch" parent="PineTree1" index="3"]
+visible = false
+
+[node name="Tree Lower Body Frame" parent="PineTree1" index="4"]
+visible = false
+
+[node name="Tree Top Frame" parent="PineTree1" index="5"]
+visible = false
+
+[node name="Tree Upper Body Frame" parent="PineTree1" index="6"]
+visible = false
+
+[node name="Medium Composite Branch" parent="PineTree1" index="7"]
+visible = false
+
+[node name="Tree Trunk" parent="PineTree1" index="8"]
+visible = false
+
+[node name="PineTree" parent="." instance=ExtResource("2_lidnu")]
+
+[editable path="PineTree1"]

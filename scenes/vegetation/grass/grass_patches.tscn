@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cpi65b7fpoxf8" path="res://assets/3D/Act1/blend/GrassPatches.blend" id="2_ow33i"]
 [ext_resource type="PackedScene" uid="uid://bc2qa3y0xpf50" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_round_patch_3m_mixed_1.tscn" id="3_trv1p"]
 [ext_resource type="PackedScene" uid="uid://drmfw4wqihplu" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_round_patch_3m_mixed_2.tscn" id="4_5fohd"]
-[ext_resource type="Material" uid="uid://bc7ox7tpuk657" path="res://assets/3D/Act1/materials/grass_material.tres" id="5_vv113"]
+[ext_resource type="Material" uid="uid://bc7ox7tpuk657" path="res://assets/3D/Act1/materials/vegetation/grass/grass_material.tres" id="5_vv113"]
 [ext_resource type="Texture2D" uid="uid://55kej4h3xq8v" path="res://assets/3D/Act1/Textures/Vegetation/Grass2/Grass2_color.png" id="6_x1wa2"]
 [ext_resource type="PackedScene" uid="uid://bxm6l73d6ddrh" path="res://scenes/vegetation/grass/multimesh_patches/dense_grass_round_patch_3m_mixed_2.tscn" id="7_4ct1o"]
 [ext_resource type="PackedScene" uid="uid://ckbxqfqfj1jqb" path="res://scenes/vegetation/grass/multimesh_patches/dense_grass_round_patch_3m_mixed_1.tscn" id="8_8wu4s"]

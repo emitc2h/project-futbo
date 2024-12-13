@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7kc4mj4vxacb"]
+
+[ext_resource type="PackedScene" uid="uid://gwjw7a1mxim4" path="res://assets/3D/Act1/blend/Tree1.blend" id="1_8a0tf"]
+[ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="2_8dmoj"]
+
+[node name="Tree1Construction" type="Node3D"]
+
+[node name="Tree1" parent="." instance=ExtResource("1_8a0tf")]
+
+[node name="TreeBase" parent="Tree1" index="0"]
+visible = false
+
+[node name="TreeBradfordPear" parent="." instance=ExtResource("2_8dmoj")]
+
+[editable path="Tree1"]
