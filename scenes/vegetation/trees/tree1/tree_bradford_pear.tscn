@@ -135,3 +135,43 @@ skeleton = NodePath("")
 [node name="TreeBranches" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_ekcvg")
 skeleton = NodePath("")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.281007, 1.21178, 0.000290155)
+light_intensity_lumens = 200000.0
+light_color = Color(0.89059, 0.89059, 0.89059, 1)
+light_negative = true
+light_specular = 0.0
+omni_range = 1.0
+omni_attenuation = 0.7
+omni_shadow_mode = 0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.403151, 1.21178, 0.000290155)
+light_intensity_lumens = 200000.0
+light_color = Color(0.89059, 0.89059, 0.89059, 1)
+light_negative = true
+light_specular = 0.0
+omni_range = 1.0
+omni_attenuation = 0.7
+omni_shadow_mode = 0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00364566, 1.21178, 0.383973)
+light_intensity_lumens = 200000.0
+light_color = Color(0.89059, 0.89059, 0.89059, 1)
+light_negative = true
+light_specular = 0.0
+omni_range = 1.0
+omni_attenuation = 0.7
+omni_shadow_mode = 0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00364566, 1.21178, -0.351035)
+light_intensity_lumens = 200000.0
+light_color = Color(0.89059, 0.89059, 0.89059, 1)
+light_negative = true
+light_specular = 0.0
+omni_range = 1.0
+omni_attenuation = 0.7
+omni_shadow_mode = 0

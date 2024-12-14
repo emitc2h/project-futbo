@@ -7,5 +7,6 @@ script = ExtResource("1_halyt")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 10)
+cull_mask = 31775
 current = true
 fov = 45.0

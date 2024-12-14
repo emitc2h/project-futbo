@@ -717,64 +717,112 @@ transform = Transform3D(1, 0, 0.000423938, 0, 1, 0, -0.000423938, 0, 1, 16.0254,
 transform = Transform3D(-1, 0, -0.000424059, 0, 1, 0, 0.000424059, 0, -1, 16.0229, 0.0270619, -0.926546)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 3.44212, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 3.44212, -0.126396)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 3.44212, 4.69054)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 3.44212, 4.56414)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 3.44212, -4.38348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 3.44212, -4.50988)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 3.44212, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 3.44212, -0.126396)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D5" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 3.44212, 4.69054)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 3.44212, 4.56414)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D6" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 3.44212, -4.38348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 3.44212, -4.50988)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D7" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 3.44212, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 3.44212, -0.126396)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D8" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 3.44212, 4.69054)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 3.44212, 4.56414)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D9" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 3.44212, -4.38348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 3.44212, -4.50988)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D10" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 3.44212, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 3.44212, -0.126396)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D11" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 3.44212, 4.69054)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 3.44212, 4.56414)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="OmniLight3D12" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 3.44212, -4.38348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 3.44212, -4.50988)
+light_intensity_lumens = 800.0
+light_temperature = 8000.0
 light_energy = 1000.0
-omni_range = 10.0
+shadow_enabled = true
+omni_range = 14.0
+omni_shadow_mode = 0
 
 [node name="DoorDetectorArea3D" type="Area3D" parent="LockersBuilding" node_paths=PackedStringArray("door_animation_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2156, 0.947854, 0)
@@ -1950,7 +1998,7 @@ transform = Transform3D(-1.49707, 0, -0.0936088, 0, 1.5, 0, 0.0936088, 0, -1.497
 material_override = ExtResource("48_5iqc3")
 
 [node name="TreeBradfordPear2" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-0.971233, 0, 1.39524, 0, 1.7, 0, -1.39524, 0, -0.971233, -35.089, 0, 7.90575)
+transform = Transform3D(-1.69, 0, 0.184131, 0, 1.7, 0, -0.184131, 0, -1.69, -35.089, 0, 7.90575)
 material_override = ExtResource("48_357rr")
 
 [node name="TreeBradfordPear13" parent="Trees" instance=ExtResource("47_p3d26")]
@@ -2022,7 +2070,7 @@ transform = Transform3D(1.42839, 0, 0.921798, 0, 1.7, 0, -0.921798, 0, 1.42839, 
 material_override = ExtResource("48_5iqc3")
 
 [node name="TreeBradfordPear4" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-1.49541, 0, 0.808537, 0, 1.7, 0, -0.808537, 0, -1.49541, -58.1405, 0, 12.8977)
+transform = Transform3D(-1.61444, 0, -0.532513, 0, 1.7, 0, 0.532513, 0, -1.61444, -59.0996, 0, 12.4142)
 material_override = ExtResource("48_0ux3e")
 
 [node name="TreeBradfordPear12" parent="Trees" instance=ExtResource("47_p3d26")]
@@ -2066,15 +2114,15 @@ transform = Transform3D(-1.44353, 0, -1.66018, 0, 2.2, 0, 1.66018, 0, -1.44353, 
 material_override = ExtResource("48_357rr")
 
 [node name="TreeBradfordPear22" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-1.4975, 0, -0.0866067, 0, 1.5, 0, 0.0866067, 0, -1.4975, -0.705523, 0, -23.421)
-material_override = ExtResource("48_357rr")
+transform = Transform3D(-0.579415, 0, 1.38358, 0, 1.5, 0, -1.38358, 0, -0.579415, -0.705523, 0, -23.421)
+material_override = ExtResource("48_5iqc3")
 
 [node name="TreeBradfordPear21" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.31724, 0, 1.07466, 0, 1.7, 0, -1.07466, 0, -1.31724, 22.1642, 0, -17.7872)
 material_override = ExtResource("48_0ux3e")
 
 [node name="PineTree" parent="." instance=ExtResource("51_xdu52")]
-transform = Transform3D(0.407466, 0, 0.569185, 0, 0.7, 0, -0.569185, 0, 0.407466, -27.8447, 0, 1.90599)
+transform = Transform3D(0.407466, 0, 0.569185, 0, 0.7, 0, -0.569185, 0, 0.407466, -27.8525, 0, 1.89819)
 
 [node name="PineTree2" parent="." instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.899282, 0, 0.0359463, 0, 0.9, 0, -0.0359463, 0, 0.899282, -28.1219, 0, 4.71647)
@@ -2098,7 +2146,7 @@ transform = Transform3D(-0.35558, 0, -0.934646, 0, 1, 0, 0.934646, 0, -0.35558, 
 transform = Transform3D(-0.606443, 0, -0.665002, 0, 0.9, 0, 0.665002, 0, -0.606443, -4.54233, 0, -23.6269)
 
 [node name="PineTree14" parent="." instance=ExtResource("51_xdu52")]
-transform = Transform3D(-0.336913, 0, -0.369445, 0, 0.5, 0, 0.369445, 0, -0.336913, -2.75301, 0, -21.5181)
+transform = Transform3D(-0.471678, 0, -0.517223, 0, 0.7, 0, 0.517223, 0, -0.471678, -2.75301, 0, -21.5181)
 
 [node name="PineTree10" parent="." instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.164445, 0, -0.782916, 0, 0.8, 0, 0.782916, 0, 0.164445, 16.9455, 0, -24.5855)
@@ -2146,7 +2194,7 @@ transform = Transform3D(0.133611, 0, -0.63612, 0, 0.65, 0, 0.63612, 0, 0.133611,
 transform = Transform3D(0.738874, 0, 0.306702, 0, 0.8, 0, -0.306702, 0, 0.738874, -27.9897, 0, 7.37558)
 
 [node name="PineTree20" parent="." instance=ExtResource("51_xdu52")]
-transform = Transform3D(0.738874, 0, 0.306702, 0, 0.8, 0, -0.306702, 0, 0.738874, -57.7527, 0, 14.3412)
+transform = Transform3D(0.737345, 0, 0.310361, 0, 0.8, 0, -0.310361, 0, 0.737345, -57.7527, 0, 14.3412)
 
 [node name="PineTree21" parent="." instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.286957, 0, 0.638479, 0, 0.7, 0, -0.638479, 0, 0.286957, -55.6628, 0, 10.1311)

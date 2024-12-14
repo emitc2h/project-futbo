@@ -1,0 +1,33 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://cpo0d8v00h0ap"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ulxvo"]
+turbidity = 4.0
+
+[sub_resource type="Sky" id="Sky_kkgna"]
+sky_material = SubResource("PhysicalSkyMaterial_ulxvo")
+radiance_size = 1
+
+[resource]
+background_mode = 2
+background_color = Color(1, 1, 1, 1)
+background_intensity = 20282.1
+background_canvas_max_layer = -5
+sky = SubResource("Sky_kkgna")
+ambient_light_source = 2
+ambient_light_color = Color(0.883721, 0.913614, 0.976312, 1)
+reflected_light_source = 1
+tonemap_mode = 2
+tonemap_exposure = 0.27
+tonemap_white = 0.27
+ssao_enabled = true
+glow_enabled = true
+glow_levels/1 = 0.5
+glow_levels/2 = 0.5
+glow_levels/4 = 0.5
+glow_levels/5 = 0.0
+glow_normalized = true
+glow_intensity = 0.9
+glow_bloom = 0.1
+glow_blend_mode = 1
+fog_sun_scatter = 0.05
+fog_density = 0.001
