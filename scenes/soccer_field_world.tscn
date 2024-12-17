@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=4 uid="uid://dq8d4kwgig1w8"]
+[gd_scene load_steps=96 format=4 uid="uid://dq8d4kwgig1w8"]
 
 [ext_resource type="PackedScene" uid="uid://djuxc01fqb4hr" path="res://assets/3D/gym.blend" id="1_5t2cs"]
 [ext_resource type="Texture2D" uid="uid://jiof4xx8yewt" path="res://assets/3D/Act1/Textures/Tiles/CeilingTiles1/CelingTiles1_color.png" id="3_4tkj0"]
@@ -42,13 +42,12 @@
 [ext_resource type="Texture2D" uid="uid://deiwp4p3ro442" path="res://assets/3D/Act1/Textures/Tiles/Sidewalk1/Sidewalk1_color.png" id="27_lmkvu"]
 [ext_resource type="Texture2D" uid="uid://duomom830q56p" path="res://assets/3D/Act1/Textures/Tiles/Fence1/Fence1.png" id="28_c5xtb"]
 [ext_resource type="PackedScene" uid="uid://r42whxkucyjl" path="res://scenes/vegetation/bush.tscn" id="44_m15ye"]
-[ext_resource type="PackedScene" uid="uid://bc2qa3y0xpf50" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_round_patch_3m_mixed_1.tscn" id="45_h7vpa"]
-[ext_resource type="Material" uid="uid://c7c4c38m0x41y" path="res://assets/3D/Act1/materials/vegetation/grass/grass_material_light.tres" id="46_th8ul"]
 [ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="47_p3d26"]
 [ext_resource type="Material" uid="uid://c772rq7htukcy" path="res://assets/3D/Act1/materials/vegetation/tree1/bradford_pear_yellow_leaves.tres" id="48_0ux3e"]
 [ext_resource type="Material" uid="uid://cwr4yvikap5o7" path="res://assets/3D/Act1/materials/vegetation/tree1/bradford_pear_slightly_dried_leaves.tres" id="48_5iqc3"]
 [ext_resource type="Material" uid="uid://c3ccdga8d7wlw" path="res://assets/3D/Act1/materials/vegetation/tree1/bradford_pear_progressing_leaves.tres" id="48_357rr"]
 [ext_resource type="Material" uid="uid://blrbtcrllc60i" path="res://assets/3D/Act1/materials/vegetation/tree1/bradford_pear_red_leaves.tres" id="49_dhlch"]
+[ext_resource type="PackedScene" uid="uid://1qyvwbunehqq" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_random_patch_6m_mixed_2.tscn" id="51_764ci"]
 [ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="51_xdu52"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_08h7b"]
@@ -1001,983 +1000,115 @@ transform = Transform3D(0.15471, 0, 0.98796, 0, 1, 0, -0.98796, 0, 0.15471, 0.35
 
 [node name="ParkingGrass" type="Node3D" parent="."]
 
-[node name="LightGrassRoundPatch3MMixed10" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.926784, 0, 0.375594, 0, 1, 0, -0.375594, 0, 0.926784, 37.7082, -0.0207849, 3.55243)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed17" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.986901, 0, 0.161328, 0, 1, 0, -0.161328, 0, -0.986901, 29.5091, -0.0444564, 5.15103)
 
-[node name="LightGrassRoundPatch3MMixed98" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.547476, 0, -0.836822, 0, 1, 0, 0.836822, 0, 0.547476, 27.4785, -0.0207849, -8.54776)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed18" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.986901, 0, 0.161328, 0, 1, 0, -0.161328, 0, -0.986901, 34.2086, -0.0444564, 4.85949)
 
-[node name="LightGrassRoundPatch3MMixed99" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.836392, 0, -0.548133, 0, 1, 0, 0.548133, 0, 0.836392, 27.5068, -0.0287193, -10.6822)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed19" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.976949, 0, 0.213474, 0, 1, 0, -0.213474, 0, -0.976949, 39.201, -0.0444564, 4.99076)
 
-[node name="LightGrassRoundPatch3MMixed100" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.703308, 0, -0.710886, 0, 1, 0, 0.710886, 0, -0.703308, 27.6743, -0.0507942, -13.245)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed20" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.905635, 0, -0.424057, 0, 1, 0, 0.424057, 0, 0.905635, 44.3271, -0.0444564, 5.95256)
 
-[node name="LightGrassRoundPatch3MMixed85" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.89052, 0, 0, 0, 1, 0, 0, 0, 1.90341, 28.5666, 0.00980799, -4.69139)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed21" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.905635, 0, -0.424057, 0, 1, 0, 0.424057, 0, 0.905635, 48.7009, -0.0444564, 5.95256)
 
-[node name="LightGrassRoundPatch3MMixed86" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.578614, 0, 1.81207, 0, 1, 0, -1.7998, 0, 0.582559, 31.5015, 0.00980799, -4.37316)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed22" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.987732, 0, 0.156159, 0, 1, 0, -0.156159, 0, -0.987732, 53.2536, -0.0444564, 5.41001)
 
-[node name="LightGrassRoundPatch3MMixed87" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.653319, 0, -1.78614, 0, 1, 0, 1.77405, 0, 0.657773, 33.3488, 0.00980799, -5.06025)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed23" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.987732, 0, 0.156159, 0, 1, 0, -0.156159, 0, -0.987732, 58.3758, -0.0444564, 5.25424)
 
-[node name="LightGrassRoundPatch3MMixed88" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.882647, 0, 1.68322, 0, 1, 0, -1.67182, 0, -0.888664, 43.0603, 0.00980799, -4.18175)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed24" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.210898, 0, -0.977508, 0, 1, 0, 0.977508, 0, -0.210898, 63.5319, -0.0444564, 5.15755)
 
-[node name="LightGrassRoundPatch3MMixed89" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.882647, 0, 1.68322, 0, 1, 0, -1.67182, 0, -0.888664, 46.323, 0.00980799, -4.18175)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed25" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.256087, 0, 0.966654, 0, 1, 0, -0.966654, 0, 0.256087, 69.0045, -0.0444564, 5.57596)
 
-[node name="LightGrassRoundPatch3MMixed90" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.882647, 0, 1.68322, 0, 1, 0, -1.67182, 0, -0.888664, 49.7805, 0.00980799, -4.18175)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed26" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.247151, 0, -0.968977, 0, 1, 0, 0.968977, 0, -0.247151, 74.4117, -0.0444564, 4.70693)
 
-[node name="LightGrassRoundPatch3MMixed91" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.882647, 0, 1.68322, 0, 1, 0, -1.67182, 0, -0.888664, 53.9506, -0.0134388, -4.18175)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed27" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.976421, 0, -0.215877, 0, 1, 0, 0.215877, 0, 0.976421, 75.9844, -0.0444564, 6.55631)
 
-[node name="LightGrassRoundPatch3MMixed92" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.05287, 0, 1.58091, 0, 1, 0, -1.5702, 0, 1.06004, 57.4219, -0.0134159, -3.94452)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed28" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.945371, 0, 0.325997, 0, 1, 0, -0.325997, 0, -0.945371, 76.5865, -0.0444564, -5.00535)
 
-[node name="LightGrassRoundPatch3MMixed93" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.05287, 0, 1.58091, 0, 1, 0, -1.5702, 0, 1.06004, 61.0724, 0.0139746, -3.92289)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed29" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.969885, 0, -0.243564, 0, 1, 0, 0.243564, 0, 0.969885, 70.6997, -0.0444564, -4.00212)
 
-[node name="LightGrassRoundPatch3MMixed94" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.616086, 0, 1.7995, 0, 1, 0, -1.78732, 0, 0.620286, 65.3169, 0.0139746, -3.8854)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed30" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.985097, 0, -0.171998, 0, 1, 0, 0.171998, 0, 0.985097, 65.6778, -0.0444564, -3.92821)
 
-[node name="LightGrassRoundPatch3MMixed95" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-1.77106, 0, 0.665872, 0, 1, 0, -0.661363, 0, -1.78314, 69.258, -0.00652941, -4.53767)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed31" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.985097, 0, -0.171998, 0, 1, 0, 0.171998, 0, 0.985097, 61.6097, -0.0444564, -3.92821)
 
-[node name="LightGrassRoundPatch3MMixed96" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-1.72523, 0, -0.778341, 0, 1, 0, 0.773071, 0, -1.73699, 72.5544, -0.00652941, -4.28488)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed32" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.985097, 0, -0.171998, 0, 1, 0, 0.171998, 0, 0.985097, 56.5155, -0.0444564, -3.92821)
 
-[node name="LightGrassRoundPatch3MMixed97" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.70909, 0, -0.813647, 0, 1, 0, 0.808137, 0, 1.72074, 76.148, -0.00652941, -4.74368)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed33" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.985097, 0, -0.171998, 0, 1, 0, 0.171998, 0, 0.985097, 51.7532, -0.0444564, -3.92821)
 
-[node name="LightGrassRoundPatch3MMixed103" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.882647, 0, 1.68322, 0, 1, 0, -1.67182, 0, -0.888664, 94.8399, 0.00980799, -3.79285)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed34" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.985097, 0, -0.171998, 0, 1, 0, 0.171998, 0, 0.985097, 46.9277, -0.0444564, -3.92821)
 
-[node name="LightGrassRoundPatch3MMixed110" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.649045, 0, 1.78772, 0, 1, 0, -1.77561, 0, 0.65347, 97.2145, 0.00980799, -4.15701)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed35" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.977412, 0, 0.211342, 0, 1, 0, -0.211342, 0, -0.977412, 43.2259, -0.0444564, -5.44543)
 
-[node name="LightGrassRoundPatch3MMixed104" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.87965, 0, -0.203816, 0, 1, 0, 0.202436, 0, 1.89246, 99.01, -0.0134388, -4.41864)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed36" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.983263, 0, -0.10975, 0, 1, 0, 0.118187, 0, 0.913066, 33.5272, -0.0444564, -4.23533)
 
-[node name="LightGrassRoundPatch3MMixed105" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.05287, 0, 1.58091, 0, 1, 0, -1.5702, 0, 1.06004, 102.481, -0.0134159, -4.48752)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed106" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-1.8644, 0, -0.3153, 0, 1, 0, 0.313164, 0, -1.87711, 106.132, 0.0139746, -4.41816)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed107" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.616086, 0, 1.7995, 0, 1, 0, -1.78732, 0, 0.620286, 110.376, 0.0273022, -3.725)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed108" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-1.77106, 0, 0.665872, 0, 1, 0, -0.661363, 0, -1.78314, 114.317, -0.00652941, -4.53767)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed109" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.70198, 0, -0.828602, 0, 1, 0, 0.822991, 0, 1.71359, 117.614, -0.00652941, -4.60331)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed101" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.925561, 0, 1.65969, 0, 1, 0, -1.64845, 0, 0.931871, 76.148, -0.0319644, -8.89173)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed102" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.925561, 0, 1.65969, 0, 1, 0, -1.64845, 0, 0.931871, 76.148, -0.0576144, -13.3947)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed11" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.922653, 0, 0.385632, 0, 1, 0, -0.385632, 0, 0.922653, 40.135, 0.000733778, 3.67452)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed12" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.585312, 0, -0.810809, 0, 1, 0, 0.810809, 0, -0.585312, 42.5684, 0.000733778, 3.46235)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed13" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.934217, 0, 0.356705, 0, 1, 0, -0.356705, 0, 0.934217, 44.3305, -0.0202122, 3.61521)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed14" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.191272, 0, 0.981537, 0, 1, 0, -0.981537, 0, -0.191272, 46.9208, -0.0342222, 3.90216)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed70" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, 27.3068, -0.0207849, 3.71868)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed71" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.898518, 0, 0.438936, 0, 1, 0, -0.438936, 0, 0.898518, 29.7365, 0.000733778, 3.69863)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed72" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.536887, 0, -0.843654, 0, 1, 0, 0.843654, 0, -0.536887, 32.1533, 0.000733778, 3.3445)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed73" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.911755, 0, 0.410735, 0, 1, 0, -0.410735, 0, 0.911755, 33.9214, -0.0202122, 3.39404)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed74" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.248352, 0, 0.96867, 0, 1, 0, -0.96867, 0, -0.248352, 36.524, -0.0342222, 3.529)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed75" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.907022, 0, -0.421083, 0, 1, 0, 0.421083, 0, -0.907022, 36.5515, -0.0207849, 5.46839)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed76" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.902397, 0, -0.430905, 0, 1, 0, 0.430905, 0, -0.902397, 34.1217, 0.000733778, 5.46678)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed77" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.54439, 0, 0.838832, 0, 1, 0, -0.838832, 0, 0.54439, 31.7018, 0.000733778, 5.79933)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed78" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.915382, 0, -0.402587, 0, 1, 0, 0.402587, 0, -0.915382, 29.9343, -0.0202122, 5.73403)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed79" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.239703, 0, -0.970846, 0, 1, 0, 0.970846, 0, 0.239703, 27.3329, -0.0342222, 5.57587)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed80" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.934217, 0, 0.356705, 0, 1, 0, -0.356705, 0, 0.934217, 27.3068, -0.0207849, 7.59693)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed81" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.93029, 0, 0.366826, 0, 1, 0, -0.366826, 0, 0.93029, 29.7306, 0.000733778, 7.76825)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed82" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.601648, 0, -0.798761, 0, 1, 0, 0.798761, 0, -0.601648, 32.1678, 0.000733778, 7.60552)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed83" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.941265, 0, 0.33767, 0, 1, 0, -0.33767, 0, 0.941265, 33.9265, -0.0202122, 7.79412)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed84" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.17131, 0, 0.985217, 0, 1, 0, -0.985217, 0, -0.17131, 36.5104, -0.0342222, 8.13358)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed111" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, 92.9776, -0.0207849, 4.02415)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed112" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.898518, 0, 0.438936, 0, 1, 0, -0.438936, 0, 0.898518, 95.4073, 0.000733778, 4.34534)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed113" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.536887, 0, -0.843654, 0, 1, 0, 0.843654, 0, -0.536887, 97.8242, 0.000733778, 3.71224)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed114" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.911755, 0, 0.410735, 0, 1, 0, -0.410735, 0, 0.911755, 99.78, -0.0202122, 3.39404)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed115" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.248352, 0, 0.96867, 0, 1, 0, -0.96867, 0, -0.248352, 102.195, -0.0342222, 3.28128)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed116" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.907022, 0, -0.421083, 0, 1, 0, 0.421083, 0, -0.907022, 102.222, -0.0207849, 5.46839)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed117" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.902397, 0, -0.430905, 0, 1, 0, 0.430905, 0, -0.902397, 100.164, -0.0148054, 5.46678)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed118" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.54439, 0, 0.838832, 0, 1, 0, -0.838832, 0, 0.54439, 97.3726, 0.000733778, 5.79933)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed119" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.915382, 0, -0.402587, 0, 1, 0, 0.402587, 0, -0.915382, 95.6051, -0.0202122, 5.73403)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed120" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.239703, 0, -0.970846, 0, 1, 0, 0.970846, 0, 0.239703, 93.0037, -0.0342222, 5.57587)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed121" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.934217, 0, 0.356705, 0, 1, 0, -0.356705, 0, 0.934217, 92.9777, -0.0207849, 7.59693)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed122" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.93029, 0, 0.366826, 0, 1, 0, -0.366826, 0, 0.93029, 95.4014, 0.000733778, 7.76825)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed123" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.601648, 0, -0.798761, 0, 1, 0, 0.798761, 0, -0.601648, 97.8386, 0.000733778, 7.60552)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed124" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.941265, 0, 0.33767, 0, 1, 0, -0.33767, 0, 0.941265, 99.5973, -0.0202122, 7.79412)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed125" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.17131, 0, 0.985217, 0, 1, 0, -0.985217, 0, -0.17131, 102.181, -0.0342222, 8.13358)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed141" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, 110.808, -0.0207849, 4.02415)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed142" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.898518, 0, 0.438936, 0, 1, 0, -0.438936, 0, 0.898518, 113.237, 0.000733778, 4.34534)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed143" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.536887, 0, -0.843654, 0, 1, 0, 0.843654, 0, -0.536887, 115.654, 0.000733778, 3.71224)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed144" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.911755, 0, 0.410735, 0, 1, 0, -0.410735, 0, 0.911755, 117.61, -0.0202122, 3.39404)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed145" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.248352, 0, 0.96867, 0, 1, 0, -0.96867, 0, -0.248352, 120.025, -0.0342222, 3.28128)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed146" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.907022, 0, -0.421083, 0, 1, 0, 0.421083, 0, -0.907022, 120.052, -0.0207849, 5.46839)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed147" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.902397, 0, -0.430905, 0, 1, 0, 0.430905, 0, -0.902397, 117.994, -0.0148054, 5.46678)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed148" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.54439, 0, 0.838832, 0, 1, 0, -0.838832, 0, 0.54439, 115.203, 0.000733778, 5.79933)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed149" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.915382, 0, -0.402587, 0, 1, 0, 0.402587, 0, -0.915382, 113.435, -0.0202122, 5.73403)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed150" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.239703, 0, -0.970846, 0, 1, 0, 0.970846, 0, 0.239703, 110.834, -0.0342222, 5.57587)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed151" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.934217, 0, 0.356705, 0, 1, 0, -0.356705, 0, 0.934217, 110.808, -0.0207849, 7.59693)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed152" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.93029, 0, 0.366826, 0, 1, 0, -0.366826, 0, 0.93029, 113.231, 0.000733778, 7.76825)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed153" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.601648, 0, -0.798761, 0, 1, 0, 0.798761, 0, -0.601648, 115.669, 0.000733778, 7.60552)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed154" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.941265, 0, 0.33767, 0, 1, 0, -0.33767, 0, 0.941265, 117.427, -0.0202122, 7.79412)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed155" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.17131, 0, 0.985217, 0, 1, 0, -0.985217, 0, -0.17131, 120.011, -0.0342222, 8.13358)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed126" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.924925, 0, -0.38015, 0, 1, 0, 0.38015, 0, -0.924925, 112.758, -0.0207849, 7.64967)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed127" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.920743, 0, -0.390169, 0, 1, 0, 0.390169, 0, -0.920743, 110.349, 0.000733778, 7.19877)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed128" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.581314, 0, 0.81368, 0, 1, 0, -0.81368, 0, 0.581314, 107.902, 0.000733778, 7.70148)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed129" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.93245, 0, -0.361299, 0, 1, 0, 0.361299, 0, -0.93245, 105.932, -0.0202122, 7.91444)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed130" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.1961, 0, -0.980584, 0, 1, 0, 0.980584, 0, 0.1961, 103.515, -0.0342222, 7.89767)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed131" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.928278, 0, 0.371886, 0, 1, 0, -0.371886, 0, 0.928278, 103.604, -0.0207849, 5.71223)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed132" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.924186, 0, 0.381942, 0, 1, 0, -0.381942, 0, 0.924186, 105.659, -0.0148054, 5.82409)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed133" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.588547, 0, -0.808463, 0, 1, 0, 0.808463, 0, -0.588547, 108.465, 0.000733778, 5.64158)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed134" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.935635, 0, 0.352969, 0, 1, 0, -0.352969, 0, 0.935635, 110.226, -0.0202122, 5.80148)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed135" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.187347, 0, 0.982294, 0, 1, 0, -0.982294, 0, -0.187347, 112.815, -0.0342222, 6.09878)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed136" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.951985, 0, -0.306144, 0, 1, 0, 0.306144, 0, -0.951985, 112.95, -0.0207849, 3.75916)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed137" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.948606, 0, -0.31646, 0, 1, 0, 0.31646, 0, -0.948606, 110.539, 0.000733778, 4.16896)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed138" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.643576, 0, 0.765382, 0, 1, 0, -0.765382, 0, 0.643576, 108.096, 0.000733778, 4.26791)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed139" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.958003, 0, -0.286759, 0, 1, 0, 0.286759, 0, -0.958003, 106.35, -0.0202122, 3.62991)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed140" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.118283, 0, -0.99298, 0, 1, 0, 0.99298, 0, 0.118283, 103.788, -0.0342222, 3.05307)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed15" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.985262, 0, 0.171052, 0, 1, 0, -0.171052, 0, 0.985262, 48.752, -0.0554877, 3.87149)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed16" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.119201, 0, 0.99287, 0, 1, 0, -0.99287, 0, 0.119201, 51.2548, -0.0208865, 4.02535)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed17" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.998384, 0, 0.0568322, 0, 1, 0, -0.0568322, 0, 0.998384, 53.7568, -0.000814036, 3.97926)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed18" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.403881, 0, -0.914812, 0, 1, 0, 0.914812, 0, 0.403881, 55.917, 0.000733778, 3.81886)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed19" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.903941, 0, 0.427658, 0, 1, 0, -0.427658, 0, 0.903941, 58.0317, -0.0207849, 3.85962)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed20" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.701171, 0, 0.712994, 0, 1, 0, -0.712994, 0, -0.701171, 60.4614, 0.000733778, 3.91087)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed21" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.538285, 0, -0.842763, 0, 1, 0, 0.842763, 0, -0.538285, 62.8788, 0.000733778, 3.60475)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed22" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.912435, 0, 0.409222, 0, 1, 0, -0.409222, 0, 0.912435, 64.7145, -0.0202122, 3.89011)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed23" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.246745, 0, 0.96908, 0, 1, 0, -0.96908, 0, -0.246745, 67.2492, -0.0342222, 3.74221)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed24" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.648465, 0, -0.761244, 0, 1, 0, 0.761244, 0, 0.648465, 69.2156, -0.0332132, 3.38393)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed29" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.820521, 0, 0.571616, 0, 1, 0, -0.571616, 0, 0.820521, 70.5224, -0.0332132, 3.60492)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed25" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.931983, 0, -0.362503, 0, 1, 0, 0.362503, 0, 0.931983, 71.4261, -0.0499817, 3.51603)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed26" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.246745, 0, 0.96908, 0, 1, 0, -0.96908, 0, -0.246745, 73.5462, -0.00271471, 3.52285)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed27" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.648465, 0, -0.761244, 0, 1, 0, 0.761244, 0, 0.648465, 75.8794, 0.0056266, 3.16458)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed28" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.931983, 0, -0.362503, 0, 1, 0, 0.362503, 0, 0.931983, 78.0546, -0.0499807, 3.29667)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed30" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.926784, 0, 0.375594, 0, 1, 0, -0.375594, 0, 0.926784, 37.7082, -0.0207849, 6.05298)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed31" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.922653, 0, 0.385632, 0, 1, 0, -0.385632, 0, 0.922653, 40.135, 0.000733778, 6.17507)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed32" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.585312, 0, -0.810809, 0, 1, 0, 0.810809, 0, -0.585312, 42.5684, 0.000733778, 5.9629)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed33" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.934217, 0, 0.356705, 0, 1, 0, -0.356705, 0, 0.934217, 44.3305, -0.0202122, 6.11576)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed34" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.191272, 0, 0.981537, 0, 1, 0, -0.981537, 0, -0.191272, 46.9208, -0.0342222, 6.40271)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed35" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.985262, 0, 0.171052, 0, 1, 0, -0.171052, 0, 0.985262, 48.752, -0.0554877, 6.37204)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed36" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.119201, 0, 0.99287, 0, 1, 0, -0.99287, 0, 0.119201, 51.2548, -0.0208865, 6.5259)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed37" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.998384, 0, 0.0568322, 0, 1, 0, -0.0568322, 0, 0.998384, 53.7568, -0.000814036, 6.47981)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed38" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.403881, 0, -0.914812, 0, 1, 0, 0.914812, 0, 0.403881, 55.917, 0.000733778, 6.31941)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed39" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.903941, 0, 0.427658, 0, 1, 0, -0.427658, 0, 0.903941, 58.0317, -0.0207849, 6.36017)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed40" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.701171, 0, 0.712994, 0, 1, 0, -0.712994, 0, -0.701171, 60.4614, 0.000733778, 6.41143)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed41" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.538285, 0, -0.842763, 0, 1, 0, 0.842763, 0, -0.538285, 62.8788, 0.000733778, 6.1053)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed42" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.912435, 0, 0.409222, 0, 1, 0, -0.409222, 0, 0.912435, 64.7145, -0.0202122, 6.39067)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed43" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.246745, 0, 0.96908, 0, 1, 0, -0.96908, 0, -0.246745, 67.2492, -0.0342222, 6.24276)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed44" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.648465, 0, -0.761244, 0, 1, 0, 0.761244, 0, 0.648465, 69.2156, -0.0332132, 5.88449)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed45" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.820521, 0, 0.571616, 0, 1, 0, -0.571616, 0, 0.820521, 70.5224, -0.0332132, 6.10547)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed46" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.931983, 0, -0.362503, 0, 1, 0, 0.362503, 0, 0.931983, 71.4261, -0.0499817, 6.01658)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed47" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.246745, 0, 0.96908, 0, 1, 0, -0.96908, 0, -0.246745, 73.5462, -0.00271471, 6.0234)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed48" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.648465, 0, -0.761244, 0, 1, 0, 0.761244, 0, 0.648465, 75.8794, 0.0056266, 5.66513)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed49" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.931983, 0, -0.362503, 0, 1, 0, 0.362503, 0, 0.931983, 78.0546, -0.0499807, 5.79722)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed50" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.926784, 0, 0.375594, 0, 1, 0, -0.375594, 0, 0.926784, 37.7082, -0.0207849, 8.26898)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed51" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.922653, 0, 0.385632, 0, 1, 0, -0.385632, 0, 0.922653, 40.135, 0.000733778, 8.39107)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed52" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.585312, 0, -0.810809, 0, 1, 0, 0.810809, 0, -0.585312, 42.5684, 0.000733778, 8.1789)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed53" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.934217, 0, 0.356705, 0, 1, 0, -0.356705, 0, 0.934217, 44.3305, -0.0202122, 8.33177)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed54" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.191272, 0, 0.981537, 0, 1, 0, -0.981537, 0, -0.191272, 46.9208, -0.0342222, 8.61872)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed55" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.985262, 0, 0.171052, 0, 1, 0, -0.171052, 0, 0.985262, 48.752, -0.0554877, 8.58804)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed56" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.119201, 0, 0.99287, 0, 1, 0, -0.99287, 0, 0.119201, 51.2548, -0.0208865, 8.7419)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed57" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.998384, 0, 0.0568322, 0, 1, 0, -0.0568322, 0, 0.998384, 53.7568, -0.000814036, 8.69582)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed58" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.403881, 0, -0.914812, 0, 1, 0, 0.914812, 0, 0.403881, 55.917, 0.000733778, 8.53541)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed59" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.903941, 0, 0.427658, 0, 1, 0, -0.427658, 0, 0.903941, 58.0317, -0.0207849, 8.57617)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed60" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.701171, 0, 0.712994, 0, 1, 0, -0.712994, 0, -0.701171, 60.4614, 0.000733778, 8.62743)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed61" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.538285, 0, -0.842763, 0, 1, 0, 0.842763, 0, -0.538285, 62.8788, 0.000733778, 8.32131)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed62" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.912435, 0, 0.409222, 0, 1, 0, -0.409222, 0, 0.912435, 64.7145, -0.0202122, 8.60667)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed63" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.246745, 0, 0.96908, 0, 1, 0, -0.96908, 0, -0.246745, 67.2492, -0.0342222, 8.45876)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed64" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.648465, 0, -0.761244, 0, 1, 0, 0.761244, 0, 0.648465, 69.2156, -0.0332132, 8.10049)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed65" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.820521, 0, 0.571616, 0, 1, 0, -0.571616, 0, 0.820521, 70.5224, -0.0332132, 8.32147)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed66" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.931983, 0, -0.362503, 0, 1, 0, 0.362503, 0, 0.931983, 71.4261, -0.0499817, 8.23258)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed67" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.246745, 0, 0.96908, 0, 1, 0, -0.96908, 0, -0.246745, 73.5462, -0.00271471, 8.2394)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed68" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.648465, 0, -0.761244, 0, 1, 0, 0.761244, 0, 0.648465, 75.8794, 0.0056266, 7.88113)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed69" parent="ParkingGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.931983, 0, -0.362503, 0, 1, 0, 0.362503, 0, 0.931983, 78.0546, -0.0499807, 8.01322)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed37" parent="ParkingGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.99693, 0, -0.0783027, 0, 1, 0, 0.0783027, 0, 0.99693, 28.6501, -0.0444564, -4.02084)
 
 [node name="SchoolGrass" type="Node3D" parent="."]
 
-[node name="LightGrassRoundPatch3MMixed1" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.5494, -0.00773239, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed2" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.217547, 0, 0.97605, 0, 1, 0, -0.97605, 0, 0.217547, -60.6818, -0.0615612, 12.3698)
 
-[node name="LightGrassRoundPatch3MMixed2" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.659569, 0, -0.751644, 0, 1, 0, 0.751644, 0, 0.659569, -58.286, -0.0425797, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed3" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -54.6618, -0.039881, 12.3698)
 
-[node name="LightGrassRoundPatch3MMixed3" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.129038, 0, 0.99164, 0, 1, 0, -0.99164, 0, 0.129038, -60.542, -0.0499969, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed4" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -48.6279, -0.0429934, 12.6084)
 
-[node name="LightGrassRoundPatch3MMixed4" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.838347, 0, -0.545137, 0, 1, 0, 0.545137, 0, 0.838347, -63.0205, -0.0434422, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed5" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -42.8466, -0.0648023, 12.6084)
 
-[node name="LightGrassRoundPatch3MMixed5" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.6257, -0.035234, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed6" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -37.9519, -0.0937525, 12.6084)
 
-[node name="LightGrassRoundPatch3MMixed6" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.659569, 0, -0.751644, 0, 1, 0, 0.751644, 0, 0.659569, -48.3622, -0.0140963, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed7" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -33.975, -0.0689983, 12.6084)
 
-[node name="LightGrassRoundPatch3MMixed7" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.129038, 0, 0.99164, 0, 1, 0, -0.99164, 0, 0.129038, -50.6183, -0.0354185, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed8" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.99297, 0, -0.118369, 0, 1, 0, 0.118369, 0, 0.99297, -29.8919, -0.0444564, 12.6084)
 
-[node name="LightGrassRoundPatch3MMixed8" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.838347, 0, -0.545137, 0, 1, 0, 0.545137, 0, 0.838347, -53.0968, -0.0217137, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed9" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.977959, 0, -0.208799, 0, 1, 0, 0.208799, 0, 0.977959, -30.0528, -0.0387844, 5.90503)
 
-[node name="LightGrassRoundPatch3MMixed9" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.741309, 0, 0.671164, 0, 1, 0, -0.671164, 0, 0.741309, -35.6494, -0.000409603, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed10" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.161707, 0, 0.986839, 0, 1, 0, -0.986839, 0, 0.161707, -33.7769, -0.0395699, 4.13285)
 
-[node name="LightGrassRoundPatch3MMixed10" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.515621, 0, -0.856817, 0, 1, 0, 0.856817, 0, 0.515621, -38.3859, -0.000247478, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed11" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.471335, 0, 0.881954, 0, 1, 0, -0.881954, 0, -0.471335, -35.2344, -0.0313377, 8.23366)
 
-[node name="LightGrassRoundPatch3MMixed11" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.934807, 0, 0.355156, 0, 1, 0, -0.355156, 0, 0.934807, -40.642, 0.020009, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed12" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.976016, 0, 0.2177, 0, 1, 0, -0.2177, 0, -0.976016, -36.7527, -0.118594, 4.2948)
 
-[node name="LightGrassRoundPatch3MMixed12" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.928577, 0, -0.371141, 0, 1, 0, 0.371141, 0, 0.928577, -43.1205, -0.0292704, 9.85143)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed14" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.964907, 0, -0.262593, 0, 1, 0, 0.262593, 0, 0.964907, -29.9523, -0.0672508, -5.8751)
 
-[node name="LightGrassRoundPatch3MMixed93" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.928577, 0, -0.371141, 0, 1, 0, 0.371141, 0, 0.928577, -44.2789, -0.0684383, 9.49549)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed15" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.964907, 0, -0.262593, 0, 1, 0, 0.262593, 0, 0.964907, -30.2283, -0.0672508, -11.3127)
 
-[node name="LightGrassRoundPatch3MMixed94" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.180279, 0, -0.983616, 0, 1, 0, 0.983616, 0, -0.180279, -47.0086, -0.0684383, 9.49549)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed16" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(0.991282, 0, -0.131755, 0, 1, 0, 0.131755, 0, 0.991282, -40.7263, -0.0672508, -11.8371)
 
-[node name="LightGrassRoundPatch3MMixed95" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.998802, 0, 0.0489368, 0, 1, 0, -0.0489368, 0, -0.998802, -49.2741, -0.0684383, 8.9919)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed96" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.381345, 0, -0.924433, 0, 1, 0, 0.924433, 0, -0.381345, -51.9145, -0.0684383, 8.9919)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed97" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.381345, 0, -0.924433, 0, 1, 0, 0.924433, 0, -0.381345, -56.3334, -0.0684383, 8.9919)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed98" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.381345, 0, -0.924433, 0, 1, 0, 0.924433, 0, -0.381345, -42.6579, -0.0684383, 8.73698)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed13" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.657954, 0, -0.753058, 0, 1, 0, 0.753058, 0, 0.657954, -31.7905, -0.0156772, 7.61871)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed17" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.917671, 0, 0.39734, 0, 1, 0, -0.39734, 0, 0.917671, -29.5733, -0.00668621, 7.61871)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed37" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.80765, 0, -0.589662, 0, 1, 0, 0.589662, 0, 0.80765, -55.5494, 0.00807214, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed38" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.809161, 0, -0.587588, 0, 1, 0, 0.587588, 0, 0.809161, -58.286, 0.020009, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed39" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.455514, 0, 0.890229, 0, 1, 0, -0.890229, 0, -0.455514, -60.542, 0.00383663, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed40" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.688139, 0, -0.725579, 0, 1, 0, 0.725579, 0, 0.688139, -63.0205, -0.0242021, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed41" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.891805, 0, -0.452419, 0, 1, 0, 0.452419, 0, 0.891805, -45.6257, 0.000205994, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed42" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.935697, 0, -0.352805, 0, 1, 0, 0.352805, 0, 0.935697, -48.3622, -0.00782776, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed43" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.442633, 0, 0.896703, 0, 1, 0, -0.896703, 0, 0.442633, -50.6183, -0.00825429, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed44" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.382684, 0, -0.92388, 0, 1, 0, 0.92388, 0, 0.382684, -53.0968, -0.00812507, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed45" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.771625, 0, -0.636078, 0, 1, 0, 0.636078, 0, 0.771625, -35.6494, -0.0199869, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed46" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.356885, 0, -0.934148, 0, 1, 0, 0.934148, 0, 0.356885, -38.3859, -0.00798106, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed47" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.992102, 0, -0.125437, 0, 1, 0, 0.125437, 0, -0.992102, -40.642, -0.00840974, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed48" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.823295, 0, -0.567614, 0, 1, 0, 0.567614, 0, 0.823295, -43.1205, -0.00358987, 11.5363)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed49" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.939232, 0, 0.343283, 0, 1, 0, -0.343283, 0, 0.939232, -31.7905, -0.0198386, 9.30358)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed50" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.999569, 0, -0.0293522, 0, 1, 0, 0.0293522, 0, 0.999569, -29.5733, -0.0192771, 9.30358)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed51" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.904664, 0, -0.426127, 0, 1, 0, 0.426127, 0, 0.904664, -55.5494, -0.00405526, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed52" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.9937, 0, -0.112076, 0, 1, 0, 0.112076, 0, 0.9937, -58.286, -0.0439861, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed53" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.415217, 0, 0.909722, 0, 1, 0, -0.909722, 0, 0.415217, -60.542, -0.0485928, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed54" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.301155, 0, -0.953575, 0, 1, 0, 0.953575, 0, -0.301155, -63.0205, -0.0328064, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed55" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.868951, 0, 0.494898, 0, 1, 0, -0.494898, 0, 0.868951, -45.6257, -0.035933, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed56" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.265422, 0, -0.964133, 0, 1, 0, 0.964133, 0, 0.265422, -48.3622, -0.0123818, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed57" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.393878, 0, 0.919163, 0, 1, 0, -0.919163, 0, -0.393878, -50.6183, -0.0239253, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed58" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.537123, 0, -0.843504, 0, 1, 0, 0.843504, 0, -0.537123, -53.0968, -0.0354149, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed59" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.932033, 0, 0.362373, 0, 1, 0, -0.362373, 0, 0.932033, -35.6494, -0.0399568, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed60" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.413613, 0, -0.910453, 0, 1, 0, 0.910453, 0, -0.413613, -38.3859, -0.0121379, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed61" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.762522, 0, 0.646963, 0, 1, 0, -0.646963, 0, 0.762522, -40.642, -0.0350556, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed62" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.990686, 0, -0.136165, 0, 1, 0, 0.136165, 0, 0.990686, -43.1205, -0.0279849, 13.2026)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed63" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.822144, 0, 0.56928, 0, 1, 0, -0.56928, 0, 0.822144, -31.7905, -0.0201759, 10.9698)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed64" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.448165, 0, -0.893951, 0, 1, 0, 0.893951, 0, 0.448165, -29.5733, -0.0161049, 10.9698)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed79" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.964801, 0, 0.262981, 0, 1, 0, -0.262981, 0, -0.964801, -33.572, -0.0233176, 9.72434)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed80" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.90571, 0, -0.423899, 0, 1, 0, 0.423899, 0, 0.90571, -33.572, -0.0021987, 11.321)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed81" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.565744, 0, -0.824581, 0, 1, 0, 0.824581, 0, 0.565744, -33.572, -0.015635, 12.6869)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed82" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.932381, 0, 0.361478, 0, 1, 0, -0.361478, 0, 0.932381, -28.1757, -0.0035677, 12.6869)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed83" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.999953, 0, -0.00973874, 0, 1, 0, 0.00973874, 0, 0.999953, -28.1757, -0.00147319, 11.349)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed84" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-1.10799, 0, 1.23814, 0, 1, 0, -1.36406, 0, -1.00571, -29.9497, 0.020009, -4.92265)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed85" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.427613, 0, 1.54719, 0, 1, 0, -1.70454, 0, 0.388139, -29.9497, 0.020009, -7.63261)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed86" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.324595, 0, -1.56768, 0, 1, 0, 1.72712, 0, 0.29463, -29.9497, 0.020009, -11.4918)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed87" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.58406, 0, -0.690714, 0, 1, 0, 0.760961, 0, 1.43783, -29.9497, 0.020009, -14.3089)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed88" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.58406, 0, -0.690714, 0, 1, 0, 0.760961, 0, 1.43783, -40.8632, 0.020009, -14.3089)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed89" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(1.58406, 0, -0.690714, 0, 1, 0, 0.760961, 0, 1.43783, -40.2488, 0.020009, -10.7761)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed90" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.121605, 0, -1.05195, 0, 1, 0, 1.71071, 0, -0.0747776, -38.5387, 0.020009, -7.44118)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed91" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.488795, 0, -0.850533, 0, 1, 0, 1.63027, 0, -0.25501, -38.3456, 0.020009, -5.51308)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed65" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.892389, 0, -0.451267, 0, 1, 0, 0.451267, 0, 0.892389, -55.5494, -0.0119262, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed66" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.917491, 0, 0.397757, 0, 1, 0, -0.397757, 0, 0.917491, -58.286, -7.53403e-05, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed67" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.910005, 0, 0.414598, 0, 1, 0, -0.414598, 0, 0.910005, -60.542, -0.00792694, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed68" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.682649, 0, -0.730746, 0, 1, 0, 0.730746, 0, 0.682649, -63.0205, -0.0199027, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed69" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.372146, 0, -0.928174, 0, 1, 0, 0.928174, 0, 0.372146, -45.6257, -0.00389838, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed70" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.999885, 0, -0.0152013, 0, 1, 0, 0.0152013, 0, 0.999885, -48.3622, -0.00412679, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed71" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.932324, 0, 0.361625, 0, 1, 0, -0.361625, 0, 0.932324, -50.6183, -0.00424957, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed72" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.606849, 0, -0.794817, 0, 1, 0, 0.794817, 0, 0.606849, -53.0968, -0.00345969, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed73" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.638889, 0, 0.769299, 0, 1, 0, -0.769299, 0, 0.638889, -35.6494, -0.0116022, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed74" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.490159, 0, -0.871633, 0, 1, 0, 0.871633, 0, -0.490159, -38.3859, -0.0117028, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed75" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.287628, 0, 0.957742, 0, 1, 0, -0.957742, 0, -0.287628, -40.642, -0.0079751, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed76" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.266313, 0, -0.963887, 0, 1, 0, 0.963887, 0, -0.266313, -43.1205, 2.14577e-06, 14.5993)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed77" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.186455, 0, 0.982463, 0, 1, 0, -0.982463, 0, 0.186455, -31.7905, -0.00396681, 12.3666)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed78" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.715327, 0, -0.69879, 0, 1, 0, 0.69879, 0, 0.715327, -29.5733, -0.0115981, 12.3666)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed18" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.936078, 0, -0.351793, 0, 1, 0, 0.351793, 0, 0.936078, -28.1854, -0.00378895, 7.61871)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed92" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.936078, 0, -0.351793, 0, 1, 0, 0.351793, 0, 0.936078, -28.1854, -0.00378895, 9.41827)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed14" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.0270494, 0, -0.999634, 0, 1, 0, 0.999634, 0, -0.0270494, -34.527, -0.0321081, 7.61871)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed15" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.439438, 0, 0.898273, 0, 1, 0, -0.898273, 0, -0.439438, -36.7831, -0.0117562, 7.61871)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed16" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.97494, 0, 0.222468, 0, 1, 0, -0.222468, 0, 0.97494, -39.2616, -0.0281465, 7.61871)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed19" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.739913, 0, 0.672703, 0, 1, 0, -0.672703, 0, 0.739913, -31.7905, -0.0363553, 5.95071)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed20" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.583215, 0, -0.812318, 0, 1, 0, 0.812318, 0, -0.583215, -29.5733, -0.0396185, 5.95071)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed21" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.827581, 0, -0.561347, 0, 1, 0, 0.561347, 0, 0.827581, -28.1854, -0.0348089, 5.95071)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed22" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.979392, 0, -0.201967, 0, 1, 0, 0.201967, 0, 0.979392, -34.527, -0.0122032, 5.95071)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed23" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.542735, 0, 0.839904, 0, 1, 0, -0.839904, 0, 0.542735, -36.7831, -0.0403519, 5.95071)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed24" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.922275, 0, 0.386534, 0, 1, 0, -0.386534, 0, 0.922275, -39.2616, -0.0492206, 5.95071)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed25" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.300606, 0, 0.953748, 0, 1, 0, -0.953748, 0, 0.300606, -31.7905, -0.0521879, 3.93595)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed26" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.488941, 0, -0.872317, 0, 1, 0, 0.872317, 0, 0.488941, -29.5733, -0.043865, 3.93595)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed27" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.827581, 0, -0.561347, 0, 1, 0, 0.561347, 0, 0.827581, -28.1854, -0.0432973, 3.93595)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed28" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.0362251, 0, -0.999344, 0, 1, 0, 0.999344, 0, -0.0362251, -34.527, -0.0238962, 3.93595)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed29" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.0447005, 0, 0.999001, 0, 1, 0, -0.999001, 0, -0.0447005, -36.7831, -0.0324335, 3.93595)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed30" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.74325, 0, -0.669014, 0, 1, 0, 0.669014, 0, 0.74325, -39.2616, -0.0405791, 3.93595)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed31" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.925369, 0, 0.379069, 0, 1, 0, -0.379069, 0, 0.925369, -31.7905, -0.0158367, 2.17916)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed32" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.715327, 0, -0.69879, 0, 1, 0, 0.69879, 0, 0.715327, -29.5733, -0.0389996, 2.22496)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed33" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.827581, 0, -0.561347, 0, 1, 0, 0.561347, 0, 0.827581, -28.1854, -0.0109069, 2.51448)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed34" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.679352, 0, -0.733813, 0, 1, 0, 0.733813, 0, 0.679352, -34.3709, -0.0165048, 2.00713)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed35" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(0.949781, 0, -0.312915, 0, 1, 0, 0.312915, 0, 0.949781, -36.7831, -0.0195253, 2.46043)
-material_override = ExtResource("46_th8ul")
-
-[node name="LightGrassRoundPatch3MMixed36" parent="SchoolGrass" instance=ExtResource("45_h7vpa")]
-transform = Transform3D(-0.0044156, 0, -0.99999, 0, 1, 0, 0.99999, 0, -0.0044156, -39.0918, -0.0150788, 2.53511)
-material_override = ExtResource("46_th8ul")
+[node name="LightGrassRandomPatch6MMixed13" parent="SchoolGrass" instance=ExtResource("51_764ci")]
+transform = Transform3D(-0.664478, 0, 0.15155, 0, 1, 0, -0.0947704, 0, -1.06259, -38.2911, -0.0672508, -7.59128)
 
 [node name="Trees" type="Node3D" parent="."]
 
@@ -2121,82 +1252,84 @@ material_override = ExtResource("48_5iqc3")
 transform = Transform3D(-1.31724, 0, 1.07466, 0, 1.7, 0, -1.07466, 0, -1.31724, 22.1642, 0, -17.7872)
 material_override = ExtResource("48_0ux3e")
 
-[node name="PineTree" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTrees" type="Node3D" parent="."]
+
+[node name="PineTree" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.407466, 0, 0.569185, 0, 0.7, 0, -0.569185, 0, 0.407466, -27.8525, 0, 1.89819)
 
-[node name="PineTree2" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree2" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.899282, 0, 0.0359463, 0, 0.9, 0, -0.0359463, 0, 0.899282, -28.1219, 0, 4.71647)
 
-[node name="PineTree4" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree4" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(-0.709369, 0, 0.243507, 0, 0.75, 0, -0.243507, 0, -0.709369, -28.1219, 0, -6.05206)
 
-[node name="PineTree5" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree5" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.85613, 0, 0.277563, 0, 0.9, 0, -0.277563, 0, 0.85613, -28.1219, 0, -10.0357)
 
-[node name="PineTree6" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree6" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.421121, 0, -0.427384, 0, 0.6, 0, 0.427384, 0, 0.421121, -27.8354, 0, -13.9454)
 
-[node name="PineTree7" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree7" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.561494, 0, -0.569846, 0, 0.8, 0, 0.569846, 0, 0.561494, -24.3526, 0, -22.0453)
 
-[node name="PineTree8" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree8" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(-0.35558, 0, -0.934646, 0, 1, 0, 0.934646, 0, -0.35558, -21.9562, 0, -23.9784)
 
-[node name="PineTree9" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree9" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(-0.606443, 0, -0.665002, 0, 0.9, 0, 0.665002, 0, -0.606443, -4.54233, 0, -23.6269)
 
-[node name="PineTree14" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree14" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(-0.471678, 0, -0.517223, 0, 0.7, 0, 0.517223, 0, -0.471678, -2.75301, 0, -21.5181)
 
-[node name="PineTree10" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree10" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.164445, 0, -0.782916, 0, 0.8, 0, 0.782916, 0, 0.164445, 16.9455, 0, -24.5855)
 
-[node name="PineTree11" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree11" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.185, 0, -0.880781, 0, 0.9, 0, 0.880781, 0, 0.185, 23.0323, 0, -22.205)
 
-[node name="PineTree22" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree22" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.267222, 0, -1.27224, 0, 1.3, 0, 1.27224, 0, 0.267222, 50.2077, 0, -28.2721)
 
-[node name="PineTree23" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree23" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(-1.04434, 0, -1.07673, 0, 1.5, 0, 1.07673, 0, -1.04434, 50.2077, 0, -37.2715)
 
-[node name="PineTree24" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree24" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.123114, 0, -1.39458, 0, 1.4, 0, 1.39458, 0, 0.123114, 50.2077, 0, -46.8524)
 
-[node name="PineTree25" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree25" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(-0.893164, 0, -0.944594, 0, 1.3, 0, 0.944594, 0, -0.893164, 50.2077, 0, -56.0036)
 
-[node name="PineTree26" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree26" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.322108, 0, -1.56724, 0, 1.6, 0, 1.56724, 0, 0.322108, 50.2077, 0, -65.7867)
 
-[node name="PineTree12" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree12" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.133611, 0, -0.63612, 0, 0.65, 0, 0.63612, 0, 0.133611, 19.0543, 0, -25.2724)
 
-[node name="PineTree15" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree15" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(-0.157469, 0, -0.526976, 0, 0.55, 0, 0.526976, 0, -0.157469, 27.7478, 0, -14.8237)
 
-[node name="PineTree16" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree16" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.292699, 0, -0.690527, 0, 0.75, 0, 0.690527, 0, 0.292699, 27.7478, 0, -9.77321)
 
-[node name="PineTree17" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree17" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(-0.454546, 0, -0.464638, 0, 0.65, 0, 0.464638, 0, -0.454546, 27.7478, 0, -5.13669)
 
-[node name="PineTree18" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree18" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.0881267, 0, -0.593493, 0, 0.6, 0, 0.593493, 0, 0.0881267, 27.7478, 0, 7.06729)
 
-[node name="PineTree19" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree19" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.57792, 0, -0.55318, 0, 0.8, 0, 0.55318, 0, 0.57792, 27.7478, 0, 3.09313)
 
-[node name="PineTree13" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree13" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.133611, 0, -0.63612, 0, 0.65, 0, 0.63612, 0, 0.133611, 1.97591, 0, -22.0612)
 
-[node name="PineTree3" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree3" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.738874, 0, 0.306702, 0, 0.8, 0, -0.306702, 0, 0.738874, -27.9897, 0, 7.37558)
 
-[node name="PineTree20" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree20" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.737345, 0, 0.310361, 0, 0.8, 0, -0.310361, 0, 0.737345, -57.7527, 0, 14.3412)
 
-[node name="PineTree21" parent="." instance=ExtResource("51_xdu52")]
+[node name="PineTree21" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.286957, 0, 0.638479, 0, 0.7, 0, -0.638479, 0, 0.286957, -55.6628, 0, 10.1311)
 
 [connection signal="body_entered" from="LockersBuilding/DoorDetectorArea3D" to="LockersBuilding/DoorDetectorArea3D" method="_on_body_entered"]

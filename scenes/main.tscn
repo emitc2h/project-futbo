@@ -28,6 +28,7 @@ background_canvas_max_layer = -5
 sky = SubResource("Sky_kkgna")
 ambient_light_source = 2
 ambient_light_color = Color(0.883721, 0.913614, 0.976312, 1)
+ambient_light_energy = 0.8
 reflected_light_source = 1
 tonemap_mode = 2
 tonemap_exposure = 0.27
@@ -54,16 +55,20 @@ script = ExtResource("1_vdkql")
 environment = SubResource("Environment_n4amx")
 camera_attributes = SubResource("CameraAttributesPractical_rw2vd")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
+[node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(-0.744312, -0.281181, 0.605754, 0, 0.907044, 0.421036, -0.667833, 0.313382, -0.675123, 0, 0, 0)
 light_intensity_lux = 75000.0
 light_temperature = 4200.0
-light_energy = 6.0
+light_energy = 8.0
 shadow_enabled = true
 directional_shadow_split_1 = 0.04
 directional_shadow_split_2 = 0.11
 directional_shadow_split_3 = 0.33
 directional_shadow_max_distance = 200.0
+
+[node name="Act1SkyBox" parent="WorldEnvironment" node_paths=PackedStringArray("camera_controller") instance=ExtResource("2_fer8r")]
+camera_controller = NodePath("../../CameraController")
+parallax_factor = 0.015
 
 [node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("11_rdakw")]
 subject = NodePath("../MainPlayer")
@@ -115,9 +120,6 @@ animation = &"celebrate"
 [node name="UI" parent="." node_paths=PackedStringArray("camera_controller", "player") instance=ExtResource("2_0egkg")]
 camera_controller = NodePath("../CameraController")
 player = NodePath("../MainPlayer")
-
-[node name="Act1SkyBox" parent="." node_paths=PackedStringArray("camera_controller") instance=ExtResource("2_fer8r")]
-camera_controller = NodePath("../CameraController")
 
 [connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
 [connection signal="facing_left" from="MainPlayer" to="Ball" method="_on_facing_left"]

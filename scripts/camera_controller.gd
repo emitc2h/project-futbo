@@ -13,8 +13,9 @@ var near_camera_y: float
 var far_camera_z: float
 var far_camera_y: float
 var camera_default_rotation: Vector3
+var camera_initial_position: Vector3
 
-signal camera_rotated(rotation: Vector3)
+signal camera_changed(rotation: Vector3, position_delta: Vector3, fov: float)
 
 func _ready() -> void:
 	global_position = subject.global_position
@@ -25,6 +26,7 @@ func _ready() -> void:
 	far_camera_z = near_camera_z * zoom_factor
 	
 	camera_default_rotation = camera.rotation
+	camera_initial_position = camera.global_position
 	
 	camera.global_position.y = far_camera_y
 	camera.global_position.z = far_camera_z
@@ -49,7 +51,7 @@ func _process(delta: float) -> void:
 		camera.global_position.z = lerp(camera.global_position.z, interpolate_between(subject.global_position.x, start_zooming_x, stop_zooming_x, far_camera_z, near_camera_z), delta)
 		camera.look_at(subject.global_position)
 		
-	camera_rotated.emit(camera.rotation)
+	camera_changed.emit(camera.rotation, camera.global_position - camera_initial_position, camera.fov)
 	
 
 func interpolate_between(x: float, start_x: float, stop_x: float, start_param: float, stop_param: float) -> float:

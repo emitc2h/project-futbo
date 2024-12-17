@@ -2,11 +2,14 @@
 
 [ext_resource type="Script" path="res://scripts/sky_box_camera.gd" id="1_37btj"]
 [ext_resource type="Script" path="res://scripts/act_1_skybox.gd" id="1_ywti0"]
-[ext_resource type="Texture2D" uid="uid://y5uwj4texluc" path="res://assets/3D/Act1/Textures/Sky/Cloud1/Cloud1_color.png" id="3_624se"]
-[ext_resource type="Texture2D" uid="uid://df0kveth1l3ms" path="res://assets/3D/Act1/Textures/Sky/Cloud1/Cloud1_transmission.png" id="4_gn4lj"]
+[ext_resource type="PackedScene" uid="uid://ccrdjbgqp4tlg" path="res://assets/3D/Act1/blend/MountainLine1.blend" id="3_7sj78"]
+[ext_resource type="Texture2D" uid="uid://csqgkqiyd276c" path="res://assets/3D/Act1/Textures/Sky/MountainLine1/MountainLine1_color.png" id="4_oiuxk"]
+[ext_resource type="Texture2D" uid="uid://b77krqhqo4dl5" path="res://assets/3D/Act1/Textures/Sky/MountainLine1/MountainLine1_transmission.png" id="5_fmfg7"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ulxvo"]
-turbidity = 4.0
+turbidity = 5.0
+sun_disk_scale = 0.0
+ground_color = Color(0.22992, 0.201787, 0.0773445, 1)
 
 [sub_resource type="Sky" id="Sky_kkgna"]
 sky_material = SubResource("PhysicalSkyMaterial_ulxvo")
@@ -14,8 +17,7 @@ radiance_size = 1
 
 [sub_resource type="Environment" id="Environment_kvuqf"]
 background_mode = 2
-background_color = Color(1, 1, 1, 1)
-background_intensity = 20282.1
+background_intensity = 22000.0
 background_canvas_max_layer = -5
 sky = SubResource("Sky_kkgna")
 ambient_light_source = 2
@@ -36,17 +38,18 @@ glow_bloom = 0.1
 glow_blend_mode = 1
 fog_sun_scatter = 0.05
 fog_density = 0.001
+volumetric_fog_length = 50.66
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_u38cc"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gs6wg"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yg8ks"]
 transparency = 1
-albedo_texture = ExtResource("3_624se")
+albedo_texture = ExtResource("4_oiuxk")
 backlight_enabled = true
-backlight_texture = ExtResource("4_gn4lj")
+backlight_texture = ExtResource("5_fmfg7")
 
 [node name="Act1SkyBox" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.523045, 0, 0)
 script = ExtResource("1_ywti0")
+parallax_factor = 0.1
 
 [node name="BackgroundCanvas" type="CanvasLayer" parent="."]
 layer = -5
@@ -64,49 +67,23 @@ size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="SkyBoxCamera" type="Camera3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0)
 cull_mask = 1016800
 environment = SubResource("Environment_kvuqf")
 fov = 45.0
 script = ExtResource("1_37btj")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.839487, -0.54338, 0, 0.54338, -0.839487, 0, 1.02724, -6.79698)
-layers = 32
-mesh = SubResource("PlaneMesh_u38cc")
-surface_material_override/0 = SubResource("StandardMaterial3D_gs6wg")
+[node name="MountainLine1" parent="BackgroundCanvas/SubViewportContainer/SubViewport" instance=ExtResource("3_7sj78")]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, -0.7, -10)
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.5, 0, 0, 0, -0.795545, -1.27166, 0, 1.27166, -0.795545, -1.99571, 1.44868, -5.64093)
-layers = 32
-mesh = SubResource("PlaneMesh_u38cc")
-surface_material_override/0 = SubResource("StandardMaterial3D_gs6wg")
+[node name="Layer1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/MountainLine1" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -0.04, 0.188)
 
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.369844, -0.929094, 0, 0.929094, -0.369844, 1.35581, 1.12266, -4.97402)
-layers = 32
-mesh = SubResource("PlaneMesh_u38cc")
-surface_material_override/0 = SubResource("StandardMaterial3D_gs6wg")
+[node name="Layer0" parent="BackgroundCanvas/SubViewportContainer/SubViewport/MountainLine1" index="1"]
+transform = Transform3D(1.1, 0, 0, 0, -4.80825e-08, -1.1, 0, 1.1, -4.80825e-08, 0, 0.01, 0)
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.958572, -0.284852, 0, 0.284852, -0.958572, 1.67813, 0.502768, -8.48447)
-layers = 32
-mesh = SubResource("PlaneMesh_u38cc")
-surface_material_override/0 = SubResource("StandardMaterial3D_gs6wg")
+[node name="Layer2" parent="BackgroundCanvas/SubViewportContainer/SubViewport/MountainLine1" index="2"]
+transform = Transform3D(1.85, 0, 0, 0, -5.68248e-08, -1.3, 0, 1.3, -5.68248e-08, 0, 0.103411, -0.92372)
+surface_material_override/0 = SubResource("StandardMaterial3D_yg8ks")
 
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.53314, 0, 0, 0, -0.895051, -0.445964, 0, 0.445964, -0.895051, 4.49367, 0.735426, -8.48447)
-layers = 32
-mesh = SubResource("PlaneMesh_u38cc")
-surface_material_override/0 = SubResource("StandardMaterial3D_gs6wg")
-
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.53314, 0, 0, 0, -0.895051, -0.445964, 0, 0.445964, -0.895051, -4.08817, 0.86376, -8.48447)
-layers = 32
-mesh = SubResource("PlaneMesh_u38cc")
-surface_material_override/0 = SubResource("StandardMaterial3D_gs6wg")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.990612, -0.136701, 0, 0.136701, -0.990612, -1.24117, 0.378466, -9.31563)
-layers = 32
-mesh = SubResource("PlaneMesh_u38cc")
-surface_material_override/0 = SubResource("StandardMaterial3D_gs6wg")
+[editable path="BackgroundCanvas/SubViewportContainer/SubViewport/MountainLine1"]
