@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=4 uid="uid://dq8d4kwgig1w8"]
+[gd_scene load_steps=95 format=4 uid="uid://dq8d4kwgig1w8"]
 
 [ext_resource type="PackedScene" uid="uid://djuxc01fqb4hr" path="res://assets/3D/gym.blend" id="1_5t2cs"]
 [ext_resource type="Texture2D" uid="uid://jiof4xx8yewt" path="res://assets/3D/Act1/Textures/Tiles/CeilingTiles1/CelingTiles1_color.png" id="3_4tkj0"]
@@ -42,11 +42,10 @@
 [ext_resource type="Texture2D" uid="uid://deiwp4p3ro442" path="res://assets/3D/Act1/Textures/Tiles/Sidewalk1/Sidewalk1_color.png" id="27_lmkvu"]
 [ext_resource type="Texture2D" uid="uid://duomom830q56p" path="res://assets/3D/Act1/Textures/Tiles/Fence1/Fence1.png" id="28_c5xtb"]
 [ext_resource type="PackedScene" uid="uid://r42whxkucyjl" path="res://scenes/vegetation/bush.tscn" id="44_m15ye"]
+[ext_resource type="Material" uid="uid://teei7svk8hhq" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_progressing_leaves_swaying.tres" id="45_m4c5j"]
+[ext_resource type="Material" uid="uid://c33v812uounix" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_slightly_dried_leaves_swaying.tres" id="47_ilmie"]
 [ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="47_p3d26"]
-[ext_resource type="Material" uid="uid://c772rq7htukcy" path="res://assets/3D/Act1/materials/vegetation/tree1/bradford_pear_yellow_leaves.tres" id="48_0ux3e"]
-[ext_resource type="Material" uid="uid://cwr4yvikap5o7" path="res://assets/3D/Act1/materials/vegetation/tree1/bradford_pear_slightly_dried_leaves.tres" id="48_5iqc3"]
-[ext_resource type="Material" uid="uid://c3ccdga8d7wlw" path="res://assets/3D/Act1/materials/vegetation/tree1/bradford_pear_progressing_leaves.tres" id="48_357rr"]
-[ext_resource type="Material" uid="uid://blrbtcrllc60i" path="res://assets/3D/Act1/materials/vegetation/tree1/bradford_pear_red_leaves.tres" id="49_dhlch"]
+[ext_resource type="Material" uid="uid://602a6yse0f72" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_red_leaves_swaying.tres" id="48_jowur"]
 [ext_resource type="PackedScene" uid="uid://1qyvwbunehqq" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_random_patch_6m_mixed_2.tscn" id="51_764ci"]
 [ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="51_xdu52"]
 
@@ -201,8 +200,8 @@ shader = ExtResource("8_pisw0")
 shader_parameter/red_tiling_factor = 10.0
 shader_parameter/green_tiling_factor = 16.0
 shader_parameter/blue_tiling_factor = 10.0
-shader_parameter/specular = 0.1
-shader_parameter/roughness = 0.75
+shader_parameter/specular = 0.15
+shader_parameter/roughness = 0.7
 shader_parameter/red_channel_texture = ExtResource("10_v7twt")
 shader_parameter/green_channel_texture = ExtResource("8_3temt")
 shader_parameter/blue_channel_texture = ExtResource("12_wbnv8")
@@ -215,7 +214,6 @@ shader_parameter/splatmap = ExtResource("13_hpaor")
 resource_name = "soccerField"
 cull_mode = 2
 albedo_texture = ExtResource("8_3temt")
-roughness = 0.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5stau"]
 _surfaces = [{
@@ -704,123 +702,199 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30.2266)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.3243, 0.000200197, -0.575899)
 
 [node name="BuildingFrame" parent="LockersBuilding" index="0"]
+layers = 1024
 surface_material_override/5 = SubResource("ShaderMaterial_08h7b")
 
 [node name="Ceiling" parent="LockersBuilding" index="1"]
+layers = 1024
 material_override = SubResource("StandardMaterial3D_ox1u8")
+
+[node name="Roof" parent="LockersBuilding" index="2"]
+layers = 1024
+
+[node name="Lockers" parent="LockersBuilding" index="3"]
+layers = 1024
+
+[node name="Staircase1" parent="LockersBuilding" index="4"]
+layers = 1024
+
+[node name="Lockers_001" parent="LockersBuilding" index="5"]
+layers = 1024
+
+[node name="AtticVent" parent="LockersBuilding" index="6"]
+layers = 1024
+
+[node name="WindowFrame" parent="LockersBuilding" index="7"]
+layers = 1024
+
+[node name="WindowGlass" parent="LockersBuilding" index="8"]
+layers = 1024
+
+[node name="WindowFrame_001" parent="LockersBuilding" index="9"]
+layers = 1024
+
+[node name="WindowGlass_001" parent="LockersBuilding" index="10"]
+layers = 1024
+
+[node name="WindowFrame_002" parent="LockersBuilding" index="11"]
+layers = 1024
+
+[node name="WindowGlass_002" parent="LockersBuilding" index="12"]
+layers = 1024
+
+[node name="WindowFrame_003" parent="LockersBuilding" index="13"]
+layers = 1024
+
+[node name="WindowGlass_003" parent="LockersBuilding" index="14"]
+layers = 1024
+
+[node name="WindowFrame_004" parent="LockersBuilding" index="15"]
+layers = 1024
+
+[node name="WindowGlass_004" parent="LockersBuilding" index="16"]
+layers = 1024
+
+[node name="DoorFrame" parent="LockersBuilding" index="17"]
+layers = 1024
 
 [node name="DoorLeft" parent="LockersBuilding" index="18"]
 transform = Transform3D(1, 0, 0.000423938, 0, 1, 0, -0.000423938, 0, 1, 16.0254, 0.0270619, 0.926937)
+layers = 1024
 
 [node name="DoorRight" parent="LockersBuilding" index="19"]
 transform = Transform3D(-1, 0, -0.000424059, 0, 1, 0, 0.000424059, 0, -1, 16.0229, 0.0270619, -0.926546)
+layers = 1024
 
 [node name="OmniLight3D" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 3.44212, -0.126396)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 2.54194, -0.126396)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 3.44212, 4.56414)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 2.54194, 4.56414)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 3.44212, -4.50988)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 2.54194, -4.50988)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 3.44212, -0.126396)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 2.54194, -0.126396)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D5" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 3.44212, 4.56414)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 2.54194, 4.56414)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D6" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 3.44212, -4.50988)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 2.54194, -4.50988)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D7" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 3.44212, -0.126396)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 2.54194, -0.126396)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D8" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 3.44212, 4.56414)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 2.54194, 4.56414)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D9" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 3.44212, -4.50988)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 2.54194, -4.50988)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D10" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 3.44212, -0.126396)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 2.54194, -0.126396)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D11" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 3.44212, 4.56414)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 2.54194, 4.56414)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D12" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 3.44212, -4.50988)
-light_intensity_lumens = 800.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 2.54194, -4.50988)
+layers = 1024
+light_intensity_lumens = 100000.0
 light_temperature = 8000.0
-light_energy = 1000.0
+light_energy = 10.0
+light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 14.0
+omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="DoorDetectorArea3D" type="Area3D" parent="LockersBuilding" node_paths=PackedStringArray("door_animation_player")]
@@ -886,6 +960,55 @@ delay_in_seconds = "0.0"
 wait_time = 0.9
 one_shot = true
 
+[node name="ReflectionProbe" type="ReflectionProbe" parent="LockersBuilding"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0159225, 1.58067, -5.34091)
+layers = 1024
+size = Vector3(31.9614, 3.42976, 26.6972)
+interior = true
+enable_shadows = true
+cull_mask = 1024
+reflection_mask = 1024
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="LockersBuilding"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.317476, 0)
+layers = 1024
+light_intensity_lux = 5963.31
+light_temperature = 8000.0
+light_energy = 5.746
+light_cull_mask = 4293919744
+directional_shadow_mode = 0
+sky_mode = 1
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="LockersBuilding"]
+transform = Transform3D(-1, 3.82137e-15, 8.74228e-08, 8.74228e-08, 4.37114e-08, 1, 0, 1, -4.37114e-08, 0, 1.83448, 0)
+layers = 1024
+light_intensity_lux = 5963.31
+light_temperature = 8000.0
+light_energy = 5.746
+light_cull_mask = 4293919744
+directional_shadow_mode = 0
+sky_mode = 1
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="LockersBuilding"]
+transform = Transform3D(-4.37114e-08, -4.37114e-08, -1, -1, 1.91069e-15, 4.37114e-08, 0, 1, -4.37114e-08, 0, 1.83448, 0)
+layers = 1024
+light_intensity_lux = 5963.31
+light_temperature = 8000.0
+light_energy = 5.746
+light_cull_mask = 4293919744
+directional_shadow_mode = 0
+sky_mode = 1
+
+[node name="DirectionalLight3D4" type="DirectionalLight3D" parent="LockersBuilding"]
+transform = Transform3D(1.31134e-07, 4.37114e-08, 1, 1, -5.73206e-15, -1.31134e-07, 0, 1, -4.37114e-08, 0, 1.83448, 0)
+layers = 1024
+light_intensity_lux = 5963.31
+light_temperature = 8000.0
+light_energy = 5.746
+light_cull_mask = 4293919744
+directional_shadow_mode = 0
+sky_mode = 1
+
 [node name="ClassBuilding" parent="." instance=ExtResource("3_o1t8c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.324, 0, -0.576)
 
@@ -893,13 +1016,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.324, 0, -0.576)
 surface_material_override/2 = SubResource("ShaderMaterial_nbnid")
 
 [node name="spotlight" parent="." instance=ExtResource("6_4d8uc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.727, 0, -18.0433)
+transform = Transform3D(0.82467, 0, 0.565615, 0, 1, 0, -0.565615, 0, 0.82467, -25.681, 0, -18.0433)
 
 [node name="spotlight2" parent="." instance=ExtResource("6_4d8uc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.0433)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22424, 0, -18.0433)
+
+[node name="spotlight4" parent="." instance=ExtResource("6_4d8uc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.18948, 0, -18.0433)
 
 [node name="spotlight3" parent="." instance=ExtResource("6_4d8uc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5627, 0, -18.0433)
+transform = Transform3D(0.846453, 0, -0.532463, 0, 1, 0, 0.532463, 0, 0.846453, 25.3248, 0, -18.0433)
 
 [node name="BaseMap2" parent="." instance=ExtResource("5_30e2b")]
 
@@ -985,6 +1111,15 @@ transform = Transform3D(1.12039, 0, -0.398676, 0, 1, 0, 0.466188, 0, 0.958136, 1
 
 [node name="Bush9" parent="SchoolBushes" instance=ExtResource("44_m15ye")]
 transform = Transform3D(-1.0949, 0, 0.476485, 0, 1, 0, -0.578544, 0, -0.90175, 13.9909, 0.225412, -9.41441)
+
+[node name="Bush12" parent="SchoolBushes" instance=ExtResource("44_m15ye")]
+transform = Transform3D(1.21104, 0, 0.0661386, 0, 1, 0, -0.07734, 0, 1.03566, 38.6076, 0.225412, -23.955)
+
+[node name="Bush13" parent="SchoolBushes" instance=ExtResource("44_m15ye")]
+transform = Transform3D(1.18841, 0, 0.209986, 0, 1, 0, -0.245546, 0, 1.0163, 63.7044, 0.225412, -26.1126)
+
+[node name="Bush15" parent="SchoolBushes" instance=ExtResource("44_m15ye")]
+transform = Transform3D(0.884816, 0, -0.713547, 0, 1, 0, 0.866383, 0, 0.728726, 48.2713, 0.225412, -21.2998)
 
 [node name="Bush3" parent="SchoolBushes" instance=ExtResource("44_m15ye")]
 transform = Transform3D(0.824073, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 0.968878, -3.89209, 0, -0.688522)
@@ -1114,143 +1249,128 @@ transform = Transform3D(-0.664478, 0, 0.15155, 0, 1, 0, -0.0947704, 0, -1.06259,
 
 [node name="TreeBradfordPear" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(1.13551, 0, 0.980108, 0, 1.5, 0, -0.980108, 0, 1.13551, -38.4107, 0, 9.27929)
-material_override = ExtResource("48_0ux3e")
 
 [node name="TreeBradfordPear9" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-1.65571, 0, 0.931997, 0, 1.9, 0, -0.931997, 0, -1.65571, -37.1731, 0, -6.40532)
-material_override = ExtResource("48_357rr")
+transform = Transform3D(-1.65571, 0, 0.931997, 0, 1.9, 0, -0.931997, 0, -1.65571, -40.4875, 0, -11.2644)
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear10" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(1.51094, 0, 1.15198, 0, 1.9, 0, -1.15198, 0, 1.51094, -31.7668, 0, -9.44063)
-material_override = ExtResource("48_0ux3e")
+transform = Transform3D(1.51094, 0, 1.15198, 0, 1.9, 0, -1.15198, 0, 1.51094, -29.91, 0, -23.2555)
 
 [node name="TreeBradfordPear8" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.49707, 0, -0.0936088, 0, 1.5, 0, 0.0936088, 0, -1.49707, -36.8995, 0, 4.83706)
-material_override = ExtResource("48_5iqc3")
+material_override = ExtResource("47_ilmie")
 
 [node name="TreeBradfordPear2" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.69, 0, 0.184131, 0, 1.7, 0, -0.184131, 0, -1.69, -35.089, 0, 7.90575)
-material_override = ExtResource("48_357rr")
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear13" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-0.971233, 0, 1.39524, 0, 1.7, 0, -1.39524, 0, -0.971233, 35.494, 0, -2.65929)
-material_override = ExtResource("48_357rr")
-
-[node name="TreeBradfordPear15" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(1.20612, 0, 0.48505, 0, 1.3, 0, -0.48505, 0, 1.20612, 42.3378, 0, -7.08978)
-material_override = ExtResource("48_0ux3e")
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear16" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(0.404333, 0, -1.85648, 0, 1.9, 0, 1.85648, 0, 0.404333, 46.6321, 0, -4.82503)
-material_override = ExtResource("49_dhlch")
+transform = Transform3D(1.08021, 0, -1.56306, 0, 1.9, 0, 1.56306, 0, 1.08021, 42.313, 0, -5.40035)
+material_override = ExtResource("48_jowur")
 
 [node name="TreeBradfordPear17" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.52904, 0, -1.12784, 0, 1.9, 0, 1.12784, 0, -1.52904, 41.9294, 0, 4.12257)
-material_override = ExtResource("48_357rr")
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear23" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-1.04619, 0, -0.77168, 0, 1.3, 0, 0.77168, 0, -1.04619, 34.7731, 0, 6.07702)
-material_override = ExtResource("49_dhlch")
+transform = Transform3D(-1.29879, 0, -0.0561351, 0, 1.3, 0, 0.0561351, 0, -1.29879, 34.7731, 0, 6.07702)
+material_override = ExtResource("48_jowur")
 
 [node name="TreeBradfordPear24" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.26218, 0, 0.311286, 0, 1.3, 0, -0.311286, 0, -1.26218, 47.5797, 0, 4.8421)
-material_override = ExtResource("48_0ux3e")
 
 [node name="TreeBradfordPear25" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.45636, 0, 0.359176, 0, 1.5, 0, -0.359176, 0, -1.45636, 53.7772, 0, 6.51153)
-material_override = ExtResource("48_357rr")
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear26" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-0.625852, 0, -1.3632, 0, 1.5, 0, 1.3632, 0, -0.625852, 55.1264, 0, -5.35744)
-material_override = ExtResource("48_5iqc3")
+material_override = ExtResource("47_ilmie")
 
 [node name="TreeBradfordPear27" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(1.48761, 0, 0.192359, 0, 1.5, 0, -0.192359, 0, 1.48761, 59.0828, 0, 7.95228)
-material_override = ExtResource("48_5iqc3")
+material_override = ExtResource("47_ilmie")
 
 [node name="TreeBradfordPear28" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(1.76909, 0, -1.13151, 0, 2.1, 0, 1.13151, 0, 1.76909, 63.8624, 0, -3.07054)
-material_override = ExtResource("48_0ux3e")
-
-[node name="TreeBradfordPear29" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(0.126577, 0, -1.19331, 0, 1.2, 0, 1.19331, 0, 0.126577, 65.9434, 0, 3.12693)
-material_override = ExtResource("48_357rr")
 
 [node name="TreeBradfordPear30" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-1.29233, 0, -1.10449, 0, 1.7, 0, 1.10449, 0, -1.29233, 77.6523, 0, 3.12693)
-material_override = ExtResource("48_357rr")
+transform = Transform3D(0.166921, 0, -1.69179, 0, 1.7, 0, 1.69179, 0, 0.166921, 77.6523, 0, 3.12693)
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear31" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.61786, 0, 0.522058, 0, 1.7, 0, -0.522058, 0, -1.61786, 71.9122, 0, -2.36161)
-material_override = ExtResource("49_dhlch")
+material_override = ExtResource("48_jowur")
 
 [node name="TreeBradfordPear32" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.61786, 0, 0.522058, 0, 1.7, 0, -0.522058, 0, -1.61786, 77.6066, 0, -9.77114)
-material_override = ExtResource("48_0ux3e")
 
 [node name="TreeBradfordPear34" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.80819, 0, 0.583476, 0, 1.9, 0, -0.583476, 0, -1.80819, 74.0162, 0, -28.5237)
-material_override = ExtResource("48_357rr")
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear33" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-0.223966, 0, 1.07696, 0, 1.1, 0, -1.07696, 0, -0.223966, 75.9143, 0, -18.6214)
-material_override = ExtResource("48_5iqc3")
+material_override = ExtResource("47_ilmie")
 
 [node name="TreeBradfordPear14" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(1.42839, 0, 0.921798, 0, 1.7, 0, -0.921798, 0, 1.42839, 31.5793, 0, 2.62512)
-material_override = ExtResource("48_5iqc3")
+material_override = ExtResource("47_ilmie")
 
 [node name="TreeBradfordPear4" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.61444, 0, -0.532513, 0, 1.7, 0, 0.532513, 0, -1.61444, -59.0996, 0, 12.4142)
-material_override = ExtResource("48_0ux3e")
 
 [node name="TreeBradfordPear12" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(1.6853, 0, 0.223068, 0, 1.7, 0, -0.223068, 0, 1.6853, -50.82, 0, 10.5563)
-material_override = ExtResource("48_5iqc3")
+material_override = ExtResource("47_ilmie")
 
 [node name="TreeBradfordPear5" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.39999, 0, -0.00463969, 0, 1.4, 0, 0.00463969, 0, -1.39999, -56.9312, 0, 11.4863)
-material_override = ExtResource("48_357rr")
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear6" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-0.0393701, 0, -1.09929, 0, 1.1, 0, 1.09929, 0, -0.0393701, -58.493, 0, 10.3739)
-material_override = ExtResource("49_dhlch")
+transform = Transform3D(-0.0357912, 0, -0.999359, 0, 1, 0, 0.999359, 0, -0.0357912, -58.3283, 0, 9.89217)
+material_override = ExtResource("48_jowur")
 
 [node name="TreeBradfordPear7" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-1.30417, 0, -0.741047, 0, 1.5, 0, 0.741047, 0, -1.30417, -47.5372, 0, 10.9602)
-material_override = ExtResource("48_357rr")
+transform = Transform3D(-0.545922, 0, 1.39713, 0, 1.5, 0, -1.39713, 0, -0.545922, -47.5372, 0, 10.9602)
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear3" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(0.548314, 0, -1.17871, 0, 1.3, 0, 1.17871, 0, 0.548314, -31.5953, 0, -4.1424)
-material_override = ExtResource("49_dhlch")
+transform = Transform3D(0.548314, 0, -1.17871, 0, 1.3, 0, 1.17871, 0, 0.548314, -30.2148, 0, -5.12211)
+material_override = ExtResource("48_jowur")
 
 [node name="TreeBradfordPear18" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-0.433284, 0, -1.01107, 0, 1.1, 0, 1.01107, 0, -0.433284, -26.4829, 0, -22.983)
-material_override = ExtResource("48_5iqc3")
+material_override = ExtResource("47_ilmie")
 
 [node name="TreeBradfordPear19" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-0.522263, 0, -1.19048, 0, 1.3, 0, 1.19048, 0, -0.522263, -19.4682, 0, -22.0358)
-material_override = ExtResource("48_357rr")
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear20" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-0.711165, 0, -1.20592, 0, 1.4, 0, 1.20592, 0, -0.711165, 19.589, 0, -22.6143)
-material_override = ExtResource("48_357rr")
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear35" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-2.19556, 0, -0.139632, 0, 2.2, 0, 0.139632, 0, -2.19556, 27.7989, 0, -25.0842)
-material_override = ExtResource("49_dhlch")
+material_override = ExtResource("48_jowur")
 
 [node name="TreeBradfordPear36" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-1.44353, 0, -1.66018, 0, 2.2, 0, 1.66018, 0, -1.44353, 23.5224, 0, -45.7119)
-material_override = ExtResource("48_357rr")
+material_override = ExtResource("45_m4c5j")
 
 [node name="TreeBradfordPear22" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-0.579415, 0, 1.38358, 0, 1.5, 0, -1.38358, 0, -0.579415, -0.705523, 0, -23.421)
-material_override = ExtResource("48_5iqc3")
+transform = Transform3D(1.23038, -0.0715819, -1.57514, 0.0405862, 1.99871, -0.0591285, 1.57624, 0.00441074, 1.23104, 0.28453, 0.015514, -20.4839)
+material_override = ExtResource("48_jowur")
 
 [node name="TreeBradfordPear21" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(-1.31724, 0, 1.07466, 0, 1.7, 0, -1.07466, 0, -1.31724, 22.1642, 0, -17.7872)
-material_override = ExtResource("48_0ux3e")
+transform = Transform3D(-1.31724, 0, 1.07466, 0, 1.7, 0, -1.07466, 0, -1.31724, 22.289, 0, -19.2741)
 
 [node name="PineTrees" type="Node3D" parent="."]
 
@@ -1276,16 +1396,16 @@ transform = Transform3D(0.561494, 0, -0.569846, 0, 0.8, 0, 0.569846, 0, 0.561494
 transform = Transform3D(-0.35558, 0, -0.934646, 0, 1, 0, 0.934646, 0, -0.35558, -21.9562, 0, -23.9784)
 
 [node name="PineTree9" parent="PineTrees" instance=ExtResource("51_xdu52")]
-transform = Transform3D(-0.606443, 0, -0.665002, 0, 0.9, 0, 0.665002, 0, -0.606443, -4.54233, 0, -23.6269)
+transform = Transform3D(-0.606443, 0, -0.665002, 0.0238462, 0.899421, -0.0217463, 0.664574, -0.0322729, -0.606053, -4.38729, -0.015514, -21.5404)
 
 [node name="PineTree14" parent="PineTrees" instance=ExtResource("51_xdu52")]
-transform = Transform3D(-0.471678, 0, -0.517223, 0, 0.7, 0, 0.517223, 0, -0.471678, -2.75301, 0, -21.5181)
+transform = Transform3D(-0.471678, 0, -0.517223, 0, 0.7, 0, 0.517223, 0, -0.471678, -1.98406, 0, -23.6289)
 
 [node name="PineTree10" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.164445, 0, -0.782916, 0, 0.8, 0, 0.782916, 0, 0.164445, 16.9455, 0, -24.5855)
 
 [node name="PineTree11" parent="PineTrees" instance=ExtResource("51_xdu52")]
-transform = Transform3D(0.185, 0, -0.880781, 0, 0.9, 0, 0.880781, 0, 0.185, 23.0323, 0, -22.205)
+transform = Transform3D(0.185, 0, -0.880781, 0, 0.9, 0, 0.880781, 0, 0.185, 22.2598, 0, -23.5353)
 
 [node name="PineTree22" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.267222, 0, -1.27224, 0, 1.3, 0, 1.27224, 0, 0.267222, 50.2077, 0, -28.2721)
@@ -1312,7 +1432,7 @@ transform = Transform3D(-0.157469, 0, -0.526976, 0, 0.55, 0, 0.526976, 0, -0.157
 transform = Transform3D(0.292699, 0, -0.690527, 0, 0.75, 0, 0.690527, 0, 0.292699, 27.7478, 0, -9.77321)
 
 [node name="PineTree17" parent="PineTrees" instance=ExtResource("51_xdu52")]
-transform = Transform3D(-0.454546, 0, -0.464638, 0, 0.65, 0, 0.464638, 0, -0.454546, 27.7478, 0, -5.13669)
+transform = Transform3D(-0.454546, 0, -0.464638, 0, 0.716102, 0, 0.464638, 0, -0.454546, 27.7478, 0, -5.13669)
 
 [node name="PineTree18" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.0881267, 0, -0.593493, 0, 0.6, 0, 0.593493, 0, 0.0881267, 27.7478, 0, 7.06729)
@@ -1320,11 +1440,8 @@ transform = Transform3D(0.0881267, 0, -0.593493, 0, 0.6, 0, 0.593493, 0, 0.08812
 [node name="PineTree19" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.57792, 0, -0.55318, 0, 0.8, 0, 0.55318, 0, 0.57792, 27.7478, 0, 3.09313)
 
-[node name="PineTree13" parent="PineTrees" instance=ExtResource("51_xdu52")]
-transform = Transform3D(0.133611, 0, -0.63612, 0, 0.65, 0, 0.63612, 0, 0.133611, 1.97591, 0, -22.0612)
-
 [node name="PineTree3" parent="PineTrees" instance=ExtResource("51_xdu52")]
-transform = Transform3D(0.738874, 0, 0.306702, 0, 0.8, 0, -0.306702, 0, 0.738874, -27.9897, 0, 7.37558)
+transform = Transform3D(0.738874, 0, 0.306702, 0, 0.711316, 0, -0.306702, 0, 0.738874, -27.9897, 0, 7.37558)
 
 [node name="PineTree20" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.737345, 0, 0.310361, 0, 0.8, 0, -0.310361, 0, 0.737345, -57.7527, 0, 14.3412)

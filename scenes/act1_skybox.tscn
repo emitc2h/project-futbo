@@ -1,15 +1,27 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6j57fie7ocg7"]
+[gd_scene load_steps=57 format=3 uid="uid://b6j57fie7ocg7"]
 
 [ext_resource type="Script" path="res://scripts/sky_box_camera.gd" id="1_37btj"]
 [ext_resource type="Script" path="res://scripts/act_1_skybox.gd" id="1_ywti0"]
 [ext_resource type="PackedScene" uid="uid://ccrdjbgqp4tlg" path="res://assets/3D/Act1/blend/MountainLine1.blend" id="3_7sj78"]
+[ext_resource type="PackedScene" uid="uid://uwjksmpfbc3n" path="res://assets/3D/Act1/blend/CloudLine1.blend" id="3_bxow3"]
+[ext_resource type="Material" uid="uid://l6hfx6hh47be" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_1.tres" id="4_11igr"]
+[ext_resource type="Texture2D" uid="uid://didf5ewjiju7j" path="res://assets/3D/Act1/Textures/Sky/CloudLine1/CloudLine1_color.png" id="4_ehy3p"]
 [ext_resource type="Texture2D" uid="uid://csqgkqiyd276c" path="res://assets/3D/Act1/Textures/Sky/MountainLine1/MountainLine1_color.png" id="4_oiuxk"]
+[ext_resource type="Shader" path="res://shaders/TextureUVDrift.gdshader" id="5_ef5nx"]
 [ext_resource type="Texture2D" uid="uid://b77krqhqo4dl5" path="res://assets/3D/Act1/Textures/Sky/MountainLine1/MountainLine1_transmission.png" id="5_fmfg7"]
+[ext_resource type="Material" uid="uid://e2ekgagyh85i" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_2.tres" id="5_xs643"]
+[ext_resource type="Texture2D" uid="uid://b4jb5n6h00xyv" path="res://assets/3D/Act1/Textures/Sky/CloudLine2/CloudLine2_color.png" id="6_qshv0"]
+[ext_resource type="Texture2D" uid="uid://bux7qtbkhdkx3" path="res://assets/3D/Act1/Textures/Sky/CloudLine2/CloudLine2_transmission.png" id="7_86qfx"]
+[ext_resource type="PackedScene" uid="uid://b7jyrasyrhgca" path="res://scenes/cloud_treadmill.tscn" id="12_1l4mi"]
+[ext_resource type="Material" uid="uid://dtjhyx51m0eao" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_5.tres" id="13_xnj6s"]
+[ext_resource type="Material" uid="uid://lljvxhhrkc7q" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_3.tres" id="15_ppmh4"]
+[ext_resource type="Material" uid="uid://c346eumdcl2wn" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_4.tres" id="16_j2far"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ulxvo"]
+rayleigh_coefficient = 1.0
+rayleigh_color = Color(0.2205, 0.391125, 0.63, 1)
 turbidity = 5.0
-sun_disk_scale = 0.0
-ground_color = Color(0.22992, 0.201787, 0.0773445, 1)
+ground_color = Color(0.176471, 0.211765, 0.203922, 1)
 
 [sub_resource type="Sky" id="Sky_kkgna"]
 sky_material = SubResource("PhysicalSkyMaterial_ulxvo")
@@ -17,15 +29,16 @@ radiance_size = 1
 
 [sub_resource type="Environment" id="Environment_kvuqf"]
 background_mode = 2
-background_intensity = 22000.0
+background_color = Color(1, 0.984314, 0.831373, 1)
+background_energy_multiplier = 1.2
 background_canvas_max_layer = -5
 sky = SubResource("Sky_kkgna")
 ambient_light_source = 2
 ambient_light_color = Color(0.883721, 0.913614, 0.976312, 1)
 reflected_light_source = 1
 tonemap_mode = 2
-tonemap_exposure = 0.27
-tonemap_white = 0.27
+tonemap_exposure = 0.22
+tonemap_white = 0.35
 ssao_enabled = true
 glow_enabled = true
 glow_levels/1 = 0.5
@@ -40,11 +53,563 @@ fog_sun_scatter = 0.05
 fog_density = 0.001
 volumetric_fog_length = 50.66
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aqkyh"]
+render_priority = 0
+shader = ExtResource("5_ef5nx")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/backlight = Color(0, 0, 0, 1)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/uvx_drift_speed = 15.0
+shader_parameter/uvy_drift_speed = 0.0
+shader_parameter/texture_albedo = ExtResource("6_qshv0")
+shader_parameter/texture_backlight = ExtResource("7_86qfx")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yg8ks"]
 transparency = 1
 albedo_texture = ExtResource("4_oiuxk")
 backlight_enabled = true
 backlight_texture = ExtResource("5_fmfg7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jywbu"]
+resource_name = "CloudLine1"
+transparency = 4
+cull_mode = 2
+albedo_texture = ExtResource("4_ehy3p")
+roughness = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ncqyy"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_746i8"]
+resource_name = "CloudLine1_Plane_001"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 255, 255, 255, 255, 255, 255, 255, 63, 255, 239, 255, 255, 255, 239),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_jywbu"),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(4, 2, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ncqyy")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xfchl"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_l3f1h"]
+resource_name = "CloudLine1_Plane_002"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 181, 237, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 181, 237),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_jywbu"),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(4, 1.75, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_xfchl")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_w5lvj"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tvmmc"]
+resource_name = "CloudLine1_Plane_003"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 169, 234, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 169, 234),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_jywbu"),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(4, 1.5, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_w5lvj")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_u1v6o"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_a0dhy"]
+resource_name = "CloudLine1_Plane_004"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 101, 230, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 101, 230),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_jywbu"),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(4, 1.25, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_u1v6o")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0gtrj"]
+resource_name = "CloudLine2"
+transparency = 4
+cull_mode = 2
+albedo_texture = ExtResource("6_qshv0")
+roughness = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jgq8s"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7psq7"]
+resource_name = "CloudLine1_Plane_009"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 255, 255, 255, 255, 255, 255, 255, 63, 255, 239, 255, 255, 255, 239),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_0gtrj"),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(4, 2, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_jgq8s")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_sk6dk"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_48q0i"]
+resource_name = "CloudLine1_Plane_010"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 181, 237, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 181, 237),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_0gtrj"),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(4, 1.75, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_sk6dk")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_rcn3d"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_22ykp"]
+resource_name = "CloudLine1_Plane_011"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 169, 234, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 169, 234),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_0gtrj"),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(4, 1.5, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_rcn3d")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_fr77q"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xukro"]
+resource_name = "CloudLine1_Plane_012"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 101, 230, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 101, 230),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_0gtrj"),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(4, 1.25, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_fr77q")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_44duf"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7s87f"]
+resource_name = "CloudLine1_Plane_013"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 255, 223, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 255, 223),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_0gtrj"),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(4, 1, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_44duf")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_symi1"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_t54pi"]
+resource_name = "CloudLine1_Plane_014"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 84, 213, 255, 63, 255, 255, 255, 255, 254, 255, 255, 255, 84, 213),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_0gtrj"),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(4, 0.75, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_symi1")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_78cmt"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_40kq0"]
+resource_name = "CloudLine1_Plane_015"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 255, 191, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 255, 191),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_0gtrj"),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(4, 0.5, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_78cmt")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_c8x0p"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(2, 0, 1, 0, 3, 0, 2, 0, 0, 0, 1, 0),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qv555"]
+resource_name = "CloudLine1_Plane_016"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 255, 127, 255, 255, 255, 127, 255, 63, 255, 255, 255, 255, 255, 255),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(2, 0, 1, 0, 3, 0, 2, 0, 0, 0, 1, 0),
+"material": SubResource("StandardMaterial3D_0gtrj"),
+"name": "CloudLine2",
+"primitive": 3,
+"uv_scale": Vector4(4, 0.25, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_c8x0p")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ne8n"]
+resource_name = "CloudLine1"
+transparency = 4
+cull_mode = 2
+albedo_texture = ExtResource("4_ehy3p")
+roughness = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_gdcpo"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_bf6vj"]
+resource_name = "CloudLine1_Plane_005"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 255, 223, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 255, 223),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_5ne8n"),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(4, 1, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_gdcpo")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ebb5u"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_g6bqh"]
+resource_name = "CloudLine1_Plane_006"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 84, 213, 255, 63, 255, 255, 255, 255, 254, 255, 255, 255, 84, 213),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_5ne8n"),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(4, 0.75, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ebb5u")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_nat63"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_0p8bt"]
+resource_name = "CloudLine1_Plane_007"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 255, 191, 255, 63, 255, 255, 255, 255, 255, 255, 255, 255, 255, 191),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(1, 0, 3, 0, 2, 0, 1, 0, 0, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_5ne8n"),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(4, 0.5, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_nat63")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_5ol60"]
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(2, 0, 1, 0, 3, 0, 2, 0, 0, 0, 1, 0),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_vrjuy"]
+resource_name = "CloudLine1_Plane_008"
+_surfaces = [{
+"aabb": AABB(-3, 0, -0.25, 6, 1e-05, 0.25),
+"attribute_data": PackedByteArray(255, 63, 63, 128, 255, 255, 63, 128, 255, 63, 255, 255, 255, 255, 255, 255),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(2, 0, 1, 0, 3, 0, 2, 0, 0, 0, 1, 0),
+"material": SubResource("StandardMaterial3D_5ne8n"),
+"name": "CloudLine1",
+"primitive": 3,
+"uv_scale": Vector4(4, 0.25, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_5ol60")
 
 [node name="Act1SkyBox" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.523045, 0, 0)
@@ -66,24 +631,289 @@ handle_input_locally = false
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
-[node name="SkyBoxCamera" type="Camera3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0)
+[node name="SkyBoxContainer" type="Node3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26.2505, 110.984)
+
+[node name="SkyBoxCamera" type="Camera3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer"]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -1.45, 0, 0)
 cull_mask = 1016800
 environment = SubResource("Environment_kvuqf")
 fov = 45.0
 script = ExtResource("1_37btj")
 
-[node name="MountainLine1" parent="BackgroundCanvas/SubViewportContainer/SubViewport" instance=ExtResource("3_7sj78")]
+[node name="CloudLine1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("3_bxow3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0155373, 0.41503, -17.8089)
+visible = false
+
+[node name="Layer0" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="0"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="Layer1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="1"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+
+[node name="Layer2" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="2"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="Layer3" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="3"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="Layer4" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="4"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="Layer5" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="5"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="Layer6" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="6"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="Layer7" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="7"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="Layer8" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="8"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("5_xs643")
+
+[node name="Layer9" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="9"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0.160517, 2.81625)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = SubResource("ShaderMaterial_aqkyh")
+
+[node name="Layer10" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="10"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, -0.216812)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("5_xs643")
+
+[node name="Layer11" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="11"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("5_xs643")
+
+[node name="Layer12" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="12"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("5_xs643")
+
+[node name="Layer13" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="13"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("5_xs643")
+
+[node name="Layer14" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="14"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("5_xs643")
+
+[node name="Layer15" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1" index="15"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+visible = false
+cast_shadow = 0
+surface_material_override/0 = ExtResource("5_xs643")
+
+[node name="MountainLine1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("3_7sj78")]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, -0.7, -10)
 
-[node name="Layer1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/MountainLine1" index="0"]
+[node name="Layer1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/MountainLine1" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -0.04, 0.188)
 
-[node name="Layer0" parent="BackgroundCanvas/SubViewportContainer/SubViewport/MountainLine1" index="1"]
+[node name="Layer0" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/MountainLine1" index="1"]
 transform = Transform3D(1.1, 0, 0, 0, -4.80825e-08, -1.1, 0, 1.1, -4.80825e-08, 0, 0.01, 0)
 
-[node name="Layer2" parent="BackgroundCanvas/SubViewportContainer/SubViewport/MountainLine1" index="2"]
+[node name="Layer2" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/MountainLine1" index="2"]
 transform = Transform3D(1.85, 0, 0, 0, -5.68248e-08, -1.3, 0, 1.3, -5.68248e-08, 0, 0.103411, -0.92372)
+visible = false
 surface_material_override/0 = SubResource("StandardMaterial3D_yg8ks")
 
-[editable path="BackgroundCanvas/SubViewportContainer/SubViewport/MountainLine1"]
+[node name="Layer0" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0.70171, -33.4159)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_746i8")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("13_xnj6s")
+
+[node name="CloudTreadmill1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("12_1l4mi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.239553, -26.806)
+length = 5.0
+speed = 0.5
+
+[node name="Layer1" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill1"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_l3f1h")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="Layer2" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill1"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_tvmmc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="Layer3" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill1"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_a0dhy")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("4_11igr")
+
+[node name="CloudTreadmill2" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("12_1l4mi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21113, -20.4042)
+length = 2.0
+speed = 0.1
+fade_in_end_fraction = 0.329
+fade_out_end_fraction = 0.623
+x_drift_speed = 20.0
+
+[node name="Layer8" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill2"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_7psq7")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("5_xs643")
+
+[node name="Layer9" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill2"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_48q0i")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("5_xs643")
+
+[node name="CloudTreadmill3" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("12_1l4mi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.88972, -24.1282)
+length = 1.0
+speed = 0.1
+fade_in_end_fraction = 0.442
+fade_out_end_fraction = 0.513
+x_drift_speed = 10.0
+
+[node name="Layer10" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill3"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, -0.216812)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_22ykp")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("15_ppmh4")
+
+[node name="Layer11" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill3"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_xukro")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("15_ppmh4")
+
+[node name="CloudTreadmill4" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("12_1l4mi")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 2.51051, -15.3254)
+length = 6.0
+speed = 0.2
+x_drift_speed = 15.0
+
+[node name="Layer12" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill4"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_7s87f")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_j2far")
+
+[node name="Layer13" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill4"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_t54pi")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_j2far")
+
+[node name="Layer14" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill4"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_40kq0")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_j2far")
+
+[node name="Layer15" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill4"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_qv555")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_j2far")
+
+[node name="CloudTreadmill5" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("12_1l4mi")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 9.42156, -46.805)
+length = 8.0
+speed = 0.1
+x_drift_speed = 5.0
+
+[node name="Layer4" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill5"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_bf6vj")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("13_xnj6s")
+
+[node name="Layer5" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill5"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_g6bqh")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("13_xnj6s")
+
+[node name="Layer6" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill5"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_0p8bt")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("13_xnj6s")
+
+[node name="Layer7" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudTreadmill5"]
+transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+layers = 32
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_vrjuy")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("13_xnj6s")
+
+[editable path="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/CloudLine1"]
+[editable path="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/MountainLine1"]

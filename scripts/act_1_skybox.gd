@@ -2,7 +2,7 @@ extends Node3D
 
 @export var camera_controller: CameraController
 @export_range(0, 1) var parallax_factor: float = 0.01
-@onready var skybox_camera: SkyBoxCamera = $BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxCamera
+@onready var skybox_camera: SkyBoxCamera = $BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/SkyBoxCamera
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

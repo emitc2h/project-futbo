@@ -33,6 +33,7 @@ shapes/collision/contact_color=Color(0.88, 0.1, 1, 1)
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=3
 window/size/resizable=false
 window/size/window_width_override=1920
 window/size/window_height_override=1080
@@ -41,6 +42,9 @@ window/stretch/scale_mode="integer"
 
 [editor]
 
+movie_writer/mjpeg_quality=0.9
+movie_writer/movie_file="/Users/mtrottiermcdonald/Movies/godot_test.avi"
+movie_writer/disable_vsync=true
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
 
@@ -144,3 +148,4 @@ sprint={
 textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/use_physical_light_units=true
 environment/defaults/default_clear_color=Color(0.3458, 0.646707, 0.91, 1)
+anti_aliasing/quality/screen_space_aa=1
