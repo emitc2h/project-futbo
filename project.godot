@@ -147,5 +147,7 @@ sprint={
 
 textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/use_physical_light_units=true
+anti_aliasing/screen_space_roughness_limiter/enabled=false
 environment/defaults/default_clear_color=Color(0.3458, 0.646707, 0.91, 1)
 anti_aliasing/quality/screen_space_aa=1
+anti_aliasing/quality/use_debanding=true

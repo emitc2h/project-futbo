@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ggo1xn5guhjd"]
+[gd_scene load_steps=4 format=3 uid="uid://ggo1xn5guhjd"]
 
 [ext_resource type="PackedScene" uid="uid://b51cmoi01d42w" path="res://assets/3D/Act1/blend/PineTree1.blend" id="1_6oq7i"]
 [ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="2_lidnu"]
+[ext_resource type="Material" uid="uid://1vs06wfy2qlv" path="res://assets/3D/Act1/materials/vegetation/pine_tree1/pine_tree1_swaying.tres" id="2_sid0i"]
 
 [node name="PineTree1Construction" type="Node3D"]
 
@@ -18,6 +19,7 @@ visible = false
 
 [node name="Large Composite Branch" parent="PineTree1" index="3"]
 visible = false
+surface_material_override/0 = ExtResource("2_sid0i")
 
 [node name="Tree Lower Body Frame" parent="PineTree1" index="4"]
 visible = false
@@ -30,6 +32,7 @@ visible = false
 
 [node name="Medium Composite Branch" parent="PineTree1" index="7"]
 visible = false
+surface_material_override/0 = ExtResource("2_sid0i")
 
 [node name="Tree Trunk" parent="PineTree1" index="8"]
 visible = false
