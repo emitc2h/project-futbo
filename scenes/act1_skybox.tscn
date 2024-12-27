@@ -628,7 +628,7 @@ grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="BackgroundCanvas/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1920, 1080)
+size = Vector2i(1280, 800)
 render_target_update_mode = 4
 
 [node name="SkyBoxContainer" type="Node3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport"]
