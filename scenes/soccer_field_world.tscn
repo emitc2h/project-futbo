@@ -1202,6 +1202,7 @@ transform = Transform3D(0.99693, 0, -0.0783027, 0, 1, 0, 0.0783027, 0, 0.99693, 
 
 [node name="LightGrassRandomPatch6MMixed2" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.217547, 0, 0.97605, 0, 1, 0, -0.97605, 0, 0.217547, -60.6818, -0.0615612, 12.3698)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed3" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -54.6618, -0.039881, 12.3698)
