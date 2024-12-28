@@ -1,7 +1,6 @@
 [gd_scene load_steps=44 format=4 uid="uid://cqmpak7hqs26q"]
 
 [ext_resource type="PackedScene" uid="uid://cu4ax72l3v1ah" path="res://assets/3D/Act1/blend/Grass2.blend" id="1_qrb16"]
-[ext_resource type="Material" uid="uid://be2gka6jbfd6a" path="res://assets/3D/Act1/materials/vegetation/grass/grass_material_swaying.tres" id="2_0fdgn"]
 [ext_resource type="PackedScene" uid="uid://cpi65b7fpoxf8" path="res://assets/3D/Act1/blend/GrassPatches.blend" id="2_ow33i"]
 [ext_resource type="PackedScene" uid="uid://bc2qa3y0xpf50" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_round_patch_3m_mixed_1.tscn" id="3_trv1p"]
 [ext_resource type="PackedScene" uid="uid://drmfw4wqihplu" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_round_patch_3m_mixed_2.tscn" id="4_5fohd"]
@@ -9,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://55kej4h3xq8v" path="res://assets/3D/Act1/Textures/Vegetation/Grass2/Grass2_color.png" id="6_x1wa2"]
 [ext_resource type="PackedScene" uid="uid://bxm6l73d6ddrh" path="res://scenes/vegetation/grass/multimesh_patches/dense_grass_round_patch_3m_mixed_2.tscn" id="7_4ct1o"]
 [ext_resource type="PackedScene" uid="uid://ckbxqfqfj1jqb" path="res://scenes/vegetation/grass/multimesh_patches/dense_grass_round_patch_3m_mixed_1.tscn" id="8_8wu4s"]
+[ext_resource type="PackedScene" uid="uid://csl4n7cabl0is" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_random_patch_6m_mixed_1.tscn" id="10_hesh0"]
 [ext_resource type="PackedScene" uid="uid://1qyvwbunehqq" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_random_patch_6m_mixed_2.tscn" id="10_vhlqo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f6x3x"]
@@ -379,22 +379,6 @@ buffer = PackedFloat32Array(0.872448, -0.0569096, 0.132899, -2.69003, 0.0567212,
 [node name="Grass2" parent="." instance=ExtResource("1_qrb16")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.19145)
 
-[node name="GrassSpotMixed1" parent="Grass2" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.734607, 0, 0)
-visible = false
-surface_material_override/0 = ExtResource("2_0fdgn")
-
-[node name="GrassSpotYellow" parent="Grass2" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.835057, 0, -0.914081)
-visible = false
-
-[node name="GrassSpotMixed2" parent="Grass2" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.956927)
-visible = false
-
-[node name="GrassSpotGreen" parent="Grass2" index="3"]
-visible = false
-
 [node name="GrassPatches" parent="." instance=ExtResource("2_ow33i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.188794, 0, -0.0124712)
 visible = false
@@ -455,7 +439,7 @@ multimesh = SubResource("MultiMesh_c6ktv")
 [node name="MixedGrassPatch" parent="MultiMeshesRandomPatch6M" instance=ExtResource("10_vhlqo")]
 visible = false
 
-[node name="LightGrassRandomPatch6MMixed1" parent="MultiMeshesRandomPatch6M" instance=ExtResource("10_vhlqo")]
+[node name="LightGrassRandomPatch6MMixed1" parent="MultiMeshesRandomPatch6M" instance=ExtResource("10_hesh0")]
 
 [node name="LightGrassRandomPatch6MYellow" type="MultiMeshInstance3D" parent="MultiMeshesRandomPatch6M"]
 visible = false
