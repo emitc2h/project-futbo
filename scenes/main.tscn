@@ -1,135 +1,33 @@
-[gd_scene load_steps=17 format=3 uid="uid://ci6nhkx4w6kqs"]
+[gd_scene load_steps=6 format=3 uid="uid://ci6nhkx4w6kqs"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_vdkql"]
-[ext_resource type="PackedScene" uid="uid://3y4snk0eo4mp" path="res://scenes/ui.tscn" id="2_0egkg"]
-[ext_resource type="PackedScene" uid="uid://b6j57fie7ocg7" path="res://scenes/act1_skybox.tscn" id="2_fer8r"]
-[ext_resource type="PackedScene" uid="uid://dq8d4kwgig1w8" path="res://scenes/soccer_field_world.tscn" id="3_h7bk2"]
-[ext_resource type="PackedScene" uid="uid://dd7y7f0ti7n53" path="res://scenes/player.tscn" id="4_grrab"]
-[ext_resource type="PackedScene" uid="uid://bhkj1mdxm4ft2" path="res://scenes/controller.tscn" id="5_qa2st"]
-[ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="6_18as7"]
-[ext_resource type="PackedScene" uid="uid://bk8wo5fenailq" path="res://scenes/ball.tscn" id="7_hbuwj"]
-[ext_resource type="PackedScene" uid="uid://de54qalm0kq4f" path="res://scenes/goal.tscn" id="8_5fyrh"]
-[ext_resource type="PackedScene" uid="uid://d13byd12eh5y7" path="res://scenes/ai.tscn" id="9_14p8g"]
-[ext_resource type="SpriteFrames" uid="uid://b5y2k0oe4jdi6" path="res://resources/adversary_spriteframes.tres" id="10_wr472"]
-[ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="11_rdakw"]
-
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ulxvo"]
-turbidity = 4.0
-
-[sub_resource type="Sky" id="Sky_kkgna"]
-sky_material = SubResource("PhysicalSkyMaterial_ulxvo")
-radiance_size = 1
-
-[sub_resource type="Environment" id="Environment_n4amx"]
-background_mode = 3
-background_color = Color(1, 1, 1, 1)
-background_canvas_max_layer = -5
-sky = SubResource("Sky_kkgna")
-ambient_light_source = 2
-ambient_light_color = Color(0.883721, 0.913614, 0.976312, 1)
-ambient_light_energy = 1.2
-reflected_light_source = 1
-tonemap_mode = 3
-tonemap_exposure = 0.4
-tonemap_white = 0.25
-ssao_enabled = true
-ssil_enabled = true
-ssil_radius = 10.0
-ssil_intensity = 0.5
-glow_enabled = true
-glow_levels/1 = 0.5
-glow_levels/2 = 0.5
-glow_levels/4 = 0.5
-glow_levels/5 = 0.0
-glow_normalized = true
-glow_intensity = 1.0
-glow_bloom = 0.1
-glow_blend_mode = 1
-fog_sun_scatter = 0.05
-fog_density = 0.001
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rw2vd"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_bf3xv"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="13_ex211"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="14_lx3lp"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="15_mqd0o"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_vdkql")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_n4amx")
-camera_attributes = SubResource("CameraAttributesPractical_rw2vd")
+[node name="GameState" type="Node" parent="."]
+script = ExtResource("13_ex211")
 
-[node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(-0.744312, -0.281181, 0.605754, 0, 0.907044, 0.421036, -0.667833, 0.313382, -0.675123, 0, 0, 0)
-light_intensity_lux = 50000.0
-light_temperature = 4200.0
-light_energy = 7.0
-shadow_enabled = true
-directional_shadow_split_1 = 0.04
-directional_shadow_split_2 = 0.11
-directional_shadow_split_3 = 0.33
-directional_shadow_max_distance = 200.0
+[node name="Root" type="Node" parent="GameState"]
+script = ExtResource("14_lx3lp")
+initial_state = NodePath("MainMenu")
 
-[node name="Act1SkyBox" parent="WorldEnvironment" node_paths=PackedStringArray("camera_controller") instance=ExtResource("2_fer8r")]
-camera_controller = NodePath("../../CameraController")
-parallax_factor = 0.015
+[node name="MainMenu" type="Node" parent="GameState/Root"]
+script = ExtResource("15_mqd0o")
 
-[node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("11_rdakw")]
-subject = NodePath("../MainPlayer")
+[node name="main menu to new game" type="Node" parent="GameState/Root/MainMenu"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../Game")
+event = &"main menu to new game"
+delay_in_seconds = "0.0"
 
-[node name="World" parent="." instance=ExtResource("3_h7bk2")]
+[node name="Game" type="Node" parent="GameState/Root"]
+script = ExtResource("15_mqd0o")
 
-[node name="MainPlayer" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("4_grrab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.4298, 0.077, 0)
-sprite = NodePath("AnimatedSprite3D")
-
-[node name="Controller" parent="MainPlayer" node_paths=PackedStringArray("player") instance=ExtResource("5_qa2st")]
-player = NodePath("..")
-
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="MainPlayer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56633, 0)
-sorting_use_aabb_center = false
-gi_mode = 0
-modulate = Color(0.8, 0.8, 0.8, 1)
-sprite_frames = ExtResource("6_18as7")
-animation = &"celebrate"
-
-[node name="Ball" parent="." instance=ExtResource("7_hbuwj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.034, 0.872, 0)
-
-[node name="GoalLeft" parent="." instance=ExtResource("8_5fyrh")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.4087, 0, 0)
-
-[node name="GoalRight" parent="." instance=ExtResource("8_5fyrh")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 22.4937, 0, 0)
-
-[node name="OpponentPlayer" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("4_grrab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9937, 0, 0)
-sprite = NodePath("AnimatedSprite3D")
-run_forward_velocity = 4.0
-run_backward_velocity = 3.0
-
-[node name="AI" parent="OpponentPlayer" node_paths=PackedStringArray("player", "ball", "home_goal", "away_goal") instance=ExtResource("9_14p8g")]
-player = NodePath("..")
-ball = NodePath("../../Ball")
-home_goal = NodePath("../../GoalRight")
-away_goal = NodePath("../../GoalLeft")
-
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="OpponentPlayer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.557838, 0)
-modulate = Color(0.8, 0.8, 0.8, 1)
-sprite_frames = ExtResource("10_wr472")
-animation = &"celebrate"
-
-[node name="UI" parent="." node_paths=PackedStringArray("camera_controller", "player") instance=ExtResource("2_0egkg")]
-camera_controller = NodePath("../CameraController")
-player = NodePath("../MainPlayer")
-
-[connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
-[connection signal="facing_left" from="MainPlayer" to="Ball" method="_on_facing_left"]
-[connection signal="facing_right" from="MainPlayer" to="Ball" method="_on_facing_right"]
-[connection signal="hide_stamina" from="MainPlayer" to="UI" method="_on_hide_stamina"]
-[connection signal="update_stamina_value" from="MainPlayer" to="UI" method="_on_update_stamina_value"]
-[connection signal="scored" from="GoalLeft" to="." method="_on_goal_left_scored"]
-[connection signal="scored" from="GoalLeft" to="OpponentPlayer/AI" method="_on_away_scored"]
-[connection signal="scored" from="GoalRight" to="." method="_on_goal_right_scored"]
-[connection signal="facing_left" from="OpponentPlayer" to="Ball" method="_on_facing_left"]
-[connection signal="facing_right" from="OpponentPlayer" to="Ball" method="_on_facing_right"]
+[connection signal="state_entered" from="GameState/Root/MainMenu" to="." method="_on_main_menu_state_entered"]
+[connection signal="state_exited" from="GameState/Root/MainMenu" to="." method="_on_main_menu_state_exited"]
+[connection signal="state_entered" from="GameState/Root/Game" to="." method="_on_game_state_entered"]

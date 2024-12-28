@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8oisyfhyx2yr"]
+
+[ext_resource type="PackedScene" uid="uid://b6j57fie7ocg7" path="res://scenes/act1/act1_skybox.tscn" id="1_clr1m"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ulxvo"]
+turbidity = 4.0
+
+[sub_resource type="Sky" id="Sky_kkgna"]
+sky_material = SubResource("PhysicalSkyMaterial_ulxvo")
+radiance_size = 1
+
+[sub_resource type="Environment" id="Environment_n4amx"]
+background_mode = 3
+background_color = Color(1, 1, 1, 1)
+background_canvas_max_layer = -5
+sky = SubResource("Sky_kkgna")
+ambient_light_source = 2
+ambient_light_color = Color(0.883721, 0.913614, 0.976312, 1)
+ambient_light_energy = 1.2
+reflected_light_source = 1
+tonemap_mode = 3
+tonemap_exposure = 0.4
+tonemap_white = 0.25
+ssao_enabled = true
+ssil_enabled = true
+ssil_radius = 10.0
+ssil_intensity = 0.5
+glow_enabled = true
+glow_levels/1 = 0.5
+glow_levels/2 = 0.5
+glow_levels/4 = 0.5
+glow_levels/5 = 0.0
+glow_normalized = true
+glow_intensity = 1.0
+glow_bloom = 0.1
+glow_blend_mode = 1
+fog_sun_scatter = 0.05
+fog_density = 0.001
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rw2vd"]
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_n4amx")
+camera_attributes = SubResource("CameraAttributesPractical_rw2vd")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.744312, -0.281181, 0.605754, 0, 0.907044, 0.421036, -0.667833, 0.313382, -0.675123, 0, 0, 0)
+light_intensity_lux = 50000.0
+light_temperature = 4200.0
+light_energy = 7.0
+shadow_enabled = true
+directional_shadow_split_1 = 0.04
+directional_shadow_split_2 = 0.11
+directional_shadow_split_3 = 0.33
+directional_shadow_max_distance = 200.0
+
+[node name="Act1SkyBox" parent="." node_paths=PackedStringArray("camera_controller") instance=ExtResource("1_clr1m")]
+camera_controller = NodePath("")
+parallax_factor = 0.015

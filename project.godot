@@ -33,7 +33,6 @@ shapes/collision/contact_color=Color(0.88, 0.1, 1, 1)
 
 window/size/viewport_width=1280
 window/size/viewport_height=800
-window/size/mode=3
 window/size/resizable=false
 window/size/window_width_override=1280
 window/size/window_height_override=800
