@@ -14,20 +14,44 @@ script = ExtResource("13_ex211")
 
 [node name="Root" type="Node" parent="GameState"]
 script = ExtResource("14_lx3lp")
-initial_state = NodePath("MainMenu")
+initial_state = NodePath("main menu")
 
-[node name="MainMenu" type="Node" parent="GameState/Root"]
+[node name="main menu" type="Node" parent="GameState/Root"]
 script = ExtResource("15_mqd0o")
 
-[node name="main menu to new game" type="Node" parent="GameState/Root/MainMenu"]
+[node name="main menu to new game" type="Node" parent="GameState/Root/main menu"]
 script = ExtResource("5_bf3xv")
-to = NodePath("../../Game")
-event = &"main menu to new game"
+to = NodePath("../../game")
+event = &"main menu to game"
 delay_in_seconds = "0.0"
 
-[node name="Game" type="Node" parent="GameState/Root"]
+[node name="main menu to loading screen" type="Node" parent="GameState/Root/main menu"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../loading screen")
+event = &"main menu to loading screen"
+delay_in_seconds = "0.0"
+
+[node name="game" type="Node" parent="GameState/Root"]
 script = ExtResource("15_mqd0o")
 
-[connection signal="state_entered" from="GameState/Root/MainMenu" to="." method="_on_main_menu_state_entered"]
-[connection signal="state_exited" from="GameState/Root/MainMenu" to="." method="_on_main_menu_state_exited"]
-[connection signal="state_entered" from="GameState/Root/Game" to="." method="_on_game_state_entered"]
+[node name="game to main menu" type="Node" parent="GameState/Root/game"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../main menu")
+event = &"game to main menu"
+delay_in_seconds = "0.0"
+
+[node name="loading screen" type="Node" parent="GameState/Root"]
+script = ExtResource("15_mqd0o")
+
+[node name="loading screen to game" type="Node" parent="GameState/Root/loading screen"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../game")
+event = &"loading screen to game"
+delay_in_seconds = "2.0"
+
+[connection signal="state_entered" from="GameState/Root/main menu" to="." method="_on_main_menu_state_entered"]
+[connection signal="state_exited" from="GameState/Root/main menu" to="." method="_on_main_menu_state_exited"]
+[connection signal="state_entered" from="GameState/Root/game" to="." method="_on_game_state_entered"]
+[connection signal="state_entered" from="GameState/Root/loading screen" to="." method="_on_loading_screen_state_entered"]
+[connection signal="state_exited" from="GameState/Root/loading screen" to="." method="_on_loading_screen_state_exited"]
+[connection signal="state_processing" from="GameState/Root/loading screen" to="." method="_on_loading_screen_state_processing"]
