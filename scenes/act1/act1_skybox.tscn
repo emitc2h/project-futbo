@@ -1,7 +1,7 @@
 [gd_scene load_steps=57 format=3 uid="uid://b6j57fie7ocg7"]
 
 [ext_resource type="Script" path="res://scripts/sky_box_camera.gd" id="1_37btj"]
-[ext_resource type="Script" path="res://scripts/act_1_skybox.gd" id="1_ywti0"]
+[ext_resource type="Script" path="res://scripts/act1/act_1_skybox.gd" id="1_ywti0"]
 [ext_resource type="PackedScene" uid="uid://ccrdjbgqp4tlg" path="res://assets/3D/Act1/blend/MountainLine1.blend" id="3_7sj78"]
 [ext_resource type="PackedScene" uid="uid://uwjksmpfbc3n" path="res://assets/3D/Act1/blend/CloudLine1.blend" id="3_bxow3"]
 [ext_resource type="Material" uid="uid://l6hfx6hh47be" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_1.tres" id="4_11igr"]

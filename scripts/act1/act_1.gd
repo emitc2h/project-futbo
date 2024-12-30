@@ -1,4 +1,4 @@
-extends Node3D
+extends Level
 
 @onready var cam_controller: CameraController = $CameraController
 var score_home: int = 0

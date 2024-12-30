@@ -8,7 +8,7 @@
 [ext_resource type="PhysicsMaterial" uid="uid://besahl7f6jbkx" path="res://resources/ball_physics_material.tres" id="6_b7cd5"]
 [ext_resource type="Script" path="res://scripts/inert_node.gd" id="7_vl0tx"]
 [ext_resource type="PackedScene" uid="uid://caxwuwjjre3j2" path="res://scenes/direction_ray.tscn" id="8_xublo"]
-[ext_resource type="Texture2D" uid="uid://bghnoo23prkx3" path="res://kenney_sports-pack/PNG/Equipment/ball_soccer2.png" id="9_gdyv1"]
+[ext_resource type="PackedScene" uid="uid://b28taugqi7ixx" path="res://assets/3D/Act1/blend/SoccerBall.blend" id="9_vmv4y"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8bm52"]
 radius = 0.19
@@ -69,10 +69,8 @@ shape = SubResource("SphereShape3D_8bm52")
 
 [node name="SpriteContainer" type="Node3D" parent="."]
 
-[node name="Sprite3D" type="Sprite3D" parent="SpriteContainer"]
-sorting_offset = 1.0
-pixel_size = 0.02
-texture = ExtResource("9_gdyv1")
+[node name="SoccerBall2" parent="SpriteContainer" instance=ExtResource("9_vmv4y")]
+transform = Transform3D(1.24, 0, 0, 0, 1.24, 0, 0, 0, 1.24, 0, 0, 0)
 
 [connection signal="state_physics_processing" from="State/Root/inert" to="." method="_on_inert_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/dribbled" to="." method="_on_dribbled_state_entered"]

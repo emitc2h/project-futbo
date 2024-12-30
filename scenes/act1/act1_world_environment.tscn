@@ -54,6 +54,5 @@ directional_shadow_split_2 = 0.11
 directional_shadow_split_3 = 0.33
 directional_shadow_max_distance = 200.0
 
-[node name="Act1SkyBox" parent="." node_paths=PackedStringArray("camera_controller") instance=ExtResource("1_clr1m")]
-camera_controller = NodePath("")
+[node name="Act1SkyBox" parent="." instance=ExtResource("1_clr1m")]
 parallax_factor = 0.015
