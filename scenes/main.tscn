@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://ci6nhkx4w6kqs"]
+[gd_scene load_steps=7 format=3 uid="uid://ci6nhkx4w6kqs"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_vdkql"]
+[ext_resource type="Script" path="res://scripts/game_state_manager.gd" id="1_vdkql"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_bf3xv"]
+[ext_resource type="Script" path="res://scripts/level_state_manager.gd" id="6_e4ydo"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="13_ex211"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="14_lx3lp"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="15_mqd0o"]
 
-[node name="Main" type="Node3D"]
+[node name="GameStateManager" type="Node3D"]
 script = ExtResource("1_vdkql")
 
 [node name="GameState" type="Node" parent="."]
@@ -48,6 +49,94 @@ script = ExtResource("5_bf3xv")
 to = NodePath("../../game")
 event = &"loading screen to game"
 delay_in_seconds = "2.0"
+
+[node name="LevelStateManager" type="Node3D" parent="."]
+script = ExtResource("6_e4ydo")
+
+[node name="StateChart" type="Node" parent="LevelStateManager"]
+script = ExtResource("13_ex211")
+
+[node name="Root" type="Node" parent="LevelStateManager/StateChart"]
+script = ExtResource("14_lx3lp")
+initial_state = NodePath("empty")
+
+[node name="empty" type="Node" parent="LevelStateManager/StateChart/Root"]
+script = ExtResource("15_mqd0o")
+
+[node name="empty to game play" type="Node" parent="LevelStateManager/StateChart/Root/empty"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../game play")
+event = &"empty to game play"
+delay_in_seconds = "0.0"
+
+[node name="empty to cut scene" type="Node" parent="LevelStateManager/StateChart/Root/empty"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../cut scene")
+event = &"empty to cut scene"
+delay_in_seconds = "0.0"
+
+[node name="cut scene" type="Node" parent="LevelStateManager/StateChart/Root"]
+script = ExtResource("15_mqd0o")
+
+[node name="cut scene to game play" type="Node" parent="LevelStateManager/StateChart/Root/cut scene"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../game play")
+event = &"cut scene to game play"
+delay_in_seconds = "0.0"
+
+[node name="cut scene to empty" type="Node" parent="LevelStateManager/StateChart/Root/cut scene"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../empty")
+event = &"cut scene to empty"
+delay_in_seconds = "0.0"
+
+[node name="cut scene to paused" type="Node" parent="LevelStateManager/StateChart/Root/cut scene"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../paused")
+event = &"cut scene to paused"
+delay_in_seconds = "0.0"
+
+[node name="game play" type="Node" parent="LevelStateManager/StateChart/Root"]
+script = ExtResource("15_mqd0o")
+
+[node name="game play to empty" type="Node" parent="LevelStateManager/StateChart/Root/game play"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../empty")
+event = &"game play to empty"
+delay_in_seconds = "0.0"
+
+[node name="game play to cut scene" type="Node" parent="LevelStateManager/StateChart/Root/game play"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../cut scene")
+event = &"game play to cut scene"
+delay_in_seconds = "0.0"
+
+[node name="game play to paused" type="Node" parent="LevelStateManager/StateChart/Root/game play"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../paused")
+event = &"game play to paused"
+delay_in_seconds = "0.0"
+
+[node name="paused" type="Node" parent="LevelStateManager/StateChart/Root"]
+script = ExtResource("15_mqd0o")
+
+[node name="paused to game play" type="Node" parent="LevelStateManager/StateChart/Root/paused"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../game play")
+event = &"paused to game play"
+delay_in_seconds = "0.0"
+
+[node name="paused to empty" type="Node" parent="LevelStateManager/StateChart/Root/paused"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../empty")
+event = &"paused to empty"
+delay_in_seconds = "0.0"
+
+[node name="paused to cut scene" type="Node" parent="LevelStateManager/StateChart/Root/paused"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../cut scene")
+event = &"paused to cut scene"
+delay_in_seconds = "0.0"
 
 [connection signal="state_entered" from="GameState/Root/main menu" to="." method="_on_main_menu_state_entered"]
 [connection signal="state_exited" from="GameState/Root/main menu" to="." method="_on_main_menu_state_exited"]

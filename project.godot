@@ -17,11 +17,13 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Enums="*res://scripts/enums.gd"
-Converters="*res://scripts/converters.gd"
-CastUtils="*res://scripts/cast_utils.gd"
-AiSkill="*res://scripts/ai_skill.gd"
-CalcPhys="*res://scripts/calc_phys.gd"
+Enums="*res://scripts/globals/enums.gd"
+Converters="*res://scripts/globals/converters.gd"
+CastUtils="*res://scripts/globals/cast_utils.gd"
+AiSkill="*res://scripts/globals/ai_skill.gd"
+CalcPhys="*res://scripts/globals/calc_phys.gd"
+Signals="*res://scripts/globals/signals.gd"
+Level="*res://scripts/globals/level.gd"
 
 [debug]
 

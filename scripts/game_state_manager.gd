@@ -1,7 +1,9 @@
-class_name Main
+class_name GameStateManager
 extends Node3D
 
 @onready var state: StateChart = $GameState
+@onready var level_state_manager: LevelStateManager = $LevelStateManager
+
 var active_scene: Node
 var scene_to_load_path: String
 var loading_status_array: Array = []
@@ -40,6 +42,13 @@ func _on_loading_screen_state_processing(delta: float) -> void:
 	match loading_status:
 		ResourceLoader.THREAD_LOAD_LOADED:
 			state.send_event("loading screen to game")
+		ResourceLoader.THREAD_LOAD_FAILED:
+			print("Loading " + scene_to_load_path + " failed, exiting game.")
+			get_tree().quit()
+		ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+			print("Invalid resource at path: " + scene_to_load_path + ", exiting game.")
+		ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+			pass
 
 
 func _on_loading_screen_state_exited() -> void:
