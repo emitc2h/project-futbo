@@ -148,10 +148,6 @@ libraries = {
 "": SubResource("AnimationLibrary_watdk")
 }
 
-[node name="ReflectionProbe" type="ReflectionProbe" parent="3DScene"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.63324, 0)
-size = Vector3(20, 14.7335, 20)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GridContainer" type="GridContainer" parent="CanvasLayer"]
