@@ -1,6 +1,6 @@
 [gd_scene load_steps=95 format=4 uid="uid://dq8d4kwgig1w8"]
 
-[ext_resource type="PackedScene" uid="uid://djuxc01fqb4hr" path="res://assets/3D/gym.blend" id="1_5t2cs"]
+[ext_resource type="Material" uid="uid://b1quy15tx2h4o" path="res://assets/3D/Act1/materials/buildings/stained_corrugated_steel.tres" id="2_585np"]
 [ext_resource type="Texture2D" uid="uid://jiof4xx8yewt" path="res://assets/3D/Act1/Textures/Tiles/CeilingTiles1/CelingTiles1_color.png" id="3_4tkj0"]
 [ext_resource type="PackedScene" uid="uid://r2qo5whkr2jl" path="res://assets/3D/Act1/blend/ClassBuilding.blend" id="3_o1t8c"]
 [ext_resource type="Texture2D" uid="uid://gmyxeaa8raxk" path="res://assets/3D/Act1/Textures/Tiles/CeilingTiles1/CelingTiles1_emission.png" id="4_ljrtk"]
@@ -45,20 +45,10 @@
 [ext_resource type="Material" uid="uid://teei7svk8hhq" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_progressing_leaves_swaying.tres" id="45_m4c5j"]
 [ext_resource type="Material" uid="uid://c33v812uounix" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_slightly_dried_leaves_swaying.tres" id="47_ilmie"]
 [ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="47_p3d26"]
+[ext_resource type="PackedScene" uid="uid://ixxcovva6q1o" path="res://assets/3D/Act1/blend/GymBuilding.blend" id="48_6mwpm"]
 [ext_resource type="Material" uid="uid://602a6yse0f72" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_red_leaves_swaying.tres" id="48_jowur"]
 [ext_resource type="PackedScene" uid="uid://1qyvwbunehqq" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_random_patch_6m_mixed_2.tscn" id="51_764ci"]
 [ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="51_xdu52"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_08h7b"]
-render_priority = 0
-shader = ExtResource("7_sxq3b")
-shader_parameter/decal_opacity = 0.5
-shader_parameter/specular = 0.2
-shader_parameter/roughness = 0.8
-shader_parameter/metallicity = 0.3
-shader_parameter/base_texture = ExtResource("9_i03so")
-shader_parameter/decal_texture = ExtResource("10_1scai")
-shader_parameter/base_normal = ExtResource("8_2o4mf")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ox1u8"]
 albedo_texture = ExtResource("3_4tkj0")
@@ -695,15 +685,12 @@ data = PackedVector3Array(81.1, 0.00100013, 3.79757, 81.1, 0.0710002, -4.20963, 
 
 [node name="World" type="Node3D"]
 
-[node name="gym" parent="." instance=ExtResource("1_5t2cs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30.2266)
-
 [node name="LockersBuilding" parent="." instance=ExtResource("4_yc2qk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.3243, 0.000200197, -0.575899)
 
 [node name="BuildingFrame" parent="LockersBuilding" index="0"]
 layers = 1024
-surface_material_override/5 = SubResource("ShaderMaterial_08h7b")
+surface_material_override/5 = ExtResource("2_585np")
 
 [node name="Ceiling" parent="LockersBuilding" index="1"]
 layers = 1024
@@ -1449,6 +1436,12 @@ transform = Transform3D(0.737345, 0, 0.310361, 0, 0.8, 0, -0.310361, 0, 0.737345
 [node name="PineTree21" parent="PineTrees" instance=ExtResource("51_xdu52")]
 transform = Transform3D(0.286957, 0, 0.638479, 0, 0.7, 0, -0.638479, 0, 0.286957, -55.6628, 0, 10.1311)
 
+[node name="GymBuilding" parent="." instance=ExtResource("48_6mwpm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.142928, -1.90735e-06, -30.1955)
+
+[node name="School Gym" parent="GymBuilding" index="0"]
+surface_material_override/7 = ExtResource("2_585np")
+
 [connection signal="body_entered" from="LockersBuilding/DoorDetectorArea3D" to="LockersBuilding/DoorDetectorArea3D" method="_on_body_entered"]
 [connection signal="body_exited" from="LockersBuilding/DoorDetectorArea3D" to="LockersBuilding/DoorDetectorArea3D" method="_on_body_exited"]
 [connection signal="state_entered" from="LockersBuilding/DoorDetectorArea3D/StateChart/CompoundState/closed" to="LockersBuilding/DoorDetectorArea3D" method="_on_closed_state_entered"]
@@ -1460,3 +1453,4 @@ transform = Transform3D(0.286957, 0, 0.638479, 0, 0.7, 0, -0.638479, 0, 0.286957
 [editable path="LockersBuilding"]
 [editable path="ClassBuilding"]
 [editable path="BaseMap2"]
+[editable path="GymBuilding"]
