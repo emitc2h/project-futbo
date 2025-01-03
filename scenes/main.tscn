@@ -1,13 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://ci6nhkx4w6kqs"]
+[gd_scene load_steps=8 format=3 uid="uid://ci6nhkx4w6kqs"]
 
 [ext_resource type="Script" path="res://scripts/game_state_manager.gd" id="1_vdkql"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_bf3xv"]
 [ext_resource type="Script" path="res://scripts/level_state_manager.gd" id="6_e4ydo"]
+[ext_resource type="Script" path="res://scripts/main_menu/pause_menu.gd" id="7_7hc34"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="13_ex211"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="14_lx3lp"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="15_mqd0o"]
 
 [node name="GameStateManager" type="Node3D"]
+process_mode = 3
 script = ExtResource("1_vdkql")
 
 [node name="GameState" type="Node" parent="."]
@@ -48,7 +50,7 @@ script = ExtResource("15_mqd0o")
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game")
 event = &"loading screen to game"
-delay_in_seconds = "2.0"
+delay_in_seconds = "0.5"
 
 [node name="LevelStateManager" type="Node3D" parent="."]
 script = ExtResource("6_e4ydo")
@@ -138,9 +140,62 @@ to = NodePath("../../cut scene")
 event = &"paused to cut scene"
 delay_in_seconds = "0.0"
 
+[node name="PauseMenu" type="CanvasLayer" parent="LevelStateManager"]
+visible = false
+script = ExtResource("7_7hc34")
+
+[node name="GridContainer" type="GridContainer" parent="LevelStateManager/PauseMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.5
+offset_top = -20.0
+offset_right = 28.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PausedTitle" type="Label" parent="LevelStateManager/PauseMenu/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Paused"
+
+[node name="ContinueButton" type="Button" parent="LevelStateManager/PauseMenu/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Continue
+"
+
+[node name="ExitToMainButton" type="Button" parent="LevelStateManager/PauseMenu/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Exit to main menu"
+
+[node name="QuitButton" type="Button" parent="LevelStateManager/PauseMenu/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Quit game"
+
 [connection signal="state_entered" from="GameState/Root/main menu" to="." method="_on_main_menu_state_entered"]
 [connection signal="state_exited" from="GameState/Root/main menu" to="." method="_on_main_menu_state_exited"]
 [connection signal="state_entered" from="GameState/Root/game" to="." method="_on_game_state_entered"]
 [connection signal="state_entered" from="GameState/Root/loading screen" to="." method="_on_loading_screen_state_entered"]
 [connection signal="state_exited" from="GameState/Root/loading screen" to="." method="_on_loading_screen_state_exited"]
 [connection signal="state_processing" from="GameState/Root/loading screen" to="." method="_on_loading_screen_state_processing"]
+[connection signal="state_entered" from="LevelStateManager/StateChart/Root/empty" to="LevelStateManager" method="_on_empty_state_entered"]
+[connection signal="state_entered" from="LevelStateManager/StateChart/Root/cut scene" to="LevelStateManager" method="_on_cut_scene_state_entered"]
+[connection signal="state_exited" from="LevelStateManager/StateChart/Root/cut scene" to="LevelStateManager" method="_on_cut_scene_state_exited"]
+[connection signal="state_physics_processing" from="LevelStateManager/StateChart/Root/cut scene" to="LevelStateManager" method="_on_cut_scene_state_physics_processing"]
+[connection signal="state_entered" from="LevelStateManager/StateChart/Root/game play" to="LevelStateManager" method="_on_game_play_state_entered"]
+[connection signal="state_physics_processing" from="LevelStateManager/StateChart/Root/game play" to="LevelStateManager" method="_on_game_play_state_physics_processing"]
+[connection signal="state_entered" from="LevelStateManager/StateChart/Root/paused" to="LevelStateManager" method="_on_paused_state_entered"]
+[connection signal="state_exited" from="LevelStateManager/StateChart/Root/paused" to="LevelStateManager" method="_on_paused_state_exited"]
+[connection signal="state_physics_processing" from="LevelStateManager/StateChart/Root/paused" to="LevelStateManager" method="_on_paused_state_physics_processing"]
+[connection signal="pressed" from="LevelStateManager/PauseMenu/GridContainer/ContinueButton" to="LevelStateManager/PauseMenu" method="_on_continue_button_pressed"]
+[connection signal="pressed" from="LevelStateManager/PauseMenu/GridContainer/ExitToMainButton" to="LevelStateManager/PauseMenu" method="_on_exit_to_main_button_pressed"]
+[connection signal="pressed" from="LevelStateManager/PauseMenu/GridContainer/QuitButton" to="LevelStateManager/PauseMenu" method="_on_quit_button_pressed"]

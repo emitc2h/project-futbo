@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=3 uid="uid://dnqdsgkyde5ys"]
 
-[ext_resource type="Script" path="res://scripts/act1/act_1.gd" id="1_75wj8"]
-[ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/act1/act1_world_environment.tscn" id="1_j6tjs"]
+[ext_resource type="Script" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
+[ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="1_j6tjs"]
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="2_vcigm"]
-[ext_resource type="PackedScene" uid="uid://dq8d4kwgig1w8" path="res://scenes/act1/soccer_field_world.tscn" id="3_wf22a"]
+[ext_resource type="PackedScene" uid="uid://dq8d4kwgig1w8" path="res://scenes/level1/soccer_field_world.tscn" id="3_wf22a"]
 [ext_resource type="PackedScene" uid="uid://dd7y7f0ti7n53" path="res://scenes/player.tscn" id="4_8dl31"]
 [ext_resource type="PackedScene" uid="uid://bhkj1mdxm4ft2" path="res://scenes/controller.tscn" id="5_8qe52"]
 [ext_resource type="SpriteFrames" uid="uid://c0xj6n41r3c1j" path="res://resources/player_spriteframes.tres" id="6_wagr6"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://3y4snk0eo4mp" path="res://scenes/ui.tscn" id="11_ffwmr"]
 
 [node name="Act1" type="Node3D"]
+process_mode = 1
 script = ExtResource("1_75wj8")
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("1_j6tjs")]

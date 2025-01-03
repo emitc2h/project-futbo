@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b8oisyfhyx2yr"]
 
-[ext_resource type="PackedScene" uid="uid://b6j57fie7ocg7" path="res://scenes/act1/act1_skybox.tscn" id="1_clr1m"]
+[ext_resource type="PackedScene" uid="uid://b6j57fie7ocg7" path="res://scenes/level1/act1_skybox.tscn" id="1_clr1m"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ulxvo"]
 turbidity = 4.0
