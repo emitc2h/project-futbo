@@ -44,6 +44,7 @@ animation = &"celebrate"
 
 [node name="Ball" parent="." instance=ExtResource("7_xq8ao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.034, 0.872, 0)
+max_speed = 1.0
 
 [node name="GoalLeft" parent="." instance=ExtResource("8_2nmo7")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.4087, 0, 0)

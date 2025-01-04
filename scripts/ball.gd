@@ -4,6 +4,9 @@ extends Node3D
 enum Mode {INERT, DRIBBLED}
 var mode: Mode = Mode.INERT
 
+# Parameters
+@export var max_speed: float = 10.0
+
 # Internal references
 @onready var state: StateChart = $State
 
@@ -30,6 +33,10 @@ var player_velocity: Vector3
 var dribble_rotation_speed: float
 var dribble_velocity_offset: float
 var ball_snap_velocity: float
+
+
+func _ready() -> void:
+	inert_node.max_speed = max_speed
 
 
 #=======================================================
