@@ -9,4 +9,4 @@ func _on_new_game_pressed() -> void:
 
 
 func _on_exit_pressed() -> void:
-	get_tree().quit()
+	Signals.quit_game.emit()

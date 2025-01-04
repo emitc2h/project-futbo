@@ -15,7 +15,7 @@ func _on_exit_to_main_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	get_tree().quit()
+	Signals.quit_game.emit()
 
 
 #=======================================================

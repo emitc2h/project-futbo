@@ -3,6 +3,7 @@ extends Node3D
 
 @onready var state: StateChart = $GameState
 @onready var level_state_manager: LevelStateManager = $LevelStateManager
+@onready var fade_screen: FadeScreen = $FadeScreen
 
 var active_scene: Node
 var level_path: String
@@ -19,6 +20,7 @@ func _ready() -> void:
 # MAIN MENU STATE
 #=======================================================
 func _on_main_menu_state_entered() -> void:
+	fade_screen.fade_in()
 	var main_menu_scene: MainMenu = load("res://scenes/main_menu/main_menu.tscn").instantiate()
 	active_scene = main_menu_scene
 	main_menu_scene.new_game.connect(_on_new_game_pressed)
@@ -27,6 +29,8 @@ func _on_main_menu_state_entered() -> void:
 
 func _on_new_game_pressed() -> void:
 	level_path = "res://scenes/level1/act_1.tscn"
+	fade_screen.fade_out()
+	await fade_screen.fade_finished
 	state.send_event("main menu to loading screen")
 
 
@@ -48,11 +52,11 @@ func _on_loading_screen_state_entered() -> void:
 
 func _on_loading_screen_state_processing(delta: float) -> void:
 	var loading_status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(level_path, loading_status_array)
-	interpolated_loading_status = lerp(interpolated_loading_status, loading_status_array[0], delta)
+	interpolated_loading_status = lerp(interpolated_loading_status, min(1.0, loading_status_array[0] + 0.5), delta)
 	active_scene.set_progress_bar_value(interpolated_loading_status)
 	match loading_status:
 		ResourceLoader.THREAD_LOAD_LOADED:
-			state.send_event("loading screen to game")
+			state.send_event("loading screen to game loaded")
 		ResourceLoader.THREAD_LOAD_FAILED:
 			print("Loading " + level_path + " failed, exiting game.")
 			get_tree().quit()
@@ -62,14 +66,27 @@ func _on_loading_screen_state_processing(delta: float) -> void:
 			pass
 
 
-func _on_loading_screen_state_exited() -> void:
+#=======================================================
+# GAME LOADED STATE
+#=======================================================
+func _on_game_loaded_state_entered() -> void:
+	fade_screen.fade_out()
+	await fade_screen.fade_finished
 	active_scene.queue_free()
+	state.send_event("game loaded to game")
+
+
+func _on_game_loaded_state_processing(delta: float) -> void:
+	# Continue updating the progress bar up to 100%
+	interpolated_loading_status = lerp(interpolated_loading_status, 1.0, delta)
+	active_scene.set_progress_bar_value(interpolated_loading_status)
 
 
 #=======================================================
 # GAME STATE
 #=======================================================
 func _on_game_state_entered() -> void:
+	fade_screen.fade_in()
 	var level: Level = ResourceLoader.load_threaded_get("res://scenes/level1/act_1.tscn").instantiate()
 	level_state_manager.open_level(level)
 	active_scene = level
@@ -79,9 +96,13 @@ func _on_game_state_entered() -> void:
 # SIGNALS
 #=======================================================
 func _on_quit_game() -> void:
+	fade_screen.fade_out(true)
+	await fade_screen.fade_finished
 	get_tree().quit()
 
 
 func _on_exit_to_main_menu() -> void:
+	fade_screen.fade_out()
+	await fade_screen.fade_finished
 	level_state_manager.close_level()
 	state.send_event("game to main menu")

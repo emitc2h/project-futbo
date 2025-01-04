@@ -1,12 +1,65 @@
-[gd_scene load_steps=8 format=3 uid="uid://ci6nhkx4w6kqs"]
+[gd_scene load_steps=13 format=3 uid="uid://ci6nhkx4w6kqs"]
 
 [ext_resource type="Script" path="res://scripts/game_state_manager.gd" id="1_vdkql"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_bf3xv"]
 [ext_resource type="Script" path="res://scripts/level_state_manager.gd" id="6_e4ydo"]
 [ext_resource type="Script" path="res://scripts/main_menu/pause_menu.gd" id="7_7hc34"]
+[ext_resource type="Script" path="res://scripts/main_menu/fade_screen.gd" id="8_k6y2d"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="13_ex211"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="14_lx3lp"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="15_mqd0o"]
+
+[sub_resource type="Animation" id="Animation_o1hwq"]
+resource_name = "fade out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_386je"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tfms1"]
+resource_name = "fade in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c2k5l"]
+_data = {
+"RESET": SubResource("Animation_386je"),
+"fade in": SubResource("Animation_tfms1"),
+"fade out": SubResource("Animation_o1hwq")
+}
 
 [node name="GameStateManager" type="Node3D"]
 process_mode = 3
@@ -46,11 +99,20 @@ delay_in_seconds = "0.0"
 [node name="loading screen" type="Node" parent="GameState/Root"]
 script = ExtResource("15_mqd0o")
 
-[node name="loading screen to game" type="Node" parent="GameState/Root/loading screen"]
+[node name="loading screen to game loaded" type="Node" parent="GameState/Root/loading screen"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../game loaded")
+event = &"loading screen to game loaded"
+delay_in_seconds = "0.0"
+
+[node name="game loaded" type="Node" parent="GameState/Root"]
+script = ExtResource("15_mqd0o")
+
+[node name="game loaded to game" type="Node" parent="GameState/Root/game loaded"]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game")
-event = &"loading screen to game"
-delay_in_seconds = "0.5"
+event = &"game loaded to game"
+delay_in_seconds = "0.0"
 
 [node name="LevelStateManager" type="Node3D" parent="."]
 script = ExtResource("6_e4ydo")
@@ -181,12 +243,30 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Quit game"
 
+[node name="FadeScreen" type="CanvasLayer" parent="."]
+layer = 10
+script = ExtResource("8_k6y2d")
+
+[node name="ColorRect" type="ColorRect" parent="FadeScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FadeScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_c2k5l")
+}
+
 [connection signal="state_entered" from="GameState/Root/main menu" to="." method="_on_main_menu_state_entered"]
 [connection signal="state_exited" from="GameState/Root/main menu" to="." method="_on_main_menu_state_exited"]
 [connection signal="state_entered" from="GameState/Root/game" to="." method="_on_game_state_entered"]
 [connection signal="state_entered" from="GameState/Root/loading screen" to="." method="_on_loading_screen_state_entered"]
-[connection signal="state_exited" from="GameState/Root/loading screen" to="." method="_on_loading_screen_state_exited"]
 [connection signal="state_processing" from="GameState/Root/loading screen" to="." method="_on_loading_screen_state_processing"]
+[connection signal="state_entered" from="GameState/Root/game loaded" to="." method="_on_game_loaded_state_entered"]
+[connection signal="state_processing" from="GameState/Root/game loaded" to="." method="_on_game_loaded_state_processing"]
 [connection signal="state_entered" from="LevelStateManager/StateChart/Root/empty" to="LevelStateManager" method="_on_empty_state_entered"]
 [connection signal="state_entered" from="LevelStateManager/StateChart/Root/cut scene" to="LevelStateManager" method="_on_cut_scene_state_entered"]
 [connection signal="state_exited" from="LevelStateManager/StateChart/Root/cut scene" to="LevelStateManager" method="_on_cut_scene_state_exited"]
@@ -199,3 +279,4 @@ text = "Quit game"
 [connection signal="pressed" from="LevelStateManager/PauseMenu/GridContainer/ContinueButton" to="LevelStateManager/PauseMenu" method="_on_continue_button_pressed"]
 [connection signal="pressed" from="LevelStateManager/PauseMenu/GridContainer/ExitToMainButton" to="LevelStateManager/PauseMenu" method="_on_exit_to_main_button_pressed"]
 [connection signal="pressed" from="LevelStateManager/PauseMenu/GridContainer/QuitButton" to="LevelStateManager/PauseMenu" method="_on_quit_button_pressed"]
+[connection signal="animation_finished" from="FadeScreen/AnimationPlayer" to="FadeScreen" method="_on_animation_player_animation_finished"]
