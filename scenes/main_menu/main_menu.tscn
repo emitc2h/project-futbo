@@ -16,11 +16,10 @@ camera_controller = NodePath("../../CameraController")
 
 [node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("1_7b7ib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.140322, -2.60812)
-subject = NodePath("Subject")
-zoom_factor = 1.1
+subject = NodePath("../Subject")
 
-[node name="Subject" type="Node3D" parent="CameraController"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.105257, 2.40815)
+[node name="Subject" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.833176, -0.19997)
 
 [node name="Level1MainMenuScene" parent="." instance=ExtResource("4_c83o0")]
 
