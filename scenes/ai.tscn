@@ -43,6 +43,12 @@ to = NodePath("../../reset")
 event = &"seek to reset"
 delay_in_seconds = "0.0"
 
+[node name="to disabled" type="Node" parent="Behaviors/State/root/seek"]
+script = ExtResource("6_47fwt")
+to = NodePath("../../disabled")
+event = &"seek to disabled"
+delay_in_seconds = "0.0"
+
 [node name="attack" type="Node" parent="Behaviors/State/root"]
 script = ExtResource("5_212yo")
 
@@ -70,6 +76,12 @@ to = NodePath("../../confused")
 event = &"attack to confused"
 delay_in_seconds = "0.0"
 
+[node name="to disabled" type="Node" parent="Behaviors/State/root/attack"]
+script = ExtResource("6_47fwt")
+to = NodePath("../../disabled")
+event = &"attack to disabled"
+delay_in_seconds = "0.0"
+
 [node name="celebrate" type="Node" parent="Behaviors/State/root"]
 script = ExtResource("5_212yo")
 
@@ -79,6 +91,12 @@ to = NodePath("../../reset")
 event = &"celebrate to reset"
 delay_in_seconds = "0.0"
 
+[node name="to disabled" type="Node" parent="Behaviors/State/root/celebrate"]
+script = ExtResource("6_47fwt")
+to = NodePath("../../disabled")
+event = &"celebrate to disabled"
+delay_in_seconds = "0.0"
+
 [node name="reset" type="Node" parent="Behaviors/State/root"]
 script = ExtResource("5_212yo")
 
@@ -86,6 +104,12 @@ script = ExtResource("5_212yo")
 script = ExtResource("6_47fwt")
 to = NodePath("../../seek")
 event = &"reset to seek"
+delay_in_seconds = "0.0"
+
+[node name="Transition" type="Node" parent="Behaviors/State/root/reset"]
+script = ExtResource("6_47fwt")
+to = NodePath("../../disabled")
+event = &"reset to disabled"
 delay_in_seconds = "0.0"
 
 [node name="idle" type="Node" parent="Behaviors/State/root"]
@@ -103,6 +127,18 @@ to = NodePath("../../reset")
 event = &"idle to reset"
 delay_in_seconds = "0.0"
 
+[node name="to seek" type="Node" parent="Behaviors/State/root/idle"]
+script = ExtResource("6_47fwt")
+to = NodePath("../../seek")
+event = &"idle to seek"
+delay_in_seconds = "0.0"
+
+[node name="to disabled" type="Node" parent="Behaviors/State/root/idle"]
+script = ExtResource("6_47fwt")
+to = NodePath("../../disabled")
+event = &"idle to disabled"
+delay_in_seconds = "0.0"
+
 [node name="confused" type="Node" parent="Behaviors/State/root"]
 script = ExtResource("5_212yo")
 
@@ -111,6 +147,21 @@ script = ExtResource("6_47fwt")
 to = NodePath("../../seek")
 event = &"confused to seek"
 delay_in_seconds = "0.8"
+
+[node name="Transition" type="Node" parent="Behaviors/State/root/confused"]
+script = ExtResource("6_47fwt")
+to = NodePath("../../disabled")
+event = &"confused to disabled"
+delay_in_seconds = "0.0"
+
+[node name="disabled" type="Node" parent="Behaviors/State/root"]
+script = ExtResource("5_212yo")
+
+[node name="to idle" type="Node" parent="Behaviors/State/root/disabled"]
+script = ExtResource("6_47fwt")
+to = NodePath("../../idle")
+event = &"disabled to idle"
+delay_in_seconds = "0.0"
 
 [node name="SeekSkill" type="Node" parent="Behaviors"]
 script = ExtResource("7_n7a0i")
@@ -137,5 +188,6 @@ wait_time = 4.0
 [connection signal="state_physics_processing" from="Behaviors/State/root/reset" to="Behaviors" method="_on_reset_state_physics_processing"]
 [connection signal="state_entered" from="Behaviors/State/root/idle" to="Behaviors" method="_on_idle_state_entered"]
 [connection signal="state_entered" from="Behaviors/State/root/confused" to="Behaviors" method="_on_confused_state_entered"]
+[connection signal="state_entered" from="Behaviors/State/root/disabled" to="Behaviors" method="_on_disabled_state_entered"]
 [connection signal="timeout" from="Behaviors/CelebrationTimer" to="Behaviors" method="_on_celebration_timer_timeout"]
 [connection signal="timeout" from="Behaviors/IdleTimer" to="Behaviors" method="_on_idle_timer_timeout"]

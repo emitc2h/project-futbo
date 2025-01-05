@@ -15,6 +15,23 @@ var player: Player
 @export var kick_skill: KickSkill
 @export var jump_skill: JumpSkill
 
+# Disable controls for cut scenes
+var _enabled: bool = true
+@export var enabled: bool:
+	get:
+		return _enabled
+	set(value):
+		_enabled = value
+		if not value:
+			state.send_event("seek to disabled")
+			state.send_event("attack to disabled")
+			state.send_event("celebrate to disabled")
+			state.send_event("reset to disabled")
+			state.send_event("confused to disabled")
+			state.send_event("idle to disabled")
+		else:
+			state.send_event("disabled to idle")
+
 # Observed Quantities
 var ball_position: Vector3
 var ball_velocity: Vector3
@@ -136,7 +153,12 @@ func _on_confused_state_entered() -> void:
 	seek_skill.stop_seeking()
 	seek_skill.basic_movement.idle_with_custom_animation("confused")
 	state.send_event("confused to seek")
-	
+
+
+# disabled state
+#----------------------------------------
+func _on_disabled_state_entered() -> void:
+	player.stop()
 	
 
 #=======================================================

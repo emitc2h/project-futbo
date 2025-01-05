@@ -467,6 +467,11 @@ func _on_recovering_state_exited() -> void:
 # CONTROL FUNCTIONS
 #=======================================================
 
+# stops the player from moving
+func stop() -> void:
+	left_right_axis = 0.0
+
+
 # is meant to be called every frame (joystick non-zero input)
 func run(direction: float) -> void:
 	left_right_axis = direction

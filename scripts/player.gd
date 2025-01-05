@@ -26,6 +26,8 @@ signal update_stamina_value(value: float)
 @export var run_deceleration: float
 @export var jump_momentum: float
 
+@onready var player_basic_movement: PlayerBasicMovement = $PlayerBasicMovement
+
 
 #=======================================================
 # RECEIVED SIGNALS
@@ -50,3 +52,18 @@ func _on_hide_stamina() -> void:
 
 func _on_update_stamina_value(value: float) -> void:
 	update_stamina_value.emit(value)
+
+
+#=======================================================
+# CONTROLS
+#=======================================================
+func run(direction: float) -> void:
+	player_basic_movement.run(direction)
+
+
+func stop() -> void:
+	player_basic_movement.stop()
+
+
+func jump() -> void:
+	player_basic_movement.jump()

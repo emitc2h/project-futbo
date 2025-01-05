@@ -10,6 +10,14 @@ extends Node3D
 # Internal references
 @onready var behaviors: Behaviors = $Behaviors
 
+# Disable controls for cut scenes
+var _enabled: bool = true
+@export var enabled: bool:
+	get:
+		return _enabled
+	set(value):
+		_enabled = value
+		behaviors.enabled = value
 
 func _ready() -> void:
 	behaviors.home_goal_position = home_goal.global_position
