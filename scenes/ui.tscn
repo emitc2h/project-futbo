@@ -9,6 +9,7 @@
 script = ExtResource("1_mrayf")
 
 [node name="ScoreLeft" type="Label" parent="."]
+visible = false
 offset_left = 43.0
 offset_top = 20.0
 offset_right = 322.0
@@ -21,6 +22,7 @@ theme_override_font_sizes/font_size = 64
 text = "0"
 
 [node name="ScoreRight" type="Label" parent="."]
+visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0

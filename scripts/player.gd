@@ -16,6 +16,7 @@ signal hide_stamina()
 signal update_stamina_value(value: float)
 
 # Basic movement configurable properties
+@export_group("Basic Movement Properties")
 @export var sprint_velocity: float
 @export var recovery_velocity: float
 @export var stamina_limit: float = 2.0
@@ -27,6 +28,17 @@ signal update_stamina_value(value: float)
 @export var jump_momentum: float
 
 @onready var player_basic_movement: PlayerBasicMovement = $PlayerBasicMovement
+
+# Animation handles
+@export_group("Animation Handles")
+@export var left_right_axis: float:
+	get:
+		if player_basic_movement:
+			return player_basic_movement.left_right_axis
+		else:
+			return 0.0
+	set(value):
+		run(value)
 
 
 #=======================================================
@@ -58,12 +70,15 @@ func _on_update_stamina_value(value: float) -> void:
 # CONTROLS
 #=======================================================
 func run(direction: float) -> void:
-	player_basic_movement.run(direction)
+	if player_basic_movement:
+		player_basic_movement.run(direction)
 
 
 func stop() -> void:
-	player_basic_movement.stop()
+	if player_basic_movement:
+		player_basic_movement.stop()
 
 
 func jump() -> void:
-	player_basic_movement.jump()
+	if player_basic_movement:
+		player_basic_movement.jump()

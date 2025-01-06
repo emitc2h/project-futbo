@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var soccer_ball_animation: AnimationPlayer = $"SoccerBall/AnimationPlayer"
+@export var animation_player: AnimationPlayer
 
 func _ready() -> void:
-	soccer_ball_animation.play("enter_scene")
+	animation_player.play("enter_scene")

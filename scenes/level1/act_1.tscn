@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene load_steps=23 format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="1_j6tjs"]
@@ -12,10 +12,76 @@
 [ext_resource type="PackedScene" uid="uid://d13byd12eh5y7" path="res://scenes/ai.tscn" id="9_2x0ki"]
 [ext_resource type="SpriteFrames" uid="uid://b5y2k0oe4jdi6" path="res://resources/adversary_spriteframes.tres" id="10_0rft1"]
 [ext_resource type="PackedScene" uid="uid://3y4snk0eo4mp" path="res://scenes/ui.tscn" id="11_ffwmr"]
+[ext_resource type="PackedScene" uid="uid://rxuskqewfa7k" path="res://scenes/cut_scene_controller.tscn" id="13_hpf6u"]
+[ext_resource type="Script" path="res://scripts/level1/level_1_script.gd" id="14_eau2p"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="14_ok3f3"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="15_e8cbd"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="16_4ihqv"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
+
+[sub_resource type="Animation" id="Animation_lcg1f"]
+resource_name = "intro"
+length = 8.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutScenePlayer/CanvasLayer/ColorRect:color:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 6.5, 8.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutScenePlayer/CanvasLayer/Label:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2.5, 4, 5.5)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CutScenePlayer/CanvasLayer:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 8.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_0c4pc"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutScenePlayer/CanvasLayer/Label:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oomc5"]
+_data = {
+"RESET": SubResource("Animation_0c4pc"),
+"intro": SubResource("Animation_lcg1f")
+}
 
 [node name="Act1" type="Node3D"]
 process_mode = 1
 script = ExtResource("1_75wj8")
+starts_with_cut_scene = true
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("1_j6tjs")]
 
@@ -30,6 +96,7 @@ subject = NodePath("../MainPlayer")
 [node name="MainPlayer" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("4_8dl31")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.4298, 0.077, 0)
 sprite = NodePath("AnimatedSprite3D")
+left_right_axis = 0.3
 
 [node name="Controller" parent="MainPlayer" node_paths=PackedStringArray("player") instance=ExtResource("5_8qe52")]
 player = NodePath("..")
@@ -74,6 +141,94 @@ animation = &"celebrate"
 camera_controller = NodePath("../CameraController")
 player = NodePath("../MainPlayer")
 
+[node name="CutSceneController" parent="." node_paths=PackedStringArray("controlled_nodes") instance=ExtResource("13_hpf6u")]
+controlled_nodes = [NodePath("../CameraController"), NodePath("../MainPlayer/Controller"), NodePath("../OpponentPlayer/AI")]
+
+[node name="Level1Script" type="Node" parent="." node_paths=PackedStringArray("cut_scene_controller", "cut_scene_player")]
+script = ExtResource("14_eau2p")
+cut_scene_controller = NodePath("../CutSceneController")
+cut_scene_player = NodePath("CutScenePlayer")
+
+[node name="StateChart" type="Node" parent="Level1Script"]
+script = ExtResource("14_ok3f3")
+
+[node name="Root" type="Node" parent="Level1Script/StateChart"]
+script = ExtResource("15_e8cbd")
+
+[node name="Foreground Events" type="Node" parent="Level1Script/StateChart/Root"]
+script = ExtResource("16_4ihqv")
+initial_state = NodePath("intro cutscene")
+
+[node name="intro cutscene" type="Node" parent="Level1Script/StateChart/Root/Foreground Events"]
+script = ExtResource("17_abldk")
+
+[node name="to gameplay" type="Node" parent="Level1Script/StateChart/Root/Foreground Events/intro cutscene"]
+script = ExtResource("18_mp8jo")
+to = NodePath("../../gameplay")
+event = &"intro cutscene to gameplay"
+delay_in_seconds = "0.0"
+
+[node name="gameplay" type="Node" parent="Level1Script/StateChart/Root/Foreground Events"]
+script = ExtResource("17_abldk")
+
+[node name="to game over" type="Node" parent="Level1Script/StateChart/Root/Foreground Events/gameplay"]
+script = ExtResource("18_mp8jo")
+to = NodePath("../../game over")
+event = &"gameplay to game over"
+delay_in_seconds = "0.0"
+
+[node name="game over" type="Node" parent="Level1Script/StateChart/Root/Foreground Events"]
+script = ExtResource("17_abldk")
+
+[node name="Background Events" type="Node" parent="Level1Script/StateChart/Root"]
+script = ExtResource("16_4ihqv")
+initial_state = NodePath("peaceful clouds")
+
+[node name="peaceful clouds" type="Node" parent="Level1Script/StateChart/Root/Background Events"]
+script = ExtResource("17_abldk")
+
+[node name="covering up" type="Node" parent="Level1Script/StateChart/Root/Background Events"]
+script = ExtResource("17_abldk")
+
+[node name="dark clouds" type="Node" parent="Level1Script/StateChart/Root/Background Events"]
+script = ExtResource("17_abldk")
+
+[node name="vortex clouds" type="Node" parent="Level1Script/StateChart/Root/Background Events"]
+script = ExtResource("17_abldk")
+
+[node name="CutScenePlayer" type="AnimationPlayer" parent="Level1Script"]
+libraries = {
+"": SubResource("AnimationLibrary_oomc5")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Level1Script/CutScenePlayer"]
+layer = 11
+
+[node name="ColorRect" type="ColorRect" parent="Level1Script/CutScenePlayer/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Level1Script/CutScenePlayer/CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 48
+text = "Pine Signal Studio presents"
+
 [connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
 [connection signal="facing_left" from="MainPlayer" to="Ball" method="_on_facing_left"]
 [connection signal="facing_right" from="MainPlayer" to="Ball" method="_on_facing_right"]
@@ -84,5 +239,7 @@ player = NodePath("../MainPlayer")
 [connection signal="scored" from="GoalRight" to="." method="_on_goal_right_scored"]
 [connection signal="facing_left" from="OpponentPlayer" to="Ball" method="_on_facing_left"]
 [connection signal="facing_right" from="OpponentPlayer" to="Ball" method="_on_facing_right"]
+[connection signal="state_entered" from="Level1Script/StateChart/Root/Foreground Events/intro cutscene" to="Level1Script" method="_on_intro_cutscene_state_entered"]
+[connection signal="state_entered" from="Level1Script/StateChart/Root/Foreground Events/gameplay" to="Level1Script" method="_on_gameplay_state_entered"]
 
 [editable path="WorldEnvironment"]

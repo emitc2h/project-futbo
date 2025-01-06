@@ -1,25 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://xuvnhtg7ox3i"]
+[gd_scene load_steps=4 format=3 uid="uid://xuvnhtg7ox3i"]
 
-[ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="1_7b7ib"]
-[ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="1_21q2j"]
 [ext_resource type="Script" path="res://scripts/main_menu/main_menu.gd" id="1_f6d7l"]
 [ext_resource type="PackedScene" uid="uid://deidkuj34u7yu" path="res://scenes/main_menu/level_1_main_menu_scene.tscn" id="4_c83o0"]
 [ext_resource type="Script" path="res://scripts/main_menu/new_game.gd" id="11_jf6cj"]
 
 [node name="MainMenu" type="Node3D"]
 script = ExtResource("1_f6d7l")
-
-[node name="WorldEnvironment" parent="." instance=ExtResource("1_21q2j")]
-
-[node name="Act1SkyBox" parent="WorldEnvironment" index="1" node_paths=PackedStringArray("camera_controller")]
-camera_controller = NodePath("../../CameraController")
-
-[node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("1_7b7ib")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.140322, -2.60812)
-subject = NodePath("../Subject")
-
-[node name="Subject" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.833176, -0.19997)
 
 [node name="Level1MainMenuScene" parent="." instance=ExtResource("4_c83o0")]
 
@@ -64,5 +50,3 @@ text = "  Quit  "
 
 [connection signal="pressed" from="MainMenuUI/GridContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Quit" to="." method="_on_exit_pressed"]
-
-[editable path="WorldEnvironment"]

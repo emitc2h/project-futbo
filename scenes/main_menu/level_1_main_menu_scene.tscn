@@ -1,8 +1,10 @@
-[gd_scene load_steps=18 format=4 uid="uid://deidkuj34u7yu"]
+[gd_scene load_steps=20 format=4 uid="uid://deidkuj34u7yu"]
 
 [ext_resource type="Script" path="res://scripts/main_menu/level_1_main_menu_scene.gd" id="1_glui6"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_jugbg"]
+[ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="2_w6ciu"]
 [ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_fq483"]
+[ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="3_kwi3e"]
 [ext_resource type="Material" uid="uid://be2gka6jbfd6a" path="res://assets/3D/Act1/materials/vegetation/grass/grass_material_swaying.tres" id="4_snxm5"]
 [ext_resource type="PackedScene" uid="uid://cu4ax72l3v1ah" path="res://assets/3D/Act1/blend/Grass2.blend" id="5_plcrp"]
 [ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="6_rf2fx"]
@@ -60,7 +62,7 @@ buffer = PackedFloat32Array(0.636677, 0, 0.931016, -79.525, 0, 1.1279, 0, 0.1154
 
 [sub_resource type="Animation" id="Animation_4vb0h"]
 resource_name = "enter_scene"
-length = 4.0
+length = 5.0
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -70,7 +72,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(1, 0, 0),
 "points": PackedFloat32Array(-1.3906, 0, 0, 0, 0, -1.3906, -0.25, 0, 0.2, 1.07532, -0.262395, -1.96667, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1, 4)
+"times": PackedFloat32Array(0, 2, 5)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -81,7 +83,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(1, 0, 0),
 "points": PackedFloat32Array(-3.0353, 0, 0, 0, 0, -3.0353, -0.25, 0, 0.2, 5.0517, 2.60704, -1.96667, 0.00881553, 0.25, 0),
-"times": PackedFloat32Array(0, 1, 4)
+"times": PackedFloat32Array(0, 2, 5)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_watdk"]
@@ -89,9 +91,26 @@ _data = {
 "enter_scene": SubResource("Animation_4vb0h")
 }
 
-[node name="Level1MainMenuScene" type="Node3D"]
+[node name="Level1MainMenuScene" type="Node3D" node_paths=PackedStringArray("animation_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.146077, -0.649305)
 script = ExtResource("1_glui6")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("2_w6ciu")]
+
+[node name="Act1SkyBox" parent="WorldEnvironment" index="1" node_paths=PackedStringArray("camera_controller")]
+camera_controller = NodePath("../../CameraController")
+
+[node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("3_kwi3e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784547, -0.959528)
+subject = NodePath("../Subject")
+sync_to_subject_on_ready = false
+enabled = true
+lerp_y = 1.0
+lerp_z = 1.0
+
+[node name="Subject" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.70707, 0.562556)
 
 [node name="Plain" type="MeshInstance3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0.115413, 0)
@@ -123,11 +142,13 @@ material_override = ExtResource("8_jv7bb")
 transform = Transform3D(-0.896893, 0, -0.0747153, 0, 0.9, 0, 0.0747153, 0, -0.896893, -0.937597, 0, 8.91222)
 
 [node name="SoccerBall" parent="." instance=ExtResource("9_iudwe")]
-transform = Transform3D(0.87591, 0.437749, -0.202875, 0.481918, -0.813984, 0.324321, -0.0231656, -0.381845, -0.923936, -0.262395, 0.264268, 9.42529)
+transform = Transform3D(0.875909, 0.437749, -0.202874, 0.481918, -0.813984, 0.324321, -0.0231655, -0.381845, -0.923936, -0.262395, 0.264268, 9.42529)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SoccerBall"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../SoccerBall")
 libraries = {
 "": SubResource("AnimationLibrary_watdk")
 }
 
+[editable path="WorldEnvironment"]
 [editable path="Grass2"]
