@@ -155,9 +155,9 @@ tracks/3/path = NodePath("../CameraController/Camera3D:rotation:x")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-0.523599, -0.25, 0, 0.25, 0, 0, -2.93333, -0.0231389, 0.25, 0),
-"times": PackedFloat32Array(5.5, 15)
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-0.349066, -0.25, 0, 0.25, 0, -0.349066, -0.25, 0, 0.25, 0, 0.0872665, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 5.5, 15)
 }
 tracks/4/type = "bezier"
 tracks/4/imported = false
@@ -383,7 +383,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 48
-text = "Pine Signal Studio presents"
+text = "Pine Signal Interactive
+presents"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TriggerGameplayArea3D" type="Area3D" parent="Level1Script"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.3323, 0, 0)
