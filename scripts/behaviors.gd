@@ -29,8 +29,6 @@ var _enabled: bool = true
 			state.send_event("reset to disabled")
 			state.send_event("confused to disabled")
 			state.send_event("idle to disabled")
-		else:
-			state.send_event("disabled to idle")
 
 # Observed Quantities
 var ball_position: Vector3

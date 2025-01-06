@@ -17,7 +17,6 @@ var _enabled: bool = true
 		return _enabled
 	set(value):
 		_enabled = value
-		self.set_process(value)
 
 
 @export_group("Lerp Factors")

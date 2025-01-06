@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://rxuskqewfa7k"]
-
-[ext_resource type="Script" path="res://scripts/cut_scene_controller.gd" id="1_k5amj"]
-
-[node name="CutSceneController" type="Node"]
-script = ExtResource("1_k5amj")
-enabled = true
