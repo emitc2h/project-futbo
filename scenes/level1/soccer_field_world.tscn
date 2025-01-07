@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=4 uid="uid://dq8d4kwgig1w8"]
+[gd_scene load_steps=90 format=4 uid="uid://dq8d4kwgig1w8"]
 
 [ext_resource type="Material" uid="uid://b1quy15tx2h4o" path="res://assets/3D/Act1/materials/buildings/stained_corrugated_steel.tres" id="2_585np"]
 [ext_resource type="Texture2D" uid="uid://jiof4xx8yewt" path="res://assets/3D/Act1/Textures/Tiles/CeilingTiles1/CelingTiles1_color.png" id="3_4tkj0"]
@@ -10,14 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://csm18r05bso3r" path="res://assets/3D/spotlight.blend" id="6_4d8uc"]
 [ext_resource type="Texture2D" uid="uid://blpvkkvirfouw" path="res://assets/3D/Act1/draft/map_draft_1.25_ratio.png" id="6_jge4r"]
 [ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="7_e4a8c"]
-[ext_resource type="Shader" path="res://shaders/TwoUVs.gdshader" id="7_sxq3b"]
-[ext_resource type="Texture2D" uid="uid://dfb2k8l25vilm" path="res://assets/3D/Act1/Textures/Tiles/CorrugatedSteel1/CorrugatedSteel1_normal.png" id="8_2o4mf"]
 [ext_resource type="Texture2D" uid="uid://bi14nqhqhl57j" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_color.png" id="8_3temt"]
 [ext_resource type="Texture2D" uid="uid://dwwqrrbioo1pg" path="res://assets/3D/Act1/Textures/BaseMap.terrain.down.right/BaseMap.terrain.down.right_splatmap.png" id="8_o0hh8"]
 [ext_resource type="Shader" path="res://shaders/SplatMap.gdshader" id="8_pisw0"]
-[ext_resource type="Texture2D" uid="uid://ctjic78y0u64c" path="res://assets/3D/Act1/Textures/Tiles/CorrugatedSteel1/CorrugatedSteel1_color.png" id="9_i03so"]
 [ext_resource type="Texture2D" uid="uid://dasstxd5w1ais" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_OnlySand_normal.png" id="9_olt5o"]
-[ext_resource type="Texture2D" uid="uid://bo7l8ds2og1c2" path="res://assets/3D/Act1/Textures/Tiles/MetalSidingStains1/MetalSidingStains_color.png" id="10_1scai"]
 [ext_resource type="Texture2D" uid="uid://wh0qaqcjqyx1" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles_OnlySand_color.png" id="10_v7twt"]
 [ext_resource type="Script" path="res://scripts/door_detector_area_3d.gd" id="10_yiblt"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="11_c6xia"]
@@ -62,17 +58,6 @@ normal_texture = ExtResource("5_ujs58")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cgsx2"]
 size = Vector3(2.12558, 1.90698, 1.93692)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nbnid"]
-render_priority = 0
-shader = ExtResource("7_sxq3b")
-shader_parameter/decal_opacity = 0.653
-shader_parameter/specular = 0.2
-shader_parameter/roughness = 0.8
-shader_parameter/metallicity = 0.3
-shader_parameter/base_texture = ExtResource("9_i03so")
-shader_parameter/decal_texture = ExtResource("10_1scai")
-shader_parameter/base_normal = ExtResource("8_2o4mf")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3wdgs"]
 render_priority = 0
@@ -999,8 +984,8 @@ sky_mode = 1
 [node name="ClassBuilding" parent="." instance=ExtResource("3_o1t8c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.324, 0, -0.576)
 
-[node name="BuildingStructure" parent="ClassBuilding" index="8"]
-surface_material_override/2 = SubResource("ShaderMaterial_nbnid")
+[node name="BuildingStructure" parent="ClassBuilding" index="14"]
+surface_material_override/1 = ExtResource("2_585np")
 
 [node name="spotlight" parent="." instance=ExtResource("6_4d8uc")]
 transform = Transform3D(0.82467, 0, 0.565615, 0, 1, 0, -0.565615, 0, 0.82467, -25.681, 0, -18.0433)
