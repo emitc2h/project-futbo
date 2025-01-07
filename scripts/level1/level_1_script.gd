@@ -3,13 +3,14 @@ extends Node3D
 
 @export var control_suppressor: ControlSuppressor
 @export var cut_scene_player: AnimationPlayer
+@export var cut_scene_context_player: AnimationPlayer
 @export var opponent_ai: AI
 
 @onready var state: StateChart = $StateChart
 
 
 func _ready() -> void:
-	cut_scene_player.animation_finished.connect(_on_animation_finished)
+	cut_scene_player.animation_finished.connect(_on_cut_scene_player_animation_finished)
 
 
 #=======================================================
@@ -17,14 +18,24 @@ func _ready() -> void:
 #=======================================================
 func _on_intro_cutscene_state_entered() -> void:
 	control_suppressor.enabled = true
+	cut_scene_context_player.play("cutscene bands come in")
 	cut_scene_player.play("intro")
+
+
+func _on_intro_cutscene_state_processing(delta: float) -> void:
+	if Input.is_action_just_pressed("sprint"):
+		state.send_event("intro cutscene to walk to field")
+
+
+func _on_intro_cutscene_state_exited() -> void:
+	cut_scene_player.seek(cut_scene_player.current_animation_length)
+	cut_scene_context_player.play("cutscene bands come out")
 
 
 #=======================================================
 # WALK TO FIELD STATE
 #=======================================================
 func _on_walk_to_field_state_entered() -> void:
-	print("walk to field state entered")
 	control_suppressor.enabled = false
 
 
@@ -50,9 +61,7 @@ func _on_trigger_game_over_area_3d_body_entered(body: Node3D) -> void:
 #=======================================================
 # UTILITIES
 #=======================================================
-func _on_animation_finished(anim_name: StringName) -> void:
-	print("animation finished: ", anim_name)
+func _on_cut_scene_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"intro":
-			print("moving on to walk to field")
 			state.send_event("intro cutscene to walk to field")

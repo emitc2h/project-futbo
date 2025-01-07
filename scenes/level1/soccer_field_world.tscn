@@ -1328,10 +1328,6 @@ material_override = ExtResource("48_jowur")
 transform = Transform3D(-0.545922, 0, 1.39713, 0, 1.5, 0, -1.39713, 0, -0.545922, -47.5372, 0, 10.9602)
 material_override = ExtResource("45_m4c5j")
 
-[node name="TreeBradfordPear3" parent="Trees" instance=ExtResource("47_p3d26")]
-transform = Transform3D(0.548314, 0, -1.17871, 0, 1.3, 0, 1.17871, 0, 0.548314, -30.2148, 0, -5.12211)
-material_override = ExtResource("48_jowur")
-
 [node name="TreeBradfordPear18" parent="Trees" instance=ExtResource("47_p3d26")]
 transform = Transform3D(-0.433284, 0, -1.01107, 0, 1.1, 0, 1.01107, 0, -0.433284, -26.4829, 0, -22.983)
 material_override = ExtResource("47_ilmie")

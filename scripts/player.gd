@@ -40,6 +40,13 @@ signal update_stamina_value(value: float)
 	set(value):
 		run(value)
 
+@export var play_animation: String:
+	get:
+		return ""
+	set(value):
+		if sprite:
+			sprite.play(value)
+
 
 #=======================================================
 # RECEIVED SIGNALS
