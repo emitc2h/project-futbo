@@ -14,6 +14,7 @@ var interpolated_loading_status: float = 0
 func _ready() -> void:
 	Signals.quit_game.connect(_on_quit_game)
 	Signals.exit_to_main_menu.connect(_on_exit_to_main_menu)
+	level_state_manager.back_to_main_menu.connect(_on_exit_to_main_menu)
 
 
 #=======================================================
@@ -105,4 +106,5 @@ func _on_exit_to_main_menu() -> void:
 	fade_screen.fade_out()
 	await fade_screen.fade_finished
 	level_state_manager.close_level()
+	level_state_manager.hide_game_over_screen()
 	state.send_event("game to main menu")

@@ -652,7 +652,7 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 80.0
+offset_top = -80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 
@@ -663,7 +663,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -80.0
+offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
@@ -747,6 +747,7 @@ shape = SubResource("WorldBoundaryShape3D_m5c52")
 [connection signal="state_processing" from="Level1Script/StateChart/root/intro cutscene" to="Level1Script" method="_on_intro_cutscene_state_processing"]
 [connection signal="state_entered" from="Level1Script/StateChart/root/walk to field" to="Level1Script" method="_on_walk_to_field_state_entered"]
 [connection signal="state_entered" from="Level1Script/StateChart/root/gameplay" to="Level1Script" method="_on_gameplay_state_entered"]
+[connection signal="state_entered" from="Level1Script/StateChart/root/game over" to="Level1Script" method="_on_game_over_state_entered"]
 [connection signal="body_entered" from="Level1Script/TriggerGameplayArea3D" to="Level1Script" method="_on_trigger_gameplay_area_3d_body_entered"]
 [connection signal="body_entered" from="Level1Script/TriggerGameOverArea3D" to="Level1Script" method="_on_trigger_game_over_area_3d_body_entered"]
 

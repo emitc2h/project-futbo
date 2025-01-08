@@ -8,7 +8,6 @@ extends Node3D
 
 @onready var state: StateChart = $StateChart
 
-
 func _ready() -> void:
 	cut_scene_player.animation_finished.connect(_on_cut_scene_player_animation_finished)
 
@@ -48,6 +47,14 @@ func _on_trigger_gameplay_area_3d_body_entered(body: Node3D) -> void:
 #=======================================================
 func _on_gameplay_state_entered() -> void:
 	opponent_ai.behaviors.state.send_event("disabled to idle")
+
+
+#=======================================================
+# GAME OVER STATE
+#=======================================================
+func _on_game_over_state_entered() -> void:
+	control_suppressor.enabled = true
+	Signals.game_over.emit()
 
 
 #=======================================================
