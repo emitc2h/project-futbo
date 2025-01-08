@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene load_steps=33 format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="1_j6tjs"]
@@ -18,6 +18,10 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="16_4ihqv"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
+[ext_resource type="StyleBox" uid="uid://dd16w0fqwnqrq" path="res://resources/styles/dialog_stylebox.tres" id="19_eiyx2"]
+[ext_resource type="Script" path="res://scripts/dialog_bubble/dialog_bubble.gd" id="19_g3ani"]
+[ext_resource type="Texture2D" uid="uid://wjhv4gb21qmo" path="res://kenney_platformer-characters/PNG/Female/Limbs/head.png" id="20_hfty4"]
+[ext_resource type="Texture2D" uid="uid://b8a5vnl8jt7i5" path="res://kenney_platformer-characters/PNG/Female/Limbs/head_focus.png" id="20_ryou5"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
 length = 0.001
@@ -519,6 +523,12 @@ _data = {
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_m5c52"]
 
+[sub_resource type="Curve2D" id="Curve2D_gim3f"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 240, 0, 0, 0, 0, 10, 240, 52, 0, 0, 0, 0, 228, 62, 0, 0, 0, 0, 0, 62, 0, 10, 0, 0, -12, 52, 0, 0, 0, 0, -12, 0)
+}
+point_count = 6
+
 [node name="Act1" type="Node3D"]
 process_mode = 1
 script = ExtResource("1_75wj8")
@@ -652,7 +662,7 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -80.0
+offset_bottom = 80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 
@@ -663,7 +673,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 80.0
+offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
@@ -732,6 +742,103 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/TriggerGameOverArea3D"]
 shape = SubResource("WorldBoundaryShape3D_m5c52")
 
+[node name="DialogBubble" type="CanvasLayer" parent="Level1Script" node_paths=PackedStringArray("camera_controller", "player")]
+layer = 3
+script = ExtResource("19_g3ani")
+camera_controller = NodePath("../../CameraController")
+texture = ExtResource("20_hfty4")
+player = NodePath("../../OpponentPlayer")
+lerp_factor_x = 5.0
+lerp_factor_y = 2.0
+offset_x = -80.0
+offset_y = -210.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Level1Script/DialogBubble"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.0
+offset_top = -26.0
+offset_right = 114.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("19_eiyx2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Level1Script/DialogBubble/PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Level1Script/DialogBubble/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="Level1Script/DialogBubble/PanelContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("20_ryou5")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Level1Script/DialogBubble/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Hey! There you are!
+Let me go get the ball!"
+vertical_alignment = 1
+
+[node name="Path2D" type="Path2D" parent="Level1Script/DialogBubble/PanelContainer"]
+curve = SubResource("Curve2D_gim3f")
+
+[node name="StateChart" type="Node" parent="Level1Script/DialogBubble"]
+script = ExtResource("14_ok3f3")
+
+[node name="root" type="Node" parent="Level1Script/DialogBubble/StateChart"]
+script = ExtResource("16_4ihqv")
+initial_state = NodePath("lingers")
+
+[node name="pops up" type="Node" parent="Level1Script/DialogBubble/StateChart/root"]
+script = ExtResource("17_abldk")
+
+[node name="to lingers" type="Node" parent="Level1Script/DialogBubble/StateChart/root/pops up"]
+script = ExtResource("18_mp8jo")
+to = NodePath("../../lingers")
+event = &"pops up to lingers"
+delay_in_seconds = "0.0"
+
+[node name="lingers" type="Node" parent="Level1Script/DialogBubble/StateChart/root"]
+script = ExtResource("17_abldk")
+
+[node name="to pops out" type="Node" parent="Level1Script/DialogBubble/StateChart/root/lingers"]
+script = ExtResource("18_mp8jo")
+to = NodePath("../../pops out")
+event = &"lingers to pops out"
+delay_in_seconds = "0.0"
+
+[node name="pops out" type="Node" parent="Level1Script/DialogBubble/StateChart/root"]
+script = ExtResource("17_abldk")
+
+[node name="Transition" type="Node" parent="Level1Script/DialogBubble/StateChart/root/pops out"]
+script = ExtResource("18_mp8jo")
+to = NodePath("../../inactive")
+event = &"pops out to inactive"
+delay_in_seconds = "0.0"
+
+[node name="inactive" type="Node" parent="Level1Script/DialogBubble/StateChart/root"]
+script = ExtResource("17_abldk")
+
+[node name="to pops up" type="Node" parent="Level1Script/DialogBubble/StateChart/root/inactive"]
+script = ExtResource("18_mp8jo")
+to = NodePath("../../pops up")
+event = &"inactive to pops up"
+delay_in_seconds = "0.0"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Level1Script/DialogBubble"]
+
 [connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
 [connection signal="facing_left" from="MainPlayer" to="Ball" method="_on_facing_left"]
 [connection signal="facing_right" from="MainPlayer" to="Ball" method="_on_facing_right"]
@@ -750,6 +857,12 @@ shape = SubResource("WorldBoundaryShape3D_m5c52")
 [connection signal="state_entered" from="Level1Script/StateChart/root/game over" to="Level1Script" method="_on_game_over_state_entered"]
 [connection signal="body_entered" from="Level1Script/TriggerGameplayArea3D" to="Level1Script" method="_on_trigger_gameplay_area_3d_body_entered"]
 [connection signal="body_entered" from="Level1Script/TriggerGameOverArea3D" to="Level1Script" method="_on_trigger_game_over_area_3d_body_entered"]
+[connection signal="state_entered" from="Level1Script/DialogBubble/StateChart/root/pops up" to="Level1Script/DialogBubble" method="_on_pops_up_state_entered"]
+[connection signal="state_processing" from="Level1Script/DialogBubble/StateChart/root/pops up" to="Level1Script/DialogBubble" method="_on_pops_up_state_processing"]
+[connection signal="state_processing" from="Level1Script/DialogBubble/StateChart/root/lingers" to="Level1Script/DialogBubble" method="_on_lingers_state_processing"]
+[connection signal="state_processing" from="Level1Script/DialogBubble/StateChart/root/pops out" to="Level1Script/DialogBubble" method="_on_pops_out_state_processing"]
+[connection signal="state_entered" from="Level1Script/DialogBubble/StateChart/root/inactive" to="Level1Script/DialogBubble" method="_on_inactive_state_entered"]
+[connection signal="state_exited" from="Level1Script/DialogBubble/StateChart/root/inactive" to="Level1Script/DialogBubble" method="_on_inactive_state_exited"]
 
 [editable path="WorldEnvironment"]
 [editable path="CameraController"]
