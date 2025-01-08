@@ -1,10 +1,14 @@
 class_name Level1Script
 extends Node3D
 
+@export_group("Cut Scenes")
 @export var control_suppressor: ControlSuppressor
 @export var cut_scene_player: AnimationPlayer
 @export var cut_scene_context_player: AnimationPlayer
+
+@export_group("Opponent Player")
 @export var opponent_ai: AI
+@export var opponent_dialog_bubble: DialogBubble
 
 @onready var state: StateChart = $StateChart
 
@@ -46,6 +50,7 @@ func _on_trigger_gameplay_area_3d_body_entered(body: Node3D) -> void:
 # GAMEPLAY STATE
 #=======================================================
 func _on_gameplay_state_entered() -> void:
+	opponent_dialog_bubble.pop_up("Hey! There you are!\nLet me go get the ball!")
 	opponent_ai.behaviors.state.send_event("disabled to idle")
 
 

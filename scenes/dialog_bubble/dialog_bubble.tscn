@@ -1,0 +1,364 @@
+[gd_scene load_steps=14 format=3 uid="uid://c86ywxv55on5f"]
+
+[ext_resource type="Script" path="res://scripts/dialog_bubble/dialog_bubble.gd" id="1_ybv2r"]
+[ext_resource type="Texture2D" uid="uid://wjhv4gb21qmo" path="res://kenney_platformer-characters/PNG/Female/Limbs/head.png" id="2_hvh1x"]
+[ext_resource type="StyleBox" uid="uid://dd16w0fqwnqrq" path="res://resources/styles/dialog_stylebox.tres" id="3_d4jss"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="4_vppnn"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_6cadr"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_687w4"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_nsaq4"]
+
+[sub_resource type="Curve2D" id="Curve2D_gim3f"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 240, 0, 0, 0, 0, 10, 240, 52, 0, 0, 0, 0, 228, 62, 0, 0, 0, 0, 0, 62, 0, 10, 0, 0, -12, 52, 0, 0, 0, 0, -12, 0)
+}
+point_count = 6
+
+[sub_resource type="Animation" id="Animation_edoi4"]
+resource_name = "pop up"
+length = 0.3
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_populate_avatar"
+}]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer/HBoxContainer/MarginContainer/TextureRect:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer/HBoxContainer/Label:custom_minimum_size:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 100, -0.1, 52.9872, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PanelContainer/HBoxContainer/Label:custom_minimum_size:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 50, -0.1, 50.3394, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PanelContainer:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Line2D:modulate:a")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_tg0pr"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer/HBoxContainer/MarginContainer/TextureRect:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer/HBoxContainer/Label:custom_minimum_size:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer/HBoxContainer/Label:custom_minimum_size:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PanelContainer:modulate:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Line2D:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_t3qcd"]
+resource_name = "pop out"
+length = 0.3
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_vacate_avatar"
+}]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer/HBoxContainer/MarginContainer/TextureRect:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer/HBoxContainer/Label:custom_minimum_size:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(100, -0.1, 52.9872, 0.0666667, 65.0319, 0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PanelContainer/HBoxContainer/Label:custom_minimum_size:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(50, -0.1, 50.3394, 0.0666667, 48.5917, 0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PanelContainer:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Line2D:modulate:a")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ypym"]
+_data = {
+"RESET": SubResource("Animation_tg0pr"),
+"pop out": SubResource("Animation_t3qcd"),
+"pop up": SubResource("Animation_edoi4")
+}
+
+[sub_resource type="Curve" id="Curve_ipv18"]
+_data = [Vector2(0, 0.505338), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.0160142), 0.487994, 0.487994, 0, 0, Vector2(1, 1), 1.57416, 0.0, 0, 0]
+point_count = 3
+
+[node name="DialogBubble" type="CanvasLayer" node_paths=PackedStringArray("camera_controller", "player")]
+layer = 3
+script = ExtResource("1_ybv2r")
+camera_controller = NodePath("")
+texture = ExtResource("2_hvh1x")
+player = NodePath("")
+x_path_offset = 16.0
+y_path_offset = 14.0
+lerp_factor_x = 5.0
+lerp_factor_y = 2.0
+offset_x = -80.0
+offset_y = -210.0
+line_fraction = 0.5
+line_point0_x_offset = -3.0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.0
+offset_top = -27.0
+offset_right = -95.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_d4jss")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 20
+vertical_alignment = 1
+
+[node name="Path2D" type="Path2D" parent="PanelContainer"]
+curve = SubResource("Curve2D_gim3f")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("4_vppnn")
+
+[node name="root" type="Node" parent="StateChart"]
+script = ExtResource("5_6cadr")
+initial_state = NodePath("inactive")
+
+[node name="pops up" type="Node" parent="StateChart/root"]
+script = ExtResource("6_687w4")
+
+[node name="to write" type="Node" parent="StateChart/root/pops up"]
+script = ExtResource("7_nsaq4")
+to = NodePath("../../write")
+event = &"pops up to write"
+delay_in_seconds = "0.0"
+
+[node name="write" type="Node" parent="StateChart/root"]
+script = ExtResource("6_687w4")
+
+[node name="to lingers" type="Node" parent="StateChart/root/write"]
+script = ExtResource("7_nsaq4")
+to = NodePath("../../lingers")
+event = &"write to lingers"
+delay_in_seconds = "0.0"
+
+[node name="lingers" type="Node" parent="StateChart/root"]
+script = ExtResource("6_687w4")
+
+[node name="to pops out" type="Node" parent="StateChart/root/lingers"]
+script = ExtResource("7_nsaq4")
+to = NodePath("../../pops out")
+event = &"lingers to pops out"
+delay_in_seconds = "0.0"
+
+[node name="pops out" type="Node" parent="StateChart/root"]
+script = ExtResource("6_687w4")
+
+[node name="to inactive" type="Node" parent="StateChart/root/pops out"]
+script = ExtResource("7_nsaq4")
+to = NodePath("../../inactive")
+event = &"pops out to inactive"
+delay_in_seconds = "0.0"
+
+[node name="inactive" type="Node" parent="StateChart/root"]
+script = ExtResource("6_687w4")
+
+[node name="to pops up" type="Node" parent="StateChart/root/inactive"]
+script = ExtResource("7_nsaq4")
+to = NodePath("../../pops up")
+event = &"inactive to pops up"
+delay_in_seconds = "0.0"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4ypym")
+}
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 5.0
+width_curve = SubResource("Curve_ipv18")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="state_entered" from="StateChart/root/pops up" to="." method="_on_pops_up_state_entered"]
+[connection signal="state_processing" from="StateChart/root/pops up" to="." method="_on_pops_up_state_processing"]
+[connection signal="state_entered" from="StateChart/root/write" to="." method="_on_write_state_entered"]
+[connection signal="state_processing" from="StateChart/root/write" to="." method="_on_write_state_processing"]
+[connection signal="state_entered" from="StateChart/root/lingers" to="." method="_on_lingers_state_entered"]
+[connection signal="state_processing" from="StateChart/root/lingers" to="." method="_on_lingers_state_processing"]
+[connection signal="state_entered" from="StateChart/root/pops out" to="." method="_on_pops_out_state_entered"]
+[connection signal="state_processing" from="StateChart/root/pops out" to="." method="_on_pops_out_state_processing"]
+[connection signal="state_entered" from="StateChart/root/inactive" to="." method="_on_inactive_state_entered"]
+[connection signal="state_exited" from="StateChart/root/inactive" to="." method="_on_inactive_state_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
