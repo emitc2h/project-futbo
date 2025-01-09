@@ -50,10 +50,15 @@ texture_under = ExtResource("2_8lnaa")
 texture_progress = ExtResource("3_mi4vw")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 1165.0
-offset_top = 755.0
-offset_right = 1267.0
-offset_bottom = 789.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -102.0
+offset_top = -34.0
+grow_horizontal = 0
+grow_vertical = 0
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 24
 text = "FPS: 60"

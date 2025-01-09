@@ -337,6 +337,7 @@ libraries = {
 
 [node name="FadeScreen" type="CanvasLayer" parent="."]
 layer = 10
+visible = false
 script = ExtResource("8_k6y2d")
 
 [node name="ColorRect" type="ColorRect" parent="FadeScreen"]

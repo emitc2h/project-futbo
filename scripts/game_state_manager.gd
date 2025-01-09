@@ -21,6 +21,9 @@ func _ready() -> void:
 # MAIN MENU STATE
 #=======================================================
 func _on_main_menu_state_entered() -> void:
+	# Adapt to screen resolution
+	#var screen_size: Vector2i = DisplayServer.screen_get_size()
+	#get_viewport().size = screen_size
 	fade_screen.fade_in()
 	var main_menu_scene: MainMenu = load("res://scenes/main_menu/main_menu.tscn").instantiate()
 	active_scene = main_menu_scene
