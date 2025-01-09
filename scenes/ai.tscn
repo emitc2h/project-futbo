@@ -163,6 +163,12 @@ to = NodePath("../../idle")
 event = &"disabled to idle"
 delay_in_seconds = "0.0"
 
+[node name="to seek" type="Node" parent="Behaviors/State/root/disabled"]
+script = ExtResource("6_47fwt")
+to = NodePath("../../seek")
+event = &"disabled to seek"
+delay_in_seconds = "0.0"
+
 [node name="SeekSkill" type="Node" parent="Behaviors"]
 script = ExtResource("7_n7a0i")
 

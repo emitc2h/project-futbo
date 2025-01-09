@@ -51,7 +51,8 @@ func _on_trigger_gameplay_area_3d_body_entered(body: Node3D) -> void:
 #=======================================================
 func _on_gameplay_state_entered() -> void:
 	opponent_dialog_bubble.pop_up("Hey! There you are!\nLet me go get the ball!")
-	opponent_ai.behaviors.state.send_event("disabled to idle")
+	await opponent_dialog_bubble.finished
+	opponent_ai.behaviors.state.send_event("disabled to seek")
 
 
 #=======================================================

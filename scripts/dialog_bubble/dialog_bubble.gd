@@ -42,6 +42,7 @@ var text_buffer_length: int = 0
 var text_write_time: float = 0.0
 var text_write_interval: float = 0.006
 
+signal finished
 
 func _ready() -> void:
 	label.text = text_buffer
@@ -113,6 +114,10 @@ func _on_pops_out_state_processing(delta: float) -> void:
 	_sync_line()
 
 
+func _on_pops_out_state_exited() -> void:
+	finished.emit()
+
+
 #=======================================================
 # INACTIVE STATE
 #=======================================================
@@ -125,7 +130,7 @@ func _on_inactive_state_exited() -> void:
 
 
 #=======================================================
-# SIGNALS
+# RECEIVED SIGNALS
 #=======================================================
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:

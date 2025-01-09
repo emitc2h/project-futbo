@@ -12,17 +12,18 @@ script = ExtResource("1_f6d7l")
 [node name="MainMenuUI" type="CanvasLayer" parent="."]
 
 [node name="GridContainer" type="GridContainer" parent="MainMenuUI"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -412.0
-offset_top = -209.0
-offset_right = 414.0
-offset_bottom = 150.0
+anchors_preset = -1
+anchor_left = 0.285
+anchor_top = 0.306
+anchor_right = 0.716
+anchor_bottom = 0.639
+offset_left = 0.799927
+offset_top = 0.519989
+offset_right = -0.720093
+offset_bottom = -0.120056
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="GameName" type="Label" parent="MainMenuUI/GridContainer"]
 layout_mode = 2
@@ -42,6 +43,12 @@ theme_override_font_sizes/font_size = 36
 text = "  New Game  "
 script = ExtResource("11_jf6cj")
 
+[node name="Settings" type="Button" parent="MainMenuUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 36
+text = "  Settings  "
+
 [node name="Quit" type="Button" parent="MainMenuUI/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
@@ -49,4 +56,5 @@ theme_override_font_sizes/font_size = 36
 text = "  Quit  "
 
 [connection signal="pressed" from="MainMenuUI/GridContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="MainMenuUI/GridContainer/Settings" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Quit" to="." method="_on_exit_pressed"]

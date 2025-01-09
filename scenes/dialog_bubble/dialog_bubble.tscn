@@ -346,6 +346,8 @@ width_curve = SubResource("Curve_ipv18")
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
+round_precision = 6
+antialiased = true
 
 [node name="Timer" type="Timer" parent="."]
 
@@ -356,6 +358,7 @@ end_cap_mode = 2
 [connection signal="state_entered" from="StateChart/root/lingers" to="." method="_on_lingers_state_entered"]
 [connection signal="state_processing" from="StateChart/root/lingers" to="." method="_on_lingers_state_processing"]
 [connection signal="state_entered" from="StateChart/root/pops out" to="." method="_on_pops_out_state_entered"]
+[connection signal="state_exited" from="StateChart/root/pops out" to="." method="_on_pops_out_state_exited"]
 [connection signal="state_processing" from="StateChart/root/pops out" to="." method="_on_pops_out_state_processing"]
 [connection signal="state_entered" from="StateChart/root/inactive" to="." method="_on_inactive_state_entered"]
 [connection signal="state_exited" from="StateChart/root/inactive" to="." method="_on_inactive_state_exited"]
