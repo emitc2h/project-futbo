@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="16_4ihqv"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
-[ext_resource type="VideoStream" path="res://assets/logo/pine_signal_interactive.ogv" id="19_rtiat"]
+[ext_resource type="VideoStream" path="res://assets/logo/pine_signal_interactive-1280x800.ogv" id="19_a2ie3"]
 [ext_resource type="PackedScene" uid="uid://c86ywxv55on5f" path="res://scenes/dialog_bubble/dialog_bubble.tscn" id="19_ub1r2"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
@@ -696,8 +696,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -360.0
-offset_bottom = -280.0
+offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
@@ -738,7 +737,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-stream = ExtResource("19_rtiat")
+stream = ExtResource("19_a2ie3")
 
 [node name="presents" type="Label" parent="Level1Script/CutScenePlayer/CanvasLayer"]
 modulate = Color(1, 1, 1, 0)
