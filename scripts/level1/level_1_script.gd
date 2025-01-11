@@ -21,7 +21,6 @@ func _ready() -> void:
 #=======================================================
 func _on_intro_cutscene_state_entered() -> void:
 	control_suppressor.enabled = true
-	cut_scene_context_player.play("cutscene bands come in")
 	cut_scene_player.play("intro")
 
 
@@ -32,7 +31,6 @@ func _on_intro_cutscene_state_processing(delta: float) -> void:
 
 func _on_intro_cutscene_state_exited() -> void:
 	cut_scene_player.seek(cut_scene_player.current_animation_length)
-	cut_scene_context_player.play("cutscene bands come out")
 
 
 #=======================================================

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene load_steps=31 format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="1_j6tjs"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="16_4ihqv"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
+[ext_resource type="VideoStream" path="res://assets/logo/pine_signal_interactive.ogv" id="19_rtiat"]
 [ext_resource type="PackedScene" uid="uid://c86ywxv55on5f" path="res://scenes/dialog_bubble/dialog_bubble.tscn" id="19_ub1r2"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
@@ -362,10 +363,33 @@ tracks/10/keys = {
 "points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/11/type = "bezier"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CutScenePlayer/CanvasLayer/BlackColorRect:color:a")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CutScenePlayer/CanvasLayer/VideoStreamPlayer:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_lcg1f"]
 resource_name = "intro"
-length = 15.0
+length = 23.0
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -373,9 +397,9 @@ tracks/0/path = NodePath("CutScenePlayer/CanvasLayer/BlackColorRect:color:a")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 5.5, 8.5)
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 7.5, 8, 13.5, 16.5)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -386,7 +410,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1, 2.5, 4, 5.5)
+"times": PackedFloat32Array(8, 9, 10.5, 12, 13.5)
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -395,7 +419,7 @@ tracks/2/path = NodePath("CutScenePlayer/CanvasLayer:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 15),
+"times": PackedFloat32Array(8, 23),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -409,7 +433,7 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0),
 "points": PackedFloat32Array(-0.349066, -0.25, 0, 0.25, 0, -0.349066, -0.25, 0, 0.25, 0, 0.0872665, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 5.5, 15)
+"times": PackedFloat32Array(8, 13.5, 23)
 }
 tracks/4/type = "bezier"
 tracks/4/imported = false
@@ -420,7 +444,7 @@ tracks/4/loop_wrap = true
 tracks/4/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(-58.2871, -0.25, 0, 1.46667, -0.0123138, -33.4634, -4.00002, 0.00431061, 0.25, 0),
-"times": PackedFloat32Array(5.5, 15)
+"times": PackedFloat32Array(13.5, 23)
 }
 tracks/5/type = "bezier"
 tracks/5/imported = false
@@ -431,7 +455,7 @@ tracks/5/loop_wrap = true
 tracks/5/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(1.54991, -0.25, 0, 0.25, 0, 0.278919, -4, -0.000630468, 0.25, 0),
-"times": PackedFloat32Array(5.5, 15)
+"times": PackedFloat32Array(13.5, 23)
 }
 tracks/6/type = "bezier"
 tracks/6/imported = false
@@ -442,7 +466,7 @@ tracks/6/loop_wrap = true
 tracks/6/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(6.80178, -0.25, 0, 0.25, 0, -1.71129, -4, 0.00422263, 0.25, 0),
-"times": PackedFloat32Array(5.5, 15)
+"times": PackedFloat32Array(13.5, 23)
 }
 tracks/7/type = "bezier"
 tracks/7/imported = false
@@ -453,7 +477,7 @@ tracks/7/loop_wrap = true
 tracks/7/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0),
 "points": PackedFloat32Array(-55.4298, -0.25, 0, 0.25, 0, -55.4298, -0.25, 0, 0.25, 0, -33.4582, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 5.5, 15)
+"times": PackedFloat32Array(8, 13.5, 23)
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -462,10 +486,53 @@ tracks/8/path = NodePath("../MainPlayer:play_animation")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 5.5, 15),
+"times": PackedFloat32Array(8, 13.5, 23),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": ["", "run", "idle"]
+}
+tracks/9/type = "method"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CutScenePlayer/CanvasLayer/VideoStreamPlayer")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play"
+}]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CutScenePlayer/CanvasLayer/VideoStreamPlayer:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 7.96667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/11/type = "method"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CutSceneContextPlayer")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(5.03333, 23),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"cutscene bands come in", -1, 1.0, false],
+"method": &"play"
+}, {
+"args": [&"cutscene bands come out", -1, 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oomc5"]
@@ -477,6 +544,13 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_og63g"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_m5c52"]
+
+[sub_resource type="Curve3D" id="Curve3D_kmy4g"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -62.5724, 0, 0, 0, 0, 0, 2, 0, 0, -26.3687, 0, 0, -2, 0, 0, 2, 0, 0, -23.0707, 0, 2.94833, -2, 0, 0, 0, 0, 0, -18.3681, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
 
 [node name="Act1" type="Node3D"]
 process_mode = 1
@@ -493,7 +567,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.087, 3, 8)
 subject = NodePath("../MainPlayer")
 
 [node name="Camera3D" parent="CameraController" index="0"]
-transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 1.1, 10)
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871558, 0, 0.0871558, 0.996195, 0, 1.1, 10)
 
 [node name="World" parent="." instance=ExtResource("3_wf22a")]
 
@@ -513,7 +587,7 @@ sprite_frames = ExtResource("6_wagr6")
 animation = &"celebrate"
 
 [node name="Ball" parent="." instance=ExtResource("7_xq8ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.4986, 0.255664, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.256, 0)
 max_speed = 20.0
 
 [node name="GoalLeft" parent="." instance=ExtResource("8_2nmo7")]
@@ -611,8 +685,7 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -80.0
-offset_bottom = -80.0
+offset_bottom = 80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
@@ -623,8 +696,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 80.9199
-offset_bottom = 81.0
+offset_top = -360.0
+offset_bottom = -280.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
@@ -657,7 +730,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Level1Script/CutScenePlayer/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("19_rtiat")
 
 [node name="presents" type="Label" parent="Level1Script/CutScenePlayer/CanvasLayer"]
 modulate = Color(1, 1, 1, 0)
@@ -674,8 +755,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 48
-text = "Pine Signal Interactive
-presents"
+text = "presents"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -695,6 +775,12 @@ shape = SubResource("WorldBoundaryShape3D_m5c52")
 visible = false
 camera_controller = NodePath("../../CameraController")
 player = NodePath("../../OpponentPlayer")
+
+[node name="SoccerFieldPath3D" type="Path3D" parent="Level1Script"]
+curve = SubResource("Curve3D_kmy4g")
+
+[node name="WalkToFieldPath3D" type="Path3D" parent="Level1Script"]
+curve = SubResource("Curve3D_kmy4g")
 
 [connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
 [connection signal="facing_left" from="MainPlayer" to="Ball" method="_on_facing_left"]

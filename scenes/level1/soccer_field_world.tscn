@@ -1375,7 +1375,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08, 0)
 shape = SubResource("ConcavePolygonShape3D_vyoab")
 
 [node name="Decal" type="Decal" parent="."]
-transform = Transform3D(0.960228, 0, 0, 0, 1, 0, 0, 0, 0.826843, 0, 3.38546, 0.705455)
+transform = Transform3D(0.960228, 0, 0, 0, 1, 0, 0, 0, 0.826843, 0, 3.38546, 0.645644)
 layers = 2
 size = Vector3(52.5, 22.7, 54)
 texture_albedo = ExtResource("17_ablyt")
