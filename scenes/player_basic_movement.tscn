@@ -268,6 +268,28 @@ to = NodePath("../../full")
 event = &"recovering to full"
 delay_in_seconds = "0.0"
 
+[node name="Constraint" type="Node" parent="State/Root"]
+script = ExtResource("4_70yeq")
+initial_state = NodePath("x-axis")
+
+[node name="x-axis" type="Node" parent="State/Root/Constraint"]
+script = ExtResource("5_cjn8p")
+
+[node name="to path" type="Node" parent="State/Root/Constraint/x-axis"]
+script = ExtResource("6_briu7")
+to = NodePath("../../path")
+event = &"x-axis to path"
+delay_in_seconds = "0.0"
+
+[node name="path" type="Node" parent="State/Root/Constraint"]
+script = ExtResource("5_cjn8p")
+
+[node name="to x-axis" type="Node" parent="State/Root/Constraint/path"]
+script = ExtResource("6_briu7")
+to = NodePath("../../x-axis")
+event = &"path to x-axis"
+delay_in_seconds = "0.0"
+
 [node name="JumpBufferTimer" type="Timer" parent="."]
 wait_time = 0.05
 
@@ -320,6 +342,8 @@ wait_time = 0.3
 [connection signal="state_entered" from="State/Root/Stamina/recovering" to="." method="_on_recovering_state_entered"]
 [connection signal="state_exited" from="State/Root/Stamina/recovering" to="." method="_on_recovering_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Stamina/recovering" to="." method="_on_recovering_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Constraint/x-axis" to="." method="_on_xaxis_state_entered"]
+[connection signal="state_entered" from="State/Root/Constraint/path" to="." method="_on_path_state_entered"]
 [connection signal="timeout" from="JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="timeout" from="TurnLeftTimer" to="." method="_on_turn_left_timer_timeout"]
 [connection signal="timeout" from="TurnRightTimer" to="." method="_on_turn_right_timer_timeout"]

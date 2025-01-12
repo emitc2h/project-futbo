@@ -6,11 +6,16 @@ extends Node3D
 @export var cut_scene_player: AnimationPlayer
 @export var cut_scene_context_player: AnimationPlayer
 
+@export_group("Main Player")
+@export var player: Player
+
 @export_group("Opponent Player")
 @export var opponent_ai: AI
 @export var opponent_dialog_bubble: DialogBubble
 
 @onready var state: StateChart = $StateChart
+
+var _path: CharacterPath = null
 
 func _ready() -> void:
 	cut_scene_player.animation_finished.connect(_on_cut_scene_player_animation_finished)
@@ -40,8 +45,11 @@ func _on_walk_to_field_state_entered() -> void:
 	control_suppressor.enabled = false
 
 
-func _on_trigger_gameplay_area_3d_body_entered(body: Node3D) -> void:
-	state.send_event("walk to field to gameplay")
+#=======================================================
+# GO AROUND GOAL STATE
+#=======================================================
+func _on_go_around_goal_state_exited() -> void:
+	_path.enabled = false
 
 
 #=======================================================
@@ -67,6 +75,17 @@ func _on_game_over_state_entered() -> void:
 func _on_trigger_game_over_area_3d_body_entered(body: Node3D) -> void:
 	state.send_event("walk to field to game over")
 	state.send_event("gameplay to game over")
+
+
+func _on_walk_to_field_path_3d_enter_path(path: CharacterPath) -> void:
+	_path = path
+	state.send_event("walk to field to go around goal")
+	player.get_on_path(path)
+
+
+func _on_walk_to_field_path_3d_exit_path() -> void:
+	state.send_event("go around goal to gameplay")
+	player.get_off_path()
 
 
 #=======================================================

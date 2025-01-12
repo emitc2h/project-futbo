@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://de54qalm0kq4f"]
+[gd_scene load_steps=5 format=3 uid="uid://de54qalm0kq4f"]
 
 [ext_resource type="Script" path="res://scripts/goal.gd" id="1_ll2ed"]
 [ext_resource type="PackedScene" uid="uid://c1ymu2h82no3g" path="res://assets/3D/goal.blend" id="2_4bxiw"]
 [ext_resource type="PackedScene" uid="uid://cmnaboavh4lbd" path="res://scenes/imported/goal_area.tscn" id="3_5i643"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ioguh"]
+size = Vector3(1, 1.87814, 0.162964)
 
 [node name="Goal" type="Node3D"]
 script = ExtResource("1_ll2ed")
@@ -12,6 +15,13 @@ script = ExtResource("1_ll2ed")
 [node name="Goal Area" parent="Goal Model" instance=ExtResource("3_5i643")]
 collision_layer = 0
 collision_mask = 4
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96196, -1.06242)
+shape = SubResource("BoxShape3D_ioguh")
 
 [connection signal="body_entered" from="Goal Model/Goal Area" to="." method="_on_goal_area_body_entered"]
 [connection signal="body_exited" from="Goal Model/Goal Area" to="." method="_on_goal_area_body_exited"]

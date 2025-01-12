@@ -58,6 +58,12 @@ var in_in_the_air_state: bool = false
 var sprint_button_pressed: bool = false
 var in_recovering_state: bool = false
 
+# path constraint
+var _path: CharacterPath = null
+var _stay_on_path_force: float = 50.0
+var player_velocity_callable: Callable = Callable(self, "_velocity_on_x_axis")
+var player_skid_callable: Callable = Callable(self, "_skid_on_x_axis")
+
 # Signals
 signal facing_left()
 signal facing_right()
@@ -97,7 +103,7 @@ func _on_idle_state_entered() -> void:
 
 func _on_idle_state_physics_processing(delta: float) -> void:
 	# Instead of stopping abruptly, decelerate
-	player.velocity.x = move_toward(player.velocity.x, 0, run_deceleration)
+	player_velocity_callable.call(move_toward(player.velocity.x, 0, run_deceleration))
 	
 	# If the floor falls from under the player
 	if not player.is_on_floor():
@@ -132,7 +138,7 @@ func run_process() -> void:
 		max_velocity = recovery_velocity
 	
 	# Apply the velocity to the player
-	player.velocity.x = left_right_axis * max_velocity
+	player_velocity_callable.call(left_right_axis * max_velocity)
 
 
 func _on_run_state_entered() -> void:
@@ -195,7 +201,7 @@ func skid_process() -> void:
 		# when turning, slow down and accelerate in the opposite direction
 	# turning_time_left should go from 2.0 to 0.0 over the course of the timer
 	if turning_time_left > 0.0:
-		player.velocity.x *= (1.0 - turning_time_left)
+		player_skid_callable.call(1.0 - turning_time_left)
 
 
 func _on_skid_state_entered() -> void:
@@ -464,6 +470,34 @@ func _on_recovering_state_exited() -> void:
 
 
 #=======================================================
+# CONSTRAINT STATES
+#=======================================================
+
+# x-axis state
+#----------------------------------------
+func _on_xaxis_state_entered() -> void:
+	# Constrain movement along the x-axis
+	player.axis_lock_linear_z = true
+	player.axis_lock_angular_y = true
+	
+	# Apply velocity from input to x-axis only
+	player_velocity_callable = Callable(self, "_velocity_on_x_axis")
+	player_skid_callable = Callable(self, "_skid_on_x_axis")
+
+
+# path state
+#----------------------------------------
+func _on_path_state_entered() -> void:
+	# Unconstrain movement
+	player.axis_lock_linear_z = false
+	player.axis_lock_angular_y = false
+	
+	# Apply velocity from input along the path
+	player_velocity_callable = Callable(self, "_velocity_on_path")
+	player_skid_callable = Callable(self, "_skid_on_path")
+
+
+#=======================================================
 # CONTROL FUNCTIONS
 #=======================================================
 
@@ -512,3 +546,44 @@ func jump_with_custom_animation(animation: String) -> void:
 func idle_with_custom_animation(animation: String) -> void:
 	idle_animation = animation
 	state.send_event("run to idle")
+
+
+func get_on_path(path: CharacterPath) -> void:
+	_path = path
+	state.send_event("x-axis to path")
+
+
+func get_off_path() -> void:
+	state.send_event("path to x-axis")
+	_path = null
+
+
+#=======================================================
+# UTILITY FUNCTIONS
+#=======================================================
+func _velocity_on_x_axis(input_magnitude: float) -> void:
+	player.velocity.x = input_magnitude
+
+
+func _skid_on_x_axis(skid_factor: float) -> void:
+	player.velocity.x *= skid_factor
+
+
+func _velocity_on_path(input_magnitude: float) -> void:
+	var offset: float = _path.curve.get_closest_offset(player.position)
+	var closest_point: Vector3 = _path.curve.get_closest_point(player.position)
+	var curve_transform: Transform3D = _path.curve.sample_baked_with_rotation(offset)
+	var direction: Vector3 = curve_transform.basis.z
+	
+	player.rotation.y = Vector3(-1,0,0).signed_angle_to(direction, Vector3(0,1,0))
+	
+	if direction:
+		var stay_on_path_correction: Vector3 = (closest_point - player.position)
+		player.velocity.x = -input_magnitude * direction.x + _stay_on_path_force * stay_on_path_correction.x
+		player.velocity.z = -input_magnitude * direction.z + _stay_on_path_force * stay_on_path_correction.z
+
+
+func _skid_on_path(skid_factor: float) -> void:
+	var direction := Vector2(player.velocity.x, player.velocity.z).normalized()
+	player.velocity.x *= (direction.x * skid_factor)
+	player.velocity.z *= (direction.y * skid_factor)

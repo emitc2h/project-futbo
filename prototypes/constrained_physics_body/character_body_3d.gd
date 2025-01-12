@@ -1,8 +1,6 @@
 extends CharacterBody3D
 
 @export var path: Path3D
-var path_begin_offset: float
-var path_end_offset: float
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -10,11 +8,6 @@ const JUMP_VELOCITY = 4.5
 # This represents the player's inertia.
 var push_force: float = 1.0
 var correction_force: float = 100.0
-
-
-func _ready() -> void:
-	path_begin_offset = path.curve.get_closest_offset(path.curve.get_point_position(0))
-	path_end_offset = path.curve.get_closest_offset(path.curve.get_point_position(path.curve.point_count-1))
 
 
 func _physics_process(delta: float) -> void:

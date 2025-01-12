@@ -89,3 +89,11 @@ func stop() -> void:
 func jump() -> void:
 	if player_basic_movement:
 		player_basic_movement.jump()
+
+
+func get_on_path(path: CharacterPath) -> void:
+	player_basic_movement.get_on_path(path)
+
+
+func get_off_path() -> void:
+	player_basic_movement.get_off_path()
