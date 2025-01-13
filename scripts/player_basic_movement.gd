@@ -62,6 +62,7 @@ var in_recovering_state: bool = false
 var _path: CharacterPath = null
 var _stay_on_path_force: float = 50.0
 var player_velocity_callable: Callable = Callable(self, "_velocity_on_x_axis")
+var player_float_callable: Callable = Callable(self, "_float_on_x_axis")
 var player_skid_callable: Callable = Callable(self, "_skid_on_x_axis")
 
 # Signals
@@ -281,6 +282,7 @@ func _on_in_the_air_state_physics_processing(delta: float) -> void:
 		state.send_event("in the air to run")
 	else:
 		player.velocity.y += gravity * delta
+		player_float_callable.call()
 	
 	# Needs to be called in every movement state
 	player.move_and_slide()
@@ -303,6 +305,7 @@ func _on_jump_buffer_state_physics_processing(delta: float) -> void:
 		state.send_event("jump buffer to jump")
 	else:
 		player.velocity.y += gravity * delta
+		player_float_callable.call()
 	
 	# Needs to be called in every movement state
 	player.move_and_slide()
@@ -482,6 +485,7 @@ func _on_xaxis_state_entered() -> void:
 	
 	# Apply velocity from input to x-axis only
 	player_velocity_callable = Callable(self, "_velocity_on_x_axis")
+	player_float_callable = Callable(self, "_float_on_x_axis")
 	player_skid_callable = Callable(self, "_skid_on_x_axis")
 
 
@@ -494,6 +498,7 @@ func _on_path_state_entered() -> void:
 	
 	# Apply velocity from input along the path
 	player_velocity_callable = Callable(self, "_velocity_on_path")
+	player_float_callable = Callable(self, "_float_on_path")
 	player_skid_callable = Callable(self, "_skid_on_path")
 
 
@@ -565,6 +570,10 @@ func _velocity_on_x_axis(input_magnitude: float) -> void:
 	player.velocity.x = input_magnitude
 
 
+func _float_on_x_axis() -> void:
+	pass
+
+
 func _skid_on_x_axis(skid_factor: float) -> void:
 	player.velocity.x *= skid_factor
 
@@ -581,6 +590,23 @@ func _velocity_on_path(input_magnitude: float) -> void:
 		var stay_on_path_correction: Vector3 = (closest_point - player.position)
 		player.velocity.x = -input_magnitude * direction.x + _stay_on_path_force * stay_on_path_correction.x
 		player.velocity.z = -input_magnitude * direction.z + _stay_on_path_force * stay_on_path_correction.z
+
+
+func _float_on_path() -> void:
+	var offset: float = _path.curve.get_closest_offset(player.position)
+	var curve_transform: Transform3D = _path.curve.sample_baked_with_rotation(offset)
+	var direction: Vector3 = curve_transform.basis.z
+	
+	player.rotation.y = Vector3(-1,0,0).signed_angle_to(direction, Vector3(0,1,0))
+	
+	var velocity_along_path_vec := Vector3(player.velocity.x, 0.0, player.velocity.z)
+	var velocity_sign: float = sign(direction.dot(velocity_along_path_vec))
+	
+	var velocity_along_path: float = velocity_along_path_vec.length()
+	
+	if direction:
+		player.velocity.x = velocity_sign * velocity_along_path * direction.x
+		player.velocity.z = velocity_sign * velocity_along_path * direction.z
 
 
 func _skid_on_path(skid_factor: float) -> void:

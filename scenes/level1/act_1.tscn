@@ -552,7 +552,7 @@ _data = {
 point_count = 5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gi030"]
-radius = 4.65905
+radius = 0.208921
 
 [node name="Act1" type="Node3D"]
 process_mode = 1
@@ -703,7 +703,8 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 80.0
+offset_top = -80.0
+offset_bottom = -80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
@@ -714,7 +715,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -80.0
+offset_top = 80.9199
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
@@ -791,12 +793,32 @@ player = NodePath("../../OpponentPlayer")
 curve = SubResource("Curve3D_kmy4g")
 script = ExtResource("21_17o5v")
 
-[node name="Area3D" type="Area3D" parent="Level1Script/WalkToFieldPath3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.147, 0, 0)
+[node name="EnterOutArea3D" type="Area3D" parent="Level1Script/WalkToFieldPath3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5266, 0, 0)
 collision_layer = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/WalkToFieldPath3D/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.708452, 0, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/WalkToFieldPath3D/EnterOutArea3D"]
+shape = SubResource("SphereShape3D_gi030")
+
+[node name="EnterInArea3D" type="Area3D" parent="Level1Script/WalkToFieldPath3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.8414, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/WalkToFieldPath3D/EnterInArea3D"]
+shape = SubResource("SphereShape3D_gi030")
+
+[node name="ExitInArea3D" type="Area3D" parent="Level1Script/WalkToFieldPath3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6132, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/WalkToFieldPath3D/ExitInArea3D"]
+shape = SubResource("SphereShape3D_gi030")
+
+[node name="ExitOutArea3D" type="Area3D" parent="Level1Script/WalkToFieldPath3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.9365, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/WalkToFieldPath3D/ExitOutArea3D"]
 shape = SubResource("SphereShape3D_gi030")
 
 [connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
@@ -817,10 +839,13 @@ shape = SubResource("SphereShape3D_gi030")
 [connection signal="state_entered" from="Level1Script/StateChart/root/gameplay" to="Level1Script" method="_on_gameplay_state_entered"]
 [connection signal="state_entered" from="Level1Script/StateChart/root/game over" to="Level1Script" method="_on_game_over_state_entered"]
 [connection signal="body_entered" from="Level1Script/TriggerGameOverArea3D" to="Level1Script" method="_on_trigger_game_over_area_3d_body_entered"]
-[connection signal="enter_path" from="Level1Script/WalkToFieldPath3D" to="Level1Script" method="_on_walk_to_field_path_3d_enter_path"]
-[connection signal="exit_path" from="Level1Script/WalkToFieldPath3D" to="Level1Script" method="_on_walk_to_field_path_3d_exit_path"]
-[connection signal="body_entered" from="Level1Script/WalkToFieldPath3D/Area3D" to="Level1Script/WalkToFieldPath3D" method="_on_area_3d_body_entered"]
-[connection signal="body_exited" from="Level1Script/WalkToFieldPath3D/Area3D" to="Level1Script/WalkToFieldPath3D" method="_on_area_3d_body_exited"]
+[connection signal="in_path" from="Level1Script/WalkToFieldPath3D" to="Level1Script" method="_on_walk_to_field_path_3d_in_path"]
+[connection signal="leave_by_enter" from="Level1Script/WalkToFieldPath3D" to="Level1Script" method="_on_walk_to_field_path_3d_leave_by_enter"]
+[connection signal="leave_by_exit" from="Level1Script/WalkToFieldPath3D" to="Level1Script" method="_on_walk_to_field_path_3d_leave_by_exit"]
+[connection signal="body_entered" from="Level1Script/WalkToFieldPath3D/EnterOutArea3D" to="Level1Script/WalkToFieldPath3D" method="_on_enter_out_area_3d_body_entered"]
+[connection signal="body_entered" from="Level1Script/WalkToFieldPath3D/EnterInArea3D" to="Level1Script/WalkToFieldPath3D" method="_on_enter_in_area_3d_body_entered"]
+[connection signal="body_entered" from="Level1Script/WalkToFieldPath3D/ExitInArea3D" to="Level1Script/WalkToFieldPath3D" method="_on_exit_in_area_3d_body_entered"]
+[connection signal="body_entered" from="Level1Script/WalkToFieldPath3D/ExitOutArea3D" to="Level1Script/WalkToFieldPath3D" method="_on_exit_out_area_3d_body_entered"]
 
 [editable path="WorldEnvironment"]
 [editable path="CameraController"]
