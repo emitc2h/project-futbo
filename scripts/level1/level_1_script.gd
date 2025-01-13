@@ -78,19 +78,16 @@ func _on_trigger_game_over_area_3d_body_entered(body: Node3D) -> void:
 
 
 func _on_walk_to_field_path_3d_in_path(path: CharacterPath) -> void:
-	print("in path signal received")
 	_path = path
 	state.send_event("walk to field to go around goal")
 	player.get_on_path(path)
 
 
 func _on_walk_to_field_path_3d_leave_by_enter() -> void:
-	print("leave_by_enter signal received")
 	player.get_off_path()
 
 
 func _on_walk_to_field_path_3d_leave_by_exit() -> void:
-	print("leave_by_exit signal received")
 	state.send_event("go around goal to gameplay")
 	player.get_off_path()
 
