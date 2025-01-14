@@ -5,11 +5,13 @@ extends Node3D
 @export var control_suppressor: ControlSuppressor
 @export var cut_scene_player: AnimationPlayer
 @export var cut_scene_context_player: AnimationPlayer
+@export var camera_controller: CameraController
 
 @export_group("Main Player")
 @export var player: Player
 
 @export_group("Opponent Player")
+@export var opponent_player: Player
 @export var opponent_ai: AI
 @export var opponent_dialog_bubble: DialogBubble
 
@@ -48,7 +50,12 @@ func _on_walk_to_field_state_entered() -> void:
 #=======================================================
 # GO AROUND GOAL STATE
 #=======================================================
+func _on_go_around_goal_state_entered() -> void:
+	camera_controller.z_tracking_enabled = false
+
+
 func _on_go_around_goal_state_exited() -> void:
+	camera_controller.z_tracking_enabled = true
 	_path.enabled = false
 
 
@@ -56,7 +63,10 @@ func _on_go_around_goal_state_exited() -> void:
 # GAMEPLAY STATE
 #=======================================================
 func _on_gameplay_state_entered() -> void:
-	opponent_dialog_bubble.pop_up("Hey! There you are!\nLet me go get the ball!")
+	opponent_player.run(-1.0)
+	await get_tree().create_timer(0.2).timeout
+	opponent_player.stop()
+	opponent_dialog_bubble.pop_up("Hey! There you are!\nLet me go get the ball!", 2.0, 0.006)
 	await opponent_dialog_bubble.finished
 	opponent_ai.behaviors.state.send_event("disabled to seek")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene load_steps=30 format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="1_j6tjs"]
@@ -20,7 +20,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
 [ext_resource type="VideoStream" path="res://assets/logo/pine_signal_interactive-1280x800.ogv" id="19_a2ie3"]
 [ext_resource type="PackedScene" uid="uid://c86ywxv55on5f" path="res://scenes/dialog_bubble/dialog_bubble.tscn" id="19_ub1r2"]
-[ext_resource type="Script" path="res://scripts/character_path.gd" id="21_17o5v"]
+[ext_resource type="PackedScene" uid="uid://dd7rk2je4r01m" path="res://scenes/character_path/character_path.tscn" id="21_52762"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
 length = 0.001
@@ -544,16 +544,6 @@ _data = {
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_m5c52"]
 
-[sub_resource type="Curve3D" id="Curve3D_kmy4g"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -28, 0, 0, 0, 0, 0, 2, 0, 0, -26.3687, 0, 0, -2, 0, 0, 2, 0, 0, -23.0707, 0, 2.94833, -2, 0, 0, 0, 0, 0, -18.3681, 0, 0, 0, 0, 0, 0, 0, 0, -16.368, 0, 0),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
-}
-point_count = 5
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_gi030"]
-radius = 0.208921
-
 [node name="Act1" type="Node3D"]
 process_mode = 1
 script = ExtResource("1_75wj8")
@@ -569,7 +559,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.087, 3, 8)
 subject = NodePath("../MainPlayer")
 
 [node name="Camera3D" parent="CameraController" index="0"]
-transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871558, 0, 0.0871558, 0.996195, 0, 1.1, 10)
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 1.1, 10)
 
 [node name="World" parent="." instance=ExtResource("3_wf22a")]
 
@@ -599,7 +589,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.40
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 22.4937, 0, 0)
 
 [node name="OpponentPlayer" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("4_8dl31")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3981, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2235, 0, 0)
 sprite = NodePath("AnimatedSprite3D")
 run_forward_velocity = 4.0
 run_backward_velocity = 3.0
@@ -623,12 +613,14 @@ player = NodePath("../MainPlayer")
 [node name="ControlSuppressor" parent="." node_paths=PackedStringArray("controlled_nodes") instance=ExtResource("13_hpf6u")]
 controlled_nodes = [NodePath("../CameraController"), NodePath("../MainPlayer/Controller"), NodePath("../OpponentPlayer/AI")]
 
-[node name="Level1Script" type="Node3D" parent="." node_paths=PackedStringArray("control_suppressor", "cut_scene_player", "cut_scene_context_player", "player", "opponent_ai", "opponent_dialog_bubble")]
+[node name="Level1Script" type="Node3D" parent="." node_paths=PackedStringArray("control_suppressor", "cut_scene_player", "cut_scene_context_player", "camera_controller", "player", "opponent_player", "opponent_ai", "opponent_dialog_bubble")]
 script = ExtResource("14_eau2p")
 control_suppressor = NodePath("../ControlSuppressor")
 cut_scene_player = NodePath("CutScenePlayer")
 cut_scene_context_player = NodePath("CutSceneContextPlayer")
+camera_controller = NodePath("../CameraController")
 player = NodePath("../MainPlayer")
+opponent_player = NodePath("../OpponentPlayer")
 opponent_ai = NodePath("../OpponentPlayer/AI")
 opponent_dialog_bubble = NodePath("OpponentDialogBubble")
 
@@ -789,37 +781,7 @@ visible = false
 camera_controller = NodePath("../../CameraController")
 player = NodePath("../../OpponentPlayer")
 
-[node name="WalkToFieldPath3D" type="Path3D" parent="Level1Script"]
-curve = SubResource("Curve3D_kmy4g")
-script = ExtResource("21_17o5v")
-
-[node name="EnterOutArea3D" type="Area3D" parent="Level1Script/WalkToFieldPath3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5266, 0, 0)
-collision_layer = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/WalkToFieldPath3D/EnterOutArea3D"]
-shape = SubResource("SphereShape3D_gi030")
-
-[node name="EnterInArea3D" type="Area3D" parent="Level1Script/WalkToFieldPath3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.8414, 0, 0)
-collision_layer = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/WalkToFieldPath3D/EnterInArea3D"]
-shape = SubResource("SphereShape3D_gi030")
-
-[node name="ExitInArea3D" type="Area3D" parent="Level1Script/WalkToFieldPath3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6132, 0, 0)
-collision_layer = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/WalkToFieldPath3D/ExitInArea3D"]
-shape = SubResource("SphereShape3D_gi030")
-
-[node name="ExitOutArea3D" type="Area3D" parent="Level1Script/WalkToFieldPath3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.9365, 0, 0)
-collision_layer = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/WalkToFieldPath3D/ExitOutArea3D"]
-shape = SubResource("SphereShape3D_gi030")
+[node name="WalkToFieldPath3D" parent="Level1Script" instance=ExtResource("21_52762")]
 
 [connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
 [connection signal="facing_left" from="MainPlayer" to="Ball" method="_on_facing_left"]
@@ -835,6 +797,7 @@ shape = SubResource("SphereShape3D_gi030")
 [connection signal="state_exited" from="Level1Script/StateChart/root/intro cutscene" to="Level1Script" method="_on_intro_cutscene_state_exited"]
 [connection signal="state_processing" from="Level1Script/StateChart/root/intro cutscene" to="Level1Script" method="_on_intro_cutscene_state_processing"]
 [connection signal="state_entered" from="Level1Script/StateChart/root/walk to field" to="Level1Script" method="_on_walk_to_field_state_entered"]
+[connection signal="state_entered" from="Level1Script/StateChart/root/go around goal" to="Level1Script" method="_on_go_around_goal_state_entered"]
 [connection signal="state_exited" from="Level1Script/StateChart/root/go around goal" to="Level1Script" method="_on_go_around_goal_state_exited"]
 [connection signal="state_entered" from="Level1Script/StateChart/root/gameplay" to="Level1Script" method="_on_gameplay_state_entered"]
 [connection signal="state_entered" from="Level1Script/StateChart/root/game over" to="Level1Script" method="_on_game_over_state_entered"]
@@ -842,10 +805,6 @@ shape = SubResource("SphereShape3D_gi030")
 [connection signal="in_path" from="Level1Script/WalkToFieldPath3D" to="Level1Script" method="_on_walk_to_field_path_3d_in_path"]
 [connection signal="leave_by_enter" from="Level1Script/WalkToFieldPath3D" to="Level1Script" method="_on_walk_to_field_path_3d_leave_by_enter"]
 [connection signal="leave_by_exit" from="Level1Script/WalkToFieldPath3D" to="Level1Script" method="_on_walk_to_field_path_3d_leave_by_exit"]
-[connection signal="body_entered" from="Level1Script/WalkToFieldPath3D/EnterOutArea3D" to="Level1Script/WalkToFieldPath3D" method="_on_enter_out_area_3d_body_entered"]
-[connection signal="body_entered" from="Level1Script/WalkToFieldPath3D/EnterInArea3D" to="Level1Script/WalkToFieldPath3D" method="_on_enter_in_area_3d_body_entered"]
-[connection signal="body_entered" from="Level1Script/WalkToFieldPath3D/ExitInArea3D" to="Level1Script/WalkToFieldPath3D" method="_on_exit_in_area_3d_body_entered"]
-[connection signal="body_entered" from="Level1Script/WalkToFieldPath3D/ExitOutArea3D" to="Level1Script/WalkToFieldPath3D" method="_on_exit_out_area_3d_body_entered"]
 
 [editable path="WorldEnvironment"]
 [editable path="CameraController"]

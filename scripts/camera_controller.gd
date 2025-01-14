@@ -18,6 +18,13 @@ var _enabled: bool = true
 	set(value):
 		_enabled = value
 
+var _z_tracking_enabled: bool = true
+@export var z_tracking_enabled: bool:
+	get:
+		return _z_tracking_enabled
+	set(value):
+		_z_tracking_enabled = value
+
 
 @export_group("Lerp Factors")
 @export var lerp_x: float = 4.8
@@ -66,7 +73,8 @@ func _process(delta: float) -> void:
 	if _enabled:
 		global_position.x = lerp(global_position.x, subject.global_position.x, lerp_x * delta)
 		global_position.y = lerp(global_position.y, subject.global_position.y, lerp_y * delta)
-		global_position.z = lerp(global_position.z, subject.global_position.z, lerp_z * delta)
+		if _z_tracking_enabled:
+			global_position.z = lerp(global_position.z, subject.global_position.z, lerp_z * delta)
 	
 	## Always sync the skybox
 	camera_changed.emit(camera.rotation, camera.global_position - camera_initial_position, camera.fov)

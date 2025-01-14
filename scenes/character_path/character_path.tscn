@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://dd7rk2je4r01m"]
+
+[ext_resource type="Script" path="res://scripts/character_path.gd" id="1_dsh78"]
+
+[sub_resource type="Curve3D" id="Curve3D_kmy4g"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -28, 0, 0, 0, 0, 0, 2, 0, 0, -26.3687, 0, 0, -2, 0, 0, 2, 0, 0, -23.0707, 0, 2.94833, -2, 0, 0, 0, 0, 0, -18.3681, 0, 0, 0, 0, 0, 0, 0, 0, -16.368, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kj3cc"]
+radius = 0.15
+height = 8.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b3ogj"]
+radius = 0.15
+height = 8.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uic3q"]
+radius = 0.15
+height = 8.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0i2nd"]
+radius = 0.15
+height = 8.0
+
+[node name="WalkToFieldPath3D" type="Path3D"]
+curve = SubResource("Curve3D_kmy4g")
+script = ExtResource("1_dsh78")
+
+[node name="EnterOutArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5266, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterOutArea3D"]
+shape = SubResource("CapsuleShape3D_kj3cc")
+
+[node name="EnterInArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.8414, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterInArea3D"]
+shape = SubResource("CapsuleShape3D_b3ogj")
+
+[node name="ExitInArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.6132, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitInArea3D"]
+shape = SubResource("CapsuleShape3D_uic3q")
+
+[node name="ExitOutArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.9365, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitOutArea3D"]
+shape = SubResource("CapsuleShape3D_0i2nd")
+
+[connection signal="body_entered" from="EnterOutArea3D" to="." method="_on_enter_out_area_3d_body_entered"]
+[connection signal="body_entered" from="EnterInArea3D" to="." method="_on_enter_in_area_3d_body_entered"]
+[connection signal="body_entered" from="ExitInArea3D" to="." method="_on_exit_in_area_3d_body_entered"]
+[connection signal="body_entered" from="ExitOutArea3D" to="." method="_on_exit_out_area_3d_body_entered"]
