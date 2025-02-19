@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene load_steps=36 format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="1_j6tjs"]
@@ -19,60 +19,66 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
 [ext_resource type="VideoStream" path="res://assets/logo/pine_signal_interactive-1280x800.ogv" id="19_a2ie3"]
+[ext_resource type="Texture2D" uid="uid://cq6d1nvt8t2s7" path="res://kenney_input-prompts/Xbox Series/Default/xbox_button_b.png" id="19_kmghq"]
 [ext_resource type="PackedScene" uid="uid://c86ywxv55on5f" path="res://scenes/dialog_bubble/dialog_bubble.tscn" id="19_ub1r2"]
+[ext_resource type="Script" path="res://scripts/controller_ui/dynamic_button_display.gd" id="20_ewap6"]
 [ext_resource type="PackedScene" uid="uid://dd7rk2je4r01m" path="res://scenes/character_path/character_path.tscn" id="21_52762"]
+[ext_resource type="Texture2D" uid="uid://bbr1htmjn4pcw" path="res://kenney_input-prompts/Nintendo Switch/Default/switch_button_a.png" id="21_ip41t"]
+[ext_resource type="Texture2D" uid="uid://b6y8aq57ik4gn" path="res://kenney_input-prompts/Steam Deck/Default/steamdeck_button_b.png" id="22_hfmre"]
+[ext_resource type="Texture2D" uid="uid://1sygo4tcshke" path="res://kenney_input-prompts/Keyboard & Mouse/Default/keyboard_shift_icon.png" id="23_8re7r"]
+[ext_resource type="Texture2D" uid="uid://bhhkq0sw3yj7e" path="res://kenney_input-prompts/PlayStation Series/Default/playstation_button_circle.png" id="24_elchd"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
 length = 0.001
-tracks/0/type = "bezier"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CutSceneContextPlayer/CanvasLayer/PressBToSkip:theme_override_colors/font_color:a")
+tracks/0/path = NodePath("CutSceneContextPlayer/CanvasLayer:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.0005, 0, 0.0005, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CutSceneContextPlayer/CanvasLayer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
 }
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(81, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_bottom")
+tracks/2/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_top")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(81, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(80.9199, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_top")
+tracks/3/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_bottom")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(80.9199, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(-80, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_bottom")
+tracks/4/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_top")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -83,119 +89,60 @@ tracks/4/keys = {
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_top")
+tracks/5/path = NodePath("CutSceneContextPlayer/CanvasLayer/HBoxContainer:modulate:a")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-80, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CutSceneContextPlayer/CanvasLayer/HBoxContainer:modulate:b")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_122bi"]
 resource_name = "cutscene bands come in"
-tracks/0/type = "bezier"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CutSceneContextPlayer/CanvasLayer/PressBToSkip:theme_override_colors/font_color:a")
+tracks/0/path = NodePath("CutSceneContextPlayer/CanvasLayer:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CutSceneContextPlayer/CanvasLayer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_bottom")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(81, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 1)
 }
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_top")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(80.9199, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_bottom")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -80, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_top")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-80, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-
-[sub_resource type="Animation" id="Animation_m0u32"]
-resource_name = "cutscene bands come out"
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CutSceneContextPlayer/CanvasLayer/PressBToSkip:theme_override_colors/font_color:a")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CutSceneContextPlayer/CanvasLayer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_top")
+tracks/2/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_top")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -80, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(80.9199, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 1)
 }
 tracks/3/type = "bezier"
@@ -206,13 +153,83 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-80, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -80, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 1)
 }
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_top")
+tracks/4/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_top")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-80, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CutSceneContextPlayer/CanvasLayer/HBoxContainer:modulate:a")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="Animation" id="Animation_m0u32"]
+resource_name = "cutscene bands come out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutSceneContextPlayer/CanvasLayer:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -80, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandTop:offset_bottom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-80, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_top")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 80, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_bottom")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -223,12 +240,23 @@ tracks/4/keys = {
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CutSceneContextPlayer/CanvasLayer/BlackCutSceneBandBottom:offset_bottom")
+tracks/5/path = NodePath("CutSceneContextPlayer/CanvasLayer/HBoxContainer:modulate:b")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 80, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CutSceneContextPlayer/CanvasLayer/HBoxContainer:modulate:a")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 1)
 }
 
@@ -356,7 +384,7 @@ tracks/9/keys = {
 tracks/10/type = "bezier"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("CutSceneContextPlayer/CanvasLayer/PressBToSkip:theme_override_colors/font_color:a")
+tracks/10/path = NodePath("CutSceneContextPlayer/CanvasLayer/HBoxContainer/Press:theme_override_colors/font_color:a")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -607,6 +635,7 @@ sprite_frames = ExtResource("10_0rft1")
 animation = &"celebrate"
 
 [node name="UI" parent="." node_paths=PackedStringArray("camera_controller", "player") instance=ExtResource("11_ffwmr")]
+visible = false
 camera_controller = NodePath("../CameraController")
 player = NodePath("../MainPlayer")
 
@@ -695,8 +724,7 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -80.0
-offset_bottom = -80.0
+offset_bottom = 80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
@@ -707,25 +735,46 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 80.9199
-offset_bottom = 81.0
+offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="PressBToSkip" type="Label" parent="Level1Script/CutSceneContextPlayer/CanvasLayer"]
-anchors_preset = 3
+[node name="HBoxContainer" type="HBoxContainer" parent="Level1Script/CutSceneContextPlayer/CanvasLayer"]
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -150.0
-offset_top = -52.0
+offset_bottom = -27.0
 grow_horizontal = 0
 grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Press" type="Label" parent="Level1Script/CutSceneContextPlayer/CanvasLayer/HBoxContainer"]
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "Press 'B' to Skip"
+text = "Press"
+
+[node name="DynamicButtonDisplay" type="TextureRect" parent="Level1Script/CutSceneContextPlayer/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("19_kmghq")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("20_ewap6")
+xbox_texture = ExtResource("19_kmghq")
+switch_texture = ExtResource("21_ip41t")
+steam_deck_texture = ExtResource("22_hfmre")
+keyboard_texture = ExtResource("23_8re7r")
+playstation_texture = ExtResource("24_elchd")
+
+[node name="to skip" type="Label" parent="Level1Script/CutSceneContextPlayer/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "to skip
+"
 
 [node name="CutScenePlayer" type="AnimationPlayer" parent="Level1Script"]
 libraries = {

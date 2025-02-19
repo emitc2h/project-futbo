@@ -24,6 +24,7 @@ AiSkill="*res://scripts/globals/ai_skill.gd"
 CalcPhys="*res://scripts/globals/calc_phys.gd"
 Signals="*res://scripts/globals/signals.gd"
 Level="*res://scripts/globals/level.gd"
+Settings="*res://scripts/globals/settings.gd"
 
 [debug]
 
