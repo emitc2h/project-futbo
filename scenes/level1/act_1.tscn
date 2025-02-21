@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene load_steps=40 format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="1_j6tjs"]
@@ -27,6 +27,9 @@
 [ext_resource type="Texture2D" uid="uid://b6y8aq57ik4gn" path="res://kenney_input-prompts/Steam Deck/Default/steamdeck_button_b.png" id="22_hfmre"]
 [ext_resource type="Texture2D" uid="uid://1sygo4tcshke" path="res://kenney_input-prompts/Keyboard & Mouse/Default/keyboard_shift_icon.png" id="23_8re7r"]
 [ext_resource type="Texture2D" uid="uid://bhhkq0sw3yj7e" path="res://kenney_input-prompts/PlayStation Series/Default/playstation_button_circle.png" id="24_elchd"]
+[ext_resource type="PackedScene" uid="uid://b57u11ctire4l" path="res://assets/3D/Act1/blend/character1.blend" id="28_v3ssc"]
+[ext_resource type="Texture2D" uid="uid://bn0up3jpdbqdi" path="res://assets/prototypes/character_design/character_base_color.png" id="29_rygy7"]
+[ext_resource type="Texture2D" uid="uid://cautq45rhb0fk" path="res://assets/prototypes/character_design/charcter_base_normal_normal.png" id="30_ddgo7"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
 length = 0.001
@@ -572,6 +575,11 @@ _data = {
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_m5c52"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5gksj"]
+albedo_texture = ExtResource("29_rygy7")
+normal_enabled = true
+normal_texture = ExtResource("30_ddgo7")
+
 [node name="Act1" type="Node3D"]
 process_mode = 1
 script = ExtResource("1_75wj8")
@@ -742,7 +750,7 @@ color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Level1Script/CutSceneContextPlayer/CanvasLayer"]
-anchors_preset = -1
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -832,6 +840,12 @@ player = NodePath("../../OpponentPlayer")
 
 [node name="WalkToFieldPath3D" parent="Level1Script" instance=ExtResource("21_52762")]
 
+[node name="character1" parent="." instance=ExtResource("28_v3ssc")]
+transform = Transform3D(0.254236, 0, 0.194329, 0, 0.32, 0, -0.194329, 0, 0.254236, -21.1478, 0.0142218, 0.269963)
+
+[node name="Body" parent="character1" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_5gksj")
+
 [connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
 [connection signal="facing_left" from="MainPlayer" to="Ball" method="_on_facing_left"]
 [connection signal="facing_right" from="MainPlayer" to="Ball" method="_on_facing_right"]
@@ -857,3 +871,4 @@ player = NodePath("../../OpponentPlayer")
 
 [editable path="WorldEnvironment"]
 [editable path="CameraController"]
+[editable path="character1"]
