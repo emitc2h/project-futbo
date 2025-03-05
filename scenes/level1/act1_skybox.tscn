@@ -12,7 +12,7 @@
 [ext_resource type="Material" uid="uid://e2ekgagyh85i" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_2.tres" id="5_xs643"]
 [ext_resource type="Texture2D" uid="uid://b4jb5n6h00xyv" path="res://assets/3D/Act1/Textures/Sky/CloudLine2/CloudLine2_color.png" id="6_qshv0"]
 [ext_resource type="Texture2D" uid="uid://bux7qtbkhdkx3" path="res://assets/3D/Act1/Textures/Sky/CloudLine2/CloudLine2_transmission.png" id="7_86qfx"]
-[ext_resource type="Environment" uid="uid://cpo0d8v00h0ap" path="res://resources/act1_worldenvironment.tres" id="8_uv183"]
+[ext_resource type="Environment" uid="uid://b4tj8c1q2alih" path="res://resources/act1_skybox_worldenvironment.tres" id="8_uv183"]
 [ext_resource type="PackedScene" uid="uid://b7jyrasyrhgca" path="res://scenes/cloud_treadmill.tscn" id="12_1l4mi"]
 [ext_resource type="Material" uid="uid://dtjhyx51m0eao" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_5.tres" id="13_xnj6s"]
 [ext_resource type="Material" uid="uid://lljvxhhrkc7q" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_3.tres" id="15_ppmh4"]

@@ -1,15 +1,17 @@
-[gd_resource type="Environment" load_steps=3 format=3 uid="uid://cpo0d8v00h0ap"]
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://b4tj8c1q2alih"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rte1f"]
+sky_top_color = Color(0.305728, 0.471113, 0.576363, 1)
+energy_multiplier = 1.8
 
 [sub_resource type="Sky" id="Sky_kkgna"]
 sky_material = SubResource("ProceduralSkyMaterial_rte1f")
 radiance_size = 1
 
 [resource]
-background_mode = 3
+background_mode = 2
 background_color = Color(1, 1, 1, 1)
-background_intensity = 17500.0
+background_intensity = 19527.0
 background_canvas_max_layer = -5
 sky = SubResource("Sky_kkgna")
 ambient_light_source = 2
