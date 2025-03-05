@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cno2tfxkcdwjx"]
 
-[ext_resource type="Script" path="res://scripts/camera_controller.gd" id="1_halyt"]
+[ext_resource type="Script" uid="uid://tlxr3dwnsnpk" path="res://scripts/camera_controller.gd" id="1_halyt"]
 
 [node name="CameraController" type="Node3D"]
 script = ExtResource("1_halyt")

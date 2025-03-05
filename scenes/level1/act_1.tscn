@@ -1,6 +1,6 @@
 [gd_scene load_steps=37 format=3 uid="uid://dnqdsgkyde5ys"]
 
-[ext_resource type="Script" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
+[ext_resource type="Script" uid="uid://dpw23mx2rrnj" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="1_j6tjs"]
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="2_vcigm"]
 [ext_resource type="PackedScene" uid="uid://dq8d4kwgig1w8" path="res://scenes/level1/soccer_field_world.tscn" id="3_wf22a"]
@@ -13,15 +13,15 @@
 [ext_resource type="SpriteFrames" uid="uid://b5y2k0oe4jdi6" path="res://resources/adversary_spriteframes.tres" id="10_0rft1"]
 [ext_resource type="PackedScene" uid="uid://3y4snk0eo4mp" path="res://scenes/ui.tscn" id="11_ffwmr"]
 [ext_resource type="PackedScene" uid="uid://rxuskqewfa7k" path="res://scenes/control_suppressor.tscn" id="13_hpf6u"]
-[ext_resource type="Script" path="res://scripts/level1/level_1_script.gd" id="14_eau2p"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="14_ok3f3"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="16_4ihqv"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
-[ext_resource type="VideoStream" path="res://assets/logo/pine_signal_interactive-1280x800.ogv" id="19_a2ie3"]
+[ext_resource type="Script" uid="uid://d1e0lhscxgp4n" path="res://scripts/level1/level_1_script.gd" id="14_eau2p"]
+[ext_resource type="Script" uid="uid://51ny165m7g4r" path="res://addons/godot_state_charts/state_chart.gd" id="14_ok3f3"]
+[ext_resource type="Script" uid="uid://nottcurryeno" path="res://addons/godot_state_charts/compound_state.gd" id="16_4ihqv"]
+[ext_resource type="Script" uid="uid://by6pa56pmo0hr" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
+[ext_resource type="Script" uid="uid://dcqi7oxwd5v8k" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
+[ext_resource type="VideoStream" uid="uid://boayy2715qxi1" path="res://assets/logo/pine_signal_interactive-1280x800.ogv" id="19_a2ie3"]
 [ext_resource type="Texture2D" uid="uid://cq6d1nvt8t2s7" path="res://kenney_input-prompts/Xbox Series/Default/xbox_button_b.png" id="19_kmghq"]
 [ext_resource type="PackedScene" uid="uid://c86ywxv55on5f" path="res://scenes/dialog_bubble/dialog_bubble.tscn" id="19_ub1r2"]
-[ext_resource type="Script" path="res://scripts/controller_ui/dynamic_button_display.gd" id="20_ewap6"]
+[ext_resource type="Script" uid="uid://cn22ovelgqca7" path="res://scripts/controller_ui/dynamic_button_display.gd" id="20_ewap6"]
 [ext_resource type="PackedScene" uid="uid://dd7rk2je4r01m" path="res://scenes/character_path/character_path.tscn" id="21_52762"]
 [ext_resource type="Texture2D" uid="uid://bbr1htmjn4pcw" path="res://kenney_input-prompts/Nintendo Switch/Default/switch_button_a.png" id="21_ip41t"]
 [ext_resource type="Texture2D" uid="uid://b6y8aq57ik4gn" path="res://kenney_input-prompts/Steam Deck/Default/steamdeck_button_b.png" id="22_hfmre"]
@@ -263,9 +263,9 @@ tracks/6/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5cewn"]
 _data = {
-"RESET": SubResource("Animation_hs7dl"),
-"cutscene bands come in": SubResource("Animation_122bi"),
-"cutscene bands come out": SubResource("Animation_m0u32")
+&"RESET": SubResource("Animation_hs7dl"),
+&"cutscene bands come in": SubResource("Animation_122bi"),
+&"cutscene bands come out": SubResource("Animation_m0u32")
 }
 
 [sub_resource type="Animation" id="Animation_0c4pc"]
@@ -567,8 +567,8 @@ tracks/11/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oomc5"]
 _data = {
-"RESET": SubResource("Animation_0c4pc"),
-"intro": SubResource("Animation_lcg1f")
+&"RESET": SubResource("Animation_0c4pc"),
+&"intro": SubResource("Animation_lcg1f")
 }
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_m5c52"]
@@ -714,7 +714,7 @@ script = ExtResource("17_abldk")
 
 [node name="CutSceneContextPlayer" type="AnimationPlayer" parent="Level1Script"]
 libraries = {
-"": SubResource("AnimationLibrary_5cewn")
+&"": SubResource("AnimationLibrary_5cewn")
 }
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Level1Script/CutSceneContextPlayer"]
@@ -725,7 +725,8 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 80.0
+offset_top = -80.0
+offset_bottom = -80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
@@ -736,7 +737,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -80.0
+offset_top = 80.9199
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
@@ -779,7 +781,7 @@ text = "to skip
 
 [node name="CutScenePlayer" type="AnimationPlayer" parent="Level1Script"]
 libraries = {
-"": SubResource("AnimationLibrary_oomc5")
+&"": SubResource("AnimationLibrary_oomc5")
 }
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Level1Script/CutScenePlayer"]

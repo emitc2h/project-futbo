@@ -1,50 +1,50 @@
 [gd_scene load_steps=5 format=4 uid="uid://cc35nexxgpc4d"]
 
-[ext_resource type="Texture2D" uid="uid://d0hnttghmofpc" path="res://assets/3D/Act1/Textures/Sprites/grass1.png" id="1_rjsav"]
+[ext_resource type="Texture2D" uid="uid://d0hnttghmofpc" path="res://assets/3D/Act1/Textures/Sprites/grass1.png" id="1_o76h1"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57bns"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u1vn5"]
 resource_name = "Grass"
 transparency = 4
 cull_mode = 2
-albedo_texture = ExtResource("1_rjsav")
+albedo_texture = ExtResource("1_o76h1")
 roughness = 0.5
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_n5syp"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_0anca"]
 _surfaces = [{
 "aabb": AABB(-0.05, -0.000234067, -0.05, 0.1, 0.1, 0.1),
 "format": 34896613377,
 "index_count": 12,
-"index_data": PackedByteArray("AAADAAEAAAACAAMABAAHAAUABAAGAAcA"),
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUA"),
 "name": "Grass",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 8,
-"vertex_data": PackedByteArray("/38AAP//AAD/fwAAAAAAAP9////+/wAA/3/+/wAAAAAAAAAA/38AAP7/AAD/fwAAAAD///9/AAD///7//38AAA==")
+"vertex_data": PackedByteArray("/38AAP//AAD/f/7/AAAAAP9/AAAAAAAA/3////7/AAAAAAAA/38AAP///v//fwAA/v8AAP9/AAAAAP///38AAA==")
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_12yht"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_8m7nt"]
 resource_name = "grass_Plane_002"
 _surfaces = [{
 "aabb": AABB(-0.05, -0.000234067, -0.05, 0.1, 0.1, 0.1),
-"attribute_data": PackedByteArray("AAD///////8AAP8T////EwAA////////AAD/E////xM="),
+"attribute_data": PackedByteArray("AAD//////xP/////AAD/EwAA//////8T/////wAA/xM="),
 "format": 34896613399,
 "index_count": 12,
-"index_data": PackedByteArray("AAADAAEAAAACAAMABAAHAAUABAAGAAcA"),
-"material": SubResource("StandardMaterial3D_57bns"),
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUA"),
+"material": SubResource("StandardMaterial3D_u1vn5"),
 "name": "Grass",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 8,
-"vertex_data": PackedByteArray("/38AAP///7//fwAAAAD/v/9////+//+//3/+/wAA/78AAAAA/38AgP7/AAD/fwCAAAD///9/AID///7//38AgP9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///")
+"vertex_data": PackedByteArray("/38AAP///7//f/7/AAD/v/9/AAAAAP+//3////7//78AAAAA/38AgP///v//fwCA/v8AAP9/AIAAAP///38AgP9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_n5syp")
+shadow_mesh = SubResource("ArrayMesh_0anca")
 
 [node name="grass" type="Node3D"]
 
 [node name="Plane_001" type="MeshInstance3D" parent="."]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
 gi_mode = 0
-mesh = SubResource("ArrayMesh_12yht")
+mesh = SubResource("ArrayMesh_8m7nt")
 skeleton = NodePath("")

@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://bqu1kln33k5bg"]
 
-[ext_resource type="Script" path="res://scripts/player_dribble_ability.gd" id="1_nyyqh"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_86uph"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_yxmeq"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_sa4ue"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_surp8"]
+[ext_resource type="Script" uid="uid://d7mv25i6j332" path="res://scripts/player_dribble_ability.gd" id="1_nyyqh"]
+[ext_resource type="Script" uid="uid://51ny165m7g4r" path="res://addons/godot_state_charts/state_chart.gd" id="2_86uph"]
+[ext_resource type="Script" uid="uid://nottcurryeno" path="res://addons/godot_state_charts/compound_state.gd" id="3_yxmeq"]
+[ext_resource type="Script" uid="uid://by6pa56pmo0hr" path="res://addons/godot_state_charts/atomic_state.gd" id="4_sa4ue"]
+[ext_resource type="Script" uid="uid://dcqi7oxwd5v8k" path="res://addons/godot_state_charts/transition.gd" id="5_surp8"]
 [ext_resource type="PackedScene" uid="uid://dpdewwupi78yf" path="res://scenes/dribble_cast.tscn" id="6_g07bc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xmcmk"]

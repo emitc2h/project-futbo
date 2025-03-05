@@ -1,17 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfsou1tom0khe"]
+[gd_scene load_steps=4 format=3 uid="uid://cfsou1tom0khe"]
 
 [ext_resource type="PackedScene" uid="uid://b57u11ctire4l" path="res://assets/3D/Act1/blend/character1.blend" id="1_txqy7"]
-[ext_resource type="Texture2D" uid="uid://bn0up3jpdbqdi" path="res://assets/prototypes/character_design/character_base_color.png" id="2_dme76"]
-[ext_resource type="Texture2D" uid="uid://cautq45rhb0fk" path="res://assets/prototypes/character_design/charcter_base_normal_normal.png" id="3_jfgnb"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w1noc"]
-albedo_texture = ExtResource("2_dme76")
-roughness = 0.81
-normal_enabled = true
-normal_scale = 0.5
-normal_texture = ExtResource("3_jfgnb")
+[ext_resource type="Material" uid="uid://cd77xmg18ik53" path="res://assets/3D/Act1/materials/characters/character1/character1_body.tres" id="2_ijfti"]
+[ext_resource type="Material" uid="uid://d3uhadbjrdmi" path="res://assets/3D/Act1/materials/characters/character1/character1_eyes.tres" id="3_ijfti"]
 
 [node name="character1" instance=ExtResource("1_txqy7")]
 
-[node name="Body" parent="." index="1"]
-surface_material_override/0 = SubResource("StandardMaterial3D_w1noc")
+[node name="Body" parent="Armature/Skeleton3D" index="0"]
+surface_material_override/0 = ExtResource("2_ijfti")
+
+[node name="Eyes" parent="Armature/Skeleton3D" index="1"]
+surface_material_override/0 = ExtResource("3_ijfti")

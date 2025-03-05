@@ -1,14 +1,14 @@
 [gd_scene load_steps=17 format=3 uid="uid://ci6nhkx4w6kqs"]
 
-[ext_resource type="Script" path="res://scripts/game_state_manager.gd" id="1_vdkql"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_bf3xv"]
-[ext_resource type="Script" path="res://scripts/level_state_manager.gd" id="6_e4ydo"]
-[ext_resource type="Script" path="res://scripts/main_menu/pause_menu.gd" id="7_7hc34"]
-[ext_resource type="Script" path="res://scripts/game_over_screen.gd" id="8_1x18l"]
-[ext_resource type="Script" path="res://scripts/main_menu/fade_screen.gd" id="8_k6y2d"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="13_ex211"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="14_lx3lp"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="15_mqd0o"]
+[ext_resource type="Script" uid="uid://dt0iyahs86i76" path="res://scripts/game_state_manager.gd" id="1_vdkql"]
+[ext_resource type="Script" uid="uid://dcqi7oxwd5v8k" path="res://addons/godot_state_charts/transition.gd" id="5_bf3xv"]
+[ext_resource type="Script" uid="uid://cd7f64u4xnivl" path="res://scripts/level_state_manager.gd" id="6_e4ydo"]
+[ext_resource type="Script" uid="uid://mbpu8h6nkhu8" path="res://scripts/main_menu/pause_menu.gd" id="7_7hc34"]
+[ext_resource type="Script" uid="uid://du2s6xmqk8na6" path="res://scripts/game_over_screen.gd" id="8_1x18l"]
+[ext_resource type="Script" uid="uid://cf1exjm4tqkcc" path="res://scripts/main_menu/fade_screen.gd" id="8_k6y2d"]
+[ext_resource type="Script" uid="uid://51ny165m7g4r" path="res://addons/godot_state_charts/state_chart.gd" id="13_ex211"]
+[ext_resource type="Script" uid="uid://nottcurryeno" path="res://addons/godot_state_charts/compound_state.gd" id="14_lx3lp"]
+[ext_resource type="Script" uid="uid://by6pa56pmo0hr" path="res://addons/godot_state_charts/atomic_state.gd" id="15_mqd0o"]
 
 [sub_resource type="Animation" id="Animation_g2vn4"]
 length = 0.001
@@ -87,8 +87,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_samqm"]
 _data = {
-"RESET": SubResource("Animation_g2vn4"),
-"game over": SubResource("Animation_dniiw")
+&"RESET": SubResource("Animation_g2vn4"),
+&"game over": SubResource("Animation_dniiw")
 }
 
 [sub_resource type="Animation" id="Animation_386je"]
@@ -138,9 +138,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c2k5l"]
 _data = {
-"RESET": SubResource("Animation_386je"),
-"fade in": SubResource("Animation_tfms1"),
-"fade out": SubResource("Animation_o1hwq")
+&"RESET": SubResource("Animation_386je"),
+&"fade in": SubResource("Animation_tfms1"),
+&"fade out": SubResource("Animation_o1hwq")
 }
 
 [node name="GameStateManager" type="Node3D"]

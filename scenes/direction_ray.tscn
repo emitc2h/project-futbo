@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://caxwuwjjre3j2"]
 
 [ext_resource type="Texture2D" uid="uid://ct55n5aqijgey" path="res://kenney_sports-pack/PNG/Elements/element (1).png" id="1_dgj8u"]
-[ext_resource type="Script" path="res://scripts/direction_ray.gd" id="2_f10p2"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_7ii86"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_5mqmn"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_hr8f4"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_08vb0"]
+[ext_resource type="Script" uid="uid://cvp18nk1u5oc6" path="res://scripts/direction_ray.gd" id="2_f10p2"]
+[ext_resource type="Script" uid="uid://51ny165m7g4r" path="res://addons/godot_state_charts/state_chart.gd" id="3_7ii86"]
+[ext_resource type="Script" uid="uid://nottcurryeno" path="res://addons/godot_state_charts/compound_state.gd" id="4_5mqmn"]
+[ext_resource type="Script" uid="uid://by6pa56pmo0hr" path="res://addons/godot_state_charts/atomic_state.gd" id="5_hr8f4"]
+[ext_resource type="Script" uid="uid://dcqi7oxwd5v8k" path="res://addons/godot_state_charts/transition.gd" id="6_08vb0"]
 [ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/clamped_aim.tscn" id="7_5lu38"]
 
 [node name="DirectionRay" type="Sprite3D"]

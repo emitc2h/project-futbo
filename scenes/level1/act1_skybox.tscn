@@ -1,17 +1,18 @@
-[gd_scene load_steps=57 format=3 uid="uid://b6j57fie7ocg7"]
+[gd_scene load_steps=55 format=3 uid="uid://b6j57fie7ocg7"]
 
-[ext_resource type="Script" path="res://scripts/sky_box_camera.gd" id="1_37btj"]
-[ext_resource type="Script" path="res://scripts/level1/act_1_skybox.gd" id="1_ywti0"]
+[ext_resource type="Script" uid="uid://comkhi4ayaddy" path="res://scripts/sky_box_camera.gd" id="1_37btj"]
+[ext_resource type="Script" uid="uid://cporhbbxs5nmi" path="res://scripts/level1/act_1_skybox.gd" id="1_ywti0"]
 [ext_resource type="PackedScene" uid="uid://ccrdjbgqp4tlg" path="res://assets/3D/Act1/blend/MountainLine1.blend" id="3_7sj78"]
 [ext_resource type="PackedScene" uid="uid://uwjksmpfbc3n" path="res://assets/3D/Act1/blend/CloudLine1.blend" id="3_bxow3"]
 [ext_resource type="Material" uid="uid://l6hfx6hh47be" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_1.tres" id="4_11igr"]
 [ext_resource type="Texture2D" uid="uid://didf5ewjiju7j" path="res://assets/3D/Act1/Textures/Sky/CloudLine1/CloudLine1_color.png" id="4_ehy3p"]
 [ext_resource type="Texture2D" uid="uid://csqgkqiyd276c" path="res://assets/3D/Act1/Textures/Sky/MountainLine1/MountainLine1_color.png" id="4_oiuxk"]
-[ext_resource type="Shader" path="res://shaders/TextureUVDrift.gdshader" id="5_ef5nx"]
+[ext_resource type="Shader" uid="uid://b76c4syd1tk6f" path="res://shaders/TextureUVDrift.gdshader" id="5_ef5nx"]
 [ext_resource type="Texture2D" uid="uid://b77krqhqo4dl5" path="res://assets/3D/Act1/Textures/Sky/MountainLine1/MountainLine1_transmission.png" id="5_fmfg7"]
 [ext_resource type="Material" uid="uid://e2ekgagyh85i" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_2.tres" id="5_xs643"]
 [ext_resource type="Texture2D" uid="uid://b4jb5n6h00xyv" path="res://assets/3D/Act1/Textures/Sky/CloudLine2/CloudLine2_color.png" id="6_qshv0"]
 [ext_resource type="Texture2D" uid="uid://bux7qtbkhdkx3" path="res://assets/3D/Act1/Textures/Sky/CloudLine2/CloudLine2_transmission.png" id="7_86qfx"]
+[ext_resource type="Environment" uid="uid://cpo0d8v00h0ap" path="res://resources/act1_worldenvironment.tres" id="8_uv183"]
 [ext_resource type="PackedScene" uid="uid://b7jyrasyrhgca" path="res://scenes/cloud_treadmill.tscn" id="12_1l4mi"]
 [ext_resource type="Material" uid="uid://dtjhyx51m0eao" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_5.tres" id="13_xnj6s"]
 [ext_resource type="Material" uid="uid://lljvxhhrkc7q" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_3.tres" id="15_ppmh4"]
@@ -21,56 +22,20 @@
 render_priority = 0
 shader = ExtResource("5_ef5nx")
 shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("6_qshv0")
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = null
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
 shader_parameter/backlight = Color(0, 0, 0, 1)
+shader_parameter/texture_backlight = ExtResource("7_86qfx")
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/uvx_drift_speed = 15.0
 shader_parameter/uvy_drift_speed = 0.0
-shader_parameter/texture_albedo = ExtResource("6_qshv0")
-shader_parameter/texture_backlight = ExtResource("7_86qfx")
-
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ulxvo"]
-rayleigh_coefficient = 1.0
-rayleigh_color = Color(0.2205, 0.391125, 0.63, 1)
-turbidity = 5.0
-ground_color = Color(0.176471, 0.211765, 0.203922, 1)
-
-[sub_resource type="Sky" id="Sky_kkgna"]
-sky_material = SubResource("PhysicalSkyMaterial_ulxvo")
-radiance_size = 1
-
-[sub_resource type="Environment" id="Environment_kvuqf"]
-background_mode = 2
-background_color = Color(1, 0.984314, 0.831373, 1)
-background_energy_multiplier = 1.2
-background_canvas_max_layer = -5
-sky = SubResource("Sky_kkgna")
-ambient_light_source = 2
-ambient_light_color = Color(0.883721, 0.913614, 0.976312, 1)
-reflected_light_source = 1
-tonemap_mode = 2
-tonemap_exposure = 0.22
-tonemap_white = 0.35
-ssao_enabled = true
-glow_enabled = true
-glow_levels/1 = 0.5
-glow_levels/2 = 0.5
-glow_levels/4 = 0.5
-glow_levels/5 = 0.0
-glow_normalized = true
-glow_intensity = 0.9
-glow_bloom = 0.1
-glow_blend_mode = 1
-fog_sun_scatter = 0.05
-fog_density = 0.001
-volumetric_fog_length = 50.66
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jywbu"]
 resource_name = "CloudLine1"
@@ -612,7 +577,6 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_5ol60")
 
 [node name="Act1SkyBox" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.523045, 0, 0)
 script = ExtResource("1_ywti0")
 parallax_factor = 0.1
 
@@ -728,7 +692,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="BackgroundCanvas/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1920, 1080)
+size = Vector2i(1280, 800)
 render_target_update_mode = 4
 
 [node name="SkyBoxContainer" type="Node3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport"]
@@ -737,7 +701,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26.2505, 110.984)
 [node name="SkyBoxCamera" type="Camera3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer"]
 transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -1.39885, 0, 0)
 cull_mask = 1016800
-environment = SubResource("Environment_kvuqf")
+environment = ExtResource("8_uv183")
 fov = 45.0
 script = ExtResource("1_37btj")
 

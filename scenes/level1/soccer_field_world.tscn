@@ -12,20 +12,20 @@
 [ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="7_e4a8c"]
 [ext_resource type="Texture2D" uid="uid://bi14nqhqhl57j" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_color.png" id="8_3temt"]
 [ext_resource type="Texture2D" uid="uid://dwwqrrbioo1pg" path="res://assets/3D/Act1/Textures/BaseMap.terrain.down.right/BaseMap.terrain.down.right_splatmap.png" id="8_o0hh8"]
-[ext_resource type="Shader" path="res://shaders/SplatMap.gdshader" id="8_pisw0"]
+[ext_resource type="Shader" uid="uid://bgdtmngt1o7w1" path="res://shaders/SplatMap.gdshader" id="8_pisw0"]
 [ext_resource type="Texture2D" uid="uid://dasstxd5w1ais" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_OnlySand_normal.png" id="9_olt5o"]
 [ext_resource type="Texture2D" uid="uid://wh0qaqcjqyx1" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles_OnlySand_color.png" id="10_v7twt"]
-[ext_resource type="Script" path="res://scripts/door_detector_area_3d.gd" id="10_yiblt"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="11_c6xia"]
+[ext_resource type="Script" uid="uid://d2luuuxr23hmo" path="res://scripts/door_detector_area_3d.gd" id="10_yiblt"]
+[ext_resource type="Script" uid="uid://51ny165m7g4r" path="res://addons/godot_state_charts/state_chart.gd" id="11_c6xia"]
 [ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="11_v2dcp"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="12_nn2hn"]
+[ext_resource type="Script" uid="uid://nottcurryeno" path="res://addons/godot_state_charts/compound_state.gd" id="12_nn2hn"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="12_wbnv8"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="13_1vxqn"]
+[ext_resource type="Script" uid="uid://by6pa56pmo0hr" path="res://addons/godot_state_charts/atomic_state.gd" id="13_1vxqn"]
 [ext_resource type="Texture2D" uid="uid://cy5ugfxbfurls" path="res://assets/3D/Act1/Textures/BaseMap.soccerField/BaseMap.soccerField_splatmap.png" id="13_hpaor"]
 [ext_resource type="Texture2D" uid="uid://ch6vonujcafcv" path="res://assets/3D/Act1/Textures/BaseMap.terrain.down.left/BaseMap.terrain.down.left_splatmap.png" id="13_m5gis"]
 [ext_resource type="Texture2D" uid="uid://bcbqdvhjwpump" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_normal.png" id="13_w7av7"]
 [ext_resource type="Texture2D" uid="uid://2fpv8shpj0pd" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_color.png" id="14_2odwx"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="14_l4dqf"]
+[ext_resource type="Script" uid="uid://dcqi7oxwd5v8k" path="res://addons/godot_state_charts/transition.gd" id="14_l4dqf"]
 [ext_resource type="Texture2D" uid="uid://bek5iprvc0ra1" path="res://assets/3D/Act1/Textures/BaseMap.soccerField/field_lines.png" id="17_ablyt"]
 [ext_resource type="Texture2D" uid="uid://ucletxuuvfq8" path="res://assets/3D/Act1/Textures/BaseMap.terrain.up.right/BaseMap.terrain.up.right.png" id="18_3tkbq"]
 [ext_resource type="Texture2D" uid="uid://6yyfxgdisuy4" path="res://assets/3D/Act1/Textures/BaseMap.asphalt/BaseMap.asphalt_splatmap.png" id="18_nyn1w"]
@@ -62,11 +62,6 @@ size = Vector3(2.12558, 1.90698, 1.93692)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3wdgs"]
 render_priority = 0
 shader = ExtResource("8_pisw0")
-shader_parameter/red_tiling_factor = 18.0
-shader_parameter/green_tiling_factor = 18.0
-shader_parameter/blue_tiling_factor = 18.0
-shader_parameter/specular = 0.2
-shader_parameter/roughness = 0.9
 shader_parameter/red_channel_texture = ExtResource("14_2odwx")
 shader_parameter/green_channel_texture = ExtResource("12_wbnv8")
 shader_parameter/blue_channel_texture = ExtResource("10_v7twt")
@@ -74,6 +69,11 @@ shader_parameter/red_channel_normal = ExtResource("13_w7av7")
 shader_parameter/green_channel_normal = ExtResource("11_v2dcp")
 shader_parameter/blue_channel_normal = ExtResource("9_olt5o")
 shader_parameter/splatmap = ExtResource("8_o0hh8")
+shader_parameter/red_tiling_factor = 18.0
+shader_parameter/green_tiling_factor = 18.0
+shader_parameter/blue_tiling_factor = 18.0
+shader_parameter/specular = 0.2
+shader_parameter/roughness = 0.9
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6dvde"]
 resource_name = "BaseMapDraft"
@@ -116,11 +116,6 @@ shadow_mesh = SubResource("ArrayMesh_jbj0e")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xajqm"]
 render_priority = 0
 shader = ExtResource("8_pisw0")
-shader_parameter/red_tiling_factor = 10.0
-shader_parameter/green_tiling_factor = 10.0
-shader_parameter/blue_tiling_factor = 10.0
-shader_parameter/specular = 0.334
-shader_parameter/roughness = 0.8
 shader_parameter/red_channel_texture = ExtResource("24_vu7c4")
 shader_parameter/green_channel_texture = ExtResource("18_ux4no")
 shader_parameter/blue_channel_texture = ExtResource("23_n7wfl")
@@ -128,6 +123,11 @@ shader_parameter/red_channel_normal = ExtResource("22_8b6o0")
 shader_parameter/green_channel_normal = ExtResource("22_8b6o0")
 shader_parameter/blue_channel_normal = ExtResource("22_8b6o0")
 shader_parameter/splatmap = ExtResource("18_nyn1w")
+shader_parameter/red_tiling_factor = 10.0
+shader_parameter/green_tiling_factor = 10.0
+shader_parameter/blue_tiling_factor = 10.0
+shader_parameter/specular = 0.334
+shader_parameter/roughness = 0.8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r2lvu"]
 resource_name = "Asphalt"
@@ -172,11 +172,6 @@ shadow_mesh = SubResource("ArrayMesh_25x1q")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_omfxt"]
 render_priority = 0
 shader = ExtResource("8_pisw0")
-shader_parameter/red_tiling_factor = 10.0
-shader_parameter/green_tiling_factor = 16.0
-shader_parameter/blue_tiling_factor = 10.0
-shader_parameter/specular = 0.15
-shader_parameter/roughness = 0.7
 shader_parameter/red_channel_texture = ExtResource("10_v7twt")
 shader_parameter/green_channel_texture = ExtResource("8_3temt")
 shader_parameter/blue_channel_texture = ExtResource("12_wbnv8")
@@ -184,6 +179,11 @@ shader_parameter/red_channel_normal = ExtResource("9_olt5o")
 shader_parameter/green_channel_normal = ExtResource("7_e4a8c")
 shader_parameter/blue_channel_normal = ExtResource("11_v2dcp")
 shader_parameter/splatmap = ExtResource("13_hpaor")
+shader_parameter/red_tiling_factor = 10.0
+shader_parameter/green_tiling_factor = 16.0
+shader_parameter/blue_tiling_factor = 10.0
+shader_parameter/specular = 0.15
+shader_parameter/roughness = 0.7
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4smau"]
 resource_name = "soccerField"
@@ -225,16 +225,16 @@ shadow_mesh = SubResource("ArrayMesh_5stau")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qg2vc"]
 render_priority = 0
 shader = ExtResource("8_pisw0")
-shader_parameter/red_tiling_factor = 2.0
-shader_parameter/green_tiling_factor = 2.0
-shader_parameter/blue_tiling_factor = 2.0
-shader_parameter/specular = 0.2
-shader_parameter/roughness = 0.9
 shader_parameter/green_channel_texture = ExtResource("12_wbnv8")
 shader_parameter/blue_channel_texture = ExtResource("10_v7twt")
 shader_parameter/green_channel_normal = ExtResource("11_v2dcp")
 shader_parameter/blue_channel_normal = ExtResource("9_olt5o")
 shader_parameter/splatmap = ExtResource("18_3tkbq")
+shader_parameter/red_tiling_factor = 2.0
+shader_parameter/green_tiling_factor = 2.0
+shader_parameter/blue_tiling_factor = 2.0
+shader_parameter/specular = 0.2
+shader_parameter/roughness = 0.9
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_t8vvw"]
 _surfaces = [{
@@ -273,11 +273,6 @@ shadow_mesh = SubResource("ArrayMesh_t8vvw")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gegq8"]
 render_priority = 0
 shader = ExtResource("8_pisw0")
-shader_parameter/red_tiling_factor = 24.0
-shader_parameter/green_tiling_factor = 32.0
-shader_parameter/blue_tiling_factor = 32.0
-shader_parameter/specular = 0.2
-shader_parameter/roughness = 0.9
 shader_parameter/red_channel_texture = ExtResource("14_2odwx")
 shader_parameter/green_channel_texture = ExtResource("12_wbnv8")
 shader_parameter/blue_channel_texture = ExtResource("10_v7twt")
@@ -285,6 +280,11 @@ shader_parameter/red_channel_normal = ExtResource("13_w7av7")
 shader_parameter/green_channel_normal = ExtResource("11_v2dcp")
 shader_parameter/blue_channel_normal = ExtResource("9_olt5o")
 shader_parameter/splatmap = ExtResource("13_m5gis")
+shader_parameter/red_tiling_factor = 24.0
+shader_parameter/green_tiling_factor = 32.0
+shader_parameter/blue_tiling_factor = 32.0
+shader_parameter/specular = 0.2
+shader_parameter/roughness = 0.9
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6uf1l"]
 resource_name = "BaseMapDraft"
@@ -327,16 +327,16 @@ shadow_mesh = SubResource("ArrayMesh_mohy1")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o0j6q"]
 render_priority = 0
 shader = ExtResource("8_pisw0")
-shader_parameter/red_tiling_factor = 2.0
-shader_parameter/green_tiling_factor = 2.0
-shader_parameter/blue_tiling_factor = 2.0
-shader_parameter/specular = 0.2
-shader_parameter/roughness = 0.9
 shader_parameter/green_channel_texture = ExtResource("12_wbnv8")
 shader_parameter/blue_channel_texture = ExtResource("10_v7twt")
 shader_parameter/green_channel_normal = ExtResource("11_v2dcp")
 shader_parameter/blue_channel_normal = ExtResource("9_olt5o")
 shader_parameter/splatmap = ExtResource("20_43s5a")
+shader_parameter/red_tiling_factor = 2.0
+shader_parameter/green_tiling_factor = 2.0
+shader_parameter/blue_tiling_factor = 2.0
+shader_parameter/specular = 0.2
+shader_parameter/roughness = 0.9
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_sg652"]
 _surfaces = [{
@@ -373,11 +373,6 @@ shadow_mesh = SubResource("ArrayMesh_sg652")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aqe3k"]
 render_priority = 0
 shader = ExtResource("8_pisw0")
-shader_parameter/red_tiling_factor = 10.0
-shader_parameter/green_tiling_factor = 10.0
-shader_parameter/blue_tiling_factor = 10.0
-shader_parameter/specular = 0.334
-shader_parameter/roughness = 0.8
 shader_parameter/red_channel_texture = ExtResource("24_vu7c4")
 shader_parameter/green_channel_texture = ExtResource("18_ux4no")
 shader_parameter/blue_channel_texture = ExtResource("23_n7wfl")
@@ -385,6 +380,11 @@ shader_parameter/red_channel_normal = ExtResource("22_8b6o0")
 shader_parameter/green_channel_normal = ExtResource("22_8b6o0")
 shader_parameter/blue_channel_normal = ExtResource("22_8b6o0")
 shader_parameter/splatmap = ExtResource("25_8v3cw")
+shader_parameter/red_tiling_factor = 10.0
+shader_parameter/green_tiling_factor = 10.0
+shader_parameter/blue_tiling_factor = 10.0
+shader_parameter/specular = 0.334
+shader_parameter/roughness = 0.8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y1ik0"]
 resource_name = "Asphalt"

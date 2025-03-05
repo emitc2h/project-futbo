@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://dkxcrq57eyl0d"]
 
-[ext_resource type="Script" path="res://scripts/player_headbutt_ability.gd" id="1_qe56f"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_udg6y"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_xd76j"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_y88xt"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_t8gqn"]
-[ext_resource type="Script" path="res://scripts/head.gd" id="6_i3rvk"]
+[ext_resource type="Script" uid="uid://ceo2a25n2sx08" path="res://scripts/player_headbutt_ability.gd" id="1_qe56f"]
+[ext_resource type="Script" uid="uid://51ny165m7g4r" path="res://addons/godot_state_charts/state_chart.gd" id="2_udg6y"]
+[ext_resource type="Script" uid="uid://nottcurryeno" path="res://addons/godot_state_charts/compound_state.gd" id="3_xd76j"]
+[ext_resource type="Script" uid="uid://by6pa56pmo0hr" path="res://addons/godot_state_charts/atomic_state.gd" id="4_y88xt"]
+[ext_resource type="Script" uid="uid://dcqi7oxwd5v8k" path="res://addons/godot_state_charts/transition.gd" id="5_t8gqn"]
+[ext_resource type="Script" uid="uid://3wtmmetimlrg" path="res://scripts/head.gd" id="6_i3rvk"]
 
 [node name="PlayerHeadbuttAbility" type="Node3D"]
 script = ExtResource("1_qe56f")

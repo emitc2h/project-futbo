@@ -1,6 +1,6 @@
-[gd_scene load_steps=20 format=4 uid="uid://deidkuj34u7yu"]
+[gd_scene load_steps=22 format=4 uid="uid://deidkuj34u7yu"]
 
-[ext_resource type="Script" path="res://scripts/main_menu/level_1_main_menu_scene.gd" id="1_glui6"]
+[ext_resource type="Script" uid="uid://cua4a6wcsrmb2" path="res://scripts/main_menu/level_1_main_menu_scene.gd" id="1_glui6"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_jugbg"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="2_w6ciu"]
 [ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_fq483"]
@@ -11,6 +11,7 @@
 [ext_resource type="Material" uid="uid://c33v812uounix" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_slightly_dried_leaves_swaying.tres" id="7_hj0m6"]
 [ext_resource type="Material" uid="uid://602a6yse0f72" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_red_leaves_swaying.tres" id="8_jv7bb"]
 [ext_resource type="PackedScene" uid="uid://b28taugqi7ixx" path="res://assets/3D/Act1/blend/SoccerBall.blend" id="9_iudwe"]
+[ext_resource type="PackedScene" uid="uid://cfsou1tom0khe" path="res://scenes/characters/character_1.tscn" id="12_q5hbi"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4vvqs"]
 
@@ -62,7 +63,7 @@ buffer = PackedFloat32Array(0.636677, 0, 0.931016, -79.525, 0, 1.1279, 0, 0.1154
 
 [sub_resource type="Animation" id="Animation_4vb0h"]
 resource_name = "enter_scene"
-length = 5.0
+length = 15.0
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -85,10 +86,38 @@ tracks/1/keys = {
 "points": PackedFloat32Array(-3.0353, 0, 0, 0, 0, -3.0353, -0.25, 0, 0.2, 5.0517, 2.60704, -1.96667, 0.00881553, 0.25, 0),
 "times": PackedFloat32Array(0, 2, 5)
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../character1:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.247076, -1.45143, 6.62554), Vector3(0.247076, 3.58673, 6.62554)]
+}
+
+[sub_resource type="Animation" id="Animation_n2k7b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../character1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.247076, -1.45143, 6.62554)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_watdk"]
 _data = {
-"enter_scene": SubResource("Animation_4vb0h")
+&"RESET": SubResource("Animation_n2k7b"),
+&"enter_scene": SubResource("Animation_4vb0h")
 }
 
 [node name="Level1MainMenuScene" type="Node3D" node_paths=PackedStringArray("animation_player")]
@@ -142,13 +171,16 @@ material_override = ExtResource("8_jv7bb")
 transform = Transform3D(-0.896893, 0, -0.0747153, 0, 0.9, 0, 0.0747153, 0, -0.896893, -0.937597, 0, 8.91222)
 
 [node name="SoccerBall" parent="." instance=ExtResource("9_iudwe")]
-transform = Transform3D(0.875909, 0.437749, -0.202874, 0.481918, -0.813984, 0.324321, -0.0231655, -0.381845, -0.923936, -0.262395, 0.264268, 9.42529)
+transform = Transform3D(0.963839, -0.172788, -0.202874, -0.100358, -0.940608, 0.324321, -0.246864, -0.292233, -0.923936, -1.3906, 0.264268, 9.42529)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../SoccerBall")
 libraries = {
-"": SubResource("AnimationLibrary_watdk")
+&"": SubResource("AnimationLibrary_watdk")
 }
+
+[node name="character1" parent="." instance=ExtResource("12_q5hbi")]
+transform = Transform3D(0.579167, 0, -0.815209, 0, 1, 0, 0.815209, 0, 0.579167, 0.247076, -1.45143, 6.62554)
 
 [editable path="WorldEnvironment"]
 [editable path="Grass2"]

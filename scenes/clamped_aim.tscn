@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bde4hn4pgdnbs"]
 
-[ext_resource type="Script" path="res://scripts/clamped_aim.gd" id="1_k05rx"]
+[ext_resource type="Script" uid="uid://b06eifwuth4wx" path="res://scripts/clamped_aim.gd" id="1_k05rx"]
 
 [node name="ClampedAim" type="Node3D"]
 script = ExtResource("1_k05rx")

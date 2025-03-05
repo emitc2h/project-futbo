@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://de54qalm0kq4f"]
 
-[ext_resource type="Script" path="res://scripts/goal.gd" id="1_ll2ed"]
+[ext_resource type="Script" uid="uid://gdldsjdm07dy" path="res://scripts/goal.gd" id="1_ll2ed"]
 [ext_resource type="PackedScene" uid="uid://c1ymu2h82no3g" path="res://assets/3D/goal.blend" id="2_4bxiw"]
 [ext_resource type="PackedScene" uid="uid://cmnaboavh4lbd" path="res://scenes/imported/goal_area.tscn" id="3_5i643"]
 

@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://huxnga0mwwl3"]
 
-[ext_resource type="Script" path="res://scripts/player_basic_movement.gd" id="1_0bw6c"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_jpdi4"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="3_lm7mb"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_70yeq"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_cjn8p"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_briu7"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_is_active_guard.gd" id="7_c8imd"]
+[ext_resource type="Script" uid="uid://d3m4a8bi5sssv" path="res://scripts/player_basic_movement.gd" id="1_0bw6c"]
+[ext_resource type="Script" uid="uid://51ny165m7g4r" path="res://addons/godot_state_charts/state_chart.gd" id="2_jpdi4"]
+[ext_resource type="Script" uid="uid://hxrx580lcae" path="res://addons/godot_state_charts/parallel_state.gd" id="3_lm7mb"]
+[ext_resource type="Script" uid="uid://nottcurryeno" path="res://addons/godot_state_charts/compound_state.gd" id="4_70yeq"]
+[ext_resource type="Script" uid="uid://by6pa56pmo0hr" path="res://addons/godot_state_charts/atomic_state.gd" id="5_cjn8p"]
+[ext_resource type="Script" uid="uid://dcqi7oxwd5v8k" path="res://addons/godot_state_charts/transition.gd" id="6_briu7"]
+[ext_resource type="Script" uid="uid://ckoovtuh524gj" path="res://addons/godot_state_charts/state_is_active_guard.gd" id="7_c8imd"]
 
 [sub_resource type="Resource" id="Resource_yleqd"]
 script = ExtResource("7_c8imd")

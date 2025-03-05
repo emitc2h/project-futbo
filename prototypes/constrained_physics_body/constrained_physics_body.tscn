@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://crfiqihnxfjit"]
 
-[ext_resource type="Script" path="res://prototypes/constrained_physics_body/character_body_3d.gd" id="1_lncf6"]
+[ext_resource type="Script" uid="uid://ft26oxf5o4f2" path="res://prototypes/constrained_physics_body/character_body_3d.gd" id="1_lncf6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8ud4d"]
 sky_top_color = Color(0.34, 0.572333, 0.68, 1)
