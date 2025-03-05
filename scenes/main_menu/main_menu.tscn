@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://xuvnhtg7ox3i"]
+[gd_scene load_steps=5 format=3 uid="uid://xuvnhtg7ox3i"]
 
 [ext_resource type="Script" path="res://scripts/main_menu/main_menu.gd" id="1_f6d7l"]
+[ext_resource type="PackedScene" uid="uid://cfsou1tom0khe" path="res://scenes/characters/character_1.tscn" id="4_1tipy"]
 [ext_resource type="PackedScene" uid="uid://deidkuj34u7yu" path="res://scenes/main_menu/level_1_main_menu_scene.tscn" id="4_c83o0"]
 [ext_resource type="Script" path="res://scripts/main_menu/new_game.gd" id="11_jf6cj"]
 
@@ -54,6 +55,9 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 36
 text = "  Quit  "
+
+[node name="character1" parent="." instance=ExtResource("4_1tipy")]
+transform = Transform3D(0.315964, 0.917206, -0.242693, -0.727396, 0.398413, 0.558715, 0.609149, 7.0467e-09, 0.793056, -0.552295, 0.209882, 8.23901)
 
 [connection signal="pressed" from="MainMenuUI/GridContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Settings" to="." method="_on_exit_pressed"]
