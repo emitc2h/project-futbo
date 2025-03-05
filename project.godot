@@ -196,6 +196,10 @@ pause={
 3d_physics/layer_4="Goal"
 2d_physics/layer_32="void"
 
+[physics]
+
+common/physics_interpolation=true
+
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true
