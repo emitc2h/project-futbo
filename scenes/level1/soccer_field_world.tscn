@@ -1040,135 +1040,123 @@ transform = Transform3D(-1, 0, -0.000424059, 0, 1, 0, 0.000424059, 0, -1, 16.022
 layers = 1024
 
 [node name="OmniLight3D" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 2.54194, -0.126396)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 2.62527, -0.126396)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 2.54194, 4.56414)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 2.62527, 4.56414)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 2.54194, -4.50988)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545128, 2.62527, -4.50988)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 2.54194, -0.126396)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 2.62527, -0.126396)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D5" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 2.54194, 4.56414)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 2.62527, 4.56414)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D6" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 2.54194, -4.50988)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.65811, 2.62527, -4.50988)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D7" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 2.54194, -0.126396)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 2.62527, -0.126396)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D8" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 2.54194, 4.56414)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 2.62527, 4.56414)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D9" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 2.54194, -4.50988)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12484, 2.62527, -4.50988)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D10" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 2.54194, -0.126396)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 2.62527, -0.126396)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D11" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 2.54194, 4.56414)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 2.62527, 4.56414)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="OmniLight3D12" type="OmniLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 2.54194, -4.50988)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2378, 2.62527, -4.50988)
 layers = 1024
 light_intensity_lumens = 100000.0
 light_temperature = 8000.0
 light_energy = 10.0
 light_cull_mask = 4293919744
 shadow_enabled = true
-omni_range = 5.858
 omni_shadow_mode = 0
 
 [node name="DoorDetectorArea3D" type="Area3D" parent="LockersBuilding" node_paths=PackedStringArray("door_animation_player")]
@@ -1244,41 +1232,67 @@ cull_mask = 1024
 reflection_mask = 1024
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="LockersBuilding"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.317476, 0)
+transform = Transform3D(0.307644, 0.754996, -0.579082, -0.883111, -2.05078e-08, -0.469163, -0.354216, 0.65573, 0.666745, -0.732056, 0.988544, 0.842881)
 layers = 1024
 light_intensity_lux = 5963.31
 light_temperature = 8000.0
-light_energy = 5.746
+light_energy = 2.0
+light_bake_mode = 1
 light_cull_mask = 4293919744
 directional_shadow_mode = 0
 sky_mode = 1
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="LockersBuilding"]
-transform = Transform3D(-1, 3.82137e-15, 8.74228e-08, 8.74228e-08, 4.37114e-08, 1, 0, 1, -4.37114e-08, 0, 1.83448, 0)
+transform = Transform3D(-0.307644, 0.754996, 0.579082, 0.883111, 2.05078e-08, 0.469163, 0.354216, 0.65573, -0.666745, 0.146416, 1.70027, -0.168574)
 layers = 1024
 light_intensity_lux = 5963.31
 light_temperature = 8000.0
-light_energy = 5.746
+light_energy = 2.0
+light_bake_mode = 1
 light_cull_mask = 4293919744
 directional_shadow_mode = 0
 sky_mode = 1
 
 [node name="DirectionalLight3D3" type="DirectionalLight3D" parent="LockersBuilding"]
-transform = Transform3D(-4.37114e-08, -4.37114e-08, -1, -1, 1.91069e-15, 4.37114e-08, 0, 1, -4.37114e-08, 0, 1.83448, 0)
+transform = Transform3D(-0.579082, 0.754996, -0.307644, -0.469163, 3.8602e-08, 0.883112, 0.666745, 0.65573, 0.354216, 0.146416, 1.70027, -0.168574)
 layers = 1024
 light_intensity_lux = 5963.31
 light_temperature = 8000.0
-light_energy = 5.746
+light_energy = 2.0
+light_bake_mode = 1
 light_cull_mask = 4293919744
 directional_shadow_mode = 0
 sky_mode = 1
 
 [node name="DirectionalLight3D4" type="DirectionalLight3D" parent="LockersBuilding"]
-transform = Transform3D(1.31134e-07, 4.37114e-08, 1, 1, -5.73206e-15, -1.31134e-07, 0, 1, -4.37114e-08, 0, 1.83448, 0)
+transform = Transform3D(0.579082, 0.754996, 0.307644, 0.469163, -3.8602e-08, -0.883111, -0.666745, 0.65573, -0.354216, 0.146416, 1.70027, -0.168574)
 layers = 1024
 light_intensity_lux = 5963.31
 light_temperature = 8000.0
-light_energy = 5.746
+light_energy = 2.0
+light_bake_mode = 1
+light_cull_mask = 4293919744
+directional_shadow_mode = 0
+sky_mode = 1
+
+[node name="DirectionalLight3D5" type="DirectionalLight3D" parent="LockersBuilding"]
+transform = Transform3D(-0.579082, 0.307644, 0.754996, -0.469163, -0.883111, 2.05078e-08, 0.666745, -0.354216, 0.65573, 0.146416, 1.70027, -0.168574)
+layers = 1024
+light_intensity_lux = 5963.31
+light_temperature = 8000.0
+light_energy = 2.0
+light_bake_mode = 1
+light_cull_mask = 4293919744
+directional_shadow_mode = 0
+sky_mode = 1
+
+[node name="DirectionalLight3D6" type="DirectionalLight3D" parent="LockersBuilding"]
+transform = Transform3D(0.579082, 0.307644, -0.754996, 0.469163, -0.883111, 1.56808e-08, -0.666745, -0.354216, -0.65573, 0.146416, 1.70027, -0.168574)
+layers = 1024
+light_intensity_lux = 5963.31
+light_temperature = 8000.0
+light_energy = 2.0
+light_bake_mode = 1
 light_cull_mask = 4293919744
 directional_shadow_mode = 0
 sky_mode = 1
@@ -1532,10 +1546,10 @@ transform = Transform3D(0.964907, 0, -0.262593, 0, 1, 0, 0.262593, 0, 0.964907, 
 transform = Transform3D(0.964907, 0, -0.262593, 0, 1, 0, 0.262593, 0, 0.964907, -30.2283, -0.0672508, -11.3127)
 
 [node name="LightGrassRandomPatch6MMixed16" parent="SchoolGrass" instance=ExtResource("51_764ci")]
-transform = Transform3D(0.991282, 0, -0.131755, 0, 1, 0, 0.131755, 0, 0.991282, -40.7263, -0.0672508, -11.8371)
+transform = Transform3D(0.991282, 0, -0.131755, 0, 1, 0, 0.131755, 0, 0.991282, -40.7263, -0.0672508, -12.4161)
 
 [node name="LightGrassRandomPatch6MMixed13" parent="SchoolGrass" instance=ExtResource("51_764ci")]
-transform = Transform3D(-0.664478, 0, 0.15155, 0, 1, 0, -0.0947704, 0, -1.06259, -38.2911, -0.0672508, -7.59128)
+transform = Transform3D(-0.525752, 0, 0.0798056, 0, 1, 0, -0.0434372, 0, -0.965952, -38.3432, -0.0672508, -7.08349)
 
 [node name="Trees" type="Node3D" parent="."]
 
