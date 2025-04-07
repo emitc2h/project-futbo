@@ -11,7 +11,7 @@
 [ext_resource type="Material" uid="uid://c33v812uounix" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_slightly_dried_leaves_swaying.tres" id="7_hj0m6"]
 [ext_resource type="Material" uid="uid://602a6yse0f72" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_red_leaves_swaying.tres" id="8_jv7bb"]
 [ext_resource type="PackedScene" uid="uid://b28taugqi7ixx" path="res://assets/3D/Act1/blend/SoccerBall.blend" id="9_iudwe"]
-[ext_resource type="PackedScene" uid="uid://cfsou1tom0khe" path="res://scenes/characters/character_1.tscn" id="12_q5hbi"]
+[ext_resource type="PackedScene" uid="uid://b7epgpy0cl42o" path="res://assets/3D/Enemies/Drone/drone.blend" id="13_n2k7b"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4vvqs"]
 
@@ -66,14 +66,26 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../character1:position")
+tracks/0/path = NodePath("../drone:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0.247076, -1.45143, 6.62554)]
+"values": [Vector3(-10, 1.271, -1.806)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../drone:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.130698, 1.60952, 0.00504972)]
 }
 
 [sub_resource type="Animation" id="Animation_4vb0h"]
@@ -104,14 +116,26 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../character1:position")
-tracks/2/interp = 1
+tracks/2/path = NodePath("../drone:position")
+tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(4, 15),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(4.34333, 4.80333, 5.23333, 5.72333, 6.33333, 6.88333, 7.37333, 7.73333, 8.22333, 8.70333, 8.96333, 9.19333, 9.67333, 10.1533, 10.4966),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0.247076, -1.45143, 6.62554), Vector3(0.247076, 3.58673, 6.62554)]
+"values": [Vector3(-10, 1.271, -1.806), Vector3(-8.39383, 1.47087, -1.806), Vector3(-6.89241, 1.34187, -1.806), Vector3(-5.18149, 1.47328, -1.806), Vector3(-3.05157, 1.31384, -1.806), Vector3(-1.13115, 1.43433, -1.806), Vector3(0.579765, 1.28054, -1.806), Vector3(1.83677, 1.33746, -1.806), Vector3(3.54768, 1.19765, -1.806), Vector3(5.22369, 1.04502, -1.806), Vector3(6.13152, 1.20843, -1.806), Vector3(6.9346, 1.07737, -1.806), Vector3(8.61061, 1.26824, -1.806), Vector3(10.2866, 1.14125, -1.806), Vector3(11.4853, 1.271, -1.806)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../drone:rotation")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 4.35333, 5.91333, 7.79333, 9.19333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.130698, 1.60952, 0.00504972), Vector3(0.130698, 1.60952, 0.00504972), Vector3(0.130698, 1.03913, 0.00504972), Vector3(0.130698, 2.59251, 0.00504971), Vector3(0.1309, 1.5708, 0.00523599)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_watdk"]
@@ -170,7 +194,7 @@ material_override = ExtResource("8_jv7bb")
 transform = Transform3D(-0.896893, 0, -0.0747153, 0, 0.9, 0, 0.0747153, 0, -0.896893, -0.937597, 0, 8.91222)
 
 [node name="SoccerBall" parent="." instance=ExtResource("9_iudwe")]
-transform = Transform3D(0.963839, -0.172787, -0.202874, -0.100358, -0.940608, 0.324321, -0.246864, -0.292233, -0.923936, -1.3906, 0.264268, 9.42529)
+transform = Transform3D(0.875909, 0.437749, -0.202874, 0.481918, -0.813984, 0.324321, -0.0231656, -0.381844, -0.923936, -0.262395, 0.264268, 9.42529)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../SoccerBall")
@@ -178,8 +202,12 @@ libraries = {
 &"": SubResource("AnimationLibrary_watdk")
 }
 
-[node name="character1" parent="." instance=ExtResource("12_q5hbi")]
-transform = Transform3D(0.579167, 0, -0.815209, 0, 1, 0, 0.815209, 0, 0.579167, 0.247076, -1.45143, 6.62554)
+[node name="drone" parent="." instance=ExtResource("13_n2k7b")]
+transform = Transform3D(-0.0380558, 0.130422, 0.990728, 0.00500663, 0.991459, -0.130326, -0.999262, 5.34579e-07, -0.0383838, -10, 1.271, -1.806)
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="drone"]
+transform = Transform3D(0.330842, 0.0728481, 0.94087, -0.15105, 0.988249, -0.023402, -0.931519, -0.134377, 0.337958, -0.083442, -0.0403268, -0.0540347)
+size = Vector3(4.1535, 4.37885, 4.12817)
 
 [editable path="WorldEnvironment"]
 [editable path="Grass2"]
