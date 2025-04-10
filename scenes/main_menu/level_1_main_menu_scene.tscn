@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://deidkuj34u7yu"]
+[gd_scene load_steps=23 format=4 uid="uid://deidkuj34u7yu"]
 
 [ext_resource type="Script" uid="uid://cua4a6wcsrmb2" path="res://scripts/main_menu/level_1_main_menu_scene.gd" id="1_glui6"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_jugbg"]
@@ -11,6 +11,7 @@
 [ext_resource type="Material" uid="uid://c33v812uounix" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_slightly_dried_leaves_swaying.tres" id="7_hj0m6"]
 [ext_resource type="Material" uid="uid://602a6yse0f72" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_red_leaves_swaying.tres" id="8_jv7bb"]
 [ext_resource type="PackedScene" uid="uid://b28taugqi7ixx" path="res://assets/3D/Act1/blend/SoccerBall.blend" id="9_iudwe"]
+[ext_resource type="Script" uid="uid://ivuwvt726w21" path="res://scripts/enemies/drone/drone.gd" id="13_4ltjo"]
 [ext_resource type="PackedScene" uid="uid://b7epgpy0cl42o" path="res://assets/3D/Enemies/Drone/drone.blend" id="13_n2k7b"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4vvqs"]
@@ -120,10 +121,10 @@ tracks/2/path = NodePath("../drone:position")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(4.34333, 4.80333, 5.23333, 5.72333, 6.33333, 6.88333, 7.37333, 7.73333, 8.22333, 8.70333, 8.96333, 9.19333, 9.67333, 10.1533, 10.4966),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 4.34333, 4.80333, 5.23333, 5.72333, 6.33333, 6.88333, 7.37333, 7.73333, 8.22333, 8.70333, 8.96333, 9.19333, 9.63333, 10.1533, 10.4966),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(-10, 1.271, -1.806), Vector3(-8.39383, 1.47087, -1.806), Vector3(-6.89241, 1.34187, -1.806), Vector3(-5.18149, 1.47328, -1.806), Vector3(-3.05157, 1.31384, -1.806), Vector3(-1.13115, 1.43433, -1.806), Vector3(0.579765, 1.28054, -1.806), Vector3(1.83677, 1.33746, -1.806), Vector3(3.54768, 1.19765, -1.806), Vector3(5.22369, 1.04502, -1.806), Vector3(6.13152, 1.20843, -1.806), Vector3(6.9346, 1.07737, -1.806), Vector3(8.61061, 1.26824, -1.806), Vector3(10.2866, 1.14125, -1.806), Vector3(11.4853, 1.271, -1.806)]
+"values": [Vector3(-10, 1.271, 2.25052), Vector3(-10, 1.271, 2.251), Vector3(-8.394, 1.471, 2.251), Vector3(-6.892, 1.342, 2.251), Vector3(-5.181, 1.473, 2.251), Vector3(-3.052, 1.314, 2.251), Vector3(-1.131, 1.434, 2.251), Vector3(0.58, 1.281, 2.251), Vector3(1.837, 1.337, 2.251), Vector3(3.548, 1.198, 2.251), Vector3(5.224, 1.045, 2.251), Vector3(6.132, 1.208, 2.251), Vector3(6.935, 1.077, 2.251), Vector3(8.611, 1.268, 2.251), Vector3(10.2866, 1.14125, -1.806), Vector3(11.4853, 1.271, -1.806)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -135,7 +136,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 4.35333, 5.91333, 7.79333, 9.19333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0.130698, 1.60952, 0.00504972), Vector3(0.130698, 1.60952, 0.00504972), Vector3(0.130698, 1.03913, 0.00504972), Vector3(0.130698, 2.59251, 0.00504971), Vector3(0.1309, 1.5708, 0.00523599)]
+"values": [Vector3(0.1309, 1.60919, -0.0174533), Vector3(0.130698, 1.60952, 0.00504972), Vector3(0.130698, 1.03913, 0.00504972), Vector3(0.130698, 2.59251, 0.00504971), Vector3(0.1309, 1.5708, 0.00523599)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_watdk"]
@@ -194,7 +195,7 @@ material_override = ExtResource("8_jv7bb")
 transform = Transform3D(-0.896893, 0, -0.0747153, 0, 0.9, 0, 0.0747153, 0, -0.896893, -0.937597, 0, 8.91222)
 
 [node name="SoccerBall" parent="." instance=ExtResource("9_iudwe")]
-transform = Transform3D(0.875909, 0.437749, -0.202874, 0.481918, -0.813984, 0.324321, -0.0231656, -0.381844, -0.923936, -0.262395, 0.264268, 9.42529)
+transform = Transform3D(0.963839, -0.172787, -0.202874, -0.100358, -0.940608, 0.32432, -0.246864, -0.292233, -0.923936, -1.3906, 0.264268, 9.42529)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../SoccerBall")
@@ -203,11 +204,60 @@ libraries = {
 }
 
 [node name="drone" parent="." instance=ExtResource("13_n2k7b")]
-transform = Transform3D(-0.0380558, 0.130422, 0.990728, 0.00500663, 0.991459, -0.130326, -0.999262, 5.34579e-07, -0.0383838, -10, 1.271, -1.806)
+transform = Transform3D(-0.0380558, 0.130422, 0.990728, 0.00500662, 0.991459, -0.130326, -0.999262, 5.34579e-07, -0.0383838, -10, 1.271, -1.806)
+script = ExtResource("13_4ltjo")
+
+[node name="Skeleton3D" parent="drone/Armature" index="0"]
+bones/4/rotation = Quaternion(0.735267, -0.677778, 2.22093e-07, 1.29763e-07)
+bones/5/rotation = Quaternion(6.72345e-08, -6.5413e-08, -0.126631, 0.99195)
+bones/6/rotation = Quaternion(1.15081e-08, -1.34886e-07, -0.119608, 0.992821)
+bones/7/rotation = Quaternion(-4.54319e-09, -5.1847e-08, -0.38982, 0.920891)
+bones/8/rotation = Quaternion(-6.38307e-08, -1.30034e-07, -0.719672, 0.694314)
+bones/9/rotation = Quaternion(1.67369e-08, -4.90209e-09, -0.124292, 0.992246)
+bones/10/rotation = Quaternion(-1.03244e-07, 4.69018e-08, -0.133076, 0.991106)
+bones/11/rotation = Quaternion(8.50331e-09, 5.6761e-08, -0.41236, 0.911021)
+bones/12/rotation = Quaternion(0.735267, -0.677778, 2.22093e-07, 1.29763e-07)
+bones/13/rotation = Quaternion(6.72345e-08, -6.5413e-08, -0.126631, 0.99195)
+bones/14/rotation = Quaternion(1.15081e-08, -1.34886e-07, -0.119608, 0.992821)
+bones/15/rotation = Quaternion(-4.54319e-09, -5.1847e-08, -0.38982, 0.920891)
+bones/16/position = Vector3(-0.685664, -0.354824, -5.12534e-08)
+bones/17/rotation = Quaternion(-6.38307e-08, -1.30034e-07, -0.719672, 0.694314)
+bones/18/rotation = Quaternion(1.67369e-08, -4.90209e-09, -0.124292, 0.992246)
+bones/19/rotation = Quaternion(-1.03244e-07, 4.69018e-08, -0.133076, 0.991106)
+bones/20/rotation = Quaternion(8.50331e-09, 5.6761e-08, -0.41236, 0.911021)
+bones/21/position = Vector3(0.673724, -0.335721, 1.2349e-07)
+bones/22/rotation = Quaternion(0.5, -0.5, 0.5, -0.5)
+bones/23/rotation = Quaternion(-0.501349, 0.498648, 0.501349, -0.498648)
+bones/24/rotation = Quaternion(-6.1151e-10, -1.86217e-08, -0.0688902, 0.997624)
+bones/25/rotation = Quaternion(4.28803e-08, -2.37308e-08, -0.0465509, 0.998916)
+bones/26/rotation = Quaternion(-4.47596e-08, -2.81276e-08, -0.311188, 0.950348)
+bones/27/rotation = Quaternion(6.95809e-09, 1.31377e-08, 0.911783, -0.410673)
+bones/28/position = Vector3(-0.249677, 0.176348, -1.78876e-08)
+bones/29/position = Vector3(-0.249677, 0.176348, -1.78876e-08)
+bones/30/rotation = Quaternion(6.95809e-09, 1.31377e-08, 0.911783, -0.410673)
+bones/31/rotation = Quaternion(-0.501349, -0.498647, 0.501349, 0.498647)
+bones/32/rotation = Quaternion(1.18173e-08, 6.16296e-08, 0.0688904, 0.997624)
+bones/33/rotation = Quaternion(4.56047e-08, 3.43845e-08, 0.0465499, 0.998916)
+bones/34/rotation = Quaternion(-5.34554e-08, 3.44351e-08, 0.311187, 0.950349)
+bones/35/rotation = Quaternion(-7.70876e-09, 1.40042e-08, 0.911783, 0.410673)
+bones/36/position = Vector3(0.249677, 0.176348, -2.90508e-08)
+bones/37/position = Vector3(0.249677, 0.176348, -2.90508e-08)
+bones/38/rotation = Quaternion(-7.70876e-09, 1.40042e-08, 0.911783, 0.410673)
+bones/39/rotation = Quaternion(-0.501349, 0.498648, 0.501349, -0.498648)
+bones/40/rotation = Quaternion(-6.1151e-10, -1.86217e-08, -0.0688902, 0.997624)
+bones/41/rotation = Quaternion(4.28803e-08, -2.37308e-08, -0.0465509, 0.998916)
+bones/42/rotation = Quaternion(-4.47596e-08, -2.81276e-08, -0.311188, 0.950348)
+bones/43/position = Vector3(5.48995e-08, -0.092159, 1.03429)
+bones/44/rotation = Quaternion(-0.501349, -0.498647, 0.501349, 0.498647)
+bones/45/rotation = Quaternion(1.18173e-08, 6.16296e-08, 0.0688904, 0.997624)
+bones/46/rotation = Quaternion(4.56047e-08, 3.43845e-08, 0.0465499, 0.998916)
+bones/47/rotation = Quaternion(-5.34554e-08, 3.44351e-08, 0.311187, 0.950349)
+bones/48/position = Vector3(-1.03429, 0, 0.0921591)
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="drone"]
-transform = Transform3D(0.330842, 0.0728481, 0.94087, -0.15105, 0.988249, -0.023402, -0.931519, -0.134377, 0.337958, -0.083442, -0.0403268, -0.0540347)
-size = Vector3(4.1535, 4.37885, 4.12817)
+transform = Transform3D(0.330843, 0.0728479, 0.940871, -0.15105, 0.988249, -0.0234018, -0.931519, -0.134376, 0.337959, -0.0868568, -0.0866579, -0.0477343)
+size = Vector3(4.1535, 5.67381, 4.12817)
 
 [editable path="WorldEnvironment"]
 [editable path="Grass2"]
+[editable path="drone"]
