@@ -1,15 +1,12 @@
-[gd_scene load_steps=5 format=4 uid="uid://cc35nexxgpc4d"]
+[gd_scene load_steps=4 format=4 uid="uid://cc35nexxgpc4d"]
 
-[ext_resource type="Texture2D" uid="uid://d0hnttghmofpc" path="res://assets/3D/Act1/Textures/Sprites/grass1.png" id="1_o76h1"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u1vn5"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lm3g"]
 resource_name = "Grass"
 transparency = 4
 cull_mode = 2
-albedo_texture = ExtResource("1_o76h1")
 roughness = 0.5
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_0anca"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_o76h1"]
 _surfaces = [{
 "aabb": AABB(-0.05, -0.000234067, -0.05, 0.1, 0.1, 0.1),
 "format": 34896613377,
@@ -23,7 +20,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_8m7nt"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_u1vn5"]
 resource_name = "grass_Plane_002"
 _surfaces = [{
 "aabb": AABB(-0.05, -0.000234067, -0.05, 0.1, 0.1, 0.1),
@@ -31,7 +28,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 12,
 "index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUA"),
-"material": SubResource("StandardMaterial3D_u1vn5"),
+"material": SubResource("StandardMaterial3D_2lm3g"),
 "name": "Grass",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -39,12 +36,12 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/38AAP///7//f/7/AAD/v/9/AAAAAP+//3////7//78AAAAA/38AgP///v//fwCA/v8AAP9/AIAAAP///38AgP9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_0anca")
+shadow_mesh = SubResource("ArrayMesh_o76h1")
 
 [node name="grass" type="Node3D"]
 
 [node name="Plane_001" type="MeshInstance3D" parent="."]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
 gi_mode = 0
-mesh = SubResource("ArrayMesh_8m7nt")
+mesh = SubResource("ArrayMesh_u1vn5")
 skeleton = NodePath("")
