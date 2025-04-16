@@ -1,8 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://xuvnhtg7ox3i"]
+[gd_scene load_steps=7 format=3 uid="uid://xuvnhtg7ox3i"]
 
 [ext_resource type="Script" uid="uid://drh5o3ouklefg" path="res://scripts/main_menu/main_menu.gd" id="1_f6d7l"]
 [ext_resource type="PackedScene" uid="uid://deidkuj34u7yu" path="res://scenes/main_menu/level_1_main_menu_scene.tscn" id="4_c83o0"]
 [ext_resource type="Script" uid="uid://b8rggvq7ih7ew" path="res://scripts/main_menu/new_game.gd" id="11_jf6cj"]
+
+[sub_resource type="Animation" id="Animation_ob46e"]
+resource_name = "StartUp"
+length = 12.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainMenuUI/GridContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 8.93333, 11.9433),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_uqeha"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainMenuUI/GridContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wem23"]
+_data = {
+&"RESET": SubResource("Animation_uqeha"),
+&"StartUp": SubResource("Animation_ob46e")
+}
 
 [node name="MainMenu" type="Node3D"]
 script = ExtResource("1_f6d7l")
@@ -12,6 +49,7 @@ script = ExtResource("1_f6d7l")
 [node name="MainMenuUI" type="CanvasLayer" parent="."]
 
 [node name="GridContainer" type="GridContainer" parent="MainMenuUI"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.285
 anchor_top = 0.306
@@ -54,6 +92,11 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 36
 text = "  Quit  "
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wem23")
+}
 
 [connection signal="pressed" from="MainMenuUI/GridContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Settings" to="." method="_on_exit_pressed"]

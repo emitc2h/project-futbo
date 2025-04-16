@@ -725,8 +725,7 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -80.0
-offset_bottom = -80.0
+offset_bottom = 80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
@@ -737,8 +736,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 80.9199
-offset_bottom = 81.0
+offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
@@ -837,7 +835,7 @@ player = NodePath("../../OpponentPlayer")
 [node name="WalkToFieldPath3D" parent="Level1Script" instance=ExtResource("21_52762")]
 
 [node name="character1" parent="." instance=ExtResource("28_i2mul")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5043, 0.000399992, 0.111814)
+transform = Transform3D(0.815865, 0, 0.578242, 0, 1, 0, -0.578242, 0, 0.815865, -25.9515, 0.000399992, 6.1819)
 
 [connection signal="display_stamina" from="MainPlayer" to="UI" method="_on_display_stamina"]
 [connection signal="facing_left" from="MainPlayer" to="Ball" method="_on_facing_left"]

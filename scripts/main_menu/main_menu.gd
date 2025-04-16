@@ -3,6 +3,9 @@ extends Node3D
 
 signal new_game
 
+func _ready() -> void:
+	$AnimationPlayer.play("StartUp")
+
 
 func _on_new_game_pressed() -> void:
 	new_game.emit()
