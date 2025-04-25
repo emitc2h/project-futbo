@@ -44,12 +44,6 @@ window/stretch/mode="viewport"
 movie_writer/mjpeg_quality=0.9
 movie_writer/movie_file="/Users/mtrottiermcdonald/Movies/godot_test.avi"
 movie_writer/disable_vsync=true
-version_control/plugin_name="GitPlugin"
-version_control/autoload_on_startup=true
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
 
 [input]
 

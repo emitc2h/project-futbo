@@ -21,4 +21,4 @@ func collapse() -> void:
 	$Armature/Skeleton3D.collapse()
 
 func _physics_process(delta: float) -> void:
-	self.
+	pass
