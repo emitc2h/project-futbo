@@ -295,7 +295,7 @@ material_override = ExtResource("8_jv7bb")
 transform = Transform3D(-0.896893, 0, -0.0747153, 0, 0.9, 0, 0.0747153, 0, -0.896893, -0.937597, 0, 8.91222)
 
 [node name="SoccerBall" parent="." instance=ExtResource("9_iudwe")]
-transform = Transform3D(0.963839, -0.172787, -0.202874, -0.100358, -0.940608, 0.32432, -0.246864, -0.292233, -0.923936, -1.3906, 0.264268, 9.42529)
+transform = Transform3D(0.963839, -0.172787, -0.202874, -0.100358, -0.940608, 0.324321, -0.246864, -0.292233, -0.923936, -1.3906, 0.264268, 9.42529)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../SoccerBall")

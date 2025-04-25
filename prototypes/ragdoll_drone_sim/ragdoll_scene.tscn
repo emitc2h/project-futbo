@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://f74yn2yguccx"]
+
+[ext_resource type="Script" uid="uid://d04eawhdw3fh0" path="res://prototypes/ragdoll_drone_sim/node_3d.gd" id="1_crm8f"]
+[ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone.tscn" id="2_be5mx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_crm8f"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_be5mx"]
+sky_material = SubResource("ProceduralSkyMaterial_crm8f")
+
+[sub_resource type="Environment" id="Environment_kh2ms"]
+background_mode = 2
+sky = SubResource("Sky_be5mx")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_fd0on"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_kh2ms"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_crm8f"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_crm8f")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.873774, -0.421177, 0.243165, 0, 0.499998, 0.866027, -0.486332, 0.756711, -0.436885, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kh2ms")
+camera_attributes = SubResource("CameraAttributesPractical_fd0on")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_kh2ms")
+
+[node name="Drone" parent="." instance=ExtResource("2_be5mx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51576, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.26318, 2.68794)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.16524, 0, 0, 0, 1, 0, 0, 0, 4.63454, 0, 0, 0)
+mesh = SubResource("PlaneMesh_crm8f")
