@@ -36,7 +36,6 @@ shapes/collision/contact_color=Color(0.88, 0.1, 1, 1)
 
 window/size/viewport_width=1280
 window/size/viewport_height=800
-window/size/resizable=false
 window/stretch/mode="viewport"
 
 [editor]
@@ -44,6 +43,10 @@ window/stretch/mode="viewport"
 movie_writer/mjpeg_quality=0.9
 movie_writer/movie_file="/Users/mtrottiermcdonald/Movies/godot_test.avi"
 movie_writer/disable_vsync=true
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
 
 [input]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://deidkuj34u7yu"]
+[gd_scene load_steps=21 format=4 uid="uid://deidkuj34u7yu"]
 
 [ext_resource type="Script" uid="uid://cua4a6wcsrmb2" path="res://scripts/main_menu/level_1_main_menu_scene.gd" id="1_glui6"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_jugbg"]
@@ -11,7 +11,6 @@
 [ext_resource type="Material" uid="uid://c33v812uounix" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_slightly_dried_leaves_swaying.tres" id="7_hj0m6"]
 [ext_resource type="Material" uid="uid://602a6yse0f72" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_red_leaves_swaying.tres" id="8_jv7bb"]
 [ext_resource type="PackedScene" uid="uid://b28taugqi7ixx" path="res://assets/3D/Act1/blend/SoccerBall.blend" id="9_iudwe"]
-[ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone.tscn" id="13_4ltjo"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4vvqs"]
 
@@ -63,72 +62,6 @@ buffer = PackedFloat32Array(0.636677, 0, 0.931016, -79.525, 0, 1.1279, 0, 0.1154
 
 [sub_resource type="Animation" id="Animation_n2k7b"]
 length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../Drone:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(6.029, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Drone:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1.17702, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../Drone:position:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(6.33885, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../Drone:rotation:x")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("../Drone:rotation:y")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-1.5708, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("../Drone:rotation:z")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
 
 [sub_resource type="Animation" id="Animation_4vb0h"]
 resource_name = "enter_scene"
@@ -154,89 +87,6 @@ tracks/1/keys = {
 "handle_modes": PackedInt32Array(1, 0, 0),
 "points": PackedFloat32Array(-3.0353, 0, 0, 0, 0, -3.0353, -0.25, 0, 0.2, 5.0517, 2.60704, -1.96667, 0.00881553, 0.25, 0),
 "times": PackedFloat32Array(0, 2, 5)
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../Drone")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(5.33333, 8.3),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"open_up"
-}, {
-"args": [],
-"method": &"close_up"
-}]
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../Drone:position:x")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 0),
-"points": PackedFloat32Array(11.86, -0.25, 0, 0.25, 0, 1.43729, -1.70171, -0.276308, 1.18848, 0.192975, 1.43729, -1.26448, 0.171979, 4.13182, -0.561959, -25.5474, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(-0.0666667, 5.01, 8.53333, 13.2667)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("../Drone:position:y")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(1.17702, -0.25, 0, 0.25, 0, 1.17702, -0.25, 0, 0.25, 0, 1.17702, -0.25, 0, 0.25, 0, 1.17702, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 5.01, 8.53333, 14.8767)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("../Drone:position:z")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(6.33885, -0.25, 0, 0.25, 0, 6.33885, -0.25, 0, 0.25, 0, 6.33885, -0.25, 0, 0.25, 0, 6.33885, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 5.01, 8.53333, 14.8767)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("../Drone:rotation:x")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.6426, -4.63966e-05, 0.199055, -0.687401, -0.00111496, 0.25, 0, 0.19794, -0.25, 0, 0.929267, -0.000400215, 0, -0.670732, 0.00209786, 0.25, 0),
-"times": PackedFloat32Array(0, 4.52, 5.55, 8.33333, 10.0667)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("../Drone:rotation:y")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(-1.5708, -0.25, 0, 0.25, 0, -1.5708, -0.25, 0, 0.511818, -0.00488746, -0.611934, -0.651515, 0.00082171, 0.25, 0, -0.611934, -0.25, 0, 0.898485, -0.00590789, -1.5708, -0.66818, -0.0026443, 0.25, 0),
-"times": PackedFloat32Array(0, 4.52, 5.55, 8.5, 10.0667)
-}
-tracks/8/type = "bezier"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("../Drone:rotation:z")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -7.39702e-07, -0.25, 0, 0.25, 0, -7.39702e-07, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 4.52, 5.55, 8.5, 10.0667)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_watdk"]
@@ -310,9 +160,6 @@ size = Vector3(20.1323, 12.7387, 14.7864)
 box_projection = true
 ambient_mode = 2
 ambient_color = Color(1, 1, 1, 1)
-
-[node name="Drone" parent="." instance=ExtResource("13_4ltjo")]
-transform = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, 6.029, 1.17702, 6.33885)
 
 [editable path="WorldEnvironment"]
 [editable path="Grass2"]

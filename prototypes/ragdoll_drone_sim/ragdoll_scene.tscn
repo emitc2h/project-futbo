@@ -1,7 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://f74yn2yguccx"]
+[gd_scene load_steps=17 format=3 uid="uid://f74yn2yguccx"]
 
-[ext_resource type="Script" uid="uid://d04eawhdw3fh0" path="res://prototypes/ragdoll_drone_sim/node_3d.gd" id="1_crm8f"]
-[ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone.tscn" id="2_be5mx"]
+[ext_resource type="Script" uid="uid://d04eawhdw3fh0" path="res://prototypes/ragdoll_drone_sim/ragdoll_scene.gd" id="1_crm8f"]
+[ext_resource type="PackedScene" uid="uid://dy4rhlpeuav22" path="res://scenes/enemies/drone.tscn" id="2_be5mx"]
+[ext_resource type="Texture2D" uid="uid://bi14nqhqhl57j" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_color.png" id="3_kh2ms"]
+[ext_resource type="Texture2D" uid="uid://dfvmyjp50vb2i" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_darker_color.png" id="3_kt6ak"]
+[ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="4_fd0on"]
+[ext_resource type="Texture2D" uid="uid://yoy65rx3qx7a" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_normal.png" id="4_yadpr"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_crm8f"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -18,32 +22,86 @@ glow_enabled = true
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_fd0on"]
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_kh2ms"]
+[sub_resource type="PrismMesh" id="PrismMesh_golq6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yu6kg"]
+albedo_texture = ExtResource("3_kt6ak")
+normal_enabled = true
+normal_texture = ExtResource("4_yadpr")
+uv1_scale = Vector3(2, 1, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_82g4o"]
+data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_crm8f"]
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kt6ak"]
+albedo_texture = ExtResource("3_kh2ms")
+roughness = 0.85
+normal_enabled = true
+normal_texture = ExtResource("4_fd0on")
+uv1_scale = Vector3(2, 2, 1)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_kh2ms"]
+
+[node name="RagdollScene" type="Node3D"]
 script = ExtResource("1_crm8f")
 
+[node name="Drone" parent="." instance=ExtResource("2_be5mx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.04273, -1.32298)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.873774, -0.421177, 0.243165, 0, 0.499998, 0.866027, -0.486332, 0.756711, -0.436885, 0, 0, 0)
+transform = Transform3D(0.899443, -0.0316088, -0.435894, 0.31937, 0.728387, 0.606181, 0.298339, -0.684436, 0.665238, 0, 0, 0)
+light_energy = 1.72
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kh2ms")
 camera_attributes = SubResource("CameraAttributesPractical_fd0on")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_kh2ms")
-
-[node name="Drone" parent="." instance=ExtResource("2_be5mx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51576, 0)
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.26318, 2.68794)
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.38216e-07, 0, -3.12567, 0, 0.862618, 0, 5.44975, 0, -1.36627e-07, 6.24084e-08, 0, -1.56614)
+mesh = SubResource("PrismMesh_golq6")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_yu6kg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+collision_layer = 2
+collision_mask = 269
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_82g4o")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.38216e-07, 0, -3.12567, 0, 0.484989, 0, 5.44975, 0, -1.36627e-07, -9.87548e-08, 0, 2.12084)
+mesh = SubResource("PrismMesh_golq6")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_yu6kg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+collision_layer = 2
+collision_mask = 269
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_82g4o")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 269
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 transform = Transform3D(3.16524, 0, 0, 0, 1, 0, 0, 0, 4.63454, 0, 0, 0)
 mesh = SubResource("PlaneMesh_crm8f")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_kt6ak")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("WorldBoundaryShape3D_kh2ms")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.394071, -0.179382, 0.901405, 3.87061e-09, 0.980768, 0.195176, -0.91908, -0.076913, 0.386492, 3.73712, 1.81418, 2.38771)
+fov = 66.3943
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0162354, 2.8009, -6.10352e-05)
+size = Vector3(6.23218, 6.07544, 9.23425)

@@ -112,7 +112,7 @@ func _on_dribbled_state_exited() -> void:
 	dribbler_id = 0
 	is_owned = false
 	
-		# wake up the inert node
+	# wake up the inert node
 	inert_node.set_freeze_enabled(false)
 	inert_node.sleeping = false
 	
