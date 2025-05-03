@@ -28,6 +28,7 @@ func _on_main_menu_state_entered() -> void:
 	var main_menu_scene: MainMenu = load("res://scenes/main_menu/main_menu.tscn").instantiate()
 	active_scene = main_menu_scene
 	main_menu_scene.new_game.connect(_on_new_game_pressed)
+	main_menu_scene.load_prototype.connect(_on_prototype_pressed)
 	self.add_child(main_menu_scene)
 
 
@@ -38,12 +39,19 @@ func _on_new_game_pressed() -> void:
 	state.send_event("main menu to loading screen")
 
 
+func _on_prototype_pressed() -> void:
+	level_path = "res://prototypes/ragdoll_drone_sim/ragdoll_scene.tscn"
+	fade_screen.fade_out()
+	await fade_screen.fade_finished
+	state.send_event("main menu to loading screen")
+
+
 func _on_main_menu_state_exited() -> void:
 	active_scene.queue_free()
 
 
 #=======================================================
-# MAIN MENU STATE
+# LOADING STATE
 #=======================================================
 func _on_loading_screen_state_entered() -> void:
 	var loading_screen_scene: LoadingScreen = load("res://scenes/loading_screen/loading_screen.tscn").instantiate()
@@ -91,7 +99,7 @@ func _on_game_loaded_state_processing(delta: float) -> void:
 #=======================================================
 func _on_game_state_entered() -> void:
 	fade_screen.fade_in()
-	var level: Level = ResourceLoader.load_threaded_get("res://scenes/level1/act_1.tscn").instantiate()
+	var level: Level = ResourceLoader.load_threaded_get(level_path).instantiate()
 	level_state_manager.open_level(level)
 	active_scene = level
 

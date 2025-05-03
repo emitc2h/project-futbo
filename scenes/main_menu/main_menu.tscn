@@ -29,7 +29,7 @@ tracks/0/path = NodePath("MainMenuUI/GridContainer:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 8.93333, 11.9433),
+"times": PackedFloat32Array(0, 2.06667, 5.07664),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -81,11 +81,11 @@ theme_override_font_sizes/font_size = 36
 text = "  New Game  "
 script = ExtResource("11_jf6cj")
 
-[node name="Settings" type="Button" parent="MainMenuUI/GridContainer"]
+[node name="Prototype" type="Button" parent="MainMenuUI/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 36
-text = "  Settings  "
+text = " Prototype "
 
 [node name="Quit" type="Button" parent="MainMenuUI/GridContainer"]
 layout_mode = 2
@@ -99,5 +99,5 @@ libraries = {
 }
 
 [connection signal="pressed" from="MainMenuUI/GridContainer/NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="MainMenuUI/GridContainer/Settings" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MainMenuUI/GridContainer/Prototype" to="." method="_on_prototype_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Quit" to="." method="_on_exit_pressed"]

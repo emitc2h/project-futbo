@@ -14,10 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://3y4snk0eo4mp" path="res://scenes/ui.tscn" id="11_ffwmr"]
 [ext_resource type="PackedScene" uid="uid://rxuskqewfa7k" path="res://scenes/control_suppressor.tscn" id="13_hpf6u"]
 [ext_resource type="Script" uid="uid://d1e0lhscxgp4n" path="res://scripts/level1/level_1_script.gd" id="14_eau2p"]
-[ext_resource type="Script" uid="uid://51ny165m7g4r" path="res://addons/godot_state_charts/state_chart.gd" id="14_ok3f3"]
-[ext_resource type="Script" uid="uid://nottcurryeno" path="res://addons/godot_state_charts/compound_state.gd" id="16_4ihqv"]
-[ext_resource type="Script" uid="uid://by6pa56pmo0hr" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
-[ext_resource type="Script" uid="uid://dcqi7oxwd5v8k" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
+[ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="14_ok3f3"]
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="16_4ihqv"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
 [ext_resource type="VideoStream" uid="uid://boayy2715qxi1" path="res://assets/logo/pine_signal_interactive-1280x800.ogv" id="19_a2ie3"]
 [ext_resource type="Texture2D" uid="uid://cq6d1nvt8t2s7" path="res://kenney_input-prompts/Xbox Series/Default/xbox_button_b.png" id="19_kmghq"]
 [ext_resource type="PackedScene" uid="uid://c86ywxv55on5f" path="res://scenes/dialog_bubble/dialog_bubble.tscn" id="19_ub1r2"]
@@ -725,7 +725,8 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 80.0
+offset_top = -80.0
+offset_bottom = -80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
@@ -736,7 +737,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -80.0
+offset_top = 80.9199
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
