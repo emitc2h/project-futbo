@@ -2,25 +2,15 @@
 
 [ext_resource type="Script" uid="uid://d04eawhdw3fh0" path="res://prototypes/ragdoll_drone_sim/ragdoll_scene.gd" id="1_crm8f"]
 [ext_resource type="PackedScene" uid="uid://dy4rhlpeuav22" path="res://scenes/enemies/drone.tscn" id="2_be5mx"]
+[ext_resource type="Environment" uid="uid://b4tj8c1q2alih" path="res://resources/act1_skybox_worldenvironment.tres" id="2_yu6kg"]
 [ext_resource type="Texture2D" uid="uid://bi14nqhqhl57j" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_color.png" id="3_kh2ms"]
 [ext_resource type="Texture2D" uid="uid://dfvmyjp50vb2i" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_darker_color.png" id="3_kt6ak"]
 [ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="4_fd0on"]
 [ext_resource type="Texture2D" uid="uid://yoy65rx3qx7a" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_normal.png" id="4_yadpr"]
+[ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node/control_node.tscn" id="7_yadpr"]
+[ext_resource type="PackedScene" uid="uid://cfsou1tom0khe" path="res://scenes/characters/character_1.tscn" id="8_golq6"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_crm8f"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-
-[sub_resource type="Sky" id="Sky_be5mx"]
-sky_material = SubResource("ProceduralSkyMaterial_crm8f")
-
-[sub_resource type="Environment" id="Environment_kh2ms"]
-background_mode = 2
-sky = SubResource("Sky_be5mx")
-tonemap_mode = 2
-glow_enabled = true
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_fd0on"]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_82g4o"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_golq6"]
 
@@ -47,20 +37,26 @@ uv1_scale = Vector3(2, 2, 1)
 [node name="RagdollScene" type="Node3D"]
 script = ExtResource("1_crm8f")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_yu6kg")
+camera_attributes = SubResource("CameraAttributesPractical_82g4o")
+
+[node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.946376, -0.30991, 0.0912554, 0.165537, 0.707737, 0.686808, -0.277434, -0.634873, 0.721087, 0, 0, 0)
+light_intensity_lux = 50000.0
+light_temperature = 4200.0
+light_energy = 7.0
+shadow_enabled = true
+directional_shadow_split_1 = 0.04
+directional_shadow_split_2 = 0.11
+directional_shadow_split_3 = 0.33
+directional_shadow_max_distance = 200.0
+
 [node name="Drone" parent="." instance=ExtResource("2_be5mx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.04273, -1.32298)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.899443, -0.0316088, -0.435894, 0.31937, 0.728387, 0.606181, 0.298339, -0.684436, 0.665238, 0, 0, 0)
-light_energy = 1.72
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_kh2ms")
-camera_attributes = SubResource("CameraAttributesPractical_fd0on")
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(-2.38216e-07, 0, -3.12567, 0, 0.862618, 0, 5.44975, 0, -1.36627e-07, 6.24084e-08, 0, -1.56614)
+transform = Transform3D(-2.38216e-07, 0, -3.12567, 0, 0.862618, 0, 5.44975, 0, -1.36627e-07, 0.803973, 0, -1.56614)
 mesh = SubResource("PrismMesh_golq6")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_yu6kg")
@@ -72,8 +68,21 @@ collision_mask = 269
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_82g4o")
 
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.41785e-07, 0, -0.942235, 0, 1.99387, 0, 3.24367, 0, -4.11863e-08, 1.7126, 0, -1.56614)
+mesh = SubResource("PrismMesh_golq6")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_yu6kg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3"]
+collision_layer = 2
+collision_mask = 269
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_82g4o")
+
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(-2.38216e-07, 0, -3.12567, 0, 0.484989, 0, 5.44975, 0, -1.36627e-07, -9.87548e-08, 0, 2.12084)
+transform = Transform3D(-2.38216e-07, 0, -3.12567, 0, 0.745615, 0, 5.44975, 0, -1.36627e-07, 0.803973, 0.115896, 2.12084)
 mesh = SubResource("PrismMesh_golq6")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_yu6kg")
@@ -90,7 +99,7 @@ collision_layer = 2
 collision_mask = 269
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(3.16524, 0, 0, 0, 1, 0, 0, 0, 4.63454, 0, 0, 0)
+transform = Transform3D(3.16524, 0, 0, 0, 1, 0, 0, 0, 4.63454, 0.803973, 0, 0)
 mesh = SubResource("PlaneMesh_crm8f")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_kt6ak")
@@ -99,9 +108,16 @@ surface_material_override/0 = SubResource("StandardMaterial3D_kt6ak")
 shape = SubResource("WorldBoundaryShape3D_kh2ms")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.394071, -0.179382, 0.901405, 3.87061e-09, 0.980768, 0.195176, -0.91908, -0.076913, 0.386492, 3.73712, 1.81418, 2.38771)
-fov = 66.3943
+transform = Transform3D(0.878335, -0.167136, 0.447876, 0.0827828, 0.975914, 0.201839, -0.470823, -0.140206, 0.871015, 2.03853, 1.8599, 5.07974)
+fov = 56.5
+
+[node name="ControlNode" parent="." instance=ExtResource("7_yadpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.70092, 2.78947, -1.24989)
+
+[node name="character1" parent="." instance=ExtResource("8_golq6")]
+transform = Transform3D(0.846221, 0, 0.532832, 0, 1, 0, -0.532832, 0, 0.846221, -1.27866, 0.0026474, 0.328114)
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0162354, 2.8009, -6.10352e-05)
-size = Vector3(6.23218, 6.07544, 9.23425)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0

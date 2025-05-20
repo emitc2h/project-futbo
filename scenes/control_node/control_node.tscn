@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bkp8fbjsyyhyx"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://besahl7f6jbkx" path="res://resources/ball_physics_material.tres" id="1_dhw6y"]
+[ext_resource type="PackedScene" uid="uid://dgpqcnsegq4rs" path="res://scenes/control_node/control_node_model.tscn" id="1_k14dj"]
+[ext_resource type="Script" uid="uid://crab58bvajfs3" path="res://scripts/control_node/control_node.gd" id="2_fgtxj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dhw6y"]
+radius = 0.486339
+
+[node name="ControlNode" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 266
+physics_material_override = ExtResource("1_dhw6y")
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("2_fgtxj")
+
+[node name="ControlNodeModel" parent="." instance=ExtResource("1_k14dj")]
+transform = Transform3D(0.13721, 0.0180001, -0.0578737, 0.012302, 0.131979, 0.070215, 0.0593467, -0.0689745, 0.11925, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.299583, 0, 0, 0, 0.299583, 0, 0, 0, 0.299583, 0, 0, 0)
+shape = SubResource("SphereShape3D_dhw6y")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
