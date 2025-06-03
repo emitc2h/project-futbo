@@ -9,4 +9,4 @@ script = ExtResource("1_halyt")
 transform = Transform3D(1, 0, 0, 0, 0.996918, -0.0784591, 0, 0.0784591, 0.996918, 0, 1.1, 10)
 cull_mask = 31775
 current = true
-fov = 45.0
+fov = 38.0

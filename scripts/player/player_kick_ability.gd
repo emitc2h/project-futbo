@@ -5,7 +5,7 @@ extends Node3D
 @export var player: Player
 
 # Nodes controlled by this node
-var sprite: AnimatedSprite3D
+var player_asset: PlayerAsset
 
 # Internal references
 @onready var state: StateChart = $State
@@ -35,7 +35,7 @@ var is_in_ready_state: bool = false
 # Record kickzone offset to flip the zone when the player faces left
 func _ready() -> void:
 	kickzone_position_x = kickzone.position.x
-	sprite = player.sprite
+	player_asset = player.player_asset
 	player_id = player.get_instance_id()
 
 
@@ -84,7 +84,7 @@ func _on_kick_state_entered() -> void:
 
 
 func _on_kick_state_exited() -> void:
-	sprite.play(previous_sprite_animation)
+	player_asset.play(previous_sprite_animation)
 
 
 # long kick state
@@ -140,8 +140,8 @@ func _on_ended_sprinting() -> void:
 func kick() -> void:
 	# If the ball is already in the kick zone, kick it
 	state.send_event("ready to kick")
-	previous_sprite_animation = sprite.animation
-	sprite.play("kick")
+	previous_sprite_animation = player_asset.animation
+	player_asset.play("kick")
 
 
 func kick_button_pressed() -> void:

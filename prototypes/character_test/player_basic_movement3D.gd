@@ -1,9 +1,9 @@
-class_name PlayerBasicMovement
+class_name PlayerBasicMovement3D
 extends Node
 
 # Nodes controlled by this node
-@export var player: Player
-var sprite: AnimatedSprite3D
+@export var player: Player3D
+var asset: CharacterAsset
 
 # Internal references
 @onready var state: StateChart = $State
@@ -78,7 +78,7 @@ signal ended_sprinting()
 
 
 func _ready() -> void:
-	sprite = player.sprite
+	asset = player.asset
 	sprint_velocity = player.sprint_velocity
 	stamina_limit = player.stamina_limit
 	stamina_replenish_rate = player.stamina_replenish_rate
@@ -99,7 +99,6 @@ func _ready() -> void:
 #----------------------------------------
 func _on_idle_state_entered() -> void:
 	in_idle_state = true
-	sprite.play(idle_animation)
 
 
 func _on_idle_state_physics_processing(delta: float) -> void:
@@ -108,7 +107,6 @@ func _on_idle_state_physics_processing(delta: float) -> void:
 	
 	# If the floor falls from under the player
 	if not player.is_on_floor():
-		sprite.play("fall")
 		state.send_event("idle to in the air")
 	
 	# Needs to be called in every movement state
@@ -144,7 +142,6 @@ func run_process() -> void:
 
 func _on_run_state_entered() -> void:
 	in_run_state = true
-	sprite.play("run")
 	
 	# Start sprinting immediately if sprint button is already pressed
 	# upon entering the run state
@@ -157,7 +154,6 @@ func _on_run_state_physics_processing(delta: float) -> void:
 	
 	# Running off a ledge transitions to in the air state
 	if not player.is_on_floor():
-		sprite.play("fall")
 		state.send_event("run to in the air")
 	
 	# Releasing the control while on the floor goes to idle
@@ -206,7 +202,7 @@ func skid_process() -> void:
 
 
 func _on_skid_state_entered() -> void:
-	sprite.play("skid")
+	pass
 
 
 func _on_skid_state_physics_processing(delta: float) -> void:
@@ -215,7 +211,6 @@ func _on_skid_state_physics_processing(delta: float) -> void:
 	
 	# Skidding off a ledge transitions to in the air state
 	if not player.is_on_floor():
-		sprite.play("fall")
 		state.send_event("skid to in the air")
 	
 	# Needs to be called in every movement state
@@ -230,7 +225,10 @@ func _on_skid_state_physics_processing(delta: float) -> void:
 func _on_run_buffer_state_entered() -> void:
 	in_run_buffer_state = true
 	state.send_event("run buffer to run")
-	sprite.play("run")
+	if left_right_axis < 0.0:
+		asset.to_move_left()
+	elif left_right_axis > 0.0:
+		asset.to_move_right()
 
 
 func _on_run_buffer_state_physics_processing(delta: float) -> void:
@@ -238,7 +236,6 @@ func _on_run_buffer_state_physics_processing(delta: float) -> void:
 	
 	# Running off a ledge transitions to in the air state
 	if not player.is_on_floor():
-		sprite.play("fall")
 		state.send_event("run buffer to in the air")
 	
 	# Releasing the control while on the floor goes to idle
@@ -259,7 +256,7 @@ func _on_jump_state_entered() -> void:
 	run_process()
 	player.velocity.y = jump_momentum
 	state.send_event("jump to in the air")
-	sprite.play(jump_animation)
+	asset.to_jump()
 
 
 func _on_jump_state_physics_processing(delta: float) -> void:
@@ -327,26 +324,27 @@ func _on_jump_buffer_state_exited() -> void:
 #----------------------------------------
 func _on_face_right_state_entered() -> void:
 	direction_faced = Enums.Direction.RIGHT
-	sprite.flip_h = false
+	asset.face_right()
 	facing_right.emit()
 
 
 func _on_face_right_state_physics_processing(delta: float) -> void:
 	if left_right_axis < 0.0 and not in_in_the_air_state \
 		and not player.can_run_backward:
-			
 		if in_run_buffer_state:
 			state.send_event("face right to face left")
+			asset.to_move_left()
 		else:
 			state.send_event("run to skid")
 			state.send_event("face right to turn left")
+			asset.to_turn_right()
 
 
 # face left state
 #----------------------------------------
 func _on_face_left_state_entered() -> void:
 	direction_faced = Enums.Direction.LEFT
-	sprite.flip_h = true
+	asset.face_left()
 	facing_left.emit()
 
 
@@ -355,9 +353,11 @@ func _on_face_left_state_physics_processing(delta: float) -> void:
 		and not player.can_run_backward:
 		if in_run_buffer_state:
 			state.send_event("face left to face right")
+			asset.to_move_right()
 		else:
 			state.send_event("run to skid")
 			state.send_event("face left to turn right")
+			asset.to_turn_left()
 
 
 # turn right state
@@ -514,6 +514,7 @@ func stop() -> void:
 # is meant to be called every frame (joystick non-zero input)
 func run(direction: float) -> void:
 	left_right_axis = direction
+	asset.speed = lerp(asset.speed, left_right_axis, 0.33)
 	if abs(left_right_axis) > 0.01:
 		# This logic isn't functionally necessary, but it cleans up the state
 		# history

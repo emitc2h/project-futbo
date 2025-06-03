@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody3D
 
 # Nodes controlled by this node
-@export var sprite: AnimatedSprite3D
+@export var player_asset: PlayerAsset
 
 # Dynamic properties
 var can_run_backward: bool = false
@@ -44,8 +44,8 @@ signal update_stamina_value(value: float)
 	get:
 		return ""
 	set(value):
-		if sprite:
-			sprite.play(value)
+		if player_asset:
+			player_asset.play(value)
 
 
 #=======================================================

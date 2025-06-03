@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmyk1j8j3wpex"]
+
+[ext_resource type="Script" uid="uid://2wf3c53vuykj" path="res://prototypes/character_test/player3D.gd" id="1_tkrpe"]
+[ext_resource type="PackedScene" uid="uid://cneunrl3vngmw" path="res://prototypes/character_test/player_basic_movement3D.tscn" id="2_6m232"]
+[ext_resource type="PackedScene" uid="uid://ce6sf1a6oipvf" path="res://prototypes/character_test/player_kick_ability3D.tscn" id="3_t2xeb"]
+[ext_resource type="PackedScene" uid="uid://bglgmij4c45oh" path="res://prototypes/character_test/player_dribble_ability3D.tscn" id="4_0pbqm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_untnw"]
+radius = 0.291466
+height = 1.25961
+
+[node name="Player3D" type="CharacterBody3D"]
+collision_mask = 2
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+script = ExtResource("1_tkrpe")
+sprint_velocity = 7.0
+recovery_velocity = 4.0
+run_forward_velocity = 5.0
+run_backward_velocity = 3.5
+run_deceleration = 0.4
+jump_momentum = 3.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.445752, 0)
+shape = SubResource("CapsuleShape3D_untnw")
+
+[node name="PlayerBasicMovement3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_6m232")]
+player = NodePath("..")
+
+[node name="PlayerKickAbility3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_t2xeb")]
+player = NodePath("..")
+
+[node name="PlayerDribbleAbility3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_0pbqm")]
+player = NodePath("..")
+
+[connection signal="display_stamina" from="PlayerBasicMovement3D" to="." method="_on_display_stamina"]
+[connection signal="ended_sprinting" from="PlayerBasicMovement3D" to="PlayerKickAbility3D" method="_on_ended_sprinting"]
+[connection signal="facing_left" from="PlayerBasicMovement3D" to="." method="_on_facing_left"]
+[connection signal="facing_left" from="PlayerBasicMovement3D" to="PlayerKickAbility3D" method="_on_facing_left"]
+[connection signal="facing_left" from="PlayerBasicMovement3D" to="PlayerDribbleAbility3D" method="_on_facing_left"]
+[connection signal="facing_right" from="PlayerBasicMovement3D" to="." method="_on_facing_right"]
+[connection signal="facing_right" from="PlayerBasicMovement3D" to="PlayerKickAbility3D" method="_on_facing_right"]
+[connection signal="facing_right" from="PlayerBasicMovement3D" to="PlayerDribbleAbility3D" method="_on_facing_right"]
+[connection signal="hide_stamina" from="PlayerBasicMovement3D" to="." method="_on_hide_stamina"]
+[connection signal="started_sprinting" from="PlayerBasicMovement3D" to="PlayerKickAbility3D" method="_on_started_sprinting"]
+[connection signal="update_stamina_value" from="PlayerBasicMovement3D" to="." method="_on_update_stamina_value"]

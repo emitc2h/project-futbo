@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://dee7cgvtr3p6c" path="res://scripts/ai.gd" id="1_88p2x"]
 [ext_resource type="Script" uid="uid://ugwv20an57rf" path="res://scripts/behaviors.gd" id="2_5s8xg"]
-[ext_resource type="Script" uid="uid://51ny165m7g4r" path="res://addons/godot_state_charts/state_chart.gd" id="3_jd1ip"]
-[ext_resource type="Script" uid="uid://nottcurryeno" path="res://addons/godot_state_charts/compound_state.gd" id="4_mbr1y"]
-[ext_resource type="Script" uid="uid://by6pa56pmo0hr" path="res://addons/godot_state_charts/atomic_state.gd" id="5_212yo"]
-[ext_resource type="Script" uid="uid://dcqi7oxwd5v8k" path="res://addons/godot_state_charts/transition.gd" id="6_47fwt"]
-[ext_resource type="Script" uid="uid://3m44xe7ttcbf" path="res://scripts/seek_skill.gd" id="7_n7a0i"]
-[ext_resource type="Script" uid="uid://c2l1db7ulpk0q" path="res://scripts/dribble_skill.gd" id="8_wkdj2"]
-[ext_resource type="Script" uid="uid://d2q0mxkrwlfcv" path="res://scripts/kick_skill.gd" id="9_15uwn"]
-[ext_resource type="Script" uid="uid://bj70xsrrw1nnt" path="res://scripts/jump_skill.gd" id="10_k1vpo"]
+[ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_jd1ip"]
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_mbr1y"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_212yo"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_47fwt"]
+[ext_resource type="Script" uid="uid://3m44xe7ttcbf" path="res://scripts/player/seek_skill.gd" id="7_n7a0i"]
+[ext_resource type="Script" uid="uid://c2l1db7ulpk0q" path="res://scripts/player/dribble_skill.gd" id="8_wkdj2"]
+[ext_resource type="Script" uid="uid://d2q0mxkrwlfcv" path="res://scripts/player/kick_skill.gd" id="9_15uwn"]
+[ext_resource type="Script" uid="uid://bj70xsrrw1nnt" path="res://scripts/player/jump_skill.gd" id="10_k1vpo"]
 
 [node name="AI" type="Node3D"]
 script = ExtResource("1_88p2x")

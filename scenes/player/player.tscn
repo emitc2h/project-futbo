@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://dd7y7f0ti7n53"]
 
-[ext_resource type="Script" uid="uid://rc7b170gbcvs" path="res://scripts/player.gd" id="1_hgcnn"]
-[ext_resource type="PackedScene" uid="uid://huxnga0mwwl3" path="res://scenes/player_basic_movement.tscn" id="2_xplsy"]
-[ext_resource type="PackedScene" uid="uid://c8bowai4pofe1" path="res://scenes/player_kick_ability.tscn" id="4_uehwc"]
-[ext_resource type="PackedScene" uid="uid://bqu1kln33k5bg" path="res://scenes/player_dribble_ability.tscn" id="5_fuj7p"]
-[ext_resource type="PackedScene" uid="uid://dkxcrq57eyl0d" path="res://scenes/player_headbutt_ability.tscn" id="6_lwi1g"]
+[ext_resource type="Script" uid="uid://rc7b170gbcvs" path="res://scripts/player/player.gd" id="1_hgcnn"]
+[ext_resource type="PackedScene" uid="uid://huxnga0mwwl3" path="res://scenes/player/player_basic_movement.tscn" id="2_xplsy"]
+[ext_resource type="PackedScene" uid="uid://c8bowai4pofe1" path="res://scenes/player/player_kick_ability.tscn" id="4_uehwc"]
+[ext_resource type="PackedScene" uid="uid://bqu1kln33k5bg" path="res://scenes/player/player_dribble_ability.tscn" id="5_fuj7p"]
+[ext_resource type="PackedScene" uid="uid://dkxcrq57eyl0d" path="res://scenes/player/player_headbutt_ability.tscn" id="6_lwi1g"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_untnw"]
 radius = 0.291466
