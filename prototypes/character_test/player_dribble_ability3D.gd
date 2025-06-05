@@ -29,6 +29,16 @@ var is_ready: bool = false
 var is_dribbling: bool = false
 
 
+func _enter_tree() -> void:
+	Signals.facing_left.connect(_on_facing_left)
+	Signals.facing_right.connect(_on_facing_right)
+
+
+func _exit_tree() -> void:
+	Signals.facing_left.disconnect(_on_facing_left)
+	Signals.facing_right.disconnect(_on_facing_right)
+
+
 # Record PickupZone, DribbleMarker & DribbleCast position so they can be flipped
 func _ready() -> void:
 	pickup_zone_position_x = pickup_zone.position.x

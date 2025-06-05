@@ -60,7 +60,6 @@ var _z_tracking_enabled: bool = true
 
 var camera_initial_position: Vector3
 
-signal camera_changed(rotation: Vector3, position_delta: Vector3, fov: float)
 
 func _ready() -> void:
 	if sync_to_subject_on_ready:
@@ -77,4 +76,4 @@ func _process(delta: float) -> void:
 			global_position.z = lerp(global_position.z, subject.global_position.z, lerp_z * delta)
 	
 	## Always sync the skybox
-	camera_changed.emit(camera.rotation, camera.global_position - camera_initial_position, camera.fov)
+	Signals.camera_changed.emit(camera.rotation, camera.global_position - camera_initial_position, camera.fov)

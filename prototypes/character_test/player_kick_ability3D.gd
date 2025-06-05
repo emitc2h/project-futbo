@@ -32,6 +32,20 @@ var kick_button_is_pressed: bool = false
 var is_in_ready_state: bool = false
 
 
+func _enter_tree() -> void:
+	Signals.facing_left.connect(_on_facing_left)
+	Signals.facing_right.connect(_on_facing_right)
+	Signals.started_sprinting.connect(_on_started_sprinting)
+	Signals.ended_sprinting.connect(_on_ended_sprinting)
+
+
+func _exit_tree() -> void:
+	Signals.facing_left.disconnect(_on_facing_left)
+	Signals.facing_right.disconnect(_on_facing_right)
+	Signals.started_sprinting.disconnect(_on_started_sprinting)
+	Signals.ended_sprinting.disconnect(_on_ended_sprinting)
+
+
 # Record kickzone offset to flip the zone when the player faces left
 func _ready() -> void:
 	kickzone_position_x = kickzone.position.x

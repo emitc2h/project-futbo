@@ -35,8 +35,18 @@ var dribble_velocity_offset: float
 var ball_snap_velocity: float
 
 
+func _enter_tree() -> void:
+	Signals.facing_left.connect(_on_facing_left)
+	Signals.facing_right.connect(_on_facing_right)
+
+
 func _ready() -> void:
 	inert_node.max_speed = max_speed
+
+
+func _exit_tree() -> void:
+	Signals.facing_left.disconnect(_on_facing_left)
+	Signals.facing_right.disconnect(_on_facing_right)
 
 
 #=======================================================
