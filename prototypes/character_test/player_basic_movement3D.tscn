@@ -111,6 +111,12 @@ to = NodePath("../../jump")
 event = &"sprint to jump"
 delay_in_seconds = "0.0"
 
+[node name="to fall" type="Node" parent="State/Root/Movement/sprint"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../fall")
+event = &"sprint to fall"
+delay_in_seconds = "0.0"
+
 [node name="run buffer" type="Node" parent="State/Root/Movement"]
 script = ExtResource("5_6dxo6")
 
@@ -335,9 +341,7 @@ wait_time = 0.05
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-target_position = Vector3(1, 0, 0)
 collision_mask = 266
-hit_from_inside = true
 
 [connection signal="state_entered" from="State/Root/Movement/idle" to="." method="_on_idle_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/idle" to="." method="_on_idle_state_exited"]
@@ -354,11 +358,13 @@ hit_from_inside = true
 [connection signal="state_exited" from="State/Root/Movement/run buffer" to="." method="_on_run_buffer_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/run buffer" to="." method="_on_run_buffer_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Movement/jump" to="." method="_on_jump_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/jump" to="." method="_on_jump_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/jump" to="." method="_on_jump_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Movement/in the air" to="." method="_on_in_the_air_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/in the air" to="." method="_on_in_the_air_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/in the air" to="." method="_on_in_the_air_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Movement/fall" to="." method="_on_fall_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/fall" to="." method="_on_fall_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/fall" to="." method="_on_fall_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Movement/jump buffer" to="." method="_on_jump_buffer_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/jump buffer" to="." method="_on_jump_buffer_state_exited"]
