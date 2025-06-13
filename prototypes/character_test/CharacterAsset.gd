@@ -12,6 +12,8 @@ var is_skidding: bool = false
 var is_sprinting: bool = false
 var is_recovering: bool = false
 var state: AnimationNodeStateMachinePlayback
+var move_left_state: AnimationNodeStateMachinePlayback
+var move_right_state: AnimationNodeStateMachinePlayback
 
 
 var speed: float:
@@ -19,13 +21,13 @@ var speed: float:
 		return speed
 	set(value):
 		speed = value
-		var blend_value: float = (abs(value) * 2) - 1.0
-		if is_recovering:
-			blend_value *= 0.666
-		if direction_faced == Enums.Direction.LEFT:
-			anim_tree.set("parameters/move left/blend/blend_amount", blend_value)
-		if direction_faced == Enums.Direction.RIGHT:
-			anim_tree.set("parameters/move right/blend/blend_amount", blend_value)
+		var blend_value: float = abs(value)
+		anim_tree.set("parameters/move left/move/move/blend_position", blend_value)
+		anim_tree.set("parameters/jump left/jump/jump/blend_position", blend_value)
+		anim_tree.set("parameters/kick left/kick/kick/blend_position", blend_value)
+		anim_tree.set("parameters/move right/move/move/blend_position", blend_value)
+		anim_tree.set("parameters/jump right/jump/jump/blend_position", blend_value)
+		anim_tree.set("parameters/kick right/kick/kick/blend_position", blend_value)
 
 
 var root_motion_position: Vector3:
@@ -39,26 +41,26 @@ var root_motion_rotation: Quaternion:
 
 
 func _ready() -> void:
-	anim_tree.set("parameters/move left/speed scale/scale", speed_scale)
-	anim_tree.set("parameters/move right/speed scale/scale", speed_scale)
-	anim_tree.set("parameters/move left/sprint blend/blend_amount", 0.0)
-	anim_tree.set("parameters/move right/sprint blend/blend_amount", 0.0)
-	anim_tree.set("parameters/jump left/speed scale/scale", 1.0)
-	anim_tree.set("parameters/jump right/speed scale/scale", 1.0)
-	anim_tree.set("parameters/turn left/speed scale/scale", speed_scale)
-	anim_tree.set("parameters/turn right/speed scale/scale", speed_scale)
-	anim_tree.set("parameters/kick left/speed scale/scale", speed_scale)
-	anim_tree.set("parameters/kick right/speed scale/scale", speed_scale)
 	state = anim_tree.get("parameters/playback")
+	move_left_state = anim_tree.get("parameters/move left/playback")
+	move_right_state = anim_tree.get("parameters/move right/playback")
 
 
-func _process(delta: float) -> void:
-	print(state.get_current_node())
+func _physics_process(delta: float) -> void:
+	#print("-----")
+	#print(state.get_current_node())
+	#print("PARAMETER -> turn left to fall right: ", anim_tree.get("parameters/conditions/turn left to fall right"))
+	#print("PARAMETER -> turn right to fall left: ", anim_tree.get("parameters/conditions/turn right to fall left"))
+	#print("PARAMETER -> turn left to move right: ", anim_tree.get("parameters/conditions/turn left to move right"))
+	#print("PARAMETER -> turn right to move left: ", anim_tree.get("parameters/conditions/turn right to move left"))
+	pass
 
 
 func to_idle() -> void:
-	state.travel("idle")
-
+	if direction_faced == Enums.Direction.LEFT:
+		state.travel("idle left")
+	if direction_faced == Enums.Direction.RIGHT:
+		state.travel("idle right")
 
 func face_left() -> void:
 	direction_faced = Enums.Direction.LEFT
@@ -69,77 +71,77 @@ func face_right() -> void:
 
 
 func to_move_left() -> void:
+	move_left_state.start("move")
 	state.travel("move left")
 
 
 func to_move_right() -> void:
+	move_right_state.start("move")
 	state.travel("move right")
 
 
 func to_turn_left() -> void:
+	anim_tree.set("parameters/conditions/turn left to move right", true)
 	state.start("turn left", true)
 
 
 func to_turn_right() -> void:
+	anim_tree.set("parameters/conditions/turn right to move left", true)
 	state.start("turn right", true)
 
 
 func to_move() -> void:
 	if direction_faced == Enums.Direction.LEFT:
+		move_left_state.start("move")
 		state.travel("move left")
 	if direction_faced == Enums.Direction.RIGHT:
+		move_right_state.start("move")
 		state.travel("move right")
 
 
 func to_sprint() -> void:
 	is_sprinting = true
-	anim_tree.set("parameters/move left/sprint blend/blend_amount", 1.0)
-	anim_tree.set("parameters/move left/speed scale/scale", sprint_speed_scale)
-	anim_tree.set("parameters/move right/sprint blend/blend_amount", 1.0)
-	anim_tree.set("parameters/move right/speed scale/scale", sprint_speed_scale)
+	if direction_faced == Enums.Direction.LEFT:
+		move_left_state.travel("sprint")
+	if direction_faced == Enums.Direction.RIGHT:
+		move_right_state.travel("sprint")
+
 
 
 func reset_speed() -> void:
 	is_recovering = false
 	is_sprinting = false
-	anim_tree.set("parameters/move left/sprint blend/blend_amount", 0.0)
-	anim_tree.set("parameters/move left/speed scale/scale", speed_scale)
-	anim_tree.set("parameters/move right/sprint blend/blend_amount", 0.0)
-	anim_tree.set("parameters/move right/speed scale/scale", speed_scale)
+	move_left_state.start("move")
+	move_right_state.start("move")
 
 
 func to_recovery() -> void:
 	is_recovering = true
-	anim_tree.set("parameters/move left/sprint blend/blend_amount", 0.0)
-	anim_tree.set("parameters/move left/speed scale/scale", recovering_speed_scale)
-	anim_tree.set("parameters/move right/sprint blend/blend_amount", 0.0)
-	anim_tree.set("parameters/move right/speed scale/scale", recovering_speed_scale)
-
+	if direction_faced == Enums.Direction.LEFT:
+		move_left_state.travel("recover")
+	if direction_faced == Enums.Direction.RIGHT:
+		move_right_state.travel("recover")
 
 
 func to_jump() -> void:
 	if direction_faced == Enums.Direction.LEFT:
-		anim_tree.set("parameters/jump left/blend/blend_amount", abs(speed))
 		state.start("jump left", true)
 	if direction_faced == Enums.Direction.RIGHT:
-		anim_tree.set("parameters/jump right/blend/blend_amount", abs(speed))
 		state.start("jump right", true)
 
 
 func to_fall() -> void:
-	print("TO_FALL CALLED")
 	if direction_faced == Enums.Direction.LEFT:
 		state.travel("fall left")
 	if direction_faced == Enums.Direction.RIGHT:
 		state.travel("fall right")
+	state.next()
 
 
 func to_kick() -> void:
 	if direction_faced == Enums.Direction.LEFT:
-		anim_tree.set("parameters/kick left/blend/blend_amount", abs(speed))
 		state.start("kick left", true)
 	if direction_faced == Enums.Direction.RIGHT:
-		anim_tree.set("parameters/kick right/blend/blend_amount", abs(speed))
 		state.start("kick right", true)
 
 
@@ -159,14 +161,42 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 func jump_to_move_path() -> void:
-	anim_tree.set("parameters/conditions/jump to move left", true)
-	anim_tree.set("parameters/conditions/jump to move right", true)
-	anim_tree.set("parameters/conditions/jump to fall left", false)
-	anim_tree.set("parameters/conditions/jump to fall right", false)
+	anim_tree.set("parameters/conditions/jump left to move left", true)
+	anim_tree.set("parameters/conditions/jump right to move right", true)
+	anim_tree.set("parameters/conditions/jump left to fall left", false)
+	anim_tree.set("parameters/conditions/jump right to fall right", false)
 
 
 func jump_to_fall_path() -> void:
-	anim_tree.set("parameters/conditions/jump to move left", false)
-	anim_tree.set("parameters/conditions/jump to move right", false)
-	anim_tree.set("parameters/conditions/jump to fall left", true)
-	anim_tree.set("parameters/conditions/jump to fall right", true)
+	anim_tree.set("parameters/conditions/jump left to move left", false)
+	anim_tree.set("parameters/conditions/jump right to move right", false)
+	anim_tree.set("parameters/conditions/jump left to fall left", true)
+	anim_tree.set("parameters/conditions/jump right to fall right", true)
+
+
+func reset_jump_paths() -> void:
+	anim_tree.set("parameters/conditions/jump left to move left", false)
+	anim_tree.set("parameters/conditions/jump right to move right", false)
+	anim_tree.set("parameters/conditions/jump left to fall left", false)
+	anim_tree.set("parameters/conditions/jump right to fall right", false)
+
+
+func turn_to_fall_path() -> void:
+	anim_tree.set("parameters/conditions/turn left to fall right", true)
+	anim_tree.set("parameters/conditions/turn right to fall left", true)
+	anim_tree.set("parameters/conditions/turn left to move right", false)
+	anim_tree.set("parameters/conditions/turn right to move left", false)
+
+
+func turn_to_move_path() -> void:
+	anim_tree.set("parameters/conditions/turn left to fall right", false)
+	anim_tree.set("parameters/conditions/turn right to fall left", false)
+	anim_tree.set("parameters/conditions/turn left to move right", true)
+	anim_tree.set("parameters/conditions/turn right to move left", true)
+
+
+func reset_turn_paths() -> void:
+	anim_tree.set("parameters/conditions/turn left to fall right", false)
+	anim_tree.set("parameters/conditions/turn right to fall left", false)
+	anim_tree.set("parameters/conditions/turn left to move right", false)
+	anim_tree.set("parameters/conditions/turn right to move left", false)

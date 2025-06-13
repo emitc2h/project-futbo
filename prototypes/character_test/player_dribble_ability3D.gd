@@ -8,7 +8,7 @@ extends Node3D
 @onready var state: StateChart = $State
 @onready var pickup_zone: Area3D = $PickupZone
 @onready var dribble_marker: Marker3D = $DribbleMarker
-@onready var dribble_cast: DribbleCast = $DribbleCast
+@onready var dribble_cast: DribbleCast3D = $DribbleCast3D
 
 # Configurables
 @export var dribble_rotation_speed: float = 4.0

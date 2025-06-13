@@ -349,6 +349,7 @@ collision_mask = 266
 [connection signal="state_entered" from="State/Root/Movement/run" to="." method="_on_run_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/run" to="." method="_on_run_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/run" to="." method="_on_run_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Movement/skid" to="." method="_on_skid_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/skid" to="." method="_on_skid_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/skid" to="." method="_on_skid_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Movement/sprint" to="." method="_on_sprint_state_entered"]

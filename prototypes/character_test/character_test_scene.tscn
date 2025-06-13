@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://r3ljca4oslb"]
+[gd_scene load_steps=19 format=3 uid="uid://r3ljca4oslb"]
 
 [ext_resource type="Texture2D" uid="uid://cf2yrglbe1dcs" path="res://assets/3D/Act1/Textures/Tiles/GraniteFloor1/GraniteFloor1_color.png" id="1_tj300"]
 [ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_anyti"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://prototypes/character_test/controller3D.tscn" id="6_tj300"]
 [ext_resource type="PackedScene" uid="uid://bk8wo5fenailq" path="res://scenes/ball/ball.tscn" id="7_4630x"]
 [ext_resource type="Script" uid="uid://ccsbijhylyt8u" path="res://prototypes/character_test/blocks.gd" id="8_eqkmv"]
+[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="9_0rikf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tj300"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -94,6 +95,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("9_0rikf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -106,6 +108,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D2"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("9_0rikf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D2"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -118,6 +121,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D6"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("9_0rikf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D6"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -130,6 +134,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D7"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("9_0rikf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D7"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -142,6 +147,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D3"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("9_0rikf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D3"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -154,6 +160,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D8"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("9_0rikf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D8"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")

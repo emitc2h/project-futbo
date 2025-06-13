@@ -73,10 +73,9 @@ func _ready() -> void:
 	raycast.target_position = Vector3.DOWN
 
 
-func _process(delta: float) -> void:
-	# ALWAYS read input
-	asset.speed = lerp(asset.speed, left_right_axis, 0.33)
-	print(asset.speed)
+func _physics_process(delta: float) -> void:
+	# ALWAYS read input if on ground
+	pass
 
 
 # movement reusable functions
@@ -88,6 +87,7 @@ func is_running_forward() -> bool:
 
 
 func move_process(delta: float) -> void:
+	asset.speed = lerp(asset.speed, left_right_axis, 0.4)
 	player_velocity_callable.call(asset.root_motion_position.x/delta)
 
 
@@ -114,6 +114,7 @@ func in_the_air_process(delta: float, transition_to: String) -> void:
 #----------------------------------------
 func _on_idle_state_entered() -> void:
 	in_idle_state = true
+	asset.to_idle()
 
 
 func _on_idle_state_physics_processing(delta: float) -> void:
@@ -121,6 +122,7 @@ func _on_idle_state_physics_processing(delta: float) -> void:
 	
 	# If the floor falls from under the player
 	if not player.is_on_floor():
+		asset.to_fall()
 		state.send_event("idle to fall")
 	
 	# Needs to be called in every movement state
@@ -150,6 +152,7 @@ func _on_run_state_physics_processing(delta: float) -> void:
 	
 	# Running off a ledge transitions to in the air state
 	if not player.is_on_floor():
+		asset.to_fall()
 		state.send_event("run to fall")
 	
 	# Releasing the control while on the floor goes to idle
@@ -168,12 +171,18 @@ func _on_run_state_exited() -> void:
 
 # skid state
 #----------------------------------------
-func _on_skid_state_physics_processing(delta: float) -> void:
+func _on_skid_state_entered() -> void:
+	asset.turn_to_move_path()
 	print("SKID STATE ENTERED")
+
+
+func _on_skid_state_physics_processing(delta: float) -> void:
 	move_process(delta)
 	
 	# Running off a ledge transitions to in the air state
 	if not player.is_on_floor():
+		print("FALLING FROM THE EXPECTED PLACE")
+		asset.turn_to_fall_path()
 		state.send_event("skid to fall")
 	
 	# Needs to be called in every movement state
@@ -189,6 +198,7 @@ func _on_skid_state_exited() -> void:
 #----------------------------------------
 func _on_sprint_state_entered() -> void:
 	print("SPRINT STATE ENTERED")
+	asset.to_sprint()
 	in_sprint_state = true
 	state.send_event("full to draining")
 	state.send_event("replenishing to draining")
@@ -200,6 +210,7 @@ func _on_sprint_state_physics_processing(delta: float) -> void:
 	
 		# Running off a ledge transitions to in the air state
 	if not player.is_on_floor():
+		asset.to_fall()
 		state.send_event("sprint to fall")
 	
 	# Delegate both scenarios to the run state
@@ -213,6 +224,7 @@ func _on_sprint_state_physics_processing(delta: float) -> void:
 func _on_sprint_state_exited() -> void:
 	print("SPRINT STATE EXITED")
 	in_sprint_state = false
+	asset.reset_speed()
 	state.send_event("draining to replenishing")
 	fall_velocity_x = player.velocity.x
 	Signals.ended_sprinting.emit()
@@ -227,8 +239,10 @@ func _on_run_buffer_state_entered() -> void:
 	in_run_buffer_state = true
 	state.send_event("run buffer to run")
 	if left_right_axis < 0.0:
+		asset.face_left()
 		asset.to_move_left()
 	elif left_right_axis > 0.0:
+		asset.face_right()
 		asset.to_move_right()
 
 
@@ -237,6 +251,7 @@ func _on_run_buffer_state_physics_processing(delta: float) -> void:
 	
 	# Running off a ledge transitions to fall state
 	if not player.is_on_floor():
+		asset.to_fall()
 		state.send_event("run buffer to fall")
 	
 	# Releasing the control while on the floor goes to idle
@@ -257,6 +272,7 @@ func _on_run_buffer_state_exited() -> void:
 #----------------------------------------
 func _on_jump_state_entered() -> void:
 	print("JUMP STATE ENTERED")
+	in_in_the_air_state = true
 	player.velocity.y = jump_momentum
 	fall_velocity_x = player.velocity.x
 	asset.to_jump()
@@ -326,8 +342,6 @@ func _on_jump_buffer_state_exited() -> void:
 #----------------------------------------
 func _on_fall_state_entered() -> void:
 	print("FALL STATE ENTERED")
-	if jump_set_to_fall:
-		asset.to_fall()
 	in_in_the_air_state = true
 
 
@@ -341,6 +355,12 @@ func _on_fall_state_physics_processing(delta: float) -> void:
 	
 	# Needs to be called in every movement state
 	player.move_and_slide()
+
+
+func _on_fall_state_exited() -> void:
+	asset.reset_jump_paths()
+	asset.reset_turn_paths()
+	print("FALL STATE EXITED")
 
 
 #=======================================================
@@ -360,6 +380,7 @@ func _on_face_right_state_physics_processing(delta: float) -> void:
 		and not player.can_run_backward:
 		if in_run_buffer_state:
 			state.send_event("face right to face left")
+			asset.face_left()
 			asset.to_move_left()
 		else:
 			state.send_event("face right to turn left")
@@ -379,6 +400,7 @@ func _on_face_left_state_physics_processing(delta: float) -> void:
 		and not player.can_run_backward:
 		if in_run_buffer_state:
 			state.send_event("face left to face right")
+			asset.face_right()
 			asset.to_move_right()
 		else:
 			state.send_event("face left to turn right")
@@ -388,6 +410,7 @@ func _on_face_left_state_physics_processing(delta: float) -> void:
 # turn right state
 #----------------------------------------
 func _on_turn_right_state_entered() -> void:
+	print("TURN RIGHT STATE ENTERED")
 	state.send_event("run to skid")
 
 
@@ -397,6 +420,7 @@ func _on_turn_right_state_physics_processing(delta: float) -> void:
 
 
 func _on_turn_right_state_exited() -> void:
+	print("TURN RIGHT STATE EXITED")
 	state.send_event("skid to run")
 
 
@@ -409,6 +433,7 @@ func _turn_left_ended() -> void:
 # turn left state
 #----------------------------------------
 func _on_turn_left_state_entered() -> void:
+	print("TURN LEFT STATE ENTERED")
 	state.send_event("run to skid")
 
 
@@ -418,6 +443,7 @@ func _on_turn_left_state_physics_processing(delta: float) -> void:
 
 
 func _on_turn_left_state_exited() -> void:
+	print("TURN LEFT STATE EXITED")
 	state.send_event("skid to run")
 
 
@@ -433,7 +459,6 @@ func _turn_right_ended() -> void:
 # full state
 #----------------------------------------
 func _on_full_state_entered() -> void:
-	asset.reset_speed()
 	Signals.hide_stamina.emit()
 	
 
@@ -441,7 +466,6 @@ func _on_full_state_entered() -> void:
 #----------------------------------------
 func _on_draining_state_entered() -> void:
 	Signals.display_stamina.emit(Color.YELLOW)
-	asset.to_sprint()
 
 
 func _on_draining_state_physics_processing(delta: float) -> void:
@@ -462,7 +486,7 @@ func refill_stamina(delta: float) -> void:
 
 
 func _on_draining_state_exited() -> void:
-	asset.reset_speed()
+	pass
 
 
 # replenishing state
@@ -616,7 +640,3 @@ func _float_on_path() -> void:
 
 func _on_jump_state_exited() -> void:
 	print("JUMP STATE EXITED")
-
-
-func _on_fall_state_exited() -> void:
-	print("FALL STATE EXITED")
