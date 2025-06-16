@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cneunrl3vngmw"]
+[gd_scene load_steps=7 format=3 uid="uid://cneunrl3vngmw"]
 
 [ext_resource type="Script" uid="uid://c3id3p6t12gms" path="res://prototypes/character_test/player_basic_movement3D.gd" id="1_sejk5"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_f24ff"]
@@ -6,18 +6,12 @@
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_kfmla"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_6dxo6"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_uqqs6"]
-[ext_resource type="Script" uid="uid://hp8ns4ny8ksg" path="res://addons/godot_state_charts/state_is_active_guard.gd" id="7_orp1d"]
-
-[sub_resource type="Resource" id="Resource_bkwr6"]
-script = ExtResource("7_orp1d")
-state = NodePath("../../../Constraint/x-axis")
 
 [node name="PlayerBasicMovement3D" type="Node3D"]
 script = ExtResource("1_sejk5")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_f24ff")
-track_in_editor = true
 
 [node name="Root" type="Node" parent="State"]
 script = ExtResource("3_0rigy")
@@ -74,13 +68,6 @@ to = NodePath("../../idle")
 event = &"run to idle"
 delay_in_seconds = "0.1"
 
-[node name="to sprint" type="Node" parent="State/Root/Movement/run"]
-script = ExtResource("6_uqqs6")
-to = NodePath("../../sprint")
-event = &"run to sprint"
-guard = SubResource("Resource_bkwr6")
-delay_in_seconds = "0.0"
-
 [node name="skid" type="Node" parent="State/Root/Movement"]
 script = ExtResource("5_6dxo6")
 
@@ -96,25 +83,10 @@ to = NodePath("../../fall")
 event = &"skid to fall"
 delay_in_seconds = "0.0"
 
-[node name="sprint" type="Node" parent="State/Root/Movement"]
-script = ExtResource("5_6dxo6")
-
-[node name="to run" type="Node" parent="State/Root/Movement/sprint"]
-script = ExtResource("6_uqqs6")
-to = NodePath("../../run")
-event = &"sprint to run"
-delay_in_seconds = "0.0"
-
-[node name="to jump" type="Node" parent="State/Root/Movement/sprint"]
+[node name="to jump" type="Node" parent="State/Root/Movement/skid"]
 script = ExtResource("6_uqqs6")
 to = NodePath("../../jump")
-event = &"sprint to jump"
-delay_in_seconds = "0.0"
-
-[node name="to fall" type="Node" parent="State/Root/Movement/sprint"]
-script = ExtResource("6_uqqs6")
-to = NodePath("../../fall")
-event = &"sprint to fall"
+event = &"skid to jump"
 delay_in_seconds = "0.0"
 
 [node name="run buffer" type="Node" parent="State/Root/Movement"]
@@ -352,9 +324,7 @@ collision_mask = 266
 [connection signal="state_entered" from="State/Root/Movement/skid" to="." method="_on_skid_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/skid" to="." method="_on_skid_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/skid" to="." method="_on_skid_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Movement/sprint" to="." method="_on_sprint_state_entered"]
-[connection signal="state_exited" from="State/Root/Movement/sprint" to="." method="_on_sprint_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Movement/sprint" to="." method="_on_sprint_state_physics_processing"]
+[connection signal="taken" from="State/Root/Movement/skid/to jump" to="." method="_on_skid_to_jump_taken"]
 [connection signal="state_entered" from="State/Root/Movement/run buffer" to="." method="_on_run_buffer_state_entered"]
 [connection signal="state_exited" from="State/Root/Movement/run buffer" to="." method="_on_run_buffer_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Movement/run buffer" to="." method="_on_run_buffer_state_physics_processing"]

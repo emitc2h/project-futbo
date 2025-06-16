@@ -34,6 +34,8 @@ signal update_stamina_value(value: float)
 signal started_sprinting
 signal ended_sprinting
 
+signal kicked
+
 signal jump_left_animation_ended
 signal jump_right_animation_ended
 signal turn_left_animation_ended

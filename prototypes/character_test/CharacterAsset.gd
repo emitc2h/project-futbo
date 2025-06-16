@@ -4,16 +4,48 @@ extends Node3D
 @onready var anim_tree: AnimationTree = $AnimationTree
 
 @export var speed_scale: float = 1.4
+@export var jump_speed_scale: float = 1.2
 @export var sprint_speed_scale: float = 1.8
 @export var recovering_speed_scale: float = 0.9
 
 var direction_faced: Enums.Direction = Enums.Direction.RIGHT
 var is_skidding: bool = false
-var is_sprinting: bool = false
-var is_recovering: bool = false
 var state: AnimationNodeStateMachinePlayback
 var move_left_state: AnimationNodeStateMachinePlayback
 var move_right_state: AnimationNodeStateMachinePlayback
+
+var jump_blend_factor: float = 1.0
+
+var sprint_mode: Enums.SprintMode:
+	get:
+		return sprint_mode
+	set(value):
+		sprint_mode = value
+		if value == Enums.SprintMode.NORMAL:
+			jump_blend_factor = 1.0
+			anim_tree.set("parameters/jump left/jump/scale/scale", jump_speed_scale)
+		if value == Enums.SprintMode.SPRINTING:
+			jump_blend_factor = 1.0
+			anim_tree.set("parameters/jump left/jump/scale/scale", jump_speed_scale * 0.8)
+		if value == Enums.SprintMode.RECOVERING:
+			jump_blend_factor = 0.5
+			anim_tree.set("parameters/jump left/jump/scale/scale", jump_speed_scale)
+
+var move_initial_state: String:
+	get:
+		if sprint_mode == Enums.SprintMode.SPRINTING:
+			return "sprint"
+		if sprint_mode == Enums.SprintMode.RECOVERING:
+			return "recover"
+		return "move"
+
+var jump_speed_factor: float:
+	get:
+		if sprint_mode == Enums.SprintMode.SPRINTING:
+			return 1.2
+		if sprint_mode == Enums.SprintMode.RECOVERING:
+			return 1.0
+		return 1.1
 
 
 var speed: float:
@@ -23,10 +55,10 @@ var speed: float:
 		speed = value
 		var blend_value: float = abs(value)
 		anim_tree.set("parameters/move left/move/move/blend_position", blend_value)
-		anim_tree.set("parameters/jump left/jump/jump/blend_position", blend_value)
+		anim_tree.set("parameters/jump left/jump/jump/blend_position", blend_value * jump_blend_factor)
 		anim_tree.set("parameters/kick left/kick/kick/blend_position", blend_value)
 		anim_tree.set("parameters/move right/move/move/blend_position", blend_value)
-		anim_tree.set("parameters/jump right/jump/jump/blend_position", blend_value)
+		anim_tree.set("parameters/jump right/jump/jump/blend_position", blend_value * jump_blend_factor)
 		anim_tree.set("parameters/kick right/kick/kick/blend_position", blend_value)
 
 
@@ -71,12 +103,14 @@ func face_right() -> void:
 
 
 func to_move_left() -> void:
-	move_left_state.start("move")
+	move_left_state.start(move_initial_state)
+	move_right_state.start(move_initial_state)
 	state.travel("move left")
 
 
 func to_move_right() -> void:
-	move_right_state.start("move")
+	move_left_state.start(move_initial_state)
+	move_right_state.start(move_initial_state)
 	state.travel("move right")
 
 
@@ -91,36 +125,30 @@ func to_turn_right() -> void:
 
 
 func to_move() -> void:
+	move_left_state.start(move_initial_state)
+	move_right_state.start(move_initial_state)
 	if direction_faced == Enums.Direction.LEFT:
-		move_left_state.start("move")
 		state.travel("move left")
 	if direction_faced == Enums.Direction.RIGHT:
-		move_right_state.start("move")
 		state.travel("move right")
 
 
 func to_sprint() -> void:
-	is_sprinting = true
-	if direction_faced == Enums.Direction.LEFT:
-		move_left_state.travel("sprint")
-	if direction_faced == Enums.Direction.RIGHT:
-		move_right_state.travel("sprint")
-
+	sprint_mode = Enums.SprintMode.SPRINTING
+	move_left_state.travel("sprint")
+	move_right_state.travel("sprint")
 
 
 func reset_speed() -> void:
-	is_recovering = false
-	is_sprinting = false
-	move_left_state.start("move")
-	move_right_state.start("move")
+	sprint_mode = Enums.SprintMode.NORMAL
+	move_left_state.travel("move")
+	move_right_state.travel("move")
 
 
 func to_recovery() -> void:
-	is_recovering = true
-	if direction_faced == Enums.Direction.LEFT:
-		move_left_state.travel("recover")
-	if direction_faced == Enums.Direction.RIGHT:
-		move_right_state.travel("recover")
+	sprint_mode = Enums.SprintMode.RECOVERING
+	move_left_state.travel("recover")
+	move_right_state.travel("recover")
 
 
 func to_jump() -> void:

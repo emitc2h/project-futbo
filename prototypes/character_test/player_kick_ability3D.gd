@@ -155,7 +155,7 @@ func _on_ended_sprinting() -> void:
 func kick() -> void:
 	# If the ball is already in the kick zone, kick it
 	state.send_event("ready to kick")
-	pass
+	Signals.kicked.emit()
 
 
 func kick_button_pressed() -> void:
