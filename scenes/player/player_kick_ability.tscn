@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_w2lss"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_14865"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_ixm4p"]
-[ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/ball/clamped_aim.tscn" id="6_prlib"]
+[ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/control_node_and_balls/clamped_aim.tscn" id="6_prlib"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tgrgb"]
 radius = 0.17767

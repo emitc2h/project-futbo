@@ -33,14 +33,14 @@ func _on_main_menu_state_entered() -> void:
 
 
 func _on_new_game_pressed() -> void:
-	level_path = "res://scenes/level1/act_1.tscn"
+	level_path = "res://scenes/level1/level1.tscn"
 	fade_screen.fade_out()
 	await fade_screen.fade_finished
 	state.send_event("main menu to loading screen")
 
 
 func _on_prototype_pressed() -> void:
-	level_path = "res://prototypes/ragdoll_drone_sim/ragdoll_scene.tscn"
+	level_path = "res://prototypes/character_test/character_test_scene.tscn"
 	fade_screen.fade_out()
 	await fade_screen.fade_finished
 	state.send_event("main menu to loading screen")

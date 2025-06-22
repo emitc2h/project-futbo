@@ -8,7 +8,7 @@ extends Node3D
 @export var camera_controller: CameraController
 
 @export_group("Main Player")
-@export var player: Player
+@export var player: Player3D
 
 @export_group("Opponent Player")
 @export var opponent_player: Player

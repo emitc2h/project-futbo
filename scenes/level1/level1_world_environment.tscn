@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8oisyfhyx2yr"]
+
+[ext_resource type="Environment" uid="uid://cpo0d8v00h0ap" path="res://resources/act1_worldenvironment.tres" id="1_5x5al"]
+[ext_resource type="PackedScene" uid="uid://b6j57fie7ocg7" path="res://scenes/level1/level1_skybox.tscn" id="1_clr1m"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rw2vd"]
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = ExtResource("1_5x5al")
+camera_attributes = SubResource("CameraAttributesPractical_rw2vd")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.744312, -0.281181, 0.605754, 0, 0.907044, 0.421036, -0.667833, 0.313382, -0.675123, 0, 0, 0)
+light_intensity_lux = 50000.0
+light_temperature = 4200.0
+light_energy = 7.0
+shadow_enabled = true
+directional_shadow_split_1 = 0.04
+directional_shadow_split_2 = 0.11
+directional_shadow_split_3 = 0.33
+directional_shadow_max_distance = 200.0
+
+[node name="Act1SkyBox" parent="." instance=ExtResource("1_clr1m")]
+parallax_factor = 0.015

@@ -1,0 +1,62 @@
+[gd_scene load_steps=16 format=3 uid="uid://dgpqcnsegq4rs"]
+
+[ext_resource type="PackedScene" uid="uid://diidp43t3wfk6" path="res://assets/3D/ControlNode/ControlNode2.blend" id="1_fgtxj"]
+[ext_resource type="Texture2D" uid="uid://clt4ajeb7q4qy" path="res://assets/3D/Textures/ControlNode/ControlNode_color.png" id="2_rcgw8"]
+[ext_resource type="Texture2D" uid="uid://c0hrabvlx7ao" path="res://assets/3D/Textures/ControlNode/Shield_color.png" id="2_xm2o6"]
+[ext_resource type="Texture2D" uid="uid://dhjmwpcfeiw67" path="res://assets/3D/Textures/ControlNode/ControlNode_emission.png" id="3_rcgw8"]
+[ext_resource type="Texture2D" uid="uid://dlxo45ki7fnva" path="res://assets/3D/Textures/ControlNode/ControlNode_normal.png" id="3_u3c6g"]
+[ext_resource type="Texture2D" uid="uid://btuoe0ipvokae" path="res://assets/3D/Textures/ControlNode/ControlNode_metallic.png" id="4_v3jxs"]
+[ext_resource type="Shader" uid="uid://bjskv0mgvfryi" path="res://shaders/ControlNode/control_node_emission_shader.gdshader" id="4_y1t43"]
+[ext_resource type="Texture2D" uid="uid://k4rwown6iuby" path="res://assets/3D/Textures/ControlNode/ControlNode_roughness.png" id="6_0qqv4"]
+[ext_resource type="Shader" uid="uid://uhr3xm5scj6h" path="res://shaders/ControlNode/control_node_shield_shader.gdshader" id="8_cl1vl"]
+[ext_resource type="Texture2D" uid="uid://ddynp3502832v" path="res://assets/3D/Textures/ControlNode/Shield_noise.png" id="9_0ygwb"]
+[ext_resource type="Texture2D" uid="uid://cpwsx5xmbwito" path="res://assets/3D/Textures/ControlNode/Shield_power_up_mask.png" id="9_ocnbc"]
+[ext_resource type="Texture2D" uid="uid://dwfwt37k62jc7" path="res://assets/3D/Textures/ControlNode/Shield_ripple_mask.png" id="11_pg2yr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d0b0c"]
+render_priority = 0
+shader = ExtResource("4_y1t43")
+shader_parameter/texture_emission = ExtResource("3_rcgw8")
+shader_parameter/emission_energy = 0.0
+shader_parameter/emission_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i77l4"]
+next_pass = SubResource("ShaderMaterial_d0b0c")
+albedo_texture = ExtResource("2_rcgw8")
+metallic = 1.0
+metallic_texture = ExtResource("4_v3jxs")
+roughness_texture = ExtResource("6_0qqv4")
+normal_enabled = true
+normal_texture = ExtResource("3_u3c6g")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ygwb"]
+render_priority = 0
+shader = ExtResource("8_cl1vl")
+shader_parameter/alpha = 1.0
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_xm2o6")
+shader_parameter/albedo_texture_size = Vector2i(2048, 2048)
+shader_parameter/point_size = 0.1
+shader_parameter/texture_emission = ExtResource("2_xm2o6")
+shader_parameter/emission = Color(0, 0, 0, 1)
+shader_parameter/emission_energy = 20.0
+shader_parameter/dissolve_texture = ExtResource("9_ocnbc")
+shader_parameter/dissolve_value = 0.0
+shader_parameter/burn_size = 0.07
+shader_parameter/burn_color = Color(0.39, 0.6645, 1, 1)
+shader_parameter/ripple_map = ExtResource("9_0ygwb")
+shader_parameter/ripple_mask = ExtResource("11_pg2yr")
+shader_parameter/ripple_stretch = Vector2(1, 1)
+shader_parameter/ripple_strength = 0.02
+shader_parameter/speed = 1.0
+
+[node name="ControlNodeModel" instance=ExtResource("1_fgtxj")]
+
+[node name="ControlNodeMesh" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+layers = 4
+surface_material_override/0 = SubResource("StandardMaterial3D_i77l4")
+
+[node name="ShieldMesh" parent="." index="1"]
+transform = Transform3D(8.19605e-08, 1.70784e-08, -1, -0.607062, 0.794654, -3.61837e-08, 0.794654, 0.607062, 7.54979e-08, 0, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_0ygwb")

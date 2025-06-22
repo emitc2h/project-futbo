@@ -1,41 +1,58 @@
-[gd_scene load_steps=21 format=3 uid="uid://r3ljca4oslb"]
+[gd_scene load_steps=21 format=3 uid="uid://cvaogmwqhlu3a"]
 
-[ext_resource type="Texture2D" uid="uid://cf2yrglbe1dcs" path="res://assets/3D/Act1/Textures/Tiles/GraniteFloor1/GraniteFloor1_color.png" id="1_tj300"]
-[ext_resource type="Script" uid="uid://b7ony258av6kv" path="res://prototypes/character_test/character_test_scene.gd" id="1_y4atg"]
-[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_anyti"]
-[ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="4_anyti"]
-[ext_resource type="PackedScene" uid="uid://dmyk1j8j3wpex" path="res://scenes/player3D/player3D.tscn" id="4_tj300"]
-[ext_resource type="PackedScene" uid="uid://c7h2ha3hpanp6" path="res://scenes/player3D/assets/character_asset.tscn" id="5_4630x"]
-[ext_resource type="PackedScene" uid="uid://cto8ffyhqoxgf" path="res://scenes/player3D/models/character_model.tscn" id="6_hi8lg"]
-[ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player3D/controller3D.tscn" id="6_tj300"]
-[ext_resource type="PackedScene" uid="uid://bk8wo5fenailq" path="res://scenes/control_node_and_balls/ball.tscn" id="7_4630x"]
-[ext_resource type="Script" uid="uid://ccsbijhylyt8u" path="res://prototypes/character_test/blocks.gd" id="8_eqkmv"]
-[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="9_0rikf"]
+[ext_resource type="Script" uid="uid://bunkqcq7mgxft" path="res://prototypes/loop_test/loop_test_scene.gd" id="1_vum0r"]
+[ext_resource type="Texture2D" uid="uid://cf2yrglbe1dcs" path="res://assets/3D/Act1/Textures/Tiles/GraniteFloor1/GraniteFloor1_color.png" id="2_ivxaw"]
+[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_i1kmq"]
+[ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="4_hk3aj"]
+[ext_resource type="PackedScene" uid="uid://dmyk1j8j3wpex" path="res://scenes/player3D/player3D.tscn" id="5_f8j8h"]
+[ext_resource type="PackedScene" uid="uid://c7h2ha3hpanp6" path="res://scenes/player3D/assets/character_asset.tscn" id="6_bvm2f"]
+[ext_resource type="PackedScene" uid="uid://cto8ffyhqoxgf" path="res://scenes/player3D/models/character_model.tscn" id="7_e8ni1"]
+[ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player3D/controller3D.tscn" id="8_ouyrh"]
+[ext_resource type="Script" uid="uid://ccsbijhylyt8u" path="res://prototypes/character_test/blocks.gd" id="10_1jso1"]
+[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="11_46hk0"]
+[ext_resource type="PackedScene" uid="uid://d1ewxnn4pejar" path="res://scenes/control_node_and_balls/control_node.tscn" id="12_iocbp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tj300"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+sky_top_color = Color(0.1705, 0.328625, 0.55, 1)
+sky_horizon_color = Color(0.621053, 0.548528, 0.617582, 1)
+ground_horizon_color = Color(0.567306, 0.464107, 0.505137, 1)
+sun_curve = 0.139955
 
 [sub_resource type="Sky" id="Sky_4630x"]
 sky_material = SubResource("ProceduralSkyMaterial_tj300")
 
 [sub_resource type="Environment" id="Environment_eqkmv"]
 background_mode = 2
-background_intensity = 14585.0
+background_intensity = 5000.0
 sky = SubResource("Sky_4630x")
 ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 0.31
+ambient_light_color = Color(0.944138, 0.915146, 0.899337, 1)
+ambient_light_energy = 0.3
 tonemap_mode = 2
 glow_enabled = true
+glow_bloom = 0.1
+fog_mode = 1
+fog_light_color = Color(0.00125094, 0.071217, 0.0856228, 1)
+fog_density = 1.0
+fog_height = 1.0
+fog_height_density = 1.0
+fog_depth_begin = 7.0
+fog_depth_end = 22.0
+volumetric_fog_density = 0.1
+volumetric_fog_albedo = Color(0.72, 0.878667, 1, 1)
+volumetric_fog_emission_energy = 0.03
+volumetric_fog_gi_inject = 0.0
+volumetric_fog_length = 16.0
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_0rikf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hi8lg"]
-albedo_texture = ExtResource("1_tj300")
-roughness = 0.31
-normal_texture = ExtResource("3_anyti")
-uv1_scale = Vector3(20, 20, 20)
+albedo_texture = ExtResource("2_ivxaw")
+roughness = 0.2
+normal_texture = ExtResource("3_i1kmq")
+anisotropy_enabled = true
+anisotropy = 0.2
+uv1_scale = Vector3(100, 100, 100)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_y4atg"]
 
@@ -47,19 +64,20 @@ uv1_scale = Vector3(20, 20, 20)
 points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
 
 [node name="CharacterTestScene" type="Node3D"]
-script = ExtResource("1_y4atg")
+script = ExtResource("1_vum0r")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_eqkmv")
 camera_attributes = SubResource("CameraAttributesPractical_0rikf")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.836441, 0.474632, -0.274027, -1.47357e-08, 0.499998, 0.866027, 0.548057, -0.72438, 0.41822, 0, 0, 0)
-light_intensity_lux = 49397.6
+transform = Transform3D(0.915047, -0.100396, -0.390652, 0.261921, 0.88444, 0.386216, 0.306735, -0.455726, 0.835601, 0.0118855, -0.0196906, -0.0371979)
+light_intensity_lux = 50000.0
+light_volumetric_fog_energy = 0.0
 shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_hi8lg")
 mesh = SubResource("PlaneMesh_y4atg")
 
@@ -70,27 +88,24 @@ collision_mask = 261
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_5yoqd")
 
-[node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("4_anyti")]
+[node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("4_hk3aj")]
 subject = NodePath("../Player3D")
 enabled = true
 
-[node name="Player3D" parent="." node_paths=PackedStringArray("asset") instance=ExtResource("4_tj300")]
+[node name="Player3D" parent="." node_paths=PackedStringArray("asset") instance=ExtResource("5_f8j8h")]
 asset = NodePath("CharacterAsset")
 
-[node name="CharacterAsset" parent="Player3D" instance=ExtResource("5_4630x")]
+[node name="CharacterAsset" parent="Player3D" instance=ExtResource("6_bvm2f")]
 
-[node name="CharacterModel" parent="Player3D/CharacterAsset" instance=ExtResource("6_hi8lg")]
+[node name="CharacterModel" parent="Player3D/CharacterAsset" instance=ExtResource("7_e8ni1")]
 
-[node name="Controller3D" parent="Player3D" node_paths=PackedStringArray("player") instance=ExtResource("6_tj300")]
+[node name="Controller3D" parent="Player3D" node_paths=PackedStringArray("player") instance=ExtResource("8_ouyrh")]
 player = NodePath("..")
 enabled = true
 
-[node name="Ball" parent="." instance=ExtResource("7_4630x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.29177, 0.239491, 0)
-
 [node name="Blocks" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98832, 0, 0)
-script = ExtResource("8_eqkmv")
+script = ExtResource("10_1jso1")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Blocks"]
 transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.539924, 1.56718, -0.0020504)
@@ -100,7 +115,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("9_0rikf")
+surface_material_override/0 = ExtResource("11_46hk0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -113,7 +128,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D2"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("9_0rikf")
+surface_material_override/0 = ExtResource("11_46hk0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D2"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -126,7 +141,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D6"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("9_0rikf")
+surface_material_override/0 = ExtResource("11_46hk0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D6"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -139,7 +154,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D7"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("9_0rikf")
+surface_material_override/0 = ExtResource("11_46hk0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D7"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -152,7 +167,7 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D3"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("9_0rikf")
+surface_material_override/0 = ExtResource("11_46hk0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D3"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
@@ -165,7 +180,10 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D8"]
 mesh = SubResource("BoxMesh_4630x")
 skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("9_0rikf")
+surface_material_override/0 = ExtResource("11_46hk0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D8"]
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="ControlNode" parent="." instance=ExtResource("12_iocbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94639, 0.19192, 0)

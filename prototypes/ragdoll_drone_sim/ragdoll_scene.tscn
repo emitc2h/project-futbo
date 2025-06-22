@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://f74yn2yguccx"]
+[gd_scene load_steps=16 format=3 uid="uid://f74yn2yguccx"]
 
 [ext_resource type="Script" uid="uid://d04eawhdw3fh0" path="res://prototypes/ragdoll_drone_sim/ragdoll_scene.gd" id="1_crm8f"]
 [ext_resource type="PackedScene" uid="uid://dy4rhlpeuav22" path="res://scenes/enemies/drone.tscn" id="2_be5mx"]
@@ -7,8 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dfvmyjp50vb2i" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_darker_color.png" id="3_kt6ak"]
 [ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="4_fd0on"]
 [ext_resource type="Texture2D" uid="uid://yoy65rx3qx7a" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_normal.png" id="4_yadpr"]
-[ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node/control_node.tscn" id="7_yadpr"]
-[ext_resource type="PackedScene" uid="uid://cfsou1tom0khe" path="res://scenes/characters/character_1.tscn" id="8_golq6"]
+[ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node_and_balls/assets/control_node_asset.tscn" id="7_yadpr"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_82g4o"]
 
@@ -108,14 +107,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_kt6ak")
 shape = SubResource("WorldBoundaryShape3D_kh2ms")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.878335, -0.167136, 0.447876, 0.0827828, 0.975914, 0.201839, -0.470823, -0.140206, 0.871015, 2.03853, 1.8599, 5.07974)
+transform = Transform3D(0.784362, -0.188743, 0.590892, 0.0827828, 0.975914, 0.201839, -0.614755, -0.109399, 0.781094, 3.26828, 1.8599, 5.07974)
 fov = 56.5
 
 [node name="ControlNode" parent="." instance=ExtResource("7_yadpr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.70092, 2.78947, -1.24989)
-
-[node name="character1" parent="." instance=ExtResource("8_golq6")]
-transform = Transform3D(0.846221, 0, 0.532832, 0, 1, 0, -0.532832, 0, 0.846221, -1.27866, 0.0026474, 0.328114)
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="."]
 

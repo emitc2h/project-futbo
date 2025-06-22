@@ -6,5 +6,5 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	camera_controller.camera_changed.connect(skybox_camera._on_camera_changed)
+	Signals.camera_changed.connect(skybox_camera._on_camera_changed)
 	skybox_camera.parallax_factor = parallax_factor

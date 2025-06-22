@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cto8ffyhqoxgf"]
-
-[ext_resource type="PackedScene" uid="uid://b57u11ctire4l" path="res://assets/3D/Act1/blend/character1.blend" id="1_yosyl"]
-
-[node name="CharacterModel" instance=ExtResource("1_yosyl")]

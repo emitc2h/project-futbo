@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cua4a6wcsrmb2" path="res://scripts/main_menu/level_1_main_menu_scene.gd" id="1_glui6"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_jugbg"]
-[ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/act1_world_environment.tscn" id="2_w6ciu"]
+[ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="2_w6ciu"]
 [ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_fq483"]
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="3_kwi3e"]
 [ext_resource type="Material" uid="uid://be2gka6jbfd6a" path="res://assets/3D/Act1/materials/vegetation/grass/grass_material_swaying.tres" id="4_snxm5"]

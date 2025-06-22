@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://caxwuwjjre3j2"]
+
+[ext_resource type="Texture2D" uid="uid://ct55n5aqijgey" path="res://kenney_sports-pack/PNG/Elements/element (1).png" id="1_dgj8u"]
+[ext_resource type="Script" uid="uid://cvp18nk1u5oc6" path="res://scripts/control_node_and_balls/direction_ray.gd" id="2_f10p2"]
+[ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_7ii86"]
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_5mqmn"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_hr8f4"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_08vb0"]
+[ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/control_node_and_balls/clamped_aim.tscn" id="7_5lu38"]
+
+[node name="DirectionRay" type="Sprite3D"]
+offset = Vector2(0, 32)
+texture = ExtResource("1_dgj8u")
+script = ExtResource("2_f10p2")
+
+[node name="State" type="Node" parent="."]
+script = ExtResource("3_7ii86")
+
+[node name="Root" type="Node" parent="State"]
+script = ExtResource("4_5mqmn")
+initial_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="State/Root"]
+script = ExtResource("5_hr8f4")
+
+[node name="to pointing" type="Node" parent="State/Root/idle"]
+script = ExtResource("6_08vb0")
+to = NodePath("../../pointing")
+event = &"idle to pointing"
+delay_in_seconds = "0.0"
+
+[node name="pointing" type="Node" parent="State/Root"]
+script = ExtResource("5_hr8f4")
+
+[node name="to idle" type="Node" parent="State/Root/pointing"]
+script = ExtResource("6_08vb0")
+to = NodePath("../../idle")
+event = &"pointing to idle"
+delay_in_seconds = "0.0"
+
+[node name="ClampedAim" parent="." instance=ExtResource("7_5lu38")]
+
+[connection signal="state_physics_processing" from="State/Root/idle" to="." method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/pointing" to="." method="_on_pointing_state_entered"]
+[connection signal="state_exited" from="State/Root/pointing" to="." method="_on_pointing_state_exited"]
+[connection signal="state_processing" from="State/Root/pointing" to="." method="_on_pointing_state_processing"]

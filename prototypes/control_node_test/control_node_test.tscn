@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bxf0onv18bo2q" path="res://prototypes/control_node_test/control_node_test.gd" id="1_ygcf8"]
 [ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="2_rvd62"]
-[ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node/control_node.tscn" id="3_gxxsf"]
+[ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node_and_balls/assets/control_node_asset.tscn" id="3_gxxsf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lehrb"]
 sky_top_color = Color(0.123525, 0.15575, 0.200563, 1)

@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="5_t6brq"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="6_o57st"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="7_md0p7"]
-[ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/ball/inert_node.gd" id="8_2myhj"]
+[ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="8_2myhj"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_md0p7"]
 radius = 0.512331

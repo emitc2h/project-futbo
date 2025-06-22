@@ -1,0 +1,365 @@
+[gd_scene load_steps=7 format=3 uid="uid://cneunrl3vngmw"]
+
+[ext_resource type="Script" uid="uid://c3id3p6t12gms" path="res://scripts/player3D/abilities/basic_movement/player_basic_movement3D.gd" id="1_sejk5"]
+[ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_f24ff"]
+[ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_0rigy"]
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_kfmla"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_6dxo6"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_uqqs6"]
+
+[node name="PlayerBasicMovement3D" type="Node3D"]
+script = ExtResource("1_sejk5")
+
+[node name="State" type="Node" parent="."]
+script = ExtResource("2_f24ff")
+track_in_editor = true
+
+[node name="Root" type="Node" parent="State"]
+script = ExtResource("3_0rigy")
+
+[node name="Movement" type="Node" parent="State/Root"]
+script = ExtResource("4_kfmla")
+initial_state = NodePath("in the air")
+
+[node name="idle" type="Node" parent="State/Root/Movement"]
+script = ExtResource("5_6dxo6")
+
+[node name="to run buffer" type="Node" parent="State/Root/Movement/idle"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../run buffer")
+event = &"idle to run buffer"
+delay_in_seconds = "0.0"
+
+[node name="to jump" type="Node" parent="State/Root/Movement/idle"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../jump")
+event = &"idle to jump"
+delay_in_seconds = "0.0"
+
+[node name="to fall" type="Node" parent="State/Root/Movement/idle"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../fall")
+event = &"idle to fall"
+delay_in_seconds = "0.0"
+
+[node name="run" type="Node" parent="State/Root/Movement"]
+script = ExtResource("5_6dxo6")
+
+[node name="to jump" type="Node" parent="State/Root/Movement/run"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../jump")
+event = &"run to jump"
+delay_in_seconds = "0.0"
+
+[node name="to fall" type="Node" parent="State/Root/Movement/run"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../fall")
+event = &"run to fall"
+delay_in_seconds = "0.0"
+
+[node name="to skid" type="Node" parent="State/Root/Movement/run"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../skid")
+event = &"run to skid"
+delay_in_seconds = "0.0"
+
+[node name="to idle" type="Node" parent="State/Root/Movement/run"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../idle")
+event = &"run to idle"
+delay_in_seconds = "0.1"
+
+[node name="skid" type="Node" parent="State/Root/Movement"]
+script = ExtResource("5_6dxo6")
+
+[node name="to run" type="Node" parent="State/Root/Movement/skid"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../run")
+event = &"skid to run"
+delay_in_seconds = "0.0"
+
+[node name="to fall" type="Node" parent="State/Root/Movement/skid"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../fall")
+event = &"skid to fall"
+delay_in_seconds = "0.0"
+
+[node name="to jump" type="Node" parent="State/Root/Movement/skid"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../jump")
+event = &"skid to jump"
+delay_in_seconds = "0.0"
+
+[node name="run buffer" type="Node" parent="State/Root/Movement"]
+script = ExtResource("5_6dxo6")
+
+[node name="to run" type="Node" parent="State/Root/Movement/run buffer"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../run")
+event = &"run buffer to run"
+delay_in_seconds = "0.1"
+
+[node name="to jump" type="Node" parent="State/Root/Movement/run buffer"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../jump")
+event = &"run buffer to jump"
+delay_in_seconds = "0.0"
+
+[node name="to fall" type="Node" parent="State/Root/Movement/run buffer"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../fall")
+event = &"run buffer to fall"
+delay_in_seconds = "0.0"
+
+[node name="jump" type="Node" parent="State/Root/Movement"]
+script = ExtResource("5_6dxo6")
+
+[node name="to in the air" type="Node" parent="State/Root/Movement/jump"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../in the air")
+event = &"jump to in the air"
+delay_in_seconds = "0.05"
+
+[node name="to run" type="Node" parent="State/Root/Movement/jump"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../run")
+event = &"jump to run"
+delay_in_seconds = "0.0"
+
+[node name="in the air" type="Node" parent="State/Root/Movement"]
+script = ExtResource("5_6dxo6")
+
+[node name="to run" type="Node" parent="State/Root/Movement/in the air"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../run")
+event = &"in the air to run"
+delay_in_seconds = "0.0"
+
+[node name="to jump buffer" type="Node" parent="State/Root/Movement/in the air"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../jump buffer")
+event = &"in the air to jump buffer"
+delay_in_seconds = "0.0"
+
+[node name="to fall" type="Node" parent="State/Root/Movement/in the air"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../fall")
+event = &"in the air to fall"
+delay_in_seconds = "0.0"
+
+[node name="fall" type="Node" parent="State/Root/Movement"]
+script = ExtResource("5_6dxo6")
+
+[node name="to run" type="Node" parent="State/Root/Movement/fall"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../run")
+event = &"fall to run"
+delay_in_seconds = "0.0"
+
+[node name="to jump buffer" type="Node" parent="State/Root/Movement/fall"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../jump buffer")
+event = &"fall to jump buffer"
+delay_in_seconds = "0.0"
+
+[node name="jump buffer" type="Node" parent="State/Root/Movement"]
+script = ExtResource("5_6dxo6")
+
+[node name="to jump" type="Node" parent="State/Root/Movement/jump buffer"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../jump")
+event = &"jump buffer to jump"
+delay_in_seconds = "0.0"
+
+[node name="to in the air" type="Node" parent="State/Root/Movement/jump buffer"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../in the air")
+event = &"jump buffer to in the air"
+delay_in_seconds = "0.0"
+
+[node name="to fall" type="Node" parent="State/Root/Movement/jump buffer"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../fall")
+event = &"jump buffer to fall"
+delay_in_seconds = "0.0"
+
+[node name="Direction" type="Node" parent="State/Root"]
+script = ExtResource("4_kfmla")
+initial_state = NodePath("face right")
+
+[node name="face right" type="Node" parent="State/Root/Direction"]
+script = ExtResource("5_6dxo6")
+
+[node name="to face left" type="Node" parent="State/Root/Direction/face right"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../face left")
+event = &"face right to face left"
+delay_in_seconds = "0.0"
+
+[node name="to turn left" type="Node" parent="State/Root/Direction/face right"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../turn left")
+event = &"face right to turn left"
+delay_in_seconds = "0.0"
+
+[node name="face left" type="Node" parent="State/Root/Direction"]
+script = ExtResource("5_6dxo6")
+
+[node name="to face right" type="Node" parent="State/Root/Direction/face left"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../face right")
+event = &"face left to face right"
+delay_in_seconds = "0.0"
+
+[node name="to turn right" type="Node" parent="State/Root/Direction/face left"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../turn right")
+event = &"face left to turn right"
+delay_in_seconds = "0.0"
+
+[node name="turn right" type="Node" parent="State/Root/Direction"]
+script = ExtResource("5_6dxo6")
+
+[node name="to face right" type="Node" parent="State/Root/Direction/turn right"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../face right")
+event = &"turn right to face right"
+delay_in_seconds = "0.0"
+
+[node name="turn left" type="Node" parent="State/Root/Direction"]
+script = ExtResource("5_6dxo6")
+
+[node name="to face left" type="Node" parent="State/Root/Direction/turn left"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../face left")
+event = &"turn left to face left"
+delay_in_seconds = "0.0"
+
+[node name="Stamina" type="Node" parent="State/Root"]
+script = ExtResource("4_kfmla")
+initial_state = NodePath("full")
+
+[node name="full" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("5_6dxo6")
+
+[node name="to draining" type="Node" parent="State/Root/Stamina/full"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../draining")
+event = &"full to draining"
+delay_in_seconds = "0.0"
+
+[node name="draining" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("5_6dxo6")
+
+[node name="to replenishing" type="Node" parent="State/Root/Stamina/draining"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../replenishing")
+event = &"draining to replenishing"
+delay_in_seconds = "0.0"
+
+[node name="to recovering" type="Node" parent="State/Root/Stamina/draining"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../recovering")
+event = &"draining to recovering"
+delay_in_seconds = "0.0"
+
+[node name="replenishing" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("5_6dxo6")
+
+[node name="to draining" type="Node" parent="State/Root/Stamina/replenishing"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../draining")
+event = &"replenishing to draining"
+delay_in_seconds = "0.0"
+
+[node name="to full" type="Node" parent="State/Root/Stamina/replenishing"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../full")
+event = &"replenishing to full"
+delay_in_seconds = "0.0"
+
+[node name="recovering" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("5_6dxo6")
+
+[node name="to full" type="Node" parent="State/Root/Stamina/recovering"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../full")
+event = &"recovering to full"
+delay_in_seconds = "0.0"
+
+[node name="Constraint" type="Node" parent="State/Root"]
+script = ExtResource("4_kfmla")
+initial_state = NodePath("x-axis")
+
+[node name="x-axis" type="Node" parent="State/Root/Constraint"]
+script = ExtResource("5_6dxo6")
+
+[node name="to path" type="Node" parent="State/Root/Constraint/x-axis"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../path")
+event = &"x-axis to path"
+delay_in_seconds = "0.0"
+
+[node name="path" type="Node" parent="State/Root/Constraint"]
+script = ExtResource("5_6dxo6")
+
+[node name="to x-axis" type="Node" parent="State/Root/Constraint/path"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../x-axis")
+event = &"path to x-axis"
+delay_in_seconds = "0.0"
+
+[node name="JumpBufferTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+collision_mask = 266
+
+[connection signal="state_entered" from="State/Root/Movement/idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/idle" to="." method="_on_idle_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Movement/idle" to="." method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Movement/run" to="." method="_on_run_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/run" to="." method="_on_run_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Movement/run" to="." method="_on_run_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Movement/skid" to="." method="_on_skid_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/skid" to="." method="_on_skid_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Movement/skid" to="." method="_on_skid_state_physics_processing"]
+[connection signal="taken" from="State/Root/Movement/skid/to jump" to="." method="_on_skid_to_jump_taken"]
+[connection signal="state_entered" from="State/Root/Movement/run buffer" to="." method="_on_run_buffer_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/run buffer" to="." method="_on_run_buffer_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Movement/run buffer" to="." method="_on_run_buffer_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Movement/jump" to="." method="_on_jump_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/jump" to="." method="_on_jump_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Movement/jump" to="." method="_on_jump_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Movement/in the air" to="." method="_on_in_the_air_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/in the air" to="." method="_on_in_the_air_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Movement/in the air" to="." method="_on_in_the_air_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Movement/fall" to="." method="_on_fall_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/fall" to="." method="_on_fall_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Movement/fall" to="." method="_on_fall_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Movement/jump buffer" to="." method="_on_jump_buffer_state_entered"]
+[connection signal="state_exited" from="State/Root/Movement/jump buffer" to="." method="_on_jump_buffer_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Movement/jump buffer" to="." method="_on_jump_buffer_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Direction/face right" to="." method="_on_face_right_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Direction/face right" to="." method="_on_face_right_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Direction/face left" to="." method="_on_face_left_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Direction/face left" to="." method="_on_face_left_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Direction/turn right" to="." method="_on_turn_right_state_entered"]
+[connection signal="state_exited" from="State/Root/Direction/turn right" to="." method="_on_turn_right_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Direction/turn right" to="." method="_on_turn_right_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_entered"]
+[connection signal="state_exited" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Stamina/full" to="." method="_on_full_state_entered"]
+[connection signal="state_entered" from="State/Root/Stamina/draining" to="." method="_on_draining_state_entered"]
+[connection signal="state_exited" from="State/Root/Stamina/draining" to="." method="_on_draining_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Stamina/draining" to="." method="_on_draining_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Stamina/replenishing" to="." method="_on_replenishing_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Stamina/replenishing" to="." method="_on_replenishing_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Stamina/recovering" to="." method="_on_recovering_state_entered"]
+[connection signal="state_exited" from="State/Root/Stamina/recovering" to="." method="_on_recovering_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Stamina/recovering" to="." method="_on_recovering_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Constraint/x-axis" to="." method="_on_xaxis_state_entered"]
+[connection signal="state_entered" from="State/Root/Constraint/path" to="." method="_on_path_state_entered"]
+[connection signal="timeout" from="JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
