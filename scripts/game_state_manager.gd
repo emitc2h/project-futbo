@@ -40,7 +40,7 @@ func _on_new_game_pressed() -> void:
 
 
 func _on_prototype_pressed() -> void:
-	level_path = "res://prototypes/character_test/character_test_scene.tscn"
+	level_path = "res://prototypes/loop_test/loop_test_scene.tscn"
 	fade_screen.fade_out()
 	await fade_screen.fade_finished
 	state.send_event("main menu to loading screen")

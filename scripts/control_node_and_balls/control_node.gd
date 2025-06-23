@@ -6,8 +6,7 @@ extends Ball
 
 func _ready() -> void:
 	asset.power_up_shield()
-	inert_node.contact_monitor = true
 
 
 func _on_inert_node_body_entered(body: Node) -> void:
-	asset.bounce(inert_node.linear_velocity.length())
+	asset.bounce(inert_node.linear_velocity.length() / 5.0)
