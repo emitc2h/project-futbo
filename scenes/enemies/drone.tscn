@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dy4rhlpeuav22"]
+[gd_scene load_steps=14 format=3 uid="uid://dy4rhlpeuav22"]
 
 [ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone_model.tscn" id="2_cq5ml"]
 [ext_resource type="Script" uid="uid://ivuwvt726w21" path="res://scripts/enemies/drone/drone.gd" id="2_y3ws1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="6_o57st"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="7_md0p7"]
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="8_2myhj"]
+[ext_resource type="BehaviorTree" uid="uid://cl3pokesv8enr" path="res://ai/trees/enemies/drone_behavior_tree.tres" id="9_t6brq"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_md0p7"]
 radius = 0.512331
@@ -19,6 +20,8 @@ height = 1.50978
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2myhj"]
 friction = 0.65
 bounce = 0.23
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_o57st"]
 
 [node name="Drone" type="Node3D"]
 script = ExtResource("2_y3ws1")
@@ -135,6 +138,46 @@ to = NodePath("../../open")
 event = &"attack to open"
 delay_in_seconds = "0.0"
 
+[node name="Direction" type="Node" parent="State/Root"]
+script = ExtResource("5_t6brq")
+initial_state = NodePath("face left")
+
+[node name="face left" type="Node" parent="State/Root/Direction"]
+script = ExtResource("6_o57st")
+
+[node name="to turn right" type="Node" parent="State/Root/Direction/face left"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../turn right")
+event = &"face left to turn right"
+delay_in_seconds = "0.0"
+
+[node name="face right" type="Node" parent="State/Root/Direction"]
+script = ExtResource("6_o57st")
+
+[node name="to turn left" type="Node" parent="State/Root/Direction/face right"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../turn left")
+event = &"face right to turn left"
+delay_in_seconds = "0.0"
+
+[node name="turn left" type="Node" parent="State/Root/Direction"]
+script = ExtResource("6_o57st")
+
+[node name="turn left to face left" type="Node" parent="State/Root/Direction/turn left"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../face left")
+event = &"turn left to face left"
+delay_in_seconds = "0.0"
+
+[node name="turn right" type="Node" parent="State/Root/Direction"]
+script = ExtResource("6_o57st")
+
+[node name="turn right to face right" type="Node" parent="State/Root/Direction/turn right"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../face right")
+event = &"turn right to face right"
+delay_in_seconds = "0.0"
+
 [node name="FloatCast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 0)
 target_position = Vector3(0, -3, 0)
@@ -145,7 +188,7 @@ collision_mask = 2
 [node name="CharNode" type="CharacterBody3D" parent="."]
 collision_layer = 256
 collision_mask = 6
-axis_lock_linear_x = true
+axis_lock_linear_z = true
 
 [node name="ClosedCollisionShape3D" type="CollisionShape3D" parent="CharNode"]
 shape = SubResource("SphereShape3D_md0p7")
@@ -158,13 +201,23 @@ disabled = true
 [node name="RigidNode" type="RigidBody3D" parent="."]
 collision_layer = 256
 collision_mask = 6
-axis_lock_linear_x = true
+axis_lock_linear_z = true
 mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_2myhj")
 script = ExtResource("8_2myhj")
 
 [node name="ClosedCollisionShape3D" type="CollisionShape3D" parent="RigidNode"]
 shape = SubResource("SphereShape3D_md0p7")
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("9_t6brq")
+blackboard_plan = SubResource("BlackboardPlan_o57st")
+
+[node name="PatrolMarker1" type="Marker3D" parent="."]
+transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, 3, 0, 0)
+
+[node name="PatrolMarker2" type="Marker3D" parent="."]
+transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, -3, 0, 0)
 
 [connection signal="state_entered" from="State/Root/Mode/char" to="." method="_on_char_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Mode/char" to="." method="_on_char_state_physics_processing"]
@@ -178,3 +231,7 @@ shape = SubResource("SphereShape3D_md0p7")
 [connection signal="state_exited" from="State/Root/Engagement/closed" to="." method="_on_closed_state_exited"]
 [connection signal="state_entered" from="State/Root/Engagement/opening" to="." method="_on_opening_state_entered"]
 [connection signal="state_entered" from="State/Root/Engagement/open" to="." method="_on_open_state_entered"]
+[connection signal="state_entered" from="State/Root/Direction/turn left" to="." method="_on_turn_left_entered"]
+[connection signal="state_exited" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_exited"]
+[connection signal="state_entered" from="State/Root/Direction/turn right" to="." method="_on_turn_right_entered"]
+[connection signal="state_exited" from="State/Root/Direction/turn right" to="." method="_on_turn_right_state_exited"]

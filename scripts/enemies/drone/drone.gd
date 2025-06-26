@@ -3,12 +3,16 @@ extends Node3D
 enum Mode {RIGID, CHAR, RAGDOLL}
 var mode: Mode = Mode.RIGID
 
+const FACE_RIGHT_Y_ROT = Vector3(0.0, -PI/2, 0.0)
+const FACE_LEFT_Y_ROT = Vector3(0.0, PI/2, 0.0)
+
 # Static/Internal properties
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
 var float_cast_length: float = 2.0
 var time_floating: float = 0.0
 
 var initial_position: Vector3 = Vector3(0,0,0)
+var direction: Enums.Direction = Enums.Direction.LEFT
 
 # Internal references
 @onready var state: StateChart = $State
@@ -27,11 +31,19 @@ var initial_position: Vector3 = Vector3(0,0,0)
 @onready var open_collision_shape_char: CollisionShape3D = $CharNode/OpenCollisionShape3D
 @onready var closed_collision_shape_rigid: CollisionShape3D = $RigidNode/ClosedCollisionShape3D
 
+@onready var patrol_marker_1: Marker3D = $PatrolMarker1
+@onready var patrol_marker_2: Marker3D = $PatrolMarker2
+
 # State tracking
 var in_closed_state: bool = true
+var in_turn_state: bool = false
 
+# Signals
 signal in_char_mode
 
+# Handles
+@export var left_right_axis: float = 0.0
+@export var max_speed: float = 3.0
 
 func _ready() -> void:
 	initial_position = char_node.global_position
@@ -95,15 +107,21 @@ func _on_char_state_physics_processing(delta: float) -> void:
 		# little bit of a floating animation
 		char_node.velocity.y -= 0.015 * sin( 3.0 * time_floating )
 	
+	# Apply horizontal speed
+	char_node.velocity.x = left_right_axis * max_speed
+	
 	char_node.move_and_slide()
 	
-	# Force drone to look forward
-	if abs(char_node.rotation.x) > 0.001 or \
-		abs(char_node.rotation.y) > 0.001 or \
-		abs(char_node.rotation.z) > 0.001:
-		char_node.rotation /= 1.05
-	else:
-		char_node.rotation = Vector3(0,0,0)
+	# Force drone to look in the right direction
+	if not in_turn_state:
+		var target_direction: Vector3 = FACE_LEFT_Y_ROT
+		if direction == Enums.Direction.RIGHT:
+			target_direction = FACE_RIGHT_Y_ROT
+		
+		var target_orientation: Quaternion = Quaternion.from_euler(target_direction)
+		var current_orientation: Quaternion = Quaternion.from_euler(char_node.rotation)
+		var new_orientation: Quaternion = current_orientation.slerp(target_orientation, 0.1)
+		char_node.rotation = new_orientation.get_euler()
 	
 	# model and float cast follow char node
 	model.transform = char_node.transform
@@ -219,6 +237,53 @@ func _on_open_state_entered() -> void:
 
 
 #=======================================================
+# DIRECTION STATES
+#=======================================================
+
+# face left state
+#----------------------------------------
+func _on_turn_left_entered() -> void:
+	direction = Enums.Direction.LEFT
+	in_turn_state = true
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.5)\
+		.set_trans(Tween.TRANS_QUAD)\
+		.set_ease(Tween.EASE_IN)\
+		.from(FACE_RIGHT_Y_ROT)
+	tween.tween_property(char_node, "rotation", FACE_LEFT_Y_ROT, 1.0)\
+		.set_trans(Tween.TRANS_BACK)\
+		.set_ease(Tween.EASE_OUT)\
+		.from(Vector3.ZERO)
+	await tween.finished
+	state.send_event("turn left to face left")
+
+
+func _on_turn_left_state_exited() -> void:
+	in_turn_state = false
+
+
+# face right state
+#----------------------------------------
+func _on_turn_right_entered() -> void:
+	direction = Enums.Direction.RIGHT
+	in_turn_state = true
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.5)\
+		.set_trans(Tween.TRANS_QUAD)\
+		.set_ease(Tween.EASE_IN)\
+		.from(FACE_LEFT_Y_ROT)
+	tween.tween_property(char_node, "rotation", FACE_RIGHT_Y_ROT, 1.0)\
+		.set_trans(Tween.TRANS_BACK)\
+		.set_ease(Tween.EASE_OUT)\
+		.from(Vector3.ZERO)
+	await tween.finished
+	state.send_event("turn right to face right")
+
+
+func _on_turn_right_state_exited() -> void:
+	in_turn_state = false
+
+#=======================================================
 # SIGNALS RECEIVED
 #=======================================================
 
@@ -248,6 +313,19 @@ func start_floating() -> void:
 func become_ragdoll() -> void:
 	state.send_event("rigid to ragdoll")
 	state.send_event("char to ragdoll")
+
+func face_left() -> void:
+	state.send_event("face right to turn left")
+
+func face_right() -> void:
+	state.send_event("face left to turn right")
+	
+func move_toward_x_pos(target_x: float, delta: float) -> void:
+	var target_value: float = (target_x - get_mode_position().x) / max(abs(target_x - get_mode_position().x), 0.5)
+	left_right_axis = lerp(left_right_axis, target_value, 3.0 * delta)
+
+func stop_moving(delta: float) -> void:
+	left_right_axis = lerp(left_right_axis, 0.0, 3.0 * delta)
 
 
 #=======================================================
