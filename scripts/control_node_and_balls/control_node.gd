@@ -10,3 +10,5 @@ func _ready() -> void:
 
 func _on_inert_node_body_entered(body: Node) -> void:
 	asset.bounce(inert_node.linear_velocity.length() / 5.0)
+	if body.get_parent() is Drone:
+		body.get_parent().become_ragdoll()

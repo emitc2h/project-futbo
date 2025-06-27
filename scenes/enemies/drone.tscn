@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dy4rhlpeuav22"]
+[gd_scene load_steps=15 format=3 uid="uid://dy4rhlpeuav22"]
 
 [ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone_model.tscn" id="2_cq5ml"]
 [ext_resource type="Script" uid="uid://ivuwvt726w21" path="res://scripts/enemies/drone/drone.gd" id="2_y3ws1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="6_o57st"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="7_md0p7"]
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="8_2myhj"]
+[ext_resource type="Script" uid="uid://dqr71asyjiu46" path="res://scripts/enemies/drone/drone_field_of_view.gd" id="8_o57st"]
 [ext_resource type="BehaviorTree" uid="uid://cl3pokesv8enr" path="res://ai/trees/enemies/drone_behavior_tree.tres" id="9_t6brq"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_md0p7"]
@@ -82,6 +83,15 @@ script = ExtResource("7_md0p7")
 to = NodePath("../../rigid")
 event = &"ragdoll to rigid"
 delay_in_seconds = "0.0"
+
+[node name="to dead" type="Node" parent="State/Root/Mode/ragdoll"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../dead")
+event = &"ragdoll to dead"
+delay_in_seconds = "0.0"
+
+[node name="dead" type="Node" parent="State/Root/Mode"]
+script = ExtResource("6_o57st")
 
 [node name="Engagement" type="Node" parent="State/Root"]
 script = ExtResource("5_t6brq")
@@ -178,12 +188,64 @@ to = NodePath("../../face right")
 event = &"turn right to face right"
 delay_in_seconds = "0.0"
 
+[node name="Target" type="Node" parent="State/Root"]
+script = ExtResource("5_t6brq")
+initial_state = NodePath("none")
+
+[node name="none" type="Node" parent="State/Root/Target"]
+script = ExtResource("6_o57st")
+
+[node name="to acquired" type="Node" parent="State/Root/Target/none"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../acquired")
+event = &"none to acquired"
+delay_in_seconds = "0.0"
+
+[node name="acquired" type="Node" parent="State/Root/Target"]
+script = ExtResource("6_o57st")
+
+[node name="to lost" type="Node" parent="State/Root/Target/acquired"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../lost")
+event = &"acquired to lost"
+delay_in_seconds = "0.0"
+
+[node name="lost" type="Node" parent="State/Root/Target"]
+script = ExtResource("6_o57st")
+
+[node name="to acquired" type="Node" parent="State/Root/Target/lost"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../acquired")
+event = &"lost to acquired"
+delay_in_seconds = "0.0"
+
+[node name="to none" type="Node" parent="State/Root/Target/lost"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../none")
+event = &"lost to none"
+delay_in_seconds = "0.0"
+
 [node name="FloatCast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 0)
 target_position = Vector3(0, -3, 0)
 collision_mask = 2
 
 [node name="DroneModel" parent="." instance=ExtResource("2_cq5ml")]
+
+[node name="FieldOfView" type="Node3D" parent="DroneModel"]
+script = ExtResource("8_o57st")
+
+[node name="RayCast3D" type="RayCast3D" parent="DroneModel/FieldOfView"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.50784)
+target_position = Vector3(0, 0, 4)
+
+[node name="RayCast3D3" type="RayCast3D" parent="DroneModel/FieldOfView"]
+transform = Transform3D(1, 0, 0, 0, 0.994522, -0.104528, 0, 0.104528, 0.994522, 0, 0, 0.50784)
+target_position = Vector3(0, 0, 4)
+
+[node name="RayCast3D2" type="RayCast3D" parent="DroneModel/FieldOfView"]
+transform = Transform3D(1, 0, 0, 0, 0.994522, 0.104528, 0, -0.104528, 0.994522, 0, 0, 0.50784)
+target_position = Vector3(0, 0, 4)
 
 [node name="CharNode" type="CharacterBody3D" parent="."]
 collision_layer = 256
@@ -219,6 +281,9 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [node name="PatrolMarker2" type="Marker3D" parent="."]
 transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, -3, 0, 0)
 
+[node name="TargetLossTimer" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="state_entered" from="State/Root/Mode/char" to="." method="_on_char_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Mode/char" to="." method="_on_char_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Mode/rigid" to="." method="_on_rigid_state_entered"]
@@ -235,3 +300,9 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [connection signal="state_exited" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_exited"]
 [connection signal="state_entered" from="State/Root/Direction/turn right" to="." method="_on_turn_right_entered"]
 [connection signal="state_exited" from="State/Root/Direction/turn right" to="." method="_on_turn_right_state_exited"]
+[connection signal="state_entered" from="State/Root/Target/none" to="." method="_on_none_state_entered"]
+[connection signal="state_entered" from="State/Root/Target/acquired" to="." method="_on_acquired_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Target/acquired" to="." method="_on_acquired_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Target/lost" to="." method="_on_lost_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Target/lost" to="." method="_on_lost_state_physics_processing"]
+[connection signal="timeout" from="TargetLossTimer" to="." method="_on_target_loss_timer_timeout"]

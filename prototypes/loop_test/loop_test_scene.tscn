@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cvaogmwqhlu3a"]
+[gd_scene load_steps=29 format=3 uid="uid://cvaogmwqhlu3a"]
 
 [ext_resource type="Script" uid="uid://bunkqcq7mgxft" path="res://prototypes/loop_test/loop_test_scene.gd" id="1_vum0r"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_vum0r"]
@@ -9,46 +9,21 @@
 [ext_resource type="PackedScene" uid="uid://cto8ffyhqoxgf" path="res://scenes/player3D/models/character_model.tscn" id="7_e8ni1"]
 [ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player3D/controller3D.tscn" id="8_ouyrh"]
 [ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="11_46hk0"]
+[ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="12_3tfwp"]
 [ext_resource type="PackedScene" uid="uid://dy4rhlpeuav22" path="res://scenes/enemies/drone.tscn" id="12_dd3rq"]
 [ext_resource type="PackedScene" uid="uid://d1ewxnn4pejar" path="res://scenes/control_node_and_balls/control_node.tscn" id="12_iocbp"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tj300"]
-sky_top_color = Color(0.1705, 0.328625, 0.55, 1)
-sky_horizon_color = Color(0.621053, 0.548528, 0.617582, 1)
-ground_horizon_color = Color(0.567306, 0.464107, 0.505137, 1)
-sun_curve = 0.139955
-
-[sub_resource type="Sky" id="Sky_4630x"]
-sky_material = SubResource("ProceduralSkyMaterial_tj300")
-
-[sub_resource type="Environment" id="Environment_eqkmv"]
-background_mode = 2
-background_intensity = 5000.0
-sky = SubResource("Sky_4630x")
-ambient_light_source = 2
-ambient_light_color = Color(0.944138, 0.915146, 0.899337, 1)
-ambient_light_energy = 0.3
-tonemap_mode = 2
-glow_enabled = true
-glow_bloom = 0.1
-fog_mode = 1
-fog_light_color = Color(0.00125094, 0.071217, 0.0856228, 1)
-fog_density = 1.0
-fog_height = 1.0
-fog_height_density = 1.0
-fog_depth_begin = 7.0
-fog_depth_end = 22.0
-volumetric_fog_density = 0.1
-volumetric_fog_albedo = Color(0.72, 0.878667, 1, 1)
-volumetric_fog_emission_energy = 0.03
-volumetric_fog_gi_inject = 0.0
-volumetric_fog_length = 16.0
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_0rikf"]
+[ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="13_3tfwp"]
+[ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="14_lgxwc"]
+[ext_resource type="Shader" uid="uid://cpb5j5g4ss8rb" path="res://shaders/SwayingLeaves.tres" id="15_mli22"]
+[ext_resource type="Texture2D" uid="uid://cqhgxcbm0nrae" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color3.png" id="16_pv0wt"]
+[ext_resource type="Texture2D" uid="uid://bp5q5nu3lf3ry" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_transmission.png" id="17_6uf0e"]
+[ext_resource type="Texture2D" uid="uid://deem7pbadipj0" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_normal.png" id="18_xm3b7"]
+[ext_resource type="Texture2D" uid="uid://dumcqi0isdutb" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color2.png" id="19_qt0wu"]
+[ext_resource type="PackedScene" uid="uid://r42whxkucyjl" path="res://scenes/vegetation/bush.tscn" id="20_mli22"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hi8lg"]
 albedo_texture = ExtResource("2_vum0r")
-roughness = 0.73
+roughness = 0.96
 normal_enabled = true
 normal_texture = ExtResource("3_i1kmq")
 anisotropy_enabled = true
@@ -81,12 +56,60 @@ func _process(delta: float) -> void:
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_eqkmv"]
 points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_utcmx"]
+render_priority = 0
+shader = ExtResource("15_mli22")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("16_pv0wt")
+shader_parameter/alpha_scissor_threshold = 0.5
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.05
+shader_parameter/metallic = 0.0
+shader_parameter/texture_normal = ExtResource("18_xm3b7")
+shader_parameter/normal_scale = 1.0
+shader_parameter/backlight = Color(0, 0, 0, 1)
+shader_parameter/texture_backlight = ExtResource("17_6uf0e")
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/sway_speed = 2.5
+shader_parameter/sway_strength_x = 0.0
+shader_parameter/sway_strength_y = 0.0
+shader_parameter/sway_strength_z = 0.015
+shader_parameter/sway_phase_len = 16.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ar4im"]
+render_priority = 0
+shader = ExtResource("15_mli22")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("19_qt0wu")
+shader_parameter/alpha_scissor_threshold = 0.5
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.05
+shader_parameter/metallic = 0.0
+shader_parameter/texture_normal = ExtResource("18_xm3b7")
+shader_parameter/normal_scale = 1.0
+shader_parameter/backlight = Color(0, 0, 0, 1)
+shader_parameter/texture_backlight = ExtResource("17_6uf0e")
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/sway_speed = 2.5
+shader_parameter/sway_strength_x = 0.0
+shader_parameter/sway_strength_y = 0.0
+shader_parameter/sway_strength_z = 0.015
+shader_parameter/sway_phase_len = 16.0
+
 [node name="LoopTestScene" type="Node3D"]
 script = ExtResource("1_vum0r")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_eqkmv")
-camera_attributes = SubResource("CameraAttributesPractical_0rikf")
+[node name="WorldEnvironment" parent="." instance=ExtResource("12_3tfwp")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.915047, -0.100396, -0.390652, 0.261921, 0.88444, 0.386216, 0.306735, -0.455726, 0.835601, 0.0118855, -0.0196906, -0.0371979)
@@ -95,7 +118,7 @@ light_volumetric_fog_energy = 0.0
 shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(86.6871, 0, -49.8533, 0, 1, 0, 49.8533, 0, 86.6871, 0, 0, 0)
+transform = Transform3D(70.6045, 0, -70.8167, 0, 1, 0, 70.8167, 0, 70.6045, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_hi8lg")
 mesh = SubResource("PlaneMesh_y4atg")
 
@@ -290,3 +313,50 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94639, 0.19192, 0)
 
 [node name="Drone" parent="." instance=ExtResource("12_dd3rq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1005, 1.47802, 1.16463e-07)
+
+[node name="Props" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00811756, 0)
+
+[node name="PineTree" parent="Props" instance=ExtResource("13_3tfwp")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 1.59193, 0.00758123, -9.27904)
+
+[node name="PineTree4" parent="Props" instance=ExtResource("13_3tfwp")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 27.9113, 0.00758123, -12.7894)
+
+[node name="PineTree2" parent="Props" instance=ExtResource("13_3tfwp")]
+transform = Transform3D(-0.469279, 0, -0.647902, 0, 0.8, 0, 0.647902, 0, -0.469279, 12.6306, 0.00758123, -18.4601)
+
+[node name="PineTree3" parent="Props" instance=ExtResource("13_3tfwp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1566, 0.00758123, -3.74824)
+
+[node name="TreeBradfordPear" parent="Props" instance=ExtResource("14_lgxwc")]
+transform = Transform3D(1.76107, 0, -0.372336, 0, 1.8, 0, 0.372336, 0, 1.76107, 14.2508, 0, -6.49864)
+material_override = SubResource("ShaderMaterial_utcmx")
+
+[node name="TreeBradfordPear2" parent="Props" instance=ExtResource("14_lgxwc")]
+transform = Transform3D(-0.995694, 0, 1.12187, 0, 1.5, 0, -1.12187, 0, -0.995694, -3.99922, 0, -7.06437)
+
+[node name="TreeBradfordPear4" parent="Props" instance=ExtResource("14_lgxwc")]
+transform = Transform3D(-1.19751, 0, 0.903308, 0, 1.5, 0, -0.903308, 0, -1.19751, 19.8512, 0, -1.50893)
+
+[node name="TreeBradfordPear3" parent="Props" instance=ExtResource("14_lgxwc")]
+transform = Transform3D(2.18221, 0, 0.279199, 0, 2.2, 0, -0.279199, 0, 2.18221, -11.6179, 0, -16.0075)
+material_override = SubResource("ShaderMaterial_ar4im")
+
+[node name="Bush" parent="Props" instance=ExtResource("20_mli22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+
+[node name="Bush6" parent="Props" instance=ExtResource("20_mli22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3667, 0, -3.90254)
+
+[node name="Bush2" parent="Props" instance=ExtResource("20_mli22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.52928, 0, -8.1564)
+
+[node name="Bush3" parent="Props" instance=ExtResource("20_mli22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.85722, 0, -5.18152)
+
+[node name="Bush4" parent="Props" instance=ExtResource("20_mli22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8656, 0, -12.6798)
+
+[node name="Bush5" parent="Props" instance=ExtResource("20_mli22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1447, 0, -1.92601)

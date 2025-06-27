@@ -1,10 +1,11 @@
+class_name Drone
 extends Node3D
 
 enum Mode {RIGID, CHAR, RAGDOLL}
 var mode: Mode = Mode.RIGID
 
-const FACE_RIGHT_Y_ROT = Vector3(0.0, -PI/2, 0.0)
-const FACE_LEFT_Y_ROT = Vector3(0.0, PI/2, 0.0)
+const FACE_RIGHT_Y_ROT = Vector3(0.0, PI/2, 0.0)
+const FACE_LEFT_Y_ROT = Vector3(0.0, -PI/2, 0.0)
 
 # Static/Internal properties
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -13,6 +14,7 @@ var time_floating: float = 0.0
 
 var initial_position: Vector3 = Vector3(0,0,0)
 var direction: Enums.Direction = Enums.Direction.LEFT
+var target: Node3D
 
 # Internal references
 @onready var state: StateChart = $State
@@ -22,6 +24,7 @@ var direction: Enums.Direction = Enums.Direction.LEFT
 
 @onready var model: Node3D = $DroneModel
 @onready var float_cast: RayCast3D = $FloatCast
+@onready var field_of_view: FieldOfView = $DroneModel/FieldOfView
 
 @onready var model_animations: AnimationPlayer = $DroneModel/AnimationPlayer
 
@@ -34,9 +37,12 @@ var direction: Enums.Direction = Enums.Direction.LEFT
 @onready var patrol_marker_1: Marker3D = $PatrolMarker1
 @onready var patrol_marker_2: Marker3D = $PatrolMarker2
 
+@onready var target_loss_timer: Timer = $TargetLossTimer
+
 # State tracking
 var in_closed_state: bool = true
 var in_turn_state: bool = false
+var tracking_target: bool = false
 
 # Signals
 signal in_char_mode
@@ -44,6 +50,14 @@ signal in_char_mode
 # Handles
 @export var left_right_axis: float = 0.0
 @export var max_speed: float = 3.0
+
+var sees_player: bool:
+	get:
+		var drone_sees_player: bool = field_of_view.sees_player
+		if drone_sees_player:
+			target = field_of_view.target
+			state.send_event("none to acquired")
+		return drone_sees_player
 
 func _ready() -> void:
 	initial_position = char_node.global_position
@@ -183,6 +197,7 @@ func _on_ragdoll_state_entered() -> void:
 	bone_simulation.physical_bones_start_simulation()
 	# bone_simulation.active = true
 
+
 func _on_ragdoll_state_exited() -> void:
 	
 	# Stop the ragdoll simulation
@@ -282,6 +297,50 @@ func _on_turn_right_entered() -> void:
 
 func _on_turn_right_state_exited() -> void:
 	in_turn_state = false
+
+
+#=======================================================
+# TARGET STATES
+#=======================================================
+
+# target none state
+#----------------------------------------
+func _on_none_state_entered() -> void:
+	self.close()
+	field_of_view.range = 4.0
+	
+
+# target acquired state
+#----------------------------------------
+func _on_acquired_state_entered() -> void:
+	self.open()
+	tracking_target = true
+	field_of_view.range = 8.0
+
+
+func _on_acquired_state_physics_processing(delta: float) -> void:
+	if not field_of_view.sees_player:
+		state.send_event("acquired to lost")
+
+
+# target lost state
+#----------------------------------------
+func _on_lost_state_entered() -> void:
+	target_loss_timer.start()
+	field_of_view.range = 6.0
+
+
+func _on_lost_state_physics_processing(delta: float) -> void:
+	if field_of_view.sees_player:
+		state.send_event("lost to acquired")
+		target_loss_timer.stop()
+
+
+func _on_target_loss_timer_timeout() -> void:
+	tracking_target = false
+	state.send_event("lost to none")
+	target = null
+
 
 #=======================================================
 # SIGNALS RECEIVED
