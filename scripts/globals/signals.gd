@@ -48,3 +48,4 @@ signal kick_right_animation_ended
 ## ------------------------------------- ##
 
 signal camera_changed(rotation: Vector3, position_delta: Vector3, fov: float)
+signal update_zoom(zoom_target: Enums.Zoom)

@@ -25,6 +25,7 @@ CalcPhys="*res://scripts/globals/calc_phys.gd"
 Signals="*res://scripts/globals/signals.gd"
 Level="*res://scripts/globals/level.gd"
 Settings="*res://scripts/globals/settings.gd"
+Constants="*res://scripts/globals/constants.gd"
 
 [debug]
 

@@ -20,3 +20,17 @@ var range: float:
 		for child in self.get_children():
 			if child is RayCast3D:
 				child.target_position.z = value
+
+
+var enabled: bool:
+	get:
+		var result: bool = false
+		for child in self.get_children():
+			if child is RayCast3D:
+				if child.enabled:
+					result = true
+		return result
+	set(value):
+		for child in self.get_children():
+			if child is RayCast3D:
+				child.enabled = value

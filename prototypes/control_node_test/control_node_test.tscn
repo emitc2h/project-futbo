@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cvtmcnvjfna06"]
+[gd_scene load_steps=15 format=3 uid="uid://cvtmcnvjfna06"]
 
 [ext_resource type="Script" uid="uid://bxf0onv18bo2q" path="res://prototypes/control_node_test/control_node_test.gd" id="1_ygcf8"]
 [ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="2_rvd62"]
@@ -28,7 +28,7 @@ glow_enabled = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r8se5"]
 albedo_color = Color(0.174143, 0.174143, 0.174143, 1)
 metallic = 0.2
-roughness = 0.18
+roughness = 0.47
 normal_texture = ExtResource("2_rvd62")
 uv1_scale = Vector3(2, 2, 1)
 
@@ -89,10 +89,45 @@ tracks/1/keys = {
 "values": [Vector3(0.00965017, 1.32741, 0.414284)]
 }
 
+[sub_resource type="Animation" id="Animation_rvd62"]
+resource_name = "test_blow_animation"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ControlNode:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.00965017, 0.139628, 0.414284)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ControlNode")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.166667, 5.03333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"power_up_shield"
+}, {
+"args": [],
+"method": &"blow_shield"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ygcf8"]
 _data = {
 &"RESET": SubResource("Animation_ygcf8"),
-&"test_animation": SubResource("Animation_mt3j1")
+&"test_animation": SubResource("Animation_mt3j1"),
+&"test_blow_animation": SubResource("Animation_rvd62")
 }
 
 [node name="Node3D" type="Node3D"]
@@ -128,8 +163,6 @@ fov = 50.0
 
 [node name="ControlNode" parent="." instance=ExtResource("3_gxxsf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00965017, 1.32741, 0.414284)
-gravity_scale = 0.3
-can_sleep = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

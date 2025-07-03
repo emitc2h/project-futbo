@@ -57,13 +57,13 @@ visible = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VERTEBRAE_03/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_jff30")
 
+[node name="PANEL_TB" parent="." index="4"]
+visible = false
+
 [node name="StaticBody3D" type="StaticBody3D" parent="PANEL_TB" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PANEL_TB/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_6tdyq")
-
-[node name="PANEL_LR" parent="." index="5"]
-visible = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="PANEL_LR" index="0"]
 

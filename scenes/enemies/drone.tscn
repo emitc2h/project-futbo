@@ -72,18 +72,6 @@ delay_in_seconds = "0.0"
 [node name="ragdoll" type="Node" parent="State/Root/Mode"]
 script = ExtResource("6_o57st")
 
-[node name="to char" type="Node" parent="State/Root/Mode/ragdoll"]
-script = ExtResource("7_md0p7")
-to = NodePath("../../char")
-event = &"ragdoll to char"
-delay_in_seconds = "0.0"
-
-[node name="to rigid" type="Node" parent="State/Root/Mode/ragdoll"]
-script = ExtResource("7_md0p7")
-to = NodePath("../../rigid")
-event = &"ragdoll to rigid"
-delay_in_seconds = "0.0"
-
 [node name="to dead" type="Node" parent="State/Root/Mode/ragdoll"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../dead")
@@ -131,21 +119,6 @@ script = ExtResource("6_o57st")
 script = ExtResource("7_md0p7")
 to = NodePath("../../closing")
 event = &"open to closing"
-delay_in_seconds = "0.0"
-
-[node name="to attack" type="Node" parent="State/Root/Engagement/open"]
-script = ExtResource("7_md0p7")
-to = NodePath("../../attack")
-event = &"open to attack"
-delay_in_seconds = "0.0"
-
-[node name="attack" type="Node" parent="State/Root/Engagement"]
-script = ExtResource("6_o57st")
-
-[node name="to open" type="Node" parent="State/Root/Engagement/attack"]
-script = ExtResource("7_md0p7")
-to = NodePath("../../open")
-event = &"attack to open"
 delay_in_seconds = "0.0"
 
 [node name="Direction" type="Node" parent="State/Root"]
@@ -254,6 +227,7 @@ axis_lock_linear_z = true
 
 [node name="ClosedCollisionShape3D" type="CollisionShape3D" parent="CharNode"]
 shape = SubResource("SphereShape3D_md0p7")
+disabled = true
 
 [node name="OpenCollisionShape3D" type="CollisionShape3D" parent="CharNode"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0988013)
@@ -284,6 +258,9 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [node name="TargetLossTimer" type="Timer" parent="."]
 wait_time = 2.0
 
+[node name="DeadTimer" type="Timer" parent="."]
+wait_time = 10.0
+
 [connection signal="state_entered" from="State/Root/Mode/char" to="." method="_on_char_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Mode/char" to="." method="_on_char_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Mode/rigid" to="." method="_on_rigid_state_entered"]
@@ -291,11 +268,13 @@ wait_time = 2.0
 [connection signal="state_entered" from="State/Root/Mode/ragdoll" to="." method="_on_ragdoll_state_entered"]
 [connection signal="state_exited" from="State/Root/Mode/ragdoll" to="." method="_on_ragdoll_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Mode/ragdoll" to="." method="_on_ragdoll_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Mode/dead" to="." method="_on_dead_state_entered"]
 [connection signal="state_entered" from="State/Root/Engagement/closing" to="." method="_on_closing_state_entered"]
 [connection signal="state_entered" from="State/Root/Engagement/closed" to="." method="_on_closed_state_entered"]
 [connection signal="state_exited" from="State/Root/Engagement/closed" to="." method="_on_closed_state_exited"]
 [connection signal="state_entered" from="State/Root/Engagement/opening" to="." method="_on_opening_state_entered"]
 [connection signal="state_entered" from="State/Root/Engagement/open" to="." method="_on_open_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Engagement/open" to="." method="_on_open_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Direction/turn left" to="." method="_on_turn_left_entered"]
 [connection signal="state_exited" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_exited"]
 [connection signal="state_entered" from="State/Root/Direction/turn right" to="." method="_on_turn_right_entered"]
@@ -306,3 +285,4 @@ wait_time = 2.0
 [connection signal="state_entered" from="State/Root/Target/lost" to="." method="_on_lost_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Target/lost" to="." method="_on_lost_state_physics_processing"]
 [connection signal="timeout" from="TargetLossTimer" to="." method="_on_target_loss_timer_timeout"]
+[connection signal="timeout" from="DeadTimer" to="." method="_on_dead_timer_timeout"]

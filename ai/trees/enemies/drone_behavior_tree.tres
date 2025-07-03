@@ -53,7 +53,7 @@ children = [SubResource("BTSequence_0xi1a"), SubResource("BTSequence_dovx4")]
 
 [sub_resource type="BTAction" id="BTAction_dr43r"]
 script = ExtResource("4_b76ob")
-target_offset = 3.0
+target_offset = 5.0
 
 [sub_resource type="BTSelector" id="BTSelector_an7lx"]
 children = [SubResource("BTAction_dr43r")]

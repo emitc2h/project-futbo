@@ -1,46 +1,137 @@
-[gd_scene load_steps=8 format=3 uid="uid://caxwuwjjre3j2"]
+[gd_scene load_steps=16 format=3 uid="uid://caxwuwjjre3j2"]
 
-[ext_resource type="Texture2D" uid="uid://ct55n5aqijgey" path="res://kenney_sports-pack/PNG/Elements/element (1).png" id="1_dgj8u"]
 [ext_resource type="Script" uid="uid://cvp18nk1u5oc6" path="res://scripts/control_node_and_balls/direction_ray.gd" id="2_f10p2"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_7ii86"]
+[ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_xhkeq"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_5mqmn"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_hr8f4"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_08vb0"]
 [ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/control_node_and_balls/clamped_aim.tscn" id="7_5lu38"]
+[ext_resource type="Texture2D" uid="uid://b4is3s6ydyd8y" path="res://assets/3D/Particles/streak/streak_64x64.png" id="7_v4urv"]
 
-[node name="DirectionRay" type="Sprite3D"]
-offset = Vector2(0, 32)
-texture = ExtResource("1_dgj8u")
+[sub_resource type="Gradient" id="Gradient_v4urv"]
+offsets = PackedFloat32Array(0, 0.137168, 0.373894, 0.723451, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0.283333, 1, 1, 0.33, 0.732, 1, 1, 0.00027319, 0.122321, 1, 1, 0, 0.333333, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xhkeq"]
+gradient = SubResource("Gradient_v4urv")
+
+[sub_resource type="Curve" id="Curve_55bw7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.592885, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fhi1o"]
+curve = SubResource("Curve_55bw7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xhkeq"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.01
+emission_ring_radius = 0.25
+emission_ring_inner_radius = 0.2
+emission_ring_cone_angle = 90.0
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+radial_velocity_min = -0.500022
+radial_velocity_max = -0.400022
+gravity = Vector3(0, 2, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+radial_accel_min = -2.23517e-06
+radial_accel_max = -2.23517e-06
+scale_curve = SubResource("CurveTexture_fhi1o")
+color_ramp = SubResource("GradientTexture1D_xhkeq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_55bw7"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("7_v4urv")
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_fhi1o"]
+material = SubResource("StandardMaterial3D_55bw7")
+size = Vector2(0.05, 0.6)
+
+[node name="DirectionRay" type="Node3D"]
 script = ExtResource("2_f10p2")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("3_7ii86")
 
-[node name="Root" type="Node" parent="State"]
+[node name="ParallelState" type="Node" parent="State"]
+script = ExtResource("3_xhkeq")
+metadata/_custom_type_script = "uid://duu2hhmogs378"
+
+[node name="Pointing" type="Node" parent="State/ParallelState"]
 script = ExtResource("4_5mqmn")
 initial_state = NodePath("idle")
 
-[node name="idle" type="Node" parent="State/Root"]
+[node name="idle" type="Node" parent="State/ParallelState/Pointing"]
 script = ExtResource("5_hr8f4")
 
-[node name="to pointing" type="Node" parent="State/Root/idle"]
+[node name="to pointing" type="Node" parent="State/ParallelState/Pointing/idle"]
 script = ExtResource("6_08vb0")
 to = NodePath("../../pointing")
 event = &"idle to pointing"
 delay_in_seconds = "0.0"
 
-[node name="pointing" type="Node" parent="State/Root"]
+[node name="pointing" type="Node" parent="State/ParallelState/Pointing"]
 script = ExtResource("5_hr8f4")
 
-[node name="to idle" type="Node" parent="State/Root/pointing"]
+[node name="to idle" type="Node" parent="State/ParallelState/Pointing/pointing"]
 script = ExtResource("6_08vb0")
 to = NodePath("../../idle")
 event = &"pointing to idle"
 delay_in_seconds = "0.0"
 
+[node name="Power" type="Node" parent="State/ParallelState"]
+script = ExtResource("4_5mqmn")
+initial_state = NodePath("off")
+
+[node name="off" type="Node" parent="State/ParallelState/Power"]
+script = ExtResource("5_hr8f4")
+
+[node name="charge" type="Node" parent="State/ParallelState/Power/off"]
+script = ExtResource("6_08vb0")
+to = NodePath("../../charging")
+event = &"charge"
+delay_in_seconds = "0.0"
+
+[node name="charging" type="Node" parent="State/ParallelState/Power"]
+script = ExtResource("5_hr8f4")
+
+[node name="turn on" type="Node" parent="State/ParallelState/Power/charging"]
+script = ExtResource("6_08vb0")
+to = NodePath("../../on")
+event = &"turn on"
+delay_in_seconds = "0.0"
+
+[node name="on" type="Node" parent="State/ParallelState/Power"]
+script = ExtResource("5_hr8f4")
+
+[node name="turn off" type="Node" parent="State/ParallelState/Power/on"]
+script = ExtResource("6_08vb0")
+to = NodePath("../../off")
+event = &"turn off"
+delay_in_seconds = "0.0"
+
 [node name="ClampedAim" parent="." instance=ExtResource("7_5lu38")]
 
-[connection signal="state_physics_processing" from="State/Root/idle" to="." method="_on_idle_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/pointing" to="." method="_on_pointing_state_entered"]
-[connection signal="state_exited" from="State/Root/pointing" to="." method="_on_pointing_state_exited"]
-[connection signal="state_processing" from="State/Root/pointing" to="." method="_on_pointing_state_processing"]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.324201, 0)
+amount = 150
+lifetime = 1.2
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_xhkeq")
+draw_pass_1 = SubResource("QuadMesh_fhi1o")
+
+[connection signal="state_physics_processing" from="State/ParallelState/Pointing/idle" to="." method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="State/ParallelState/Pointing/pointing" to="." method="_on_pointing_state_entered"]
+[connection signal="state_exited" from="State/ParallelState/Pointing/pointing" to="." method="_on_pointing_state_exited"]
+[connection signal="state_processing" from="State/ParallelState/Pointing/pointing" to="." method="_on_pointing_state_processing"]
+[connection signal="state_entered" from="State/ParallelState/Power/off" to="." method="_on_off_state_entered"]
+[connection signal="state_entered" from="State/ParallelState/Power/charging" to="." method="_on_charging_state_entered"]
+[connection signal="state_exited" from="State/ParallelState/Power/on" to="." method="_on_on_state_exited"]

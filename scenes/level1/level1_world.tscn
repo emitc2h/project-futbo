@@ -1508,48 +1508,63 @@ transform = Transform3D(0.99693, 0, -0.0783027, 0, 1, 0, 0.0783027, 0, 0.99693, 
 
 [node name="LightGrassRandomPatch6MMixed2" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.217547, 0, 0.97605, 0, 1, 0, -0.97605, 0, 0.217547, -60.6818, -0.0615612, 12.3698)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed3" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -54.6618, -0.039881, 12.3698)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed4" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -48.6279, -0.0429934, 12.6084)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed5" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -42.8466, -0.0648023, 12.6084)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed6" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -37.9519, -0.0937525, 12.6084)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed7" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.961055, 0, -0.276359, 0, 1, 0, 0.276359, 0, 0.961055, -33.975, -0.0689983, 12.6084)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed8" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.99297, 0, -0.118369, 0, 1, 0, 0.118369, 0, 0.99297, -29.8919, -0.0444564, 12.6084)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed9" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.977959, 0, -0.208799, 0, 1, 0, 0.208799, 0, 0.977959, -30.0528, -0.0387844, 5.90503)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed10" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.161707, 0, 0.986839, 0, 1, 0, -0.986839, 0, 0.161707, -33.7769, -0.0395699, 4.13285)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed11" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(-0.471335, 0, 0.881954, 0, 1, 0, -0.881954, 0, -0.471335, -35.2344, -0.0313377, 8.23366)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed12" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(-0.976016, 0, 0.2177, 0, 1, 0, -0.2177, 0, -0.976016, -36.7527, -0.118594, 4.2948)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed14" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.964907, 0, -0.262593, 0, 1, 0, 0.262593, 0, 0.964907, -29.9523, -0.0672508, -5.8751)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed15" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.964907, 0, -0.262593, 0, 1, 0, 0.262593, 0, 0.964907, -30.2283, -0.0672508, -11.3127)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed16" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(0.991282, 0, -0.131755, 0, 1, 0, 0.131755, 0, 0.991282, -40.7263, -0.0672508, -12.4161)
+cast_shadow = 0
 
 [node name="LightGrassRandomPatch6MMixed13" parent="SchoolGrass" instance=ExtResource("51_764ci")]
 transform = Transform3D(-0.525752, 0, 0.0798056, 0, 1, 0, -0.0434372, 0, -0.965952, -38.3432, -0.0672508, -7.08349)
+cast_shadow = 0
 
 [node name="Trees" type="Node3D" parent="."]
 

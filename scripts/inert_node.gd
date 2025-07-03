@@ -33,7 +33,3 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if do_set_impulse:
 		state.apply_central_impulse(impulse_to_set)
 		do_set_impulse = false
-	
-	#var current_speed: float = state.linear_velocity.length()
-	#if current_speed > max_speed:
-		#state.linear_velocity *= (max_speed / current_speed)

@@ -34,6 +34,8 @@ var dribble_rotation_speed: float
 var dribble_velocity_offset: float
 var ball_snap_velocity: float
 
+signal kicked
+
 
 func _enter_tree() -> void:
 	Signals.facing_left.connect(_on_facing_left)
@@ -158,6 +160,7 @@ func _on_facing_right() -> void:
 func impulse(force_vector: Vector3) -> void:
 	end_dribbling()
 	inert_node.set_impulse(force_vector)
+	kicked.emit()
 
 
 func own(player_id: int) -> void:

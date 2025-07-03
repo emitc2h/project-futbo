@@ -606,6 +606,17 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.40
 [node name="GoalRight" parent="." instance=ExtResource("8_2nmo7")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 22.4937, 0, 0)
 
+[node name="MainPlayer3D" parent="." node_paths=PackedStringArray("asset") instance=ExtResource("29_5g7au")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.9767, 0.0618566, 0)
+asset = NodePath("CharacterAsset")
+
+[node name="CharacterAsset" parent="MainPlayer3D" instance=ExtResource("30_cyq5e")]
+
+[node name="CharacterModel" parent="MainPlayer3D/CharacterAsset" instance=ExtResource("31_a7lbm")]
+
+[node name="Controller3D" parent="MainPlayer3D" node_paths=PackedStringArray("player") instance=ExtResource("32_cyq5e")]
+player = NodePath("..")
+
 [node name="OpponentPlayer" parent="." node_paths=PackedStringArray("player_asset") instance=ExtResource("4_8dl31")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2235, 0, 0)
 player_asset = NodePath("PlayerAssetSprite3D")
@@ -718,8 +729,7 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -80.0
-offset_bottom = -80.0
+offset_bottom = 80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
@@ -730,8 +740,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 80.9199
-offset_bottom = 81.0
+offset_top = -360.0
+offset_bottom = -280.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
@@ -829,17 +839,6 @@ camera_controller = NodePath("../../CameraController")
 player = NodePath("../../OpponentPlayer")
 
 [node name="WalkToFieldPath3D" parent="Level1Script" instance=ExtResource("21_52762")]
-
-[node name="MainPlayer3D" parent="." node_paths=PackedStringArray("asset") instance=ExtResource("29_5g7au")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.9767, 0.0618566, 0)
-asset = NodePath("CharacterAsset")
-
-[node name="CharacterAsset" parent="MainPlayer3D" instance=ExtResource("30_cyq5e")]
-
-[node name="CharacterModel" parent="MainPlayer3D/CharacterAsset" instance=ExtResource("31_a7lbm")]
-
-[node name="Controller3D" parent="MainPlayer3D" node_paths=PackedStringArray("player") instance=ExtResource("32_cyq5e")]
-player = NodePath("..")
 
 [connection signal="scored" from="GoalLeft" to="." method="_on_goal_left_scored"]
 [connection signal="scored" from="GoalLeft" to="OpponentPlayer/AI" method="_on_away_scored"]

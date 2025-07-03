@@ -2,7 +2,7 @@ extends Node
 
 # Project a 2D Vector into the 3D xy plane
 func vec3_from(vector2: Vector2) -> Vector3:
-	return Vector3(vector2.x, -vector2.y, 0)
+	return Vector3(vector2.x, vector2.y, 0)
 
 
 # Flip the y-axis, producing a vector2 meant to live  in the

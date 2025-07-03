@@ -1,8 +1,8 @@
 class_name Drone
 extends Node3D
 
-enum Mode {RIGID, CHAR, RAGDOLL}
-var mode: Mode = Mode.RIGID
+enum Mode {RIGID, CHAR, RAGDOLL, DEAD}
+var mode: Mode = Mode.CHAR
 
 const FACE_RIGHT_Y_ROT = Vector3(0.0, PI/2, 0.0)
 const FACE_LEFT_Y_ROT = Vector3(0.0, -PI/2, 0.0)
@@ -16,6 +16,10 @@ var initial_position: Vector3 = Vector3(0,0,0)
 var direction: Enums.Direction = Enums.Direction.LEFT
 var target: Node3D
 
+var has_quick_closed: bool = false
+
+var bone_transforms: Array[Transform3D] = []
+
 # Internal references
 @onready var state: StateChart = $State
 
@@ -23,12 +27,15 @@ var target: Node3D
 @onready var rigid_node: RigidBody3D = $RigidNode
 
 @onready var model: Node3D = $DroneModel
+@onready var model_mesh: MeshInstance3D = $DroneModel/Armature/Skeleton3D/drone
 @onready var float_cast: RayCast3D = $FloatCast
 @onready var field_of_view: FieldOfView = $DroneModel/FieldOfView
 
-@onready var model_animations: AnimationPlayer = $DroneModel/AnimationPlayer
+@onready var model_anim_tree: AnimationTree = $DroneModel/AnimationTree
+var anim_state: AnimationNodeStateMachinePlayback
 
 @onready var bone_simulation: PhysicalBoneSimulator3D = $DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D
+@onready var skeleton: Skeleton3D = $DroneModel/Armature/Skeleton3D
 
 @onready var closed_collision_shape_char: CollisionShape3D = $CharNode/ClosedCollisionShape3D
 @onready var open_collision_shape_char: CollisionShape3D = $CharNode/OpenCollisionShape3D
@@ -38,6 +45,7 @@ var target: Node3D
 @onready var patrol_marker_2: Marker3D = $PatrolMarker2
 
 @onready var target_loss_timer: Timer = $TargetLossTimer
+@onready var dead_timer: Timer = $DeadTimer
 
 # State tracking
 var in_closed_state: bool = true
@@ -48,8 +56,14 @@ var tracking_target: bool = false
 signal in_char_mode
 
 # Handles
+@export_group("Animation Handles")
 @export var left_right_axis: float = 0.0
+
+@export_group("Movement parameters")
 @export var max_speed: float = 3.0
+
+@export_group("Sight parameters")
+
 
 var sees_player: bool:
 	get:
@@ -61,10 +75,10 @@ var sees_player: bool:
 
 func _ready() -> void:
 	initial_position = char_node.global_position
-	model_animations.play("Closed")
-	model_animations.animation_finished.connect(_on_model_animation_finished)
+	model_anim_tree.animation_finished.connect(_on_model_animation_finished)
 	rigid_node.max_speed = 10.0
 	bone_simulation.active = true
+	anim_state = model_anim_tree.get("parameters/playback")
 
 
 #=======================================================
@@ -191,21 +205,42 @@ func _on_ragdoll_state_entered() -> void:
 	open_collision_shape_char.disabled = true
 	
 	# Disable animations
-	model_animations.active = false
+	model_anim_tree.active = false
 	
 	# Start the ragdoll simulation
 	bone_simulation.physical_bones_start_simulation()
-	# bone_simulation.active = true
+
+	# turn off the field of view
+	field_of_view.enabled = false
+	
+	#timer to dead state
+	dead_timer.start()
+	
+	# This is temporary until I have a better disappearing animation
+	await get_tree().create_timer(5).timeout
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(model_mesh, "transparency", 1.0, 5.0)\
+		.set_ease(Tween.EASE_IN)\
+		.set_trans(Tween.TRANS_LINEAR)\
+		.from(0.0)
+
+
+func _on_dead_timer_timeout() -> void:
+	state.send_event("ragdoll to dead")
 
 
 func _on_ragdoll_state_exited() -> void:
-	
 	# Stop the ragdoll simulation
 	bone_simulation.physical_bones_stop_simulation()
-	# bone_simulation.active = false
-	
-		# re-enable animations
-	model_animations.active = true
+
+
+# dead state
+#----------------------------------------
+func _on_dead_state_entered() -> void:
+	mode = Mode.DEAD
+	model_anim_tree.active = false
+	self.queue_free()
+
 
 
 #=======================================================
@@ -215,7 +250,7 @@ func _on_ragdoll_state_exited() -> void:
 # closing state
 #----------------------------------------
 func _on_closing_state_entered() -> void:
-	model_animations.play_backwards("OpenUp")
+	anim_state.travel("closed")
 	if mode == Mode.RIGID:
 		closed_collision_shape_rigid.disabled = false
 	elif mode == Mode.CHAR:
@@ -238,7 +273,10 @@ func _on_closed_state_exited() -> void:
 # opening state
 #----------------------------------------
 func _on_opening_state_entered() -> void:
-	model_animations.play("OpenUp")
+	if tracking_target:
+		anim_state.travel("targeting")
+	else:
+		anim_state.travel("idle")
 	if mode == Mode.CHAR:
 		open_collision_shape_char.disabled = false
 
@@ -249,6 +287,16 @@ func _on_opening_state_entered() -> void:
 func _on_open_state_entered() -> void:
 	if mode == Mode.CHAR:
 		closed_collision_shape_char.disabled = true
+
+
+func _on_open_state_physics_processing(delta: float) -> void:
+	if has_quick_closed:
+		has_quick_closed = false
+		await get_tree().create_timer(1).timeout
+		if tracking_target:
+			anim_state.travel("targeting")
+		else:
+			anim_state.travel("idle")
 
 
 #=======================================================
@@ -308,14 +356,17 @@ func _on_turn_right_state_exited() -> void:
 func _on_none_state_entered() -> void:
 	self.close()
 	field_of_view.range = 4.0
+	Signals.update_zoom.emit(Enums.Zoom.DEFAULT)
 	
 
 # target acquired state
 #----------------------------------------
 func _on_acquired_state_entered() -> void:
-	self.open()
 	tracking_target = true
+	self.open()
+	anim_state.travel("targeting")
 	field_of_view.range = 8.0
+	Signals.update_zoom.emit(Enums.Zoom.FAR)
 
 
 func _on_acquired_state_physics_processing(delta: float) -> void:
@@ -326,6 +377,7 @@ func _on_acquired_state_physics_processing(delta: float) -> void:
 # target lost state
 #----------------------------------------
 func _on_lost_state_entered() -> void:
+	anim_state.travel("idle")
 	target_loss_timer.start()
 	field_of_view.range = 6.0
 
@@ -348,8 +400,9 @@ func _on_target_loss_timer_timeout() -> void:
 
 func _on_model_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "OpenUp":
-		state.send_event("closing to closed")
 		state.send_event("opening to open")
+	if anim_name == "CloseUp":
+		state.send_event("closing to closed")
 
 #=======================================================
 # CONTROL FUNCTIONS
@@ -363,11 +416,9 @@ func close() -> void:
 
 func become_inert() -> void:
 	state.send_event("char to rigid")
-	state.send_event("ragdoll to rigid")
 
 func start_floating() -> void:
 	state.send_event("rigid to char")
-	state.send_event("ragdoll to char")
 
 func become_ragdoll() -> void:
 	state.send_event("rigid to ragdoll")
@@ -386,6 +437,16 @@ func move_toward_x_pos(target_x: float, delta: float) -> void:
 func stop_moving(delta: float) -> void:
 	left_right_axis = lerp(left_right_axis, 0.0, 3.0 * delta)
 
+func get_hit(strength: float) -> bool:
+	print("HIT STRENGTH: ", strength)
+	if strength > 5:
+		self.become_ragdoll()
+		return true
+	else:
+		anim_state.travel("quick close")
+		has_quick_closed = true
+		return false
+
 
 #=======================================================
 # UTIL FUNCTIONS
@@ -397,10 +458,3 @@ func get_mode_position() -> Vector3:
 		return char_node.global_position
 	else:
 		return model.global_position
-		
-		
-func reset_position() -> void:
-	state.send_event("rigid to char")
-	state.send_event("ragdoll to char")
-	char_node.global_position = initial_position
-	model_animations.play("Closed")

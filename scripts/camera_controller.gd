@@ -58,7 +58,26 @@ var _z_tracking_enabled: bool = true
 		if not _enabled:
 			camera.fov = value
 
+# Zoom controls
+@export_group("zoom settings")
+@export var zoom_min: float = 5.0
+@export var zoom_max: float = 15.0
+@export var default_zoom: float = 8.0
+@export var lerp_zoom: float = 0.5
+@export var zoom: float:
+	get:
+		return camera.position.z
+	set(value):
+		camera.position.z = value
+
+@export var zoom_target: float = 10.0
+
+
 var camera_initial_position: Vector3
+
+
+func _enter_tree() -> void:
+	Signals.update_zoom.connect(_change_zoom)
 
 
 func _ready() -> void:
@@ -74,6 +93,12 @@ func _process(delta: float) -> void:
 		global_position.y = lerp(global_position.y, subject.global_position.y, lerp_y * delta)
 		if _z_tracking_enabled:
 			global_position.z = lerp(global_position.z, subject.global_position.z, lerp_z * delta)
+
+		zoom = lerp(zoom, zoom_target, lerp_zoom * delta)
 	
 	## Always sync the skybox
 	Signals.camera_changed.emit(camera.rotation, camera.global_position - camera_initial_position, camera.fov)
+
+
+func _change_zoom(target: Enums.Zoom) -> void:
+	zoom_target = Constants.ZOOM_VALUES[target]
