@@ -35,8 +35,8 @@ shapes/collision/contact_color=Color(0.88, 0.1, 1, 1)
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=1280
+window/size/viewport_height=800
 window/stretch/mode="viewport"
 
 [editor]
@@ -193,6 +193,8 @@ pause={
 3d_physics/layer_3="Ball"
 2d_physics/layer_4="Goal"
 3d_physics/layer_4="Goal"
+3d_physics/layer_9="Enemy Collision"
+3d_physics/layer_10="Enemy Ragdoll"
 2d_physics/layer_32="void"
 
 [physics]

@@ -1,7 +1,8 @@
 @tool
 extends BTAction
 
+@export var text: String
+
 func _tick(delta: float) -> Status:
-	if agent.sees_player:
-		return FAILURE
+	print(text)
 	return RUNNING

@@ -314,6 +314,7 @@ wait_time = 0.05
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+target_position = Vector3(0, -1.3, 0)
 collision_mask = 266
 
 [connection signal="state_entered" from="State/Root/Movement/idle" to="." method="_on_idle_state_entered"]

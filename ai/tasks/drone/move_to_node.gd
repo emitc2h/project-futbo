@@ -14,8 +14,8 @@ func _enter() -> void:
 
 func _tick(delta: float) -> Status:
 	var node: Node3D = destination_node.get_value(scene_root, blackboard)
-	#print("agent: ", agent.get_mode_position().x, ", target: ", node.global_position.x)
-	var near: float = abs(agent.get_mode_position().x - node.global_position.x) < distance_when_to_stop
+	var position_delta: float = agent.get_mode_position().x - node.global_position.x
+	var near: float = abs(position_delta) < distance_when_to_stop
 	
 	if near:
 		arrived = true
@@ -27,5 +27,16 @@ func _tick(delta: float) -> Status:
 		else:
 			return RUNNING
 	else:
-		agent.move_toward_x_pos(node.global_position.x, delta)
+		# Player is to the right of the drone and the drone faces the wrong way
+		if position_delta < 0.0 and agent.direction == Enums.Direction.LEFT:
+			agent.face_right()
+			
+		# Player is to the left of the drone
+		if position_delta > 0.0 and agent.direction == Enums.Direction.RIGHT:
+			agent.face_left()
+		
+		# Only move once the drone is done facing a different direction
+		# This creates a more relaxed patrol loop
+		if not agent.in_turn_state:
+			agent.move_toward_x_pos(node.global_position.x, delta)
 		return RUNNING

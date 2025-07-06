@@ -9,3 +9,8 @@ func vec3_from(vector2: Vector2) -> Vector3:
 # xy-plane of a 3D space
 func vec2_from(vector2: Vector2) -> Vector2:
 	return Vector2(vector2.x, -vector2.y)
+
+
+func vec2_from_vec3(vector3: Vector3) -> Vector2:
+	return Vector2(vector3.x, -vector3.y)
+	

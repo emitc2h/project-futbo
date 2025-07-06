@@ -15,7 +15,6 @@ var asset: CharacterAsset
 var stamina_limit: float # in secs
 var stamina_replenish_rate: float = 0.666
 
-var run_deceleration: float
 var jump_momentum: float
 
 # Static/Internal properties
@@ -69,10 +68,9 @@ func _ready() -> void:
 	stamina_replenish_rate = player.stamina_replenish_rate
 	stamina = stamina_limit
 	
-	run_deceleration = player.run_deceleration
 	jump_momentum = player.jump_momentum
 	
-	raycast.target_position = Vector3.DOWN
+	raycast.target_position = Vector3.DOWN * 1.2
 
 
 func _physics_process(delta: float) -> void:
@@ -278,6 +276,7 @@ func _on_in_the_air_state_exited() -> void:
 
 
 func _on_jump_animation_ended() ->void:
+	print("JUMP ANIMATION ENDED")
 	if player.is_on_floor():
 		state.send_event("in the air to run")
 	else:

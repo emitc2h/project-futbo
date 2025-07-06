@@ -9,14 +9,12 @@ const FACE_LEFT_Y_ROT = Vector3(0.0, -PI/2, 0.0)
 
 # Static/Internal properties
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
-var float_cast_length: float = 2.0
+var float_cast_length: float = 2.1
 var time_floating: float = 0.0
 
 var initial_position: Vector3 = Vector3(0,0,0)
 var direction: Enums.Direction = Enums.Direction.LEFT
 var target: Node3D
-
-var has_quick_closed: bool = false
 
 var bone_transforms: Array[Transform3D] = []
 
@@ -41,19 +39,26 @@ var anim_state: AnimationNodeStateMachinePlayback
 @onready var open_collision_shape_char: CollisionShape3D = $CharNode/OpenCollisionShape3D
 @onready var closed_collision_shape_rigid: CollisionShape3D = $RigidNode/ClosedCollisionShape3D
 
+@onready var proximity_detector: Area3D = $DroneModel/ProximityDetector
+
 @onready var patrol_marker_1: Marker3D = $PatrolMarker1
 @onready var patrol_marker_2: Marker3D = $PatrolMarker2
 
 @onready var target_loss_timer: Timer = $TargetLossTimer
 @onready var dead_timer: Timer = $DeadTimer
+@onready var quick_closing_timer: Timer = $QuickClosingTimer
 
 # State tracking
 var in_closed_state: bool = true
 var in_turn_state: bool = false
 var tracking_target: bool = false
+var target_acquired: bool = false
 
 # Signals
 signal in_char_mode
+
+# Tweeners
+var turn_tween: Tween
 
 # Handles
 @export_group("Animation Handles")
@@ -88,7 +93,6 @@ func _ready() -> void:
 # char state
 #----------------------------------------
 func _on_char_state_entered() -> void:
-
 	# reset time floating
 	time_floating = 0.0
 
@@ -141,10 +145,14 @@ func _on_char_state_physics_processing(delta: float) -> void:
 	char_node.move_and_slide()
 	
 	# Force drone to look in the right direction
-	if not in_turn_state:
+	if not (in_turn_state):
 		var target_direction: Vector3 = FACE_LEFT_Y_ROT
 		if direction == Enums.Direction.RIGHT:
 			target_direction = FACE_RIGHT_Y_ROT
+		
+		if target and target_acquired:
+			var pointer_to_target: Vector3 = char_node.global_position - target.global_position - Vector3.UP * 1.5
+			self.char_node.rotation.x = min(asin(abs(pointer_to_target.y) / pointer_to_target.length()), 0.4)
 		
 		var target_orientation: Quaternion = Quaternion.from_euler(target_direction)
 		var current_orientation: Quaternion = Quaternion.from_euler(char_node.rotation)
@@ -200,12 +208,16 @@ func _on_ragdoll_state_entered() -> void:
 	mode = Mode.RAGDOLL
 	
 	# disable all other collision shapes
-	closed_collision_shape_rigid.disabled = true
-	closed_collision_shape_char.disabled = true
-	open_collision_shape_char.disabled = true
+	closed_collision_shape_rigid.queue_free()
+	closed_collision_shape_char.queue_free()
+	open_collision_shape_char.queue_free()
 	
 	# Disable animations
 	model_anim_tree.active = false
+	
+	# Disable float cast
+	float_cast.queue_free()
+	proximity_detector.queue_free()
 	
 	# Start the ragdoll simulation
 	bone_simulation.physical_bones_start_simulation()
@@ -238,9 +250,7 @@ func _on_ragdoll_state_exited() -> void:
 #----------------------------------------
 func _on_dead_state_entered() -> void:
 	mode = Mode.DEAD
-	model_anim_tree.active = false
 	self.queue_free()
-
 
 
 #=======================================================
@@ -263,7 +273,6 @@ func _on_closed_state_entered() -> void:
 	in_closed_state = true
 	if mode == Mode.CHAR:
 		open_collision_shape_char.disabled = true
-		
 
 
 func _on_closed_state_exited() -> void:
@@ -281,7 +290,6 @@ func _on_opening_state_entered() -> void:
 		open_collision_shape_char.disabled = false
 
 
-
 # opening state
 #----------------------------------------
 func _on_open_state_entered() -> void:
@@ -289,14 +297,16 @@ func _on_open_state_entered() -> void:
 		closed_collision_shape_char.disabled = true
 
 
-func _on_open_state_physics_processing(delta: float) -> void:
-	if has_quick_closed:
-		has_quick_closed = false
-		await get_tree().create_timer(1).timeout
-		if tracking_target:
-			anim_state.travel("targeting")
-		else:
-			anim_state.travel("idle")
+# quick closing state
+#----------------------------------------
+func _on_quick_closing_state_entered() -> void:
+	quick_closing_timer.stop()
+	in_closed_state = true
+	anim_state.travel("quick close")
+
+
+func _on_quick_closing_timer_timeout() -> void:
+	state.send_event("quick closing to closed")
 
 
 #=======================================================
@@ -308,16 +318,18 @@ func _on_open_state_physics_processing(delta: float) -> void:
 func _on_turn_left_entered() -> void:
 	direction = Enums.Direction.LEFT
 	in_turn_state = true
-	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.5)\
+	if turn_tween:
+		turn_tween.kill()
+	turn_tween = get_tree().create_tween()
+	turn_tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.5)\
 		.set_trans(Tween.TRANS_QUAD)\
 		.set_ease(Tween.EASE_IN)\
-		.from(FACE_RIGHT_Y_ROT)
-	tween.tween_property(char_node, "rotation", FACE_LEFT_Y_ROT, 1.0)\
+		.from(char_node.rotation)
+	turn_tween.tween_property(char_node, "rotation", FACE_LEFT_Y_ROT, 1.0)\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)\
 		.from(Vector3.ZERO)
-	await tween.finished
+	await turn_tween.finished
 	state.send_event("turn left to face left")
 
 
@@ -330,16 +342,18 @@ func _on_turn_left_state_exited() -> void:
 func _on_turn_right_entered() -> void:
 	direction = Enums.Direction.RIGHT
 	in_turn_state = true
-	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.5)\
+	if turn_tween:
+		turn_tween.kill()
+	turn_tween = get_tree().create_tween()
+	turn_tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.5)\
 		.set_trans(Tween.TRANS_QUAD)\
 		.set_ease(Tween.EASE_IN)\
-		.from(FACE_LEFT_Y_ROT)
-	tween.tween_property(char_node, "rotation", FACE_RIGHT_Y_ROT, 1.0)\
+		.from(char_node.rotation)
+	turn_tween.tween_property(char_node, "rotation", FACE_RIGHT_Y_ROT, 1.0)\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)\
 		.from(Vector3.ZERO)
-	await tween.finished
+	await turn_tween.finished
 	state.send_event("turn right to face right")
 
 
@@ -362,16 +376,27 @@ func _on_none_state_entered() -> void:
 # target acquired state
 #----------------------------------------
 func _on_acquired_state_entered() -> void:
+	target_loss_timer.stop()
 	tracking_target = true
+	target_acquired = true
 	self.open()
 	anim_state.travel("targeting")
-	field_of_view.range = 8.0
+	field_of_view.range = 9.0
+	field_of_view.focus = 7.0
 	Signals.update_zoom.emit(Enums.Zoom.FAR)
 
 
 func _on_acquired_state_physics_processing(delta: float) -> void:
 	if not field_of_view.sees_player:
 		state.send_event("acquired to lost")
+	if in_closed_state:
+		await get_tree().create_timer(1.0).timeout
+		state.send_event("closed to opening")
+
+
+func _on_acquired_state_exited() -> void:
+	target_acquired = false
+	field_of_view.focus = 1.0
 
 
 # target lost state
@@ -379,13 +404,16 @@ func _on_acquired_state_physics_processing(delta: float) -> void:
 func _on_lost_state_entered() -> void:
 	anim_state.travel("idle")
 	target_loss_timer.start()
-	field_of_view.range = 6.0
+	field_of_view.range = 7.0
+	field_of_view.focus = 4.0
 
 
 func _on_lost_state_physics_processing(delta: float) -> void:
 	if field_of_view.sees_player:
 		state.send_event("lost to acquired")
-		target_loss_timer.stop()
+	if in_closed_state:
+		await get_tree().create_timer(1.0).timeout
+		state.send_event("closed to opening")
 
 
 func _on_target_loss_timer_timeout() -> void:
@@ -403,6 +431,16 @@ func _on_model_animation_finished(anim_name: StringName) -> void:
 		state.send_event("opening to open")
 	if anim_name == "CloseUp":
 		state.send_event("closing to closed")
+	if anim_name == "QuickClose":
+		state.send_event("quick closing to closed")
+
+
+func _on_proximity_detector_body_entered(body: Node3D) -> void:
+	state.send_event("open to quick closing")
+	state.send_event("opening to quick closing")
+	state.send_event("closing to quick closing")
+	quick_closing_timer.start()
+
 
 #=======================================================
 # CONTROL FUNCTIONS
@@ -411,41 +449,50 @@ func _on_model_animation_finished(anim_name: StringName) -> void:
 func open() -> void:
 	state.send_event("closed to opening")
 
+
 func close() -> void:
 	state.send_event("open to closing")
+
 
 func become_inert() -> void:
 	state.send_event("char to rigid")
 
+
 func start_floating() -> void:
 	state.send_event("rigid to char")
+
 
 func become_ragdoll() -> void:
 	state.send_event("rigid to ragdoll")
 	state.send_event("char to ragdoll")
 
+
 func face_left() -> void:
 	state.send_event("face right to turn left")
+	state.send_event("turn right to turn left")
+
 
 func face_right() -> void:
 	state.send_event("face left to turn right")
-	
+	state.send_event("turn left to turn right")
+
+
 func move_toward_x_pos(target_x: float, delta: float) -> void:
-	var target_value: float = (target_x - get_mode_position().x) / max(abs(target_x - get_mode_position().x), 0.5)
+	var target_value: float = 0.0
+	target_value = (target_x - get_mode_position().x) / max(abs(target_x - get_mode_position().x), 0.5)
 	left_right_axis = lerp(left_right_axis, target_value, 3.0 * delta)
+
 
 func stop_moving(delta: float) -> void:
 	left_right_axis = lerp(left_right_axis, 0.0, 3.0 * delta)
 
+
 func get_hit(strength: float) -> bool:
-	print("HIT STRENGTH: ", strength)
-	if strength > 5:
+	print("STRENGTH: ", strength)
+	if strength > 5 and not in_closed_state:
 		self.become_ragdoll()
 		return true
-	else:
-		anim_state.travel("quick close")
-		has_quick_closed = true
-		return false
+	return false
 
 
 #=======================================================

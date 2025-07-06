@@ -22,6 +22,19 @@ var range: float:
 				child.target_position.z = value
 
 
+var angles: Array[float]
+var _focus: float = 1.0
+var focus: float:
+	get:
+		return _focus
+	set(value):
+		_focus = value
+		for i in range(self.get_child_count()):
+			var child: Node3D = self.get_children()[i]
+			if child is RayCast3D:
+				child.rotation_degrees.x = angles[i] / _focus
+
+
 var enabled: bool:
 	get:
 		var result: bool = false
@@ -34,3 +47,9 @@ var enabled: bool:
 		for child in self.get_children():
 			if child is RayCast3D:
 				child.enabled = value
+
+
+func _ready() -> void:
+	for child in self.get_children():
+		if child is RayCast3D:
+			angles.append(child.rotation_degrees.x)

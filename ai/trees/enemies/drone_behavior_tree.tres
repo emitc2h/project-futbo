@@ -1,15 +1,11 @@
 [gd_resource type="BehaviorTree" load_steps=22 format=3 uid="uid://cl3pokesv8enr"]
 
-[ext_resource type="Script" uid="uid://cx0yx8yuudfsl" path="res://ai/tasks/drone/turn.gd" id="1_ngwm7"]
 [ext_resource type="Script" uid="uid://b8ibdnckttvdc" path="res://ai/tasks/drone/move_to_node.gd" id="2_dovx4"]
 [ext_resource type="Script" uid="uid://b6vg8voy4knkx" path="res://ai/tasks/drone/scan_for_player.gd" id="3_kyubv"]
 [ext_resource type="Script" uid="uid://de3asibarclf" path="res://ai/tasks/drone/follow_player.gd" id="4_b76ob"]
+[ext_resource type="Script" uid="uid://4tuw54aktscr" path="res://ai/tasks/drone/stop_moving.gd" id="4_iaued"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_0xi1a"]
-
-[sub_resource type="BTAction" id="BTAction_dovx4"]
-script = ExtResource("1_ngwm7")
-direction = 1
 
 [sub_resource type="BBNode" id="BBNode_dovx4"]
 saved_value = NodePath("PatrolMarker1")
@@ -21,10 +17,6 @@ destination_node = SubResource("BBNode_dovx4")
 distance_when_to_stop = 0.1
 
 [sub_resource type="BTWait" id="BTWait_dovx4"]
-
-[sub_resource type="BTAction" id="BTAction_ngwm7"]
-script = ExtResource("1_ngwm7")
-direction = -1
 
 [sub_resource type="BBNode" id="BBNode_kyubv"]
 saved_value = NodePath("PatrolMarker2")
@@ -39,7 +31,7 @@ distance_when_to_stop = 0.1
 
 [sub_resource type="BTSequence" id="BTSequence_0xi1a"]
 custom_name = "Patrol Sequence"
-children = [SubResource("BTAction_dovx4"), SubResource("BTAction_iaued"), SubResource("BTWait_dovx4"), SubResource("BTAction_ngwm7"), SubResource("BTAction_b3bon"), SubResource("BTWait_kyubv")]
+children = [SubResource("BTAction_iaued"), SubResource("BTWait_dovx4"), SubResource("BTAction_b3bon"), SubResource("BTWait_kyubv")]
 
 [sub_resource type="BTAction" id="BTAction_b76ob"]
 script = ExtResource("3_kyubv")
@@ -48,21 +40,27 @@ script = ExtResource("3_kyubv")
 custom_name = "Scan for Player Sequence"
 children = [SubResource("BTAction_b76ob")]
 
-[sub_resource type="BTParallel" id="BTParallel_iaued"]
+[sub_resource type="BTParallel" id="BTParallel_b76ob"]
+num_successes_required = 0
 children = [SubResource("BTSequence_0xi1a"), SubResource("BTSequence_dovx4")]
 
 [sub_resource type="BTAction" id="BTAction_dr43r"]
 script = ExtResource("4_b76ob")
-target_offset = 5.0
+target_offset = 5.4
 
-[sub_resource type="BTSelector" id="BTSelector_an7lx"]
-children = [SubResource("BTAction_dr43r")]
+[sub_resource type="BTAction" id="BTAction_an7lx"]
+script = ExtResource("4_iaued")
 
-[sub_resource type="BTSequence" id="BTSequence_ufpe3"]
-children = [SubResource("BTParallel_iaued"), SubResource("BTSelector_an7lx")]
+[sub_resource type="BTWait" id="BTWait_ufpe3"]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_b76ob"]
+children = [SubResource("BTWait_ufpe3")]
+
+[sub_resource type="BTSelector" id="BTSelector_iaued"]
+children = [SubResource("BTAction_dr43r"), SubResource("BTAction_an7lx"), SubResource("BTAlwaysSucceed_b76ob")]
 
 [sub_resource type="BTSelector" id="BTSelector_0xi1a"]
-children = [SubResource("BTSequence_ufpe3")]
+children = [SubResource("BTParallel_b76ob"), SubResource("BTSelector_iaued")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_0xi1a")

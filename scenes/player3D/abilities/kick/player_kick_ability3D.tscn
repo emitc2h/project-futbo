@@ -107,7 +107,7 @@ delay_in_seconds = "0.0"
 
 [node name="LongKickRayCast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
-target_position = Vector3(2, 0, 0)
+target_position = Vector3(1.5, 0, 0)
 collision_mask = 4
 
 [node name="SprintRayCast" type="RayCast3D" parent="."]

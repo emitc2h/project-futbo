@@ -8,10 +8,10 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tkrpe"]
 radius = 0.25476
-height = 1.80326
+height = 1.47402
 
 [node name="Player3D" type="CharacterBody3D"]
-collision_mask = 2
+collision_mask = 258
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -27,9 +27,9 @@ player = NodePath("..")
 player = NodePath("..")
 
 [node name="PlayerHeadbuttAbility3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_tkrpe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.70092, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45311, 0)
 player = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.993783, 0, -0.11133, 0, 1, 0, 0.11133, 0, 0.993783, 0, 0.898014, 0)
+transform = Transform3D(0.993783, 0, -0.11133, 0, 1, 0, 0.11133, 0, 0.993783, 0, 0.734811, 0)
 shape = SubResource("CapsuleShape3D_tkrpe")
