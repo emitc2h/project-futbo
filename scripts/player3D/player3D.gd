@@ -16,7 +16,7 @@ var can_run_backward: bool = false
 
 @export var run_forward_velocity: float = 5.0
 @export var run_backward_velocity: float = 3.5
-@export var jump_momentum: float = 4.0
+@export var jump_momentum: float = 4.7
 
 @onready var player_basic_movement: PlayerBasicMovement3D = $PlayerBasicMovement3D
 

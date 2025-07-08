@@ -3,5 +3,5 @@ extends BTAction
 
 func _tick(delta: float) -> Status:
 	if agent.sees_player:
-		return FAILURE
+		return SUCCESS
 	return RUNNING

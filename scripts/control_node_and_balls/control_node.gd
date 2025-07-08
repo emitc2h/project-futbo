@@ -49,6 +49,11 @@ func _on_on_state_entered() -> void:
 	physics_material.friction = 0.6
 
 
+func _on_on_state_physics_processing(delta: float) -> void:
+	if Input.is_action_just_pressed("shield up"):
+		state.send_event("expand shield")
+
+
 func _on_turn_off_taken() -> void:
 	asset.power_down_shield()
 	direction_ray.turn_off()
@@ -81,6 +86,11 @@ func _on_on_state_exited() -> void:
 #----------------------------------------
 func _on_shrink_shield_taken() -> void:
 	asset.shrink_shield()
+
+
+func _on_shield_up_state_physics_processing(delta: float) -> void:
+	if Input.is_action_just_released("shield up"):
+		state.send_event("shrink shield")
 
 
 func _on_control_node_dribbled_state_entered() -> void:

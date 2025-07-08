@@ -1,7 +1,7 @@
 @tool
 extends MoveTo
 
-@export var destination_x: float
+@export var destination_x: BBFloat
 
 
 func _get_destination_name() -> String:
@@ -9,4 +9,4 @@ func _get_destination_name() -> String:
 
 
 func _get_destination_x() -> float:
-	return destination_x
+	return destination_x.get_value(scene_root, blackboard)
