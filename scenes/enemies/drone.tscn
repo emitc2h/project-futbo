@@ -17,7 +17,7 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iovl4"]
 noise_type = 0
-frequency = 0.0036
+frequency = 0.0171
 fractal_octaves = 3
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r56iq"]
@@ -29,8 +29,9 @@ render_priority = 0
 shader = ExtResource("9_r56iq")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_r56iq")
 shader_parameter/mask_texture = ExtResource("10_4h6a7")
-shader_parameter/noise_speed = 1.0
+shader_parameter/noise_speed = 0.5
 shader_parameter/noise_intensity = 1.0
+shader_parameter/stretch = 0.2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o57st"]
 radius = 1.10693
@@ -60,50 +61,50 @@ metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 [node name="Root" type="Node" parent="State"]
 script = ExtResource("4_2myhj")
 
-[node name="Mode" type="Node" parent="State/Root"]
+[node name="Physics Mode" type="Node" parent="State/Root"]
 script = ExtResource("5_t6brq")
 initial_state = NodePath("char")
 
-[node name="char" type="Node" parent="State/Root/Mode"]
+[node name="char" type="Node" parent="State/Root/Physics Mode"]
 script = ExtResource("6_o57st")
 
-[node name="to rigid" type="Node" parent="State/Root/Mode/char"]
+[node name="to rigid" type="Node" parent="State/Root/Physics Mode/char"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../rigid")
 event = &"char to rigid"
 delay_in_seconds = "0.0"
 
-[node name="to ragdoll" type="Node" parent="State/Root/Mode/char"]
+[node name="to ragdoll" type="Node" parent="State/Root/Physics Mode/char"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../ragdoll")
 event = &"char to ragdoll"
 delay_in_seconds = "0.0"
 
-[node name="rigid" type="Node" parent="State/Root/Mode"]
+[node name="rigid" type="Node" parent="State/Root/Physics Mode"]
 script = ExtResource("6_o57st")
 
-[node name="to char" type="Node" parent="State/Root/Mode/rigid"]
+[node name="to char" type="Node" parent="State/Root/Physics Mode/rigid"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../char")
 event = &"rigid to char"
 delay_in_seconds = "0.0"
 
-[node name="to ragdoll" type="Node" parent="State/Root/Mode/rigid"]
+[node name="to ragdoll" type="Node" parent="State/Root/Physics Mode/rigid"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../ragdoll")
 event = &"rigid to ragdoll"
 delay_in_seconds = "0.0"
 
-[node name="ragdoll" type="Node" parent="State/Root/Mode"]
+[node name="ragdoll" type="Node" parent="State/Root/Physics Mode"]
 script = ExtResource("6_o57st")
 
-[node name="to dead" type="Node" parent="State/Root/Mode/ragdoll"]
+[node name="to dead" type="Node" parent="State/Root/Physics Mode/ragdoll"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../dead")
 event = &"ragdoll to dead"
 delay_in_seconds = "0.0"
 
-[node name="dead" type="Node" parent="State/Root/Mode"]
+[node name="dead" type="Node" parent="State/Root/Physics Mode"]
 script = ExtResource("6_o57st")
 
 [node name="Engagement" type="Node" parent="State/Root"]
@@ -155,6 +156,12 @@ to = NodePath("../../quick closing")
 event = &"opening to quick closing"
 delay_in_seconds = "0.0"
 
+[node name="to closing" type="Node" parent="State/Root/Engagement/opening"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../closing")
+event = &"opening to closing"
+delay_in_seconds = "0.0"
+
 [node name="open" type="Node" parent="State/Root/Engagement"]
 script = ExtResource("6_o57st")
 
@@ -170,12 +177,6 @@ to = NodePath("../../quick closing")
 event = &"open to quick closing"
 delay_in_seconds = "0.0"
 
-[node name="to quick closing from thrust" type="Node" parent="State/Root/Engagement/open"]
-script = ExtResource("7_md0p7")
-to = NodePath("../../quick closing")
-event = &"open to quick closing from thrust"
-delay_in_seconds = "0.0"
-
 [node name="quick closing" type="Node" parent="State/Root/Engagement"]
 script = ExtResource("6_o57st")
 
@@ -185,121 +186,130 @@ to = NodePath("../../closed")
 event = &"quick closing to closed"
 delay_in_seconds = "0.0"
 
-[node name="Direction" type="Node" parent="State/Root"]
+[node name="Direction Faced" type="Node" parent="State/Root"]
 script = ExtResource("5_t6brq")
 initial_state = NodePath("face left")
 
-[node name="face left" type="Node" parent="State/Root/Direction"]
+[node name="face left" type="Node" parent="State/Root/Direction Faced"]
 script = ExtResource("6_o57st")
 
-[node name="to turn right" type="Node" parent="State/Root/Direction/face left"]
+[node name="to turn right" type="Node" parent="State/Root/Direction Faced/face left"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../turn right")
 event = &"face left to turn right"
 delay_in_seconds = "0.0"
 
-[node name="face right" type="Node" parent="State/Root/Direction"]
+[node name="face right" type="Node" parent="State/Root/Direction Faced"]
 script = ExtResource("6_o57st")
 
-[node name="to turn left" type="Node" parent="State/Root/Direction/face right"]
+[node name="to turn left" type="Node" parent="State/Root/Direction Faced/face right"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../turn left")
 event = &"face right to turn left"
 delay_in_seconds = "0.0"
 
-[node name="turn left" type="Node" parent="State/Root/Direction"]
+[node name="turn left" type="Node" parent="State/Root/Direction Faced"]
 script = ExtResource("6_o57st")
 
-[node name="to face left" type="Node" parent="State/Root/Direction/turn left"]
+[node name="to face left" type="Node" parent="State/Root/Direction Faced/turn left"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../face left")
 event = &"turn left to face left"
 delay_in_seconds = "0.0"
 
-[node name="to turn right" type="Node" parent="State/Root/Direction/turn left"]
+[node name="to turn right" type="Node" parent="State/Root/Direction Faced/turn left"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../turn right")
 event = &"turn left to turn right"
 delay_in_seconds = "0.0"
 
-[node name="turn right" type="Node" parent="State/Root/Direction"]
+[node name="turn right" type="Node" parent="State/Root/Direction Faced"]
 script = ExtResource("6_o57st")
 
-[node name="to face right" type="Node" parent="State/Root/Direction/turn right"]
+[node name="to face right" type="Node" parent="State/Root/Direction Faced/turn right"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../face right")
 event = &"turn right to face right"
 delay_in_seconds = "0.0"
 
-[node name="to turn left" type="Node" parent="State/Root/Direction/turn right"]
+[node name="to turn left" type="Node" parent="State/Root/Direction Faced/turn right"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../turn left")
 event = &"turn right to turn left"
 delay_in_seconds = "0.0"
 
-[node name="Target" type="Node" parent="State/Root"]
+[node name="Targeting" type="Node" parent="State/Root"]
 script = ExtResource("5_t6brq")
 initial_state = NodePath("none")
 
-[node name="disabled" type="Node" parent="State/Root/Target"]
+[node name="disabled" type="Node" parent="State/Root/Targeting"]
 script = ExtResource("6_o57st")
 
-[node name="to none" type="Node" parent="State/Root/Target/disabled"]
+[node name="to lost" type="Node" parent="State/Root/Targeting/disabled"]
 script = ExtResource("7_md0p7")
-to = NodePath("../../none")
-event = &"target disabled to none"
+to = NodePath("../../lost")
+event = &"target disabled to lost"
 delay_in_seconds = "0.0"
 
-[node name="none" type="Node" parent="State/Root/Target"]
+[node name="none" type="Node" parent="State/Root/Targeting"]
 script = ExtResource("6_o57st")
 
-[node name="to acquired" type="Node" parent="State/Root/Target/none"]
+[node name="to lost" type="Node" parent="State/Root/Targeting/none"]
 script = ExtResource("7_md0p7")
-to = NodePath("../../acquired")
-event = &"none to acquired"
+to = NodePath("../../lost")
+event = &"none to lost"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="State/Root/Target/none"]
+[node name="to disabled" type="Node" parent="State/Root/Targeting/none"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../disabled")
 event = &"target none to disabled"
 delay_in_seconds = "0.0"
 
-[node name="acquired" type="Node" parent="State/Root/Target"]
+[node name="to acquired" type="Node" parent="State/Root/Targeting/none"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../acquired")
+event = &"none to acquired"
+delay_in_seconds = "0.0"
+
+[node name="acquired" type="Node" parent="State/Root/Targeting"]
 script = ExtResource("6_o57st")
 
-[node name="to lost" type="Node" parent="State/Root/Target/acquired"]
+[node name="to lost" type="Node" parent="State/Root/Targeting/acquired"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../lost")
 event = &"acquired to lost"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="State/Root/Target/acquired"]
+[node name="to disabled" type="Node" parent="State/Root/Targeting/acquired"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../disabled")
 event = &"target acquired to disabled"
 delay_in_seconds = "0.0"
 
-[node name="lost" type="Node" parent="State/Root/Target"]
+[node name="lost" type="Node" parent="State/Root/Targeting"]
 script = ExtResource("6_o57st")
 
-[node name="to acquired" type="Node" parent="State/Root/Target/lost"]
+[node name="to acquired" type="Node" parent="State/Root/Targeting/lost"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../acquired")
 event = &"lost to acquired"
 delay_in_seconds = "0.0"
 
-[node name="to none" type="Node" parent="State/Root/Target/lost"]
+[node name="to none" type="Node" parent="State/Root/Targeting/lost"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../none")
 event = &"lost to none"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="State/Root/Target/lost"]
+[node name="to disabled" type="Node" parent="State/Root/Targeting/lost"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../disabled")
 event = &"target lost to disabled"
 delay_in_seconds = "0.0"
+
+[node name="acquiring" type="Node" parent="State/Root/Targeting"]
+script = ExtResource("6_o57st")
 
 [node name="Engines" type="Node" parent="State/Root"]
 script = ExtResource("5_t6brq")
@@ -329,6 +339,12 @@ to = NodePath("../../burst")
 event = &"readying to burst"
 delay_in_seconds = "0.0"
 
+[node name="to off" type="Node" parent="State/Root/Engines/readying burst"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../off")
+event = &"readying burst to off"
+delay_in_seconds = "0.0"
+
 [node name="burst" type="Node" parent="State/Root/Engines"]
 script = ExtResource("6_o57st")
 
@@ -344,10 +360,10 @@ to = NodePath("../../thrust")
 event = &"burst to thrust"
 delay_in_seconds = "0.0"
 
-[node name="to quick close off" type="Node" parent="State/Root/Engines/burst"]
+[node name="to quick off" type="Node" parent="State/Root/Engines/burst"]
 script = ExtResource("7_md0p7")
 to = NodePath("../../off")
-event = &"burst to quick close off"
+event = &"burst to quick off"
 delay_in_seconds = "0.0"
 
 [node name="readying thrust" type="Node" parent="State/Root/Engines"]
@@ -357,6 +373,12 @@ script = ExtResource("6_o57st")
 script = ExtResource("7_md0p7")
 to = NodePath("../../thrust")
 event = &"readying to thrust"
+delay_in_seconds = "0.0"
+
+[node name="to off" type="Node" parent="State/Root/Engines/readying thrust"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../off")
+event = &"readying thrust to off"
 delay_in_seconds = "0.0"
 
 [node name="thrust" type="Node" parent="State/Root/Engines"]
@@ -413,7 +435,7 @@ target_position = Vector3(0, 0, 4)
 
 [node name="ProximityDetector" type="Area3D" parent="DroneModel"]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 5
 collision_priority = 5.0
 input_ray_pickable = false
 monitorable = false
@@ -481,17 +503,22 @@ wait_time = 2.0
 process_callback = 0
 wait_time = 0.6
 
-[connection signal="state_entered" from="State/Root/Mode/char" to="." method="_on_char_state_entered"]
-[connection signal="state_exited" from="State/Root/Mode/char" to="." method="_on_char_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Mode/char" to="." method="_on_char_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Mode/rigid" to="." method="_on_rigid_state_entered"]
-[connection signal="state_exited" from="State/Root/Mode/rigid" to="." method="_on_rigid_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Mode/rigid" to="." method="_on_rigid_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Mode/ragdoll" to="." method="_on_ragdoll_state_entered"]
-[connection signal="state_exited" from="State/Root/Mode/ragdoll" to="." method="_on_ragdoll_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Mode/ragdoll" to="." method="_on_ragdoll_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Mode/dead" to="." method="_on_dead_state_entered"]
+[node name="TurnOffEnginesTimer" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="state_entered" from="State/Root/Physics Mode/char" to="." method="_on_char_state_entered"]
+[connection signal="state_exited" from="State/Root/Physics Mode/char" to="." method="_on_char_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Physics Mode/char" to="." method="_on_char_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics Mode/rigid" to="." method="_on_rigid_state_entered"]
+[connection signal="state_exited" from="State/Root/Physics Mode/rigid" to="." method="_on_rigid_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Physics Mode/rigid" to="." method="_on_rigid_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics Mode/ragdoll" to="." method="_on_ragdoll_state_entered"]
+[connection signal="state_exited" from="State/Root/Physics Mode/ragdoll" to="." method="_on_ragdoll_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Physics Mode/ragdoll" to="." method="_on_ragdoll_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics Mode/dead" to="." method="_on_dead_state_entered"]
 [connection signal="state_entered" from="State/Root/Engagement/closing" to="." method="_on_closing_state_entered"]
+[connection signal="taken" from="State/Root/Engagement/closing/to quick closing" to="." method="_on_closing_to_quick_closing_taken"]
+[connection signal="taken" from="State/Root/Engagement/closing/to opening" to="." method="_on_closing_to_opening_taken"]
 [connection signal="state_entered" from="State/Root/Engagement/closed" to="." method="_on_closed_state_entered"]
 [connection signal="state_exited" from="State/Root/Engagement/closed" to="." method="_on_closed_state_exited"]
 [connection signal="state_entered" from="State/Root/Engagement/opening" to="." method="_on_opening_state_entered"]
@@ -499,27 +526,26 @@ wait_time = 0.6
 [connection signal="state_exited" from="State/Root/Engagement/open" to="." method="_on_open_state_exited"]
 [connection signal="taken" from="State/Root/Engagement/open/to closing" to="." method="_on_open_to_closing_taken"]
 [connection signal="taken" from="State/Root/Engagement/open/to quick closing" to="." method="_on_open_to_quick_closing_taken"]
-[connection signal="taken" from="State/Root/Engagement/open/to quick closing from thrust" to="." method="_on_open_to_quick_closing_from_thrust_taken"]
 [connection signal="state_entered" from="State/Root/Engagement/quick closing" to="." method="_on_quick_closing_state_entered"]
-[connection signal="state_entered" from="State/Root/Direction/turn left" to="." method="_on_turn_left_entered"]
-[connection signal="state_exited" from="State/Root/Direction/turn left" to="." method="_on_turn_left_state_exited"]
-[connection signal="state_entered" from="State/Root/Direction/turn right" to="." method="_on_turn_right_entered"]
-[connection signal="state_exited" from="State/Root/Direction/turn right" to="." method="_on_turn_right_state_exited"]
-[connection signal="state_entered" from="State/Root/Target/disabled" to="." method="_on_disabled_state_entered"]
-[connection signal="state_entered" from="State/Root/Target/none" to="." method="_on_none_state_entered"]
-[connection signal="state_entered" from="State/Root/Target/acquired" to="." method="_on_acquired_state_entered"]
-[connection signal="state_exited" from="State/Root/Target/acquired" to="." method="_on_acquired_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Target/acquired" to="." method="_on_acquired_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Target/lost" to="." method="_on_lost_state_entered"]
-[connection signal="state_physics_processing" from="State/Root/Target/lost" to="." method="_on_lost_state_physics_processing"]
-[connection signal="taken" from="State/Root/Target/lost/to none" to="." method="_on_target_lost_to_none_taken"]
+[connection signal="state_entered" from="State/Root/Direction Faced/turn left" to="." method="_on_turn_left_entered"]
+[connection signal="state_exited" from="State/Root/Direction Faced/turn left" to="." method="_on_turn_left_state_exited"]
+[connection signal="state_entered" from="State/Root/Direction Faced/turn right" to="." method="_on_turn_right_entered"]
+[connection signal="state_exited" from="State/Root/Direction Faced/turn right" to="." method="_on_turn_right_state_exited"]
+[connection signal="state_entered" from="State/Root/Targeting/disabled" to="." method="_on_disabled_state_entered"]
+[connection signal="state_entered" from="State/Root/Targeting/none" to="." method="_on_none_state_entered"]
+[connection signal="state_entered" from="State/Root/Targeting/acquired" to="." method="_on_acquired_state_entered"]
+[connection signal="state_exited" from="State/Root/Targeting/acquired" to="." method="_on_acquired_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Targeting/acquired" to="." method="_on_acquired_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Targeting/lost" to="." method="_on_lost_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Targeting/lost" to="." method="_on_lost_state_physics_processing"]
+[connection signal="taken" from="State/Root/Targeting/lost/to none" to="." method="_on_target_lost_to_none_taken"]
 [connection signal="state_entered" from="State/Root/Engines/readying burst" to="." method="_on_readying_burst_state_entered"]
 [connection signal="taken" from="State/Root/Engines/readying burst/to burst" to="." method="_on_readying_to_burst_taken"]
 [connection signal="state_entered" from="State/Root/Engines/burst" to="." method="_on_burst_state_entered"]
 [connection signal="state_exited" from="State/Root/Engines/burst" to="." method="_on_burst_state_exited"]
 [connection signal="taken" from="State/Root/Engines/burst/to off" to="." method="_on_burst_to_off_taken"]
 [connection signal="taken" from="State/Root/Engines/burst/to thrust" to="." method="_on_burst_to_thrust_taken"]
-[connection signal="taken" from="State/Root/Engines/burst/to quick close off" to="." method="_on_burst_to_quick_close_off_taken"]
+[connection signal="taken" from="State/Root/Engines/burst/to quick off" to="." method="_on_burst_to_quick_off_taken"]
 [connection signal="state_entered" from="State/Root/Engines/readying thrust" to="." method="_on_readying_thrust_state_entered"]
 [connection signal="taken" from="State/Root/Engines/readying thrust/to thrust" to="." method="_on_readying_to_thrust_taken"]
 [connection signal="state_entered" from="State/Root/Engines/thrust" to="." method="_on_thrust_state_entered"]
@@ -533,3 +559,4 @@ wait_time = 0.6
 [connection signal="timeout" from="QuickClosingTimer" to="." method="_on_quick_closing_timer_timeout"]
 [connection signal="timeout" from="BurstTimer" to="." method="_on_burst_timer_timeout"]
 [connection signal="timeout" from="AttackBurstTimer" to="." method="_on_attack_burst_timer_timeout"]
+[connection signal="timeout" from="TurnOffEnginesTimer" to="." method="_on_turn_off_engines_timer_timeout"]

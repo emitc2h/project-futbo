@@ -2,30 +2,33 @@
 extends BTAction
 
 @export var target_offset: float
+@export var time_limit: float = 0.0
 
 var drone: Drone
+var time_elapsed: float
 
 
 func _setup() -> void:
 	drone = agent as Drone
 
 
+func _enter() -> void:
+	time_elapsed = 0.0
+
+
 func _tick(delta: float) -> Status:
+	time_elapsed += delta
+	if time_limit != 0.0 and time_elapsed > time_limit:
+		return SUCCESS
+	
 	if agent.tracking_target:
 		drone.stop_burst()
 		drone.stop_thrust()
-		var position_delta: float = drone.get_mode_position().x - drone.target.global_position.x
+		var position_delta: float = drone.face_target()
 		var offset_sign: float = sign(position_delta)
-		
-		# Player is to the right of the drone and the drone faces the wrong way
-		if position_delta < 0.0 and drone.direction == Enums.Direction.LEFT:
-			drone.face_right()
-			
-		# Player is to the left of the drone
-		if position_delta > 0.0 and drone.direction == Enums.Direction.RIGHT:
-			drone.face_left()
 			
 		# Follow the player even when turning
 		drone.move_toward_x_pos(drone.target.global_position.x + offset_sign * target_offset, delta)
 		return RUNNING
+	
 	return FAILURE

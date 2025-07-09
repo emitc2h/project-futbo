@@ -70,7 +70,7 @@ func _ready() -> void:
 	
 	jump_momentum = player.jump_momentum
 	
-	raycast.target_position = Vector3.DOWN * 1.5
+	raycast.target_position = Vector3.DOWN * 1.6
 
 
 func _physics_process(delta: float) -> void:

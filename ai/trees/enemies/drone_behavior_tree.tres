@@ -1,9 +1,11 @@
-[gd_resource type="BehaviorTree" load_steps=46 format=3 uid="uid://cl3pokesv8enr"]
+[gd_resource type="BehaviorTree" load_steps=52 format=3 uid="uid://cl3pokesv8enr"]
 
+[ext_resource type="Script" uid="uid://blh1b47nf1bpl" path="res://ai/tasks/drone/initiate_patrol_loop.gd" id="1_hc6xl"]
 [ext_resource type="Script" uid="uid://b8ibdnckttvdc" path="res://ai/tasks/drone/move_to_node.gd" id="2_dovx4"]
 [ext_resource type="Script" uid="uid://baaw1vu4hyfua" path="res://ai/tasks/drone/is_between_nodes.gd" id="3_b76ob"]
 [ext_resource type="Script" uid="uid://b6vg8voy4knkx" path="res://ai/tasks/drone/scan_for_player.gd" id="3_kyubv"]
 [ext_resource type="Script" uid="uid://de3asibarclf" path="res://ai/tasks/drone/follow_player.gd" id="4_b76ob"]
+[ext_resource type="Script" uid="uid://bxcg0350yy7cj" path="res://ai/tasks/drone/acquire_target.gd" id="4_ufpe3"]
 [ext_resource type="Script" uid="uid://list8wuigomy" path="res://ai/tasks/drone/pre_ram_attack.gd" id="5_an7lx"]
 [ext_resource type="Script" uid="uid://cualstkw12kio" path="res://ai/tasks/drone/ram_attack.gd" id="5_iaued"]
 [ext_resource type="Script" uid="uid://687fwpwkqvft" path="res://ai/tasks/drone/move_to_bb_x.gd" id="6_b3bon"]
@@ -20,6 +22,19 @@ var/target_x_position/type = 3
 var/target_x_position/value = 0.0
 var/target_x_position/hint = 0
 var/target_x_position/hint_string = ""
+
+[sub_resource type="BTAction" id="BTAction_fi43e"]
+script = ExtResource("1_hc6xl")
+
+[sub_resource type="BTAction" id="BTAction_b76ob"]
+script = ExtResource("3_kyubv")
+
+[sub_resource type="BTInvert" id="BTInvert_an7lx"]
+children = [SubResource("BTAction_b76ob")]
+
+[sub_resource type="BTSequence" id="BTSequence_dovx4"]
+custom_name = "Scan for Player Sequence"
+children = [SubResource("BTInvert_an7lx")]
 
 [sub_resource type="BBNode" id="BBNode_b76ob"]
 saved_value = NodePath("PatrolMarker1")
@@ -47,9 +62,20 @@ initial_burst = true
 use_thrust = true
 move_away = null
 
+[sub_resource type="BBNode" id="BBNode_hc6xl"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_u01um"]
+node = SubResource("BBNode_hc6xl")
+method = &"close"
+
+[sub_resource type="BTSequence" id="BTSequence_cnyv4"]
+children = [SubResource("BTAction_ufpe3"), SubResource("BTCallMethod_u01um")]
+
 [sub_resource type="BTSelector" id="BTSelector_dr43r"]
 custom_name = "Go Between Markers Selector"
-children = [SubResource("BTCondition_b3bon"), SubResource("BTAction_ufpe3")]
+children = [SubResource("BTCondition_b3bon"), SubResource("BTSequence_cnyv4")]
 
 [sub_resource type="BBNode" id="BBNode_dovx4"]
 saved_value = NodePath("PatrolMarker1")
@@ -80,37 +106,32 @@ move_away = null
 [sub_resource type="BTWait" id="BTWait_kyubv"]
 
 [sub_resource type="BTSequence" id="BTSequence_0xi1a"]
-custom_name = "Patrol Sequence"
+custom_name = "Alternate between markers Sequence"
 children = [SubResource("BTAction_iaued"), SubResource("BTWait_dovx4"), SubResource("BTAction_b3bon"), SubResource("BTWait_kyubv")]
 
 [sub_resource type="BTSequence" id="BTSequence_an7lx"]
 custom_name = "Try to Patrol Sequence"
 children = [SubResource("BTSelector_dr43r"), SubResource("BTSequence_0xi1a")]
 
-[sub_resource type="BTAction" id="BTAction_b76ob"]
-script = ExtResource("3_kyubv")
-
-[sub_resource type="BTInvert" id="BTInvert_iaued"]
-children = [SubResource("BTAction_b76ob")]
-
-[sub_resource type="BTSequence" id="BTSequence_dovx4"]
-custom_name = "Scan for Player Sequence"
-children = [SubResource("BTInvert_iaued")]
-
 [sub_resource type="BTParallel" id="BTParallel_b76ob"]
 custom_name = "Patrol Loop"
-children = [SubResource("BTSequence_an7lx"), SubResource("BTSequence_dovx4")]
+children = [SubResource("BTSequence_dovx4"), SubResource("BTSequence_an7lx")]
+
+[sub_resource type="BTSequence" id="BTSequence_ufpe3"]
+custom_name = "Patrol Sequence"
+children = [SubResource("BTAction_fi43e"), SubResource("BTParallel_b76ob")]
+
+[sub_resource type="BTAction" id="BTAction_ei0n4"]
+script = ExtResource("4_ufpe3")
+time_limit = 3.0
+
+[sub_resource type="BTInvert" id="BTInvert_ufpe3"]
+children = [SubResource("BTAction_ei0n4")]
 
 [sub_resource type="BTAction" id="BTAction_dr43r"]
 script = ExtResource("4_b76ob")
 target_offset = 5.4
-
-[sub_resource type="BTTimeLimit" id="BTTimeLimit_b76ob"]
 time_limit = 3.0
-children = [SubResource("BTAction_dr43r")]
-
-[sub_resource type="BTInvert" id="BTInvert_b3bon"]
-children = [SubResource("BTTimeLimit_b76ob")]
 
 [sub_resource type="BTAction" id="BTAction_an7lx"]
 script = ExtResource("5_an7lx")
@@ -132,7 +153,7 @@ move_away = true
 script = ExtResource("5_iaued")
 
 [sub_resource type="BTWait" id="BTWait_dr43r"]
-duration = 3.0
+duration = 2.5
 
 [sub_resource type="BTAction" id="BTAction_cnyv4"]
 script = ExtResource("8_ufpe3")
@@ -145,30 +166,28 @@ children = [SubResource("BTAction_an7lx"), SubResource("BTAction_hc6xl"), SubRes
 custom_name = "Choose Attack"
 children = [SubResource("BTSequence_b76ob")]
 
+[sub_resource type="BTAction" id="BTAction_vj4jf"]
+script = ExtResource("4_ufpe3")
+time_limit = 2.0
+
 [sub_resource type="BTAction" id="BTAction_3uq6a"]
 script = ExtResource("4_b76ob")
 target_offset = 5.4
-
-[sub_resource type="BTTimeLimit" id="BTTimeLimit_ei0n4"]
 time_limit = 3.0
-children = [SubResource("BTAction_3uq6a")]
-
-[sub_resource type="BTInvert" id="BTInvert_vj4jf"]
-children = [SubResource("BTTimeLimit_ei0n4")]
 
 [sub_resource type="BTSequence" id="BTSequence_fi43e"]
-children = [SubResource("BTRandomSelector_iaued"), SubResource("BTInvert_vj4jf")]
+children = [SubResource("BTRandomSelector_iaued"), SubResource("BTAction_vj4jf"), SubResource("BTAction_3uq6a")]
 
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_km4n8"]
 children = [SubResource("BTSequence_fi43e")]
 
 [sub_resource type="BTSequence" id="BTSequence_iaued"]
 custom_name = "Attack Loop"
-children = [SubResource("BTInvert_b3bon"), SubResource("BTRepeatUntilFailure_km4n8")]
+children = [SubResource("BTAction_dr43r"), SubResource("BTRepeatUntilFailure_km4n8")]
 
 [sub_resource type="BTSelector" id="BTSelector_0xi1a"]
 custom_name = "Main Selector"
-children = [SubResource("BTParallel_b76ob"), SubResource("BTSequence_iaued")]
+children = [SubResource("BTSequence_ufpe3"), SubResource("BTInvert_ufpe3"), SubResource("BTSequence_iaued")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_0xi1a")

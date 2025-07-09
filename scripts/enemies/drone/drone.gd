@@ -56,6 +56,7 @@ var bone_transforms: Array[Transform3D] = []
 @onready var quick_closing_timer: Timer = $QuickClosingTimer
 @onready var burst_timer: Timer = $BurstTimer
 @onready var attack_burst_timer: Timer = $AttackBurstTimer
+@onready var turn_off_engines_timer: Timer = $TurnOffEnginesTimer
 
 # State tracking
 var in_rigid_state: bool = false
@@ -64,14 +65,19 @@ var in_open_state: bool = true
 var in_turn_state: bool = false
 var targeting_enabled: bool = true
 var tracking_target: bool = false
-var target_acquired: bool = false
+var in_target_acquired_state: bool = false
 var in_burst_state: bool = false
 var in_thrust_state: bool = false
 
 # Tweeners
 var turn_tween: Tween
 
-# Handles
+# Signals
+signal player_proximity_triggered
+signal control_node_proximity_triggered
+signal turning_finished
+
+# Configuration/Handles
 @export_group("Animation Handles")
 @export var left_right_axis: float = 0.0
 
@@ -90,6 +96,7 @@ var sees_player: bool:
 			if drone_sees_player:
 				target = field_of_view.target
 				state.send_event("none to acquired")
+				state.send_event("lost to acquired")
 			return drone_sees_player
 		return false
 
@@ -138,7 +145,6 @@ func _on_char_state_entered() -> void:
 	mode = Mode.CHAR
 	
 	# Turn on float distortion
-	print("turning on distortion")
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(float_distortion_material, "shader_parameter/noise_intensity", distortion_mesh_intensity_on, distortion_on_duration)\
 		.set_ease(Tween.EASE_IN)\
@@ -147,7 +153,6 @@ func _on_char_state_entered() -> void:
 	
 	
 func _on_char_state_physics_processing(delta: float) -> void:
-	
 	#increment time floating
 	time_floating += delta
 	
@@ -182,13 +187,13 @@ func _on_char_state_physics_processing(delta: float) -> void:
 		if direction == Enums.Direction.RIGHT:
 			target_direction = FACE_RIGHT_Y_ROT
 		
-		if target and target_acquired:
+		if target and in_target_acquired_state:
 			var pointer_to_target: Vector3 = char_node.global_position - target.global_position - Vector3.UP * 1.5
-			self.char_node.rotation.x = min(asin(abs(pointer_to_target.y) / pointer_to_target.length()), 0.4)
+			self.char_node.rotation.x = min(asin(abs(pointer_to_target.y) / pointer_to_target.length()), 0.5)
 		
 		var target_orientation: Quaternion = Quaternion.from_euler(target_direction)
 		var current_orientation: Quaternion = Quaternion.from_euler(char_node.rotation)
-		var new_orientation: Quaternion = current_orientation.slerp(target_orientation, 0.1)
+		var new_orientation: Quaternion = current_orientation.slerp(target_orientation, 0.15)
 		char_node.rotation = new_orientation.get_euler()
 	
 	# model, float cast, float distortion follow char node
@@ -311,16 +316,12 @@ func _on_closing_state_entered() -> void:
 		closed_collision_shape_char.disabled = false
 
 
-func _on_open_to_closing_taken() -> void:
-	anim_state.travel("close up")
-
-
-func _on_open_to_quick_closing_taken() -> void:
+func _on_closing_to_quick_closing_taken() -> void:
 	anim_state.travel("quick close")
 
 
-func _on_open_to_quick_closing_from_thrust_taken() -> void:
-	anim_state.travel("thrust close")
+func _on_closing_to_opening_taken() -> void:
+	anim_state.travel("open up")
 
 
 # closed state
@@ -347,13 +348,39 @@ func _on_opening_state_entered() -> void:
 		open_collision_shape_char.disabled = false
 
 
-# opening state
+func _on_opening_to_quick_closing_taken() -> void:
+	# Cancel engine ignition
+	state.send_event("readying burst to off")
+	state.send_event("readying thrust to off")
+	
+	anim_state.travel("quick close")
+
+
+func _on_opening_to_closing_taken() -> void:
+	# Cancel engine ignition
+	state.send_event("readying burst to off")
+	state.send_event("readying thrust to off")
+	anim_state.travel("close up")
+
+
+# open state
 #----------------------------------------
 func _on_open_state_entered() -> void:
 	float_distortion_mesh.position.y = -1.2
 	in_open_state = true
 	if mode == Mode.CHAR:
 		closed_collision_shape_char.disabled = true
+
+
+func _on_open_to_closing_taken() -> void:
+	anim_state.travel("close up")
+
+
+func _on_open_to_quick_closing_taken() -> void:
+	if in_burst_state or in_thrust_state:
+		anim_state.travel("thrust close")
+	else:
+		anim_state.travel("quick close")
 
 
 func _on_open_state_exited() -> void:
@@ -363,7 +390,6 @@ func _on_open_state_exited() -> void:
 # quick closing state
 #----------------------------------------
 func _on_quick_closing_state_entered() -> void:
-	quick_closing_timer.stop()
 	in_closed_state = true
 
 
@@ -379,6 +405,7 @@ func _on_quick_closing_timer_timeout() -> void:
 # face left state
 #----------------------------------------
 func _on_turn_left_entered() -> void:
+	
 	direction = Enums.Direction.LEFT
 	in_turn_state = true
 	if turn_tween:
@@ -430,8 +457,8 @@ func _on_turn_right_state_exited() -> void:
 const target_none_range: float = 4.0
 const target_none_focus: float = 1.0
 
-const target_acquired_range: float = 10.0
-const target_acquired_focus: float = 8.0
+const in_target_acquired_state_range: float = 10.0
+const in_target_acquired_state_focus: float = 8.0
 
 const target_lost_range: float = 8.0
 const target_lost_focus: float = 4.0
@@ -456,18 +483,16 @@ func _on_acquired_state_entered() -> void:
 	target_none_timer.stop()
 	target_loss_timer.stop()
 	tracking_target = true
-	target_acquired = true
+	in_target_acquired_state = true
 	self.stop_thrust()
 	self.stop_burst()
 	self.open()
-	anim_state.travel("targeting")
-	field_of_view.range = target_acquired_range
-	field_of_view.focus = target_acquired_focus
-	Signals.update_zoom.emit(Enums.Zoom.FAR)
+	field_of_view.range = in_target_acquired_state_range
+	field_of_view.focus = in_target_acquired_state_focus
 
 
 func _on_acquired_state_physics_processing(delta: float) -> void:
-	if not field_of_view.sees_player:
+	if not self.sees_player:
 		state.send_event("acquired to lost")
 	if in_closed_state:
 		await get_tree().create_timer(1.0).timeout
@@ -475,13 +500,12 @@ func _on_acquired_state_physics_processing(delta: float) -> void:
 
 
 func _on_acquired_state_exited() -> void:
-	target_acquired = false
+	in_target_acquired_state = false
 
 
 # target lost state
 #----------------------------------------
 func _on_lost_state_entered() -> void:
-	anim_state.travel("idle")
 	target_loss_timer.start()
 	field_of_view.range = target_lost_range
 	field_of_view.focus = target_lost_focus
@@ -496,7 +520,6 @@ func _on_lost_state_physics_processing(delta: float) -> void:
 
 func _on_target_lost_to_none_taken() -> void:
 	target_none_timer.start()
-	Signals.update_zoom.emit(Enums.Zoom.FAR)
 
 
 func _on_target_loss_timer_timeout() -> void:
@@ -540,6 +563,7 @@ func _tween_engines(
 # readying burst state
 #----------------------------------------
 func _on_readying_burst_state_entered() -> void:
+	turn_off_engines_timer.start()
 	if not in_open_state:
 		self.open()
 	else:
@@ -559,6 +583,7 @@ func _on_readying_to_burst_taken() -> void:
 # burst state
 #----------------------------------------
 func _on_burst_state_entered() -> void:
+	turn_off_engines_timer.stop()
 	anim_state.travel("idle thrust")
 	in_burst_state = true
 
@@ -568,10 +593,6 @@ func _on_burst_state_exited() -> void:
 
 
 func _on_burst_to_off_taken() -> void:
-	if tracking_target:
-		anim_state.travel("targeting")
-	else:
-		self.close()
 	_tween_engines(
 		off_noise_speed,
 		burst_noise_intensity, off_noise_intensity,
@@ -580,8 +601,7 @@ func _on_burst_to_off_taken() -> void:
 		0.8)
 
 
-func _on_burst_to_quick_close_off_taken() -> void:
-	state.send_event("open to quick closing from thrust")
+func _on_burst_to_quick_off_taken() -> void:
 	_tween_engines(
 		off_noise_speed,
 		burst_noise_intensity, off_noise_intensity,
@@ -610,6 +630,7 @@ func _on_burst_timer_timeout() -> void:
 # readying thrust state
 #----------------------------------------
 func _on_readying_thrust_state_entered() -> void:
+	turn_off_engines_timer.start()
 	if not in_open_state:
 		self.open()
 	else:
@@ -628,6 +649,7 @@ func _on_readying_to_thrust_taken() -> void:
 # thrust state
 #----------------------------------------
 func _on_thrust_state_entered() -> void:
+	turn_off_engines_timer.stop()
 	anim_state.travel("idle thrust")
 	in_thrust_state = true
 
@@ -657,6 +679,13 @@ func _on_thrust_to_burst_taken() -> void:
 		Tween.TRANS_LINEAR,
 		0.6)
 
+
+func _on_turn_off_engines_timer_timeout() -> void:
+	turn_off_engines_timer.stop()
+	state.send_event("readying thrust to off")
+	state.send_event("readying burst to off")
+
+
 #=======================================================
 # SIGNALS RECEIVED
 #=======================================================
@@ -673,7 +702,12 @@ func _on_model_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_proximity_detector_body_entered(body: Node3D) -> void:
-	quick_close()
+	if body.get_parent() is ControlNode:
+		control_node_proximity_triggered.emit()
+	
+	if body is Player3D:
+		target = body
+		player_proximity_triggered.emit()
 
 
 
@@ -688,6 +722,7 @@ func open() -> void:
 
 func close() -> void:
 	state.send_event("open to closing")
+	state.send_event("opening to closing")
 
 
 func quick_close() -> void:
@@ -724,7 +759,7 @@ func disable_targeting() -> void:
 
 func enable_targeting() -> void:
 	targeting_enabled = true
-	state.send_event("target disabled to none")
+	state.send_event("target disabled to lost")
 
 
 func face_left() -> void:
@@ -735,6 +770,34 @@ func face_left() -> void:
 func face_right() -> void:
 	state.send_event("face left to turn right")
 	state.send_event("turn left to turn right")
+
+
+func face_target() -> float:
+		var position_delta: float = self.get_mode_position().x - self.target.global_position.x
+		
+		# Player is to the right of the drone and the drone faces the wrong way
+		if position_delta < 0.0 and self.direction == Enums.Direction.LEFT:
+			self.face_right()
+			
+		# Player is to the left of the drone
+		if position_delta > 0.0 and self.direction == Enums.Direction.RIGHT:
+			self.face_left()
+		
+		return position_delta
+
+
+func face_away_from_target() -> float:
+		var position_delta: float = self.get_mode_position().x - self.target.global_position.x
+		
+		# Player is to the right of the drone and the drone faces the wrong way
+		if position_delta < 0.0 and self.direction == Enums.Direction.RIGHT:
+			self.face_left()
+			
+		# Player is to the left of the drone
+		if position_delta > 0.0 and self.direction == Enums.Direction.LEFT:
+			self.face_right()
+		
+		return position_delta
 
 
 func move_toward_x_pos(target_x: float, delta: float, away: bool = false) -> void:
@@ -774,7 +837,8 @@ func ram_attack() -> void:
 
 func _on_attack_burst_timer_timeout() -> void:
 	attack_burst_timer.stop()
-	state.send_event("burst to quick close off")
+	self.quick_close()
+	state.send_event("burst to quick off")
 	self.become_inert()
 
 
@@ -788,7 +852,6 @@ func stop_thrust() -> void:
 
 
 func get_hit(strength: float) -> bool:
-	print("STRENGTH: ", strength)
 	if strength > 5 and not in_closed_state:
 		self.become_ragdoll()
 		return true

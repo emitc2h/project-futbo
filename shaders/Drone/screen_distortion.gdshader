@@ -8,13 +8,14 @@ uniform sampler2D mask_texture;
 
 uniform float noise_speed: hint_range(0.0, 1.0);
 uniform float noise_intensity: hint_range(0.0, 1.0);
+uniform float stretch: hint_range(0.01, 2.0);
 
 void vertex() {
-	UV2 = UV + vec2(0.0, -noise_speed * TIME);
+	UV2 = vec2(1.0, stretch) * (UV + vec2(0.0, -(noise_speed/stretch) * TIME));
 }
 
 void fragment() {
 	float noise = texture(noise_texture, UV2).r;
 	float mask = texture(mask_texture, UV).r;
-	ALBEDO = texture(screen_texture, SCREEN_UV + 0.02 * mask * noise_intensity * noise).rgb;
+	ALBEDO = texture(screen_texture, SCREEN_UV + 0.015 * mask * noise_intensity * noise).rgb;
 }
