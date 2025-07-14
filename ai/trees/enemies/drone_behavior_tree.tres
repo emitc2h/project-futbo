@@ -60,7 +60,7 @@ destination_node = SubResource("BBNode_dr43r")
 distance_when_to_stop = 0.3
 initial_burst = true
 use_thrust = true
-move_away = null
+move_away = false
 
 [sub_resource type="BBNode" id="BBNode_hc6xl"]
 saved_value = NodePath(".")
@@ -85,9 +85,9 @@ resource_name = "PatrolMarker1"
 script = ExtResource("2_dovx4")
 destination_node = SubResource("BBNode_dovx4")
 distance_when_to_stop = 0.3
-initial_burst = null
-use_thrust = null
-move_away = null
+initial_burst = false
+use_thrust = false
+move_away = false
 
 [sub_resource type="BTWait" id="BTWait_dovx4"]
 
@@ -99,9 +99,9 @@ resource_name = "PatrolMarker2"
 script = ExtResource("2_dovx4")
 destination_node = SubResource("BBNode_kyubv")
 distance_when_to_stop = 0.3
-initial_burst = null
-use_thrust = null
-move_away = null
+initial_burst = false
+use_thrust = false
+move_away = false
 
 [sub_resource type="BTWait" id="BTWait_kyubv"]
 

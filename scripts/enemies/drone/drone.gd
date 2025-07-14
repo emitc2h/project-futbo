@@ -45,7 +45,7 @@ var bone_transforms: Array[Transform3D] = []
 @onready var open_collision_shape_char: CollisionShape3D = $CharNode/OpenCollisionShape3D
 @onready var closed_collision_shape_rigid: CollisionShape3D = $RigidNode/ClosedCollisionShape3D
 
-@onready var proximity_detector: Area3D = $DroneModel/ProximityDetector
+@onready var proximity_detector: ShapeCast3D = $DroneModel/ProximityDetector
 
 @onready var patrol_marker_1: Marker3D = $PatrolMarker1
 @onready var patrol_marker_2: Marker3D = $PatrolMarker2
@@ -69,6 +69,9 @@ var in_target_acquired_state: bool = false
 var in_burst_state: bool = false
 var in_thrust_state: bool = false
 
+# State subroutines
+@onready var vulnerability_mode_state: VulnerabilityModeStates = $"State/Root/Vulnerability Mode/VulnerabilityModeStates"
+
 # Tweeners
 var turn_tween: Tween
 
@@ -76,6 +79,9 @@ var turn_tween: Tween
 signal player_proximity_triggered
 signal control_node_proximity_triggered
 signal turning_finished
+signal closing_finished
+signal opening_finished
+signal quick_closing_finished
 
 # Configuration/Handles
 @export_group("Animation Handles")
@@ -107,7 +113,14 @@ func _ready() -> void:
 	rigid_node.max_speed = 10.0
 	bone_simulation.active = true
 	anim_state = model_anim_tree.get("parameters/playback")
+	
+	opening_finished.connect(_on_opening_finished)
+	closing_finished.connect(_on_closing_finished)
+	quick_closing_finished.connect(_on_quick_closing_finished)
 
+
+#func _physics_process(delta: float) -> void:
+	#print(anim_state.get_current_node())
 
 #=======================================================
 # MODE STATES
@@ -265,9 +278,6 @@ func _on_ragdoll_state_entered() -> void:
 	# Disable animations
 	model_anim_tree.active = false
 	
-	# Disable float cast
-	proximity_detector.queue_free()
-	
 	# Start the ragdoll simulation
 	bone_simulation.physical_bones_start_simulation()
 
@@ -310,6 +320,8 @@ func _on_dead_state_entered() -> void:
 # closing state
 #----------------------------------------
 func _on_closing_state_entered() -> void:
+	print("closing state entered")
+	self.shut_off_engines()
 	if mode == Mode.RIGID:
 		closed_collision_shape_rigid.disabled = false
 	elif mode == Mode.CHAR:
@@ -317,55 +329,57 @@ func _on_closing_state_entered() -> void:
 
 
 func _on_closing_to_quick_closing_taken() -> void:
-	anim_state.travel("quick close")
-
-
-func _on_closing_to_opening_taken() -> void:
-	anim_state.travel("open up")
+	if in_burst_state or in_thrust_state:
+		anim_state.travel("thrust close")
+	else:
+		anim_state.travel("quick close")
 
 
 # closed state
 #----------------------------------------
 func _on_closed_state_entered() -> void:
+	print("closed state entered")
 	float_distortion_mesh.position.y = -1.0
 	in_closed_state = true
 	if mode == Mode.CHAR:
 		open_collision_shape_char.disabled = true
+	vulnerability_mode_state.become_invulnerable()
 
 
 func _on_closed_state_exited() -> void:
+	print("closed state exited")
 	in_closed_state = false
+	vulnerability_mode_state.become_defendable()
 
 
 # opening state
 #----------------------------------------
 func _on_opening_state_entered() -> void:
-	if tracking_target:
-		anim_state.travel("targeting")
-	else:
-		anim_state.travel("idle")
+	print("opening state entered")
+	anim_state.travel("open up")
 	if mode == Mode.CHAR:
 		open_collision_shape_char.disabled = false
 
 
 func _on_opening_to_quick_closing_taken() -> void:
-	# Cancel engine ignition
-	state.send_event("readying burst to off")
-	state.send_event("readying thrust to off")
-	
-	anim_state.travel("quick close")
+	if in_burst_state or in_thrust_state:
+		anim_state.travel("thrust close")
+	else:
+		anim_state.travel("quick close")
 
 
 func _on_opening_to_closing_taken() -> void:
-	# Cancel engine ignition
-	state.send_event("readying burst to off")
-	state.send_event("readying thrust to off")
 	anim_state.travel("close up")
 
 
 # open state
 #----------------------------------------
 func _on_open_state_entered() -> void:
+	print("open state entered")
+	if tracking_target:
+		anim_state.travel("targeting")
+	else:
+		anim_state.travel("idle")
 	float_distortion_mesh.position.y = -1.2
 	in_open_state = true
 	if mode == Mode.CHAR:
@@ -384,13 +398,17 @@ func _on_open_to_quick_closing_taken() -> void:
 
 
 func _on_open_state_exited() -> void:
+	print("open state exited")
 	in_open_state = false
 
 
 # quick closing state
 #----------------------------------------
 func _on_quick_closing_state_entered() -> void:
+	print("quick closing state entered")
+	self.shut_off_engines(true)
 	in_closed_state = true
+	vulnerability_mode_state.become_invulnerable()
 
 
 func _on_quick_closing_timer_timeout() -> void:
@@ -494,9 +512,6 @@ func _on_acquired_state_entered() -> void:
 func _on_acquired_state_physics_processing(delta: float) -> void:
 	if not self.sees_player:
 		state.send_event("acquired to lost")
-	if in_closed_state:
-		await get_tree().create_timer(1.0).timeout
-		state.send_event("closed to opening")
 
 
 func _on_acquired_state_exited() -> void:
@@ -513,9 +528,6 @@ func _on_lost_state_entered() -> void:
 
 func _on_lost_state_physics_processing(delta: float) -> void:
 	self.sees_player
-	if in_closed_state:
-		await get_tree().create_timer(1.0).timeout
-		state.send_event("closed to opening")
 
 
 func _on_target_lost_to_none_taken() -> void:
@@ -588,10 +600,6 @@ func _on_burst_state_entered() -> void:
 	in_burst_state = true
 
 
-func _on_burst_state_exited() -> void:
-	in_burst_state = false
-
-
 func _on_burst_to_off_taken() -> void:
 	_tween_engines(
 		off_noise_speed,
@@ -607,7 +615,7 @@ func _on_burst_to_quick_off_taken() -> void:
 		burst_noise_intensity, off_noise_intensity,
 		Tween.EASE_OUT,
 		Tween.TRANS_QUART,
-		0.1)
+		0.15)
 
 
 func _on_burst_to_thrust_taken() -> void:
@@ -617,6 +625,10 @@ func _on_burst_to_thrust_taken() -> void:
 		Tween.EASE_OUT,
 		Tween.TRANS_LINEAR,
 		0.6)
+
+
+func _on_burst_state_exited() -> void:
+	in_burst_state = false
 
 
 func _on_burst_timer_timeout() -> void:
@@ -654,14 +666,6 @@ func _on_thrust_state_entered() -> void:
 	in_thrust_state = true
 
 
-func _on_thrust_state_exited() -> void:
-	if tracking_target:
-		anim_state.travel("targeting")
-	else:
-		anim_state.travel("idle")
-	in_thrust_state = false
-
-
 func _on_thrust_to_off_taken() -> void:
 	_tween_engines(
 		off_noise_speed,
@@ -680,35 +684,48 @@ func _on_thrust_to_burst_taken() -> void:
 		0.6)
 
 
+func _on_thrust_state_exited() -> void:
+	if tracking_target:
+		anim_state.travel("targeting")
+	else:
+		anim_state.travel("idle")
+	in_thrust_state = false
+
+
 func _on_turn_off_engines_timer_timeout() -> void:
 	turn_off_engines_timer.stop()
-	state.send_event("readying thrust to off")
-	state.send_event("readying burst to off")
+	self.shut_off_engines()
 
 
 #=======================================================
-# SIGNALS RECEIVED
+# SIGNAL HANDLING
 #=======================================================
 
 func _on_model_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "OpenUp":
-		state.send_event("opening to open")
-		state.send_event("readying to thrust")
-		state.send_event("readying to burst")
-	if anim_name == "CloseUp":
-		state.send_event("closing to closed")
-	if anim_name == "QuickClose" or anim_name == "ThrustClose":
-		state.send_event("quick closing to closed")
-
-
-func _on_proximity_detector_body_entered(body: Node3D) -> void:
-	if body.get_parent() is ControlNode:
-		control_node_proximity_triggered.emit()
+		opening_finished.emit()
 	
-	if body is Player3D:
-		target = body
-		player_proximity_triggered.emit()
+	if anim_name == "CloseUp":
+		closing_finished.emit()
 
+	
+	if anim_name == "QuickClose" or anim_name == "ThrustClose":
+		closing_finished.emit()
+		quick_closing_finished.emit()
+
+
+func _on_opening_finished() -> void:
+	state.send_event("opening to open")
+	state.send_event("readying to thrust")
+	state.send_event("readying to burst")
+
+
+func _on_closing_finished() -> void:
+	state.send_event("closing to closed")
+
+
+func _on_quick_closing_finished() -> void:
+	state.send_event("quick closing to closed")
 
 
 #=======================================================
@@ -718,6 +735,7 @@ func _on_proximity_detector_body_entered(body: Node3D) -> void:
 func open() -> void:
 	state.send_event("closed to opening")
 	state.send_event("closing to opening")
+	state.send_event("quick closing to opening")
 
 
 func close() -> void:
@@ -824,21 +842,25 @@ func burst(duration: float, after_burst_state: AfterBurst) -> void:
 	state.send_event("thrust to burst")
 
 
-func stop_burst() -> void:
+func stop_burst(quick: bool = false) -> void:
 	burst_timer.stop()
-	state.send_event("burst to off")
+	if quick:
+		state.send_event("burst to quick off")
+	else:
+		state.send_event("burst to off")
 
 
 func ram_attack() -> void:
 	attack_burst_timer.start()
+	vulnerability_mode_state.become_invulnerable()
 	state.send_event("off to readying burst")
 	state.send_event("thrust to burst")
 
 
 func _on_attack_burst_timer_timeout() -> void:
+	print("attack burst timer timeout")
 	attack_burst_timer.stop()
 	self.quick_close()
-	state.send_event("burst to quick off")
 	self.become_inert()
 
 
@@ -851,8 +873,15 @@ func stop_thrust() -> void:
 	state.send_event("thrust to off")
 
 
+func shut_off_engines(quick: bool = false) -> void:
+	self.stop_burst(quick)
+	self.stop_thrust()
+	state.send_event("readying thrust to off")
+	state.send_event("readying burst to off")
+
+
 func get_hit(strength: float) -> bool:
-	if strength > 5 and not in_closed_state:
+	if vulnerability_mode_state.state == vulnerability_mode_state.State.VULNERABLE:
 		self.become_ragdoll()
 		return true
 	return false
@@ -868,3 +897,15 @@ func get_mode_position() -> Vector3:
 		return char_node.global_position
 	else:
 		return model.global_position
+
+
+func _on_closing_state_exited() -> void:
+	print("closing state exited")
+
+
+func _on_opening_state_exited() -> void:
+	print("opening state exited")
+
+
+func _on_quick_closing_state_exited() -> void:
+	print("quick closing state exited")

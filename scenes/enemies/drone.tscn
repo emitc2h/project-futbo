@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dy4rhlpeuav22"]
+[gd_scene load_steps=25 format=3 uid="uid://dy4rhlpeuav22"]
 
 [ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone_model.tscn" id="2_cq5ml"]
 [ext_resource type="Script" uid="uid://ivuwvt726w21" path="res://scripts/enemies/drone/drone.gd" id="2_y3ws1"]
@@ -6,12 +6,15 @@
 [ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="4_2myhj"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="5_t6brq"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="6_o57st"]
+[ext_resource type="Script" uid="uid://dfd50crlxj7fx" path="res://scripts/enemies/drone/states/vulnerability_mode_states.gd" id="7_4h6a7"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="7_md0p7"]
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="8_2myhj"]
+[ext_resource type="Script" uid="uid://d3dba4u25o30s" path="res://scripts/enemies/drone/states/behavior_processing_states.gd" id="8_kds82"]
 [ext_resource type="Script" uid="uid://dqr71asyjiu46" path="res://scripts/enemies/drone/drone_field_of_view.gd" id="8_o57st"]
 [ext_resource type="Shader" uid="uid://ddsp10lo1rx15" path="res://shaders/Drone/screen_distortion.gdshader" id="9_r56iq"]
 [ext_resource type="BehaviorTree" uid="uid://cl3pokesv8enr" path="res://ai/trees/enemies/drone_behavior_tree.tres" id="9_t6brq"]
 [ext_resource type="Texture2D" uid="uid://cbvr58ksjt0qs" path="res://assets/3D/Textures/Drone/float_mask_rendered_128x128.png" id="10_4h6a7"]
+[ext_resource type="Script" uid="uid://bfjd2p8wgxury" path="res://scenes/enemies/proximity_detector.gd" id="13_iovl4"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_kds82"]
 
@@ -33,9 +36,8 @@ shader_parameter/noise_speed = 0.5
 shader_parameter/noise_intensity = 1.0
 shader_parameter/stretch = 0.2
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o57st"]
-radius = 1.10693
-height = 3.27927
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h6a7"]
+radius = 0.9
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_md0p7"]
 radius = 0.527965
@@ -184,6 +186,12 @@ script = ExtResource("6_o57st")
 script = ExtResource("7_md0p7")
 to = NodePath("../../closed")
 event = &"quick closing to closed"
+delay_in_seconds = "0.0"
+
+[node name="to opening" type="Node" parent="State/Root/Engagement/quick closing"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../opening")
+event = &"quick closing to opening"
 delay_in_seconds = "0.0"
 
 [node name="Direction Faced" type="Node" parent="State/Root"]
@@ -396,6 +404,81 @@ to = NodePath("../../burst")
 event = &"thrust to burst"
 delay_in_seconds = "0.0"
 
+[node name="Vulnerability Mode" type="Node" parent="State/Root"]
+script = ExtResource("5_t6brq")
+initial_state = NodePath("invulnerable")
+
+[node name="VulnerabilityModeStates" type="Node" parent="State/Root/Vulnerability Mode" node_paths=PackedStringArray("drone", "sc", "proximity_detector")]
+script = ExtResource("7_4h6a7")
+drone = NodePath("../../../..")
+sc = NodePath("../../..")
+proximity_detector = NodePath("../../../../DroneModel/ProximityDetector")
+
+[node name="invulnerable" type="Node" parent="State/Root/Vulnerability Mode"]
+script = ExtResource("6_o57st")
+
+[node name="to defendable" type="Node" parent="State/Root/Vulnerability Mode/invulnerable"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../defendable")
+event = &"invulnerable to defendable"
+delay_in_seconds = "0.0"
+
+[node name="defendable" type="Node" parent="State/Root/Vulnerability Mode"]
+script = ExtResource("6_o57st")
+
+[node name="to invulnerable" type="Node" parent="State/Root/Vulnerability Mode/defendable"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../invulnerable")
+event = &"defendable to invulnerable"
+delay_in_seconds = "0.0"
+
+[node name="to vulnerable" type="Node" parent="State/Root/Vulnerability Mode/defendable"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../vulnerable")
+event = &"defendable to vulnerable"
+delay_in_seconds = "0.0"
+
+[node name="vulnerable" type="Node" parent="State/Root/Vulnerability Mode"]
+script = ExtResource("6_o57st")
+
+[node name="to defendable" type="Node" parent="State/Root/Vulnerability Mode/vulnerable"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../defendable")
+event = &"vulnerable to defendable"
+delay_in_seconds = "0.0"
+
+[node name="Behavior Processing" type="Node" parent="State/Root"]
+script = ExtResource("5_t6brq")
+initial_state = NodePath("processing")
+
+[node name="BehaviorProcessingStates" type="Node" parent="State/Root/Behavior Processing" node_paths=PackedStringArray("drone", "sc", "bt", "timers")]
+script = ExtResource("8_kds82")
+drone = NodePath("../../../..")
+sc = NodePath("../../..")
+bt = NodePath("../../../../BTPlayer")
+timers = [NodePath("../../../../AttackBurstTimer"), NodePath("../../../../BurstTimer")]
+
+[node name="InterruptedByQuickCloseTimer" type="Timer" parent="State/Root/Behavior Processing/BehaviorProcessingStates"]
+wait_time = 0.5
+
+[node name="processing" type="Node" parent="State/Root/Behavior Processing"]
+script = ExtResource("6_o57st")
+
+[node name="to interrupted by quick close" type="Node" parent="State/Root/Behavior Processing/processing"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../interrupted by quick close")
+event = &"processing to interrupted by quick close"
+delay_in_seconds = "0.0"
+
+[node name="interrupted by quick close" type="Node" parent="State/Root/Behavior Processing"]
+script = ExtResource("6_o57st")
+
+[node name="to processing" type="Node" parent="State/Root/Behavior Processing/interrupted by quick close"]
+script = ExtResource("7_md0p7")
+to = NodePath("../../processing")
+event = &"interrupted by quick close to processing"
+delay_in_seconds = "0.0"
+
 [node name="CarryAlongContainer" type="Node3D" parent="."]
 
 [node name="Distortion" type="MeshInstance3D" parent="CarryAlongContainer"]
@@ -433,21 +516,18 @@ target_position = Vector3(0, 0, 4)
 transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
 target_position = Vector3(0, 0, 4)
 
-[node name="ProximityDetector" type="Area3D" parent="DroneModel"]
-collision_layer = 0
+[node name="ProximityDetector" type="ShapeCast3D" parent="DroneModel" node_paths=PackedStringArray("drone")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.999908)
+shape = SubResource("CapsuleShape3D_4h6a7")
+max_results = 2
 collision_mask = 5
-collision_priority = 5.0
-input_ray_pickable = false
-monitorable = false
-priority = 5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DroneModel/ProximityDetector"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_o57st")
+debug_shape_custom_color = Color(0.138885, 0.556865, 0.774598, 1)
+script = ExtResource("13_iovl4")
+drone = NodePath("../..")
 
 [node name="CharNode" type="CharacterBody3D" parent="."]
 collision_layer = 256
-collision_mask = 7
+collision_mask = 3
 axis_lock_linear_z = true
 
 [node name="ClosedCollisionShape3D" type="CollisionShape3D" parent="CharNode"]
@@ -493,7 +573,6 @@ process_callback = 0
 wait_time = 10.0
 
 [node name="QuickClosingTimer" type="Timer" parent="."]
-process_callback = 0
 
 [node name="BurstTimer" type="Timer" parent="."]
 process_callback = 0
@@ -517,16 +596,20 @@ wait_time = 4.0
 [connection signal="state_physics_processing" from="State/Root/Physics Mode/ragdoll" to="." method="_on_ragdoll_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Physics Mode/dead" to="." method="_on_dead_state_entered"]
 [connection signal="state_entered" from="State/Root/Engagement/closing" to="." method="_on_closing_state_entered"]
+[connection signal="state_exited" from="State/Root/Engagement/closing" to="." method="_on_closing_state_exited"]
 [connection signal="taken" from="State/Root/Engagement/closing/to quick closing" to="." method="_on_closing_to_quick_closing_taken"]
-[connection signal="taken" from="State/Root/Engagement/closing/to opening" to="." method="_on_closing_to_opening_taken"]
 [connection signal="state_entered" from="State/Root/Engagement/closed" to="." method="_on_closed_state_entered"]
 [connection signal="state_exited" from="State/Root/Engagement/closed" to="." method="_on_closed_state_exited"]
 [connection signal="state_entered" from="State/Root/Engagement/opening" to="." method="_on_opening_state_entered"]
+[connection signal="state_exited" from="State/Root/Engagement/opening" to="." method="_on_opening_state_exited"]
+[connection signal="taken" from="State/Root/Engagement/opening/to quick closing" to="." method="_on_opening_to_quick_closing_taken"]
+[connection signal="taken" from="State/Root/Engagement/opening/to closing" to="." method="_on_opening_to_closing_taken"]
 [connection signal="state_entered" from="State/Root/Engagement/open" to="." method="_on_open_state_entered"]
 [connection signal="state_exited" from="State/Root/Engagement/open" to="." method="_on_open_state_exited"]
 [connection signal="taken" from="State/Root/Engagement/open/to closing" to="." method="_on_open_to_closing_taken"]
 [connection signal="taken" from="State/Root/Engagement/open/to quick closing" to="." method="_on_open_to_quick_closing_taken"]
 [connection signal="state_entered" from="State/Root/Engagement/quick closing" to="." method="_on_quick_closing_state_entered"]
+[connection signal="state_exited" from="State/Root/Engagement/quick closing" to="." method="_on_quick_closing_state_exited"]
 [connection signal="state_entered" from="State/Root/Direction Faced/turn left" to="." method="_on_turn_left_entered"]
 [connection signal="state_exited" from="State/Root/Direction Faced/turn left" to="." method="_on_turn_left_state_exited"]
 [connection signal="state_entered" from="State/Root/Direction Faced/turn right" to="." method="_on_turn_right_entered"]
@@ -552,7 +635,18 @@ wait_time = 4.0
 [connection signal="state_exited" from="State/Root/Engines/thrust" to="." method="_on_thrust_state_exited"]
 [connection signal="taken" from="State/Root/Engines/thrust/to off" to="." method="_on_thrust_to_off_taken"]
 [connection signal="taken" from="State/Root/Engines/thrust/to burst" to="." method="_on_thrust_to_burst_taken"]
-[connection signal="body_entered" from="DroneModel/ProximityDetector" to="." method="_on_proximity_detector_body_entered"]
+[connection signal="state_entered" from="State/Root/Vulnerability Mode/invulnerable" to="State/Root/Vulnerability Mode/VulnerabilityModeStates" method="_on_invulnerable_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Vulnerability Mode/invulnerable" to="State/Root/Vulnerability Mode/VulnerabilityModeStates" method="_on_invulnerable_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Vulnerability Mode/defendable" to="State/Root/Vulnerability Mode/VulnerabilityModeStates" method="_on_defendable_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Vulnerability Mode/defendable" to="State/Root/Vulnerability Mode/VulnerabilityModeStates" method="_on_defendable_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Vulnerability Mode/vulnerable" to="State/Root/Vulnerability Mode/VulnerabilityModeStates" method="_on_vulnerable_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Vulnerability Mode/vulnerable" to="State/Root/Vulnerability Mode/VulnerabilityModeStates" method="_on_vulnerable_state_physics_processing"]
+[connection signal="timeout" from="State/Root/Behavior Processing/BehaviorProcessingStates/InterruptedByQuickCloseTimer" to="State/Root/Behavior Processing/BehaviorProcessingStates" method="_on_interrupted_by_quick_close_timer_timeout"]
+[connection signal="state_entered" from="State/Root/Behavior Processing/processing" to="State/Root/Behavior Processing/BehaviorProcessingStates" method="_on_processing_state_entered"]
+[connection signal="state_exited" from="State/Root/Behavior Processing/processing" to="State/Root/Behavior Processing/BehaviorProcessingStates" method="_on_processing_state_exited"]
+[connection signal="state_entered" from="State/Root/Behavior Processing/interrupted by quick close" to="State/Root/Behavior Processing/BehaviorProcessingStates" method="_on_interrupted_by_quick_close_state_entered"]
+[connection signal="state_exited" from="State/Root/Behavior Processing/interrupted by quick close" to="State/Root/Behavior Processing/BehaviorProcessingStates" method="_on_interrupted_by_quick_close_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Behavior Processing/interrupted by quick close" to="State/Root/Behavior Processing/BehaviorProcessingStates" method="_on_interrupted_state_processing"]
 [connection signal="timeout" from="TargetNoneTimer" to="." method="_on_target_none_timer_timeout"]
 [connection signal="timeout" from="TargetLossTimer" to="." method="_on_target_loss_timer_timeout"]
 [connection signal="timeout" from="DeadTimer" to="." method="_on_dead_timer_timeout"]
