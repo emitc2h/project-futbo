@@ -10,6 +10,18 @@ var do_set_impulse: bool = false
 var impulse_to_set: Vector3
 
 
+func sleep() -> void:
+	self.set_freeze_enabled(true)
+	self.can_sleep = true
+	self.sleeping = true
+
+
+func wake_up() -> void:
+	self.set_freeze_enabled(false)
+	self.can_sleep = false
+	self.sleeping = false
+
+
 func set_transform_and_velocity(transform: Transform3D, velocity: Vector3) -> void:
 	do_set_transform_and_velocity = true
 	transform_to_set = transform

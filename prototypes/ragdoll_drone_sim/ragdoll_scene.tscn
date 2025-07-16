@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://f74yn2yguccx"]
 
 [ext_resource type="Script" uid="uid://d04eawhdw3fh0" path="res://prototypes/ragdoll_drone_sim/ragdoll_scene.gd" id="1_crm8f"]
-[ext_resource type="PackedScene" uid="uid://dy4rhlpeuav22" path="res://scenes/enemies/drone.tscn" id="2_be5mx"]
+[ext_resource type="PackedScene" uid="uid://dy4rhlpeuav22" path="res://scenes/enemies/drone/drone.tscn" id="2_be5mx"]
 [ext_resource type="Environment" uid="uid://b4tj8c1q2alih" path="res://resources/act1_skybox_worldenvironment.tres" id="2_yu6kg"]
 [ext_resource type="Texture2D" uid="uid://bi14nqhqhl57j" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_color.png" id="3_kh2ms"]
 [ext_resource type="Texture2D" uid="uid://dfvmyjp50vb2i" path="res://assets/3D/Act1/Textures/Tiles/Asphalt1/Asphalt1_darker_color.png" id="3_kt6ak"]

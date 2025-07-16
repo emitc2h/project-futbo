@@ -1,0 +1,553 @@
+[gd_scene load_steps=26 format=3 uid="uid://bc323ftwy8i7t"]
+
+[ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone_v2.gd" id="1_irn00"]
+[ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_g2as1"]
+[ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_wmq8b"]
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_kl701"]
+[ext_resource type="Script" uid="uid://p1lgvym5ec5j" path="res://scripts/enemies/drone/states/drone_physics_mode_states.gd" id="5_8nca4"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_voq0c"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_doilr"]
+[ext_resource type="Script" uid="uid://c2rujfre7ei0g" path="res://scripts/enemies/drone/states/drone_direction_faced_states.gd" id="6_nn3ap"]
+[ext_resource type="Script" uid="uid://c6uypq5yp7yv4" path="res://scripts/enemies/drone/states/drone_engagement_mode_states.gd" id="9_3x3q1"]
+[ext_resource type="Shader" uid="uid://ddsp10lo1rx15" path="res://shaders/Drone/screen_distortion.gdshader" id="9_ahulk"]
+[ext_resource type="Texture2D" uid="uid://cbvr58ksjt0qs" path="res://assets/3D/Textures/Drone/float_mask_rendered_128x128.png" id="10_82hyt"]
+[ext_resource type="Script" uid="uid://b3ltvqg05gn6g" path="res://scripts/enemies/drone/states/drone_engines_states.gd" id="10_g2as1"]
+[ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone/drone_model.tscn" id="11_glddf"]
+[ext_resource type="Script" uid="uid://cn8skwd81rq27" path="res://scripts/enemies/drone/states/drone_targeting_states.gd" id="11_wmq8b"]
+[ext_resource type="Script" uid="uid://dqr71asyjiu46" path="res://scripts/enemies/drone/drone_field_of_view.gd" id="12_0sc46"]
+[ext_resource type="Script" uid="uid://bfjd2p8wgxury" path="res://scenes/enemies/drone/proximity_detector.gd" id="13_h1ejm"]
+[ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="14_efc27"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_md0p7"]
+radius = 0.527965
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_md0p7"]
+radius = 0.624503
+height = 1.58185
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2myhj"]
+friction = 0.5
+bounce = 0.26
+
+[sub_resource type="QuadMesh" id="QuadMesh_kds82"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iovl4"]
+noise_type = 0
+frequency = 0.0171
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r56iq"]
+seamless = true
+noise = SubResource("FastNoiseLite_iovl4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3tghu"]
+render_priority = 0
+shader = ExtResource("9_ahulk")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_r56iq")
+shader_parameter/mask_texture = ExtResource("10_82hyt")
+shader_parameter/noise_speed = 0.5
+shader_parameter/noise_intensity = 1.0
+shader_parameter/stretch = 0.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h6a7"]
+radius = 0.9
+
+[node name="Drone" type="Node3D"]
+script = ExtResource("1_irn00")
+
+[node name="State" type="Node" parent="."]
+script = ExtResource("2_g2as1")
+metadata/_custom_type_script = "uid://cmlfnal2o37ys"
+
+[node name="Root" type="Node" parent="State"]
+script = ExtResource("3_wmq8b")
+
+[node name="Physics Mode" type="Node" parent="State/Root"]
+script = ExtResource("4_kl701")
+initial_state = NodePath("char")
+
+[node name="Physics Mode States" type="Node" parent="State/Root/Physics Mode" node_paths=PackedStringArray("drone", "sc")]
+script = ExtResource("5_8nca4")
+drone = NodePath("../../../..")
+sc = NodePath("../../..")
+
+[node name="DeadTimer" type="Timer" parent="State/Root/Physics Mode/Physics Mode States"]
+wait_time = 5.0
+
+[node name="char" type="Node" parent="State/Root/Physics Mode"]
+script = ExtResource("3_wmq8b")
+
+[node name="Direction Faced" type="Node" parent="State/Root/Physics Mode/char"]
+script = ExtResource("4_kl701")
+initial_state = NodePath("face right")
+
+[node name="Direction Faced States" type="Node" parent="State/Root/Physics Mode/char/Direction Faced" node_paths=PackedStringArray("drone", "sc")]
+script = ExtResource("6_nn3ap")
+drone = NodePath("../../../../../..")
+sc = NodePath("../../../../..")
+
+[node name="face right" type="Node" parent="State/Root/Physics Mode/char/Direction Faced"]
+script = ExtResource("5_voq0c")
+
+[node name="to turn left" type="Node" parent="State/Root/Physics Mode/char/Direction Faced/face right"]
+script = ExtResource("6_doilr")
+to = NodePath("../../turn left")
+event = &"Direction Faced: face right to turn left"
+delay_in_seconds = "0.0"
+
+[node name="face left" type="Node" parent="State/Root/Physics Mode/char/Direction Faced"]
+script = ExtResource("5_voq0c")
+
+[node name="to turn right" type="Node" parent="State/Root/Physics Mode/char/Direction Faced/face left"]
+script = ExtResource("6_doilr")
+to = NodePath("../../turn right")
+event = &"Direction Faced: face left to turn right"
+delay_in_seconds = "0.0"
+
+[node name="turn right" type="Node" parent="State/Root/Physics Mode/char/Direction Faced"]
+script = ExtResource("5_voq0c")
+
+[node name="to face right" type="Node" parent="State/Root/Physics Mode/char/Direction Faced/turn right"]
+script = ExtResource("6_doilr")
+to = NodePath("../../face right")
+event = &"Direction Faced: turn right to face right"
+delay_in_seconds = "0.0"
+
+[node name="to turn left" type="Node" parent="State/Root/Physics Mode/char/Direction Faced/turn right"]
+script = ExtResource("6_doilr")
+to = NodePath("../../turn left")
+event = &"Direction Faced: turn right to turn left"
+delay_in_seconds = "0.0"
+
+[node name="turn left" type="Node" parent="State/Root/Physics Mode/char/Direction Faced"]
+script = ExtResource("5_voq0c")
+
+[node name="to face left" type="Node" parent="State/Root/Physics Mode/char/Direction Faced/turn left"]
+script = ExtResource("6_doilr")
+to = NodePath("../../face left")
+event = &"Direction Faced: turn left to face left"
+delay_in_seconds = "0.0"
+
+[node name="to turn right" type="Node" parent="State/Root/Physics Mode/char/Direction Faced/turn left"]
+script = ExtResource("6_doilr")
+to = NodePath("../../turn right")
+event = &"Direction Faced: turn left to turn right"
+delay_in_seconds = "0.0"
+
+[node name="Engagement Mode" type="Node" parent="State/Root/Physics Mode/char"]
+script = ExtResource("4_kl701")
+initial_state = NodePath("closed")
+
+[node name="Engagement Mode States" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode" node_paths=PackedStringArray("drone", "sc")]
+script = ExtResource("9_3x3q1")
+drone = NodePath("../../../../../..")
+sc = NodePath("../../../../..")
+
+[node name="closing" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="to closed" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/closing"]
+script = ExtResource("6_doilr")
+to = NodePath("../../closed")
+event = &"Engagement Mode: closing to closed"
+delay_in_seconds = "0.0"
+
+[node name="to quick close" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/closing"]
+script = ExtResource("6_doilr")
+to = NodePath("../../quick close")
+event = &"Engagement Mode: closing to quick close"
+delay_in_seconds = "0.0"
+
+[node name="to opening" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/closing"]
+script = ExtResource("6_doilr")
+to = NodePath("../../opening")
+event = &"Engagement Mode: closing to opening"
+delay_in_seconds = "0.0"
+
+[node name="closed" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="to opening" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/closed"]
+script = ExtResource("6_doilr")
+to = NodePath("../../opening")
+event = &"Engagement Mode: closed to opening"
+delay_in_seconds = "0.0"
+
+[node name="opening" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="to open" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/opening"]
+script = ExtResource("6_doilr")
+to = NodePath("../../open - Engines")
+event = &"Engagement Mode: opening to open"
+delay_in_seconds = "0.0"
+
+[node name="to quick close" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/opening"]
+script = ExtResource("6_doilr")
+to = NodePath("../../quick close")
+event = &"Engagement Mode: opening to quick close"
+delay_in_seconds = "0.0"
+
+[node name="to closing" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/opening"]
+script = ExtResource("6_doilr")
+to = NodePath("../../closing")
+event = &"Engagement Mode: opening to closing"
+delay_in_seconds = "0.0"
+
+[node name="open - Engines" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode"]
+script = ExtResource("4_kl701")
+initial_state = NodePath("off")
+
+[node name="Engines States" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines" node_paths=PackedStringArray("drone", "sc")]
+script = ExtResource("10_g2as1")
+drone = NodePath("../../../../../../..")
+sc = NodePath("../../../../../..")
+
+[node name="off" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines"]
+script = ExtResource("5_voq0c")
+
+[node name="to thrust" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines/off"]
+script = ExtResource("6_doilr")
+to = NodePath("../../thrust")
+event = &"Engines: off to thrust"
+delay_in_seconds = "0.0"
+
+[node name="to burst" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines/off"]
+script = ExtResource("6_doilr")
+to = NodePath("../../burst")
+event = &"Engines: off to burst"
+delay_in_seconds = "0.0"
+
+[node name="thrust" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines"]
+script = ExtResource("5_voq0c")
+
+[node name="to off" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines/thrust"]
+script = ExtResource("6_doilr")
+to = NodePath("../../off")
+event = &"Engines: thrust to off"
+delay_in_seconds = "0.0"
+
+[node name="to quick off" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines/thrust"]
+script = ExtResource("6_doilr")
+to = NodePath("../../off")
+event = &"Engines: thrust to quick off"
+delay_in_seconds = "0.0"
+
+[node name="to burst" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines/thrust"]
+script = ExtResource("6_doilr")
+to = NodePath("../../burst")
+event = &"Engines: thrust to burst"
+delay_in_seconds = "0.0"
+
+[node name="burst" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines"]
+script = ExtResource("5_voq0c")
+
+[node name="to off" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines/burst"]
+script = ExtResource("6_doilr")
+to = NodePath("../../off")
+event = &"Engines: burst to off"
+delay_in_seconds = "0.0"
+
+[node name="to quick off" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines/burst"]
+script = ExtResource("6_doilr")
+to = NodePath("../../off")
+event = &"Engines: burst to quick off"
+delay_in_seconds = "0.0"
+
+[node name="to thrust" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines/burst"]
+script = ExtResource("6_doilr")
+to = NodePath("../../thrust")
+event = &"Engines: burst to thrust"
+delay_in_seconds = "0.0"
+
+[node name="to closing" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines"]
+script = ExtResource("6_doilr")
+to = NodePath("../../closing")
+event = &"Engagement Mode: open to closing"
+delay_in_seconds = "0.0"
+
+[node name="to quick close" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/open - Engines"]
+script = ExtResource("6_doilr")
+to = NodePath("../../quick close")
+event = &"Engagement Mode: open to quick close"
+delay_in_seconds = "0.0"
+
+[node name="quick close" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="to closed" type="Node" parent="State/Root/Physics Mode/char/Engagement Mode/quick close"]
+script = ExtResource("6_doilr")
+to = NodePath("../../closed")
+event = &"Engagement Mode: quick close to closed"
+delay_in_seconds = "0.0"
+
+[node name="Targeting" type="Node" parent="State/Root/Physics Mode/char"]
+script = ExtResource("4_kl701")
+initial_state = NodePath("disabled")
+
+[node name="Targeting States" type="Node" parent="State/Root/Physics Mode/char/Targeting"]
+script = ExtResource("11_wmq8b")
+
+[node name="disabled" type="Node" parent="State/Root/Physics Mode/char/Targeting"]
+script = ExtResource("5_voq0c")
+
+[node name="none" type="Node" parent="State/Root/Physics Mode/char/Targeting"]
+script = ExtResource("5_voq0c")
+
+[node name="to disabled" type="Node" parent="State/Root/Physics Mode/char/Targeting/none"]
+script = ExtResource("6_doilr")
+to = NodePath("../../disabled")
+event = &"Targeting: none to disabled"
+delay_in_seconds = "0.0"
+
+[node name="to acquiring" type="Node" parent="State/Root/Physics Mode/char/Targeting/none"]
+script = ExtResource("6_doilr")
+to = NodePath("../../acquiring")
+event = &"Targeting: none to acquiring"
+delay_in_seconds = "0.0"
+
+[node name="to acquired" type="Node" parent="State/Root/Physics Mode/char/Targeting/none"]
+script = ExtResource("6_doilr")
+to = NodePath("../../acquired")
+event = &"Targeting: none to acquired"
+delay_in_seconds = "0.0"
+
+[node name="acquiring" type="Node" parent="State/Root/Physics Mode/char/Targeting"]
+script = ExtResource("5_voq0c")
+
+[node name="to disabled" type="Node" parent="State/Root/Physics Mode/char/Targeting/acquiring"]
+script = ExtResource("6_doilr")
+to = NodePath("../../disabled")
+event = &"Targeting: acquiring to disabled"
+delay_in_seconds = "0.0"
+
+[node name="to none" type="Node" parent="State/Root/Physics Mode/char/Targeting/acquiring"]
+script = ExtResource("6_doilr")
+to = NodePath("../../none")
+event = &"Targeting: acquiring to none"
+delay_in_seconds = "0.0"
+
+[node name="to acquired" type="Node" parent="State/Root/Physics Mode/char/Targeting/acquiring"]
+script = ExtResource("6_doilr")
+to = NodePath("../../acquired")
+event = &"Targeting: acquiring to acquired"
+delay_in_seconds = "0.0"
+
+[node name="acquired" type="Node" parent="State/Root/Physics Mode/char/Targeting"]
+script = ExtResource("5_voq0c")
+
+[node name="to disabled" type="Node" parent="State/Root/Physics Mode/char/Targeting/acquired"]
+script = ExtResource("6_doilr")
+to = NodePath("../../disabled")
+event = &"Targeting: acquired to disabled"
+delay_in_seconds = "0.0"
+
+[node name="to acquiring" type="Node" parent="State/Root/Physics Mode/char/Targeting/acquired"]
+script = ExtResource("6_doilr")
+to = NodePath("../../acquiring")
+event = &"Targeting: acquired to acquiring"
+delay_in_seconds = "0.0"
+
+[node name="to rigid" type="Node" parent="State/Root/Physics Mode/char"]
+script = ExtResource("6_doilr")
+to = NodePath("../../rigid")
+event = &"Physics Mode: char to rigid"
+delay_in_seconds = "0.0"
+
+[node name="to ragdoll" type="Node" parent="State/Root/Physics Mode/char"]
+script = ExtResource("6_doilr")
+to = NodePath("../../ragdoll")
+event = &"Physics Mode: char to ragdoll"
+delay_in_seconds = "0.0"
+
+[node name="rigid" type="Node" parent="State/Root/Physics Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="to char" type="Node" parent="State/Root/Physics Mode/rigid"]
+script = ExtResource("6_doilr")
+to = NodePath("../../char")
+event = &"Physics Mode: rigid to char"
+delay_in_seconds = "0.0"
+
+[node name="ragdoll" type="Node" parent="State/Root/Physics Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="to dead" type="Node" parent="State/Root/Physics Mode/ragdoll"]
+script = ExtResource("6_doilr")
+to = NodePath("../../dead")
+event = &"Physics Mode: ragdoll to dead"
+delay_in_seconds = "0.0"
+
+[node name="dead" type="Node" parent="State/Root/Physics Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="Vulnerability Mode" type="Node" parent="State/Root"]
+script = ExtResource("4_kl701")
+initial_state = NodePath("invulnerable")
+
+[node name="invulnerable" type="Node" parent="State/Root/Vulnerability Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="to defendable" type="Node" parent="State/Root/Vulnerability Mode/invulnerable"]
+script = ExtResource("6_doilr")
+to = NodePath("../../defendable")
+event = &"Vulnerability Mode: invulnerable to defendable"
+delay_in_seconds = "0.0"
+
+[node name="defendable" type="Node" parent="State/Root/Vulnerability Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="to invulnerable" type="Node" parent="State/Root/Vulnerability Mode/defendable"]
+script = ExtResource("6_doilr")
+to = NodePath("../../invulnerable")
+event = &"Vulnerability Mode: defendable to invulnerable"
+delay_in_seconds = "0.0"
+
+[node name="to vulnerable" type="Node" parent="State/Root/Vulnerability Mode/defendable"]
+script = ExtResource("6_doilr")
+to = NodePath("../../vulnerable")
+event = &"Vulnerability Mode: defendable to vulnerable"
+delay_in_seconds = "0.0"
+
+[node name="vulnerable" type="Node" parent="State/Root/Vulnerability Mode"]
+script = ExtResource("5_voq0c")
+
+[node name="to defendable" type="Node" parent="State/Root/Vulnerability Mode/vulnerable"]
+script = ExtResource("6_doilr")
+to = NodePath("../../defendable")
+event = &"Vulnerability Mode: vulnerable to defendable"
+delay_in_seconds = "0.0"
+
+[node name="CharNode" type="CharacterBody3D" parent="."]
+collision_layer = 256
+collision_mask = 3
+axis_lock_linear_z = true
+
+[node name="ClosedCollisionShape3D" type="CollisionShape3D" parent="CharNode"]
+shape = SubResource("SphereShape3D_md0p7")
+disabled = true
+
+[node name="OpenCollisionShape3D" type="CollisionShape3D" parent="CharNode"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0988013)
+shape = SubResource("CapsuleShape3D_md0p7")
+disabled = true
+
+[node name="RigidNode" type="RigidBody3D" parent="."]
+collision_layer = 256
+collision_mask = 7
+axis_lock_linear_z = true
+mass = 20.0
+physics_material_override = SubResource("PhysicsMaterial_2myhj")
+script = ExtResource("14_efc27")
+
+[node name="ClosedCollisionShape3D" type="CollisionShape3D" parent="RigidNode"]
+shape = SubResource("SphereShape3D_md0p7")
+
+[node name="TrackPositionContainer" type="Node3D" parent="."]
+
+[node name="Distortion" type="MeshInstance3D" parent="TrackPositionContainer"]
+transform = Transform3D(1.3, 0, 0, 0, 2, 0, 0, 0, 1, 0, -1, -0.1)
+mesh = SubResource("QuadMesh_kds82")
+skeleton = NodePath("../../CharNode")
+surface_material_override/0 = SubResource("ShaderMaterial_3tghu")
+
+[node name="FloatCast" type="RayCast3D" parent="TrackPositionContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 0)
+target_position = Vector3(0, -2.6, 0)
+collision_mask = 2
+
+[node name="TrackTransformContainer" type="Node3D" parent="."]
+
+[node name="DroneModel" parent="TrackTransformContainer" instance=ExtResource("11_glddf")]
+
+[node name="FieldOfView" type="Node3D" parent="TrackTransformContainer"]
+script = ExtResource("12_0sc46")
+
+[node name="RayCast3D" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+transform = Transform3D(1, 0, 0, 0, 0.939692, 0.34202, 0, -0.34202, 0.939692, 0, 0, 0)
+target_position = Vector3(0, 0, 4)
+
+[node name="RayCast3D2" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+target_position = Vector3(0, 0, 4)
+
+[node name="RayCast3D3" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, -0.34202, 0, 0.34202, 0.939693, 0, 0, 0)
+target_position = Vector3(0, 0, 4)
+
+[node name="RayCast3D4" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+transform = Transform3D(1, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, 0, 0)
+target_position = Vector3(0, 0, 4)
+
+[node name="RayCast3D5" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, 0, 4)
+
+[node name="ProximityDetector" type="ShapeCast3D" parent="TrackTransformContainer" node_paths=PackedStringArray("drone")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.999908)
+shape = SubResource("CapsuleShape3D_4h6a7")
+max_results = 2
+collision_mask = 5
+debug_shape_custom_color = Color(0.138885, 0.556865, 0.774598, 1)
+script = ExtResource("13_h1ejm")
+drone = NodePath("../..")
+
+[node name="PatrolMarker1" type="Marker3D" parent="."]
+transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, 3.5, 0, 0)
+
+[node name="PatrolMarker2" type="Marker3D" parent="."]
+transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, -3.5, 0, 0)
+
+[node name="TargetNoneTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 3.0
+
+[node name="TargetLossTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+
+[node name="QuickClosingTimer" type="Timer" parent="."]
+
+[node name="BurstTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+
+[node name="AttackBurstTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.6
+
+[node name="TurnOffEnginesTimer" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="timeout" from="State/Root/Physics Mode/Physics Mode States/DeadTimer" to="State/Root/Physics Mode/Physics Mode States" method="_on_dead_timer_timeout"]
+[connection signal="state_entered" from="State/Root/Physics Mode/char" to="State/Root/Physics Mode/Physics Mode States" method="_on_char_state_entered"]
+[connection signal="state_exited" from="State/Root/Physics Mode/char" to="State/Root/Physics Mode/Physics Mode States" method="_on_char_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Physics Mode/char" to="State/Root/Physics Mode/Physics Mode States" method="_on_char_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics Mode/char/Direction Faced/face right" to="State/Root/Physics Mode/char/Direction Faced/Direction Faced States" method="_on_face_right_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Physics Mode/char/Direction Faced/face right" to="State/Root/Physics Mode/char/Direction Faced/Direction Faced States" method="_on_face_right_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics Mode/char/Direction Faced/face left" to="State/Root/Physics Mode/char/Direction Faced/Direction Faced States" method="_on_face_left_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Physics Mode/char/Direction Faced/face left" to="State/Root/Physics Mode/char/Direction Faced/Direction Faced States" method="_on_face_left_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics Mode/char/Direction Faced/turn right" to="State/Root/Physics Mode/char/Direction Faced/Direction Faced States" method="_on_turn_right_state_entered"]
+[connection signal="state_entered" from="State/Root/Physics Mode/char/Direction Faced/turn left" to="State/Root/Physics Mode/char/Direction Faced/Direction Faced States" method="_on_turn_left_state_entered"]
+[connection signal="state_entered" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/off" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_off_state_entered"]
+[connection signal="taken" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/off/to thrust" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_off_to_thrust_taken"]
+[connection signal="taken" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/off/to burst" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_off_to_burst_taken"]
+[connection signal="state_entered" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/thrust" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_thrust_state_entered"]
+[connection signal="taken" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/thrust/to off" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_thrust_to_off_taken"]
+[connection signal="taken" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/thrust/to quick off" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_thrust_to_quick_off_taken"]
+[connection signal="taken" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/thrust/to burst" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_thrust_to_burst_taken"]
+[connection signal="state_entered" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/burst" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_burst_state_entered"]
+[connection signal="taken" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/burst/to off" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_burst_to_off_taken"]
+[connection signal="taken" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/burst/to quick off" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_burst_to_quick_off_taken"]
+[connection signal="taken" from="State/Root/Physics Mode/char/Engagement Mode/open - Engines/burst/to thrust" to="State/Root/Physics Mode/char/Engagement Mode/open - Engines/Engines States" method="_on_burst_to_thrust_taken"]
+[connection signal="state_entered" from="State/Root/Physics Mode/rigid" to="State/Root/Physics Mode/Physics Mode States" method="_on_rigid_state_entered"]
+[connection signal="state_exited" from="State/Root/Physics Mode/rigid" to="State/Root/Physics Mode/Physics Mode States" method="_on_rigid_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Physics Mode/rigid" to="State/Root/Physics Mode/Physics Mode States" method="_on_rigid_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics Mode/ragdoll" to="State/Root/Physics Mode/Physics Mode States" method="_on_ragdoll_state_entered"]
+[connection signal="state_exited" from="State/Root/Physics Mode/ragdoll" to="State/Root/Physics Mode/Physics Mode States" method="_on_ragdoll_state_exited"]
+[connection signal="state_entered" from="State/Root/Physics Mode/dead" to="State/Root/Physics Mode/Physics Mode States" method="_on_dead_state_entered"]
+[connection signal="timeout" from="TargetNoneTimer" to="." method="_on_target_none_timer_timeout"]
+[connection signal="timeout" from="TargetLossTimer" to="." method="_on_target_loss_timer_timeout"]
+[connection signal="timeout" from="QuickClosingTimer" to="." method="_on_quick_closing_timer_timeout"]
+[connection signal="timeout" from="BurstTimer" to="." method="_on_burst_timer_timeout"]
+[connection signal="timeout" from="AttackBurstTimer" to="." method="_on_attack_burst_timer_timeout"]
+[connection signal="timeout" from="TurnOffEnginesTimer" to="." method="_on_turn_off_engines_timer_timeout"]

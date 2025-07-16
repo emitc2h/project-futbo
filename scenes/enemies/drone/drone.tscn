@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://dy4rhlpeuav22"]
 
-[ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone_model.tscn" id="2_cq5ml"]
+[ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone/drone_model.tscn" id="2_cq5ml"]
 [ext_resource type="Script" uid="uid://ivuwvt726w21" path="res://scripts/enemies/drone/drone.gd" id="2_y3ws1"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_md0p7"]
 [ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="4_2myhj"]
@@ -14,7 +14,7 @@
 [ext_resource type="Shader" uid="uid://ddsp10lo1rx15" path="res://shaders/Drone/screen_distortion.gdshader" id="9_r56iq"]
 [ext_resource type="BehaviorTree" uid="uid://cl3pokesv8enr" path="res://ai/trees/enemies/drone_behavior_tree.tres" id="9_t6brq"]
 [ext_resource type="Texture2D" uid="uid://cbvr58ksjt0qs" path="res://assets/3D/Textures/Drone/float_mask_rendered_128x128.png" id="10_4h6a7"]
-[ext_resource type="Script" uid="uid://bfjd2p8wgxury" path="res://scenes/enemies/proximity_detector.gd" id="13_iovl4"]
+[ext_resource type="Script" uid="uid://bfjd2p8wgxury" path="res://scenes/enemies/drone/proximity_detector.gd" id="13_iovl4"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_kds82"]
 
@@ -315,9 +315,6 @@ script = ExtResource("7_md0p7")
 to = NodePath("../../disabled")
 event = &"target lost to disabled"
 delay_in_seconds = "0.0"
-
-[node name="acquiring" type="Node" parent="State/Root/Targeting"]
-script = ExtResource("6_o57st")
 
 [node name="Engines" type="Node" parent="State/Root"]
 script = ExtResource("5_t6brq")
