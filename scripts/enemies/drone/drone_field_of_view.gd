@@ -1,9 +1,9 @@
-class_name FieldOfView
+class_name DroneFieldOfView
 extends Node3D
 
 var target: Node3D
 
-var sees_player: bool:
+var sees_target: bool:
 	get:
 		for child in self.get_children():
 			if child is RayCast3D and child.is_colliding():

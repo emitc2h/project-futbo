@@ -115,11 +115,6 @@ func _on_char_state_physics_processing(delta: float) -> void:
 	
 	char_node.move_and_slide()
 	
-	## Will move this logic into the DroneTargetingStates
-		#if target and in_target_acquired_state:
-			#var pointer_to_target: Vector3 = char_node.global_position - target.global_position - Vector3.UP * 1.5
-			#self.char_node.rotation.x = min(asin(abs(pointer_to_target.y) / pointer_to_target.length()), 0.5)
-	
 	## nodes tha must follow the char node
 	track_transform_container.transform = char_node.transform
 	track_position_container.position = char_node.position

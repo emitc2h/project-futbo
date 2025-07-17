@@ -25,6 +25,16 @@ enum State {OFF = 0, THRUST = 1, BURST = 2}
 var state: State = State.OFF
 
 ## State transition constants
+const TRANS_OFF_TO_THRUST: String = "Engines: off to thrust"
+const TRANS_OFF_TO_BURST: String = "Engines: off to burst"
+
+const TRANS_THRUST_TO_OFF: String = "Engines: thrust to off"
+const TRANS_THRUST_TO_QUICK_OFF: String = "Engines: thrust to quick off"
+const TRANS_THRUST_TO_BURST: String = "Engines: thrust to burst"
+
+const TRANS_BURST_TO_OFF: String = "Engines: burst to off"
+const TRANS_BURST_TO_QUICK_OFF: String = "Engines: burst to quick off"
+const TRANS_BURST_TO_THRUST: String = "Engines: burst to thrust"
 
 ## Drone nodes controlled by this state
 @onready var model_mesh: Node3D = drone.get_node("TrackTransformContainer/DroneModel/Armature/Skeleton3D/drone")

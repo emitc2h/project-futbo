@@ -32,7 +32,7 @@ var bone_transforms: Array[Transform3D] = []
 @onready var float_distortion_mesh: MeshInstance3D = $CarryAlongContainer/Distortion
 @onready var float_distortion_material: ShaderMaterial = float_distortion_mesh.get_surface_override_material(0)
 
-@onready var field_of_view: FieldOfView = $DroneModel/FieldOfView
+@onready var field_of_view: DroneFieldOfView = $DroneModel/FieldOfView
 
 @onready var model_anim_tree: AnimationTree = $DroneModel/AnimationTree
 @onready var anim_state: AnimationNodeStateMachinePlayback

@@ -1,6 +1,6 @@
 extends Level
 
-@onready var dronev2: DroneV2 = $Drone2
+@onready var dronev2: DroneV2 = $Drone
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):

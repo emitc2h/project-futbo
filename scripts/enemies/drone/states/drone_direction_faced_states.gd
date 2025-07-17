@@ -14,18 +14,30 @@ var direction: Enums.Direction = Enums.Direction.RIGHT
 enum Mode {FACING = 0, TURNING = 1}
 var mode: Mode = Mode.FACING
 
+## State transition constants
+const TRANS_FACE_RIGHT_TO_TURN_LEFT: String = "Direction Faced: face right to turn left"
+
+const TRANS_FACE_LEFT_TO_TURN_RIGHT: String = "Direction Faced: face left to turn right"
+
+const TRANS_TURN_RIGHT_TO_FACE_RIGHT: String = "Direction Faced: turn right to face right"
+const TRANS_TURN_RIGHT_TO_TURN_LEFT: String = "Direction Faced: turn right to turn left"
+
+const TRANS_TURN_LEFT_TO_FACE_LEFT: String = "Direction Faced: turn left to face left"
+const TRANS_TURN_LEFT_TO_TURN_RIGHT: String = "Direction Faced: turn left to turn right"
+
 ## Drone nodes controlled by this state
 @onready var char_node: CharacterBody3D = drone.get_node("CharNode")
 
-# Constants
+## Internal constants
 const FACE_RIGHT_Y_ROT = Vector3(0.0, PI/2, 0.0)
 const FACE_LEFT_Y_ROT = Vector3(0.0, -PI/2, 0.0)
 
-const TRANS_TURN_RIGHT_TO_FACE_RIGHT: String = "Direction Faced: turn right to face right"
-const TRANS_TURN_LEFT_TO_FACE_LEFT: String = "Direction Faced: turn left to face left"
-
 ## Internal variables
 var tween: Tween
+
+## Signals
+signal is_now_facing_right
+signal is_now_facing_left
 
 
 func _rotate_toward(vector: Vector3) -> void:
@@ -40,6 +52,7 @@ func _rotate_toward(vector: Vector3) -> void:
 func _on_face_right_state_entered() -> void:
 	state = State.FACE_RIGHT
 	mode = Mode.FACING
+	is_now_facing_right.emit()
 
 
 func _on_face_right_state_physics_processing(delta: float) -> void:
@@ -51,6 +64,7 @@ func _on_face_right_state_physics_processing(delta: float) -> void:
 func _on_face_left_state_entered() -> void:
 	state = State.FACE_LEFT
 	mode = Mode.FACING
+	is_now_facing_left.emit()
 
 
 func _on_face_left_state_physics_processing(delta: float) -> void:
