@@ -14,7 +14,7 @@
 [ext_resource type="Shader" uid="uid://ddsp10lo1rx15" path="res://shaders/Drone/screen_distortion.gdshader" id="9_r56iq"]
 [ext_resource type="BehaviorTree" uid="uid://cl3pokesv8enr" path="res://ai/trees/enemies/drone_behavior_tree.tres" id="9_t6brq"]
 [ext_resource type="Texture2D" uid="uid://cbvr58ksjt0qs" path="res://assets/3D/Textures/Drone/float_mask_rendered_128x128.png" id="10_4h6a7"]
-[ext_resource type="Script" uid="uid://bfjd2p8wgxury" path="res://scenes/enemies/drone/proximity_detector.gd" id="13_iovl4"]
+[ext_resource type="Script" uid="uid://bfjd2p8wgxury" path="res://scripts/enemies/drone/proximity_detector.gd" id="13_iovl4"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_kds82"]
 

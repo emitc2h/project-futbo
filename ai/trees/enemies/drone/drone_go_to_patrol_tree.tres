@@ -1,0 +1,78 @@
+[gd_resource type="BehaviorTree" load_steps=22 format=3 uid="uid://7euectnyhgwy"]
+
+[ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/droneV2/face_node_action.gd" id="1_bhjmg"]
+[ext_resource type="Script" uid="uid://bbbdpq3yu2mga" path="res://ai/tasks/droneV2/between_patrol_markers_condition.gd" id="1_hmil3"]
+[ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/droneV2/move_to_node_action.gd" id="1_ioh2e"]
+[ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/droneV2/open_action.gd" id="2_hapyk"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_3x0vg"]
+
+[sub_resource type="BTCondition" id="BTCondition_hapyk"]
+script = ExtResource("1_hmil3")
+
+[sub_resource type="BTAction" id="BTAction_gyocu"]
+script = ExtResource("2_hapyk")
+check_signal_id = false
+async = true
+
+[sub_resource type="BBNode" id="BBNode_hapyk"]
+saved_value = NodePath("PatrolMarker1")
+resource_name = "PatrolMarker1"
+
+[sub_resource type="BTAction" id="BTAction_6d301"]
+script = ExtResource("1_bhjmg")
+target_node = SubResource("BBNode_hapyk")
+away = false
+use_target = false
+
+[sub_resource type="BBNode" id="BBNode_bhjmg"]
+saved_value = NodePath("PatrolMarker1")
+resource_name = "PatrolMarker1"
+
+[sub_resource type="BTAction" id="BTAction_hmil3"]
+script = ExtResource("1_ioh2e")
+target_node = SubResource("BBNode_bhjmg")
+away = false
+use_target = false
+use_burst = false
+use_thrust = false
+close_enough_distance = 0.1
+far_enough_distance = 0.0
+
+[sub_resource type="BBNode" id="BBNode_ioh2e"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_bhjmg"]
+node = SubResource("BBNode_ioh2e")
+method = &"burst"
+
+[sub_resource type="BTWait" id="BTWait_ioh2e"]
+
+[sub_resource type="BBNode" id="BBNode_hmil3"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_hapyk"]
+node = SubResource("BBNode_hmil3")
+method = &"thrust"
+
+[sub_resource type="BTSequence" id="BTSequence_hmil3"]
+children = [SubResource("BTCallMethod_bhjmg"), SubResource("BTWait_ioh2e"), SubResource("BTCallMethod_hapyk")]
+
+[sub_resource type="BTAlwaysFail" id="BTAlwaysFail_ioh2e"]
+children = [SubResource("BTSequence_hmil3")]
+
+[sub_resource type="BTParallel" id="BTParallel_hapyk"]
+num_failures_required = 5
+children = [SubResource("BTAction_hmil3"), SubResource("BTAlwaysFail_ioh2e")]
+
+[sub_resource type="BTSequence" id="BTSequence_gyocu"]
+children = [SubResource("BTAction_gyocu"), SubResource("BTAction_6d301"), SubResource("BTParallel_hapyk")]
+
+[sub_resource type="BTSelector" id="BTSelector_bhjmg"]
+children = [SubResource("BTCondition_hapyk"), SubResource("BTSequence_gyocu")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_3x0vg")
+root_task = SubResource("BTSelector_bhjmg")

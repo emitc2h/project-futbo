@@ -2,7 +2,11 @@
 class_name BehaviorManager
 extends Node
 
+@export var reset_tree_on_enter: bool = true
+
 @onready var btplayer: BTPlayer = $BTPlayer
+
+signal finished(status: int)
 
 
 ## Check whether the Behavior Manager has a BTPlayer node
@@ -25,14 +29,22 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func _ready() -> void:
+	btplayer.active = false
+	btplayer.behavior_tree_finished.connect(_on_bt_finished)
 	var state: AtomicState = get_parent() as AtomicState
 	state.state_entered.connect(_on_behavior_entered)
 	state.state_exited.connect(_on_behavior_exited)
 
 
 func _on_behavior_entered() -> void:
+	if reset_tree_on_enter:
+		btplayer.restart()
 	btplayer.active = true
 
 
 func _on_behavior_exited() -> void:
 	btplayer.active = false
+	
+
+func _on_bt_finished(status: int) -> void:
+	finished.emit(status)

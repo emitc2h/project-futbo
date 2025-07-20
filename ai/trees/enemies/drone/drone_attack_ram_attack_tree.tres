@@ -1,0 +1,78 @@
+[gd_resource type="BehaviorTree" load_steps=20 format=3 uid="uid://45gcob0egysb"]
+
+[ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/droneV2/face_node_action.gd" id="1_c0n87"]
+[ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/droneV2/move_to_node_action.gd" id="2_avors"]
+[ext_resource type="Script" uid="uid://503g2foi17mj" path="res://ai/tasks/droneV2/ball_attack_action.gd" id="3_kuy2p"]
+[ext_resource type="Script" uid="uid://wa54421i351d" path="res://ai/tasks/droneV2/recover_from_ball_action.gd" id="4_35t0q"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_kt6ms"]
+
+[sub_resource type="BBNode" id="BBNode_avors"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_kuy2p"]
+script = ExtResource("1_c0n87")
+target_node = SubResource("BBNode_avors")
+away = true
+use_target = true
+
+[sub_resource type="BBNode" id="BBNode_kuy2p"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_35t0q"]
+script = ExtResource("2_avors")
+target_node = SubResource("BBNode_kuy2p")
+away = true
+use_target = true
+use_burst = true
+use_thrust = false
+close_enough_distance = 0.0
+far_enough_distance = 11.0
+
+[sub_resource type="BBNode" id="BBNode_35t0q"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_2xvos"]
+script = ExtResource("1_c0n87")
+target_node = SubResource("BBNode_35t0q")
+away = false
+use_target = true
+
+[sub_resource type="BTAction" id="BTAction_mq0oj"]
+script = ExtResource("3_kuy2p")
+burst_duration = 0.8
+
+[sub_resource type="BTWait" id="BTWait_35t0q"]
+duration = 0.6
+
+[sub_resource type="BBNode" id="BBNode_mq0oj"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_77xo3"]
+script = ExtResource("1_c0n87")
+target_node = SubResource("BBNode_mq0oj")
+away = false
+use_target = true
+
+[sub_resource type="BTAction" id="BTAction_26juq"]
+script = ExtResource("4_35t0q")
+
+[sub_resource type="BBNode" id="BBNode_2xvos"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_6wf5b"]
+script = ExtResource("2_avors")
+target_node = SubResource("BBNode_2xvos")
+away = false
+use_target = true
+use_burst = false
+use_thrust = true
+close_enough_distance = 5.9
+far_enough_distance = 0.0
+
+[sub_resource type="BTSequence" id="BTSequence_35t0q"]
+children = [SubResource("BTAction_kuy2p"), SubResource("BTAction_35t0q"), SubResource("BTAction_2xvos"), SubResource("BTAction_mq0oj"), SubResource("BTWait_35t0q"), SubResource("BTAction_77xo3"), SubResource("BTAction_26juq"), SubResource("BTAction_6wf5b")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_kt6ms")
+root_task = SubResource("BTSequence_35t0q")

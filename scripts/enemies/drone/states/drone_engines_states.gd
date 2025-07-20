@@ -28,13 +28,15 @@ var state: State = State.OFF
 const TRANS_OFF_TO_THRUST: String = "Engines: off to thrust"
 const TRANS_OFF_TO_BURST: String = "Engines: off to burst"
 
-const TRANS_THRUST_TO_OFF: String = "Engines: thrust to off"
+const TRANS_THRUST_TO_STOPPING: String = "Engines: thrust to stopping"
 const TRANS_THRUST_TO_QUICK_OFF: String = "Engines: thrust to quick off"
 const TRANS_THRUST_TO_BURST: String = "Engines: thrust to burst"
 
-const TRANS_BURST_TO_OFF: String = "Engines: burst to off"
+const TRANS_BURST_TO_STOPPING: String = "Engines: burst to stopping"
 const TRANS_BURST_TO_QUICK_OFF: String = "Engines: burst to quick off"
 const TRANS_BURST_TO_THRUST: String = "Engines: burst to thrust"
+
+const TRANS_STOPPING_TO_OFF: String = "Engines: stopping to off"
 
 ## Drone nodes controlled by this state
 @onready var model_mesh: Node3D = drone.get_node("TrackTransformContainer/DroneModel/Armature/Skeleton3D/drone")
@@ -43,6 +45,7 @@ const TRANS_BURST_TO_THRUST: String = "Engines: burst to thrust"
 @onready var model_anim_tree: AnimationTree = drone.get_node("TrackTransformContainer/DroneModel/AnimationTree")
 @onready var anim_state: AnimationNodeStateMachinePlayback
 
+signal engines_are_off
 
 ## Utils
 func _tween_engines(
@@ -68,14 +71,14 @@ func _tween_engines(
 
 func _ready() -> void:
 	anim_state = model_anim_tree.get("parameters/playback")
+	model_anim_tree.animation_finished.connect(_on_animation_finished)
 
 
 # off state
 #----------------------------------------
 func _on_off_state_entered() -> void:
 	state = State.OFF
-	drone.physics_mode_states.speed = off_speed
-	anim_state.travel("idle")
+	engines_are_off.emit()
 
 
 func _on_off_to_thrust_taken() -> void:
@@ -85,6 +88,7 @@ func _on_off_to_thrust_taken() -> void:
 		Tween.EASE_OUT,
 		Tween.TRANS_BACK,
 		0.6)
+	anim_state.travel("start thrust")
 
 
 func _on_off_to_burst_taken() -> void:
@@ -94,23 +98,23 @@ func _on_off_to_burst_taken() -> void:
 		Tween.EASE_OUT,
 		Tween.TRANS_BACK,
 		0.4)
+	anim_state.travel("start thrust")
 
 
 # thrust state
 #----------------------------------------
 func _on_thrust_state_entered() -> void:
 	state = State.THRUST
-	drone.physics_mode_states.speed = thrust_speed
-	anim_state.travel("idle thrust")
 
 
-func _on_thrust_to_off_taken() -> void:
+func _on_thrust_to_stopping_taken() -> void:
 	_tween_engines(
 		off_noise_speed,
 		thrust_noise_intensity, off_noise_intensity,
 		Tween.EASE_OUT,
 		Tween.TRANS_QUART,
 		0.8)
+	anim_state.travel("stop thrust")
 
 
 func _on_thrust_to_quick_off_taken() -> void:
@@ -135,17 +139,16 @@ func _on_thrust_to_burst_taken() -> void:
 #----------------------------------------
 func _on_burst_state_entered() -> void:
 	state = State.BURST
-	drone.physics_mode_states.speed = burst_speed
-	anim_state.travel("idle thrust")
 
 
-func _on_burst_to_off_taken() -> void:
+func _on_burst_to_stoppping_taken() -> void:
 	_tween_engines(
 		off_noise_speed,
 		burst_noise_intensity, off_noise_intensity,
 		Tween.EASE_OUT,
 		Tween.TRANS_QUART,
 		0.8)
+	anim_state.travel("stop thrust")
 
 
 func _on_burst_to_quick_off_taken() -> void:
@@ -164,3 +167,10 @@ func _on_burst_to_thrust_taken() -> void:
 		Tween.EASE_OUT,
 		Tween.TRANS_LINEAR,
 		0.6)
+
+
+# stopping state
+#----------------------------------------
+func _on_animation_finished(anim_name: String) -> void:
+	if anim_name == "StopThrust":
+		sc.send_event(TRANS_STOPPING_TO_OFF)

@@ -6,9 +6,11 @@ var target: Node3D
 var sees_target: bool:
 	get:
 		for child in self.get_children():
-			if child is RayCast3D and child.is_colliding():
-				target = child.get_collider()
-				return true
+			if child is RayCast3D:
+				#child.force_raycast_update()
+				if child.is_colliding():
+					target = child.get_collider()
+					return true
 		target = null
 		return false
 

@@ -16,15 +16,17 @@ extends Node
 @export var acquired_focus: float = 8.0
 
 @export_group("Tracking Parameters")
-@export var look_down_lerp_factor: float = 4.0
+@export var look_down_lerp_factor: float = 10.0
 @export_range(0, 360, 0.1, "radians_as_degrees") var max_look_down_angle: float = 0.5
-@export var look_down_target_height: float = 1.5
+@export var look_down_target_height: float = 1.0
+@export var look_up_lerp_factor: float = 5.0
 
 ## States Enum
 enum State {DISABLED = 0, NONE = 1, ACQUIRING = 2, ACQUIRED = 3}
 var state: State = State.NONE
 
 ## State transition constants
+const TRANS_DISABLED_TO_NONE: String = "Targeting: disabled to none"
 const TRANS_DISABLED_TO_ACQUIRING: String = "Targeting: disabled to acquiring"
 
 const TRANS_NONE_TO_DISABLED: String = "Targeting: none to disabled"
@@ -41,9 +43,20 @@ const TRANS_ACQUIRED_TO_ACQUIRING: String = "Targeting: acquired to acquiring"
 ## Drone nodes controlled by this state
 @onready var field_of_view: DroneFieldOfView = drone.get_node("TrackTransformContainer/FieldOfView")
 @onready var char_node: CharacterBody3D = drone.get_node("CharNode")
+@onready var drone_model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
 
 ## Internal variables
 var target: Node3D
+var range_tween: Tween
+var focus_tween: Tween
+
+## Timers
+@onready var acquiring_timer: Timer = $AcquiringTimer
+
+## Signals
+signal target_acquired()
+signal target_acquiring()
+signal target_none()
 
 
 ## Utils
@@ -54,12 +67,14 @@ func scan_for_target() -> bool:
 	return false
 
 
-
 # disabled state
 #----------------------------------------
 func _on_disabled_state_entered() -> void:
 	state = State.DISABLED
 	field_of_view.enabled = false
+	
+	## Make the drone transition animations land on the idle state
+	drone_model.open_paths_to_idle()
 
 
 func _on_disabled_state_exited() -> void:
@@ -72,6 +87,10 @@ func _on_none_state_entered() -> void:
 	state = State.NONE
 	field_of_view.range = none_range
 	field_of_view.focus = none_focus
+	target_none.emit()
+	
+	## Make the drone transition animations land on the idle state
+	drone_model.open_paths_to_idle()
 
 
 func _on_none_state_physics_processing(delta: float) -> void:
@@ -85,6 +104,11 @@ func _on_acquiring_state_entered() -> void:
 	state = State.ACQUIRING
 	field_of_view.range = acquiring_range
 	field_of_view.focus = acquiring_focus
+	acquiring_timer.start()
+	target_acquiring.emit()
+	
+	## Make the drone transition animations land on the idle state
+	drone_model.open_paths_to_idle()
 
 
 func _on_acquiring_state_physics_processing(delta: float) -> void:
@@ -92,15 +116,50 @@ func _on_acquiring_state_physics_processing(delta: float) -> void:
 		sc.send_event(TRANS_ACQUIRING_TO_ACQUIRED)
 
 
+func _on_acquiring_timer_timeout() -> void:
+	acquiring_timer.stop()
+	sc.send_event(TRANS_ACQUIRING_TO_NONE)
+
+
 # acquired state
 #----------------------------------------
 func _on_acquired_state_entered() -> void:
 	state = State.ACQUIRED
-	field_of_view.range = acquired_range
-	field_of_view.focus = acquired_focus
+	## Bring the new raycast configuration gradually in
+	if range_tween:
+		range_tween.stop()
+	range_tween = get_tree().create_tween()
+	range_tween.tween_property(field_of_view, "range", acquired_range, 1.0)
+
+	if focus_tween:
+		focus_tween.stop()
+	focus_tween = get_tree().create_tween()
+	focus_tween.tween_property(field_of_view, "focus", acquired_focus, 1.0)
+
+	## Let the drone look down at the target
+	drone.physics_mode_states.look_down_lerp_factor = look_down_lerp_factor
+	
+	target_acquired.emit()
+	
+	## Make the drone transition animations land on the targeting state
+	drone_model.open_paths_to_targeting()
 
 
 func _on_acquired_state_physics_processing(delta: float) -> void:
-	var pointer_to_target: Vector3 = char_node.global_position - target.global_position - Vector3.UP * look_down_target_height
-	var new_rotation_x: float = min(asin(abs(pointer_to_target.y) / pointer_to_target.length()), max_look_down_angle)
-	char_node.rotation.x = lerp(char_node.rotation.x, new_rotation_x, look_down_lerp_factor)
+	if not scan_for_target():
+		sc.send_event(TRANS_ACQUIRED_TO_ACQUIRING)
+	else:
+		## Compute where the target is, and the angle need to look down at it
+		var pointer_to_target: Vector3 = char_node.global_position - target.global_position - Vector3.UP * look_down_target_height
+		var new_rotation_x: float = min(asin(abs(pointer_to_target.y) / pointer_to_target.length()), max_look_down_angle)
+		drone.physics_mode_states.look_down_angle = new_rotation_x
+
+
+func _on_acquired_state_exited() -> void:
+	## Look back up
+	drone.physics_mode_states.look_down_lerp_factor = look_up_lerp_factor
+	drone.physics_mode_states.look_down_angle = 0.0
+	if range_tween:
+		range_tween.stop()
+	if focus_tween:
+		focus_tween.stop()

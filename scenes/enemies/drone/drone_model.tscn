@@ -1,7 +1,8 @@
-[gd_scene load_steps=79 format=3 uid="uid://blqvlawbxf74y"]
+[gd_scene load_steps=72 format=3 uid="uid://blqvlawbxf74y"]
 
 [ext_resource type="PackedScene" uid="uid://c6irjm83p35mw" path="res://assets/3D/Enemies/Drone/drone.glb" id="1_y6iu8"]
 [ext_resource type="Texture2D" uid="uid://c0dkmj477txwv" path="res://assets/3D/Textures/Drone/exhaust_flame.png" id="2_3hy7v"]
+[ext_resource type="Script" uid="uid://csqm55eeox22r" path="res://scripts/enemies/drone/drone_model.gd" id="2_3tr2a"]
 [ext_resource type="Shader" uid="uid://km1fq1l33q5u" path="res://shaders/Drone/drone_exhaust.gdshader" id="2_6fcep"]
 [ext_resource type="Texture2D" uid="uid://mpmfxrcwxyin" path="res://assets/3D/Textures/Drone/exhaust_noise.png" id="3_ur4vj"]
 
@@ -54,16 +55,11 @@ radius = 0.0633245
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xd6o8"]
 animation = &"CloseUp"
 
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_xd6o8"]
-
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_6fcep"]
-graph_offset = Vector2(-360, -5)
 nodes/close/node = SubResource("AnimationNodeAnimation_xd6o8")
-nodes/close/position = Vector2(50, 170)
+nodes/close/position = Vector2(240, 190)
 nodes/output/position = Vector2(480, 200)
-nodes/scale/node = SubResource("AnimationNodeTimeScale_xd6o8")
-nodes/scale/position = Vector2(260, 150)
-node_connections = [&"output", 0, &"scale", &"scale", 0, &"close"]
+node_connections = [&"output", 0, &"close"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ur4vj"]
 animation = &"Closed"
@@ -71,41 +67,29 @@ animation = &"Closed"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yu0nt"]
 animation = &"Fire"
 
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_h7a81"]
-
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_e35r2"]
 graph_offset = Vector2(-365, -49)
 nodes/fire/node = SubResource("AnimationNodeAnimation_yu0nt")
-nodes/fire/position = Vector2(-60, 110)
-nodes/scale/node = SubResource("AnimationNodeTimeScale_h7a81")
-nodes/scale/position = Vector2(120, 110)
-node_connections = [&"output", 0, &"scale", &"scale", 0, &"fire"]
+nodes/fire/position = Vector2(90, 110)
+node_connections = [&"output", 0, &"fire"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g0jmh"]
 animation = &"IdleThrust"
 
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_eijxh"]
-
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_565iv"]
 graph_offset = Vector2(-228, -143)
 "nodes/idle thrust/node" = SubResource("AnimationNodeAnimation_g0jmh")
-"nodes/idle thrust/position" = Vector2(-50, 130)
-nodes/scale/node = SubResource("AnimationNodeTimeScale_eijxh")
-nodes/scale/position = Vector2(120, 120)
-node_connections = [&"output", 0, &"scale", &"scale", 0, &"idle thrust"]
+"nodes/idle thrust/position" = Vector2(110, 130)
+node_connections = [&"output", 0, &"idle thrust"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3hy7v"]
 animation = &"IdleOpen"
 
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_6fcep"]
-
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ur4vj"]
 graph_offset = Vector2(-278, -35)
 "nodes/idle open/node" = SubResource("AnimationNodeAnimation_3hy7v")
-"nodes/idle open/position" = Vector2(-100, 120)
-nodes/scale/node = SubResource("AnimationNodeTimeScale_6fcep")
-nodes/scale/position = Vector2(110, 130)
-node_connections = [&"output", 0, &"scale", &"scale", 0, &"idle open"]
+"nodes/idle open/position" = Vector2(80, 130)
+node_connections = [&"output", 0, &"idle open"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uabyq"]
 animation = &"OpenUp"
@@ -119,43 +103,29 @@ node_connections = [&"output", 0, &"open up"]
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6fcep"]
 animation = &"QuickClose"
 
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ur4vj"]
-
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xd6o8"]
 graph_offset = Vector2(-363, -27)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_6fcep")
-nodes/Animation/position = Vector2(-110, 120)
-nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_ur4vj")
-nodes/TimeScale/position = Vector2(90, 100)
-node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_uabyq"]
+nodes/Animation/position = Vector2(90, 120)
+node_connections = [&"output", 0, &"Animation"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e35r2"]
 animation = &"StartThrust"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_eijxh"]
 graph_offset = Vector2(-250, -131)
-nodes/scale/node = SubResource("AnimationNodeTimeScale_uabyq")
-nodes/scale/position = Vector2(90, 120)
 "nodes/start thrust/node" = SubResource("AnimationNodeAnimation_e35r2")
-"nodes/start thrust/position" = Vector2(-140, 120)
-node_connections = [&"output", 0, &"scale", &"scale", 0, &"start thrust"]
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_yu0nt"]
+"nodes/start thrust/position" = Vector2(90, 120)
+node_connections = [&"output", 0, &"start thrust"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eijxh"]
 animation = &"StopThrust"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_utdxq"]
 graph_offset = Vector2(-347, -128)
-nodes/scale/node = SubResource("AnimationNodeTimeScale_yu0nt")
-nodes/scale/position = Vector2(110, 130)
 "nodes/stop thrust/node" = SubResource("AnimationNodeAnimation_eijxh")
-"nodes/stop thrust/position" = Vector2(-85.5, 143.5)
-node_connections = [&"output", 0, &"scale", &"scale", 0, &"stop thrust"]
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_3hy7v"]
+"nodes/stop thrust/position" = Vector2(100, 130)
+node_connections = [&"output", 0, &"stop thrust"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h7a81"]
 animation = &"Targeting"
@@ -163,42 +133,33 @@ animation = &"Targeting"
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_g0jmh"]
 graph_offset = Vector2(-272.64, 97.92)
 nodes/output/position = Vector2(400, 150)
-nodes/scale/node = SubResource("AnimationNodeTimeScale_3hy7v")
-nodes/scale/position = Vector2(180, 120)
 nodes/targeting/node = SubResource("AnimationNodeAnimation_h7a81")
-nodes/targeting/position = Vector2(-10, 130)
-node_connections = [&"output", 0, &"scale", &"scale", 0, &"targeting"]
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_e35r2"]
+nodes/targeting/position = Vector2(160, 130)
+node_connections = [&"output", 0, &"targeting"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_565iv"]
 animation = &"ThrustClose"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_sbwod"]
 graph_offset = Vector2(-382, -172)
-nodes/scale/node = SubResource("AnimationNodeTimeScale_e35r2")
-nodes/scale/position = Vector2(70, 120)
 "nodes/thrust close/node" = SubResource("AnimationNodeAnimation_565iv")
-"nodes/thrust close/position" = Vector2(-160, 130)
-node_connections = [&"output", 0, &"scale", &"scale", 0, &"thrust close"]
+"nodes/thrust close/position" = Vector2(80, 130)
+node_connections = [&"output", 0, &"thrust close"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uabyq"]
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h7a81"]
 xfade_time = 0.1
-advance_mode = 2
-advance_condition = &"open up"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_e35r2"]
 xfade_time = 0.5
 switch_mode = 2
 advance_mode = 2
+advance_expression = "trans_openup_to_idle_opened == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g0jmh"]
 xfade_time = 0.5
-advance_mode = 2
-advance_condition = &"close up"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_eijxh"]
 xfade_time = 0.1
@@ -207,8 +168,6 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3hy7v"]
 xfade_time = 0.05
-advance_mode = 2
-advance_condition = &"idle to quick close"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6fcep"]
 xfade_time = 0.1
@@ -217,63 +176,45 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xd6o8"]
 xfade_time = 0.5
-advance_mode = 2
-advance_condition = &"fire"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_565iv"]
 xfade_time = 0.5
 switch_mode = 2
 advance_mode = 2
+advance_expression = "trans_fire_to_idle_opened == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_utdxq"]
 xfade_time = 0.05
-advance_mode = 2
-advance_condition = &"fire to quick close"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sbwod"]
 xfade_time = 0.5
-advance_mode = 2
-advance_condition = &"targeting"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_abk80"]
 xfade_time = 0.5
-advance_mode = 2
-advance_condition = &"targeting to idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pcn5y"]
 xfade_time = 0.5
-advance_mode = 2
-advance_condition = &"targeting to fire"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dtoeo"]
 xfade_time = 0.5
 switch_mode = 2
 advance_mode = 2
+advance_expression = "trans_fire_to_targeting_opened == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ur4vj"]
 xfade_time = 0.05
-advance_mode = 2
-advance_condition = &"targeting to quick close"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yu0nt"]
 xfade_time = 0.1
-advance_mode = 2
-advance_condition = &"close up to quick close"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_i8e50"]
 xfade_time = 0.05
-advance_mode = 2
-advance_condition = &"open up to quick close"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_syd1y"]
 xfade_time = 0.2
-advance_mode = 2
-advance_condition = &"idle to start thrust"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_42xs3"]
 xfade_time = 0.2
-advance_mode = 2
-advance_condition = &"targeting to start thrust"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kw7w5"]
 xfade_time = 0.2
@@ -282,24 +223,22 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_offs8"]
 xfade_time = 0.2
-advance_mode = 2
-advance_condition = &"idle thrust to stop thrust"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_63bqk"]
 xfade_time = 0.2
 switch_mode = 2
 advance_mode = 2
 advance_condition = &"stop thrust to idle"
+advance_expression = "trans_stopthrust_to_idle_opened == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_o8em1"]
 xfade_time = 0.2
 switch_mode = 2
 advance_mode = 2
 advance_condition = &"stop thrust to targeting"
+advance_expression = "trans_stopthrust_to_targeting_opened == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iigsm"]
-advance_mode = 2
-advance_condition = &"idle thrust to close"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_s8rxf"]
 switch_mode = 2
@@ -308,26 +247,23 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3cleu"]
 xfade_time = 0.5
 switch_mode = 1
-advance_mode = 2
-advance_condition = &"open up to close up"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0u2x7"]
 xfade_time = 0.5
 switch_mode = 1
-advance_mode = 2
-advance_condition = &"close up to open up"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4qqf3"]
-advance_mode = 2
-advance_condition = &"targeting to close up"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5rp5g"]
-advance_mode = 2
-advance_condition = &"start thrust to thrust close"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_owosy"]
-advance_mode = 2
 advance_condition = &"stop thrust to thrust close"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p5rs3"]
+xfade_time = 0.5
+switch_mode = 2
+advance_mode = 2
+advance_expression = "trans_openup_to_targeting_opened == true"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_xd6o8"]
 states/End/position = Vector2(1289, 99.9375)
@@ -338,11 +274,11 @@ states/closed/position = Vector2(357.5, 176.996)
 states/fire/node = SubResource("AnimationNodeBlendTree_e35r2")
 states/fire/position = Vector2(1106.5, -129.369)
 states/idle/node = SubResource("AnimationNodeBlendTree_ur4vj")
-states/idle/position = Vector2(768.5, 178.617)
+states/idle/position = Vector2(695, 111.117)
 "states/idle thrust/node" = SubResource("AnimationNodeBlendTree_565iv")
 "states/idle thrust/position" = Vector2(944.693, 380.662)
 "states/open up/node" = SubResource("AnimationNodeBlendTree_yu0nt")
-"states/open up/position" = Vector2(559.281, 176.902)
+"states/open up/position" = Vector2(536.781, 175.199)
 "states/quick close/node" = SubResource("AnimationNodeBlendTree_xd6o8")
 "states/quick close/position" = Vector2(755.688, -130)
 "states/start thrust/node" = SubResource("AnimationNodeBlendTree_eijxh")
@@ -353,10 +289,11 @@ states/targeting/node = SubResource("AnimationNodeBlendTree_g0jmh")
 states/targeting/position = Vector2(1118, 168)
 "states/thrust close/node" = SubResource("AnimationNodeBlendTree_sbwod")
 "states/thrust close/position" = Vector2(602.508, 381.162)
-transitions = ["Start", "closed", SubResource("AnimationNodeStateMachineTransition_uabyq"), "closed", "open up", SubResource("AnimationNodeStateMachineTransition_h7a81"), "open up", "idle", SubResource("AnimationNodeStateMachineTransition_e35r2"), "idle", "close up", SubResource("AnimationNodeStateMachineTransition_g0jmh"), "close up", "closed", SubResource("AnimationNodeStateMachineTransition_eijxh"), "idle", "quick close", SubResource("AnimationNodeStateMachineTransition_3hy7v"), "quick close", "closed", SubResource("AnimationNodeStateMachineTransition_6fcep"), "idle", "fire", SubResource("AnimationNodeStateMachineTransition_xd6o8"), "fire", "idle", SubResource("AnimationNodeStateMachineTransition_565iv"), "fire", "quick close", SubResource("AnimationNodeStateMachineTransition_utdxq"), "idle", "targeting", SubResource("AnimationNodeStateMachineTransition_sbwod"), "targeting", "idle", SubResource("AnimationNodeStateMachineTransition_abk80"), "targeting", "fire", SubResource("AnimationNodeStateMachineTransition_pcn5y"), "fire", "targeting", SubResource("AnimationNodeStateMachineTransition_dtoeo"), "targeting", "quick close", SubResource("AnimationNodeStateMachineTransition_ur4vj"), "close up", "quick close", SubResource("AnimationNodeStateMachineTransition_yu0nt"), "open up", "quick close", SubResource("AnimationNodeStateMachineTransition_i8e50"), "idle", "start thrust", SubResource("AnimationNodeStateMachineTransition_syd1y"), "targeting", "start thrust", SubResource("AnimationNodeStateMachineTransition_42xs3"), "start thrust", "idle thrust", SubResource("AnimationNodeStateMachineTransition_kw7w5"), "idle thrust", "stop thrust", SubResource("AnimationNodeStateMachineTransition_offs8"), "stop thrust", "idle", SubResource("AnimationNodeStateMachineTransition_63bqk"), "stop thrust", "targeting", SubResource("AnimationNodeStateMachineTransition_o8em1"), "idle thrust", "thrust close", SubResource("AnimationNodeStateMachineTransition_iigsm"), "thrust close", "closed", SubResource("AnimationNodeStateMachineTransition_s8rxf"), "open up", "close up", SubResource("AnimationNodeStateMachineTransition_3cleu"), "close up", "open up", SubResource("AnimationNodeStateMachineTransition_0u2x7"), "targeting", "close up", SubResource("AnimationNodeStateMachineTransition_4qqf3"), "start thrust", "thrust close", SubResource("AnimationNodeStateMachineTransition_5rp5g"), "stop thrust", "thrust close", SubResource("AnimationNodeStateMachineTransition_owosy")]
-graph_offset = Vector2(31.7678, -36.3075)
+transitions = ["Start", "closed", SubResource("AnimationNodeStateMachineTransition_uabyq"), "closed", "open up", SubResource("AnimationNodeStateMachineTransition_h7a81"), "open up", "idle", SubResource("AnimationNodeStateMachineTransition_e35r2"), "idle", "close up", SubResource("AnimationNodeStateMachineTransition_g0jmh"), "close up", "closed", SubResource("AnimationNodeStateMachineTransition_eijxh"), "idle", "quick close", SubResource("AnimationNodeStateMachineTransition_3hy7v"), "quick close", "closed", SubResource("AnimationNodeStateMachineTransition_6fcep"), "idle", "fire", SubResource("AnimationNodeStateMachineTransition_xd6o8"), "fire", "idle", SubResource("AnimationNodeStateMachineTransition_565iv"), "fire", "quick close", SubResource("AnimationNodeStateMachineTransition_utdxq"), "idle", "targeting", SubResource("AnimationNodeStateMachineTransition_sbwod"), "targeting", "idle", SubResource("AnimationNodeStateMachineTransition_abk80"), "targeting", "fire", SubResource("AnimationNodeStateMachineTransition_pcn5y"), "fire", "targeting", SubResource("AnimationNodeStateMachineTransition_dtoeo"), "targeting", "quick close", SubResource("AnimationNodeStateMachineTransition_ur4vj"), "close up", "quick close", SubResource("AnimationNodeStateMachineTransition_yu0nt"), "open up", "quick close", SubResource("AnimationNodeStateMachineTransition_i8e50"), "idle", "start thrust", SubResource("AnimationNodeStateMachineTransition_syd1y"), "targeting", "start thrust", SubResource("AnimationNodeStateMachineTransition_42xs3"), "start thrust", "idle thrust", SubResource("AnimationNodeStateMachineTransition_kw7w5"), "idle thrust", "stop thrust", SubResource("AnimationNodeStateMachineTransition_offs8"), "stop thrust", "idle", SubResource("AnimationNodeStateMachineTransition_63bqk"), "stop thrust", "targeting", SubResource("AnimationNodeStateMachineTransition_o8em1"), "idle thrust", "thrust close", SubResource("AnimationNodeStateMachineTransition_iigsm"), "thrust close", "closed", SubResource("AnimationNodeStateMachineTransition_s8rxf"), "open up", "close up", SubResource("AnimationNodeStateMachineTransition_3cleu"), "close up", "open up", SubResource("AnimationNodeStateMachineTransition_0u2x7"), "targeting", "close up", SubResource("AnimationNodeStateMachineTransition_4qqf3"), "start thrust", "thrust close", SubResource("AnimationNodeStateMachineTransition_5rp5g"), "stop thrust", "thrust close", SubResource("AnimationNodeStateMachineTransition_owosy"), "open up", "targeting", SubResource("AnimationNodeStateMachineTransition_p5rs3")]
+graph_offset = Vector2(74.0423, 30.475)
 
 [node name="DroneModel" instance=ExtResource("1_y6iu8")]
+script = ExtResource("2_3tr2a")
 
 [node name="Skeleton3D" parent="Armature" index="0"]
 bones/3/position = Vector3(1.8176e-08, 2.11038e-22, -2.13483e-08)
@@ -516,12 +453,12 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.5258
 shape = SubResource("ConvexPolygonShape3D_xd6o8")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="1"]
-transform = Transform3D(-1.56678e-07, 7.64326e-07, 1, -0.20005, 0.979786, -7.80219e-07, -0.979786, -0.20005, -6.07268e-10, -2.24648e-07, -1.32822e-08, 0.512002)
+transform = Transform3D(-1.5556e-07, 7.64597e-07, 1, -0.20005, 0.979786, -7.8026e-07, -0.979786, -0.20005, 5.42397e-10, -2.24665e-07, -1.32822e-08, 0.512002)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.72829e-14, 1.0155e-13, 1.51271e-07)
-body_offset = Transform3D(1, 3.8892e-06, -1.14254e-07, -4.06802e-06, 1, -6.71311e-07, 1.84575e-07, 6.24835e-07, 1, 0, 0, -1.51271e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7454e-14, 1.01602e-13, 1.51288e-07)
+body_offset = Transform3D(1, 3.8892e-06, -1.15372e-07, -4.06802e-06, 1, -6.71582e-07, 1.85693e-07, 6.25106e-07, 1, 0, 0, -1.51288e-07)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_01.T"
 joint_constraints/angular_limit_enabled = true
@@ -536,12 +473,12 @@ transform = Transform3D(0.99999, -6.11419e-08, 0.00441611, 0.00441527, 5.46137e-
 shape = SubResource("ConvexPolygonShape3D_3hy7v")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="2"]
-transform = Transform3D(-3.59511e-07, 8.61297e-07, 1, -0.561134, 0.827725, -9.1465e-07, -0.827725, -0.561134, 1.85726e-07, -6.55927e-08, 0.200729, 0.471075)
+transform = Transform3D(-3.62325e-07, 8.58305e-07, 1, -0.561354, 0.827576, -9.13705e-07, -0.827576, -0.561354, 1.81962e-07, -6.55656e-08, 0.200726, 0.471078)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62517e-05, 9.15284e-06, 2.08022e-08)
-body_offset = Transform3D(0.999999, 0.00165182, 1.63792e-07, -0.00165188, 0.999999, -6.6983e-07, -8.21157e-08, 6.53669e-07, 1, -5.62668e-05, -9.05991e-06, -2.08036e-08)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.65989e-05, 1.33706e-05, 2.07719e-08)
+body_offset = Transform3D(0.999998, 0.00191852, 1.66382e-07, -0.00191858, 0.999998, -6.66939e-07, -8.48744e-08, 6.50751e-07, 1, -5.66244e-05, -1.3262e-05, -2.07758e-08)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_02.T"
 joint_constraints/angular_limit_enabled = true
@@ -556,12 +493,12 @@ transform = Transform3D(1, 7.10543e-14, 0, 0, -4.37114e-08, -1, 1.06581e-13, 1, 
 shape = SubResource("ConvexPolygonShape3D_h7a81")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="3"]
-transform = Transform3D(-4.04728e-07, 7.58864e-07, 1, -0.829466, 0.558558, -7.59577e-07, -0.558558, -0.829466, 4.03387e-07, 1.04496e-07, 0.362029, 0.361997)
+transform = Transform3D(-4.01286e-07, 7.51312e-07, 1, -0.829593, 0.558369, -7.52414e-07, -0.558369, -0.829593, 3.99217e-07, 1.0455e-07, 0.362039, 0.362012)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.27414e-05, -2.83003e-05, -1.08777e-07)
-body_offset = Transform3D(0.999999, 0.00145528, 4.06552e-07, -0.00145528, 0.999999, -5.54287e-07, -3.24626e-07, 5.69842e-07, 1, 3.27826e-05, 2.82526e-05, 1.08783e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.67717e-05, -2.19032e-05, -1.0883e-07)
+body_offset = Transform3D(0.999999, 0.00168273, 4.02951e-07, -0.00168273, 0.999999, -5.46822e-07, -3.21141e-07, 5.62309e-07, 1, 1.68085e-05, 2.18749e-05, 1.08837e-07)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_03.T"
 joint_constraints/angular_limit_enabled = true
@@ -576,12 +513,12 @@ transform = Transform3D(1, -7.93676e-12, -2.98023e-08, -2.98023e-08, -4.36956e-0
 shape = SubResource("ConvexPolygonShape3D_g0jmh")
 
 [node name="Physical Bone DEF_PANEL_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="4"]
-transform = Transform3D(-7.44089e-07, 1.55731e-07, 1, -0.94251, -0.334177, -6.49269e-07, 0.334177, -0.94251, 3.95436e-07, 2.53942e-07, 0.471086, 0.200629)
+transform = Transform3D(-7.16113e-07, 1.50341e-07, 1, -0.942546, -0.334075, -6.24745e-07, 0.334075, -0.942546, 3.80939e-07, 2.56519e-07, 0.471101, 0.200612)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.33431e-05, -4.94955e-05, -2.21337e-07)
-body_offset = Transform3D(1, -0.000283331, 6.7526e-07, 0.000283331, 1, 5.54891e-09, -6.39002e-07, 7.07389e-08, 1, -8.33571e-05, 4.94719e-05, 2.21394e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000103212, -6.05987e-05, -2.23901e-07)
+body_offset = Transform3D(1, -0.000391394, 6.473e-07, 0.000391394, 1, 1.1009e-08, -6.11036e-07, 6.53369e-08, 1, -0.000103235, 6.05583e-05, 2.23968e-07)
 angular_damp = 25.0
 bone_name = "DEF_PANEL.T"
 joint_constraints/angular_limit_enabled = true
@@ -596,12 +533,12 @@ transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4
 shape = SubResource("ConvexPolygonShape3D_eijxh")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="5"]
-transform = Transform3D(3.36379e-07, -6.00509e-07, -1, 0.200042, -0.979787, 6.55661e-07, -0.979787, -0.200042, -2.09452e-07, -2.31071e-07, -3.51821e-08, 0.512002)
+transform = Transform3D(3.36555e-07, -5.99715e-07, -1, 0.200041, -0.979787, 6.54918e-07, -0.979787, -0.200041, -2.09785e-07, -2.31026e-07, -3.51821e-08, 0.512002)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.34689e-15, -4.47036e-08, -1.57694e-07)
-body_offset = Transform3D(1, -1.44541e-06, 3.63161e-07, 1.50502e-06, 1, -6.06449e-07, -4.09636e-07, 5.36126e-07, 1, 0, 4.47035e-08, 1.57694e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.59631e-14, -4.47036e-08, -1.57649e-07)
+body_offset = Transform3D(1, -2.5332e-06, 3.63338e-07, 2.5928e-06, 1, -6.05654e-07, -4.09813e-07, 5.35332e-07, 1, 0, 4.47035e-08, 1.57649e-07)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_01.B"
 joint_constraints/angular_limit_enabled = true
@@ -616,12 +553,12 @@ transform = Transform3D(1, -2.11031e-12, 0, 0, -4.37135e-08, -1, 2.089e-12, 1, -
 shape = SubResource("ConvexPolygonShape3D_6fcep")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="6"]
-transform = Transform3D(5.19152e-07, -4.06074e-07, -1, 0.561828, -0.827254, 6.27601e-07, -0.827254, -0.561828, -2.01327e-07, -3.47044e-07, -0.200721, 0.471041)
+transform = Transform3D(5.15421e-07, -3.99972e-07, -1, 0.562209, -0.826995, 6.2055e-07, -0.826995, -0.562209, -2.01383e-07, -3.4702e-07, -0.20073, 0.471065)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.33139e-05, -3.36918e-06, -2.60465e-07)
-body_offset = Transform3D(0.999997, 0.00249183, 5.54218e-07, -0.00249177, 0.999997, -4.02738e-07, -5.7104e-07, 3.1856e-07, 1, -2.33054e-05, 3.42727e-06, 2.60479e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7378e-05, 2.65817e-06, -2.60431e-07)
+body_offset = Transform3D(0.999996, 0.00295207, 5.50317e-07, -0.00295207, 0.999996, -3.96864e-07, -5.67269e-07, 3.12434e-07, 1, -4.73857e-05, -2.5183e-06, 2.60457e-07)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_02.B"
 joint_constraints/angular_limit_enabled = true
@@ -636,12 +573,12 @@ transform = Transform3D(1, -3.10507e-12, 0, 0, -4.37114e-08, -1, 3.10507e-12, 1,
 shape = SubResource("ConvexPolygonShape3D_e35r2")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="7"]
-transform = Transform3D(6.92588e-07, 5.66633e-08, -1, 0.829342, -0.558741, 5.42732e-07, -0.558741, -0.829342, -4.3397e-07, -4.25469e-07, -0.362076, 0.362064)
+transform = Transform3D(6.88421e-07, 6.07836e-08, -1, 0.829601, -0.558357, 5.37176e-07, -0.558357, -0.829601, -4.34811e-07, -4.23116e-07, -0.362078, 0.362069)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.24977e-05, 3.80313e-07, -3.2186e-07)
-body_offset = Transform3D(0.999999, 0.00123498, 6.73924e-07, -0.00123507, 0.999999, -1.69563e-07, -6.58003e-07, 8.59944e-08, 1, -4.24981e-05, -3.27826e-07, 3.21888e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.74998e-05, 3.06091e-06, -3.19504e-07)
+body_offset = Transform3D(0.999999, 0.00169834, 6.6979e-07, -0.0016984, 0.999999, -1.65757e-07, -6.53903e-07, 8.18901e-08, 1, -4.75049e-05, -2.98023e-06, 3.19534e-07)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_03.B"
 joint_constraints/angular_limit_enabled = true
@@ -656,12 +593,12 @@ transform = Transform3D(1, -7.01306e-12, 8.9407e-08, 0, -4.37114e-08, -1, 7.0414
 shape = SubResource("ConvexPolygonShape3D_g0jmh")
 
 [node name="Physical Bone DEF_PANEL_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="8"]
-transform = Transform3D(4.69544e-07, 6.34547e-07, -1, 0.942986, 0.332833, 6.53971e-07, 0.332833, -0.942986, -4.42089e-07, -4.1503e-07, -0.470991, 0.200699)
+transform = Transform3D(4.68472e-07, 6.33806e-07, -1, 0.943079, 0.33257, 6.5259e-07, 0.33257, -0.943079, -4.41929e-07, -4.15095e-07, -0.470975, 0.200704)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96808e-05, -1.60425e-05, -3.39241e-07)
-body_offset = Transform3D(0.999999, -0.00170946, 5.31308e-07, 0.0017094, 0.999999, 4.37879e-07, -4.56011e-07, -4.73338e-07, 1, 2.96533e-05, 1.60933e-05, 3.3922e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.59593e-05, -1.70152e-05, -3.39315e-07)
+body_offset = Transform3D(0.999998, -0.00198811, 5.30061e-07, 0.00198805, 0.999998, 4.37266e-07, -4.54894e-07, -4.726e-07, 1, 4.59254e-05, 1.71065e-05, 3.39286e-07)
 angular_damp = 25.0
 bone_name = "DEF_PANEL.B"
 joint_constraints/angular_limit_enabled = true
@@ -696,12 +633,12 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.2
 shape = SubResource("ConvexPolygonShape3D_yu0nt")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="10"]
-transform = Transform3D(-0.200021, 0.979792, -4.47609e-05, -0.000221587, 4.47732e-07, 1, 0.979791, 0.200022, 0.00021702, 9.02416e-05, 2.46486e-05, -0.512453)
+transform = Transform3D(-0.200025, 0.979791, -4.45343e-05, -0.000221435, 2.4671e-07, 1, 0.979791, 0.200025, 0.000216911, 0.000274782, 2.47281e-05, -0.513282)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000459736, 1.88887e-06, -2.45467e-05)
-body_offset = Transform3D(1, -2.39611e-05, 0.000221505, 2.39611e-05, 1, -3.37546e-07, -0.000221587, 4.17926e-07, 1, -0.000459731, -1.8999e-06, 2.46486e-05)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0013091, -1.30576e-05, -2.44382e-05)
+body_offset = Transform3D(1, -2.02656e-05, 0.000221353, 2.02358e-05, 1, -1.37356e-07, -0.000221435, 2.16911e-07, 1, -0.0013091, 1.30311e-05, 2.47281e-05)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_01.L"
 joint_constraints/angular_limit_enabled = true
@@ -716,12 +653,12 @@ transform = Transform3D(1, 0, -1.49012e-08, -1.49012e-08, -4.37114e-08, -1, 4.44
 shape = SubResource("ConvexPolygonShape3D_ur4vj")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="11"]
-transform = Transform3D(-0.559772, 0.828647, 3.23166e-07, 2.49735e-06, 1.29703e-06, 1, 0.828647, 0.559772, -2.79546e-06, 0.20064, -1.2634e-05, -0.470921)
+transform = Transform3D(-0.559873, 0.828579, 3.27716e-07, 2.52283e-06, 1.30917e-06, 1, 0.828579, 0.559873, -2.82333e-06, 0.200651, -1.28561e-05, -0.470949)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000121534, -2.87701e-06, 1.26404e-05)
-body_offset = Transform3D(1, 9.14931e-06, -2.58211e-06, -9.05991e-06, 1, -1.24605e-06, 2.47738e-06, 1.28396e-06, 1, 0.000121534, 2.87592e-06, -1.26401e-05)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.18512e-05, 3.56434e-06, 1.28624e-05)
+body_offset = Transform3D(1, 0.000130206, -2.60774e-06, -0.000130117, 1, -1.25788e-06, 2.50286e-06, 1.29609e-06, 1, 9.18508e-05, -3.57628e-06, -1.28622e-05)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_02.L"
 joint_constraints/angular_limit_enabled = true
@@ -736,12 +673,12 @@ transform = Transform3D(1, 1.5703e-12, 0, 0, -4.37106e-08, -1, -1.57385e-12, 1, 
 shape = SubResource("ConvexPolygonShape3D_e35r2")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="12"]
-transform = Transform3D(-0.828325, 0.560248, -2.8657e-05, -5.62723e-06, 4.28308e-05, 1, 0.560248, 0.828325, -3.23251e-05, 0.362002, 1.69144e-06, -0.362075)
+transform = Transform3D(-0.828305, 0.560278, -2.90809e-05, -5.67483e-06, 4.35148e-05, 1, 0.560278, 0.828305, -3.2864e-05, 0.362022, 1.69121e-06, -0.36208)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.26065e-05, 5.07756e-05, -1.68503e-06)
-body_offset = Transform3D(1, -0.000583917, 5.58798e-06, 0.000584036, 1, -4.2737e-05, -5.67432e-06, 4.27364e-05, 1, 1.26362e-05, -5.07683e-05, 1.68279e-06)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.47757e-06, 4.35365e-05, -1.68441e-06)
+body_offset = Transform3D(1, -0.000619709, 5.63754e-06, 0.000619739, 1, -4.34208e-05, -5.72192e-06, 4.34204e-05, 1, -7.45058e-06, -4.35412e-05, 1.68256e-06)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_03.L"
 joint_constraints/angular_limit_enabled = true
@@ -756,12 +693,12 @@ transform = Transform3D(1, 7.10543e-15, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-
 shape = SubResource("ConvexPolygonShape3D_g0jmh")
 
 [node name="Physical Bone DEF_PANEL_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="13"]
-transform = Transform3D(-0.942604, -0.333914, 0.000136699, 9.05891e-05, 0.000153661, 1, -0.333914, 0.942604, -0.000114592, 0.470983, 1.45899e-06, -0.200677)
+transform = Transform3D(-0.94265, -0.333784, 0.000135507, 8.92823e-05, 0.000153826, 1, -0.333784, 0.94265, -0.000115203, 0.470984, 1.45884e-06, -0.200689)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96464e-05, -4.03955e-05, -1.42307e-06)
-body_offset = Transform3D(1, -0.0005638, -9.05067e-05, 0.00056386, 1, -0.000153789, 9.05305e-05, 0.000153646, 1, 2.96235e-05, 4.04119e-05, 1.43196e-06)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1909e-05, -2.90053e-05, -1.4245e-06)
+body_offset = Transform3D(1, -0.000701964, -8.91786e-05, 0.000702024, 1, -0.000153966, 8.92237e-05, 0.000153811, 1, 3.18885e-05, 2.90275e-05, 1.43181e-06)
 angular_damp = 25.0
 bone_name = "DEF_PANEL.L"
 joint_constraints/angular_limit_enabled = true
@@ -776,12 +713,12 @@ transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4
 shape = SubResource("ConvexPolygonShape3D_565iv")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="14"]
-transform = Transform3D(-0.200079, -0.97978, -2.37253e-06, -7.8698e-06, -8.14419e-07, 1, -0.97978, 0.200079, -7.54772e-06, -5.63169e-05, 9.88113e-06, -0.512274)
+transform = Transform3D(-0.200094, -0.979777, -2.32835e-06, -7.66973e-06, -8.10061e-07, 1, -0.979777, 0.200094, -7.35253e-06, 8.47153e-05, 9.87433e-06, -0.51176)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000278056, -8.10009e-07, -9.88332e-06)
-body_offset = Transform3D(1, -3.43025e-05, 8.06882e-06, 3.43323e-05, 1, 8.95718e-07, -8.10822e-06, -8.44214e-07, 1, 0.000278056, 8.19564e-07, 9.88106e-06)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000253977, 3.44835e-05, -9.87236e-06)
+body_offset = Transform3D(1, -4.97401e-05, 7.86873e-06, 4.97848e-05, 1, 8.91472e-07, -7.90815e-06, -8.39852e-07, 1, -0.000253975, -3.44962e-05, 9.8744e-06)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_01.R"
 joint_constraints/angular_limit_enabled = true
@@ -796,12 +733,12 @@ transform = Transform3D(-1, -4.76837e-07, -2.98023e-08, 2.98023e-08, -1.58933e-0
 shape = SubResource("ConvexPolygonShape3D_uabyq")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="15"]
-transform = Transform3D(-0.559739, -0.828669, -1.50676e-05, -7.74021e-07, -1.76601e-05, 1, -0.828669, 0.559739, 9.24365e-06, -0.200446, 1.75987e-05, -0.471114)
+transform = Transform3D(-0.55977, -0.828648, -1.51633e-05, -7.64549e-07, -1.77824e-05, 1, -0.828648, 0.55977, 9.32052e-06, -0.200448, 1.74955e-05, -0.471107)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.05636e-05, 0.000265198, -1.75879e-05)
-body_offset = Transform3D(1, 3.12924e-05, 8.84334e-07, -3.12626e-05, 1, 1.76792e-05, -9.00553e-07, -1.76168e-05, 1, -7.05719e-05, -0.000265196, 1.75926e-05)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.53418e-05, 0.000259816, -1.74847e-05)
+body_offset = Transform3D(1, -5.99027e-06, 8.74202e-07, 6.04987e-06, 1, 1.78015e-05, -8.91079e-07, -1.77391e-05, 1, -7.53403e-05, -0.000259817, 1.74894e-05)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_02.R"
 joint_constraints/angular_limit_enabled = true
@@ -816,12 +753,12 @@ transform = Transform3D(-1, 8.74273e-08, 0, 0, -4.37137e-08, -1, -8.74273e-08, -
 shape = SubResource("ConvexPolygonShape3D_e35r2")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="16"]
-transform = Transform3D(-0.828987, -0.559268, -9.93379e-05, -0.000142423, 3.3488e-05, 1, -0.559268, 0.828987, -0.000107414, -0.362234, 5.05608e-06, -0.360793)
+transform = Transform3D(-0.829073, -0.55914, -9.92012e-05, -0.000142127, 3.33233e-05, 1, -0.55914, 0.829073, -0.000107096, -0.362235, 5.05017e-06, -0.360776)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000536116, -0.00114157, -4.94383e-06)
-body_offset = Transform3D(1, -0.000599086, 0.0001425, 0.000598997, 1, -3.33558e-05, -0.000142472, 3.35053e-05, 1, -0.000536799, 0.00114125, 5.05846e-06)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00054487, -0.00115601, -4.93653e-06)
+body_offset = Transform3D(1, -0.000753582, 0.000142209, 0.000753582, 1, -3.31693e-05, -0.000142176, 3.33406e-05, 1, -0.00054574, 0.0011556, 5.05254e-06)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_03.R"
 joint_constraints/angular_limit_enabled = true
@@ -836,12 +773,12 @@ transform = Transform3D(-1, 8.74228e-08, -8.9407e-08, 0, -4.37127e-08, -1, -8.74
 shape = SubResource("ConvexPolygonShape3D_g0jmh")
 
 [node name="Physical Bone DEF_PANEL_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="17"]
-transform = Transform3D(-0.944006, 0.32993, -7.58999e-05, -4.20983e-05, 0.000109596, 1, 0.32993, 0.944006, -8.95694e-05, -0.471637, -1.67915e-06, -0.201669)
+transform = Transform3D(-0.944087, 0.329697, -7.46973e-05, -4.13408e-05, 0.000108184, 1, 0.329696, 0.944087, -8.85055e-05, -0.471631, -1.689e-06, -0.201683)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000260999, 0.0011117, 1.54063e-06)
-body_offset = Transform3D(0.999989, 0.00478691, 4.15141e-05, -0.00478694, 0.999989, -0.000109918, -4.19838e-05, 0.00010975, 1, 0.000255674, -0.00111294, -1.6736e-06)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000250721, 0.00112307, 1.55144e-06)
+body_offset = Transform3D(0.999988, 0.00503376, 4.07366e-05, -0.00503382, 0.999988, -0.000108513, -4.12263e-05, 0.000108339, 1, 0.000245064, -0.00112432, -1.68345e-06)
 angular_damp = 25.0
 bone_name = "DEF_PANEL.R"
 joint_constraints/angular_limit_enabled = true
@@ -866,35 +803,8 @@ shape = SubResource("SphereShape3D_xd6o8")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 tree_root = SubResource("AnimationNodeStateMachine_xd6o8")
+advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
-"parameters/conditions/close up" = false
-"parameters/conditions/close up to open up" = false
-"parameters/conditions/close up to quick close" = false
-parameters/conditions/fire = false
-"parameters/conditions/fire to quick close" = false
-"parameters/conditions/idle thrust to close" = false
-"parameters/conditions/idle thrust to stop thrust" = false
-"parameters/conditions/idle to quick close" = false
-"parameters/conditions/idle to start thrust" = false
-"parameters/conditions/open up" = false
-"parameters/conditions/open up to close up" = false
-"parameters/conditions/open up to quick close" = false
-"parameters/conditions/start thrust to thrust close" = false
 "parameters/conditions/stop thrust to idle" = false
 "parameters/conditions/stop thrust to targeting" = false
 "parameters/conditions/stop thrust to thrust close" = false
-parameters/conditions/targeting = false
-"parameters/conditions/targeting to close up" = false
-"parameters/conditions/targeting to fire" = false
-"parameters/conditions/targeting to idle" = false
-"parameters/conditions/targeting to quick close" = false
-"parameters/conditions/targeting to start thrust" = false
-"parameters/close up/scale/scale" = 1.0
-parameters/fire/scale/scale = 1.0
-parameters/idle/scale/scale = 1.0
-"parameters/idle thrust/scale/scale" = 1.0
-"parameters/quick close/TimeScale/scale" = 1.0
-"parameters/start thrust/scale/scale" = 1.0
-"parameters/stop thrust/scale/scale" = 1.0
-parameters/targeting/scale/scale = 1.0
-"parameters/thrust close/scale/scale" = 1.0

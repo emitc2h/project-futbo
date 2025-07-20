@@ -5,6 +5,7 @@ extends Node
 @export_group("Dependencies")
 @export var drone: DroneV2
 @export var sc: StateChart
+@export var engines_states: DroneEnginesStates
 
 ## Parameters
 @export_group("Float Distortion")
@@ -57,10 +58,16 @@ const TRANS_RAGDOLL_TO_DEAD: String = "Physics Mode: ragdoll to dead"
 ## Internal variables
 var time_floating: float = 0.0
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
+var look_down_angle: float = 0.0
+var look_down_lerp_factor: float = 4.0
 
 ## Settable Parameters
 var speed: float = 3.0
 var left_right_axis: float = 0.0
+
+## Signals
+signal char_entered
+signal rigid_entered
 
 
 # char state
@@ -78,6 +85,12 @@ func _on_char_state_entered() -> void:
 	## char node takes ownership of transform
 	char_node.transform = rigid_node.transform
 
+	## Stop all motion leftover from previous states
+	left_right_axis = 0.0
+	
+	## Reset speed
+	speed = engines_states.off_speed
+
 	## Turn on float distortion
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(
@@ -89,6 +102,8 @@ func _on_char_state_entered() -> void:
 		.set_ease(Tween.EASE_IN)\
 		.set_trans(Tween.TRANS_LINEAR)\
 		.from(distortion_mesh_intensity_off)
+	
+	char_entered.emit()
 
 
 func _on_char_state_physics_processing(delta: float) -> void:
@@ -114,6 +129,8 @@ func _on_char_state_physics_processing(delta: float) -> void:
 	char_node.velocity.x = lerp(char_node.velocity.x, left_right_axis * speed, axis_lerp_strength * delta)
 	
 	char_node.move_and_slide()
+	
+	char_node.rotation.x = lerp(char_node.rotation.x, look_down_angle, look_down_lerp_factor * delta)
 	
 	## nodes tha must follow the char node
 	track_transform_container.transform = char_node.transform
@@ -155,6 +172,8 @@ func _on_rigid_state_entered() -> void:
 	
 	## Enable rigid node colliions
 	closed_collision_shape_rigid.disabled = false
+	
+	rigid_entered.emit()
 
 
 func _on_rigid_state_physics_processing(delta: float) -> void:

@@ -6,7 +6,7 @@ var player_detected: bool
 var control_node_detected: bool
 
 func scan(scan_for_control_node: bool = true, scan_for_player: bool = true) -> void:
-	self.force_shapecast_update()
+	#self.force_shapecast_update()
 	if self.is_colliding():
 		for i in range(self.get_collision_count()):
 			var collider: Object = self.get_collider(i)

@@ -1,0 +1,30 @@
+[gd_resource type="BehaviorTree" load_steps=9 format=3 uid="uid://doq0w3n8yvclw"]
+
+[ext_resource type="Script" uid="uid://bpgtq3hrfkxtw" path="res://ai/tasks/droneV2/track_target_action.gd" id="1_ej8dm"]
+[ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/droneV2/open_action.gd" id="1_groxm"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_jeevw"]
+
+[sub_resource type="BBNode" id="BBNode_ej8dm"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_groxm"]
+node = SubResource("BBNode_ej8dm")
+method = &"quick_stop_engines"
+
+[sub_resource type="BTAction" id="BTAction_qpn2y"]
+script = ExtResource("1_groxm")
+check_signal_id = false
+async = true
+
+[sub_resource type="BTAction" id="BTAction_ej8dm"]
+script = ExtResource("1_ej8dm")
+offset = 6.0
+
+[sub_resource type="BTSequence" id="BTSequence_nag8p"]
+children = [SubResource("BTCallMethod_groxm"), SubResource("BTAction_qpn2y"), SubResource("BTAction_ej8dm")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_jeevw")
+root_task = SubResource("BTSequence_nag8p")

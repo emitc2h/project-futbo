@@ -1,9 +1,15 @@
-[gd_resource type="BehaviorTree" load_steps=15 format=3 uid="uid://bnm2timop763s"]
+[gd_resource type="BehaviorTree" load_steps=17 format=3 uid="uid://bnm2timop763s"]
 
 [ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/droneV2/face_node_action.gd" id="1_cdacq"]
+[ext_resource type="Script" uid="uid://bg84c7y6wffvi" path="res://ai/tasks/droneV2/close_action.gd" id="1_ux7gf"]
 [ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/droneV2/move_to_node_action.gd" id="2_erkqb"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_voq0c"]
+
+[sub_resource type="BTAction" id="BTAction_lhmdx"]
+script = ExtResource("1_ux7gf")
+check_signal_id = false
+async = false
 
 [sub_resource type="BBNode" id="BBNode_cdacq"]
 saved_value = NodePath("PatrolMarker1")
@@ -12,6 +18,8 @@ resource_name = "PatrolMarker1"
 [sub_resource type="BTAction" id="BTAction_erkqb"]
 script = ExtResource("1_cdacq")
 target_node = SubResource("BBNode_cdacq")
+away = false
+use_target = false
 
 [sub_resource type="BBNode" id="BBNode_q5h4i"]
 saved_value = NodePath("PatrolMarker1")
@@ -21,6 +29,9 @@ resource_name = "PatrolMarker1"
 script = ExtResource("2_erkqb")
 target_node = SubResource("BBNode_q5h4i")
 away = false
+use_target = false
+use_burst = false
+use_thrust = false
 close_enough_distance = 0.1
 far_enough_distance = 0.0
 
@@ -31,6 +42,8 @@ resource_name = "PatrolMarker2"
 [sub_resource type="BTAction" id="BTAction_q5h4i"]
 script = ExtResource("1_cdacq")
 target_node = SubResource("BBNode_ux7gf")
+away = false
+use_target = false
 
 [sub_resource type="BBNode" id="BBNode_lhmdx"]
 saved_value = NodePath("PatrolMarker2")
@@ -40,6 +53,9 @@ resource_name = "PatrolMarker2"
 script = ExtResource("2_erkqb")
 target_node = SubResource("BBNode_lhmdx")
 away = false
+use_target = false
+use_burst = false
+use_thrust = false
 close_enough_distance = 0.1
 far_enough_distance = 0.0
 
@@ -49,9 +65,9 @@ children = [SubResource("BTAction_erkqb"), SubResource("BTAction_gq854"), SubRes
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_lhmdx"]
 children = [SubResource("BTSequence_gq854")]
 
-[sub_resource type="BTSelector" id="BTSelector_anox6"]
-children = [SubResource("BTRepeatUntilFailure_lhmdx")]
+[sub_resource type="BTSequence" id="BTSequence_erkqb"]
+children = [SubResource("BTAction_lhmdx"), SubResource("BTRepeatUntilFailure_lhmdx")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_voq0c")
-root_task = SubResource("BTSelector_anox6")
+root_task = SubResource("BTSequence_erkqb")
