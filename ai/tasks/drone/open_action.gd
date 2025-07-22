@@ -1,16 +1,17 @@
 class_name OpenAction
 extends BTAction
 
+@export_group("Parameters")
 @export var check_signal_id: bool
 @export var async: bool
 
-var drone: DroneV2
+var drone: Drone
 var done: bool
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var signal_id: int
 
 func _setup() -> void:
-	drone = agent as DroneV2
+	drone = agent as Drone
 	drone.open_finished.connect(_on_open_finished)
 
 

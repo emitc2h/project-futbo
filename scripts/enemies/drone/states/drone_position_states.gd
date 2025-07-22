@@ -3,8 +3,9 @@ extends Node
 
 ## Dependency Injection
 @export_group("Dependencies")
-@export var drone: DroneV2
+@export var drone: Drone
 @export var sc: StateChart
+@export var repr: DroneInternalRepresentation
 @export var patrol_marker_1: Marker3D
 @export var patrol_marker_2: Marker3D
 
@@ -45,6 +46,9 @@ func _ready() -> void:
 	else:
 		right_marker_pos_x = x1
 		left_marker_pos_x = x2
+	
+	repr.worldRepresentation.patrol_marker_1_pos_x = x1
+	repr.worldRepresentation.patrol_marker_2_pos_x = x2
 
 
 # between patrol markers state

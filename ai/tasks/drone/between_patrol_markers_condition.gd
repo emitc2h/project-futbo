@@ -1,11 +1,11 @@
 class_name BetweenPatrolMarkersCondition
 extends BTCondition
 
-var drone: DroneV2
+var drone: Drone
 
 
 func _setup() -> void:
-	drone = agent as DroneV2
+	drone = agent as Drone
 
 
 func _tick(delta: float) -> Status:

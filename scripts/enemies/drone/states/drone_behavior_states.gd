@@ -3,10 +3,16 @@ extends Node
 
 ## Dependency Injection
 @export_group("Dependencies")
-@export var drone: DroneV2
+@export var drone: Drone
 @export var sc: StateChart
+@export var vulnerabiliy_states: DroneVulnerabilityStates
+
+@export_group("Monitoring State Machines")
 @export var targeting_states: DroneTargetingStates
+@export var proximity_states: DroneProximityStates
 @export var position_states: DronePositionStates
+
+@export_group("Behavior sub-state machines")
 @export var attack_states: DroneAttackStates
 
 ## States Enum
@@ -15,15 +21,21 @@ var state: State = State.PATROL
 
 ## State transition constants
 const TRANS_PATROL_TO_ATTACK: String = "Behavior: patrol to attack"
+const TRANS_PATROL_TO_BLOCK: String = "Behavior: patrol to block"
 
 const TRANS_GO_TO_PATROL_TO_PATROL: String = "Behavior: go to patrol to patrol"
 const TRANS_GO_TO_PATROL_TO_ATTACK: String = "Behavior: go to patrol to attack"
+const TRANS_GO_TO_PATROL_TO_BLOCK: String = "Behavior: go to patrol to block"
+
+const TRANS_BLOCK_TO_ATTACK: String = "Behavior: block to attack"
 
 const TRANS_ATTACK_TO_GO_TO_PATROL: String = "Behavior: attack to go to patrol"
+const TRANS_ATTACK_TO_BLOCK: String = "Behavior: attack to block"
 
 
 func _ready() -> void:
 	targeting_states.target_acquired.connect(_on_target_acquired)
+	proximity_states.control_node_proximity_entered.connect(_on_control_node_proximity_entered)
 
 
 # patrol state
@@ -53,6 +65,12 @@ func _on_go_to_patrol_bt_finished(status: int) -> void:
 	sc.send_event(TRANS_GO_TO_PATROL_TO_PATROL)
 
 
+# block state
+#----------------------------------------
+func _on_block_bt_finished(status: int) -> void:
+	sc.send_event(TRANS_BLOCK_TO_ATTACK)
+
+
 # attack state
 #----------------------------------------
 func _on_attack_state_entered() -> void:
@@ -70,3 +88,13 @@ func _on_target_acquired() -> void:
 		sc.send_event(TRANS_PATROL_TO_ATTACK)
 	if state == State.GO_TO_PATROL:
 		sc.send_event(TRANS_GO_TO_PATROL_TO_ATTACK)
+
+
+func _on_control_node_proximity_entered() -> void:
+	if vulnerabiliy_states.state == vulnerabiliy_states.State.DEFENDABLE:
+		if state == State.PATROL:
+			sc.send_event(TRANS_PATROL_TO_BLOCK)
+		if state == State.GO_TO_PATROL:
+			sc.send_event(TRANS_GO_TO_PATROL_TO_BLOCK)
+		if state == State.ATTACK:
+			sc.send_event(TRANS_ATTACK_TO_BLOCK)

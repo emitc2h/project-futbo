@@ -1,8 +1,8 @@
 [gd_resource type="BehaviorTree" load_steps=17 format=3 uid="uid://bnm2timop763s"]
 
-[ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/droneV2/face_node_action.gd" id="1_cdacq"]
-[ext_resource type="Script" uid="uid://bg84c7y6wffvi" path="res://ai/tasks/droneV2/close_action.gd" id="1_ux7gf"]
-[ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/droneV2/move_to_node_action.gd" id="2_erkqb"]
+[ext_resource type="Script" uid="uid://bg84c7y6wffvi" path="res://ai/tasks/drone/close_action.gd" id="1_ux7gf"]
+[ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/drone/face_node_action.gd" id="2_q5h4i"]
+[ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/drone/move_to_node_action.gd" id="3_gq854"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_voq0c"]
 
@@ -10,57 +10,61 @@
 script = ExtResource("1_ux7gf")
 check_signal_id = false
 async = false
+quick = false
+stop_engines = false
 
-[sub_resource type="BBNode" id="BBNode_cdacq"]
-saved_value = NodePath("PatrolMarker1")
-resource_name = "PatrolMarker1"
-
-[sub_resource type="BTAction" id="BTAction_erkqb"]
-script = ExtResource("1_cdacq")
-target_node = SubResource("BBNode_cdacq")
-away = false
-use_target = false
-
-[sub_resource type="BBNode" id="BBNode_q5h4i"]
-saved_value = NodePath("PatrolMarker1")
-resource_name = "PatrolMarker1"
-
-[sub_resource type="BTAction" id="BTAction_gq854"]
-script = ExtResource("2_erkqb")
-target_node = SubResource("BBNode_q5h4i")
-away = false
-use_target = false
-use_burst = false
-use_thrust = false
-close_enough_distance = 0.1
-far_enough_distance = 0.0
-
-[sub_resource type="BBNode" id="BBNode_ux7gf"]
-saved_value = NodePath("PatrolMarker2")
-resource_name = "PatrolMarker2"
+[sub_resource type="BBNode" id="BBNode_gq854"]
+saved_value = NodePath("")
 
 [sub_resource type="BTAction" id="BTAction_q5h4i"]
-script = ExtResource("1_cdacq")
-target_node = SubResource("BBNode_ux7gf")
+script = ExtResource("2_q5h4i")
+custom_node = SubResource("BBNode_gq854")
+world_repr_pos_x_name = "patrol_marker_1_pos_x"
+target_type = "world representation x position"
 away = false
-use_target = false
+async = false
 
 [sub_resource type="BBNode" id="BBNode_lhmdx"]
-saved_value = NodePath("PatrolMarker2")
-resource_name = "PatrolMarker2"
+saved_value = NodePath("")
 
 [sub_resource type="BTAction" id="BTAction_anox6"]
-script = ExtResource("2_erkqb")
-target_node = SubResource("BBNode_lhmdx")
+script = ExtResource("3_gq854")
+custom_node = SubResource("BBNode_lhmdx")
+world_repr_pos_x_name = "patrol_marker_1_pos_x"
+target_type = "world representation x position"
 away = false
-use_target = false
-use_burst = false
-use_thrust = false
 close_enough_distance = 0.1
 far_enough_distance = 0.0
+use_burst = false
+use_thrust = false
+
+[sub_resource type="BBNode" id="BBNode_ux7gf"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_erkqb"]
+script = ExtResource("2_q5h4i")
+custom_node = SubResource("BBNode_ux7gf")
+world_repr_pos_x_name = "patrol_marker_2_pos_x"
+target_type = "world representation x position"
+away = false
+async = false
+
+[sub_resource type="BBNode" id="BBNode_q5h4i"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_gq854"]
+script = ExtResource("3_gq854")
+custom_node = SubResource("BBNode_q5h4i")
+world_repr_pos_x_name = "patrol_marker_2_pos_x"
+target_type = "world representation x position"
+away = false
+close_enough_distance = 0.1
+far_enough_distance = 0.0
+use_burst = false
+use_thrust = false
 
 [sub_resource type="BTSequence" id="BTSequence_gq854"]
-children = [SubResource("BTAction_erkqb"), SubResource("BTAction_gq854"), SubResource("BTAction_q5h4i"), SubResource("BTAction_anox6")]
+children = [SubResource("BTAction_q5h4i"), SubResource("BTAction_anox6"), SubResource("BTAction_erkqb"), SubResource("BTAction_gq854")]
 
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_lhmdx"]
 children = [SubResource("BTSequence_gq854")]

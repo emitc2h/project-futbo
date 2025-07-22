@@ -1,9 +1,10 @@
 class_name BallAttackAction
 extends BTAction
 
+@export_group("Parameters")
 @export var burst_duration: float
 
-var drone: DroneV2
+var drone: Drone
 var turned_into_ball: bool
 var become_rigid_done: bool
 var closed_done: bool
@@ -13,7 +14,7 @@ var signal_id: int
 var burst_time: float = 0.0
 
 func _setup() -> void:
-	drone = agent as DroneV2
+	drone = agent as Drone
 	drone.quick_close_finished.connect(_on_quick_close_finished)
 	drone.physics_mode_states.rigid_entered.connect(_on_become_rigid_finished)
 
@@ -26,6 +27,7 @@ func _enter() -> void:
 	turned_into_ball = false
 	signal_id = rng.randi()
 	drone.disable_targeting()
+	drone.become_invulnerable()
 
 
 func _tick(delta: float) -> Status:

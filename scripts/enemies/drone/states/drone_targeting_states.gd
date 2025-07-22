@@ -3,8 +3,9 @@ extends Node
 
 ## Dependency Injection
 @export_group("Dependencies")
-@export var drone: DroneV2
+@export var drone: Drone
 @export var sc: StateChart
+@export var repr: DroneInternalRepresentation
 
 ## Parameters
 @export_group("Vision Parameters")
@@ -63,6 +64,7 @@ signal target_none()
 func scan_for_target() -> bool:
 	if field_of_view.sees_target:
 		target = field_of_view.target
+		repr.playerRepresentation.last_known_player_pos_x = target.global_position.x
 		return true
 	return false
 

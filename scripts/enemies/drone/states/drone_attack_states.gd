@@ -3,7 +3,7 @@ extends Node
 
 ## Dependency Injection
 @export_group("Dependencies")
-@export var drone: DroneV2
+@export var drone: Drone
 @export var sc: StateChart
 @export var behavior_states: DroneBehaviorStates
 @export var targeting_states: DroneTargetingStates

@@ -1,17 +1,17 @@
 [gd_resource type="BehaviorTree" load_steps=22 format=3 uid="uid://7euectnyhgwy"]
 
-[ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/droneV2/face_node_action.gd" id="1_bhjmg"]
-[ext_resource type="Script" uid="uid://bbbdpq3yu2mga" path="res://ai/tasks/droneV2/between_patrol_markers_condition.gd" id="1_hmil3"]
-[ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/droneV2/move_to_node_action.gd" id="1_ioh2e"]
-[ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/droneV2/open_action.gd" id="2_hapyk"]
+[ext_resource type="Script" uid="uid://bbbdpq3yu2mga" path="res://ai/tasks/drone/between_patrol_markers_condition.gd" id="1_hapyk"]
+[ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/drone/open_action.gd" id="2_6d301"]
+[ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/drone/face_node_action.gd" id="3_gyocu"]
+[ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/drone/move_to_node_action.gd" id="4_c133w"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_3x0vg"]
 
 [sub_resource type="BTCondition" id="BTCondition_hapyk"]
-script = ExtResource("1_hmil3")
+script = ExtResource("1_hapyk")
 
 [sub_resource type="BTAction" id="BTAction_gyocu"]
-script = ExtResource("2_hapyk")
+script = ExtResource("2_6d301")
 check_signal_id = false
 async = true
 
@@ -20,24 +20,26 @@ saved_value = NodePath("PatrolMarker1")
 resource_name = "PatrolMarker1"
 
 [sub_resource type="BTAction" id="BTAction_6d301"]
-script = ExtResource("1_bhjmg")
-target_node = SubResource("BBNode_hapyk")
+script = ExtResource("3_gyocu")
+custom_node = SubResource("BBNode_hapyk")
+world_repr_pos_x_name = "patrol_center_pos_x"
+target_type = "world representation x position"
 away = false
-use_target = false
+async = false
 
-[sub_resource type="BBNode" id="BBNode_bhjmg"]
-saved_value = NodePath("PatrolMarker1")
-resource_name = "PatrolMarker1"
+[sub_resource type="BBNode" id="BBNode_6d301"]
+saved_value = NodePath("")
 
 [sub_resource type="BTAction" id="BTAction_hmil3"]
-script = ExtResource("1_ioh2e")
-target_node = SubResource("BBNode_bhjmg")
+script = ExtResource("4_c133w")
+custom_node = SubResource("BBNode_6d301")
+world_repr_pos_x_name = "patrol_center_pos_x"
+target_type = "world representation x position"
 away = false
-use_target = false
-use_burst = false
-use_thrust = false
 close_enough_distance = 0.1
 far_enough_distance = 0.0
+use_burst = false
+use_thrust = false
 
 [sub_resource type="BBNode" id="BBNode_ioh2e"]
 saved_value = NodePath(".")

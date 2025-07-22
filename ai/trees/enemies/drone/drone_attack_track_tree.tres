@@ -1,7 +1,7 @@
 [gd_resource type="BehaviorTree" load_steps=9 format=3 uid="uid://doq0w3n8yvclw"]
 
-[ext_resource type="Script" uid="uid://bpgtq3hrfkxtw" path="res://ai/tasks/droneV2/track_target_action.gd" id="1_ej8dm"]
-[ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/droneV2/open_action.gd" id="1_groxm"]
+[ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/drone/open_action.gd" id="1_groxm"]
+[ext_resource type="Script" uid="uid://bpgtq3hrfkxtw" path="res://ai/tasks/drone/track_target_action.gd" id="2_qpn2y"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jeevw"]
 
@@ -19,7 +19,7 @@ check_signal_id = false
 async = true
 
 [sub_resource type="BTAction" id="BTAction_ej8dm"]
-script = ExtResource("1_ej8dm")
+script = ExtResource("2_qpn2y")
 offset = 6.0
 
 [sub_resource type="BTSequence" id="BTSequence_nag8p"]

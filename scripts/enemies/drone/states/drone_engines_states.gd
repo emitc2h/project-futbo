@@ -3,7 +3,7 @@ extends Node
 
 ## Dependency Injection
 @export_group("Dependencies")
-@export var drone: DroneV2
+@export var drone: Drone
 @export var sc: StateChart
 
 ## Parameters
@@ -42,6 +42,7 @@ const TRANS_STOPPING_TO_OFF: String = "Engines: stopping to off"
 @onready var model_mesh: Node3D = drone.get_node("TrackTransformContainer/DroneModel/Armature/Skeleton3D/drone")
 @onready var exhaust_material: ShaderMaterial = model_mesh.get_surface_override_material(6)
 
+@onready var model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
 @onready var model_anim_tree: AnimationTree = drone.get_node("TrackTransformContainer/DroneModel/AnimationTree")
 @onready var anim_state: AnimationNodeStateMachinePlayback
 
@@ -71,7 +72,7 @@ func _tween_engines(
 
 func _ready() -> void:
 	anim_state = model_anim_tree.get("parameters/playback")
-	model_anim_tree.animation_finished.connect(_on_animation_finished)
+	model.anim_state_finished.connect(_on_anim_state_finished)
 
 
 # off state
@@ -171,6 +172,6 @@ func _on_burst_to_thrust_taken() -> void:
 
 # stopping state
 #----------------------------------------
-func _on_animation_finished(anim_name: String) -> void:
-	if anim_name == "StopThrust":
+func _on_anim_state_finished(anim_name: String) -> void:
+	if anim_name == "stop thrust":
 		sc.send_event(TRANS_STOPPING_TO_OFF)

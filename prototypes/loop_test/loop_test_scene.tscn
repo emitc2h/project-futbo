@@ -19,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://deem7pbadipj0" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_normal.png" id="18_xm3b7"]
 [ext_resource type="Texture2D" uid="uid://dumcqi0isdutb" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color2.png" id="19_qt0wu"]
 [ext_resource type="PackedScene" uid="uid://r42whxkucyjl" path="res://scenes/vegetation/bush.tscn" id="20_mli22"]
-[ext_resource type="PackedScene" uid="uid://bc323ftwy8i7t" path="res://scenes/enemies/drone/drone_v2.tscn" id="21_pv0wt"]
+[ext_resource type="PackedScene" uid="uid://bc323ftwy8i7t" path="res://scenes/enemies/drone/drone.tscn" id="21_pv0wt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hi8lg"]
 albedo_texture = ExtResource("2_vum0r")
