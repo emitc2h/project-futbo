@@ -34,8 +34,6 @@ const TRANS_CLOSING_TO_OPENING: String = "Engagement Mode: closing to opening"
 const TRANS_QUICK_CLOSE_TO_CLOSED: String = "Engagement Mode: quick close to closed"
 
 ## Drone nodes controlled by this state
-@onready var closed_collision_shape_char: CollisionShape3D = drone.get_node("CharNode/ClosedCollisionShape3D")
-@onready var open_collision_shape_char: CollisionShape3D = drone.get_node("CharNode/OpenCollisionShape3D")
 @onready var float_distortion_mesh: MeshInstance3D = drone.get_node("TrackPositionContainer/Distortion")
 @onready var model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
 @onready var model_anim_tree: AnimationTree = drone.get_node("TrackTransformContainer/DroneModel/AnimationTree")
@@ -56,21 +54,14 @@ func _ready() -> void:
 func _on_closed_state_entered() -> void:
 	state = State.CLOSED
 	
-	## Use the closed collision shape when closed
-	closed_collision_shape_char.disabled = false
-	open_collision_shape_char.disabled = true
-	
 	## Set the float distortion mesh position
 	float_distortion_mesh.position.y = float_distortion_closed_pos_y
-	
-	drone.become_invulnerable()
 	
 	closing_finished.emit()
 
 
 func _on_closed_state_exited() -> void:
 	drone.reset_engines()
-	drone.become_defendable()
 
 
 func _on_closed_to_opening_taken() -> void:
@@ -95,10 +86,6 @@ func _on_opening_to_quick_close_taken() -> void:
 #----------------------------------------
 func _on_open_state_entered() -> void:
 	state = State.OPEN
-	
-	## Use the open collision shape when open
-	open_collision_shape_char.disabled = false
-	closed_collision_shape_char.disabled = true
 
 	## Set the float distortion mesh position
 	float_distortion_mesh.position.y = float_distortion_open_pos_y

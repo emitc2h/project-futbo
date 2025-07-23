@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bc323ftwy8i7t"]
+[gd_scene load_steps=43 format=3 uid="uid://bc323ftwy8i7t"]
 
 [ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone.gd" id="1_irn00"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_g2as1"]
@@ -28,6 +28,7 @@
 [ext_resource type="BehaviorTree" uid="uid://doq0w3n8yvclw" path="res://ai/trees/enemies/drone/drone_attack_track_tree.tres" id="16_ahulk"]
 [ext_resource type="BehaviorTree" uid="uid://45gcob0egysb" path="res://ai/trees/enemies/drone/drone_attack_ram_attack_tree.tres" id="19_0sc46"]
 [ext_resource type="BehaviorTree" uid="uid://ln0b5i3866ql" path="res://ai/trees/enemies/drone/drone_block_tree.tres" id="20_fv7v3"]
+[ext_resource type="PackedScene" uid="uid://qcbmkep1csam" path="res://scenes/enemies/drone/drone_shield.tscn" id="27_fv7v3"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_doilr"]
 
@@ -39,16 +40,15 @@
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_h1ejm"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_md0p7"]
-radius = 0.527965
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_md0p7"]
-radius = 0.624503
-height = 1.58185
+[sub_resource type="SphereShape3D" id="SphereShape3D_fv7v3"]
+radius = 0.507499
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2myhj"]
 friction = 0.5
 bounce = 0.26
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_md0p7"]
+radius = 0.51341
 
 [sub_resource type="QuadMesh" id="QuadMesh_kds82"]
 
@@ -364,10 +364,13 @@ delay_in_seconds = "0.0"
 
 [node name="Vulnerability" type="Node" parent="State/Root"]
 script = ExtResource("4_kl701")
-initial_state = NodePath("invulnerable")
+initial_state = NodePath("defendable")
 
-[node name="Vulnerability States" type="Node" parent="State/Root/Vulnerability"]
+[node name="Vulnerability States" type="Node" parent="State/Root/Vulnerability" node_paths=PackedStringArray("drone", "sc", "shield")]
 script = ExtResource("12_43bu3")
+drone = NodePath("../../../..")
+sc = NodePath("../../..")
+shield = NodePath("../../../../TrackPositionContainer/DroneShield")
 
 [node name="invulnerable" type="Node" parent="State/Root/Vulnerability"]
 script = ExtResource("5_voq0c")
@@ -376,6 +379,12 @@ script = ExtResource("5_voq0c")
 script = ExtResource("6_doilr")
 to = NodePath("../../defendable")
 event = &"Vulnerability: invulnerable to defendable"
+delay_in_seconds = "0.0"
+
+[node name="to vulnerable" type="Node" parent="State/Root/Vulnerability/invulnerable"]
+script = ExtResource("6_doilr")
+to = NodePath("../../vulnerable")
+event = &"Vulnerability: invulnerable to vulnerable"
 delay_in_seconds = "0.0"
 
 [node name="defendable" type="Node" parent="State/Root/Vulnerability"]
@@ -400,6 +409,12 @@ script = ExtResource("5_voq0c")
 script = ExtResource("6_doilr")
 to = NodePath("../../defendable")
 event = &"Vulnerability: vulnerable to defendable"
+delay_in_seconds = "0.0"
+
+[node name="to invulnerable" type="Node" parent="State/Root/Vulnerability/vulnerable"]
+script = ExtResource("6_doilr")
+to = NodePath("../../invulnerable")
+event = &"Vulnerability: vulnerable to invulnerable"
 delay_in_seconds = "0.0"
 
 [node name="Monitoring" type="Node" parent="State/Root"]
@@ -713,28 +728,24 @@ event = &"Behavior: attack to block"
 delay_in_seconds = "0.0"
 
 [node name="CharNode" type="CharacterBody3D" parent="."]
-collision_layer = 256
-collision_mask = 2
+collision_layer = 0
+collision_mask = 0
 axis_lock_linear_z = true
 
-[node name="ClosedCollisionShape3D" type="CollisionShape3D" parent="CharNode"]
-shape = SubResource("SphereShape3D_md0p7")
-disabled = true
-
-[node name="OpenCollisionShape3D" type="CollisionShape3D" parent="CharNode"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0988013)
-shape = SubResource("CapsuleShape3D_md0p7")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode"]
+visible = false
+shape = SubResource("SphereShape3D_fv7v3")
 disabled = true
 
 [node name="RigidNode" type="RigidBody3D" parent="."]
 collision_layer = 256
-collision_mask = 7
+collision_mask = 3
 axis_lock_linear_z = true
 mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_2myhj")
 script = ExtResource("14_efc27")
 
-[node name="ClosedCollisionShape3D" type="CollisionShape3D" parent="RigidNode"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode"]
 shape = SubResource("SphereShape3D_md0p7")
 
 [node name="TrackPositionContainer" type="Node3D" parent="."]
@@ -747,9 +758,10 @@ skeleton = NodePath("../../CharNode")
 surface_material_override/0 = SubResource("ShaderMaterial_3tghu")
 
 [node name="FloatCast" type="RayCast3D" parent="TrackPositionContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 0)
 target_position = Vector3(0, -2.6, 0)
 collision_mask = 2
+
+[node name="DroneShield" parent="TrackPositionContainer" instance=ExtResource("27_fv7v3")]
 
 [node name="TrackTransformContainer" type="Node3D" parent="."]
 
@@ -829,9 +841,10 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [connection signal="taken" from="State/Root/Engines/thrust/to quick off" to="State/Root/Engines/Engines States" method="_on_thrust_to_quick_off_taken"]
 [connection signal="taken" from="State/Root/Engines/thrust/to burst" to="State/Root/Engines/Engines States" method="_on_thrust_to_burst_taken"]
 [connection signal="state_entered" from="State/Root/Engines/burst" to="State/Root/Engines/Engines States" method="_on_burst_state_entered"]
-[connection signal="taken" from="State/Root/Engines/burst/to stopping" to="State/Root/Engines/Engines States" method="_on_burst_to_stoppping_taken"]
+[connection signal="taken" from="State/Root/Engines/burst/to stopping" to="State/Root/Engines/Engines States" method="_on_burst_to_stopping_taken"]
 [connection signal="taken" from="State/Root/Engines/burst/to quick off" to="State/Root/Engines/Engines States" method="_on_burst_to_quick_off_taken"]
 [connection signal="taken" from="State/Root/Engines/burst/to thrust" to="State/Root/Engines/Engines States" method="_on_burst_to_thrust_taken"]
+[connection signal="state_entered" from="State/Root/Engines/stopping" to="State/Root/Engines/Engines States" method="_on_stopping_state_entered"]
 [connection signal="state_entered" from="State/Root/Vulnerability/invulnerable" to="State/Root/Vulnerability/Vulnerability States" method="_on_invulnerable_state_entered"]
 [connection signal="state_entered" from="State/Root/Vulnerability/defendable" to="State/Root/Vulnerability/Vulnerability States" method="_on_defendable_state_entered"]
 [connection signal="state_entered" from="State/Root/Vulnerability/vulnerable" to="State/Root/Vulnerability/Vulnerability States" method="_on_vulnerable_state_entered"]
@@ -858,6 +871,7 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [connection signal="finished" from="State/Root/Behavior/block/BehaviorManager" to="State/Root/Behavior/Behavior States" method="_on_block_bt_finished"]
 [connection signal="state_entered" from="State/Root/Behavior/attack" to="State/Root/Behavior/Behavior States" method="_on_attack_state_entered"]
 [connection signal="state_entered" from="State/Root/Behavior/attack/track" to="State/Root/Behavior/attack/Attack States" method="_on_track_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Behavior/attack/track" to="State/Root/Behavior/attack/Attack States" method="_on_track_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Behavior/attack/ram attack" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_state_entered"]
 [connection signal="state_exited" from="State/Root/Behavior/attack/ram attack" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_state_exited"]
 [connection signal="finished" from="State/Root/Behavior/attack/ram attack/BehaviorManager" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_bt_finished"]

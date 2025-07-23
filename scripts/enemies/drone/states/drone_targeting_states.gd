@@ -50,6 +50,7 @@ const TRANS_ACQUIRED_TO_ACQUIRING: String = "Targeting: acquired to acquiring"
 var target: Node3D
 var range_tween: Tween
 var focus_tween: Tween
+var time_spent_in_acquired_state: float = 0.0
 
 ## Timers
 @onready var acquiring_timer: Timer = $AcquiringTimer
@@ -74,9 +75,6 @@ func scan_for_target() -> bool:
 func _on_disabled_state_entered() -> void:
 	state = State.DISABLED
 	field_of_view.enabled = false
-	
-	## Make the drone transition animations land on the idle state
-	drone_model.open_paths_to_idle()
 
 
 func _on_disabled_state_exited() -> void:
@@ -90,9 +88,6 @@ func _on_none_state_entered() -> void:
 	field_of_view.range = none_range
 	field_of_view.focus = none_focus
 	target_none.emit()
-	
-	## Make the drone transition animations land on the idle state
-	drone_model.open_paths_to_idle()
 
 
 func _on_none_state_physics_processing(delta: float) -> void:
@@ -108,9 +103,6 @@ func _on_acquiring_state_entered() -> void:
 	field_of_view.focus = acquiring_focus
 	acquiring_timer.start()
 	target_acquiring.emit()
-	
-	## Make the drone transition animations land on the idle state
-	drone_model.open_paths_to_idle()
 
 
 func _on_acquiring_state_physics_processing(delta: float) -> void:
@@ -145,6 +137,9 @@ func _on_acquired_state_entered() -> void:
 	
 	## Make the drone transition animations land on the targeting state
 	drone_model.open_paths_to_targeting()
+	
+	## Track the cumulative amound of time spent in acquired state (reset it here)
+	time_spent_in_acquired_state = 0.0
 
 
 func _on_acquired_state_physics_processing(delta: float) -> void:
@@ -155,6 +150,9 @@ func _on_acquired_state_physics_processing(delta: float) -> void:
 		var pointer_to_target: Vector3 = char_node.global_position - target.global_position - Vector3.UP * look_down_target_height
 		var new_rotation_x: float = min(asin(abs(pointer_to_target.y) / pointer_to_target.length()), max_look_down_angle)
 		drone.physics_mode_states.look_down_angle = new_rotation_x
+		
+		## accumulate the time spent
+		time_spent_in_acquired_state += delta
 
 
 func _on_acquired_state_exited() -> void:
@@ -165,3 +163,6 @@ func _on_acquired_state_exited() -> void:
 		range_tween.stop()
 	if focus_tween:
 		focus_tween.stop()
+	
+	## Make the drone transition animations land on the idle state
+	drone_model.open_paths_to_idle()

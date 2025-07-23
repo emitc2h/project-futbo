@@ -21,7 +21,7 @@ extends Node
 @export var burst_speed: float = 12.0
 
 ## States Enum
-enum State {OFF = 0, THRUST = 1, BURST = 2}
+enum State {OFF = 0, THRUST = 1, BURST = 2, STOPPING = 3}
 var state: State = State.OFF
 
 ## State transition constants
@@ -142,7 +142,7 @@ func _on_burst_state_entered() -> void:
 	state = State.BURST
 
 
-func _on_burst_to_stoppping_taken() -> void:
+func _on_burst_to_stopping_taken() -> void:
 	_tween_engines(
 		off_noise_speed,
 		burst_noise_intensity, off_noise_intensity,
@@ -172,6 +172,10 @@ func _on_burst_to_thrust_taken() -> void:
 
 # stopping state
 #----------------------------------------
+func _on_stopping_state_entered() -> void:
+	state = State.STOPPING
+
+
 func _on_anim_state_finished(anim_name: String) -> void:
 	if anim_name == "stop thrust":
 		sc.send_event(TRANS_STOPPING_TO_OFF)

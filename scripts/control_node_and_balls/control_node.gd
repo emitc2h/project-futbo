@@ -16,6 +16,13 @@ func _on_inert_node_body_entered(body: Node) -> void:
 	var hit_strength: float = inert_node.linear_velocity.length()
 	bounce_strength = hit_strength / 5.0
 	
+	print("Colliding with: ", body.name)
+	
+	if body is DroneShield and in_on_state:
+		var drone_shield: DroneShield = body as DroneShield
+		drone_shield.look_at(self.get_control_node_position(), Vector3.UP)
+		drone_shield.hit()
+	
 	if body.get_parent() is Drone and in_on_state:
 		var drone: Drone = body.get_parent()
 		if drone.get_hit(hit_strength):

@@ -1,14 +1,21 @@
-[gd_resource type="BehaviorTree" load_steps=22 format=3 uid="uid://7euectnyhgwy"]
+[gd_resource type="BehaviorTree" load_steps=23 format=3 uid="uid://7euectnyhgwy"]
 
 [ext_resource type="Script" uid="uid://bbbdpq3yu2mga" path="res://ai/tasks/drone/between_patrol_markers_condition.gd" id="1_hapyk"]
 [ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/drone/open_action.gd" id="2_6d301"]
+[ext_resource type="Script" uid="uid://c6ocf77l1pyn7" path="res://ai/tasks/drone/set_targeting_action.gd" id="2_gyocu"]
 [ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/drone/face_node_action.gd" id="3_gyocu"]
 [ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/drone/move_to_node_action.gd" id="4_c133w"]
+[ext_resource type="Script" uid="uid://cjmmtaigaxfy3" path="res://ai/tasks/drone/set_engines_action.gd" id="5_6d301"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_3x0vg"]
 
 [sub_resource type="BTCondition" id="BTCondition_hapyk"]
 script = ExtResource("1_hapyk")
+
+[sub_resource type="BTAction" id="BTAction_ccpv4"]
+script = ExtResource("2_gyocu")
+targ_type = "enabled"
+enable_to_acquiring = false
 
 [sub_resource type="BTAction" id="BTAction_gyocu"]
 script = ExtResource("2_6d301")
@@ -41,26 +48,22 @@ far_enough_distance = 0.0
 use_burst = false
 use_thrust = false
 
-[sub_resource type="BBNode" id="BBNode_ioh2e"]
-saved_value = NodePath(".")
-resource_name = "."
-
-[sub_resource type="BTCallMethod" id="BTCallMethod_bhjmg"]
-node = SubResource("BBNode_ioh2e")
-method = &"burst"
+[sub_resource type="BTAction" id="BTAction_c133w"]
+script = ExtResource("5_6d301")
+eng_type = "burst"
+quick_stop_keep_speed = false
+stop_async = null
 
 [sub_resource type="BTWait" id="BTWait_ioh2e"]
 
-[sub_resource type="BBNode" id="BBNode_hmil3"]
-saved_value = NodePath(".")
-resource_name = "."
-
-[sub_resource type="BTCallMethod" id="BTCallMethod_hapyk"]
-node = SubResource("BBNode_hmil3")
-method = &"thrust"
+[sub_resource type="BTAction" id="BTAction_2mqvs"]
+script = ExtResource("5_6d301")
+eng_type = "thrust"
+quick_stop_keep_speed = false
+stop_async = null
 
 [sub_resource type="BTSequence" id="BTSequence_hmil3"]
-children = [SubResource("BTCallMethod_bhjmg"), SubResource("BTWait_ioh2e"), SubResource("BTCallMethod_hapyk")]
+children = [SubResource("BTAction_c133w"), SubResource("BTWait_ioh2e"), SubResource("BTAction_2mqvs")]
 
 [sub_resource type="BTAlwaysFail" id="BTAlwaysFail_ioh2e"]
 children = [SubResource("BTSequence_hmil3")]
@@ -70,7 +73,7 @@ num_failures_required = 5
 children = [SubResource("BTAction_hmil3"), SubResource("BTAlwaysFail_ioh2e")]
 
 [sub_resource type="BTSequence" id="BTSequence_gyocu"]
-children = [SubResource("BTAction_gyocu"), SubResource("BTAction_6d301"), SubResource("BTParallel_hapyk")]
+children = [SubResource("BTAction_ccpv4"), SubResource("BTAction_gyocu"), SubResource("BTAction_6d301"), SubResource("BTParallel_hapyk")]
 
 [sub_resource type="BTSelector" id="BTSelector_bhjmg"]
 children = [SubResource("BTCondition_hapyk"), SubResource("BTSequence_gyocu")]

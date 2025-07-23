@@ -26,8 +26,6 @@ func _enter() -> void:
 	burst_time = 0.0
 	turned_into_ball = false
 	signal_id = rng.randi()
-	drone.disable_targeting()
-	drone.become_invulnerable()
 
 
 func _tick(delta: float) -> Status:
@@ -38,6 +36,7 @@ func _tick(delta: float) -> Status:
 		if not turned_into_ball:
 			drone.become_rigid()
 			drone.quick_close(signal_id)
+			drone.quick_stop_engines(true)
 			turned_into_ball = true
 			
 			if drone.physics_mode_states.state == drone.physics_mode_states.State.RIGID:

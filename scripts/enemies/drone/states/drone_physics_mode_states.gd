@@ -18,7 +18,7 @@ extends Node
 @export var axis_lerp_strength: float = 4.0
 
 @export_group("Floating")
-@export var float_cast_length: float = 1.8
+@export var float_cast_length: float = 2.0
 @export var float_strength: float = 4.0
 @export var float_dampening: float = 4.0
 @export var oscillation_amplitude: float = 0.015
@@ -41,9 +41,8 @@ const TRANS_RAGDOLL_TO_DEAD: String = "Physics Mode: ragdoll to dead"
 @onready var track_transform_container: Node3D = drone.get_node("TrackTransformContainer")
 @onready var track_position_container: Node3D = drone.get_node("TrackPositionContainer")
 
-@onready var closed_collision_shape_char: CollisionShape3D = drone.get_node("CharNode/ClosedCollisionShape3D")
-@onready var open_collision_shape_char: CollisionShape3D = drone.get_node("CharNode/OpenCollisionShape3D")
-@onready var closed_collision_shape_rigid: CollisionShape3D = drone.get_node("RigidNode/ClosedCollisionShape3D")
+@onready var collision_shape_char: CollisionShape3D = drone.get_node("CharNode/CollisionShape3D")
+@onready var collision_shape_rigid: CollisionShape3D = drone.get_node("RigidNode/CollisionShape3D")
 
 @onready var float_cast: RayCast3D = drone.get_node("TrackPositionContainer/FloatCast")
 @onready var float_distortion_mesh: MeshInstance3D = drone.get_node("TrackPositionContainer/Distortion")
@@ -78,10 +77,6 @@ func _on_char_state_entered() -> void:
 	## reset time floating
 	time_floating = 0.0
 	
-	## char state can only be entered from rigid state, and rigid state is always closed,
-	## so we enter char state in closed state and use the closed collision shape
-	closed_collision_shape_char.disabled = false
-	
 	## char node takes ownership of transform
 	char_node.transform = rigid_node.transform
 
@@ -114,6 +109,7 @@ func _on_char_state_physics_processing(delta: float) -> void:
 	if not char_node.is_on_floor():
 		char_node.velocity.y += gravity * delta
 	
+	
 	if float_cast.is_colliding():
 		## Detect the ground and push against the ground
 		var lift_factor: float = 1.0 - (abs(float_cast.get_collision_point().y - float_cast.global_position.y) / float_cast_length)**2
@@ -141,11 +137,7 @@ func _on_char_state_physics_processing(delta: float) -> void:
 	rigid_node.linear_velocity = char_node.velocity
 
 
-func _on_char_state_exited() -> void:
-	## Disable char node collisions
-	closed_collision_shape_char.disabled = true
-	open_collision_shape_char.disabled = true
-	
+func _on_char_state_exited() -> void:	
 	## turn off the float distortion
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(
@@ -171,7 +163,7 @@ func _on_rigid_state_entered() -> void:
 	char_node.velocity = Vector3.ZERO
 	
 	## Enable rigid node colliions
-	closed_collision_shape_rigid.disabled = false
+	collision_shape_rigid.disabled = false
 	
 	rigid_entered.emit()
 
@@ -187,7 +179,7 @@ func _on_rigid_state_physics_processing(delta: float) -> void:
 
 func _on_rigid_state_exited() -> void:
 	## Disable rigid node colliions
-	closed_collision_shape_rigid.disabled = true
+	collision_shape_rigid.disabled = true
 	
 	## Put the rigid node to sleep
 	rigid_node.sleep()
@@ -200,9 +192,8 @@ func _on_ragdoll_state_entered() -> void:
 	
 	## Transformation to ragdoll state is meant to be irreversible
 	## disable all other collision shapes
-	closed_collision_shape_rigid.queue_free()
-	closed_collision_shape_char.queue_free()
-	open_collision_shape_char.queue_free()
+	collision_shape_rigid.queue_free()
+	collision_shape_char.queue_free()
 	
 	## Disable animations
 	model_anim_tree.active = false

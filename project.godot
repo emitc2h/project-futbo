@@ -201,6 +201,7 @@ pause={
 3d_physics/layer_4="Goal"
 3d_physics/layer_9="Enemy Collision"
 3d_physics/layer_10="Enemy Ragdoll"
+3d_physics/layer_11="Enemy Shield"
 2d_physics/layer_32="void"
 
 [physics]

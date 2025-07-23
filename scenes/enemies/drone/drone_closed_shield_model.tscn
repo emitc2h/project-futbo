@@ -1,0 +1,29 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjmtqo5slxoa0"]
+
+[ext_resource type="PackedScene" uid="uid://b677i5g1p1prv" path="res://assets/3D/Enemies/Drone/drone_closed_shield.glb" id="1_o685o"]
+[ext_resource type="Shader" uid="uid://duoq662dp7lb5" path="res://shaders/Drone/closed_shield.gdshader" id="2_h1coj"]
+[ext_resource type="Script" uid="uid://o8glpmt2i8tw" path="res://scripts/enemies/drone/drone_closed_shield_model.gd" id="2_pyfqk"]
+[ext_resource type="Texture2D" uid="uid://b64qyuxss5jvu" path="res://assets/3D/Textures/Drone/closed_shield_color.png" id="3_pyfqk"]
+[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/3D/Textures/Drone/closed_shield_alpha_mask.png" id="4_2flmm"]
+[ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/3D/Textures/Drone/closed_shield_dissolve.png" id="4_pyfqk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pnec2"]
+render_priority = 0
+shader = ExtResource("2_h1coj")
+shader_parameter/texture_albedo = ExtResource("3_pyfqk")
+shader_parameter/albedo_uv_drift = 0.2
+shader_parameter/texture_alpha_mask = ExtResource("4_2flmm")
+shader_parameter/alpha = 1.0
+shader_parameter/emission_energy = 10.0
+shader_parameter/dissolve_texture = ExtResource("4_pyfqk")
+shader_parameter/dissolve_value_in = 1.0
+shader_parameter/dissolve_value_out = 0.0
+shader_parameter/dissolve_uv_drift = 0.1
+shader_parameter/burn_size = 0.08
+shader_parameter/burn_color = Color(0.87386, 0.546692, 0.986915, 1)
+
+[node name="DroneClosedShieldModel" instance=ExtResource("1_o685o")]
+script = ExtResource("2_pyfqk")
+
+[node name="ClosedShield" parent="." index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_pnec2")

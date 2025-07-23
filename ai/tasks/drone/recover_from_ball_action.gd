@@ -35,8 +35,6 @@ func _tick(delta: float) -> Status:
 
 func _on_become_char_finished() -> void:
 	become_char_done = true
-	drone.enable_targeting(true)
-	drone.become_defendable()
 
 
 func _on_open_finished(id: int) -> void:

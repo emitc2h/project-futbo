@@ -49,6 +49,10 @@ func _physics_process(delta: float) -> void:
 	var new_current_node: String = anim_state.get_current_node()
 	var new_current_fading_node: String = anim_state.get_fading_from_node()
 	
+	#print("-----------------------")
+	#print(current_node, " | ", new_current_node)
+	#print(current_fading_node, " | ", new_current_fading_node)
+	
 	if new_current_node != current_node:
 		anim_state_started.emit(new_current_node)
 		## When the outgoing animation doesn't have a crossfade

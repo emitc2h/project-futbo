@@ -1,11 +1,29 @@
-[gd_resource type="BehaviorTree" load_steps=20 format=3 uid="uid://45gcob0egysb"]
+[gd_resource type="BehaviorTree" load_steps=30 format=3 uid="uid://45gcob0egysb"]
 
 [ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/drone/face_node_action.gd" id="1_35t0q"]
+[ext_resource type="Script" uid="uid://cjmmtaigaxfy3" path="res://ai/tasks/drone/set_engines_action.gd" id="1_mq0oj"]
 [ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/drone/move_to_node_action.gd" id="2_2xvos"]
+[ext_resource type="Script" uid="uid://cetf63fmdqa02" path="res://ai/tasks/drone/set_vulnerability_action.gd" id="3_2xvos"]
 [ext_resource type="Script" uid="uid://503g2foi17mj" path="res://ai/tasks/drone/ball_attack_action.gd" id="3_6wf5b"]
+[ext_resource type="Script" uid="uid://c6ocf77l1pyn7" path="res://ai/tasks/drone/set_targeting_action.gd" id="4_6wf5b"]
 [ext_resource type="Script" uid="uid://wa54421i351d" path="res://ai/tasks/drone/recover_from_ball_action.gd" id="4_mq0oj"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_kt6ms"]
+
+[sub_resource type="BTAction" id="BTAction_notr1"]
+script = ExtResource("1_mq0oj")
+eng_type = "stop"
+quick_stop_keep_speed = false
+stop_async = true
+
+[sub_resource type="BTAction" id="BTAction_56blt"]
+script = ExtResource("4_6wf5b")
+targ_type = "enabled"
+enable_to_acquiring = false
+
+[sub_resource type="BTAction" id="BTAction_3kwsa"]
+script = ExtResource("3_2xvos")
+vuln_type = "defendable"
 
 [sub_resource type="BBNode" id="BBNode_35t0q"]
 saved_value = NodePath("")
@@ -14,7 +32,7 @@ saved_value = NodePath("")
 script = ExtResource("1_35t0q")
 custom_node = SubResource("BBNode_35t0q")
 world_repr_pos_x_name = ""
-target_type = "player representation"
+target_type = "target node"
 away = true
 async = false
 
@@ -39,16 +57,25 @@ saved_value = NodePath("")
 script = ExtResource("1_35t0q")
 custom_node = SubResource("BBNode_6wf5b")
 world_repr_pos_x_name = ""
-target_type = "player representation"
+target_type = "target node"
 away = false
 async = false
+
+[sub_resource type="BTAction" id="BTAction_oxhd1"]
+script = ExtResource("3_2xvos")
+vuln_type = "invulnerable"
+
+[sub_resource type="BTAction" id="BTAction_4t0ov"]
+script = ExtResource("4_6wf5b")
+targ_type = "disabled"
+enable_to_acquiring = null
 
 [sub_resource type="BTAction" id="BTAction_mq0oj"]
 script = ExtResource("3_6wf5b")
 burst_duration = 0.8
 
 [sub_resource type="BTWait" id="BTWait_35t0q"]
-duration = 1.2
+duration = 1.3
 
 [sub_resource type="BBNode" id="BBNode_mq0oj"]
 saved_value = NodePath("")
@@ -57,12 +84,21 @@ saved_value = NodePath("")
 script = ExtResource("1_35t0q")
 custom_node = SubResource("BBNode_mq0oj")
 world_repr_pos_x_name = ""
-target_type = "player representation"
+target_type = "target node"
 away = false
 async = true
 
+[sub_resource type="BTAction" id="BTAction_upoti"]
+script = ExtResource("4_6wf5b")
+targ_type = "enabled"
+enable_to_acquiring = true
+
 [sub_resource type="BTAction" id="BTAction_26juq"]
 script = ExtResource("4_mq0oj")
+
+[sub_resource type="BTAction" id="BTAction_s06vg"]
+script = ExtResource("3_2xvos")
+vuln_type = "defendable"
 
 [sub_resource type="BBNode" id="BBNode_77xo3"]
 saved_value = NodePath("")
@@ -71,7 +107,7 @@ saved_value = NodePath("")
 script = ExtResource("2_2xvos")
 custom_node = SubResource("BBNode_77xo3")
 world_repr_pos_x_name = ""
-target_type = "player representation"
+target_type = "target node"
 away = false
 close_enough_distance = 6.2
 far_enough_distance = 0.0
@@ -79,7 +115,7 @@ use_burst = false
 use_thrust = true
 
 [sub_resource type="BTSequence" id="BTSequence_35t0q"]
-children = [SubResource("BTAction_kuy2p"), SubResource("BTAction_35t0q"), SubResource("BTAction_2xvos"), SubResource("BTAction_mq0oj"), SubResource("BTWait_35t0q"), SubResource("BTAction_77xo3"), SubResource("BTAction_26juq"), SubResource("BTAction_6wf5b")]
+children = [SubResource("BTAction_notr1"), SubResource("BTAction_56blt"), SubResource("BTAction_3kwsa"), SubResource("BTAction_kuy2p"), SubResource("BTAction_35t0q"), SubResource("BTAction_2xvos"), SubResource("BTAction_oxhd1"), SubResource("BTAction_4t0ov"), SubResource("BTAction_mq0oj"), SubResource("BTWait_35t0q"), SubResource("BTAction_77xo3"), SubResource("BTAction_upoti"), SubResource("BTAction_26juq"), SubResource("BTAction_s06vg"), SubResource("BTAction_6wf5b")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_kt6ms")

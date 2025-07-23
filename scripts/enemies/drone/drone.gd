@@ -19,8 +19,7 @@ extends Node3D
 ## Useful internal nodes to have a handle on
 @onready var char_node: CharacterBody3D = $CharNode
 @onready var repr: DroneInternalRepresentation = $InternalRepresentation
-@onready var patrol_marker_1: Marker3D = $PatrolMarker1
-@onready var patrol_marker_2: Marker3D = $PatrolMarker2
+@onready var shield: DroneShield = $TrackPositionContainer/DroneShield
 
 
 func _ready() -> void:
@@ -115,9 +114,6 @@ func open(id: int = 0) -> void:
 signal close_finished(id: int)
 
 func close(id: int = 0) -> void:
-	if not engines_states.state == engines_states.State.OFF:
-		stop_engines()
-		await engines_states.engines_are_off
 	sc.send_event(engagement_mode_states.TRANS_OPEN_TO_CLOSING)
 	sc.send_event(engagement_mode_states.TRANS_OPENING_TO_CLOSING)
 	await engagement_mode_states.closing_finished
@@ -130,7 +126,6 @@ func quick_close(id: int = 0) -> void:
 	sc.send_event(engagement_mode_states.TRANS_OPEN_TO_QUICK_CLOSE)
 	sc.send_event(engagement_mode_states.TRANS_OPENING_TO_QUICK_CLOSE)
 	sc.send_event(engagement_mode_states.TRANS_CLOSING_TO_QUICK_CLOSE)
-	quick_stop_engines(true)
 	await engagement_mode_states.closing_finished
 	quick_close_finished.emit(id)
 
@@ -148,11 +143,14 @@ func burst() -> void:
 	sc.send_event(engines_states.TRANS_OFF_TO_BURST)
 	sc.send_event(engines_states.TRANS_THRUST_TO_BURST)
 
+signal stop_engines_finished
 
 func stop_engines() -> void:
 	physics_mode_states.speed = engines_states.off_speed
 	sc.send_event(engines_states.TRANS_THRUST_TO_STOPPING)
 	sc.send_event(engines_states.TRANS_BURST_TO_STOPPING)
+	await engines_states.engines_are_off
+	stop_engines_finished.emit()
 
 
 func quick_stop_engines(keep_speed: bool = false) -> void:
@@ -199,4 +197,13 @@ func disable_targeting() -> void:
 ## Hitbox
 ## ---------------------------------------
 func get_hit(strength: float) -> bool:
+	return false
+
+
+## Internal Representation
+## ---------------------------------------
+func force_update_player_pos_x() -> bool:
+	if targeting_states.target:
+		repr.playerRepresentation.last_known_player_pos_x = targeting_states.target.global_position.x
+		return true
 	return false
