@@ -34,6 +34,7 @@ const TRANS_ATTACK_TO_BLOCK: String = "Behavior: attack to block"
 
 
 func _ready() -> void:
+	targeting_states.target_none.connect(_on_target_none)
 	targeting_states.target_acquired.connect(_on_target_acquired)
 	proximity_states.control_node_proximity_entered.connect(_on_control_node_proximity_entered)
 	proximity_states.player_proximity_entered.connect(_on_player_proximity_entered)
@@ -81,6 +82,10 @@ func _on_attack_state_entered() -> void:
 
 # signal handling
 #========================================
+func _on_target_none() -> void:
+	if state == State.ATTACK:
+		sc.send_event(TRANS_ATTACK_TO_GO_TO_PATROL)
+
 func _on_target_acquired() -> void:
 	## If the drone sees the player, go to attack state
 	if state == State.PATROL:
@@ -90,7 +95,6 @@ func _on_target_acquired() -> void:
 
 
 func _on_control_node_proximity_entered() -> void:
-	print("control node proximity entered. state = ", vulnerabiliy_states.state)
 	## If the control node is detected within the proximity detector, go to block state
 	if vulnerabiliy_states.state == vulnerabiliy_states.State.DEFENDABLE:
 		if state == State.PATROL:

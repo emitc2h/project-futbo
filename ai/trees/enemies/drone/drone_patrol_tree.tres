@@ -11,13 +11,13 @@
 [sub_resource type="BTAction" id="BTAction_rwqa8"]
 script = ExtResource("1_gq854")
 targ_type = "enabled"
-enable_to_acquiring = null
+enable_to_acquiring = false
 
 [sub_resource type="BTAction" id="BTAction_s3eib"]
 script = ExtResource("1_q5h4i")
 eng_type = "stop"
 quick_stop_keep_speed = false
-stop_async = null
+stop_async = true
 
 [sub_resource type="BTAction" id="BTAction_lhmdx"]
 script = ExtResource("1_ux7gf")

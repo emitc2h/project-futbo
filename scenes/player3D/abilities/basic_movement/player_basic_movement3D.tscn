@@ -110,6 +110,12 @@ to = NodePath("../../fall")
 event = &"run buffer to fall"
 delay_in_seconds = "0.0"
 
+[node name="to idle" type="Node" parent="State/Root/Movement/run buffer"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../idle")
+event = &"run buffer to idle"
+delay_in_seconds = "0.0"
+
 [node name="jump" type="Node" parent="State/Root/Movement"]
 script = ExtResource("5_6dxo6")
 

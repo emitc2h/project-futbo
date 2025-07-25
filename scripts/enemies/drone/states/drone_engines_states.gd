@@ -46,6 +46,10 @@ const TRANS_STOPPING_TO_OFF: String = "Engines: stopping to off"
 @onready var model_anim_tree: AnimationTree = drone.get_node("TrackTransformContainer/DroneModel/AnimationTree")
 @onready var anim_state: AnimationNodeStateMachinePlayback
 
+## Internal variables
+var engine_tween: Tween
+
+## Signals
 signal engines_are_off
 
 ## Utils
@@ -57,9 +61,12 @@ func _tween_engines(
 	trans: Tween.TransitionType,
 	duration: float) -> Tween:
 		exhaust_material.set_shader_parameter("noise_speed", noise_speed)
+		## Interrupt any ongoing tween so animations don't conflict
+		if engine_tween:
+			engine_tween.kill()
 		
-		var tween: Tween = get_tree().create_tween()
-		tween.tween_property(
+		engine_tween = get_tree().create_tween()
+		engine_tween.tween_property(
 			exhaust_material,
 			"shader_parameter/noise_intensity",
 			noise_intensity_to,
@@ -67,7 +74,7 @@ func _tween_engines(
 			.set_ease(ease)\
 			.set_trans(trans)\
 			.from(noise_intensity_from)
-		return tween
+		return engine_tween
 
 
 func _ready() -> void:

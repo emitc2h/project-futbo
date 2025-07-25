@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl2glyig12kut"]
+
+[ext_resource type="Script" uid="uid://c28dgpqfk275l" path="res://scripts/debug/debug_tool.gd" id="1_rtcbt"]
+
+[node name="DebugTool" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_rtcbt")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(450, 400)
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 470.0
+offset_bottom = 791.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Running Logs" type="MarginContainer" parent="PanelContainer/MarginContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/TabContainer/Running Logs"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/TabContainer/Running Logs/VBoxContainer"]
+custom_minimum_size = Vector2(400, 800)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/TabContainer/Running Logs/VBoxContainer/ScrollContainer"]
+process_mode = 3
+custom_minimum_size = Vector2(400, 760)
+layout_mode = 2
+size_flags_vertical = 0
+text = "awaiting logs..."
+autowrap_mode = 3
+
+[node name="Pause Logs" type="MarginContainer" parent="PanelContainer/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.93462, 0.762591, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "< DEBUG >"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer"]
+custom_minimum_size = Vector2(400, 800)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer/ScrollContainer"]
+process_mode = 3
+custom_minimum_size = Vector2(400, 760)
+layout_mode = 2
+size_flags_vertical = 0
+text = "awaiting logs..."
+autowrap_mode = 3

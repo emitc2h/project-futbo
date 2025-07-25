@@ -18,7 +18,7 @@ extends Node
 @export var axis_lerp_strength: float = 4.0
 
 @export_group("Floating")
-@export var float_cast_length: float = 2.0
+@export var float_cast_length: float = 2.2
 @export var float_strength: float = 4.0
 @export var float_dampening: float = 4.0
 @export var oscillation_amplitude: float = 0.015

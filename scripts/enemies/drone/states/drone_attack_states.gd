@@ -9,7 +9,7 @@ extends Node
 @export var targeting_states: DroneTargetingStates
 
 @export_group("Parameters")
-@export var min_time_in_track_state: float = 2.0
+@export var min_time_in_track_state: float = 2.5
 @export var max_time_in_track_state: float = 6.0
 @export var time_track_to_ram_attack: float = 3.0
 
@@ -23,9 +23,6 @@ const TRANS_TRACK_TO_RAM_ATTACK: String = "Attack: track to ram attack"
 
 ## Internal variables
 var time_spent_in_track_state: float = 0.0
-
-func _ready() -> void:
-	targeting_states.target_none.connect(_on_target_none)
 
 
 # track state
@@ -58,11 +55,8 @@ func _on_ram_attack_state_exited() -> void:
 
 
 func _on_ram_attack_bt_finished(status: int) -> void:
-	sc.send_event(TRANS_RAM_ATTACK_TO_TRACK)
-
-
-# signal handling
-#========================================
-func _on_target_none() -> void:
-	if state == State.TRACK:
-		sc.send_event(behavior_states.TRANS_ATTACK_TO_GO_TO_PATROL)
+	match(status):
+		BT.SUCCESS:
+			sc.send_event(TRANS_RAM_ATTACK_TO_TRACK)
+		BT.FAILURE:
+			sc.send_event(TRANS_RAM_ATTACK_TO_TRACK)

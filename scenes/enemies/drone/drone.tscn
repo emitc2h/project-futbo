@@ -71,10 +71,11 @@ shader_parameter/noise_intensity = 1.0
 shader_parameter/stretch = 0.2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h6a7"]
-radius = 1.2
-height = 2.8
+margin = 0.1
+radius = 1.3
+height = 3.0
 
-[node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "vulnerability_states", "targeting_states", "position_states")]
+[node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_states", "behavior_attack_states")]
 script = ExtResource("1_irn00")
 physics_mode_states = NodePath("State/Root/Physics Mode/Physics Mode States")
 direction_faced_states = NodePath("State/Root/Direction Faced/Direction Faced States")
@@ -82,7 +83,10 @@ engagement_mode_states = NodePath("State/Root/Engagement Mode/Engagement Mode St
 engines_states = NodePath("State/Root/Engines/Engines States")
 vulnerability_states = NodePath("State/Root/Vulnerability/Vulnerability States")
 targeting_states = NodePath("State/Root/Monitoring/Targeting/Targeting States")
+proximity_states = NodePath("State/Root/Monitoring/Proximity/Proximity States")
 position_states = NodePath("State/Root/Monitoring/Position/Position States")
+behavior_states = NodePath("State/Root/Behavior/Behavior States")
+behavior_attack_states = NodePath("State/Root/Behavior/attack/Attack States")
 
 [node name="InternalRepresentation" type="Node" parent="."]
 script = ExtResource("2_n6xh2")
@@ -432,7 +436,7 @@ repr = NodePath("../../../../../InternalRepresentation")
 max_look_down_angle = 1.0472
 
 [node name="AcquiringTimer" type="Timer" parent="State/Root/Monitoring/Targeting/Targeting States"]
-wait_time = 3.0
+wait_time = 2.0
 
 [node name="disabled" type="Node" parent="State/Root/Monitoring/Targeting"]
 script = ExtResource("5_voq0c")
@@ -794,7 +798,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 shape = SubResource("CapsuleShape3D_4h6a7")
 target_position = Vector3(0, 0, 0)
 margin = 0.1
-max_results = 2
+max_results = 5
 collision_mask = 5
 debug_shape_custom_color = Color(0.138885, 0.556865, 0.774598, 1)
 

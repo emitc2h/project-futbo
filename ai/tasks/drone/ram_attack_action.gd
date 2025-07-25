@@ -1,4 +1,4 @@
-class_name BallAttackAction
+class_name RamAttackAction
 extends BTAction
 
 @export_group("Parameters")

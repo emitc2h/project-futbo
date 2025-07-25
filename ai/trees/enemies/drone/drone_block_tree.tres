@@ -1,10 +1,11 @@
-[gd_resource type="BehaviorTree" load_steps=15 format=3 uid="uid://ln0b5i3866ql"]
+[gd_resource type="BehaviorTree" load_steps=17 format=3 uid="uid://ln0b5i3866ql"]
 
 [ext_resource type="Script" uid="uid://cjmmtaigaxfy3" path="res://ai/tasks/drone/set_engines_action.gd" id="1_n8kl3"]
 [ext_resource type="Script" uid="uid://bg84c7y6wffvi" path="res://ai/tasks/drone/close_action.gd" id="1_nk0ob"]
 [ext_resource type="Script" uid="uid://cnulieepl2f00" path="res://ai/tasks/drone/stop_moving_action.gd" id="1_wjov6"]
 [ext_resource type="Script" uid="uid://cetf63fmdqa02" path="res://ai/tasks/drone/set_vulnerability_action.gd" id="1_wr0yp"]
 [ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/drone/open_action.gd" id="3_a1jrj"]
+[ext_resource type="Script" uid="uid://byp755qw4t3mv" path="res://ai/tasks/drone/wait_for_control_node_proximity_exited_action.gd" id="5_bgcqb"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_n6qsu"]
 
@@ -16,7 +17,7 @@ vuln_type = "invulnerable"
 script = ExtResource("1_n8kl3")
 eng_type = "quick stop"
 quick_stop_keep_speed = false
-stop_async = null
+stop_async = true
 
 [sub_resource type="BTAction" id="BTAction_a1jrj"]
 script = ExtResource("1_wjov6")
@@ -28,6 +29,9 @@ async = false
 quick = true
 stop_engines = true
 
+[sub_resource type="BTAction" id="BTAction_qns3d"]
+script = ExtResource("5_bgcqb")
+
 [sub_resource type="BTAction" id="BTAction_n8kl3"]
 script = ExtResource("3_a1jrj")
 check_signal_id = false
@@ -38,7 +42,7 @@ script = ExtResource("1_wr0yp")
 vuln_type = "defendable"
 
 [sub_resource type="BTSequence" id="BTSequence_a1jrj"]
-children = [SubResource("BTAction_wjov6"), SubResource("BTAction_n8kl3"), SubResource("BTAction_0cetv")]
+children = [SubResource("BTAction_wjov6"), SubResource("BTAction_qns3d"), SubResource("BTAction_n8kl3"), SubResource("BTAction_0cetv")]
 
 [sub_resource type="BTParallel" id="BTParallel_n8kl3"]
 num_successes_required = 4

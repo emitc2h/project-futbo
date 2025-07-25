@@ -37,9 +37,9 @@ func _ready() -> void:
 
 
 func _on_behavior_entered() -> void:
+	btplayer.active = true
 	if reset_tree_on_enter:
 		btplayer.restart()
-	btplayer.active = true
 
 
 func _on_behavior_exited() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cvaogmwqhlu3a"]
+[gd_scene load_steps=30 format=3 uid="uid://cvaogmwqhlu3a"]
 
 [ext_resource type="Script" uid="uid://bunkqcq7mgxft" path="res://prototypes/loop_test/loop_test_scene.gd" id="1_vum0r"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_vum0r"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://deem7pbadipj0" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_normal.png" id="18_xm3b7"]
 [ext_resource type="Texture2D" uid="uid://dumcqi0isdutb" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color2.png" id="19_qt0wu"]
 [ext_resource type="PackedScene" uid="uid://r42whxkucyjl" path="res://scenes/vegetation/bush.tscn" id="20_mli22"]
+[ext_resource type="PackedScene" uid="uid://dl2glyig12kut" path="res://scenes/debug/debug_tool.tscn" id="21_6uf0e"]
 [ext_resource type="PackedScene" uid="uid://bc323ftwy8i7t" path="res://scenes/enemies/drone/drone.tscn" id="21_pv0wt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hi8lg"]
@@ -360,3 +361,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1447, 0, -1.92601)
 
 [node name="Drone" parent="." instance=ExtResource("21_pv0wt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.77845, 1.59083, 0)
+
+[node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]

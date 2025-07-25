@@ -14,17 +14,24 @@ extends Node3D
 
 @export_subgroup("Monitoring State Machines")
 @export var targeting_states: DroneTargetingStates
+@export var proximity_states: DroneProximityStates
 @export var position_states: DronePositionStates
+
+@export_group("Behavior State Machines")
+@export var behavior_states: DroneBehaviorStates
+@export var behavior_attack_states: DroneAttackStates
 
 ## Useful internal nodes to have a handle on
 @onready var char_node: CharacterBody3D = $CharNode
 @onready var repr: DroneInternalRepresentation = $InternalRepresentation
 @onready var shield: DroneShield = $TrackPositionContainer/DroneShield
+@onready var track_position_container: Node3D = $TrackPositionContainer
 
 
 func _ready() -> void:
 	## initialize the internal representationd
 	repr.initialize()
+	Signals.debug_advance.connect(_on_debug_advance)
 
 
 ## Physics Controls
@@ -39,6 +46,10 @@ func become_char() -> void:
 
 func become_ragdoll() -> void:
 	sc.send_event(physics_mode_states.TRANS_CHAR_TO_RAGDOLL)
+
+
+func get_global_pos_x() -> float:
+	return track_position_container.global_position.x
 
 
 ## Direction Controls
@@ -194,6 +205,16 @@ func disable_targeting() -> void:
 	sc.send_event(targeting_states.TRANS_NONE_TO_DISABLED)
 
 
+## Proximity Controls
+## ---------------------------------------
+func enable_proximity_detector() -> void:
+	sc.send_event(proximity_states.TRANS_DISABLED_TO_ENABLED)
+
+
+func disable_proximity_detector() -> void:
+	sc.send_event(proximity_states.TRANS_ENABLED_TO_DISABLED)
+
+
 ## Hitbox
 ## ---------------------------------------
 func get_hit(strength: float) -> bool:
@@ -207,3 +228,25 @@ func force_update_player_pos_x() -> bool:
 		repr.playerRepresentation.last_known_player_pos_x = targeting_states.target.global_position.x
 		return true
 	return false
+
+
+## Debugging
+## ---------------------------------------
+func generate_state_report() -> String:
+	var output: String = ""
+	output += "Physics Mode : " + physics_mode_states.State.keys()[physics_mode_states.state] + "\n"
+	output += "Direction Faced : " + direction_faced_states.State.keys()[direction_faced_states.state] + "\n"
+	output += "Engagement Mode : " + engagement_mode_states.State.keys()[engagement_mode_states.state] + "\n"
+	output += "Engines : " + engines_states.State.keys()[engines_states.state] + "\n"
+	output += "Vulnerability : " + vulnerability_states.State.keys()[vulnerability_states.state] + "\n"
+	output += "Targeting : " + targeting_states.State.keys()[targeting_states.state] + "\n"
+	output += "Behavior : " + behavior_states.State.keys()[behavior_states.state] + "\n"
+	output += "---> Attack : " + behavior_attack_states.State.keys()[behavior_attack_states.state] + "\n"
+	output += "===================================\n"
+	output += "Animation tree node: " + engagement_mode_states.anim_state.get_current_node()\
+			 + " (fading : " + engagement_mode_states.anim_state.get_fading_from_node() + ")"
+	return output
+
+
+func _on_debug_advance() -> void:
+	Signals.debug_log.emit(generate_state_report())

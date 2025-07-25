@@ -3,7 +3,6 @@ extends Node
 ## ===================================== ##
 ## GAME STATE SIGNALS                    ##
 ## ------------------------------------- ##
-
 # Tell the game to quit.
 signal quit_game
 
@@ -23,7 +22,6 @@ signal unpause
 ## ===================================== ##
 ## PLAYER SIGNALS                        ##
 ## ------------------------------------- ##
-
 signal facing_left
 signal facing_right
 
@@ -43,9 +41,17 @@ signal turn_right_animation_ended
 signal kick_left_animation_ended
 signal kick_right_animation_ended
 
+
 ## ===================================== ##
 ## CAMERA SIGNALS                        ##
 ## ------------------------------------- ##
-
 signal camera_changed(rotation: Vector3, position_delta: Vector3, fov: float)
 signal update_zoom(zoom_target: Enums.Zoom)
+
+
+## ===================================== ##
+## DEBUG SIGNALS                         ##
+## ------------------------------------- ##
+signal debug_log(text: String)
+signal debug_running_log(text: String)
+signal debug_advance
