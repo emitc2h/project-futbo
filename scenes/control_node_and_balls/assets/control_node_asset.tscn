@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://bkp8fbjsyyhyx"]
+
+[ext_resource type="PackedScene" uid="uid://dgpqcnsegq4rs" path="res://scenes/control_node_and_balls/models/control_node_model.tscn" id="1_k14dj"]
+[ext_resource type="Script" uid="uid://crab58bvajfs3" path="res://scripts/control_node_and_balls/assets/control_node_asset.gd" id="2_fgtxj"]
+[ext_resource type="Texture2D" uid="uid://c0kyqekhnn4eh" path="res://assets/3D/Particles/dots/dots_spritesheet_64x64.png" id="3_o78rc"]
+
+[sub_resource type="Gradient" id="Gradient_o78rc"]
+offsets = PackedFloat32Array(0, 0.299145, 0.790287, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.23, 0.7305, 1, 1, 0.164602, 0.471592, 0.971196, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ndvbx"]
+gradient = SubResource("Gradient_o78rc")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_bbe66"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.454754, 1), 0.0, 0.0, 0, 0, Vector2(0.847652, 0.760928), -1.80151, -1.80151, 0, 0, Vector2(1, 0), -2.82591, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_uxj54"]
+curve = SubResource("Curve_bbe66")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3mwn8"]
+lifetime_randomness = 1.0
+emission_shape = 2
+emission_sphere_radius = 0.14
+direction = Vector3(0, 0, 0)
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = -1.60933e-05
+radial_velocity_min = 0.599978
+radial_velocity_max = 0.799978
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -1.3
+radial_accel_max = -1.1
+tangential_accel_min = -0.300002
+tangential_accel_max = 0.299998
+scale_curve = SubResource("CurveTexture_uxj54")
+color_ramp = SubResource("GradientTexture1D_ndvbx")
+anim_speed_min = 0.2
+anim_speed_max = 0.5
+anim_offset_max = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jasuo"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_o78rc")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 4
+particles_anim_loop = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_o78rc"]
+material = SubResource("StandardMaterial3D_jasuo")
+size = Vector2(0.015, 0.015)
+
+[node name="ControlNodeAsset" type="Node3D"]
+script = ExtResource("2_fgtxj")
+
+[node name="ControlNodeModel" parent="." instance=ExtResource("1_k14dj")]
+transform = Transform3D(0.128063, 0.0168002, -0.0540155, 0.0114819, 0.123181, 0.0655341, 0.0553903, -0.0643763, 0.1113, 0, 0, 0)
+
+[node name="Light" type="OmniLight3D" parent="."]
+light_intensity_lumens = 10000.0
+light_color = Color(0.5, 0.733333, 1, 1)
+light_energy = 0.0
+light_volumetric_fog_energy = 10.0
+light_size = 0.2
+light_cull_mask = 4294967291
+omni_range = 2.0
+
+[node name="WispParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 300
+lifetime = 1.2
+one_shot = true
+explosiveness = 1.0
+randomness = 0.34
+fixed_fps = 60
+local_coords = true
+trail_lifetime = 1.0
+process_material = SubResource("ParticleProcessMaterial_3mwn8")
+draw_pass_1 = SubResource("QuadMesh_o78rc")
