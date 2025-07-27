@@ -61,6 +61,7 @@ func _input(event: InputEvent) -> void:
 		paused = !paused
 		get_tree().paused = !get_tree().paused
 		if paused:
+			pause_log_array_idx = 0
 			tab_container.current_tab = 1
 		else:
 			tab_container.current_tab = 0
@@ -109,4 +110,5 @@ func _update_running_label() -> void:
 
 
 func _reset_pause_log_array() -> void:
+	pause_log_array_idx = 0
 	pause_log_array = []

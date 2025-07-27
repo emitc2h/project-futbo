@@ -17,7 +17,7 @@
 script = ExtResource("1_mq0oj")
 eng_type = "stop"
 quick_stop_keep_speed = false
-stop_async = true
+async = null
 
 [sub_resource type="BTAction" id="BTAction_3kwsa"]
 script = ExtResource("3_2xvos")

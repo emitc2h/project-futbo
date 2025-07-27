@@ -360,6 +360,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8656, 0, -12.6798)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1447, 0, -1.92601)
 
 [node name="Drone" parent="." instance=ExtResource("21_pv0wt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.77845, 1.59083, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.28794, 1.59083, 0)
 
 [node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]

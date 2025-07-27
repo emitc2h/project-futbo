@@ -43,8 +43,6 @@ const TRANS_STOPPING_TO_OFF: String = "Engines: stopping to off"
 @onready var exhaust_material: ShaderMaterial = model_mesh.get_surface_override_material(6)
 
 @onready var model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
-@onready var model_anim_tree: AnimationTree = drone.get_node("TrackTransformContainer/DroneModel/AnimationTree")
-@onready var anim_state: AnimationNodeStateMachinePlayback
 
 ## Internal variables
 var engine_tween: Tween
@@ -64,6 +62,8 @@ func _tween_engines(
 		## Interrupt any ongoing tween so animations don't conflict
 		if engine_tween:
 			engine_tween.kill()
+			if state == State.STOPPING:
+				sc.send_event(TRANS_STOPPING_TO_OFF)
 		
 		engine_tween = get_tree().create_tween()
 		engine_tween.tween_property(
@@ -75,11 +75,6 @@ func _tween_engines(
 			.set_trans(trans)\
 			.from(noise_intensity_from)
 		return engine_tween
-
-
-func _ready() -> void:
-	anim_state = model_anim_tree.get("parameters/playback")
-	model.anim_state_finished.connect(_on_anim_state_finished)
 
 
 # off state
@@ -96,7 +91,6 @@ func _on_off_to_thrust_taken() -> void:
 		Tween.EASE_OUT,
 		Tween.TRANS_BACK,
 		0.6)
-	anim_state.travel("start thrust")
 
 
 func _on_off_to_burst_taken() -> void:
@@ -106,7 +100,6 @@ func _on_off_to_burst_taken() -> void:
 		Tween.EASE_OUT,
 		Tween.TRANS_BACK,
 		0.4)
-	anim_state.travel("start thrust")
 
 
 # thrust state
@@ -121,8 +114,9 @@ func _on_thrust_to_stopping_taken() -> void:
 		thrust_noise_intensity, off_noise_intensity,
 		Tween.EASE_OUT,
 		Tween.TRANS_QUART,
-		0.8)
-	anim_state.travel("stop thrust")
+		0.8)	
+	await engine_tween.finished
+	sc.send_event(TRANS_STOPPING_TO_OFF)
 
 
 func _on_thrust_to_quick_off_taken() -> void:
@@ -156,7 +150,8 @@ func _on_burst_to_stopping_taken() -> void:
 		Tween.EASE_OUT,
 		Tween.TRANS_QUART,
 		0.8)
-	anim_state.travel("stop thrust")
+	await engine_tween.finished
+	sc.send_event(TRANS_STOPPING_TO_OFF)
 
 
 func _on_burst_to_quick_off_taken() -> void:
@@ -181,8 +176,3 @@ func _on_burst_to_thrust_taken() -> void:
 #----------------------------------------
 func _on_stopping_state_entered() -> void:
 	state = State.STOPPING
-
-
-func _on_anim_state_finished(anim_name: String) -> void:
-	if anim_name == "stop thrust":
-		sc.send_event(TRANS_STOPPING_TO_OFF)

@@ -6,7 +6,6 @@ extends BTAction
 @export var check_signal_id: bool
 @export var async: bool
 @export var quick: bool
-@export var stop_engines: bool
 
 var drone: Drone
 var done: bool
@@ -38,12 +37,8 @@ func _enter() -> void:
 		signal_id = rng.randi()
 		if quick:
 			drone.quick_close(signal_id)
-			if stop_engines:
-				drone.stop_engines()
 		else:
 			drone.close(signal_id)
-			if stop_engines:
-				drone.quick_stop_engines()
 		if async:
 			done = true
 

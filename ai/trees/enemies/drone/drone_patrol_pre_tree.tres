@@ -1,0 +1,100 @@
+[gd_resource type="BehaviorTree" load_steps=32 format=3 uid="uid://b85ebhhwxt3bb"]
+
+[ext_resource type="Script" uid="uid://og2wfxp7v822" path="res://ai/tasks/drone/is_in_physics_state_condition.gd" id="1_woip1"]
+[ext_resource type="Script" uid="uid://dhptod8wkftxr" path="res://ai/tasks/drone/set_physics_action.gd" id="2_6ej42"]
+[ext_resource type="Script" uid="uid://bq6jhax0oj50u" path="res://ai/tasks/drone/is_in_engagement_state_condition.gd" id="3_qhkcb"]
+[ext_resource type="Script" uid="uid://bg84c7y6wffvi" path="res://ai/tasks/drone/close_action.gd" id="4_jp8qy"]
+[ext_resource type="Script" uid="uid://cryuu1jycrokl" path="res://ai/tasks/drone/is_in_engines_state_condition.gd" id="5_jp8qy"]
+[ext_resource type="Script" uid="uid://cjmmtaigaxfy3" path="res://ai/tasks/drone/set_engines_action.gd" id="6_12nq2"]
+[ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="7_45ikg"]
+[ext_resource type="Script" uid="uid://c6ocf77l1pyn7" path="res://ai/tasks/drone/set_targeting_action.gd" id="8_5hu3r"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_y70i2"]
+
+[sub_resource type="BTCondition" id="BTCondition_78vy3"]
+script = ExtResource("1_woip1")
+expected_state = 0
+
+[sub_resource type="BTInvert" id="BTInvert_s32mk"]
+children = [SubResource("BTCondition_78vy3")]
+
+[sub_resource type="BTAction" id="BTAction_12nq2"]
+script = ExtResource("2_6ej42")
+phys_type = "char"
+
+[sub_resource type="BTSequence" id="BTSequence_6ej42"]
+custom_name = "Physics Sequence"
+children = [SubResource("BTInvert_s32mk"), SubResource("BTAction_12nq2")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_45ikg"]
+children = [SubResource("BTSequence_6ej42")]
+
+[sub_resource type="BTCondition" id="BTCondition_ld5ub"]
+script = ExtResource("7_45ikg")
+expected_state = 1
+
+[sub_resource type="BTInvert" id="BTInvert_0h333"]
+children = [SubResource("BTCondition_ld5ub")]
+
+[sub_resource type="BTAction" id="BTAction_l4uem"]
+script = ExtResource("8_5hu3r")
+targ_type = "enabled"
+enable_to_acquiring = false
+
+[sub_resource type="BTSequence" id="BTSequence_dc7wy"]
+custom_name = "Targeting Sequence"
+children = [SubResource("BTInvert_0h333"), SubResource("BTAction_l4uem")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_0h333"]
+children = [SubResource("BTSequence_dc7wy")]
+
+[sub_resource type="BTCondition" id="BTCondition_5hu3r"]
+script = ExtResource("5_jp8qy")
+expected_state = 0
+
+[sub_resource type="BTInvert" id="BTInvert_ld5ub"]
+children = [SubResource("BTCondition_5hu3r")]
+
+[sub_resource type="BTAction" id="BTAction_0h333"]
+script = ExtResource("6_12nq2")
+eng_type = "stop"
+quick_stop_keep_speed = false
+async = true
+
+[sub_resource type="BTSequence" id="BTSequence_l4uem"]
+custom_name = "Engines Sequence"
+children = [SubResource("BTInvert_ld5ub"), SubResource("BTAction_0h333")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_ld5ub"]
+children = [SubResource("BTSequence_l4uem")]
+
+[sub_resource type="BTCondition" id="BTCondition_45ikg"]
+script = ExtResource("3_qhkcb")
+expected_state = 0
+
+[sub_resource type="BTInvert" id="BTInvert_5hu3r"]
+children = [SubResource("BTCondition_45ikg")]
+
+[sub_resource type="BTAction" id="BTAction_ld5ub"]
+script = ExtResource("4_jp8qy")
+check_signal_id = false
+async = false
+quick = false
+
+[sub_resource type="BTSequence" id="BTSequence_0h333"]
+custom_name = "Engagement Sequence"
+children = [SubResource("BTInvert_5hu3r"), SubResource("BTAction_ld5ub")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_5hu3r"]
+children = [SubResource("BTSequence_0h333")]
+
+[sub_resource type="BTSequence" id="BTSequence_45ikg"]
+children = [SubResource("BTAlwaysSucceed_ld5ub"), SubResource("BTAlwaysSucceed_5hu3r")]
+
+[sub_resource type="BTParallel" id="BTParallel_qhkcb"]
+num_successes_required = 4
+children = [SubResource("BTAlwaysSucceed_45ikg"), SubResource("BTAlwaysSucceed_0h333"), SubResource("BTSequence_45ikg")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_y70i2")
+root_task = SubResource("BTParallel_qhkcb")

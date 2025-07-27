@@ -40,9 +40,13 @@ func _on_track_state_physics_processing(delta: float) -> void:
 		time_spent_in_track_state > min_time_in_track_state:
 		sc.send_event(TRANS_TRACK_TO_RAM_ATTACK)
 	
-	## Max time to spend in track state before performing a ram attack
+	## Max time to spend in track state before performing a ram attack, even if there wasn't
+	## much time spent in acquired state. If target isn't aquired by that point, go to patrol
 	if time_spent_in_track_state > max_time_in_track_state:
-		sc.send_event(TRANS_TRACK_TO_RAM_ATTACK)
+		if targeting_states.state == targeting_states.State.ACQUIRED:
+			sc.send_event(TRANS_TRACK_TO_RAM_ATTACK)
+		else:
+			sc.send_event(drone.behavior_states.TRANS_ATTACK_TO_GO_TO_PATROL)
 
 # ram attack state
 #----------------------------------------

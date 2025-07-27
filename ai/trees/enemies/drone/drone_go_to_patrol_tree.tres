@@ -1,7 +1,6 @@
-[gd_resource type="BehaviorTree" load_steps=23 format=3 uid="uid://7euectnyhgwy"]
+[gd_resource type="BehaviorTree" load_steps=21 format=3 uid="uid://7euectnyhgwy"]
 
 [ext_resource type="Script" uid="uid://bbbdpq3yu2mga" path="res://ai/tasks/drone/between_patrol_markers_condition.gd" id="1_hapyk"]
-[ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/drone/open_action.gd" id="2_6d301"]
 [ext_resource type="Script" uid="uid://c6ocf77l1pyn7" path="res://ai/tasks/drone/set_targeting_action.gd" id="2_gyocu"]
 [ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/drone/face_node_action.gd" id="3_gyocu"]
 [ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/drone/move_to_node_action.gd" id="4_c133w"]
@@ -16,11 +15,6 @@ script = ExtResource("1_hapyk")
 script = ExtResource("2_gyocu")
 targ_type = "enabled"
 enable_to_acquiring = false
-
-[sub_resource type="BTAction" id="BTAction_gyocu"]
-script = ExtResource("2_6d301")
-check_signal_id = false
-async = true
 
 [sub_resource type="BBNode" id="BBNode_hapyk"]
 saved_value = NodePath("PatrolMarker1")
@@ -52,7 +46,7 @@ use_thrust = false
 script = ExtResource("5_6d301")
 eng_type = "burst"
 quick_stop_keep_speed = false
-stop_async = true
+async = null
 
 [sub_resource type="BTWait" id="BTWait_ioh2e"]
 
@@ -60,7 +54,7 @@ stop_async = true
 script = ExtResource("5_6d301")
 eng_type = "thrust"
 quick_stop_keep_speed = false
-stop_async = true
+async = null
 
 [sub_resource type="BTSequence" id="BTSequence_hmil3"]
 children = [SubResource("BTAction_c133w"), SubResource("BTWait_ioh2e"), SubResource("BTAction_2mqvs")]
@@ -73,7 +67,7 @@ num_failures_required = 5
 children = [SubResource("BTAction_hmil3"), SubResource("BTAlwaysFail_ioh2e")]
 
 [sub_resource type="BTSequence" id="BTSequence_gyocu"]
-children = [SubResource("BTAction_ccpv4"), SubResource("BTAction_gyocu"), SubResource("BTAction_6d301"), SubResource("BTParallel_hapyk")]
+children = [SubResource("BTAction_ccpv4"), SubResource("BTAction_6d301"), SubResource("BTParallel_hapyk")]
 
 [sub_resource type="BTSelector" id="BTSelector_bhjmg"]
 children = [SubResource("BTCondition_hapyk"), SubResource("BTSequence_gyocu")]

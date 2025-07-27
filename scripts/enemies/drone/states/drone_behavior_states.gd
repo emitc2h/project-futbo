@@ -64,9 +64,21 @@ func _on_go_to_patrol_bt_finished(status: int) -> void:
 	sc.send_event(TRANS_GO_TO_PATROL_TO_PATROL)
 
 
+
+# seek state
+#----------------------------------------
+func _on_seek_state_entered() -> void:
+	state = State.SEEK
+
+
 # block state
 #----------------------------------------
+func _on_block_state_entered() -> void:
+	state = State.BLOCK
+
+
 func _on_block_bt_finished(status: int) -> void:
+	Signals.debug_log.emit("block BT finished")
 	sc.send_event(TRANS_BLOCK_TO_ATTACK)
 
 

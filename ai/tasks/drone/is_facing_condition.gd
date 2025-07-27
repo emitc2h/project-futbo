@@ -1,6 +1,6 @@
 @tool
-class_name MoveToNodeAction
-extends BTAction
+class_name IsFacingCondition
+extends BTCondition
 
 const CUSTOM_POS_X: String = "custom x position"
 const CUSTOM_NODE: String = "custom node"
@@ -16,26 +16,17 @@ const CONTROL_NODE_REPR: String = "control node representation"
 
 @export_group("Parameters")
 @export var away: bool
-@export var close_enough_distance: float
-@export var far_enough_distance: float
-
-@export_group("Engines")
-@export var use_burst: bool
-@export var use_thrust: bool
-
 
 var drone: Drone
 var target_x: float
-var arrived: bool
-
 
 func _generate_name() -> String:
 	var name: String = ""
 	if away:
-		name += "Move away from "
+		name += "Is facing away from "
 	else:
-		name += "Move to "
-
+		name += "Is facing "
+	
 	match(target_type):
 		CUSTOM_NODE:
 			name += str(custom_node)
@@ -43,7 +34,7 @@ func _generate_name() -> String:
 			name += target_type + ": " + world_repr_pos_x_name
 		_:
 			name += target_type
-
+	
 	return name
 
 
@@ -52,6 +43,7 @@ func _setup() -> void:
 
 
 func _enter() -> void:
+	## Select the target x value based on the provided subject
 	match(target_type):
 		CUSTOM_NODE:
 			target_x = custom_node.get_value(scene_root, blackboard).global_position.x
@@ -62,42 +54,16 @@ func _enter() -> void:
 		CONTROL_NODE_REPR:
 			target_x = drone.repr.controlNodeRepresentation.last_known_control_node_pos_x
 		WORLD_REPR_POS_X:
-			assert(world_repr_pos_x_name in drone.repr.worldRepresentation)
 			target_x = drone.repr.worldRepresentation.get(world_repr_pos_x_name)
-
-	arrived = false
-	_check_arrived()
-	if not arrived:
-		if use_thrust:
-			drone.thrust()
-		if use_burst:
-			drone.burst()
 
 
 func _tick(delta: float) -> Status:
-	_check_arrived()
-	if arrived:
-		if use_burst or use_thrust:
-			drone.stop_engines()
-		drone.stop_moving(delta)
-		if abs(drone.physics_mode_states.left_right_axis) < 0.01:
-			return SUCCESS
-		else:
-			return RUNNING
-	
-	if away:
-		drone.move_toward_x_pos(target_x, delta, true)
-	else:
-		drone.move_toward_x_pos(target_x, delta)
-	return RUNNING
-
-
-func _check_arrived() -> void:
-	var distance_to_target: float = target_x - drone.char_node.global_position.x
-	
-	if away:
-		if (abs(distance_to_target) > far_enough_distance):
-			arrived = true
-	else:
-		if (abs(distance_to_target) < close_enough_distance):
-			arrived = true
+	if target_x > drone.char_node.global_position.x and\
+		(drone.direction_faced_states.state == drone.direction_faced_states.State.FACE_RIGHT or\
+		 drone.direction_faced_states.state == drone.direction_faced_states.State.TURN_RIGHT):
+		return SUCCESS
+	if target_x < drone.char_node.global_position.x and\
+		(drone.direction_faced_states.state == drone.direction_faced_states.State.FACE_LEFT or\
+		 drone.direction_faced_states.state == drone.direction_faced_states.State.TURN_LEFT):
+		return SUCCESS
+	return FAILURE

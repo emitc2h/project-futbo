@@ -36,8 +36,6 @@ const TRANS_QUICK_CLOSE_TO_CLOSED: String = "Engagement Mode: quick close to clo
 ## Drone nodes controlled by this state
 @onready var float_distortion_mesh: MeshInstance3D = drone.get_node("TrackPositionContainer/Distortion")
 @onready var model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
-@onready var model_anim_tree: AnimationTree = drone.get_node("TrackTransformContainer/DroneModel/AnimationTree")
-@onready var anim_state: AnimationNodeStateMachinePlayback
 
 ## Signals
 signal opening_finished
@@ -45,7 +43,6 @@ signal closing_finished
 
 
 func _ready() -> void:
-	anim_state = model_anim_tree.get("parameters/playback")
 	model.anim_state_finished.connect(_on_anim_state_finished)
 
 
@@ -64,22 +61,10 @@ func _on_closed_state_exited() -> void:
 	drone.reset_engines()
 
 
-func _on_closed_to_opening_taken() -> void:
-	anim_state.travel("open up")
-
-
 # opening state
 #----------------------------------------
 func _on_opening_state_entered() -> void:
 	state = State.OPENING
-
-
-func _on_opening_to_closing_taken() -> void:
-	anim_state.travel("close up")
-
-
-func _on_opening_to_quick_close_taken() -> void:
-	anim_state.travel("quick close")
 
 
 # open state
@@ -93,26 +78,10 @@ func _on_open_state_entered() -> void:
 	opening_finished.emit()
 
 
-func _on_open_to_closing_taken() -> void:
-	anim_state.travel("close up")
-
-
-func _on_open_to_quick_close_taken() -> void:
-	if engines_states.state == engines_states.State.OFF:
-		anim_state.travel("quick close")
-	else:
-		anim_state.travel("thrust close")
-
-
-
 # closing state
 #----------------------------------------
 func _on_closing_state_entered() -> void:
 	state = State.CLOSING
-
-
-func _on_closing_to_quick_close_taken() -> void:
-	anim_state.travel("quick close")
 
 
 # quick close state

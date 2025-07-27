@@ -1,0 +1,12 @@
+[gd_resource type="BehaviorTree" load_steps=4 format=3 uid="uid://cndng00i0jfr3"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_evj1u"]
+
+[sub_resource type="BTFail" id="BTFail_evj1u"]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_n1fag"]
+children = [SubResource("BTFail_evj1u")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_evj1u")
+root_task = SubResource("BTAlwaysSucceed_n1fag")

@@ -23,6 +23,7 @@ func _enter() -> void:
 	else:
 		signal_id = rng.randi()
 		drone.open(signal_id)
+		Signals.debug_running_log.emit("drone.open from OpenAction")
 		if async:
 			done = true
 

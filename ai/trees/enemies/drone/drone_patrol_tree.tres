@@ -1,30 +1,9 @@
-[gd_resource type="BehaviorTree" load_steps=21 format=3 uid="uid://bnm2timop763s"]
+[gd_resource type="BehaviorTree" load_steps=15 format=3 uid="uid://bnm2timop763s"]
 
-[ext_resource type="Script" uid="uid://c6ocf77l1pyn7" path="res://ai/tasks/drone/set_targeting_action.gd" id="1_gq854"]
-[ext_resource type="Script" uid="uid://cjmmtaigaxfy3" path="res://ai/tasks/drone/set_engines_action.gd" id="1_q5h4i"]
-[ext_resource type="Script" uid="uid://bg84c7y6wffvi" path="res://ai/tasks/drone/close_action.gd" id="1_ux7gf"]
 [ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/drone/face_node_action.gd" id="2_q5h4i"]
 [ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/drone/move_to_node_action.gd" id="3_gq854"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_voq0c"]
-
-[sub_resource type="BTAction" id="BTAction_rwqa8"]
-script = ExtResource("1_gq854")
-targ_type = "enabled"
-enable_to_acquiring = false
-
-[sub_resource type="BTAction" id="BTAction_s3eib"]
-script = ExtResource("1_q5h4i")
-eng_type = "stop"
-quick_stop_keep_speed = false
-stop_async = true
-
-[sub_resource type="BTAction" id="BTAction_lhmdx"]
-script = ExtResource("1_ux7gf")
-check_signal_id = false
-async = false
-quick = false
-stop_engines = false
 
 [sub_resource type="BBNode" id="BBNode_gq854"]
 saved_value = NodePath("")
@@ -83,7 +62,7 @@ children = [SubResource("BTAction_q5h4i"), SubResource("BTAction_anox6"), SubRes
 children = [SubResource("BTSequence_gq854")]
 
 [sub_resource type="BTSequence" id="BTSequence_erkqb"]
-children = [SubResource("BTAction_rwqa8"), SubResource("BTAction_s3eib"), SubResource("BTAction_lhmdx"), SubResource("BTRepeatUntilFailure_lhmdx")]
+children = [SubResource("BTRepeatUntilFailure_lhmdx")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_voq0c")

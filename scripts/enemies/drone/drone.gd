@@ -27,10 +27,16 @@ extends Node3D
 @onready var shield: DroneShield = $TrackPositionContainer/DroneShield
 @onready var track_position_container: Node3D = $TrackPositionContainer
 
+## Animation nodes
+@onready var model_anim_tree: AnimationTree = $"TrackTransformContainer/DroneModel/AnimationTree"
+@onready var anim_state: AnimationNodeStateMachinePlayback
+
 
 func _ready() -> void:
-	## initialize the internal representationd
+	## initialize the internal representation
 	repr.initialize()
+	anim_state = model_anim_tree.get("parameters/playback")
+	
 	Signals.debug_advance.connect(_on_debug_advance)
 
 
@@ -116,6 +122,7 @@ func track_target(offset: float, delta: float) -> void:
 signal open_finished(id: int)
 
 func open(id: int = 0) -> void:
+	anim_state.travel("open up")
 	sc.send_event(engagement_mode_states.TRANS_CLOSED_TO_OPENING)
 	sc.send_event(engagement_mode_states.TRANS_CLOSING_TO_OPENING)
 	await engagement_mode_states.opening_finished
@@ -125,6 +132,7 @@ func open(id: int = 0) -> void:
 signal close_finished(id: int)
 
 func close(id: int = 0) -> void:
+	anim_state.travel("close up")
 	sc.send_event(engagement_mode_states.TRANS_OPEN_TO_CLOSING)
 	sc.send_event(engagement_mode_states.TRANS_OPENING_TO_CLOSING)
 	await engagement_mode_states.closing_finished
@@ -134,6 +142,10 @@ func close(id: int = 0) -> void:
 signal quick_close_finished(id: int)
 
 func quick_close(id: int = 0) -> void:
+	if anim_state.get_current_node() in ["start thrust", "idle thrust", "stop_thrust"]:
+		anim_state.travel("thrust close")
+	else:
+		anim_state.travel("quick close")
 	sc.send_event(engagement_mode_states.TRANS_OPEN_TO_QUICK_CLOSE)
 	sc.send_event(engagement_mode_states.TRANS_OPENING_TO_QUICK_CLOSE)
 	sc.send_event(engagement_mode_states.TRANS_CLOSING_TO_QUICK_CLOSE)
@@ -144,12 +156,16 @@ func quick_close(id: int = 0) -> void:
 ## Engine Controls
 ## ---------------------------------------
 func thrust() -> void:
+	if not anim_state.get_current_node() in ["start thrust", "idle thrust"]:
+		anim_state.travel("start thrust")
 	physics_mode_states.speed = engines_states.thrust_speed
 	sc.send_event(engines_states.TRANS_OFF_TO_THRUST)
 	sc.send_event(engines_states.TRANS_BURST_TO_THRUST)
 
 
 func burst() -> void:
+	if not anim_state.get_current_node() in ["start thrust", "idle thrust"]:
+		anim_state.travel("start thrust")
 	physics_mode_states.speed = engines_states.burst_speed
 	sc.send_event(engines_states.TRANS_OFF_TO_BURST)
 	sc.send_event(engines_states.TRANS_THRUST_TO_BURST)
@@ -157,6 +173,8 @@ func burst() -> void:
 signal stop_engines_finished
 
 func stop_engines() -> void:
+	if anim_state.get_current_node() in ["start thrust", "idle thrust"]:
+		anim_state.travel("stop thrust")
 	physics_mode_states.speed = engines_states.off_speed
 	sc.send_event(engines_states.TRANS_THRUST_TO_STOPPING)
 	sc.send_event(engines_states.TRANS_BURST_TO_STOPPING)
@@ -165,7 +183,8 @@ func stop_engines() -> void:
 
 
 func quick_stop_engines(keep_speed: bool = false) -> void:
-	if not keep_speed:
+	if not keep_speed and anim_state.get_current_node() in ["start thrust", "idle thrust"]:
+		anim_state.travel("stop thrust")
 		physics_mode_states.speed = engines_states.off_speed
 	sc.send_event(engines_states.TRANS_THRUST_TO_QUICK_OFF)
 	sc.send_event(engines_states.TRANS_BURST_TO_QUICK_OFF)
@@ -179,6 +198,7 @@ func reset_engines() -> void:
 ## ---------------------------------------
 func become_vulnerable() -> void:
 	sc.send_event(vulnerability_states.TRANS_DEFENDABLE_TO_VULNERABLE)
+	sc.send_event(vulnerability_states.TRANS_INVULNERABLE_TO_VULNERABLE)
 
 
 func become_defendable() -> void:
@@ -188,6 +208,7 @@ func become_defendable() -> void:
 
 func become_invulnerable() -> void:
 	sc.send_event(vulnerability_states.TRANS_DEFENDABLE_TO_INVULNERABLE)
+	sc.send_event(vulnerability_states.TRANS_VULNERABLE_TO_INVULNERABLE)
 
 
 ## Targeting Controls
@@ -241,10 +262,11 @@ func generate_state_report() -> String:
 	output += "Vulnerability : " + vulnerability_states.State.keys()[vulnerability_states.state] + "\n"
 	output += "Targeting : " + targeting_states.State.keys()[targeting_states.state] + "\n"
 	output += "Behavior : " + behavior_states.State.keys()[behavior_states.state] + "\n"
-	output += "---> Attack : " + behavior_attack_states.State.keys()[behavior_attack_states.state] + "\n"
+	if behavior_states.state == behavior_states.State.ATTACK:
+		output += "---> Attack : " + behavior_attack_states.State.keys()[behavior_attack_states.state] + "\n"
 	output += "===================================\n"
-	output += "Animation tree node: " + engagement_mode_states.anim_state.get_current_node()\
-			 + " (fading : " + engagement_mode_states.anim_state.get_fading_from_node() + ")"
+	output += "Animation tree node: " + anim_state.get_current_node()\
+			 + " (fading : " + anim_state.get_fading_from_node() + ")"
 	return output
 
 
