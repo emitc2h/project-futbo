@@ -46,7 +46,7 @@ use_thrust = false
 script = ExtResource("5_6d301")
 eng_type = "burst"
 quick_stop_keep_speed = false
-async = null
+async = true
 
 [sub_resource type="BTWait" id="BTWait_ioh2e"]
 
@@ -54,7 +54,7 @@ async = null
 script = ExtResource("5_6d301")
 eng_type = "thrust"
 quick_stop_keep_speed = false
-async = null
+async = true
 
 [sub_resource type="BTSequence" id="BTSequence_hmil3"]
 children = [SubResource("BTAction_c133w"), SubResource("BTWait_ioh2e"), SubResource("BTAction_2mqvs")]

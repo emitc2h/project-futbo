@@ -79,7 +79,7 @@ num_successes_required = 3
 children = [SubResource("BTAlwaysSucceed_37wiq"), SubResource("BTAlwaysSucceed_tdfnr"), SubResource("BTAlwaysSucceed_jdkcr")]
 
 [sub_resource type="BBNode" id="BBNode_gqil7"]
-saved_value = null
+saved_value = NodePath("")
 
 [sub_resource type="BTCondition" id="BTCondition_w8312"]
 script = ExtResource("1_04tl1")
@@ -92,7 +92,7 @@ away = false
 children = [SubResource("BTCondition_w8312")]
 
 [sub_resource type="BBNode" id="BBNode_w8312"]
-saved_value = null
+saved_value = NodePath("")
 
 [sub_resource type="BTAction" id="BTAction_37wiq"]
 script = ExtResource("8_gqil7")
