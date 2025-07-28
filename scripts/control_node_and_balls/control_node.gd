@@ -16,7 +16,7 @@ func _on_inert_node_body_entered(body: Node) -> void:
 	var hit_strength: float = inert_node.linear_velocity.length()
 	bounce_strength = hit_strength / 5.0
 	
-	#Signals.debug_running_log.emit("control node is colliding with " + body.name)
+	Signals.debug_running_log.emit("control node is colliding with " + body.name)
 	
 	if body is DroneShield and in_on_state:
 		var drone_shield: DroneShield = body as DroneShield

@@ -577,7 +577,7 @@ _data = {
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_m5c52"]
 
-[node name="Act1" type="Node3D"]
+[node name="Level1" type="Node3D"]
 process_mode = 1
 script = ExtResource("1_75wj8")
 starts_with_cut_scene = true
@@ -729,7 +729,8 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 80.0
+offset_top = -80.0
+offset_bottom = -80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
@@ -740,8 +741,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -360.0
-offset_bottom = -280.0
+offset_top = 80.9199
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)

@@ -18,7 +18,6 @@ func _enter() -> void:
 	become_char_done = false
 	open_done = false
 	drone.become_char()
-	Signals.debug_running_log.emit("drone.open from Recover from ball")
 	drone.open(signal_id)
 	
 	## Faciliate state recovery by checking if already in desired states

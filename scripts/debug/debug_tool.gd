@@ -13,11 +13,19 @@ var process_one_tick: bool = false
 var pause_log_array: PackedStringArray = []
 var pause_log_array_idx: int = 0
 
+@export var active: bool:
+	get:
+		return active
+	set(value):
+		self.visible = value
+		active = value
+
 @export var max_running_logs: int = 100
 var running_log_array: PackedStringArray = []
 
 
 func _ready() -> void:
+	self.visible = active
 	Signals.debug_log.connect(_on_debug_log)
 	Signals.debug_advance.connect(_on_debug_advance)
 	Signals.debug_running_log.connect(_on_debug_running_log)
@@ -27,12 +35,16 @@ func _ready() -> void:
 
 
 func _on_debug_log(text: String) -> void:
+	if not active:
+		return
 	pause_log_array.append(text)
 	_update_pause_label()
 	_update_pause_header()
 
 
 func _on_debug_running_log(text: String) -> void:
+	if not active:
+		return
 	running_log_array.append(text)
 	if running_log_array.size() > max_running_logs:
 		running_log_array.remove_at(0)
@@ -40,14 +52,14 @@ func _on_debug_running_log(text: String) -> void:
 
 
 func _on_debug_advance() -> void:
-	if paused:
+	if active and paused:
 		get_tree().paused = false
 		advance_one_tick = true
 		process_one_tick = false
 
 
 func _physics_process(delta: float) -> void:
-	if paused:
+	if active and paused:
 		if process_one_tick:
 			get_tree().paused = true
 			advance_one_tick = false
@@ -57,6 +69,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if not active:
+		return
 	if event.is_action_pressed("debug_pause"):
 		paused = !paused
 		get_tree().paused = !get_tree().paused

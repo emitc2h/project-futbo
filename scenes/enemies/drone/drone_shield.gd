@@ -14,6 +14,6 @@ var enabled: bool:
 		
 
 func hit() -> void:
-	Signals.debug_log.emit("hitting the shield")
+	Signals.debug_running_log.emit("hitting the shield")
 	drone_shield_closed_model.hit()
 	

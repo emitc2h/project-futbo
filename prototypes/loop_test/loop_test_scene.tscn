@@ -108,6 +108,7 @@ shader_parameter/sway_strength_z = 0.015
 shader_parameter/sway_phase_len = 16.0
 
 [node name="LoopTestScene" type="Node3D"]
+process_mode = 1
 script = ExtResource("1_vum0r")
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("12_3tfwp")]
