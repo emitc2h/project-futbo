@@ -3,6 +3,7 @@ extends Node3D
 
 # Nodes controlled by this node
 @export var player: Player3D
+@export var enabled: bool = true
 
 # Internal references
 @onready var state: StateChart = $State
@@ -142,6 +143,8 @@ func _on_facing_right() -> void:
 # CONTROL FUNCTIONS
 #=======================================================
 func start_dribble() -> void:
+	if not enabled:
+		return
 	if is_ready:
 		state.send_event("ready to dribbling")
 	else:

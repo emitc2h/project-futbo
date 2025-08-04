@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://de54qalm0kq4f" path="res://scenes/goal.tscn" id="8_2nmo7"]
 [ext_resource type="PackedScene" uid="uid://d13byd12eh5y7" path="res://scenes/ai.tscn" id="9_2x0ki"]
 [ext_resource type="SpriteFrames" uid="uid://b5y2k0oe4jdi6" path="res://resources/adversary_spriteframes.tres" id="10_0rft1"]
+[ext_resource type="PackedScene" uid="uid://resnwy07iokh" path="res://scenes/characters/Character1/character_model.tscn" id="10_yo7ps"]
 [ext_resource type="PackedScene" uid="uid://3y4snk0eo4mp" path="res://scenes/ui.tscn" id="11_ffwmr"]
 [ext_resource type="PackedScene" uid="uid://rxuskqewfa7k" path="res://scenes/control_suppressor.tscn" id="13_hpf6u"]
 [ext_resource type="Script" uid="uid://d1e0lhscxgp4n" path="res://scripts/level1/level_1_script.gd" id="14_eau2p"]
@@ -28,7 +29,6 @@
 [ext_resource type="Texture2D" uid="uid://bhhkq0sw3yj7e" path="res://kenney_input-prompts/PlayStation Series/Default/playstation_button_circle.png" id="24_elchd"]
 [ext_resource type="PackedScene" uid="uid://dmyk1j8j3wpex" path="res://scenes/player3D/player3D.tscn" id="29_5g7au"]
 [ext_resource type="PackedScene" uid="uid://c7h2ha3hpanp6" path="res://scenes/player3D/assets/character_asset.tscn" id="30_cyq5e"]
-[ext_resource type="PackedScene" uid="uid://cto8ffyhqoxgf" path="res://scenes/player3D/models/character_model.tscn" id="31_a7lbm"]
 [ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player3D/controller3D.tscn" id="32_cyq5e"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
@@ -612,7 +612,7 @@ asset = NodePath("CharacterAsset")
 
 [node name="CharacterAsset" parent="MainPlayer3D" instance=ExtResource("30_cyq5e")]
 
-[node name="CharacterModel" parent="MainPlayer3D/CharacterAsset" instance=ExtResource("31_a7lbm")]
+[node name="CharacterModel" parent="MainPlayer3D/CharacterAsset" instance=ExtResource("10_yo7ps")]
 
 [node name="Controller3D" parent="MainPlayer3D" node_paths=PackedStringArray("player") instance=ExtResource("32_cyq5e")]
 player = NodePath("..")
@@ -729,8 +729,7 @@ visible = false
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -80.0
-offset_bottom = -80.0
+offset_bottom = 80.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
@@ -741,8 +740,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 80.9199
-offset_bottom = 81.0
+offset_top = -360.0
+offset_bottom = -280.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)

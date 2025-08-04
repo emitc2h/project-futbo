@@ -3,6 +3,7 @@ extends Node3D
 
 # Nodes controlled by this node
 @export var player: Player3D
+@export var enabled: bool = true
 
 # Nodes controlled by this node
 var asset: CharacterAsset
@@ -191,6 +192,8 @@ func _on_facing_right() -> void:
 # CONTROL FUNCTIONS
 #=======================================================
 func kick() -> void:
+	if not enabled:
+		return
 	# If the ball is already in the kick zone, kick it
 	state.send_event("ready to kick")
 	Signals.kicked.emit()

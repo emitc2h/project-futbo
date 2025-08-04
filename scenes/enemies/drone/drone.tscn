@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://c2e3ru6va1vkg" path="res://scripts/enemies/drone/states/drone_vulnerability_states.gd" id="12_43bu3"]
 [ext_resource type="Script" uid="uid://djscy8uidfy3g" path="res://scripts/enemies/drone/states/drone_position_states.gd" id="12_glddf"]
 [ext_resource type="Script" uid="uid://bjs30qhms2c1n" path="res://scripts/enemies/drone/states/drone_behavior_states.gd" id="12_r1v31"]
-[ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/shared/behavior_manager.gd" id="12_voq0c"]
+[ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/utilities/behavior_tree/behavior_manager.gd" id="12_voq0c"]
 [ext_resource type="Script" uid="uid://kcwfn3rok7aj" path="res://scripts/enemies/drone/states/drone_proximity_states.gd" id="13_43bu3"]
 [ext_resource type="BehaviorTree" uid="uid://bnm2timop763s" path="res://ai/trees/enemies/drone/drone_patrol_tree.tres" id="13_doilr"]
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="14_efc27"]
@@ -108,7 +108,6 @@ script = ExtResource("2_n6xh2")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_g2as1")
-track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="Root" type="Node" parent="State"]
@@ -791,6 +790,8 @@ collision_mask = 3
 axis_lock_linear_z = true
 mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_2myhj")
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("14_efc27")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode"]
@@ -921,3 +922,4 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [connection signal="state_entered" from="State/Root/Behavior/attack/ram attack" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_state_entered"]
 [connection signal="state_exited" from="State/Root/Behavior/attack/ram attack" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_state_exited"]
 [connection signal="finished" from="State/Root/Behavior/attack/ram attack/BehaviorManager" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_bt_finished"]
+[connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]

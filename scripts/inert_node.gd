@@ -5,6 +5,7 @@ var do_set_transform_and_velocity: bool = false
 var transform_to_set: Transform3D
 var velocity_to_set: Vector3
 var max_speed: float
+var velocity_from_previous_frame: Vector3
 
 var do_set_impulse: bool = false
 var impulse_to_set: Vector3
@@ -45,3 +46,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if do_set_impulse:
 		state.apply_central_impulse(impulse_to_set)
 		do_set_impulse = false
+
+
+func _physics_process(delta: float) -> void:
+	velocity_from_previous_frame = self.linear_velocity

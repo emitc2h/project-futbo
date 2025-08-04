@@ -23,6 +23,7 @@ extends Node3D
 
 ## Useful internal nodes to have a handle on
 @onready var char_node: CharacterBody3D = $CharNode
+@onready var rigid_node: InertNode = $RigidNode
 @onready var repr: DroneInternalRepresentation = $InternalRepresentation
 @onready var shield: DroneShield = $TrackPositionContainer/DroneShield
 @onready var track_position_container: Node3D = $TrackPositionContainer
@@ -272,3 +273,8 @@ func generate_state_report() -> String:
 
 func _on_debug_advance() -> void:
 	Signals.debug_log.emit(generate_state_report())
+
+
+func _on_rigid_node_body_entered(body: Node) -> void:
+	if body is Player3D:
+		Signals.player_knocked.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position)

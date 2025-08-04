@@ -1,12 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://cvaogmwqhlu3a"]
+[gd_scene load_steps=29 format=3 uid="uid://cvaogmwqhlu3a"]
 
 [ext_resource type="Script" uid="uid://bunkqcq7mgxft" path="res://prototypes/loop_test/loop_test_scene.gd" id="1_vum0r"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_vum0r"]
 [ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_i1kmq"]
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="4_hk3aj"]
 [ext_resource type="PackedScene" uid="uid://dmyk1j8j3wpex" path="res://scenes/player3D/player3D.tscn" id="5_f8j8h"]
-[ext_resource type="PackedScene" uid="uid://c7h2ha3hpanp6" path="res://scenes/player3D/assets/character_asset.tscn" id="6_bvm2f"]
-[ext_resource type="PackedScene" uid="uid://cto8ffyhqoxgf" path="res://scenes/player3D/models/character_model.tscn" id="7_e8ni1"]
+[ext_resource type="PackedScene" uid="uid://fgg78lg0p617" path="res://scenes/characters/Character1/character_asset.tscn" id="7_mli22"]
 [ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player3D/controller3D.tscn" id="8_ouyrh"]
 [ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="11_46hk0"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="12_3tfwp"]
@@ -138,9 +137,7 @@ enabled = true
 [node name="Player3D" parent="." node_paths=PackedStringArray("asset") instance=ExtResource("5_f8j8h")]
 asset = NodePath("CharacterAsset")
 
-[node name="CharacterAsset" parent="Player3D" instance=ExtResource("6_bvm2f")]
-
-[node name="CharacterModel" parent="Player3D/CharacterAsset" instance=ExtResource("7_e8ni1")]
+[node name="CharacterAsset" parent="Player3D" instance=ExtResource("7_mli22")]
 
 [node name="Controller3D" parent="Player3D" node_paths=PackedStringArray("player") instance=ExtResource("8_ouyrh")]
 player = NodePath("..")
@@ -364,3 +361,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1447, 0, -1.92601)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.28794, 1.59083, 0)
 
 [node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]
+max_running_logs = 1000

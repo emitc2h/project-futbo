@@ -5,6 +5,8 @@ extends Node3D
 @export var player: Player3D
 var asset: CharacterAsset
 
+@export var enabled: bool = true
+
 # Internal references
 @onready var state: StateChart = $State
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
@@ -71,6 +73,8 @@ func _ready() -> void:
 	jump_momentum = player.jump_momentum
 	
 	raycast.target_position = Vector3.DOWN * 1.6
+	
+	Signals.player_knocked.connect(_on_player_knocked)
 
 
 func _physics_process(delta: float) -> void:
@@ -170,7 +174,7 @@ func _on_run_state_exited() -> void:
 # skid state
 #----------------------------------------
 func _on_skid_state_entered() -> void:
-	asset.turn_to_move_path()
+	asset.open_paths_to_move()
 
 
 func _on_skid_state_physics_processing(delta: float) -> void:
@@ -178,7 +182,7 @@ func _on_skid_state_physics_processing(delta: float) -> void:
 	
 	# Running off a ledge transitions to in the air state
 	if not player.is_on_floor():
-		asset.turn_to_fall_path()
+		asset.open_paths_to_fall()
 		state.send_event("skid to fall")
 	
 	# Needs to be called in every movement state
@@ -255,7 +259,7 @@ func _on_jump_state_exited() -> void:
 #----------------------------------------
 func _on_in_the_air_state_entered() -> void:
 	in_in_the_air_state = true
-	asset.jump_to_move_path()
+	asset.open_paths_to_move()
 	jump_set_to_fall = false
 	previous_velocity_y = player.velocity.y
 
@@ -266,7 +270,7 @@ func _on_in_the_air_state_physics_processing(delta: float) -> void:
 	# to the fall animation
 	if not raycast.is_colliding():
 		if not jump_set_to_fall:
-			asset.jump_to_fall_path()
+			asset.open_paths_to_fall()
 			jump_set_to_fall = true
 	previous_velocity_y = player.velocity.y
 
@@ -276,7 +280,6 @@ func _on_in_the_air_state_exited() -> void:
 
 
 func _on_jump_animation_ended() ->void:
-	print("JUMP ANIMATION ENDED")
 	if player.is_on_floor():
 		state.send_event("in the air to run")
 	else:
@@ -301,7 +304,6 @@ func _on_jump_buffer_state_exited() -> void:
 	jump_buffer_timer.stop()
 
 
-
 # fall state
 #----------------------------------------
 func _on_fall_state_entered() -> void:
@@ -321,8 +323,28 @@ func _on_fall_state_physics_processing(delta: float) -> void:
 
 
 func _on_fall_state_exited() -> void:
-	asset.reset_jump_paths()
-	asset.reset_turn_paths()
+	asset.open_paths_to_move()
+
+
+# knocked states
+#----------------------------------------
+func _on_player_knocked(_obj_velocity: Vector3, _obj_position: Vector3) -> void:
+	state.send_event("idle to knocked")
+	state.send_event("run to knocked")
+	state.send_event("skid to knocked")
+	state.send_event("run buffer to knocked")
+
+
+func _on_knocked_state_entered() -> void:
+	self.enabled = false
+	
+	# Set input axis to 0.0 and go to idle state if possible
+	self.stop()
+	state.send_event("run to idle")
+
+
+func _on_knocked_state_exited() -> void:
+	self.enabled = true
 
 
 #=======================================================
@@ -372,6 +394,7 @@ func _on_face_left_state_physics_processing(delta: float) -> void:
 # turn right state
 #----------------------------------------
 func _on_turn_right_state_entered() -> void:
+	direction_faced = Enums.Direction.RIGHT
 	asset.face_right()
 	Signals.facing_right.emit()
 	state.send_event("run to skid")
@@ -387,13 +410,13 @@ func _on_turn_right_state_exited() -> void:
 
 
 func _turn_left_interrupted() -> void:
-	state.send_event("turn right to face right")
-	
+	state.send_event("turn left to face left")
 
 
 # turn left state
 #----------------------------------------
 func _on_turn_left_state_entered() -> void:
+	direction_faced = Enums.Direction.LEFT
 	asset.face_left()
 	Signals.facing_left.emit()
 	state.send_event("run to skid")
@@ -409,7 +432,7 @@ func _on_turn_left_state_exited() -> void:
 
 
 func _turn_right_interrupted() -> void:
-	state.send_event("turn left to face left")
+	state.send_event("turn right to face right")
 
 
 #=======================================================
@@ -421,7 +444,7 @@ func _turn_right_interrupted() -> void:
 func _on_full_state_entered() -> void:
 	asset.reset_speed()
 	Signals.hide_stamina.emit()
-	
+
 
 # draining state
 #----------------------------------------
@@ -518,6 +541,8 @@ func stop() -> void:
 
 # is meant to be called every frame (joystick non-zero input)
 func run(direction: float) -> void:
+	if not enabled:
+		return
 	left_right_axis = direction
 	if abs(left_right_axis) > 0.01:
 		# This logic isn't functionally necessary, but it cleans up the state
@@ -527,6 +552,8 @@ func run(direction: float) -> void:
 
 
 func start_sprinting() -> void:
+	if not enabled:
+		return
 	sprint_button_pressed = true
 	if not in_recovering_state:
 		in_sprint_state = true
@@ -536,6 +563,8 @@ func start_sprinting() -> void:
 
 
 func end_sprinting() -> void:
+	if not enabled:
+		return
 	sprint_button_pressed = false
 	in_sprint_state = false
 	state.send_event("draining to replenishing")
@@ -545,6 +574,8 @@ func end_sprinting() -> void:
 
 # is meant to be call on button press
 func jump() -> void:
+	if not enabled:
+		return
 	if player.is_on_floor():
 		state.send_event("idle to jump")
 		state.send_event("run to jump")

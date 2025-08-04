@@ -41,6 +41,8 @@ signal turn_right_animation_ended
 signal kick_left_animation_ended
 signal kick_right_animation_ended
 
+signal player_knocked(obj_velocity: Vector3, obj_position: Vector3)
+
 
 ## ===================================== ##
 ## CAMERA SIGNALS                        ##
