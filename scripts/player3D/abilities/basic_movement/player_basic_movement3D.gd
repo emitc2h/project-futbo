@@ -252,6 +252,7 @@ func _on_jump_state_physics_processing(delta: float) -> void:
 
 
 func _on_jump_state_exited() -> void:
+	in_in_the_air_state = false
 	pass
 
 
@@ -276,6 +277,7 @@ func _on_in_the_air_state_physics_processing(delta: float) -> void:
 
 
 func _on_in_the_air_state_exited() -> void:
+	in_in_the_air_state = false
 	pass
 
 
@@ -323,6 +325,7 @@ func _on_fall_state_physics_processing(delta: float) -> void:
 
 
 func _on_fall_state_exited() -> void:
+	in_in_the_air_state = false
 	asset.open_paths_to_move()
 
 
@@ -333,6 +336,11 @@ func _on_player_knocked(_obj_velocity: Vector3, _obj_position: Vector3) -> void:
 	state.send_event("run to knocked")
 	state.send_event("skid to knocked")
 	state.send_event("run buffer to knocked")
+	state.send_event("jump to knocked")
+	state.send_event("in the air to knocked")
+	state.send_event("fall to knocked")
+	state.send_event("jump buffer to knocked")
+	
 
 
 func _on_knocked_state_entered() -> void:

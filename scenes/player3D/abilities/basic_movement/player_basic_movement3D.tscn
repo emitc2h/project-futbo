@@ -157,6 +157,12 @@ to = NodePath("../../run")
 event = &"jump to run"
 delay_in_seconds = "0.0"
 
+[node name="to knocked" type="Node" parent="State/Root/Movement/jump"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../knocked")
+event = &"jump to knocked"
+delay_in_seconds = "0.0"
+
 [node name="in the air" type="Node" parent="State/Root/Movement"]
 script = ExtResource("5_6dxo6")
 
@@ -178,6 +184,12 @@ to = NodePath("../../fall")
 event = &"in the air to fall"
 delay_in_seconds = "0.0"
 
+[node name="to knocked" type="Node" parent="State/Root/Movement/in the air"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../knocked")
+event = &"in the air to knocked"
+delay_in_seconds = "0.0"
+
 [node name="fall" type="Node" parent="State/Root/Movement"]
 script = ExtResource("5_6dxo6")
 
@@ -191,6 +203,12 @@ delay_in_seconds = "0.0"
 script = ExtResource("6_uqqs6")
 to = NodePath("../../jump buffer")
 event = &"fall to jump buffer"
+delay_in_seconds = "0.0"
+
+[node name="to knocked" type="Node" parent="State/Root/Movement/fall"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../knocked")
+event = &"fall to knocked"
 delay_in_seconds = "0.0"
 
 [node name="jump buffer" type="Node" parent="State/Root/Movement"]
@@ -214,6 +232,12 @@ to = NodePath("../../fall")
 event = &"jump buffer to fall"
 delay_in_seconds = "0.0"
 
+[node name="to knocked" type="Node" parent="State/Root/Movement/jump buffer"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../knocked")
+event = &"jump buffer to knocked"
+delay_in_seconds = "0.0"
+
 [node name="knocked" type="Node" parent="State/Root/Movement"]
 script = ExtResource("4_kfmla")
 initial_state = NodePath("knocked")
@@ -232,10 +256,19 @@ to = NodePath("../../recovering")
 event = &"Knocked: knocked to recovering"
 delay_in_seconds = "0.0"
 
-[node name="to down" type="Node" parent="State/Root/Movement/knocked/knocked"]
+[node name="to out" type="Node" parent="State/Root/Movement/knocked/knocked"]
 script = ExtResource("6_uqqs6")
-to = NodePath("../../down")
-event = &"Knocked: knocked to down"
+to = NodePath("../../out")
+event = &"Knocked: knocked to out"
+delay_in_seconds = "0.0"
+
+[node name="out" type="Node" parent="State/Root/Movement/knocked"]
+script = ExtResource("5_6dxo6")
+
+[node name="to recovering" type="Node" parent="State/Root/Movement/knocked/out"]
+script = ExtResource("6_uqqs6")
+to = NodePath("../../recovering")
+event = &"Knocked: out to recovering"
 delay_in_seconds = "0.0"
 
 [node name="recovering" type="Node" parent="State/Root/Movement/knocked"]
@@ -413,6 +446,7 @@ collision_mask = 266
 [connection signal="state_exited" from="State/Root/Movement/knocked" to="." method="_on_knocked_state_exited"]
 [connection signal="state_entered" from="State/Root/Movement/knocked/knocked" to="State/Root/Movement/knocked/Knocked States" method="_on_knocked_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Movement/knocked/knocked" to="State/Root/Movement/knocked/Knocked States" method="_on_knocked_state_physics_processing"]
+[connection signal="state_physics_processing" from="State/Root/Movement/knocked/out" to="State/Root/Movement/knocked/Knocked States" method="_on_out_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Movement/knocked/recovering" to="State/Root/Movement/knocked/Knocked States" method="_on_recovering_state_entered"]
 [connection signal="state_entered" from="State/Root/Movement/knocked/down" to="State/Root/Movement/knocked/Knocked States" method="_on_down_state_entered"]
 [connection signal="state_entered" from="State/Root/Direction/face right" to="." method="_on_face_right_state_entered"]

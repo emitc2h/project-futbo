@@ -34,6 +34,7 @@ var trans_knocked_head_front_opened: bool = false
 var trans_knocked_middle_front_opened: bool = false
 var trans_knocked_middle_back_opened: bool = false
 var trans_knocked_head_back_opened: bool = false
+var auto_recover: bool = true
 
 ## Internal variables
 var direction_faced: Enums.Direction = Enums.Direction.RIGHT
@@ -297,10 +298,18 @@ func to_knocked_middle_back() -> void:
 		main_anim_state.travel("knocked right")
 
 
+func to_recover_from_knocked(anim_name: String) -> void:
+	if direction_faced == Enums.Direction.LEFT:
+		knocked_left_anim_state.travel(anim_name)
+	if direction_faced == Enums.Direction.RIGHT:
+		knocked_right_anim_state.travel(anim_name)
+
+
 ######################################
 ##             SIGNALS             ##
 ######################################
 func _on_anim_state_finished(anim_name: String) -> void:
+	print("Character Asset anim_state_finished: ", anim_name)
 	anim_state_finished.emit(anim_name)
 	if anim_name == "turn left":
 		Signals.turn_right_animation_ended.emit()

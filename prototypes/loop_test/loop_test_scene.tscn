@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cvaogmwqhlu3a"]
+[gd_scene load_steps=30 format=3 uid="uid://cvaogmwqhlu3a"]
 
 [ext_resource type="Script" uid="uid://bunkqcq7mgxft" path="res://prototypes/loop_test/loop_test_scene.gd" id="1_vum0r"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_vum0r"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://fgg78lg0p617" path="res://scenes/characters/Character1/character_asset.tscn" id="7_mli22"]
 [ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player3D/controller3D.tscn" id="8_ouyrh"]
 [ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="11_46hk0"]
+[ext_resource type="PackedScene" uid="uid://1qyvwbunehqq" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_random_patch_6m_mixed_2.tscn" id="11_pv0wt"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="12_3tfwp"]
 [ext_resource type="PackedScene" uid="uid://d1ewxnn4pejar" path="res://scenes/control_node_and_balls/control_node.tscn" id="12_iocbp"]
 [ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="13_3tfwp"]
@@ -356,6 +357,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8656, 0, -12.6798)
 
 [node name="Bush5" parent="Props" instance=ExtResource("20_mli22")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1447, 0, -1.92601)
+
+[node name="Grass" type="Node3D" parent="Props"]
+transform = Transform3D(1.77773, 0, 0, 0, 1, 0, 0, 0, 2.29965, 0, -0.0710142, -4.28457)
+
+[node name="LightGrassRandomPatch6MMixed1" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
+transform = Transform3D(0.0109604, 0, 0.99994, 0, 1, 0, -0.99994, 0, 0.0109604, -8.50588, -0.0734396, 7.14017)
+
+[node name="LightGrassRandomPatch6MMixed7" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
+transform = Transform3D(0.289032, 0, 0.95732, 0, 1, 0, -0.95732, 0, 0.289032, -15.5304, -0.0734396, 7.14017)
+
+[node name="LightGrassRandomPatch6MMixed2" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
+transform = Transform3D(0.308287, 0, 0.951294, 0, 1, 0, -0.951294, 0, 0.308287, -1.6251, -0.0734396, 7.14017)
+
+[node name="LightGrassRandomPatch6MMixed3" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
+transform = Transform3D(-0.289216, 0, 0.957264, 0, 1, 0, -0.957264, 0, -0.289216, 4.80171, -0.0734396, 6.20552)
+
+[node name="LightGrassRandomPatch6MMixed4" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
+transform = Transform3D(0.169091, 0, 0.9856, 0, 1, 0, -0.9856, 0, 0.169091, 12.0118, -0.0734396, 6.20552)
+
+[node name="LightGrassRandomPatch6MMixed5" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
+transform = Transform3D(0.433596, 0, 0.901107, 0, 1, 0, -0.901107, 0, 0.433596, 18.5658, -0.0734396, 6.20552)
+
+[node name="LightGrassRandomPatch6MMixed6" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
+transform = Transform3D(0.108607, 0, 0.994085, 0, 1, 0, -0.994085, 0, 0.108607, 25.7914, -0.0734396, 6.20552)
 
 [node name="Drone" parent="." instance=ExtResource("21_pv0wt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.28794, 1.59083, 0)
