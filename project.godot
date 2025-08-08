@@ -37,7 +37,6 @@ shapes/collision/contact_color=Color(0.88, 0.1, 1, 1)
 
 window/size/viewport_width=3840
 window/size/viewport_height=2160
-window/size/mode=3
 window/stretch/mode="viewport"
 
 [editor]
@@ -228,6 +227,8 @@ common/physics_interpolation=true
 
 [rendering]
 
+rendering_device/driver.ios="vulkan"
+rendering_device/driver.macos="vulkan"
 textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/use_physical_light_units=true
 anti_aliasing/screen_space_roughness_limiter/enabled=false

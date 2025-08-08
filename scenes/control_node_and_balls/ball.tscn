@@ -67,6 +67,7 @@ axis_lock_angular_y = true
 shape = SubResource("SphereShape3D_8bm52")
 
 [node name="DirectionRay" parent="." instance=ExtResource("8_xublo")]
+visible = false
 
 [node name="ModelContainer" type="Node3D" parent="."]
 

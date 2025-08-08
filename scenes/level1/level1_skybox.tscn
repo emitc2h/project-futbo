@@ -23,17 +23,8 @@ render_priority = 0
 shader = ExtResource("5_ef5nx")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/texture_albedo = ExtResource("6_qshv0")
-shader_parameter/point_size = 1.0
-shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
 shader_parameter/backlight = Color(0, 0, 0, 1)
 shader_parameter/texture_backlight = ExtResource("7_86qfx")
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/uvx_drift_speed = 15.0
 shader_parameter/uvy_drift_speed = 0.0
 
@@ -582,7 +573,6 @@ parallax_factor = 0.1
 
 [node name="CloudLine1" parent="." instance=ExtResource("3_bxow3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507508, 26.6655, 93.1751)
-visible = false
 
 [node name="Layer0" parent="CloudLine1" index="0"]
 transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
@@ -692,7 +682,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="BackgroundCanvas/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1920, 1080)
+size = Vector2i(3840, 2160)
 render_target_update_mode = 4
 
 [node name="SkyBoxContainer" type="Node3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport"]
