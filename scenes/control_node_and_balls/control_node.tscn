@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d1ewxnn4pejar"]
+[gd_scene load_steps=13 format=3 uid="uid://d1ewxnn4pejar"]
 
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="1_0jkta"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_qi4cr"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_qi4cr"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_2p3vg"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_tbext"]
+[ext_resource type="Script" uid="uid://b3jcml15v3wkh" path="res://scripts/control_node_and_balls/states/control_node_charge_states.gd" id="7_8s4nh"]
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="7_cnds4"]
 [ext_resource type="PhysicsMaterial" uid="uid://bangmdh456sm4" path="res://resources/powered_down_control_node_physics_material.tres" id="7_qi4cr"]
 [ext_resource type="PackedScene" uid="uid://caxwuwjjre3j2" path="res://scenes/control_node_and_balls/direction_ray.tscn" id="8_nbe53"]
@@ -19,28 +20,29 @@ script = ExtResource("1_0jkta")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_qi4cr")
+track_in_editor = true
 
 [node name="Root" type="Node" parent="State"]
 script = ExtResource("3_qi4cr")
 
-[node name="Mode" type="Node" parent="State/Root"]
+[node name="Physics" type="Node" parent="State/Root"]
 script = ExtResource("3_8s4nh")
 initial_state = NodePath("inert")
 metadata/_custom_type_script = "uid://duu2hhmogs378"
 
-[node name="inert" type="Node" parent="State/Root/Mode"]
+[node name="inert" type="Node" parent="State/Root/Physics"]
 script = ExtResource("4_2p3vg")
 
-[node name="to dribbled" type="Node" parent="State/Root/Mode/inert"]
+[node name="to dribbled" type="Node" parent="State/Root/Physics/inert"]
 script = ExtResource("5_tbext")
 to = NodePath("../../dribbled")
 event = &"inert to dribbled"
 delay_in_seconds = "0.0"
 
-[node name="dribbled" type="Node" parent="State/Root/Mode"]
+[node name="dribbled" type="Node" parent="State/Root/Physics"]
 script = ExtResource("4_2p3vg")
 
-[node name="to inert" type="Node" parent="State/Root/Mode/dribbled"]
+[node name="to inert" type="Node" parent="State/Root/Physics/dribbled"]
 script = ExtResource("5_tbext")
 to = NodePath("../../inert")
 event = &"dribbled to inert"
@@ -110,6 +112,65 @@ to = NodePath("../../on")
 event = &"shrink shield"
 delay_in_seconds = "0.0"
 
+[node name="Charge" type="Node" parent="State/Root"]
+script = ExtResource("3_8s4nh")
+initial_state = NodePath("none")
+
+[node name="Charge States" type="Node" parent="State/Root/Charge" node_paths=PackedStringArray("control_node", "inert_node", "asset", "sc")]
+script = ExtResource("7_8s4nh")
+control_node = NodePath("../../../..")
+inert_node = NodePath("../../../../InertNode")
+asset = NodePath("../../../../ModelContainer/ControlNodeAsset")
+sc = NodePath("../../..")
+
+[node name="none" type="Node" parent="State/Root/Charge"]
+script = ExtResource("4_2p3vg")
+
+[node name="to level1" type="Node" parent="State/Root/Charge/none"]
+script = ExtResource("5_tbext")
+to = NodePath("../../level1")
+event = &"charge up"
+delay_in_seconds = "0.0"
+
+[node name="level1" type="Node" parent="State/Root/Charge"]
+script = ExtResource("4_2p3vg")
+
+[node name="to none" type="Node" parent="State/Root/Charge/level1"]
+script = ExtResource("5_tbext")
+to = NodePath("../../none")
+event = &"discharge"
+delay_in_seconds = "0.0"
+
+[node name="to level2" type="Node" parent="State/Root/Charge/level1"]
+script = ExtResource("5_tbext")
+to = NodePath("../../level2")
+event = &"charge up"
+delay_in_seconds = "0.0"
+
+[node name="level2" type="Node" parent="State/Root/Charge"]
+script = ExtResource("4_2p3vg")
+
+[node name="to none" type="Node" parent="State/Root/Charge/level2"]
+script = ExtResource("5_tbext")
+to = NodePath("../../none")
+event = &"discharge"
+delay_in_seconds = "0.0"
+
+[node name="to level3" type="Node" parent="State/Root/Charge/level2"]
+script = ExtResource("5_tbext")
+to = NodePath("../../level3")
+event = &"charge up"
+delay_in_seconds = "0.0"
+
+[node name="level3" type="Node" parent="State/Root/Charge"]
+script = ExtResource("4_2p3vg")
+
+[node name="to none" type="Node" parent="State/Root/Charge/level3"]
+script = ExtResource("5_tbext")
+to = NodePath("../../none")
+event = &"discharge"
+delay_in_seconds = "0.0"
+
 [node name="InertNode" type="RigidBody3D" parent="."]
 collision_layer = 4
 collision_mask = 1546
@@ -142,14 +203,20 @@ shape = SubResource("SphereShape3D_8bm52")
 [node name="ModelContainer" type="Node3D" parent="."]
 
 [node name="ControlNodeAsset" parent="ModelContainer" instance=ExtResource("9_0jkta")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="ModelContainer"]
+strength = 65.0
+attenuation = 2.0
+radius = 10.0
+
+[node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="ModelContainer"]
 
 [connection signal="kicked" from="." to="." method="_on_kicked"]
-[connection signal="state_physics_processing" from="State/Root/Mode/inert" to="." method="_on_inert_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Mode/dribbled" to="." method="_on_dribbled_state_entered"]
-[connection signal="state_entered" from="State/Root/Mode/dribbled" to="." method="_on_control_node_dribbled_state_entered"]
-[connection signal="state_exited" from="State/Root/Mode/dribbled" to="." method="_on_dribbled_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Mode/dribbled" to="." method="_on_dribbled_state_physics_processing"]
+[connection signal="state_physics_processing" from="State/Root/Physics/inert" to="." method="_on_inert_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics/dribbled" to="." method="_on_control_node_dribbled_state_entered"]
+[connection signal="state_entered" from="State/Root/Physics/dribbled" to="." method="_on_dribbled_state_entered"]
+[connection signal="state_exited" from="State/Root/Physics/dribbled" to="." method="_on_dribbled_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Physics/dribbled" to="." method="_on_dribbled_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Power/charging" to="." method="_on_charging_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/on" to="." method="_on_on_state_entered"]
 [connection signal="state_exited" from="State/Root/Power/on" to="." method="_on_on_state_exited"]
@@ -161,4 +228,8 @@ transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 [connection signal="taken" from="State/Root/Power/on/blow" to="." method="_on_blow_taken"]
 [connection signal="state_physics_processing" from="State/Root/Power/shield up" to="." method="_on_shield_up_state_physics_processing"]
 [connection signal="taken" from="State/Root/Power/shield up/shrink shield" to="." method="_on_shrink_shield_taken"]
+[connection signal="state_entered" from="State/Root/Charge/none" to="State/Root/Charge/Charge States" method="_on_none_state_entered"]
+[connection signal="state_entered" from="State/Root/Charge/level1" to="State/Root/Charge/Charge States" method="_on_level_1_state_entered"]
+[connection signal="state_entered" from="State/Root/Charge/level2" to="State/Root/Charge/Charge States" method="_on_level_2_state_entered"]
+[connection signal="state_entered" from="State/Root/Charge/level3" to="State/Root/Charge/Charge States" method="_on_level_3_state_entered"]
 [connection signal="body_entered" from="InertNode" to="." method="_on_inert_node_body_entered"]

@@ -52,8 +52,6 @@ func _on_knocked_state_entered() -> void:
 	var player_position: Vector3 = player.global_position
 	var player_direction_faced: Enums.Direction = player_basic_movement.direction_faced
 	
-	print("player position y: ", player_position.y, " object position y: ", object_position.y)
-	
 	var delta_y: float = object_position.y - player_position.y
 	
 	## go straight to recovering state if the player is on the ground, otherwise pass by the out state

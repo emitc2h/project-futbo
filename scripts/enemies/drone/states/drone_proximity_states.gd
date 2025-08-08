@@ -59,6 +59,7 @@ func _on_enabled_state_physics_processing(delta: float) -> void:
 			
 			## Scan for the player entering the shapecast
 			if scan_for_player and collider is Player3D:
+				drone.targeting_states.target = collider as Player3D
 				player_entered_confirmed = true
 		
 		if control_node_entered_confirmed and not control_node_in_detector:

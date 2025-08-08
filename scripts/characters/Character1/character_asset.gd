@@ -309,7 +309,6 @@ func to_recover_from_knocked(anim_name: String) -> void:
 ##             SIGNALS             ##
 ######################################
 func _on_anim_state_finished(anim_name: String) -> void:
-	print("Character Asset anim_state_finished: ", anim_name)
 	anim_state_finished.emit(anim_name)
 	if anim_name == "turn left":
 		Signals.turn_right_animation_ended.emit()

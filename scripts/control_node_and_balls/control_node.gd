@@ -4,6 +4,8 @@ extends Ball
 @onready var asset: ControlNodeAsset = $ModelContainer/ControlNodeAsset
 @onready var physics_material: PhysicsMaterial = $InertNode.physics_material_override
 
+@onready var charge_states: ControlNodeChargeStates = $"State/Root/Charge/Charge States"
+
 var bounce_strength: float = 0.0
 var in_on_state: bool = false
 
@@ -67,6 +69,7 @@ func _on_turn_off_taken() -> void:
 
 
 func _on_expand_shield_taken() -> void:
+	state.send_event(charge_states.TRANS_DISCHARGE)
 	asset.expand_shield()
 
 
@@ -79,6 +82,7 @@ func _on_hit_taken() -> void:
 
 
 func _on_blow_taken() -> void:
+	state.send_event(charge_states.TRANS_DISCHARGE)
 	asset.blow_shield()
 	direction_ray.turn_off()
 

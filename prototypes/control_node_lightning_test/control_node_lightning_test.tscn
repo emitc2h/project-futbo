@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5o2dx8h5cbo1"]
+
+[ext_resource type="ArrayMesh" uid="uid://b3lvlj7kfxj60" path="res://assets/3D/Particles/lightning-sparks/lightning_on_sphere_mesh.tres" id="2_hrpir"]
+[ext_resource type="Material" uid="uid://c200ia63f5opo" path="res://assets/3D/Particles/lightning-sparks/red_lightning_shader_material.tres" id="2_ptntm"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v87tk"]
+particle_flag_align_y = true
+angle_min = -261.7
+angle_max = 103.2
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 0.00997765
+gravity = Vector3(0, 0, 0)
+scale_max = 1.2
+
+[sub_resource type="QuadMesh" id="QuadMesh_1c1bg"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+visible = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_v87tk")
+draw_pass_1 = ExtResource("2_hrpir")
+
+[node name="Collection" type="Node3D" parent="."]
+visible = false
+
+[node name="LightningMesh" type="MeshInstance3D" parent="Collection"]
+mesh = ExtResource("2_hrpir")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.121567, 1.25094)
+mesh = SubResource("QuadMesh_1c1bg")
+surface_material_override/0 = ExtResource("2_ptntm")

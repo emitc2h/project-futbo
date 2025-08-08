@@ -5,14 +5,13 @@ render_mode blend_add, depth_draw_opaque, cull_disabled, diffuse_burley, specula
 
 group_uniforms Albedo;
 uniform float alpha : hint_range(0.0, 1.0, 0.01);
-uniform vec4 albedo : source_color;
+uniform vec4 modulate : source_color;
+uniform float modulate_factor: hint_range(0.0, 1.0, 0.01);
 uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
 uniform ivec2 albedo_texture_size;
 uniform float point_size : hint_range(0.1, 128.0, 0.1);
 
 group_uniforms Emission;
-uniform sampler2D texture_emission : source_color, hint_default_black, filter_linear_mipmap, repeat_enable;
-uniform vec4 emission : source_color;
 uniform float emission_energy : hint_range(0.0, 1000.0, 0.01);
 
 group_uniforms Dissolve;
@@ -48,19 +47,18 @@ void fragment() {
 	float threshold = smoothstep(noise_tex.x-burn_size_step, noise_tex.x, dissolve_value);
 	float border = smoothstep(noise_tex.x, noise_tex.x + burn_size_step, dissolve_value);
 
-	vec3 main_albedo = albedo.rgb * albedo_tex.rgb;
+	vec3 modulated_albedo = mix(albedo_tex.rgb, modulate.rgb, modulate_factor);
+	vec3 modulated_burn_color = mix(burn_color.rgb, modulate.rgb, modulate_factor);
 
-	ALBEDO = mix(burn_color.rgb, main_albedo, border);
-
-	vec3 emission_tex = texture(texture_emission, UV + ripple_effect).rgb;
+	ALBEDO = mix(modulated_burn_color, modulated_albedo, border);
 
 	float burn_boost = dissolve_value * 200.0;
 	if (dissolve_value > 0.1) {
 		burn_boost = 20.0;
 	}
 
-	EMISSION = mix(burn_color.rgb * burn_boost, emission_tex, border) * emission_energy * 1000.0;
-	ALPHA *= alpha * albedo.a * albedo_tex.a * threshold;
+	EMISSION = mix(modulated_burn_color * burn_boost, modulated_albedo, border) * emission_energy * 1000.0;
+	ALPHA *= alpha * albedo_tex.a * threshold;
 }
 
 void light() {

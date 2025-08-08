@@ -39,6 +39,7 @@ linear_accel_min = -2.23517e-06
 linear_accel_max = -2.23517e-06
 radial_accel_min = -2.23517e-06
 radial_accel_max = -2.23517e-06
+attractor_interaction_enabled = false
 scale_curve = SubResource("CurveTexture_fhi1o")
 color_ramp = SubResource("GradientTexture1D_xhkeq")
 
