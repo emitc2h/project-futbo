@@ -14,6 +14,7 @@ script = ExtResource("1_tu0pa")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_yxlrk")
+track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="root" type="Node" parent="State"]

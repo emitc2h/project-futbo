@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://caxwuwjjre3j2"]
+[gd_scene load_steps=15 format=3 uid="uid://caxwuwjjre3j2"]
 
 [ext_resource type="Script" uid="uid://cvp18nk1u5oc6" path="res://scripts/control_node_and_balls/direction_ray.gd" id="2_f10p2"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_7ii86"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_5mqmn"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_hr8f4"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_08vb0"]
-[ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/control_node_and_balls/clamped_aim.tscn" id="7_5lu38"]
 [ext_resource type="Texture2D" uid="uid://b4is3s6ydyd8y" path="res://assets/3D/Particles/streak/streak_64x64.png" id="7_v4urv"]
 
 [sub_resource type="Gradient" id="Gradient_v4urv"]
@@ -117,8 +116,6 @@ script = ExtResource("6_08vb0")
 to = NodePath("../../off")
 event = &"turn off"
 delay_in_seconds = "0.0"
-
-[node name="ClampedAim" parent="." instance=ExtResource("7_5lu38")]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.124639, 0)

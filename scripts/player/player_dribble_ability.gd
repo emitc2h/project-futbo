@@ -10,11 +10,6 @@ extends Node3D
 @onready var dribble_marker: Marker3D = $DribbleMarker
 @onready var dribble_cast: DribbleCast = $DribbleCast
 
-# Configurables
-@export var dribble_rotation_speed: float = 4.0
-@export var dribble_velocity_offset: float = 0.0063662
-@export var ball_snap_velocity: float = 6.0
-
 # Static/Internal properties
 var pickup_zone_position_x: float
 var dribble_marker_position_x: float
@@ -65,9 +60,6 @@ func _on_dribbling_state_entered() -> void:
 	# If the ball accepts ownership, start dribbling
 	if player_id == ball.dribbler_id:
 		ball.start_dribbling()
-		ball.dribble_rotation_speed = dribble_rotation_speed
-		ball.dribble_velocity_offset = dribble_velocity_offset
-		ball.ball_snap_velocity = ball_snap_velocity
 		
 		#start tracking the ball with the DribbleCast
 		dribble_cast.start_tracking(ball)
@@ -78,8 +70,8 @@ func _on_dribbling_state_entered() -> void:
 
 func _on_dribbling_state_physics_processing(delta: float) -> void:
 	if player_id == ball.dribbler_id:
-		ball.player_dribble_marker_position = dribble_marker.global_position
-		ball.player_velocity = player.velocity
+		Signals.active_dribble_marker_position_updated.emit(dribble_marker.global_position)
+		Signals.player_velocity_updated.emit(player.velocity)
 	else:
 		state.send_event("dribbling to not ready")
 

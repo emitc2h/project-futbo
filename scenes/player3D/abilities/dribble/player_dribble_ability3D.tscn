@@ -16,6 +16,7 @@ script = ExtResource("1_jfi7p")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_dtk0s")
+track_in_editor = true
 
 [node name="root" type="Node" parent="State"]
 script = ExtResource("3_l32tu")

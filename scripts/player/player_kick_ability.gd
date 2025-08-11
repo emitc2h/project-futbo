@@ -9,7 +9,6 @@ var player_asset: PlayerAsset
 
 # Internal references
 @onready var state: StateChart = $State
-@onready var clamped_aim: ClampedAim = $ClampedAim
 @onready var kickzone: Area3D = $KickZone
 
 # Configurables
@@ -21,7 +20,6 @@ var kickzone_position_x: float
 var player_id: int
 
 # Dynamic properties
-var aim: Vector2
 var ball: Ball
 var direction: Enums.Direction = Enums.Direction.RIGHT
 var previous_sprite_animation: String
@@ -77,7 +75,7 @@ func _on_ready_state_exited() -> void:
 # kick state
 #----------------------------------------
 func _on_kick_state_entered() -> void:
-	ball.impulse(clamped_aim.get_vector(aim, direction) * kick_force)
+	ball.impulse(Aim.vector * kick_force)
 	# if the kick doesn't work for some reason, stay in ready state
 	# ready state will be dropped once the ball has exited the kick zone
 	state.send_event("kick to ready")

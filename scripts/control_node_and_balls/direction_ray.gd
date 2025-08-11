@@ -3,16 +3,7 @@ extends Node3D
 
 # Internal references
 @onready var state: StateChart = $State
-@onready var clamped_aim: ClampedAim = $ClampedAim
 @onready var particles: GPUParticles3D = $GPUParticles3D
-
-# Dynamic properties
-var aim: Vector2
-var direction_faced: Enums.Direction = Enums.Direction.RIGHT
-
-var clamped_aim_vector: Vector3:
-	get:
-		return clamped_aim.get_vector(aim, direction_faced)
 
 var _was_just_kicked: bool = false
 var was_just_kicked: bool:
@@ -30,12 +21,6 @@ func _ready() -> void:
 	self.visible = false
 
 
-# Listen to the aim vector at all times
-func _physics_process(delta: float) -> void:
-	aim = Converters.vec2_from(
-		Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down"))
-
-
 #=======================================================
 # POINTING STATES
 #=======================================================
@@ -43,7 +28,7 @@ func _physics_process(delta: float) -> void:
 # idle state
 #----------------------------------------
 func _on_idle_state_physics_processing(delta: float) -> void:
-	if not aim.is_zero_approx():
+	if not Aim.vector.is_zero_approx():
 		state.send_event("idle to pointing")
 
 
@@ -57,10 +42,10 @@ func _on_pointing_state_entered() -> void:
 
 
 func _on_pointing_state_processing(delta: float) -> void:
-	if aim.is_zero_approx() or _was_just_kicked:
+	if Aim.vector.is_zero_approx() or _was_just_kicked:
 		state.send_event("pointing to idle")
 	else:
-		var angle: float = clamped_aim.get_angle(aim, direction_faced) - PI/2
+		var angle: float = Aim.angle - PI/2
 		self.global_rotation.z = angle
 		particles.process_material.set("angle", angle)
 

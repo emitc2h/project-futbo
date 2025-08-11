@@ -17,6 +17,8 @@ var is_tracking: bool = false
 
 func _ready() -> void:
 	init_target_pos = self.target_position
+	Signals.facing_left.connect(_on_facing_left)
+	Signals.facing_right.connect(_on_facing_right)
 
 
 #=======================================================
@@ -30,7 +32,10 @@ func _on_tracking_state_entered() -> void:
 
 
 func _on_tracking_state_physics_processing(delta: float) -> void:
-	self.target_position = tracked_ball.dribbled_node.global_position - self.global_position
+	self.target_position = tracked_ball.get_ball_position() - self.global_position
+	
+	print("target position: ", self.target_position, " | reported ball position: ", tracked_ball.get_ball_position(), " | dribble cast position: ", self.global_position)
+	
 	self.force_raycast_update()
 	if not CastUtils.hits_ball(self):
 		player_dribble_ability.end_dribble()
@@ -57,11 +62,11 @@ func end_tracking(direction_faced: Enums.Direction) -> void:
 		self.target_position = init_target_pos
 
 
-func face_left() -> void:
+func _on_facing_left() -> void:
 	if not is_tracking:
 		self.target_position.x = -init_target_pos.x
 
 
-func face_right() -> void:
+func _on_facing_right() -> void:
 	if not is_tracking:
 		self.target_position.x = init_target_pos.x

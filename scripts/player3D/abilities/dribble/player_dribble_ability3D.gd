@@ -11,11 +11,6 @@ extends Node3D
 @onready var dribble_marker: Marker3D = $DribbleMarker
 @onready var dribble_cast: DribbleCast3D = $DribbleCast3D
 
-# Configurables
-@export var dribble_rotation_speed: float = 4.0
-@export var dribble_velocity_offset: float = 0.0063662
-@export var ball_snap_velocity: float = 6.0
-
 # Static/Internal properties
 var pickup_zone_position_x: float
 var dribble_marker_position_x: float
@@ -30,18 +25,10 @@ var is_ready: bool = false
 var is_dribbling: bool = false
 
 
-func _enter_tree() -> void:
-	Signals.facing_left.connect(_on_facing_left)
-	Signals.facing_right.connect(_on_facing_right)
-
-
-func _exit_tree() -> void:
-	Signals.facing_left.disconnect(_on_facing_left)
-	Signals.facing_right.disconnect(_on_facing_right)
-
-
 # Record PickupZone, DribbleMarker & DribbleCast position so they can be flipped
 func _ready() -> void:
+	Signals.facing_left.connect(_on_facing_left)
+	Signals.facing_right.connect(_on_facing_right)
 	pickup_zone_position_x = pickup_zone.position.x
 	dribble_marker_position_x = dribble_marker.position.x
 	player_id = player.get_instance_id()
@@ -76,11 +63,9 @@ func _on_dribbling_state_entered() -> void:
 	# If the ball accepts ownership, start dribbling
 	if player_id == ball.dribbler_id:
 		ball.start_dribbling()
-		ball.dribble_rotation_speed = dribble_rotation_speed
-		ball.dribble_velocity_offset = dribble_velocity_offset
-		ball.ball_snap_velocity = ball_snap_velocity
 		
 		#start tracking the ball with the DribbleCast
+		print("start tracking")
 		dribble_cast.start_tracking(ball)
 		is_dribbling = true
 	else:
@@ -89,8 +74,8 @@ func _on_dribbling_state_entered() -> void:
 
 func _on_dribbling_state_physics_processing(delta: float) -> void:
 	if player_id == ball.dribbler_id:
-		ball.player_dribble_marker_position = dribble_marker.global_position
-		ball.player_velocity = player.velocity
+		Signals.active_dribble_marker_position_updated.emit(dribble_marker.global_position)
+		Signals.player_velocity_updated.emit(player.velocity)
 	else:
 		state.send_event("dribbling to not ready")
 
@@ -129,14 +114,12 @@ func _on_facing_left() -> void:
 	pickup_zone.position.x = -pickup_zone_position_x
 	dribble_marker.position.x = -dribble_marker_position_x
 	direction_faced = Enums.Direction.LEFT
-	dribble_cast.face_left()
 
 
 func _on_facing_right() -> void:
 	pickup_zone.position.x = pickup_zone_position_x
 	dribble_marker.position.x = dribble_marker_position_x
 	direction_faced = Enums.Direction.RIGHT
-	dribble_cast.face_right()
 
 
 #=======================================================
@@ -158,4 +141,4 @@ func end_dribble() -> void:
 
 func ball_jump(jump_velocity_y: float) -> void:
 	if ball and player_id == ball.dribbler_id:
-		ball.dribbled_node.velocity.y += jump_velocity_y
+		ball.physics_states.char_node.velocity.y += jump_velocity_y

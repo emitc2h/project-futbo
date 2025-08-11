@@ -5,6 +5,7 @@ extends Ball
 @onready var physics_material: PhysicsMaterial = $InertNode.physics_material_override
 
 @onready var charge_states: ControlNodeChargeStates = $"State/Root/Charge/Charge States"
+@onready var direction_ray: DirectionRay = $DirectionRay
 
 var bounce_strength: float = 0.0
 var in_on_state: bool = false
@@ -15,24 +16,24 @@ func _ready() -> void:
 
 
 func _on_inert_node_body_entered(body: Node) -> void:
-	var hit_strength: float = inert_node.linear_velocity.length()
+	var hit_strength: float = get_ball_velocity().length()
 	bounce_strength = hit_strength / 5.0
 	
 	Signals.debug_running_log.emit("control node is colliding with " + body.name)
 	
 	if body is DroneShield and in_on_state:
 		var drone_shield: DroneShield = body as DroneShield
-		drone_shield.look_at(self.get_control_node_position(), Vector3.UP)
+		drone_shield.look_at(self.get_ball_position(), Vector3.UP)
 		drone_shield.hit()
 	
 	if body.get_parent() is Drone and in_on_state:
 		var drone: Drone = body.get_parent()
 		if drone.get_hit(hit_strength):
-			state.send_event("blow")
+			sc.send_event("blow")
 		else:
-			state.send_event("hit")
+			sc.send_event("hit")
 	else:
-		state.send_event("bounce")
+		sc.send_event("bounce")
 
 
 #=======================================================
@@ -47,7 +48,7 @@ func _on_charging_state_entered() -> void:
 
 
 func _on_charging_finished() -> void:
-	state.send_event("turn on")
+	sc.send_event("turn on")
 
 
 # power on state
@@ -60,7 +61,7 @@ func _on_on_state_entered() -> void:
 
 func _on_on_state_physics_processing(delta: float) -> void:
 	if Input.is_action_just_pressed("shield up"):
-		state.send_event("expand shield")
+		sc.send_event("expand shield")
 
 
 func _on_turn_off_taken() -> void:
@@ -69,7 +70,7 @@ func _on_turn_off_taken() -> void:
 
 
 func _on_expand_shield_taken() -> void:
-	state.send_event(charge_states.TRANS_DISCHARGE)
+	sc.send_event(charge_states.TRANS_DISCHARGE)
 	asset.expand_shield()
 
 
@@ -82,7 +83,7 @@ func _on_hit_taken() -> void:
 
 
 func _on_blow_taken() -> void:
-	state.send_event(charge_states.TRANS_DISCHARGE)
+	sc.send_event(charge_states.TRANS_DISCHARGE)
 	asset.blow_shield()
 	direction_ray.turn_off()
 
@@ -101,11 +102,11 @@ func _on_shrink_shield_taken() -> void:
 
 func _on_shield_up_state_physics_processing(delta: float) -> void:
 	if Input.is_action_just_released("shield up"):
-		state.send_event("shrink shield")
+		sc.send_event("shrink shield")
 
 
 func _on_control_node_dribbled_state_entered() -> void:
-	state.send_event("charge")
+	sc.send_event("charge")
 
 
 func _on_kicked() -> void:

@@ -21,9 +21,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if kick_enabled:
-		player_kick_ability.aim = \
-				Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
-				
 		if player_kick_ability.is_in_ready_state:
 		
 			if Input.is_action_just_pressed("kick"):

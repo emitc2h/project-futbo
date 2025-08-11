@@ -34,6 +34,11 @@ signal ended_sprinting
 
 signal kicked
 
+signal aim_vector_updated(vec: Vector3)
+
+signal active_dribble_marker_position_updated(pos: Vector3)
+signal player_velocity_updated(vel: Vector3)
+
 signal jump_left_animation_ended
 signal jump_right_animation_ended
 signal turn_left_animation_ended

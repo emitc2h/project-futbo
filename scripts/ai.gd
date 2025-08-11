@@ -27,8 +27,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	behaviors.ball_position = ball.get_control_node_position()
-	behaviors.ball_velocity = ball.get_control_node_velocity()
+	behaviors.ball_position = ball.get_ball_position()
+	behaviors.ball_velocity = ball.get_ball_velocity()
 
 
 #=======================================================
