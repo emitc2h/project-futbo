@@ -8,7 +8,7 @@ extends Node3D
 @export var camera_controller: CameraController
 
 @export_group("Main Player")
-@export var player: Player3D
+@export var player: Player
 
 @onready var state: StateChart = $StateChart
 

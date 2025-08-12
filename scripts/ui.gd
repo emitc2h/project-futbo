@@ -3,7 +3,7 @@ extends CanvasLayer
 
 
 @export var camera_controller: CameraController
-@export var player: Player3D
+@export var player: Player
 @export var stamina_offset: Vector2
 
 @onready var score_left: Label = $ScoreLeft

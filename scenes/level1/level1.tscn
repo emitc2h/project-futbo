@@ -21,8 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://b6y8aq57ik4gn" path="res://kenney_input-prompts/Steam Deck/Default/steamdeck_button_b.png" id="22_hfmre"]
 [ext_resource type="Texture2D" uid="uid://1sygo4tcshke" path="res://kenney_input-prompts/Keyboard & Mouse/Default/keyboard_shift_icon.png" id="23_8re7r"]
 [ext_resource type="Texture2D" uid="uid://bhhkq0sw3yj7e" path="res://kenney_input-prompts/PlayStation Series/Default/playstation_button_circle.png" id="24_elchd"]
-[ext_resource type="PackedScene" uid="uid://dmyk1j8j3wpex" path="res://scenes/player3D/player3D.tscn" id="29_5g7au"]
-[ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player3D/controller3D.tscn" id="32_cyq5e"]
+[ext_resource type="PackedScene" uid="uid://dmyk1j8j3wpex" path="res://scenes/player/player.tscn" id="29_5g7au"]
+[ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player/controller.tscn" id="32_cyq5e"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
 length = 0.001

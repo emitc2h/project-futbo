@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dd7rk2je4r01m"]
 
-[ext_resource type="Script" uid="uid://deffsqrqu5y1b" path="res://scripts/player3D/abilities/basic_movement/character_path.gd" id="1_dsh78"]
+[ext_resource type="Script" uid="uid://deffsqrqu5y1b" path="res://scripts/player/abilities/basic_movement/character_path.gd" id="1_dsh78"]
 
 [sub_resource type="Curve3D" id="Curve3D_kmy4g"]
 _data = {

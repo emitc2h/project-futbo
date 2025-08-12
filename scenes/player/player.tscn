@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://dmyk1j8j3wpex"]
+
+[ext_resource type="Script" uid="uid://2wf3c53vuykj" path="res://scripts/player/player.gd" id="1_hcsbr"]
+[ext_resource type="PackedScene" uid="uid://cneunrl3vngmw" path="res://scenes/player/abilities/basic_movement/player_basic_movement.tscn" id="2_6m232"]
+[ext_resource type="PackedScene" uid="uid://ce6sf1a6oipvf" path="res://scenes/player/abilities/kick/player_kick_ability.tscn" id="3_t2xeb"]
+[ext_resource type="PackedScene" uid="uid://bglgmij4c45oh" path="res://scenes/player/abilities/dribble/player_dribble_ability.tscn" id="4_0pbqm"]
+[ext_resource type="PackedScene" uid="uid://c28xkt5r3qdsr" path="res://scenes/player/abilities/headbutt/player_headbutt_ability.tscn" id="5_tkrpe"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tkrpe"]
+radius = 0.25476
+height = 1.47402
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 770
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+script = ExtResource("1_hcsbr")
+jump_momentum = 5.0
+
+[node name="PlayerBasicMovement" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_6m232")]
+player = NodePath("..")
+
+[node name="PlayerKickAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_t2xeb")]
+player = NodePath("..")
+
+[node name="PlayerDribbleAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_0pbqm")]
+player = NodePath("..")
+
+[node name="PlayerHeadbuttAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_tkrpe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45311, 0)
+player = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.993783, 0, -0.11133, 0, 1, 0, 0.11133, 0, 0.993783, 0, 0.734811, 0)
+shape = SubResource("CapsuleShape3D_tkrpe")

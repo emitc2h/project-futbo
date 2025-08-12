@@ -276,5 +276,5 @@ func _on_debug_advance() -> void:
 
 
 func _on_rigid_node_body_entered(body: Node) -> void:
-	if body is Player3D:
+	if body is Player:
 		Signals.player_knocked.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position)
