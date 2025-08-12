@@ -65,7 +65,6 @@ func _on_dribbling_state_entered() -> void:
 		ball.start_dribbling()
 		
 		#start tracking the ball with the DribbleCast
-		print("start tracking")
 		dribble_cast.start_tracking(ball)
 		is_dribbling = true
 	else:

@@ -46,7 +46,6 @@ func _ready() -> void:
 # free state
 #----------------------------------------
 func _on_free_state_entered() -> void:
-	print("FREE STATE ENTERED")
 	state = State.FREE
 	if ball.physics_states.state != ball.physics_states.State.RIGID:
 		sc.send_event(ball.physics_states.TRANS_TO_RIGID)
@@ -55,7 +54,6 @@ func _on_free_state_entered() -> void:
 # dribbled state
 #----------------------------------------
 func _on_dribbled_state_entered() -> void:
-	print("DRIBBLED STATE ENTERED")
 	state = State.DRIBBLED
 	if ball.physics_states.state != ball.physics_states.State.CHAR:
 		sc.send_event(ball.physics_states.TRANS_TO_CHAR)
@@ -78,7 +76,6 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 	
 	# Use gravity when not touching the ground
 	if not char_node.is_on_floor():
-		print("adding gravity")
 		char_node.velocity.y += gravity * delta
 	
 	# Compute colliding behavior

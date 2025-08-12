@@ -1,15 +1,10 @@
-[gd_scene load_steps=39 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene load_steps=34 format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" uid="uid://dpw23mx2rrnj" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="1_j6tjs"]
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="2_vcigm"]
 [ext_resource type="PackedScene" uid="uid://dq8d4kwgig1w8" path="res://scenes/level1/level1_world.tscn" id="3_wf22a"]
-[ext_resource type="PackedScene" uid="uid://dd7y7f0ti7n53" path="res://scenes/player/player.tscn" id="4_8dl31"]
-[ext_resource type="Script" uid="uid://byom5qhuy4uf4" path="res://scenes/level1/player_asset_sprite3D.gd" id="7_gohmj"]
-[ext_resource type="PackedScene" uid="uid://bk8wo5fenailq" path="res://scenes/control_node_and_balls/ball.tscn" id="7_xq8ao"]
 [ext_resource type="PackedScene" uid="uid://de54qalm0kq4f" path="res://scenes/goal.tscn" id="8_2nmo7"]
-[ext_resource type="PackedScene" uid="uid://d13byd12eh5y7" path="res://scenes/ai.tscn" id="9_2x0ki"]
-[ext_resource type="SpriteFrames" uid="uid://b5y2k0oe4jdi6" path="res://resources/adversary_spriteframes.tres" id="10_0rft1"]
 [ext_resource type="PackedScene" uid="uid://resnwy07iokh" path="res://scenes/characters/Character1/character_model.tscn" id="10_yo7ps"]
 [ext_resource type="PackedScene" uid="uid://3y4snk0eo4mp" path="res://scenes/ui.tscn" id="11_ffwmr"]
 [ext_resource type="PackedScene" uid="uid://rxuskqewfa7k" path="res://scenes/control_suppressor.tscn" id="13_hpf6u"]
@@ -596,10 +591,6 @@ transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0,
 
 [node name="World" parent="." instance=ExtResource("3_wf22a")]
 
-[node name="Ball" parent="." instance=ExtResource("7_xq8ao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.256, 0)
-max_speed = 20.0
-
 [node name="GoalLeft" parent="." instance=ExtResource("8_2nmo7")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.4087, 0, 0)
 
@@ -617,35 +608,12 @@ asset = NodePath("CharacterAsset")
 [node name="Controller3D" parent="MainPlayer3D" node_paths=PackedStringArray("player") instance=ExtResource("32_cyq5e")]
 player = NodePath("..")
 
-[node name="OpponentPlayer" parent="." node_paths=PackedStringArray("player_asset") instance=ExtResource("4_8dl31")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2235, 0, 0)
-player_asset = NodePath("PlayerAssetSprite3D")
-run_forward_velocity = 4.0
-run_backward_velocity = 3.0
-
-[node name="AI" parent="OpponentPlayer" node_paths=PackedStringArray("player", "ball", "home_goal", "away_goal") instance=ExtResource("9_2x0ki")]
-player = NodePath("..")
-ball = NodePath("../../Ball")
-home_goal = NodePath("../../GoalRight")
-away_goal = NodePath("../../GoalLeft")
-
-[node name="PlayerAssetSprite3D" type="Node3D" parent="OpponentPlayer" node_paths=PackedStringArray("sprite")]
-script = ExtResource("7_gohmj")
-sprite = NodePath("AnimatedSprite3D")
-metadata/_custom_type_script = "uid://byom5qhuy4uf4"
-
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="OpponentPlayer/PlayerAssetSprite3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.557838, 0)
-modulate = Color(0.8, 0.8, 0.8, 1)
-sprite_frames = ExtResource("10_0rft1")
-animation = &"celebrate"
-
 [node name="UI" parent="." node_paths=PackedStringArray("camera_controller", "player") instance=ExtResource("11_ffwmr")]
 camera_controller = NodePath("../CameraController")
 player = NodePath("../MainPlayer3D")
 
 [node name="ControlSuppressor" parent="." node_paths=PackedStringArray("controlled_nodes") instance=ExtResource("13_hpf6u")]
-controlled_nodes = [NodePath("../CameraController"), null, NodePath("../OpponentPlayer/AI")]
+controlled_nodes = [NodePath("../CameraController"), null, NodePath("")]
 
 [node name="Level1Script" type="Node3D" parent="." node_paths=PackedStringArray("control_suppressor", "cut_scene_player", "cut_scene_context_player", "camera_controller", "player", "opponent_player", "opponent_ai", "opponent_dialog_bubble")]
 script = ExtResource("14_eau2p")
@@ -654,8 +622,8 @@ cut_scene_player = NodePath("CutScenePlayer")
 cut_scene_context_player = NodePath("CutSceneContextPlayer")
 camera_controller = NodePath("../CameraController")
 player = NodePath("../MainPlayer3D")
-opponent_player = NodePath("../OpponentPlayer")
-opponent_ai = NodePath("../OpponentPlayer/AI")
+opponent_player = NodePath("")
+opponent_ai = NodePath("")
 opponent_dialog_bubble = NodePath("OpponentDialogBubble")
 
 [node name="StateChart" type="Node" parent="Level1Script"]
@@ -836,15 +804,12 @@ shape = SubResource("WorldBoundaryShape3D_m5c52")
 [node name="OpponentDialogBubble" parent="Level1Script" node_paths=PackedStringArray("camera_controller", "player") instance=ExtResource("19_ub1r2")]
 visible = false
 camera_controller = NodePath("../../CameraController")
-player = NodePath("../../OpponentPlayer")
+player = NodePath("")
 
 [node name="WalkToFieldPath3D" parent="Level1Script" instance=ExtResource("21_52762")]
 
 [connection signal="scored" from="GoalLeft" to="." method="_on_goal_left_scored"]
-[connection signal="scored" from="GoalLeft" to="OpponentPlayer/AI" method="_on_away_scored"]
 [connection signal="scored" from="GoalRight" to="." method="_on_goal_right_scored"]
-[connection signal="facing_left" from="OpponentPlayer" to="Ball" method="_on_facing_left"]
-[connection signal="facing_right" from="OpponentPlayer" to="Ball" method="_on_facing_right"]
 [connection signal="state_entered" from="Level1Script/StateChart/root/intro cutscene" to="Level1Script" method="_on_intro_cutscene_state_entered"]
 [connection signal="state_exited" from="Level1Script/StateChart/root/intro cutscene" to="Level1Script" method="_on_intro_cutscene_state_exited"]
 [connection signal="state_processing" from="Level1Script/StateChart/root/intro cutscene" to="Level1Script" method="_on_intro_cutscene_state_processing"]

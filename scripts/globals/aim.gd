@@ -17,6 +17,10 @@ extends Node
 var _direction_faced: Enums.Direction = Enums.Direction.RIGHT
 var _input_vec2: Vector2 = Vector2.ZERO
 
+var input_is_zero_approx: bool:
+	get:
+		return _input_vec2.is_zero_approx()
+
 var vector: Vector3:
 	get:
 		return get_aim_vector(_input_vec2, _direction_faced)

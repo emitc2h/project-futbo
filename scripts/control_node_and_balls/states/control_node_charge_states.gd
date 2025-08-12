@@ -4,7 +4,7 @@ extends Node
 ## Dependency Injection
 @export_group("Dependencies")
 @export var control_node: ControlNode
-@export var inert_node: InertNode
+@export var rigid_node: InertNode
 @export var asset: ControlNodeAsset
 @export var sc: StateChart
 
@@ -17,7 +17,7 @@ const TRANS_CHARGE_UP: String = "charge up"
 const TRANS_DISCHARGE: String = "discharge"
 
 func _ready() -> void:
-	inert_node.body_entered.connect(_on_shield_body_entered)
+	rigid_node.body_entered.connect(_on_shield_body_entered)
 
 
 # none state
@@ -49,8 +49,7 @@ func _on_level_3_state_entered() -> void:
 
 
 # signal handling
-#----------------------------------------
+#========================================
 func _on_shield_body_entered(body: Node) -> void:
-	if body is DroneShield and control_node.in_on_state:
-		print("charge up event")
+	if body is DroneShield and control_node.power_states.in_on_state:
 		sc.send_event(TRANS_CHARGE_UP)

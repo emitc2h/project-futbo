@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ce6sf1a6oipvf"]
+[gd_scene load_steps=8 format=3 uid="uid://ce6sf1a6oipvf"]
 
 [ext_resource type="Script" uid="uid://bcd55rfrsiitu" path="res://scripts/player3D/abilities/kick/player_kick_ability3D.gd" id="1_4ly6d"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_iosrh"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_t7rgp"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_n4xlr"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_t82jc"]
-[ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/control_node_and_balls/clamped_aim.tscn" id="6_qb6tn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tgrgb"]
 radius = 0.257409
@@ -102,8 +101,6 @@ script = ExtResource("5_t82jc")
 to = NodePath("../../standby")
 event = &"winding up to standby"
 delay_in_seconds = "0.0"
-
-[node name="ClampedAim" parent="." instance=ExtResource("6_qb6tn")]
 
 [node name="LongKickRayCast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)

@@ -1,235 +1,178 @@
-[gd_scene load_steps=13 format=3 uid="uid://d1ewxnn4pejar"]
+[gd_scene load_steps=10 format=3 uid="uid://cupvg7lj3rh2s"]
 
-[ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="1_0jkta"]
-[ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_qi4cr"]
-[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_8s4nh"]
-[ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_qi4cr"]
-[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_2p3vg"]
-[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_tbext"]
-[ext_resource type="Script" uid="uid://b3jcml15v3wkh" path="res://scripts/control_node_and_balls/states/control_node_charge_states.gd" id="7_8s4nh"]
-[ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="7_cnds4"]
-[ext_resource type="PhysicsMaterial" uid="uid://bangmdh456sm4" path="res://resources/powered_down_control_node_physics_material.tres" id="7_qi4cr"]
-[ext_resource type="PackedScene" uid="uid://caxwuwjjre3j2" path="res://scenes/control_node_and_balls/direction_ray.tscn" id="8_nbe53"]
-[ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node_and_balls/assets/control_node_asset.tscn" id="9_0jkta"]
+[ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
+[ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_02qb1"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_0jkta"]
+[ext_resource type="PackedScene" uid="uid://caxwuwjjre3j2" path="res://scenes/control_node_and_balls/direction_ray.tscn" id="4_bt07l"]
+[ext_resource type="Script" uid="uid://t3jmyqr06q1w" path="res://scripts/control_node_and_balls/states/control_node_power_states.gd" id="4_qi4cr"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_qi4cr"]
+[ext_resource type="Script" uid="uid://b3jcml15v3wkh" path="res://scripts/control_node_and_balls/states/control_node_charge_states.gd" id="6_8s4nh"]
+[ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node_and_balls/assets/control_node_asset.tscn" id="7_2p3vg"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_8bm52"]
-radius = 0.159323
+[node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states") instance=ExtResource("1_fpwqj")]
+script = ExtResource("2_r7e0p")
+power_states = NodePath("State/Root/Power/Power States")
+charge_states = NodePath("State/Root/Charge/Charge States")
 
-[node name="ControlNode" type="Node3D"]
-script = ExtResource("1_0jkta")
-
-[node name="State" type="Node" parent="."]
-script = ExtResource("2_qi4cr")
-track_in_editor = true
-
-[node name="Root" type="Node" parent="State"]
-script = ExtResource("3_qi4cr")
-
-[node name="Physics" type="Node" parent="State/Root"]
-script = ExtResource("3_8s4nh")
-initial_state = NodePath("inert")
-metadata/_custom_type_script = "uid://duu2hhmogs378"
-
-[node name="inert" type="Node" parent="State/Root/Physics"]
-script = ExtResource("4_2p3vg")
-
-[node name="to dribbled" type="Node" parent="State/Root/Physics/inert"]
-script = ExtResource("5_tbext")
-to = NodePath("../../dribbled")
-event = &"inert to dribbled"
-delay_in_seconds = "0.0"
-
-[node name="dribbled" type="Node" parent="State/Root/Physics"]
-script = ExtResource("4_2p3vg")
-
-[node name="to inert" type="Node" parent="State/Root/Physics/dribbled"]
-script = ExtResource("5_tbext")
-to = NodePath("../../inert")
-event = &"dribbled to inert"
-delay_in_seconds = "0.0"
-
-[node name="Power" type="Node" parent="State/Root"]
-script = ExtResource("3_8s4nh")
+[node name="Power" type="Node" parent="State/Root" index="2"]
+script = ExtResource("3_02qb1")
 initial_state = NodePath("off")
 
-[node name="off" type="Node" parent="State/Root/Power"]
-script = ExtResource("4_2p3vg")
+[node name="Power States" type="Node" parent="State/Root/Power" index="0" node_paths=PackedStringArray("control_node", "asset", "sc", "direction_ray", "rigid_node")]
+script = ExtResource("4_qi4cr")
+control_node = NodePath("../../../..")
+asset = NodePath("../../../../TrackTransformContainer/ControlNodeAsset")
+sc = NodePath("../../..")
+direction_ray = NodePath("../../../../TrackPositionContainer/DirectionRay")
+rigid_node = NodePath("../../../../RigidNode")
 
-[node name="charge" type="Node" parent="State/Root/Power/off"]
-script = ExtResource("5_tbext")
+[node name="off" type="Node" parent="State/Root/Power" index="1"]
+script = ExtResource("4_0jkta")
+
+[node name="to charging" type="Node" parent="State/Root/Power/off" index="0"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../charging")
-event = &"charge"
+event = &"Power: off to charging"
 delay_in_seconds = "0.0"
 
-[node name="charging" type="Node" parent="State/Root/Power"]
-script = ExtResource("4_2p3vg")
+[node name="charging" type="Node" parent="State/Root/Power" index="2"]
+script = ExtResource("4_0jkta")
 
-[node name="turn on" type="Node" parent="State/Root/Power/charging"]
-script = ExtResource("5_tbext")
+[node name="to on" type="Node" parent="State/Root/Power/charging" index="0"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../on")
-event = &"turn on"
+event = &"Power: charging to on"
 delay_in_seconds = "0.0"
 
-[node name="on" type="Node" parent="State/Root/Power"]
-script = ExtResource("4_2p3vg")
+[node name="on" type="Node" parent="State/Root/Power" index="3"]
+script = ExtResource("4_0jkta")
 
-[node name="turn off" type="Node" parent="State/Root/Power/on"]
-script = ExtResource("5_tbext")
+[node name="to off" type="Node" parent="State/Root/Power/on" index="0"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../off")
-event = &"turn off"
+event = &"Power: to off"
 delay_in_seconds = "0.0"
 
-[node name="expand shield" type="Node" parent="State/Root/Power/on"]
-script = ExtResource("5_tbext")
-to = NodePath("../../shield up")
-event = &"expand shield"
+[node name="to expanded" type="Node" parent="State/Root/Power/on" index="1"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../expanded")
+event = &"Power: to expanded"
 delay_in_seconds = "0.0"
 
-[node name="bounce" type="Node" parent="State/Root/Power/on"]
-script = ExtResource("5_tbext")
+[node name="bounce" type="Node" parent="State/Root/Power/on" index="2"]
+script = ExtResource("5_qi4cr")
 to = NodePath("..")
-event = &"bounce"
+event = &"Power: bounce"
 delay_in_seconds = "0.0"
 
-[node name="hit" type="Node" parent="State/Root/Power/on"]
-script = ExtResource("5_tbext")
+[node name="hit" type="Node" parent="State/Root/Power/on" index="3"]
+script = ExtResource("5_qi4cr")
 to = NodePath("..")
-event = &"hit"
+event = &"Power: hit"
 delay_in_seconds = "0.0"
 
-[node name="blow" type="Node" parent="State/Root/Power/on"]
-script = ExtResource("5_tbext")
+[node name="blow" type="Node" parent="State/Root/Power/on" index="4"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../off")
-event = &"blow"
+event = &"Power: blow"
 delay_in_seconds = "0.0"
 
-[node name="shield up" type="Node" parent="State/Root/Power"]
-script = ExtResource("4_2p3vg")
+[node name="expanded" type="Node" parent="State/Root/Power" index="4"]
+script = ExtResource("4_0jkta")
 
-[node name="shrink shield" type="Node" parent="State/Root/Power/shield up"]
-script = ExtResource("5_tbext")
+[node name="to on" type="Node" parent="State/Root/Power/expanded" index="0"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../on")
 event = &"shrink shield"
 delay_in_seconds = "0.0"
 
-[node name="Charge" type="Node" parent="State/Root"]
-script = ExtResource("3_8s4nh")
+[node name="Charge" type="Node" parent="State/Root" index="3"]
+script = ExtResource("3_02qb1")
 initial_state = NodePath("none")
 
-[node name="Charge States" type="Node" parent="State/Root/Charge" node_paths=PackedStringArray("control_node", "inert_node", "asset", "sc")]
-script = ExtResource("7_8s4nh")
+[node name="Charge States" type="Node" parent="State/Root/Charge" index="0" node_paths=PackedStringArray("control_node", "rigid_node", "asset", "sc")]
+script = ExtResource("6_8s4nh")
 control_node = NodePath("../../../..")
-inert_node = NodePath("../../../../InertNode")
-asset = NodePath("../../../../ModelContainer/ControlNodeAsset")
+rigid_node = NodePath("../../../../RigidNode")
+asset = NodePath("../../../../TrackTransformContainer/ControlNodeAsset")
 sc = NodePath("../../..")
 
-[node name="none" type="Node" parent="State/Root/Charge"]
-script = ExtResource("4_2p3vg")
+[node name="none" type="Node" parent="State/Root/Charge" index="1"]
+script = ExtResource("4_0jkta")
 
-[node name="to level1" type="Node" parent="State/Root/Charge/none"]
-script = ExtResource("5_tbext")
+[node name="to level1" type="Node" parent="State/Root/Charge/none" index="0"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../level1")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
-[node name="level1" type="Node" parent="State/Root/Charge"]
-script = ExtResource("4_2p3vg")
+[node name="level1" type="Node" parent="State/Root/Charge" index="2"]
+script = ExtResource("4_0jkta")
 
-[node name="to none" type="Node" parent="State/Root/Charge/level1"]
-script = ExtResource("5_tbext")
+[node name="to none" type="Node" parent="State/Root/Charge/level1" index="0"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="to level2" type="Node" parent="State/Root/Charge/level1"]
-script = ExtResource("5_tbext")
+[node name="to level2" type="Node" parent="State/Root/Charge/level1" index="1"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../level2")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
-[node name="level2" type="Node" parent="State/Root/Charge"]
-script = ExtResource("4_2p3vg")
+[node name="level2" type="Node" parent="State/Root/Charge" index="3"]
+script = ExtResource("4_0jkta")
 
-[node name="to none" type="Node" parent="State/Root/Charge/level2"]
-script = ExtResource("5_tbext")
+[node name="to none" type="Node" parent="State/Root/Charge/level2" index="0"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="to level3" type="Node" parent="State/Root/Charge/level2"]
-script = ExtResource("5_tbext")
+[node name="to level3" type="Node" parent="State/Root/Charge/level2" index="1"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../level3")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
-[node name="level3" type="Node" parent="State/Root/Charge"]
-script = ExtResource("4_2p3vg")
+[node name="level3" type="Node" parent="State/Root/Charge" index="4"]
+script = ExtResource("4_0jkta")
 
-[node name="to none" type="Node" parent="State/Root/Charge/level3"]
-script = ExtResource("5_tbext")
+[node name="to none" type="Node" parent="State/Root/Charge/level3" index="0"]
+script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="InertNode" type="RigidBody3D" parent="."]
-collision_layer = 4
-collision_mask = 1546
-input_ray_pickable = false
-axis_lock_linear_z = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-physics_material_override = ExtResource("7_qi4cr")
-can_sleep = false
-contact_monitor = true
-max_contacts_reported = 1
-angular_damp = 3.0
-script = ExtResource("7_cnds4")
+[node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" instance=ExtResource("7_2p3vg")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InertNode"]
-shape = SubResource("SphereShape3D_8bm52")
+[node name="DirectionRay" parent="TrackPositionContainer" index="0" instance=ExtResource("4_bt07l")]
 
-[node name="DribbledNode" type="CharacterBody3D" parent="."]
-collision_layer = 4
-collision_mask = 1034
-axis_lock_linear_z = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DribbledNode"]
-shape = SubResource("SphereShape3D_8bm52")
-
-[node name="DirectionRay" parent="." instance=ExtResource("8_nbe53")]
-
-[node name="ModelContainer" type="Node3D" parent="."]
-
-[node name="ControlNodeAsset" parent="ModelContainer" instance=ExtResource("9_0jkta")]
-
-[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="ModelContainer"]
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="TrackPositionContainer" index="1"]
 strength = 65.0
 attenuation = 2.0
 radius = 10.0
 
-[node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="ModelContainer"]
+[node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="TrackPositionContainer" index="2"]
 
-[connection signal="kicked" from="." to="." method="_on_kicked"]
-[connection signal="state_physics_processing" from="State/Root/Physics/inert" to="." method="_on_inert_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Physics/dribbled" to="." method="_on_control_node_dribbled_state_entered"]
-[connection signal="state_entered" from="State/Root/Physics/dribbled" to="." method="_on_dribbled_state_entered"]
-[connection signal="state_exited" from="State/Root/Physics/dribbled" to="." method="_on_dribbled_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Physics/dribbled" to="." method="_on_dribbled_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Power/charging" to="." method="_on_charging_state_entered"]
-[connection signal="state_entered" from="State/Root/Power/on" to="." method="_on_on_state_entered"]
-[connection signal="state_exited" from="State/Root/Power/on" to="." method="_on_on_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Power/on" to="." method="_on_on_state_physics_processing"]
-[connection signal="taken" from="State/Root/Power/on/turn off" to="." method="_on_turn_off_taken"]
-[connection signal="taken" from="State/Root/Power/on/expand shield" to="." method="_on_expand_shield_taken"]
-[connection signal="taken" from="State/Root/Power/on/bounce" to="." method="_on_bounce_taken"]
-[connection signal="taken" from="State/Root/Power/on/hit" to="." method="_on_hit_taken"]
-[connection signal="taken" from="State/Root/Power/on/blow" to="." method="_on_blow_taken"]
-[connection signal="state_physics_processing" from="State/Root/Power/shield up" to="." method="_on_shield_up_state_physics_processing"]
-[connection signal="taken" from="State/Root/Power/shield up/shrink shield" to="." method="_on_shrink_shield_taken"]
+[connection signal="kicked" from="." to="State/Root/Power/Power States" method="_on_kicked"]
+[connection signal="state_entered" from="State/Root/Control/dribbled" to="State/Root/Power/Power States" method="_on_control_states_dribbled_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/off" to="State/Root/Power/Power States" method="_on_off_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/charging" to="State/Root/Power/Power States" method="_on_charging_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/on" to="State/Root/Power/Power States" method="_on_on_state_entered"]
+[connection signal="state_exited" from="State/Root/Power/on" to="State/Root/Power/Power States" method="_on_on_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Power/on" to="State/Root/Power/Power States" method="_on_on_state_physics_processing"]
+[connection signal="taken" from="State/Root/Power/on/to off" to="State/Root/Power/Power States" method="_on_on_to_off_taken"]
+[connection signal="taken" from="State/Root/Power/on/to expanded" to="State/Root/Power/Power States" method="_on_on_to_expanded_taken"]
+[connection signal="taken" from="State/Root/Power/on/bounce" to="State/Root/Power/Power States" method="_on_on_to_bounce_taken"]
+[connection signal="taken" from="State/Root/Power/on/hit" to="State/Root/Power/Power States" method="_on_on_to_hit_taken"]
+[connection signal="taken" from="State/Root/Power/on/blow" to="State/Root/Power/Power States" method="_on_on_to_blow_taken"]
+[connection signal="state_entered" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_entered"]
+[connection signal="state_exited" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Charge/none" to="State/Root/Charge/Charge States" method="_on_none_state_entered"]
 [connection signal="state_entered" from="State/Root/Charge/level1" to="State/Root/Charge/Charge States" method="_on_level_1_state_entered"]
 [connection signal="state_entered" from="State/Root/Charge/level2" to="State/Root/Charge/Charge States" method="_on_level_2_state_entered"]
 [connection signal="state_entered" from="State/Root/Charge/level3" to="State/Root/Charge/Charge States" method="_on_level_3_state_entered"]
-[connection signal="body_entered" from="InertNode" to="." method="_on_inert_node_body_entered"]

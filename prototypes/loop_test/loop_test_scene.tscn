@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cvaogmwqhlu3a"]
+[gd_scene load_steps=30 format=3 uid="uid://cvaogmwqhlu3a"]
 
 [ext_resource type="Script" uid="uid://bunkqcq7mgxft" path="res://prototypes/loop_test/loop_test_scene.gd" id="1_vum0r"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_vum0r"]
@@ -16,9 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://cqhgxcbm0nrae" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color3.png" id="16_pv0wt"]
 [ext_resource type="Texture2D" uid="uid://bp5q5nu3lf3ry" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_transmission.png" id="17_6uf0e"]
 [ext_resource type="Texture2D" uid="uid://deem7pbadipj0" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_normal.png" id="18_xm3b7"]
-[ext_resource type="PackedScene" uid="uid://bk8wo5fenailq" path="res://scenes/control_node_and_balls/ball.tscn" id="19_mli22"]
 [ext_resource type="Texture2D" uid="uid://dumcqi0isdutb" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color2.png" id="19_qt0wu"]
+[ext_resource type="PackedScene" uid="uid://bc323ftwy8i7t" path="res://scenes/enemies/drone/drone.tscn" id="20_6uf0e"]
 [ext_resource type="PackedScene" uid="uid://r42whxkucyjl" path="res://scenes/vegetation/bush.tscn" id="20_mli22"]
+[ext_resource type="PackedScene" uid="uid://cupvg7lj3rh2s" path="res://scenes/control_node_and_balls/control_node.tscn" id="20_pv0wt"]
 [ext_resource type="PackedScene" uid="uid://dl2glyig12kut" path="res://scenes/debug/debug_tool.tscn" id="21_6uf0e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hi8lg"]
@@ -374,8 +375,11 @@ transform = Transform3D(0.433596, 0, 0.901107, 0, 1, 0, -0.901107, 0, 0.433596, 
 [node name="LightGrassRandomPatch6MMixed6" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
 transform = Transform3D(0.108607, 0, 0.994085, 0, 1, 0, -0.994085, 0, 0.108607, 25.7914, -0.0734396, 6.20552)
 
-[node name="Ball" parent="." instance=ExtResource("19_mli22")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.41746, 0.189651, 0)
+[node name="ControlNode" parent="." instance=ExtResource("20_pv0wt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.06864, 0.250523, 0)
+
+[node name="Drone" parent="." instance=ExtResource("20_6uf0e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7328, 1.79018, 0)
 
 [node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]
 max_running_logs = 1000

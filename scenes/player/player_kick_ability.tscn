@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8bowai4pofe1"]
+[gd_scene load_steps=7 format=3 uid="uid://c8bowai4pofe1"]
 
 [ext_resource type="Script" uid="uid://cg2kkqhduviqf" path="res://scripts/player/player_kick_ability.gd" id="1_mlbdn"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_4bk80"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_w2lss"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_14865"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_ixm4p"]
-[ext_resource type="PackedScene" uid="uid://bde4hn4pgdnbs" path="res://scenes/control_node_and_balls/clamped_aim.tscn" id="6_prlib"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tgrgb"]
 radius = 0.17767
@@ -83,8 +82,6 @@ script = ExtResource("5_ixm4p")
 to = NodePath("../../standby")
 event = &"long kick to standby"
 delay_in_seconds = "0.0"
-
-[node name="ClampedAim" parent="." instance=ExtResource("6_prlib")]
 
 [node name="KickZone" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.152, 0.18, 0)

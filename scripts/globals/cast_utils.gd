@@ -5,19 +5,14 @@ const BALL_INERT_NODE_NAME = "RigidNode"
 
 func hits_ball(ray_cast: RayCast3D) -> bool:
 	if ray_cast.is_colliding():
-		print("raycast is colliding with something")
 		match ray_cast.get_collider().name:
 			BALL_DRIBBLED_NODE_NAME:
-				print("CharNode detected")
 				return true
 			BALL_INERT_NODE_NAME:
-				print("RigidNode detected")
 				return true
 			_:
-				print("SomethingElse detected")
 				return false
 	else:
-		print("raycast doesn't detect anything")
 		return false
 
 

@@ -33,12 +33,13 @@ func _on_tracking_state_entered() -> void:
 
 func _on_tracking_state_physics_processing(delta: float) -> void:
 	self.target_position = tracked_ball.get_ball_position() - self.global_position
-	
-	print("target position: ", self.target_position, " | reported ball position: ", tracked_ball.get_ball_position(), " | dribble cast position: ", self.global_position)
-	
+
+	self.force_update_transform()
 	self.force_raycast_update()
+	
 	if not CastUtils.hits_ball(self):
-		player_dribble_ability.end_dribble()
+		pass
+		#player_dribble_ability.end_dribble()
 
 
 func _on_tracking_state_exited() -> void:

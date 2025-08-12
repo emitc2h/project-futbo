@@ -28,7 +28,7 @@ func _ready() -> void:
 # idle state
 #----------------------------------------
 func _on_idle_state_physics_processing(delta: float) -> void:
-	if not Aim.vector.is_zero_approx():
+	if not Aim.input_is_zero_approx:
 		state.send_event("idle to pointing")
 
 
@@ -42,7 +42,7 @@ func _on_pointing_state_entered() -> void:
 
 
 func _on_pointing_state_processing(delta: float) -> void:
-	if Aim.vector.is_zero_approx() or _was_just_kicked:
+	if Aim.input_is_zero_approx or _was_just_kicked:
 		state.send_event("pointing to idle")
 	else:
 		var angle: float = Aim.angle - PI/2

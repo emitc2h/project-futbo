@@ -28,7 +28,6 @@ const TRANS_TO_RIGID: String = "Physics: to rigid"
 # rigid state
 #----------------------------------------
 func _on_rigid_state_entered() -> void:
-	print("RIGID STATE ENTERED")
 	state = State.RIGID
 	
 	## wake up the rigid node
@@ -40,7 +39,6 @@ func _on_rigid_state_entered() -> void:
 	
 	## Enable rigid node collisions
 	rigid_node.set_collision_layer_value(3, true)
-	collision_shape_rigid.disabled = false
 
 
 func _on_rigid_state_physics_processing(delta: float) -> void:
@@ -53,9 +51,10 @@ func _on_rigid_state_physics_processing(delta: float) -> void:
 
 
 func _on_rigid_state_exited() -> void:
-	## Disable rigid node colliions
+	## Disable rigid node collisions
+	## Better to manipulate the collision layer than disabling the collision shape entirely. I'm not sure why, but this
+	## is more reliable. The raycast doesn't like re-enabled collision shapes for some reason.
 	rigid_node.set_collision_layer_value(3, false)
-	collision_shape_rigid.disabled = true
 	
 	## Put the rigid node to sleep
 	rigid_node.sleep()
@@ -64,7 +63,6 @@ func _on_rigid_state_exited() -> void:
 # char state
 #----------------------------------------
 func _on_char_state_entered() -> void:
-	print("CHAR STATE ENTERED")
 	state = State.CHAR
 	
 	## char node takes ownership of transform
@@ -72,7 +70,6 @@ func _on_char_state_entered() -> void:
 
 	## Enable char node collisions
 	char_node.set_collision_layer_value(3, true)
-	collision_shape_char.disabled = false
 
 
 func _on_char_state_physics_processing(delta: float) -> void:
@@ -87,4 +84,3 @@ func _on_char_state_physics_processing(delta: float) -> void:
 func _on_char_state_exited() -> void:
 	## Disable char node collisions
 	char_node.set_collision_layer_value(3, false)
-	collision_shape_char.disabled = true
