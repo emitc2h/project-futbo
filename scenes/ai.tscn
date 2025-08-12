@@ -1,21 +1,293 @@
-[gd_scene load_steps=11 format=3 uid="uid://d13byd12eh5y7"]
+[gd_scene load_steps=11 format=3 uid="uid://vgadiixuuiba"]
 
-[ext_resource type="Script" uid="uid://dee7cgvtr3p6c" path="res://scripts/ai.gd" id="1_88p2x"]
-[ext_resource type="Script" uid="uid://ugwv20an57rf" path="res://scripts/behaviors.gd" id="2_5s8xg"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_jd1ip"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_mbr1y"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_212yo"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_47fwt"]
-[ext_resource type="Script" uid="uid://3m44xe7ttcbf" path="res://scripts/player/seek_skill.gd" id="7_n7a0i"]
-[ext_resource type="Script" uid="uid://c2l1db7ulpk0q" path="res://scripts/player/dribble_skill.gd" id="8_wkdj2"]
-[ext_resource type="Script" uid="uid://d2q0mxkrwlfcv" path="res://scripts/player/kick_skill.gd" id="9_15uwn"]
-[ext_resource type="Script" uid="uid://bj70xsrrw1nnt" path="res://scripts/player/jump_skill.gd" id="10_k1vpo"]
+
+[sub_resource type="GDScript" id="GDScript_qdh3h"]
+script/source = "class_name AI
+extends Node3D
+
+# Nodes observed
+@export var player: Player
+@export var ball: Ball
+@export var home_goal: Goal
+@export var away_goal: Goal
+
+# Internal references
+@onready var behaviors: Behaviors = $Behaviors
+
+# Disable controls for cut scenes
+var _enabled: bool = true
+@export var enabled: bool:
+	get:
+		return _enabled
+	set(value):
+		_enabled = value
+		behaviors.enabled = value
+
+func _ready() -> void:
+	behaviors.home_goal_position = home_goal.global_position
+	behaviors.away_goal_position = away_goal.global_position
+	behaviors.player = player
+	behaviors.initialize()
+
+
+func _physics_process(delta: float) -> void:
+	behaviors.ball_position = ball.get_ball_position()
+	behaviors.ball_velocity = ball.get_ball_velocity()
+
+
+#=======================================================
+# RECEIVED SIGNALS
+#=======================================================
+func _on_away_scored() -> void:
+	behaviors.celebrate()
+"
+
+[sub_resource type="GDScript" id="GDScript_dko2i"]
+script/source = "class_name Behaviors
+extends Node3D
+
+# Internal references
+@onready var state: StateChart = $State
+@onready var celebration_timer: Timer = $CelebrationTimer
+@onready var idle_timer: Timer = $IdleTimer
+
+# Controlled Node
+var player: Player
+
+# Skills
+@export var seek_skill: SeekSkill
+@export var dribble_skill: DribbleSkill
+@export var kick_skill: KickSkill
+@export var jump_skill: JumpSkill
+
+# Disable controls for cut scenes
+var _enabled: bool = true
+@export var enabled: bool:
+	get:
+		return _enabled
+	set(value):
+		_enabled = value
+		if not value:
+			state.send_event(\"seek to disabled\")
+			state.send_event(\"attack to disabled\")
+			state.send_event(\"celebrate to disabled\")
+			state.send_event(\"reset to disabled\")
+			state.send_event(\"confused to disabled\")
+			state.send_event(\"idle to disabled\")
+
+# Observed Quantities
+var ball_position: Vector3
+var ball_velocity: Vector3
+
+var home_goal_position: Vector3
+var away_goal_position: Vector3
+
+# Constants
+const GOAL_ATTEMPT_DISTANCE: float = 4.0
+const RESET_DISTANCE: float = 5.0
+const ODDS_OF_STEALING: float = 0.5
+
+
+func initialize() -> void:
+	seek_skill.player = player
+	seek_skill.basic_movement = player.get_node(\"PlayerBasicMovement\")
+	
+	dribble_skill.player = player
+	dribble_skill.dribble_ability = player.get_node(\"PlayerDribbleAbility\")
+	
+	kick_skill.player = player
+	kick_skill.kick_ability = player.get_node(\"PlayerKickAbility\")
+	kick_skill.basic_movement = player.get_node(\"PlayerBasicMovement\")
+	
+	jump_skill.player = player
+	jump_skill.basic_movement = player.get_node(\"PlayerBasicMovement\")
+
+#=======================================================
+# STATES
+#=======================================================
+
+# seek state
+#----------------------------------------
+func _on_seek_state_physics_processing(delta: float) -> void:
+	if not dribble_skill.dribble_ability.is_ready:
+		seek_skill.seek_target(ball_position)
+	else:
+		state.send_event(\"seek to attack\")
+
+
+# attack state
+#----------------------------------------
+func _on_attack_state_entered() -> void:
+	# If dribbling attempt is unsuccessful, return to seek state
+	dribble_skill.start_dribbling()
+	if not dribble_skill.dribble_ability.is_dribbling:
+		# If dribbling missed, this means another player has the ball
+		# Try to kick
+		var roll: float = randf()
+		if roll > ODDS_OF_STEALING:
+			kick_skill.kick_where_faced(0.5)
+		# If kick fails, go back to seeking
+		else:
+			state.send_event(\"attack to seek\")
+
+
+func _on_attack_state_physics_processing(delta: float) -> void:
+	# If the ball was lost
+	if not dribble_skill.dribble_ability.is_dribbling:
+		state.send_event(\"attack to confused\")
+	
+	# Head toward the away goal
+	var distance_to_away_goal: float = CalcPhys.distance_x_positions(
+		player.global_position, away_goal_position)
+	if distance_to_away_goal > GOAL_ATTEMPT_DISTANCE:
+		seek_skill.seek_target(away_goal_position)
+	# Aim for the goal and kick
+	else:
+		seek_skill.stop_seeking()
+		var dir: float = CalcPhys.direction_x_positions(
+			player.global_position, away_goal_position)
+		# Construct an aim vector at 45 degrees toward the goal
+		kick_skill.kick(Vector2(dir, -1.0))
+		dribble_skill.end_dribbling()
+		state.send_event(\"attack to idle\")
+
+
+# celebrate state
+#----------------------------------------
+func _on_celebrate_state_entered() -> void:
+	celebration_timer.start()
+	
+	
+func _on_celebrate_state_physics_processing(delta: float) -> void:
+	if player.is_on_floor():
+		jump_skill.celebration_jump()
+
+
+func _on_celebration_timer_timeout() -> void:
+	state.send_event(\"celebrate to reset\")
+	celebration_timer.stop()
+
+
+# reset state
+#----------------------------------------
+func _on_reset_state_physics_processing(delta: float) -> void:
+	var distance_to_home_goal: float = CalcPhys.distance_x_positions(
+		player.global_position, home_goal_position)
+	if distance_to_home_goal > RESET_DISTANCE:
+		seek_skill.seek_target(home_goal_position)
+	else:
+		state.send_event(\"reset to seek\")
+
+
+# reset state
+#----------------------------------------
+func _on_idle_state_entered() -> void:
+	idle_timer.start()
+
+
+func _on_idle_timer_timeout() -> void:
+	state.send_event(\"idle to reset\")
+	idle_timer.stop()
+
+
+# confused state
+#----------------------------------------
+func _on_confused_state_entered() -> void:
+	seek_skill.stop_seeking()
+	seek_skill.basic_movement.idle_with_custom_animation(\"confused\")
+	state.send_event(\"confused to seek\")
+
+
+# disabled state
+#----------------------------------------
+func _on_disabled_state_entered() -> void:
+	player.stop()
+	
+
+#=======================================================
+# CONTROL FUNCTIONS
+#=======================================================
+func celebrate() -> void:
+	state.send_event(\"idle to celebrate\")
+"
+
+[sub_resource type="GDScript" id="GDScript_adtt1"]
+script/source = "class_name SeekSkill
+extends AiSkill
+
+var basic_movement: PlayerBasicMovement
+
+# Constants
+const STOP_SEEKING_DISTANCE: float = 0.15
+
+# Uses global positions
+func seek_target(target_position: Vector3) -> void:
+	var direction_to_target: float = sign(target_position.x - player.global_position.x)
+	if distance_to_target(target_position) > STOP_SEEKING_DISTANCE:
+		basic_movement.run(direction_to_target)
+	else:
+		stop_seeking()
+
+
+func stop_seeking() -> void:
+	basic_movement.run(0.0)
+ 
+"
+
+[sub_resource type="GDScript" id="GDScript_igwfk"]
+script/source = "class_name DribbleSkill
+extends AiSkill
+
+var dribble_ability: PlayerDribbleAbility
+
+func start_dribbling() -> void:
+	dribble_ability.start_dribble()
+
+
+func end_dribbling() -> void:
+	dribble_ability.end_dribble()
+"
+
+[sub_resource type="GDScript" id="GDScript_hma35"]
+script/source = "class_name KickSkill
+extends AiSkill
+
+var kick_ability: PlayerKickAbility
+var basic_movement: PlayerBasicMovement
+
+func kick(aim: Vector2) -> void:
+	kick_ability.aim = aim.normalized()
+	kick_ability.kick()
+
+
+func kick_where_faced(upward: float) -> void:
+	kick_ability.aim = Vector2(basic_movement.direction_faced, -upward).normalized()
+	kick_ability.kick()
+"
+
+[sub_resource type="GDScript" id="GDScript_thgv4"]
+script/source = "class_name JumpSkill
+extends AiSkill
+
+var basic_movement: PlayerBasicMovement
+
+func jump() -> void:
+	basic_movement.jump()
+
+
+func celebration_jump() -> void:
+	basic_movement.jump_with_custom_animation(\"celebrate\")
+"
 
 [node name="AI" type="Node3D"]
-script = ExtResource("1_88p2x")
+script = SubResource("GDScript_qdh3h")
 
 [node name="Behaviors" type="Node3D" parent="." node_paths=PackedStringArray("seek_skill", "dribble_skill", "kick_skill", "jump_skill")]
-script = ExtResource("2_5s8xg")
+script = SubResource("GDScript_dko2i")
 seek_skill = NodePath("SeekSkill")
 dribble_skill = NodePath("DribbleSkill")
 kick_skill = NodePath("KickSkill")
@@ -170,16 +442,16 @@ event = &"disabled to seek"
 delay_in_seconds = "0.0"
 
 [node name="SeekSkill" type="Node" parent="Behaviors"]
-script = ExtResource("7_n7a0i")
+script = SubResource("GDScript_adtt1")
 
 [node name="DribbleSkill" type="Node" parent="Behaviors"]
-script = ExtResource("8_wkdj2")
+script = SubResource("GDScript_igwfk")
 
 [node name="KickSkill" type="Node" parent="Behaviors"]
-script = ExtResource("9_15uwn")
+script = SubResource("GDScript_hma35")
 
 [node name="JumpSkill" type="Node" parent="Behaviors"]
-script = ExtResource("10_k1vpo")
+script = SubResource("GDScript_thgv4")
 
 [node name="CelebrationTimer" type="Timer" parent="Behaviors"]
 wait_time = 4.0

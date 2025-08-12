@@ -1,11 +1,11 @@
-[gd_scene load_steps=34 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene load_steps=32 format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" uid="uid://dpw23mx2rrnj" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="1_j6tjs"]
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera_controller.tscn" id="2_vcigm"]
 [ext_resource type="PackedScene" uid="uid://dq8d4kwgig1w8" path="res://scenes/level1/level1_world.tscn" id="3_wf22a"]
+[ext_resource type="PackedScene" uid="uid://fgg78lg0p617" path="res://scenes/characters/Character1/character_asset.tscn" id="7_825qs"]
 [ext_resource type="PackedScene" uid="uid://de54qalm0kq4f" path="res://scenes/goal.tscn" id="8_2nmo7"]
-[ext_resource type="PackedScene" uid="uid://resnwy07iokh" path="res://scenes/characters/Character1/character_model.tscn" id="10_yo7ps"]
 [ext_resource type="PackedScene" uid="uid://3y4snk0eo4mp" path="res://scenes/ui.tscn" id="11_ffwmr"]
 [ext_resource type="PackedScene" uid="uid://rxuskqewfa7k" path="res://scenes/control_suppressor.tscn" id="13_hpf6u"]
 [ext_resource type="Script" uid="uid://d1e0lhscxgp4n" path="res://scripts/level1/level_1_script.gd" id="14_eau2p"]
@@ -15,7 +15,6 @@
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
 [ext_resource type="VideoStream" uid="uid://boayy2715qxi1" path="res://assets/logo/pine_signal_interactive-1280x800.ogv" id="19_a2ie3"]
 [ext_resource type="Texture2D" uid="uid://cq6d1nvt8t2s7" path="res://kenney_input-prompts/Xbox Series/Default/xbox_button_b.png" id="19_kmghq"]
-[ext_resource type="PackedScene" uid="uid://c86ywxv55on5f" path="res://scenes/dialog_bubble/dialog_bubble.tscn" id="19_ub1r2"]
 [ext_resource type="Script" uid="uid://cn22ovelgqca7" path="res://scripts/controller_ui/dynamic_button_display.gd" id="20_ewap6"]
 [ext_resource type="PackedScene" uid="uid://dd7rk2je4r01m" path="res://scenes/character_path/character_path.tscn" id="21_52762"]
 [ext_resource type="Texture2D" uid="uid://bbr1htmjn4pcw" path="res://kenney_input-prompts/Nintendo Switch/Default/switch_button_a.png" id="21_ip41t"]
@@ -23,7 +22,6 @@
 [ext_resource type="Texture2D" uid="uid://1sygo4tcshke" path="res://kenney_input-prompts/Keyboard & Mouse/Default/keyboard_shift_icon.png" id="23_8re7r"]
 [ext_resource type="Texture2D" uid="uid://bhhkq0sw3yj7e" path="res://kenney_input-prompts/PlayStation Series/Default/playstation_button_circle.png" id="24_elchd"]
 [ext_resource type="PackedScene" uid="uid://dmyk1j8j3wpex" path="res://scenes/player3D/player3D.tscn" id="29_5g7au"]
-[ext_resource type="PackedScene" uid="uid://c7h2ha3hpanp6" path="res://scenes/player3D/assets/character_asset.tscn" id="30_cyq5e"]
 [ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player3D/controller3D.tscn" id="32_cyq5e"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
@@ -601,9 +599,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 22.493
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.9767, 0.0618566, 0)
 asset = NodePath("CharacterAsset")
 
-[node name="CharacterAsset" parent="MainPlayer3D" instance=ExtResource("30_cyq5e")]
-
-[node name="CharacterModel" parent="MainPlayer3D/CharacterAsset" instance=ExtResource("10_yo7ps")]
+[node name="CharacterAsset" parent="MainPlayer3D" instance=ExtResource("7_825qs")]
 
 [node name="Controller3D" parent="MainPlayer3D" node_paths=PackedStringArray("player") instance=ExtResource("32_cyq5e")]
 player = NodePath("..")
@@ -613,18 +609,16 @@ camera_controller = NodePath("../CameraController")
 player = NodePath("../MainPlayer3D")
 
 [node name="ControlSuppressor" parent="." node_paths=PackedStringArray("controlled_nodes") instance=ExtResource("13_hpf6u")]
-controlled_nodes = [NodePath("../CameraController"), null, NodePath("")]
+controlled_nodes = [NodePath("../CameraController"), null, null]
 
-[node name="Level1Script" type="Node3D" parent="." node_paths=PackedStringArray("control_suppressor", "cut_scene_player", "cut_scene_context_player", "camera_controller", "player", "opponent_player", "opponent_ai", "opponent_dialog_bubble")]
+[node name="Level1Script" type="Node3D" parent="." node_paths=PackedStringArray("control_suppressor", "cut_scene_player", "cut_scene_context_player", "camera_controller", "player", "opponent_dialog_bubble")]
 script = ExtResource("14_eau2p")
 control_suppressor = NodePath("../ControlSuppressor")
 cut_scene_player = NodePath("CutScenePlayer")
 cut_scene_context_player = NodePath("CutSceneContextPlayer")
 camera_controller = NodePath("../CameraController")
 player = NodePath("../MainPlayer3D")
-opponent_player = NodePath("")
-opponent_ai = NodePath("")
-opponent_dialog_bubble = NodePath("OpponentDialogBubble")
+opponent_dialog_bubble = NodePath("")
 
 [node name="StateChart" type="Node" parent="Level1Script"]
 script = ExtResource("14_ok3f3")
@@ -800,11 +794,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/TriggerGameOverArea3D"]
 shape = SubResource("WorldBoundaryShape3D_m5c52")
-
-[node name="OpponentDialogBubble" parent="Level1Script" node_paths=PackedStringArray("camera_controller", "player") instance=ExtResource("19_ub1r2")]
-visible = false
-camera_controller = NodePath("../../CameraController")
-player = NodePath("")
 
 [node name="WalkToFieldPath3D" parent="Level1Script" instance=ExtResource("21_52762")]
 
