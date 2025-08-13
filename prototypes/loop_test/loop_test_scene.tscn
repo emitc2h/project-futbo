@@ -128,15 +128,15 @@ collision_mask = 261
 shape = SubResource("WorldBoundaryShape3D_5yoqd")
 
 [node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("4_hk3aj")]
-subject = NodePath("../Player3D")
+subject = NodePath("../Player")
 enabled = true
 
-[node name="Player3D" parent="." node_paths=PackedStringArray("asset") instance=ExtResource("5_f8j8h")]
+[node name="Player" parent="." node_paths=PackedStringArray("asset") instance=ExtResource("5_f8j8h")]
 asset = NodePath("CharacterAsset")
 
-[node name="CharacterAsset" parent="Player3D" instance=ExtResource("7_mli22")]
+[node name="CharacterAsset" parent="Player" instance=ExtResource("7_mli22")]
 
-[node name="Controller3D" parent="Player3D" node_paths=PackedStringArray("player") instance=ExtResource("8_ouyrh")]
+[node name="Controller" parent="Player" node_paths=PackedStringArray("player") instance=ExtResource("8_ouyrh")]
 player = NodePath("..")
 enabled = true
 

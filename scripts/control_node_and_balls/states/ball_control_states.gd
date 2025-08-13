@@ -13,7 +13,7 @@ extends Node
 @export var ball_snap_velocity: float = 6.0
 
 ## States Enum
-enum State {FREE = 0, DRIBBLED = 1, HELD = 2}
+enum State {FREE = 0, DRIBBLED = 1, HELD = 2, SHOT = 3}
 var state: State = State.FREE
 
 ## State transition constants

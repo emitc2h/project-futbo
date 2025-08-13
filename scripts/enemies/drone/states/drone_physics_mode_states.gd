@@ -202,6 +202,9 @@ func _on_ragdoll_state_entered() -> void:
 	bone_simulation.physical_bones_start_simulation()
 	
 	dead_timer.start()
+	
+	## End the encounter, reset the zoom
+	Signals.update_zoom.emit(Enums.Zoom.DEFAULT)
 
 
 func _on_dead_timer_timeout() -> void:

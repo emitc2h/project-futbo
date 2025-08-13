@@ -126,7 +126,7 @@ func _on_ready_state_exited() -> void:
 # kick state
 #----------------------------------------
 func _on_kick_state_entered() -> void:
-	ball.impulse(Aim.vector * kick_force)
+	ball.kick(Aim.vector * kick_force)
 	# if the kick doesn't work for some reason, stay in ready state
 	# ready state will be dropped once the ball has exited the kick zone
 	state.send_event("kick to ready")
@@ -140,7 +140,7 @@ func _on_kick_state_exited() -> void:
 # long kick state
 #----------------------------------------
 func _on_long_kick_state_entered() -> void:
-	ball.impulse(Aim.vector * long_kick_force)
+	ball.long_kick(Aim.vector * long_kick_force)
 	state.send_event("long kick to standby")
 
 

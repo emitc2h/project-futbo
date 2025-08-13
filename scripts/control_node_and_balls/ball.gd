@@ -32,6 +32,14 @@ func impulse(force_vector: Vector3) -> void:
 	kicked.emit()
 
 
+func kick(force_vector: Vector3) -> void:
+	self.impulse(force_vector)
+
+
+func long_kick(force_vector: Vector3) -> void:
+	self.impulse(force_vector)
+
+
 func own(player_id: int) -> void:
 	if not control_states.is_owned:
 		control_states.dribbler_id = player_id

@@ -28,7 +28,7 @@ var player_in_detector: bool = false
 ## Signals
 signal player_proximity_entered
 signal player_proximity_exited
-signal control_node_proximity_entered
+signal control_node_proximity_entered(control_node: ControlNode)
 signal control_node_proximity_exited
 
 
@@ -46,6 +46,7 @@ func _on_enabled_state_entered() -> void:
 
 func _on_enabled_state_physics_processing(delta: float) -> void:
 	var control_node_entered_confirmed: bool = false
+	var control_node: ControlNode
 	var player_entered_confirmed: bool = false
 	
 	proximity_detector.force_shapecast_update()
@@ -56,6 +57,7 @@ func _on_enabled_state_physics_processing(delta: float) -> void:
 			## Scan for the control node entering the shapecast
 			if scan_for_control_node and collider.get_parent() is ControlNode:
 				control_node_entered_confirmed = true
+				control_node = collider.get_parent() as ControlNode
 			
 			## Scan for the player entering the shapecast
 			if scan_for_player and collider is Player:
@@ -63,7 +65,7 @@ func _on_enabled_state_physics_processing(delta: float) -> void:
 				player_entered_confirmed = true
 		
 		if control_node_entered_confirmed and not control_node_in_detector:
-			control_node_proximity_entered.emit()
+			control_node_proximity_entered.emit(control_node)
 			control_node_in_detector = true
 
 		if player_entered_confirmed and not player_in_detector:

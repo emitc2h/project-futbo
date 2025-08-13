@@ -179,7 +179,7 @@ func expand_shield() -> void:
 		.set_trans(Tween.TRANS_EXPO)\
 		.set_ease(Tween.EASE_IN)
 		
-	tween3.tween_property(shield_mesh, "scale", Vector3(1.0, 1.0, 1.0), 2.0)\
+	tween3.tween_property(shield_mesh, "scale", Vector3.ONE, 2.0)\
 		.set_trans(Tween.TRANS_LINEAR)\
 		.set_ease(Tween.EASE_OUT)
 	
@@ -241,7 +241,7 @@ func blow_shield() -> void:
 	var tween2: Tween = get_tree().create_tween()
 	var tween3: Tween = get_tree().create_tween()
 	
-	tween1.tween_property(shield_mesh, "scale", shield_blown.shield_scale, 0.5)\
+	tween1.tween_property(shield_mesh, "scale", shield_blown.shield_scale  * Vector3.ONE, 0.5)\
 		.set_trans(Tween.TRANS_QUART)\
 		.set_ease(Tween.EASE_OUT)
 	

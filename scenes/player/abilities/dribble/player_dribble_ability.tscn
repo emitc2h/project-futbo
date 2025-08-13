@@ -7,17 +7,14 @@
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_4iayt"]
 [ext_resource type="PackedScene" uid="uid://jmksfugqcld7" path="res://scenes/player/abilities/dribble/dribble_cast.tscn" id="6_jfi7p"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xmcmk"]
-radius = 0.257
-height = 1.108
+[sub_resource type="BoxShape3D" id="BoxShape3D_ci21c"]
+size = Vector3(1, 0.86731, 1)
 
 [node name="PlayerDribbleAbility" type="Node3D"]
 script = ExtResource("1_jfi7p")
-enabled = null
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_dtk0s")
-track_in_editor = true
 
 [node name="root" type="Node" parent="State"]
 script = ExtResource("3_l32tu")
@@ -89,8 +86,8 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PickupZone"]
-transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_xmcmk")
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.0663452, 0.239773, 0)
+shape = SubResource("BoxShape3D_ci21c")
 
 [node name="DribbleMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.18, 0)

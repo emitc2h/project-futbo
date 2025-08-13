@@ -59,7 +59,6 @@ script = ExtResource("2_f10p2")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("3_7ii86")
-track_in_editor = true
 
 [node name="ParallelState" type="Node" parent="State"]
 script = ExtResource("3_xhkeq")

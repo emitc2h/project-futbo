@@ -29,6 +29,7 @@ extends Node3D
 @onready var track_position_container: Node3D = $TrackPositionContainer
 
 ## Animation nodes
+@onready var model: DroneModel = $TrackTransformContainer/DroneModel
 @onready var model_anim_tree: AnimationTree = $"TrackTransformContainer/DroneModel/AnimationTree"
 @onready var anim_state: AnimationNodeStateMachinePlayback
 
@@ -239,6 +240,12 @@ func disable_proximity_detector() -> void:
 
 ## Hitbox
 ## ---------------------------------------
+func die(force: Vector3) -> void:
+	model.die_particles()
+	sc.send_event(physics_mode_states.TRANS_CHAR_TO_RAGDOLL)
+	model.body_bone.apply_central_impulse(force * 5.0)
+
+
 func get_hit(strength: float) -> bool:
 	return false
 

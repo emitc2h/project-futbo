@@ -108,6 +108,7 @@ script = ExtResource("2_n6xh2")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_g2as1")
+track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="Root" type="Node" parent="State"]
@@ -124,7 +125,7 @@ sc = NodePath("../../..")
 engines_states = NodePath("../../Engines/Engines States")
 
 [node name="DeadTimer" type="Timer" parent="State/Root/Physics/Physics States"]
-wait_time = 5.0
+wait_time = 10.0
 
 [node name="char" type="Node" parent="State/Root/Physics"]
 script = ExtResource("5_voq0c")
@@ -810,11 +811,13 @@ surface_material_override/0 = SubResource("ShaderMaterial_3tghu")
 target_position = Vector3(0, -2.6, 0)
 collision_mask = 2
 
-[node name="DroneShield" parent="TrackPositionContainer" instance=ExtResource("27_fv7v3")]
+[node name="DroneShield" parent="TrackPositionContainer" node_paths=PackedStringArray("drone") instance=ExtResource("27_fv7v3")]
+drone = NodePath("../..")
 
 [node name="TrackTransformContainer" type="Node3D" parent="."]
 
-[node name="DroneModel" parent="TrackTransformContainer" instance=ExtResource("11_glddf")]
+[node name="DroneModel" parent="TrackTransformContainer" node_paths=PackedStringArray("drone") instance=ExtResource("11_glddf")]
+drone = NodePath("../..")
 
 [node name="FieldOfView" type="Node3D" parent="TrackTransformContainer"]
 script = ExtResource("12_0sc46")

@@ -1,19 +1,42 @@
-[gd_scene load_steps=10 format=3 uid="uid://cupvg7lj3rh2s"]
+[gd_scene load_steps=12 format=3 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_02qb1"]
+[ext_resource type="Script" uid="uid://bpu4om7fscq8" path="res://scripts/control_node_and_balls/states/control_node_control_states.gd" id="3_qi4cr"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_0jkta"]
 [ext_resource type="PackedScene" uid="uid://caxwuwjjre3j2" path="res://scenes/control_node_and_balls/direction_ray.tscn" id="4_bt07l"]
 [ext_resource type="Script" uid="uid://t3jmyqr06q1w" path="res://scripts/control_node_and_balls/states/control_node_power_states.gd" id="4_qi4cr"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_qi4cr"]
 [ext_resource type="Script" uid="uid://b3jcml15v3wkh" path="res://scripts/control_node_and_balls/states/control_node_charge_states.gd" id="6_8s4nh"]
 [ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node_and_balls/assets/control_node_asset.tscn" id="7_2p3vg"]
+[ext_resource type="PackedScene" uid="uid://dvd5ic7fxna84" path="res://scenes/control_node_and_balls/models/control_node_streak.tscn" id="11_8s4nh"]
 
 [node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states") instance=ExtResource("1_fpwqj")]
 script = ExtResource("2_r7e0p")
 power_states = NodePath("State/Root/Power/Power States")
 charge_states = NodePath("State/Root/Charge/Charge States")
+
+[node name="Control States" parent="State/Root/Control" index="0" node_paths=PackedStringArray("streak")]
+script = ExtResource("3_qi4cr")
+shot_speed = 60.0
+range = 10.0
+streak = NodePath("../../../../ControlNodeStreak")
+
+[node name="to shot" type="Node" parent="State/Root/Control/free" index="2"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../shot")
+event = &"Control: free to shot"
+delay_in_seconds = "0.0"
+
+[node name="shot" type="Node" parent="State/Root/Control" index="4"]
+script = ExtResource("4_0jkta")
+
+[node name="to free" type="Node" parent="State/Root/Control/shot" index="0"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../free")
+event = &"Control: shot to free"
+delay_in_seconds = "0.0"
 
 [node name="Power" type="Node" parent="State/Root" index="2"]
 script = ExtResource("3_02qb1")
@@ -157,8 +180,12 @@ radius = 10.0
 
 [node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="TrackPositionContainer" index="2"]
 
-[connection signal="kicked" from="." to="State/Root/Power/Power States" method="_on_kicked"]
+[node name="ControlNodeStreak" parent="." index="5" instance=ExtResource("11_8s4nh")]
+
 [connection signal="state_entered" from="State/Root/Control/dribbled" to="State/Root/Power/Power States" method="_on_control_states_dribbled_state_entered"]
+[connection signal="state_entered" from="State/Root/Control/shot" to="State/Root/Control/Control States" method="_on_shot_state_entered"]
+[connection signal="state_exited" from="State/Root/Control/shot" to="State/Root/Control/Control States" method="_on_shot_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Control/shot" to="State/Root/Control/Control States" method="_on_shot_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Power/off" to="State/Root/Power/Power States" method="_on_off_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/charging" to="State/Root/Power/Power States" method="_on_charging_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/on" to="State/Root/Power/Power States" method="_on_on_state_entered"]

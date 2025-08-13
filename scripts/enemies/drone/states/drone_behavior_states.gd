@@ -64,7 +64,6 @@ func _on_go_to_patrol_bt_finished(status: int) -> void:
 	sc.send_event(TRANS_GO_TO_PATROL_TO_PATROL)
 
 
-
 # seek state
 #----------------------------------------
 func _on_seek_state_entered() -> void:
@@ -106,7 +105,11 @@ func _on_target_acquired() -> void:
 		sc.send_event(TRANS_GO_TO_PATROL_TO_ATTACK)
 
 
-func _on_control_node_proximity_entered() -> void:
+func _on_control_node_proximity_entered(control_node: ControlNode) -> void:
+	## If the drone doesn't already have a target, use the control node
+	if not targeting_states.target:
+		targeting_states.target = control_node.physics_states.track_position_container
+	
 	## If the control node is detected within the proximity detector, go to block state
 	if vulnerabiliy_states.state == vulnerabiliy_states.State.DEFENDABLE:
 		if state == State.PATROL:
