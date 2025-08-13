@@ -26,7 +26,6 @@ var initial_pos: Vector3
 func _ready() -> void:
 	super._ready()
 	control_node = ball as ControlNode
-	streak.visible = false
 	streak.duration = range / shot_speed
 
 
@@ -60,8 +59,9 @@ func _on_shot_state_physics_processing(delta: float) -> void:
 	if collision:
 		var object: Object = collision.get_collider(0)
 		if (object is DroneShield) or (object is DroneBone):
-			var drone: Drone = object.drone
+			streak.strike()
 			control_node.blow()
+			var drone: Drone = object.drone
 			drone.die(shot_vector)
 		end_shot()
 

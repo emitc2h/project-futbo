@@ -77,7 +77,6 @@ func _on_block_state_entered() -> void:
 
 
 func _on_block_bt_finished(status: int) -> void:
-	Signals.debug_log.emit("block BT finished")
 	sc.send_event(TRANS_BLOCK_TO_ATTACK)
 
 

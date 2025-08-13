@@ -1,20 +1,30 @@
 extends Node3D
 class_name ControlNodeAsset
 
+## Main mesh
 @onready var control_node_mesh: MeshInstance3D = $ControlNodeModel/ControlNodeMesh
+var emitters_material: ShaderMaterial
+
+## Shield
 @onready var shield_mesh: MeshInstance3D = $ControlNodeModel/ShieldMesh
+var shield_material: ShaderMaterial
 
-@onready var shield_material: ShaderMaterial = $ControlNodeModel/ShieldMesh.get_surface_override_material(0)
-@onready var emitters_material: ShaderMaterial = $ControlNodeModel/ControlNodeMesh.get_surface_override_material(0).next_pass
-
+## Light
 @onready var light: OmniLight3D = $Light
 
-@onready var wisps_particles: GPUParticles3D = $WispParticles3D
-@onready var lightning_particles: GPUParticles3D = $LightningParticles3D
-@onready var lightning_material: ShaderMaterial = lightning_particles.draw_pass_1.surface_get_material(0)
+## Wisps (needs to be placed in the TrackPositionContainer, so inject dependency)
+@export var wisps_particles: GPUParticles3D
 
+## Lightning (needs to be placed in the TrackPositionContainer, so inject dependency)
+@export var lightning_particles: GPUParticles3D
+var lightning_material: ShaderMaterial
+
+## Aura
 @onready var aura_mesh: MeshInstance3D = $Aura
-@onready var aura_material: StandardMaterial3D = aura_mesh.get_surface_override_material(0)
+var aura_material: StandardMaterial3D
+
+## Ready Sphere (needs to be placed in the TrackPositionContainer, so inject dependency)
+@export var ready_sphere: ControlNodeReadySphere
 
 var power_on: bool = false
 const blue: Color = Color.STEEL_BLUE
@@ -26,6 +36,7 @@ signal power_up_finished
 ## Properties Data Structure
 func apply_props(props: ControlNodeProps) -> void:
 	## Apply Shield Emitters properties
+	emitters_material = control_node_mesh.get_surface_override_material(0).next_pass
 	emitters_material.set_shader_parameter("emission_color", props.emitter_emission_color)
 	emitters_material.set_shader_parameter("emission_energy", props.emitter_emission_energy)
 
@@ -34,6 +45,7 @@ func apply_props(props: ControlNodeProps) -> void:
 	light.set("light_color", props.light_color)
 	
 	## Apply Shield Shader material properties
+	shield_material = $ControlNodeModel/ShieldMesh.get_surface_override_material(0)
 	shield_material.set_shader_parameter("alpha", props.shield_alpha)
 	shield_material.set_shader_parameter("dissolve_value", props.shield_dissolve_value)
 	shield_material.set_shader_parameter("emission_energy", props.shield_emission_energy)
@@ -45,12 +57,14 @@ func apply_props(props: ControlNodeProps) -> void:
 	shield_mesh.scale = props.shield_scale * Vector3.ONE
 	
 	## Apply Lightning Properties
+	lightning_material = lightning_particles.draw_pass_1.surface_get_material(0)
 	lightning_material.set_shader_parameter("lightning_window_size", props.lightning_window_size)
 	lightning_particles.set("amount_ratio", props.lightning_amount_ratio)
 	lightning_material.set_shader_parameter("lightning_emission_factor", props.lightning_emission_factor)
 	lightning_material.set_shader_parameter("lightning_reverse", props.lightning_reverse)
 	
 	## Apply aura properties
+	aura_material = aura_mesh.get_surface_override_material(0)
 	aura_material.albedo_color = props.aura_color
 	aura_mesh.scale = props.aura_scale * Vector3.ONE
 
@@ -81,6 +95,8 @@ func _ready() -> void:
 	shield_charge_1.shield_scale = 1.0
 	
 	apply_props(shield_off)
+	
+	ready_sphere.visible = false
 
 
 ################################
@@ -109,7 +125,7 @@ func power_up_shield() -> void:
 	tween2.tween_property(shield_material, "shader_parameter/dissolve_value", shield_on.shield_dissolve_value, 1.2)
 	
 	await tween2.finished
-	wisps_particles.emitting = true
+	self.blue_wisps()
 	apply_props(shield_on)
 	current_default_props = shield_on
 	power_up_finished.emit()
@@ -235,7 +251,7 @@ func blow_shield() -> void:
 	self.bounce(2.0)
 	
 	## Trigger the particles
-	wisps_particles.emitting = true
+	self.blue_wisps()
 	
 	var tween1: Tween = get_tree().create_tween()
 	var tween2: Tween = get_tree().create_tween()
@@ -279,3 +295,22 @@ func discharge() -> void:
 	else:
 		current_default_props = shield_off
 		apply_props(shield_off)
+
+
+func turn_on_ready_sphere() -> void:
+	ready_sphere.visible = true
+	aura_mesh.visible = false
+
+
+func turn_off_ready_sphere() -> void:
+	ready_sphere.visible = false
+	aura_mesh.visible = true
+
+func blue_wisps() -> void:
+	wisps_particles.process_material.set("color", blue)
+	wisps_particles.emitting = true
+
+
+func magenta_wisps() -> void:
+	wisps_particles.process_material.set("color", magenta)
+	wisps_particles.emitting = true

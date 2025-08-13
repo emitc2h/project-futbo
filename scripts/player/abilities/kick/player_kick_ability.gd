@@ -68,12 +68,19 @@ func _on_not_ready_state_entered() -> void:
 
 
 func _on_not_ready_state_physics_processing(delta: float) -> void:
-	if kick_button_is_pressed and (not long_kick_raycast.is_colliding()):
+	if kick_button_is_pressed and\
+	 (not long_kick_raycast.is_colliding()) and\
+	 (not sprint_raycast.is_colliding()):
 		state.send_event("not ready to standby")
 
 
 # standby state
 #----------------------------------------
+func _on_standby_state_entered() -> void:
+	print("long kick ready emitted")
+	Signals.player_long_kick_ready.emit()
+
+
 func _on_standby_state_physics_processing(delta: float) -> void:
 	if not kick_button_is_pressed:
 		state.send_event("standby to not ready")

@@ -12,7 +12,8 @@ enable_to_acquiring = true
 
 [sub_resource type="BTAction" id="BTAction_ej8dm"]
 script = ExtResource("2_qpn2y")
-offset = 6.0
+default_offset = 5.0
+cautious_offset = 8.0
 
 [sub_resource type="BTSequence" id="BTSequence_nag8p"]
 children = [SubResource("BTAction_bjftg"), SubResource("BTAction_ej8dm")]

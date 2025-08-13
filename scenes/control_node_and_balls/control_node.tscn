@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cupvg7lj3rh2s"]
+[gd_scene load_steps=23 format=3 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
@@ -11,11 +11,78 @@
 [ext_resource type="Script" uid="uid://b3jcml15v3wkh" path="res://scripts/control_node_and_balls/states/control_node_charge_states.gd" id="6_8s4nh"]
 [ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node_and_balls/assets/control_node_asset.tscn" id="7_2p3vg"]
 [ext_resource type="PackedScene" uid="uid://dvd5ic7fxna84" path="res://scenes/control_node_and_balls/models/control_node_streak.tscn" id="11_8s4nh"]
+[ext_resource type="Texture2D" uid="uid://cmy0jxny0n8xx" path="res://assets/3D/Particles/dots/mega_dot_color.png" id="11_r313a"]
+[ext_resource type="ArrayMesh" uid="uid://b3lvlj7kfxj60" path="res://assets/3D/Particles/lightning-sparks/lightning_on_sphere_mesh.tres" id="12_cnds4"]
+[ext_resource type="PackedScene" uid="uid://dr3wkl0fgpbyw" path="res://scenes/control_node_and_balls/models/control_node_ready_sphere.tscn" id="13_nbe53"]
 
-[node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states") instance=ExtResource("1_fpwqj")]
+[sub_resource type="Curve" id="Curve_r313a"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.708835, 0.64441), -1.77206, -1.77206, 0, 0, Vector2(0.953815, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_cnds4"]
+curve = SubResource("Curve_r313a")
+
+[sub_resource type="Curve" id="Curve_l8rvj"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 2), 0.0, 0.0, 0, 0, Vector2(0.638554, 1.58478), -1.94736, -1.94736, 0, 0, Vector2(0.859438, 0.975195), -3.7456, -3.7456, 0, 0, Vector2(1, 0), -13.2928, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_uxj54"]
+curve = SubResource("Curve_l8rvj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1t0mc"]
+lifetime_randomness = 1.0
+particle_flag_rotate_y = true
+emission_shape = 2
+emission_sphere_radius = 0.14
+direction = Vector3(0, 0, 0)
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = -1.60933e-05
+radial_velocity_min = 0.799978
+radial_velocity_max = 1.19998
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.0
+radial_accel_max = -2.0
+tangential_accel_min = -0.600002
+tangential_accel_max = 0.599998
+attractor_interaction_enabled = false
+scale_curve = SubResource("CurveTexture_uxj54")
+color = Color(1, 0, 1, 1)
+alpha_curve = SubResource("CurveTexture_cnds4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jasuo"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0, 1, 1)
+albedo_texture = ExtResource("11_r313a")
+emission_enabled = true
+emission = Color(0.929549, 0.6567, 1, 1)
+emission_intensity = 50000.0
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_ygoor"]
+material = SubResource("StandardMaterial3D_jasuo")
+size = Vector2(0.015, 0.015)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xdpkx"]
+particle_flag_align_y = true
+angle_min = -261.7
+angle_max = 103.2
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 0.00997765
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_min = 0.6
+scale_max = 0.6
+
+[node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states", "asset") instance=ExtResource("1_fpwqj")]
 script = ExtResource("2_r7e0p")
 power_states = NodePath("State/Root/Power/Power States")
 charge_states = NodePath("State/Root/Charge/Charge States")
+asset = NodePath("TrackTransformContainer/ControlNodeAsset")
+
+[node name="State" parent="." index="0"]
+track_in_editor = true
 
 [node name="Control States" parent="State/Root/Control" index="0" node_paths=PackedStringArray("streak")]
 script = ExtResource("3_qi4cr")
@@ -169,7 +236,10 @@ to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" instance=ExtResource("7_2p3vg")]
+[node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" node_paths=PackedStringArray("wisps_particles", "lightning_particles", "ready_sphere") instance=ExtResource("7_2p3vg")]
+wisps_particles = NodePath("../../TrackPositionContainer/WispParticles3D")
+lightning_particles = NodePath("../../TrackPositionContainer/LightningParticles3D")
+ready_sphere = NodePath("../../TrackPositionContainer/ControlNodeReadySphere")
 
 [node name="DirectionRay" parent="TrackPositionContainer" index="0" instance=ExtResource("4_bt07l")]
 
@@ -179,6 +249,28 @@ attenuation = 2.0
 radius = 10.0
 
 [node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="TrackPositionContainer" index="2"]
+
+[node name="WispParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" index="3"]
+emitting = false
+amount = 200
+lifetime = 1.2
+one_shot = true
+explosiveness = 1.0
+randomness = 0.34
+fixed_fps = 60
+local_coords = true
+trail_lifetime = 1.0
+process_material = SubResource("ParticleProcessMaterial_1t0mc")
+draw_pass_1 = SubResource("QuadMesh_ygoor")
+
+[node name="LightningParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" index="4"]
+amount = 10
+amount_ratio = 0.1
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_xdpkx")
+draw_pass_1 = ExtResource("12_cnds4")
+
+[node name="ControlNodeReadySphere" parent="TrackPositionContainer" index="5" instance=ExtResource("13_nbe53")]
 
 [node name="ControlNodeStreak" parent="." index="5" instance=ExtResource("11_8s4nh")]
 
@@ -203,3 +295,4 @@ radius = 10.0
 [connection signal="state_entered" from="State/Root/Charge/level1" to="State/Root/Charge/Charge States" method="_on_level_1_state_entered"]
 [connection signal="state_entered" from="State/Root/Charge/level2" to="State/Root/Charge/Charge States" method="_on_level_2_state_entered"]
 [connection signal="state_entered" from="State/Root/Charge/level3" to="State/Root/Charge/Charge States" method="_on_level_3_state_entered"]
+[connection signal="state_exited" from="State/Root/Charge/level3" to="State/Root/Charge/Charge States" method="_on_level_3_state_exited"]

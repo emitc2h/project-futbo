@@ -1,0 +1,29 @@
+[gd_scene load_steps=8 format=3 uid="uid://dr3wkl0fgpbyw"]
+
+[ext_resource type="PackedScene" uid="uid://npwj3b44pls6" path="res://assets/3D/ControlNode/ReadySphere.glb" id="1_d0wl0"]
+[ext_resource type="Script" uid="uid://bgaif4h5yg136" path="res://scripts/control_node_and_balls/assets/control_node_ready_sphere.gd" id="2_1o84y"]
+[ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/3D/Textures/Drone/closed_shield_dissolve.png" id="3_1o84y"]
+[ext_resource type="Shader" uid="uid://3df3duark3k0" path="res://shaders/ControlNode/control_node_ready_sphere_shader.gdshader" id="3_8mhpn"]
+[ext_resource type="Texture2D" uid="uid://brweuwinhq7aa" path="res://assets/3D/ControlNode/streak/streak.png" id="4_8mhpn"]
+[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/3D/Textures/Drone/closed_shield_alpha_mask.png" id="5_1iaf2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jap3d"]
+render_priority = 0
+shader = ExtResource("3_8mhpn")
+shader_parameter/texture_albedo = ExtResource("4_8mhpn")
+shader_parameter/albedo_uv_drift = 0.46
+shader_parameter/texture_alpha_mask = ExtResource("5_1iaf2")
+shader_parameter/alpha = 0.2
+shader_parameter/emission_energy = 1.0
+shader_parameter/dissolve_texture = ExtResource("3_1o84y")
+shader_parameter/dissolve_speed = 0.842
+shader_parameter/dissolve_uv_drift = 0.1
+shader_parameter/burn_size = 0.08
+shader_parameter/burn_color = Color(1, 0.432344, 0.717951, 1)
+shader_parameter/burn_boost = 50.0
+
+[node name="ControlNodeReadySphere" instance=ExtResource("1_d0wl0")]
+script = ExtResource("2_1o84y")
+
+[node name="ReadySphere" parent="." index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_jap3d")

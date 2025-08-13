@@ -13,6 +13,7 @@ script = ExtResource("1_sejk5")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_f24ff")
+track_in_editor = true
 
 [node name="Root" type="Node" parent="State"]
 script = ExtResource("3_0rigy")

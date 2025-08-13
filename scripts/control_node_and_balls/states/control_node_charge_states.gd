@@ -46,6 +46,13 @@ func _on_level_2_state_entered() -> void:
 func _on_level_3_state_entered() -> void:
 	state = State.LEVEL3
 	asset.charge_level_3()
+	asset.turn_on_ready_sphere()
+	Signals.control_node_is_charged.emit()
+
+
+func _on_level_3_state_exited() -> void:
+	asset.turn_off_ready_sphere()
+	Signals.control_node_is_discharged.emit()
 
 
 # signal handling

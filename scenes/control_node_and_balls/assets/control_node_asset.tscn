@@ -1,75 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bkp8fbjsyyhyx"]
+[gd_scene load_steps=7 format=3 uid="uid://bkp8fbjsyyhyx"]
 
 [ext_resource type="PackedScene" uid="uid://dgpqcnsegq4rs" path="res://scenes/control_node_and_balls/models/control_node_model.tscn" id="1_k14dj"]
 [ext_resource type="Script" uid="uid://crab58bvajfs3" path="res://scripts/control_node_and_balls/assets/control_node_asset.gd" id="2_fgtxj"]
-[ext_resource type="Texture2D" uid="uid://c0kyqekhnn4eh" path="res://assets/3D/Particles/dots/dots_spritesheet_64x64.png" id="3_o78rc"]
-[ext_resource type="ArrayMesh" uid="uid://b3lvlj7kfxj60" path="res://assets/3D/Particles/lightning-sparks/lightning_on_sphere_mesh.tres" id="4_ndvbx"]
 [ext_resource type="Script" uid="uid://25frarsn771f" path="res://scripts/control_node_and_balls/assets/control_node_props.gd" id="5_bbe66"]
 [ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="6_uxj54"]
-
-[sub_resource type="Gradient" id="Gradient_o78rc"]
-offsets = PackedFloat32Array(0, 0.299145, 0.790287, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.23, 0.7305, 1, 1, 0.164602, 0.471592, 0.971196, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ndvbx"]
-gradient = SubResource("Gradient_o78rc")
-use_hdr = true
-
-[sub_resource type="Curve" id="Curve_bbe66"]
-_limits = [0.0, 2.0, 0.0, 1.0]
-_data = [Vector2(0, 2), 0.0, 0.0, 0, 0, Vector2(0.638554, 1.58478), -1.94736, -1.94736, 0, 0, Vector2(0.859438, 0.975195), -3.7456, -3.7456, 0, 0, Vector2(1, 0), -13.2928, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_uxj54"]
-curve = SubResource("Curve_bbe66")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3mwn8"]
-lifetime_randomness = 1.0
-emission_shape = 2
-emission_sphere_radius = 0.14
-direction = Vector3(0, 0, 0)
-angular_velocity_min = -1.60933e-05
-angular_velocity_max = -1.60933e-05
-radial_velocity_min = 0.599978
-radial_velocity_max = 0.799978
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -1.3
-radial_accel_max = -1.1
-tangential_accel_min = -0.300002
-tangential_accel_max = 0.299998
-attractor_interaction_enabled = false
-scale_curve = SubResource("CurveTexture_uxj54")
-color_ramp = SubResource("GradientTexture1D_ndvbx")
-anim_speed_min = 0.2
-anim_speed_max = 0.5
-anim_offset_max = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jasuo"]
-transparency = 1
-blend_mode = 1
-shading_mode = 0
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("3_o78rc")
-billboard_mode = 3
-billboard_keep_scale = true
-particles_anim_h_frames = 4
-particles_anim_v_frames = 4
-particles_anim_loop = true
-
-[sub_resource type="QuadMesh" id="QuadMesh_o78rc"]
-material = SubResource("StandardMaterial3D_jasuo")
-size = Vector2(0.015, 0.015)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bbe66"]
-particle_flag_align_y = true
-angle_min = -261.7
-angle_max = 103.2
-radial_velocity_min = -2.23517e-05
-radial_velocity_max = 0.00997765
-gravity = Vector3(0, 0, 0)
-attractor_interaction_enabled = false
-scale_min = 0.6
-scale_max = 0.6
 
 [sub_resource type="QuadMesh" id="QuadMesh_bbe66"]
 
@@ -98,26 +32,6 @@ light_volumetric_fog_energy = 10.0
 light_size = 0.2
 light_cull_mask = 4294967291
 omni_range = 2.0
-
-[node name="WispParticles3D" type="GPUParticles3D" parent="."]
-emitting = false
-amount = 300
-lifetime = 1.2
-one_shot = true
-explosiveness = 1.0
-randomness = 0.34
-fixed_fps = 60
-local_coords = true
-trail_lifetime = 1.0
-process_material = SubResource("ParticleProcessMaterial_3mwn8")
-draw_pass_1 = SubResource("QuadMesh_o78rc")
-
-[node name="LightningParticles3D" type="GPUParticles3D" parent="."]
-amount = 10
-amount_ratio = 0.1
-local_coords = true
-process_material = SubResource("ParticleProcessMaterial_bbe66")
-draw_pass_1 = ExtResource("4_ndvbx")
 
 [node name="Aura" type="MeshInstance3D" parent="."]
 mesh = SubResource("QuadMesh_bbe66")

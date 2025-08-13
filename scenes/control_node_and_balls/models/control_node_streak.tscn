@@ -1,11 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://dvd5ic7fxna84"]
+[gd_scene load_steps=18 format=3 uid="uid://dvd5ic7fxna84"]
 
 [ext_resource type="PackedScene" uid="uid://d2mbpbgsr3nkl" path="res://assets/3D/ControlNode/streak.glb" id="1_f3c4y"]
 [ext_resource type="Script" uid="uid://c302y7c5q4eoa" path="res://scripts/control_node_and_balls/assets/control_node_streak.gd" id="2_vo1ib"]
 [ext_resource type="Shader" uid="uid://duoq662dp7lb5" path="res://shaders/Drone/closed_shield.gdshader" id="3_d7avl"]
+[ext_resource type="Material" uid="uid://bv58qw6wja2qm" path="res://assets/3D/ControlNode/streak/control_node_streak_material.tres" id="3_ekexi"]
 [ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/3D/Textures/Drone/closed_shield_dissolve.png" id="4_uw5tb"]
 [ext_resource type="Texture2D" uid="uid://brweuwinhq7aa" path="res://assets/3D/ControlNode/streak/streak.png" id="5_d7avl"]
 [ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/3D/Textures/Drone/closed_shield_alpha_mask.png" id="6_ekexi"]
+[ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="7_uw5tb"]
+[ext_resource type="Texture2D" uid="uid://ufu6wds3282p" path="res://assets/3D/Particles/dart/dart_map.png" id="8_lustn"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_lustn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ekexi"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+albedo_color = Color(1, 0, 0.65, 0.431373)
+albedo_texture = ExtResource("7_uw5tb")
+billboard_mode = 1
+billboard_keep_scale = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uw5tb"]
 render_priority = 0
@@ -13,7 +29,7 @@ shader = ExtResource("3_d7avl")
 shader_parameter/texture_albedo = ExtResource("5_d7avl")
 shader_parameter/albedo_uv_drift = 0.3
 shader_parameter/texture_alpha_mask = ExtResource("6_ekexi")
-shader_parameter/alpha = 1.0
+shader_parameter/alpha = 0.2
 shader_parameter/emission_energy = 1.0
 shader_parameter/dissolve_texture = ExtResource("4_uw5tb")
 shader_parameter/dissolve_value_in = 1.0
@@ -23,8 +39,54 @@ shader_parameter/burn_size = 0.08
 shader_parameter/burn_color = Color(1, 0.432344, 0.717951, 1)
 shader_parameter/burn_boost = 50.0
 
+[sub_resource type="Gradient" id="Gradient_lustn"]
+offsets = PackedFloat32Array(0, 0.792793, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.0470588, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ekexi"]
+gradient = SubResource("Gradient_lustn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lustn"]
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 120.0
+initial_velocity_min = 5.0
+initial_velocity_max = 8.0
+attractor_interaction_enabled = false
+color_ramp = SubResource("GradientTexture1D_ekexi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_43trr"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("8_lustn")
+emission_enabled = true
+emission = Color(1, 0.461017, 0.392737, 1)
+emission_energy_multiplier = 10.0
+emission_intensity = 60000.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_u2ls6"]
+material = SubResource("StandardMaterial3D_43trr")
+size = Vector2(0.15, 0.15)
+
 [node name="ControlNodeStreak" instance=ExtResource("1_f3c4y")]
 script = ExtResource("2_vo1ib")
 
 [node name="streak" parent="Armature/Skeleton3D" index="0"]
+surface_material_override/0 = ExtResource("3_ekexi")
+
+[node name="Aura" type="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("QuadMesh_lustn")
+surface_material_override/0 = SubResource("StandardMaterial3D_ekexi")
+
+[node name="ring" parent="." index="2"]
 surface_material_override/0 = SubResource("ShaderMaterial_uw5tb")
+
+[node name="ShrapnelParticles3D" type="GPUParticles3D" parent="." index="3"]
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_lustn")
+draw_pass_1 = SubResource("QuadMesh_u2ls6")

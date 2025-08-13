@@ -48,6 +48,15 @@ signal kick_right_animation_ended
 
 signal player_knocked(obj_velocity: Vector3, obj_position: Vector3)
 
+signal player_long_kick_ready
+
+
+## ===================================== ##
+## CONTROL NODE SIGNALS                  ##
+## ------------------------------------- ##
+signal control_node_is_charged
+signal control_node_is_discharged
+
 
 ## ===================================== ##
 ## CAMERA SIGNALS                        ##

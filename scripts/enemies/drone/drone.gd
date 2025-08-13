@@ -241,9 +241,10 @@ func disable_proximity_detector() -> void:
 ## Hitbox
 ## ---------------------------------------
 func die(force: Vector3) -> void:
-	model.die_particles()
-	sc.send_event(physics_mode_states.TRANS_CHAR_TO_RAGDOLL)
-	model.body_bone.apply_central_impulse(force * 5.0)
+	if vulnerability_states.state != vulnerability_states.State.INVULNERABLE:
+		model.die_particles()
+		sc.send_event(physics_mode_states.TRANS_CHAR_TO_RAGDOLL)
+		model.body_bone.apply_central_impulse(force * 5.0)
 
 
 func get_hit(strength: float) -> bool:

@@ -19,6 +19,7 @@ script = ExtResource("1_4ly6d")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_iosrh")
+track_in_editor = true
 
 [node name="root" type="Node" parent="State"]
 script = ExtResource("3_t7rgp")
@@ -109,7 +110,7 @@ collision_mask = 4
 
 [node name="SprintRayCast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
-target_position = Vector3(3.5, 0, 0)
+target_position = Vector3(2.5, 0, 0)
 collision_mask = 4
 
 [node name="KickZone" type="Area3D" parent="."]
@@ -132,6 +133,7 @@ shape = SubResource("CapsuleShape3D_8biqi")
 
 [connection signal="state_entered" from="State/root/not ready" to="." method="_on_not_ready_state_entered"]
 [connection signal="state_physics_processing" from="State/root/not ready" to="." method="_on_not_ready_state_physics_processing"]
+[connection signal="state_entered" from="State/root/standby" to="." method="_on_standby_state_entered"]
 [connection signal="state_exited" from="State/root/standby" to="." method="_on_standby_state_exited"]
 [connection signal="state_physics_processing" from="State/root/standby" to="." method="_on_standby_state_physics_processing"]
 [connection signal="taken" from="State/root/standby/to not ready" to="." method="_on_standby_to_not_ready_taken"]
