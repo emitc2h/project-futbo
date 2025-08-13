@@ -4,26 +4,27 @@
 [ext_resource type="Script" uid="uid://c302y7c5q4eoa" path="res://scripts/control_node_and_balls/assets/control_node_streak.gd" id="2_vo1ib"]
 [ext_resource type="Shader" uid="uid://duoq662dp7lb5" path="res://shaders/Drone/closed_shield.gdshader" id="3_d7avl"]
 [ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/3D/Textures/Drone/closed_shield_dissolve.png" id="4_uw5tb"]
-[ext_resource type="Texture2D" uid="uid://b64qyuxss5jvu" path="res://assets/3D/Textures/Drone/closed_shield_color.png" id="5_lustn"]
+[ext_resource type="Texture2D" uid="uid://brweuwinhq7aa" path="res://assets/3D/ControlNode/streak/streak.png" id="5_d7avl"]
 [ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/3D/Textures/Drone/closed_shield_alpha_mask.png" id="6_ekexi"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_43trr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uw5tb"]
 render_priority = 0
 shader = ExtResource("3_d7avl")
-shader_parameter/texture_albedo = ExtResource("5_lustn")
-shader_parameter/albedo_uv_drift = 0.12
+shader_parameter/texture_albedo = ExtResource("5_d7avl")
+shader_parameter/albedo_uv_drift = 0.3
 shader_parameter/texture_alpha_mask = ExtResource("6_ekexi")
 shader_parameter/alpha = 1.0
-shader_parameter/emission_energy = 20.0
+shader_parameter/emission_energy = 1.0
 shader_parameter/dissolve_texture = ExtResource("4_uw5tb")
 shader_parameter/dissolve_value_in = 1.0
 shader_parameter/dissolve_value_out = 1.0
-shader_parameter/dissolve_uv_drift = 0.1
+shader_parameter/dissolve_uv_drift = 1.0
 shader_parameter/burn_size = 0.08
-shader_parameter/burn_color = Color(0.87386, 0.546692, 0.986915, 1)
+shader_parameter/burn_color = Color(1, 0.432344, 0.717951, 1)
+shader_parameter/burn_boost = 50.0
 
 [node name="ControlNodeStreak" instance=ExtResource("1_f3c4y")]
 script = ExtResource("2_vo1ib")
 
 [node name="streak" parent="Armature/Skeleton3D" index="0"]
-surface_material_override/0 = SubResource("ShaderMaterial_43trr")
+surface_material_override/0 = SubResource("ShaderMaterial_uw5tb")

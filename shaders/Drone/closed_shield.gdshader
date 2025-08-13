@@ -20,6 +20,7 @@ uniform float dissolve_uv_drift: hint_range(0.0, 1.0);
 
 uniform float burn_size: hint_range(0.0, 1.0, 0.01);
 uniform vec4 burn_color: source_color;
+uniform float burn_boost: hint_range(1.0, 100.0);
 
 void fragment() {
 
@@ -45,20 +46,20 @@ void fragment() {
 
 	ALBEDO = mix(burn_color.rgb, mix(burn_color.rgb, main_albedo, border_in), border_out);
 
-	float burn_boost_in = dissolve_value_in * 200.0;
-	if (dissolve_value_in > 0.1) {
-		burn_boost_in = 20.0;
-	}
+	float burn_boost_in = (1.0 - dissolve_value_in) * burn_boost;
+	//if (dissolve_value_in > 0.1) {
+		//burn_boost_in = 20.0;
+	//}
 
-		float burn_boost_out = dissolve_value_out * 200.0;
-	if (dissolve_value_in > 0.1) {
-		burn_boost_out = 20.0;
-	}
+	float burn_boost_out = dissolve_value_out * burn_boost;
+	//if (dissolve_value_in < 0.9) {
+		//burn_boost_out = 20.0;
+	//}
 
 	//EMISSION = mix(burn_color.rgb * burn_boost, emission_tex, border) * emission_energy * 1000.0;
 	//ALPHA *= alpha * albedo.a * albedo_tex.a * threshold;
 
-	EMISSION = 1000.0 * emission_energy * mix(burn_color.rgb, mix(burn_color.rgb * burn_boost_in, main_albedo, border_in), border_out);
+	EMISSION = 1000.0 * emission_energy * mix(burn_color.rgb * burn_boost_out, mix(burn_color.rgb * burn_boost_in, main_albedo, border_in), border_out);
 
 	ALPHA *= alpha * (albedo_tex_1.a + albedo_tex_2.a) * alpha_tex.r * threshold_in * threshold_out;
 }

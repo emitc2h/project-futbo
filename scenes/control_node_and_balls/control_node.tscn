@@ -19,7 +19,7 @@ charge_states = NodePath("State/Root/Charge/Charge States")
 
 [node name="Control States" parent="State/Root/Control" index="0" node_paths=PackedStringArray("streak")]
 script = ExtResource("3_qi4cr")
-shot_speed = 60.0
+shot_speed = 50.0
 range = 10.0
 streak = NodePath("../../../../ControlNodeStreak")
 

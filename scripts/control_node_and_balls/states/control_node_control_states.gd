@@ -2,7 +2,7 @@ class_name ControlNodeControlStates
 extends BallControlStates
 
 ## Configurables
-@export var shot_speed: float = 60.0
+@export var shot_speed: float = 50.0
 @export var range: float = 10.0
 
 ## Overrides
@@ -27,6 +27,7 @@ func _ready() -> void:
 	super._ready()
 	control_node = ball as ControlNode
 	streak.visible = false
+	streak.duration = range / shot_speed
 
 
 # shot state
@@ -41,7 +42,7 @@ func _on_shot_state_entered() -> void:
 	## Bones are in local coordinates, we need to offset the main control node's position
 	streak.start_position = control_node.get_ball_position() - control_node.global_position
 	streak.end_position = control_node.get_ball_position() - control_node.global_position
-	streak.visible = true
+	streak.streak_in()
 
 
 func _on_shot_state_physics_processing(delta: float) -> void:
@@ -66,7 +67,7 @@ func _on_shot_state_physics_processing(delta: float) -> void:
 
 
 func _on_shot_state_exited() -> void:
-	streak.visible = false
+	streak.streak_out()
 
 
 # control functions
