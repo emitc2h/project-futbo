@@ -77,7 +77,6 @@ func _on_not_ready_state_physics_processing(delta: float) -> void:
 # standby state
 #----------------------------------------
 func _on_standby_state_entered() -> void:
-	print("long kick ready emitted")
 	Signals.player_long_kick_ready.emit()
 
 
@@ -95,6 +94,10 @@ func _on_standby_state_physics_processing(delta: float) -> void:
 	if is_sprinting and (not sprint_raycast.is_colliding()):
 		asset.reset_speed()
 		is_sprinting = false
+
+
+func _on_standby_state_exited() -> void:
+	asset.reset_speed()
 
 
 func _on_standby_to_not_ready_taken() -> void:

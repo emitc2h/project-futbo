@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://cupvg7lj3rh2s"]
+[gd_scene load_steps=26 format=4 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
@@ -11,7 +11,8 @@
 [ext_resource type="Script" uid="uid://b3jcml15v3wkh" path="res://scripts/control_node_and_balls/states/control_node_charge_states.gd" id="6_8s4nh"]
 [ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node_and_balls/assets/control_node_asset.tscn" id="7_2p3vg"]
 [ext_resource type="PackedScene" uid="uid://dvd5ic7fxna84" path="res://scenes/control_node_and_balls/models/control_node_streak.tscn" id="11_8s4nh"]
-[ext_resource type="Texture2D" uid="uid://cmy0jxny0n8xx" path="res://assets/3D/Particles/dots/mega_dot_color.png" id="11_r313a"]
+[ext_resource type="Shader" uid="uid://c2lu8bfyo1f0b" path="res://shaders/ControlNode/control_node_wisps_shader.gdshader" id="11_r313a"]
+[ext_resource type="Texture2D" uid="uid://cmy0jxny0n8xx" path="res://assets/3D/Particles/dots/mega_dot_color.png" id="12_cnds4"]
 [ext_resource type="Material" uid="uid://bu2l1unbjhits" path="res://assets/3D/ControlNode/materials/control_node_lightning_material.tres" id="12_r313a"]
 [ext_resource type="PackedScene" uid="uid://dr3wkl0fgpbyw" path="res://scenes/control_node_and_balls/models/control_node_ready_sphere.tscn" id="13_nbe53"]
 
@@ -47,20 +48,17 @@ tangential_accel_min = -0.600002
 tangential_accel_max = 0.599998
 attractor_interaction_enabled = false
 scale_curve = SubResource("CurveTexture_uxj54")
-color = Color(1, 0, 1, 1)
+color = Color(0.336616, 0.432601, 1, 1)
 alpha_curve = SubResource("CurveTexture_cnds4")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jasuo"]
-transparency = 1
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("11_r313a")
-emission_enabled = true
-emission = Color(0.929549, 0.6567, 1, 1)
-emission_intensity = 50000.0
-billboard_keep_scale = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cnds4"]
+render_priority = 0
+shader = ExtResource("11_r313a")
+shader_parameter/texture_albedo = ExtResource("12_cnds4")
+shader_parameter/emission_energy = 200.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_ygoor"]
-material = SubResource("StandardMaterial3D_jasuo")
+material = SubResource("ShaderMaterial_cnds4")
 size = Vector2(0.02, 0.02)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xdpkx"]
@@ -217,6 +215,9 @@ rigid_node = NodePath("../../../../RigidNode")
 asset = NodePath("../../../../TrackTransformContainer/ControlNodeAsset")
 sc = NodePath("../../..")
 
+[node name="LoseChargeTimer" type="Timer" parent="State/Root/Charge/Charge States" index="0"]
+wait_time = 8.0
+
 [node name="none" type="Node" parent="State/Root/Charge" index="1"]
 script = ExtResource("4_0jkta")
 
@@ -241,6 +242,12 @@ to = NodePath("../../level2")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
+[node name="to none via charge down" type="Node" parent="State/Root/Charge/level1" index="2"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../none")
+event = &"charge down"
+delay_in_seconds = "0.0"
+
 [node name="level2" type="Node" parent="State/Root/Charge" index="3"]
 script = ExtResource("4_0jkta")
 
@@ -254,6 +261,12 @@ delay_in_seconds = "0.0"
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level3")
 event = &"charge up"
+delay_in_seconds = "0.0"
+
+[node name="to level 1" type="Node" parent="State/Root/Charge/level2" index="2"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../level1")
+event = &"charge down"
 delay_in_seconds = "0.0"
 
 [node name="level3" type="Node" parent="State/Root/Charge" index="4"]
@@ -326,6 +339,7 @@ draw_pass_1 = SubResource("ArrayMesh_r313a")
 [connection signal="state_entered" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_entered"]
 [connection signal="state_exited" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_physics_processing"]
+[connection signal="timeout" from="State/Root/Charge/Charge States/LoseChargeTimer" to="State/Root/Charge/Charge States" method="_on_lose_charge_timer_timeout"]
 [connection signal="state_entered" from="State/Root/Charge/none" to="State/Root/Charge/Charge States" method="_on_none_state_entered"]
 [connection signal="state_entered" from="State/Root/Charge/level1" to="State/Root/Charge/Charge States" method="_on_level_1_state_entered"]
 [connection signal="state_entered" from="State/Root/Charge/level2" to="State/Root/Charge/Charge States" method="_on_level_2_state_entered"]

@@ -33,6 +33,5 @@ func blow() -> void:
 # Signal handling
 # ===========================================
 func _on_player_long_kick_ready() -> void:
-	print("long kick ready received")
 	if charge_states.state == charge_states.State.LEVEL3:
 		asset.magenta_wisps()
