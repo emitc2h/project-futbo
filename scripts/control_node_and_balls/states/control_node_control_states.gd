@@ -54,6 +54,8 @@ func _on_shot_state_physics_processing(delta: float) -> void:
 	streak.end_position = control_node.get_ball_position() - control_node.global_position
 	
 	if char_node.global_position.distance_to(initial_pos) > range:
+		## Lose a charge when you don't hit anything
+		sc.send_event(control_node.charge_states.TRANS_CHARGE_DOWN)
 		end_shot()
 	
 	if collision:

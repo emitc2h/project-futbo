@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://blqvlawbxf74y"]
+[gd_scene load_steps=87 format=4 uid="uid://blqvlawbxf74y"]
 
 [ext_resource type="PackedScene" uid="uid://c6irjm83p35mw" path="res://assets/3D/Enemies/Drone/drone.glb" id="1_y6iu8"]
 [ext_resource type="Texture2D" uid="uid://c0dkmj477txwv" path="res://assets/3D/Textures/Drone/exhaust_flame.png" id="2_3hy7v"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://mpmfxrcwxyin" path="res://assets/3D/Textures/Drone/exhaust_noise.png" id="3_ur4vj"]
 [ext_resource type="Script" uid="uid://r4dihe2vx3dk" path="res://scripts/utilities/animation_tree/animation_state_change_tracker.gd" id="6_7e3mk"]
 [ext_resource type="Script" uid="uid://dflhlxuhdu11p" path="res://scripts/enemies/drone/drone_bone.gd" id="6_llkgy"]
-[ext_resource type="ArrayMesh" uid="uid://b3lvlj7kfxj60" path="res://assets/3D/Particles/lightning-sparks/lightning_on_sphere_mesh.tres" id="7_1tsr1"]
+[ext_resource type="Material" uid="uid://ms7f07u5wnvf" path="res://assets/3D/Enemies/Drone/materials/drone_lightning_material.tres" id="7_c0e6q"]
 [ext_resource type="Texture2D" uid="uid://nq4dlxtmbbtj" path="res://assets/3D/Particles/smoke/smoke_01_color.png" id="8_c0e6q"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ur4vj"]
@@ -66,6 +66,36 @@ gravity = Vector3(0, 0, 0)
 attractor_interaction_enabled = false
 scale_min = 1.4
 scale_max = 1.4
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_lyibg"]
+_surfaces = [{
+"aabb": AABB(-0.432778, -0.190369, -0.493909, 0.920597, 0.637503, 0.907317),
+"format": 34896613377,
+"index_count": 309,
+"index_data": PackedByteArray("AAABAAIAAQAAAAIAAQADAAAAAAADAAEAAwABAAQAAwAFAAEAAwAEAAUABAAGAAUABAAHAAYABgAIAAUABgAJAAgABwAKAAYACgALAAYACgAMAAsABwANAAoADQAOAAoADQAPAA4ADwAQAA4ADwARABAACQASAAgAEgATAAgAEgAJABQAEgAVABMAFQAWABMAFQAXABYAFwAYABYAFwAZABgAEgAUABoAFAAbABoAGwAcABoAFAAdABsAGwAeABwAGwAdAB8AHQAgAB8AHQAhACAAIgAcAB4AIgAeACMAJAAiACMAJAAjACUAJgAkACUAJgAnACQAKAAmACUAJgApACcAKAAlACoAKQArACcALAAoACoAKQAtACsALQAuACsALQAvAC4ALwAwAC4ALwAxADAALAAqADIALAAyADMANAAsADMAMgA1ADMANAAzADYAMgA3ADUAOAA0ADYANwA5ADUANwA6ADkAOgA7ADkAOgA8ADsAOAA9ADQAPQA4AD4AOAA/AD4APgA/AEAAPwBBAEAAPwBCAEEAQwA9AD4ARAA9AEMARABDAEUARgBEAEUAQwBHAEUARgBFAEgAQwBJAEcASQBKAEcASQBLAEoATABGAEgATABIAE0ATgBMAE0ATABOAE8ATwBOAFAAUABRAE8AUABSAFEAUwBOAE0AUwBNAFQAVQBTAFQAUwBVAFYAUwBWAFcAWABVAFQAWABZAFUAWQBYAFoAWABbAFoAWgBbAFwAXQBZAFoAXQBeAFkAXgBdAF8AXQBgAF8AXQBhAGAAYgBeAF8AYgBfAGMAZABiAGMAZABlAGIA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 102,
+"vertex_data": PackedByteArray("GCAAANzkAAAgKfQ6A+wAAORCPgnK4QAAmBrBI2ngAAAAAEZE6b4AAGYlE2EozgAAfhnOeSLHAAAYHCpvU7UAAPo7M3hH3QAAqyT7pH7aAABWB9SEF68AAN0pRI0rxgAAqyRSqHGtAADoEr91aaAAAOMOs6GTngAA+RWcjkiRAAB3EV+dKXMAABYEpoE8fAAAI0rMuFbiAAAgUE+F//8AAL0g577ywAAAhFfawCfoAACMZeWmEPQAALVwocRy5QAATIfXhnj/AABrmWOMsv4AAFA9Yc8K1AAATTBv6HSuAAAOSGTZv8QAALYdAdlqmwAAS1H6/FyaAAD2Nt3jJqkAAEpQQuifigAAhTlZ3v5zAABRmlPTUsUAAMmNH/FinAAAwrvc6uuTAADumf//en4AAAqynM3lbAAA5MlO19qbAACEjBvq0F8AAK3R2KfnjAAA02vc4Dl8AABtvQjWnLsAAMJ0k99jQgAASOLku3CyAABdzCKjC70AAAbyJ5uprQAARsMmlCjPAAAD4DiUdN4AAGRaBsbCRAAAOnJUvmMyAABZn4zfBjQAAOlLB5rPKAAA8ncXsZY1AAB2TQ+wvUsAAIpveYxyJQAA8jxAo7E2AABqPp7J51UAAOsySYUdJwAA9S7shD03AAD0k8itrhwAAFV9N2nYKQAAeGP2Y2QoAACNeRdzbxwAAEF5lUjhDQAACmsmQwAAAABjpiZ/ICIAANShl6LvNwAAs7fpil83AACguQHS0U8AALawQXTgQAAAOcd0snhLAAD1pMd4HBcAAB+fPz1BDgAABo+3XqwGAACAyxuxg3kAAETP444bZgAAte+dkwV2AABs766mp44AAIvgbWy6hQAA6vuYbZSTAAB773dkV38AAMzpjmzbZwAAlM/idVZkAADu3QtLOGAAAP//NzgZZgAAcvfzUvpzAACN1XeA4UkAADPTj1kUUAAANMque7ZDAAC/yamm20MAANium3LvQAAAs7jZYGwyAACKxnRWozwAAPKygirYHwAAEKzWNiQZAAConYk4piEAADzI2jtlTwAASrQIKRtHAAARwUcbtSUAAKnLJg+fJwAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_lfxu6"]
+resource_name = "Collection_Plane"
+_surfaces = [{
+"aabb": AABB(-0.432778, -0.190369, -0.493909, 0.920597, 0.637503, 0.907317),
+"attribute_data": PackedByteArray("AAAp8gMwnuB1D///0BVJ2NAVSdgoLjTDAzCe4CAXk7UgF5O16C/vrSguNMMgF5O1Sh1kpegv763oL++t0UzFxiguNMPKR9GvSh1kpTkvV5voL++tSh1kpZIZGJo5L1ebOS9Xm6lCA6roL++thT/ll5IZGJo5MjaKOS9Xm48c34mPHN+JjyL8cTkyNor5E517ykfRr+JgbrbRTMXG4mButopgR9PRTMXGv2pfvOJgbrY9Rj+dM1/tpcpH0a+/al+853VrzIpgR9M6e0W4OntFuPuK0t3ndWvM55fS0D1GP51SWB2MM1/tpT1GP532P+qCUlgdjDdY3oZSWB2MB2pyoTNf7aXJaiyA9j/qgrBmVnQ3WN6GFFX/Zy7wAADE4g8xnN8nFf//nQxeTXhVUU2DMllTHEBoP9g3PWDJTVlTHEA5YSk5Xk14VVqBuVMca+tS03j8QlqBuVPcdslxHGvrUoeK7WMca+tSOWEpOdN4/EI9YMlNh4rtY3aRJ3ncdslxzqDsaq+VkKLJaiyAnIoeiAdqcqHOoOxqiaOFfHaRJ3nOoOxquayigYmjhXw5u0F4iaOFfJyKHoh2kSd5r5WQojm7QXgiq2iWuayigRu8B40bvAeN3roFmiKraJaIzN6QiMzekFO1gafeugWacsPPq/OScVDTePxCYn0OQVqBuVNsjPA4EHirMMqHWCcQeKswHmgpIMqHWCfGgDsgEHirMPOScVBifQ5BbIzwOB5oKSCmg4IJxoA7INtzXwRwmzE/3p7dK+GuKDhwmzE/bIzwON6e3SvKh1gn3p7dK2C1BCjhrig4iqGdJIqhnSTXpRULYLUEKE+Y2xGcoA9b4a4oOAWzi05wmzE/gLnnawWzi07aw1dZnKAPW5jNhWmAuedr2sNXWYC552uYzYVpe8b/gDfSj3A30o9wleRYgnvG/4BE5Gpx3uiuSuzjv1wN1MhQ7OO/XNrDV1kN1MhQmM2Faezjv1zP+mJczu0ZZd7orkqK1zU4yseTQw3D9TLKx5NDhLevRQ3D9TLFsrM2yseTQ97orkoN1MhQitc1OOjR3Sb/vvkiTssiE/+++SJSwGQDTssiE3iw2gv/vvkiitc1OA3D9TLo0d0mxOIPMU7LIhOc3ycV6NHdJtAVSdgDMJ7gIBeTtQAAKfJ1D///"),
+"format": 34896613399,
+"index_count": 309,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACwAMAA0ADgAPABAADgARAA8AEgATABQAFQAWABcAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJwAoACkAJwAqACgAKwAsAC0AKwAuACwALwAwADEALwAyADAAMwA0ADUAMwA2ADQANwA4ADkAOgA7ADwAPAA7AD0APgA/AEAAPgBBAD8AQgBDAEQAQgBFAEMARgBHAEgARgBJAEcASgBLAEwASgBNAEsATgBPAFAATgBRAE8AUgBTAFQAVQBWAFcAVQBYAFYAWQBaAFsAWQBcAFoAXQBeAF8AXQBgAF4AYQBiAGMAYQBkAGIAZQBmAGcAaABpAGoAaABrAGkAbABtAG4AbABvAG0AcABxAHIAcABzAHEAdAB1AHYAdAB3AHUAeAB5AHoAeAB7AHkAfAB9AH4AfAB/AH0AgACBAIIAgwCEAIUAhQCEAIYAhwCIAIkAhwCKAIgAiwCMAI0AiwCOAIwAjwCQAJEAkgCTAJQAlACTAJUAlgCXAJgAlgCZAJcAmgCbAJwAmgCdAJsAngCfAKAAngChAJ8AogCjAKQAogClAKMApgCnAKgAqQCqAKsAqwCqAKwArQCuAK8ArQCwAK4AsQCyALMAtAC1ALYAtAC3ALUAuAC5ALoAuAC7ALkAvAC9AL4AvwDAAMEAwQDAAMIAwwDEAMUAwwDGAMQAxwDIAMkAygDLAMwAygDNAMsAzgDPANAAzgDRAM8A0gDTANQA0gDVANMA1gDXANgA1wDWANkA1wDZANoA"),
+"material": ExtResource("7_c0e6q"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 219,
+"vertex_data": PackedByteArray("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")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_lyibg")
 
 [sub_resource type="Curve" id="Curve_lfxu6"]
 _data = [Vector2(0.0100402, 0), 0.0, 0.0, 0, 0, Vector2(0.126506, 0.930515), 1.31683, 1.31683, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -510,11 +540,11 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.5258
 shape = SubResource("ConvexPolygonShape3D_xd6o8")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="1"]
-transform = Transform3D(-3.21435e-07, 1.41138e-07, 1, -0.200047, 0.979786, -2.02587e-07, -0.979786, -0.200047, -2.86703e-07, -7.33771e-08, -1.32822e-08, 0.512002)
+transform = Transform3D(-3.20321e-07, 1.41138e-07, 1, -0.200047, 0.979786, -2.02364e-07, -0.979786, -0.200047, -2.85612e-07, -7.33771e-08, -1.32822e-08, 0.512002)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, 9.38773e-07, 5.0506e-08, -1.10269e-06, 1, -4.81224e-08, 1.98175e-08, 1.64621e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, 9.38773e-07, 4.93925e-08, -1.10269e-06, 1, -4.81225e-08, 2.0931e-08, 1.64629e-09, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_01.T"
 joint_constraints/angular_limit_enabled = true
@@ -530,11 +560,11 @@ transform = Transform3D(0.99999, -6.11419e-08, 0.00441611, 0.00441527, 5.46137e-
 shape = SubResource("ConvexPolygonShape3D_3hy7v")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="2"]
-transform = Transform3D(-2.74149e-07, 2.23122e-07, 1, -0.559764, 0.828652, -3.38349e-07, -0.828652, -0.559764, -1.02279e-07, -4.48028e-08, 0.200705, 0.471023)
+transform = Transform3D(-2.74149e-07, 2.234e-07, 1, -0.559764, 0.828652, -3.3858e-07, -0.828652, -0.559764, -1.02123e-07, -4.48028e-08, 0.200705, 0.471023)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, -1.63913e-06, 7.98541e-08, 1.57952e-06, 1, -3.1062e-08, 2.90206e-09, 1.50352e-08, 1, 0, 0, 0)
+body_offset = Transform3D(1, -1.63913e-06, 7.98539e-08, 1.57952e-06, 1, -3.13403e-08, 2.90226e-09, 1.53134e-08, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_02.T"
 joint_constraints/angular_limit_enabled = true
@@ -550,11 +580,11 @@ transform = Transform3D(1, 7.10543e-14, 0, 0, -4.37114e-08, -1, 1.06581e-13, 1, 
 shape = SubResource("ConvexPolygonShape3D_h7a81")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="3"]
-transform = Transform3D(-7.50635e-08, 1.89041e-07, 1, -0.828704, 0.559687, -1.68009e-07, -0.559687, -0.828704, 1.14647e-07, -4.28928e-09, 0.36204, 0.362039)
+transform = Transform3D(-7.52026e-08, 1.89041e-07, 1, -0.828704, 0.559687, -1.68125e-07, -0.559687, -0.828704, 1.14569e-07, -4.28928e-09, 0.36204, 0.362039)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, 9.33707e-05, 7.79752e-08, -9.33707e-05, 1, 1.61164e-08, 4.78087e-09, -8.89955e-11, 1, 0, 0, 0)
+body_offset = Transform3D(1, 9.33707e-05, 7.81143e-08, -9.33707e-05, 1, 1.61163e-08, 4.64175e-09, -8.89102e-11, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_03.T"
 joint_constraints/angular_limit_enabled = true
@@ -570,11 +600,11 @@ transform = Transform3D(1, -7.93676e-12, -2.98023e-08, -2.98023e-08, -4.36956e-0
 shape = SubResource("ConvexPolygonShape3D_g0jmh")
 
 [node name="Physical Bone DEF_PANEL_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="4"]
-transform = Transform3D(-9.78206e-08, 7.87842e-08, 1, -0.942421, -0.334429, -6.58404e-08, 0.334429, -0.942421, 1.06962e-07, 3.2535e-08, 0.471024, 0.200704)
+transform = Transform3D(-9.7264e-08, 7.82275e-08, 1, -0.942421, -0.334429, -6.5502e-08, 0.334429, -0.942421, 1.06251e-07, 3.2535e-08, 0.471024, 0.200704)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, -1.56164e-05, 2.89494e-08, 1.56164e-05, 1, 8.22866e-08, 7.28843e-09, -6.17996e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, -1.56164e-05, 2.83928e-08, 1.56164e-05, 1, 8.28432e-08, 7.845e-09, -6.73657e-09, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_PANEL.T"
 joint_constraints/angular_limit_enabled = true
@@ -590,11 +620,11 @@ transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4
 shape = SubResource("ConvexPolygonShape3D_eijxh")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="5"]
-transform = Transform3D(-7.39887e-08, -6.2713e-08, -1, 0.200044, -0.979787, 4.66444e-08, -0.979787, -0.200044, 8.50385e-08, -7.33771e-08, 8.61776e-09, 0.512002)
+transform = Transform3D(-7.39887e-08, -6.24348e-08, -1, 0.200044, -0.979787, 4.63718e-08, -0.979787, -0.200044, 8.49828e-08, -7.33771e-08, 8.61776e-09, 0.512002)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, 4.47035e-08, -4.72076e-08, 1.49012e-08, 1, -6.86535e-08, 7.31283e-10, -1.66986e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, 4.47035e-08, -4.72076e-08, 1.49012e-08, 1, -6.83753e-08, 7.31283e-10, -1.94811e-09, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_01.B"
 joint_constraints/angular_limit_enabled = true
@@ -610,11 +640,11 @@ transform = Transform3D(1, -2.11031e-12, 0, 0, -4.37135e-08, -1, 2.089e-12, 1, -
 shape = SubResource("ConvexPolygonShape3D_6fcep")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="6"]
-transform = Transform3D(-5.20277e-08, -8.64898e-08, -1, 0.559768, -0.82865, 4.25463e-08, -0.82865, -0.559768, 9.15269e-08, -8.65657e-08, -0.200705, 0.471024)
+transform = Transform3D(-5.20276e-08, -8.62115e-08, -1, 0.559768, -0.82865, 4.23158e-08, -0.82865, -0.559768, 9.1371e-08, -8.65657e-08, -0.200705, 0.471024)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, 3.30806e-06, -1.59489e-08, -3.27826e-06, 1, -8.18611e-08, -7.79679e-11, -8.95014e-10, 1, 0, 0, 0)
+body_offset = Transform3D(1, 3.30806e-06, -1.59488e-08, -3.27826e-06, 1, -8.15828e-08, -7.80886e-11, -1.17329e-09, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_02.B"
 joint_constraints/angular_limit_enabled = true
@@ -634,7 +664,7 @@ transform = Transform3D(3.48462e-08, 1.42501e-07, -1, 0.828659, -0.559753, -5.08
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, 1.38581e-05, 1.61146e-08, -1.38581e-05, 1, -8.28709e-08, -8.77591e-11, 1.14845e-10, 1, 0, 0, 0)
+body_offset = Transform3D(1, 1.37389e-05, 1.61147e-08, -1.38283e-05, 1, -8.28708e-08, -8.77947e-11, 1.14831e-10, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_03.B"
 joint_constraints/angular_limit_enabled = true
@@ -650,11 +680,11 @@ transform = Transform3D(1, -7.01306e-12, 8.9407e-08, 0, -4.37114e-08, -1, 7.0414
 shape = SubResource("ConvexPolygonShape3D_g0jmh")
 
 [node name="Physical Bone DEF_PANEL_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="8"]
-transform = Transform3D(1.51282e-08, 1.67911e-07, -1, 0.942415, 0.334445, 7.04141e-08, 0.334445, -0.942415, -1.53182e-07, -7.58126e-08, -0.471024, 0.200705)
+transform = Transform3D(1.49892e-08, 1.67911e-07, -1, 0.942415, 0.334445, 7.02831e-08, 0.334445, -0.942415, -1.53229e-07, -7.58126e-08, -0.471024, 0.200705)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, 8.34465e-07, 7.7978e-08, -8.64267e-07, 1, -2.95589e-08, -1.87129e-09, -6.67896e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, 8.34465e-07, 7.7839e-08, -8.64267e-07, 1, -2.95588e-08, -1.73225e-09, -6.67903e-09, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_PANEL.B"
 joint_constraints/angular_limit_enabled = true
@@ -690,11 +720,11 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.2
 shape = SubResource("ConvexPolygonShape3D_yu0nt")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="10"]
-transform = Transform3D(-0.200044, 0.979787, -1.25273e-07, -9.34803e-07, -6.30022e-08, 1, 0.979787, 0.200044, 9.28511e-07, 1.36317e-07, -4.68125e-16, -0.512002)
+transform = Transform3D(-0.200044, 0.979787, -1.25264e-07, -9.34803e-07, -6.30119e-08, 1, 0.979787, 0.200044, 9.28513e-07, 1.36317e-07, -4.68125e-16, -0.512002)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, -8.79169e-07, 8.52556e-07, 8.64267e-07, 1, 1.67879e-07, -9.34803e-07, -9.28045e-08, 1, 0, 0, 0)
+body_offset = Transform3D(1, -8.49366e-07, 8.52556e-07, 8.19564e-07, 1, 1.67889e-07, -9.34803e-07, -9.28142e-08, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_01.L"
 joint_constraints/angular_limit_enabled = true
@@ -710,11 +740,11 @@ transform = Transform3D(1, 0, -1.49012e-08, -1.49012e-08, -4.37114e-08, -1, 4.44
 shape = SubResource("ConvexPolygonShape3D_ur4vj")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="11"]
-transform = Transform3D(-0.559764, 0.828652, 5.1793e-07, 8.98058e-07, -1.83782e-08, 1, 0.828652, 0.559764, -7.3389e-07, 0.200706, 6.10489e-09, -0.471024)
+transform = Transform3D(-0.559764, 0.828652, 5.17008e-07, 8.98058e-07, -1.72655e-08, 1, 0.828652, 0.559764, -7.34513e-07, 0.200706, 6.10489e-09, -0.471024)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, -2.98023e-07, -9.82803e-07, 3.27826e-07, 1, 6.93348e-08, 8.78087e-07, -3.14505e-08, 1, 0, 0, 0)
+body_offset = Transform3D(1, -2.98023e-07, -9.82803e-07, 3.27826e-07, 1, 6.82221e-08, 8.78087e-07, -3.03377e-08, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_02.L"
 joint_constraints/angular_limit_enabled = true
@@ -730,11 +760,11 @@ transform = Transform3D(1, 1.5703e-12, 0, 0, -4.37106e-08, -1, -1.57385e-12, 1, 
 shape = SubResource("ConvexPolygonShape3D_e35r2")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="12"]
-transform = Transform3D(-0.828641, 0.559781, -9.95562e-07, -1.03833e-06, 2.41457e-07, 1, 0.559781, 0.828641, 3.81154e-07, 0.362041, 8.64998e-09, -0.36204)
+transform = Transform3D(-0.828641, 0.559781, -9.96185e-07, -1.03833e-06, 2.4257e-07, 1, 0.559781, 0.828641, 3.80232e-07, 0.362041, 8.64998e-09, -0.36204)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, -1.93119e-05, 9.74075e-07, 1.94311e-05, 1, -1.50975e-07, -1.08536e-06, 1.47049e-07, 1, 0, 0, 0)
+body_offset = Transform3D(1, -1.93119e-05, 9.74075e-07, 1.94311e-05, 1, -1.52088e-07, -1.08536e-06, 1.48161e-07, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_03.L"
 joint_constraints/angular_limit_enabled = true
@@ -750,11 +780,11 @@ transform = Transform3D(1, 7.10543e-15, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-
 shape = SubResource("ConvexPolygonShape3D_g0jmh")
 
 [node name="Physical Bone DEF_PANEL_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="13"]
-transform = Transform3D(-0.942428, -0.334408, 1.13823e-07, -7.65008e-08, 5.55967e-07, 1, -0.334408, 0.942428, -5.49541e-07, 0.471024, 2.7031e-08, -0.200705)
+transform = Transform3D(-0.942428, -0.334409, 1.13561e-07, -7.67797e-08, 5.55967e-07, 1, -0.334409, 0.942428, -5.49635e-07, 0.471024, 2.7031e-08, -0.200705)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, -3.91006e-05, 7.21883e-08, 3.91603e-05, 1, -6.32944e-07, -1.35065e-07, 5.41055e-07, 1, 0, 0, 0)
+body_offset = Transform3D(1, -3.90112e-05, 7.24671e-08, 3.90708e-05, 1, -6.32944e-07, -1.35344e-07, 5.41055e-07, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_PANEL.L"
 joint_constraints/angular_limit_enabled = true
@@ -770,11 +800,11 @@ transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4
 shape = SubResource("ConvexPolygonShape3D_565iv")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="14"]
-transform = Transform3D(-0.200051, -0.979786, 7.91128e-08, 2.61309e-07, 2.73914e-08, 1, -0.979786, 0.200051, 2.50548e-07, 1.09793e-07, 4.43217e-16, -0.512002)
+transform = Transform3D(-0.200051, -0.979786, 7.91075e-08, 2.61283e-07, 2.73914e-08, 1, -0.979786, 0.200051, 2.50521e-07, 1.09793e-07, 4.43217e-16, -0.512002)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, -5.36442e-06, -6.22625e-08, 5.40912e-06, 1, 5.36359e-08, 2.28907e-08, -2.40964e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, -5.37932e-06, -6.22359e-08, 5.42402e-06, 1, 5.36359e-08, 2.2864e-08, -2.40964e-09, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_01.R"
 joint_constraints/angular_limit_enabled = true
@@ -790,11 +820,11 @@ transform = Transform3D(-1, -4.76837e-07, -2.98023e-08, 2.98023e-08, -1.58933e-0
 shape = SubResource("ConvexPolygonShape3D_uabyq")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="15"]
-transform = Transform3D(-0.559768, -0.828649, -4.13814e-07, -7.14444e-07, -1.6763e-08, 1, -0.828649, 0.559768, -5.8264e-07, -0.200705, 6.10489e-09, -0.471024)
+transform = Transform3D(-0.559768, -0.828649, -4.12972e-07, -7.12219e-07, -1.72504e-08, 1, -0.828649, 0.559768, -5.80523e-07, -0.200705, 6.10489e-09, -0.471024)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, -3.93391e-06, 8.24203e-07, 3.96371e-06, 1, 3.58447e-08, -8.40975e-07, 2.65526e-08, 1, 0, 0, 0)
+body_offset = Transform3D(1, -3.93391e-06, 8.21978e-07, 3.96371e-06, 1, 3.6332e-08, -8.38749e-07, 2.60652e-08, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_02.R"
 joint_constraints/angular_limit_enabled = true
@@ -810,11 +840,11 @@ transform = Transform3D(-1, 8.74273e-08, 0, 0, -4.37137e-08, -1, -8.74273e-08, -
 shape = SubResource("ConvexPolygonShape3D_e35r2")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="16"]
-transform = Transform3D(-0.828657, -0.559757, -1.92369e-06, -2.40042e-06, 1.16893e-07, 1, -0.559757, 0.828657, -1.44051e-06, -0.36204, -2.32839e-09, -0.36204)
+transform = Transform3D(-0.828657, -0.559757, -1.92208e-06, -2.40042e-06, 1.19768e-07, 1, -0.559757, 0.828657, -1.4429e-06, -0.36204, -2.32839e-09, -0.36204)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, -8.88109e-06, 2.45733e-06, 8.85129e-06, 1, -7.00165e-08, -2.44959e-06, 1.34182e-07, 1, 0, 0, 0)
+body_offset = Transform3D(1, -8.88109e-06, 2.45733e-06, 8.85129e-06, 1, -7.28911e-08, -2.44959e-06, 1.37057e-07, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_VERTEBRAE_03.R"
 joint_constraints/angular_limit_enabled = true
@@ -830,11 +860,11 @@ transform = Transform3D(-1, 8.74228e-08, -8.9407e-08, 0, -4.37127e-08, -1, -8.74
 shape = SubResource("ConvexPolygonShape3D_g0jmh")
 
 [node name="Physical Bone DEF_PANEL_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="17"]
-transform = Transform3D(-0.942471, 0.334287, -3.04401e-07, -1.71699e-07, 4.26517e-07, 1, 0.334287, 0.942471, -3.44583e-07, -0.471024, -5.69436e-09, -0.200705)
+transform = Transform3D(-0.942471, 0.334287, -3.03132e-07, -1.71143e-07, 4.24291e-07, 1, 0.334287, 0.942471, -3.42671e-07, -0.471024, -5.69436e-09, -0.200705)
 collision_layer = 512
 collision_mask = 3
 joint_type = 3
-body_offset = Transform3D(1, 0.000166804, 1.12516e-07, -0.000166833, 1, -5.48315e-07, -5.64062e-08, 5.80166e-07, 1, 0, 0, 0)
+body_offset = Transform3D(1, 0.000166774, 1.1196e-07, -0.000166833, 1, -5.46089e-07, -5.58495e-08, 5.77939e-07, 1, 0, 0, 0)
 angular_damp = 25.0
 bone_name = "DEF_PANEL.R"
 joint_constraints/angular_limit_enabled = true
@@ -864,7 +894,7 @@ amount = 10
 preprocess = 2.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_c0e6q")
-draw_pass_1 = ExtResource("7_1tsr1")
+draw_pass_1 = SubResource("ArrayMesh_lfxu6")
 
 [node name="SmokeParticles3D" type="GPUParticles3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY" index="2"]
 amount = 25

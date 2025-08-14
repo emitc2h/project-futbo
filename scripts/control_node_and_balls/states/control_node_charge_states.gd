@@ -14,6 +14,7 @@ var state: State = State.NONE
 
 ## State transition constants
 const TRANS_CHARGE_UP: String = "charge up"
+const TRANS_CHARGE_DOWN: String = "charge down"
 const TRANS_DISCHARGE: String = "discharge"
 
 func _ready() -> void:

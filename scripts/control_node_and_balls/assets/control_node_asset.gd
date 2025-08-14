@@ -29,7 +29,7 @@ var aura_material: StandardMaterial3D
 var power_on: bool = false
 const blue: Color = Color.STEEL_BLUE
 const black: Color = Color.BLACK
-const magenta: Color = Color.MAGENTA
+const magenta: Color = Color.LIGHT_PINK
 
 signal power_up_finished
 
@@ -307,10 +307,10 @@ func turn_off_ready_sphere() -> void:
 	aura_mesh.visible = true
 
 func blue_wisps() -> void:
-	wisps_particles.process_material.set("color", blue)
+	wisps_particles.process_material.color = blue
 	wisps_particles.emitting = true
 
 
 func magenta_wisps() -> void:
-	wisps_particles.process_material.set("color", magenta)
+	wisps_particles.process_material.color = magenta
 	wisps_particles.emitting = true
