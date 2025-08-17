@@ -84,7 +84,7 @@ func _on_block_bt_finished(status: int) -> void:
 #----------------------------------------
 func _on_attack_state_entered() -> void:
 	state = State.ATTACK
-	sc.send_event(attack_states.TRANS_RAM_ATTACK_TO_TRACK)
+	sc.send_event(attack_states.TRANS_TO_TRACK)
 	
 	## Zoom out
 	Signals.update_zoom.emit(Enums.Zoom.FAR)

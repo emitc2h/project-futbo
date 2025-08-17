@@ -28,6 +28,7 @@ func _ready() -> void:
 #----------------------------------------
 func _on_none_state_entered() -> void:
 	state = State.NONE
+	Signals.updated_control_node_charge_level.emit(state)
 	asset.discharge()
 	lose_charge_timer.stop()
 
@@ -36,6 +37,7 @@ func _on_none_state_entered() -> void:
 #----------------------------------------
 func _on_level_1_state_entered() -> void:
 	state = State.LEVEL1
+	Signals.updated_control_node_charge_level.emit(state)
 	asset.charge_level_1()
 	lose_charge_timer.start()
 
@@ -44,6 +46,7 @@ func _on_level_1_state_entered() -> void:
 #----------------------------------------
 func _on_level_2_state_entered() -> void:
 	state = State.LEVEL2
+	Signals.updated_control_node_charge_level.emit(state)
 	asset.charge_level_2()
 	lose_charge_timer.start()
 
@@ -52,6 +55,7 @@ func _on_level_2_state_entered() -> void:
 #----------------------------------------
 func _on_level_3_state_entered() -> void:
 	state = State.LEVEL3
+	Signals.updated_control_node_charge_level.emit(state)
 	asset.charge_level_3()
 	asset.turn_on_ready_sphere()
 	Signals.control_node_is_charged.emit()

@@ -19,6 +19,7 @@ var can_run_backward: bool = false
 @export var jump_momentum: float = 4.7
 
 @onready var player_basic_movement: PlayerBasicMovement = $PlayerBasicMovement
+@onready var target_marker: Marker3D = $TargetMarker
 
 # Animation handles
 @export_group("Animation Handles")
@@ -30,6 +31,8 @@ var can_run_backward: bool = false
 			return 0.0
 	set(value):
 		run(value)
+
+var is_dribbling: bool = false
 
 
 #=======================================================

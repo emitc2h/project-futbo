@@ -10,6 +10,7 @@ extends Node3D
 @export var direction_faced_states: DroneDirectionFacedStates
 @export var engagement_mode_states: DroneEngagementModeStates
 @export var engines_states: DroneEnginesStates
+@export var spinners_states: DroneSpinnersStates
 @export var vulnerability_states: DroneVulnerabilityStates
 
 @export_subgroup("Monitoring State Machines")
@@ -196,6 +197,19 @@ func reset_engines() -> void:
 	sc.send_event(engines_states.TRANS_STOPPING_TO_OFF)
 
 
+## Spinner Controls
+## ---------------------------------------
+signal fire_finished(id: int)
+
+func fire(id: int = 0) -> void:
+	if anim_state.get_current_node() in ["idle", "targeting"]:
+		sc.send_event(spinners_states.TRANS_TO_CHARGING)
+		await spinners_states.fire_finished
+		fire_finished.emit(id)
+	else:
+		fire_finished.emit(id)
+
+
 ## Vulnerability Controls
 ## ---------------------------------------
 func become_vulnerable() -> void:
@@ -241,8 +255,8 @@ func disable_proximity_detector() -> void:
 ## Hitbox
 ## ---------------------------------------
 func die(force: Vector3) -> void:
-	if vulnerability_states.state != vulnerability_states.State.INVULNERABLE:
-		model.die_particles()
+	if vulnerability_states.state == vulnerability_states.State.VULNERABLE:
+		model.die()
 		sc.send_event(physics_mode_states.TRANS_CHAR_TO_RAGDOLL)
 		model.body_bone.apply_central_impulse(force * 5.0)
 
@@ -268,6 +282,7 @@ func generate_state_report() -> String:
 	output += "Direction Faced : " + direction_faced_states.State.keys()[direction_faced_states.state] + "\n"
 	output += "Engagement Mode : " + engagement_mode_states.State.keys()[engagement_mode_states.state] + "\n"
 	output += "Engines : " + engines_states.State.keys()[engines_states.state] + "\n"
+	output += "Spinners : " + spinners_states.State.keys()[spinners_states.state] + "\n"
 	output += "Vulnerability : " + vulnerability_states.State.keys()[vulnerability_states.state] + "\n"
 	output += "Targeting : " + targeting_states.State.keys()[targeting_states.state] + "\n"
 	output += "Behavior : " + behavior_states.State.keys()[behavior_states.state] + "\n"

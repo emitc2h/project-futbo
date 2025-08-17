@@ -54,6 +54,7 @@ signal player_long_kick_ready
 ## ===================================== ##
 ## CONTROL NODE SIGNALS                  ##
 ## ------------------------------------- ##
+signal updated_control_node_charge_level(level: ControlNodeChargeStates.State)
 signal control_node_is_charged
 signal control_node_is_discharged
 

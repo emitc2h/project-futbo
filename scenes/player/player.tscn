@@ -1,21 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmyk1j8j3wpex"]
+[gd_scene load_steps=9 format=3 uid="uid://dmyk1j8j3wpex"]
 
 [ext_resource type="Script" uid="uid://2wf3c53vuykj" path="res://scripts/player/player.gd" id="1_hcsbr"]
 [ext_resource type="PackedScene" uid="uid://cneunrl3vngmw" path="res://scenes/player/abilities/basic_movement/player_basic_movement.tscn" id="2_6m232"]
 [ext_resource type="PackedScene" uid="uid://ce6sf1a6oipvf" path="res://scenes/player/abilities/kick/player_kick_ability.tscn" id="3_t2xeb"]
 [ext_resource type="PackedScene" uid="uid://bglgmij4c45oh" path="res://scenes/player/abilities/dribble/player_dribble_ability.tscn" id="4_0pbqm"]
 [ext_resource type="PackedScene" uid="uid://c28xkt5r3qdsr" path="res://scenes/player/abilities/headbutt/player_headbutt_ability.tscn" id="5_tkrpe"]
+[ext_resource type="PackedScene" uid="uid://fgg78lg0p617" path="res://scenes/characters/Character1/character_asset.tscn" id="6_0owmy"]
+[ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player/controller.tscn" id="7_qek5x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tkrpe"]
 radius = 0.25476
 height = 1.47402
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("asset")]
 collision_mask = 770
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 script = ExtResource("1_hcsbr")
+asset = NodePath("CharacterAsset")
 jump_momentum = 5.0
 
 [node name="PlayerBasicMovement" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_6m232")]
@@ -34,3 +37,12 @@ player = NodePath("..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.993783, 0, -0.11133, 0, 1, 0, 0.11133, 0, 0.993783, 0, 0.734811, 0)
 shape = SubResource("CapsuleShape3D_tkrpe")
+
+[node name="CharacterAsset" parent="." instance=ExtResource("6_0owmy")]
+
+[node name="Controller" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_qek5x")]
+player = NodePath("..")
+enabled = true
+
+[node name="TargetMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00116658, 1.06277, 0)

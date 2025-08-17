@@ -1,4 +1,3 @@
-@tool
 class_name AnimationStateChangeTracker
 extends Node
 
@@ -9,6 +8,7 @@ var current_node: String = ""
 var current_fading_node: String = ""
 
 @export var state_machine_path: String
+@export var printout: bool = false
 
 signal anim_state_finished(anim_name: String)
 signal anim_state_started(anim_name: String)
@@ -37,14 +37,23 @@ func _physics_process(delta: float) -> void:
 	var new_current_node: String = sm.get_current_node()
 	var new_current_fading_node: String = sm.get_fading_from_node()
 	
+	if printout:
+		print(current_node, " -> ", new_current_node, " | ", current_fading_node, " -> ", new_current_fading_node)
+	
 	if new_current_node != current_node:
 		## When the outgoing animation doesn't have a crossfade
-		if new_current_fading_node == "":
+		if new_current_fading_node != current_node:
 			anim_state_finished.emit(current_node)
+			if printout:
+				print("finished: ", current_node)
 		anim_state_started.emit(new_current_node)
+		if printout:
+			print("started: ", new_current_node)
 	current_node = new_current_node
 	
 	## When the outgoing animation has a crossfade
-	if current_fading_node != "" and new_current_fading_node == "":
+	if current_fading_node != new_current_fading_node:
 		anim_state_finished.emit(current_fading_node)
+		if printout:
+			print("finished: ", current_fading_node)
 	current_fading_node = new_current_fading_node

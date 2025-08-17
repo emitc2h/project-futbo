@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://invfr68fmeed"]
+
+[ext_resource type="Script" uid="uid://cwk5rr6qkn52l" path="res://scripts/enemies/drone/drone_plasma_bolt.gd" id="1_8q3t1"]
+[ext_resource type="PackedScene" uid="uid://dd3qiywytn0rt" path="res://scenes/enemies/drone/models/drone_plasma_bolt_model.tscn" id="1_357h2"]
+[ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_mjux0"]
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_xtwlp"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_fjnq5"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_kyqan"]
+
+[node name="DronePlasmaBolt" type="Node3D"]
+script = ExtResource("1_8q3t1")
+
+[node name="DronePlasmaBoltModel" parent="." instance=ExtResource("1_357h2")]
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 8, 0)
+collision_mask = 3
+debug_shape_custom_color = Color(0.234374, 0.379617, 1, 1)
+debug_shape_thickness = 5
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("3_mjux0")
+metadata/_custom_type_script = "uid://cmlfnal2o37ys"
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("4_xtwlp")
+initial_state = NodePath("off")
+
+[node name="off" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_fjnq5")
+
+[node name="to fire" type="Node" parent="StateChart/Root/off"]
+script = ExtResource("6_kyqan")
+to = NodePath("../../fire")
+event = &"to fire"
+delay_in_seconds = "0.0"
+
+[node name="fire" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_fjnq5")
+
+[node name="to hit" type="Node" parent="StateChart/Root/fire"]
+script = ExtResource("6_kyqan")
+to = NodePath("../../hit")
+event = &"to hit"
+delay_in_seconds = "0.0"
+
+[node name="to miss" type="Node" parent="StateChart/Root/fire"]
+script = ExtResource("6_kyqan")
+to = NodePath("../../miss")
+event = &"to miss"
+delay_in_seconds = "0.0"
+
+[node name="hit" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_fjnq5")
+
+[node name="to off" type="Node" parent="StateChart/Root/hit"]
+script = ExtResource("6_kyqan")
+to = NodePath("../../off")
+event = &"to off"
+delay_in_seconds = "0.0"
+
+[node name="miss" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_fjnq5")
+
+[node name="to off" type="Node" parent="StateChart/Root/miss"]
+script = ExtResource("6_kyqan")
+to = NodePath("../../off")
+event = &"to off"
+delay_in_seconds = "0.0"
+
+[connection signal="state_entered" from="StateChart/Root/off" to="." method="_on_off_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/fire" to="." method="_on_fire_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/fire" to="." method="_on_fire_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/hit" to="." method="_on_hit_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/miss" to="." method="_on_miss_state_entered"]

@@ -1,0 +1,35 @@
+[gd_resource type="BehaviorTree" load_steps=11 format=3 uid="uid://nlwtwirr4cbo"]
+
+[ext_resource type="Script" uid="uid://cetf63fmdqa02" path="res://ai/tasks/drone/set_vulnerability_action.gd" id="1_te6m7"]
+[ext_resource type="Script" uid="uid://bpgtq3hrfkxtw" path="res://ai/tasks/drone/track_target_action.gd" id="2_fn3vr"]
+[ext_resource type="Script" uid="uid://biv05ve7fy8oe" path="res://ai/tasks/drone/beam_attack_action.gd" id="2_te6m7"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_fd817"]
+
+[sub_resource type="BTAction" id="BTAction_xjy0s"]
+script = ExtResource("1_te6m7")
+vuln_type = "vulnerable"
+
+[sub_resource type="BTAction" id="BTAction_te6m7"]
+script = ExtResource("2_te6m7")
+check_signal_id = true
+async = false
+
+[sub_resource type="BTAction" id="BTAction_7xg1u"]
+script = ExtResource("1_te6m7")
+vuln_type = "defendable"
+
+[sub_resource type="BTSequence" id="BTSequence_62g8w"]
+children = [SubResource("BTAction_xjy0s"), SubResource("BTAction_te6m7"), SubResource("BTAction_7xg1u")]
+
+[sub_resource type="BTAction" id="BTAction_x1psn"]
+script = ExtResource("2_fn3vr")
+default_offset = 6.0
+cautious_offset = 6.0
+
+[sub_resource type="BTParallel" id="BTParallel_xjy0s"]
+children = [SubResource("BTSequence_62g8w"), SubResource("BTAction_x1psn")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_fd817")
+root_task = SubResource("BTParallel_xjy0s")

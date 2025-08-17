@@ -1,28 +1,76 @@
 class_name DroneModel
 extends Node3D
 
+## Inject drone dependency to pass it to the physical bones
 @export var drone: Drone
 
+## Animation Managers
+@onready var em_spinners_animations: DroneEMSpinnersAnimation = $EMSpinnersAnimation
+
+## Main Drone Model Mesh
+@onready var drone_mesh: MeshInstance3D = $Armature/Skeleton3D/drone
+
+## Animation Tree
 @onready var anim_tree: AnimationTree = $AnimationTree
+var anim_state: AnimationNodeStateMachinePlayback
+
+## Bones
 @onready var physical_bones: PhysicalBoneSimulator3D = $Armature/Skeleton3D/PhysicalBoneSimulator3D
 @onready var body_bone: PhysicalBone3D = $"Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY"
+
+## Particle Systems
 @onready var lightning_particles: GPUParticles3D = $"Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY/LightningParticles3D"
 @onready var smoke_particles: GPUParticles3D = $"Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY/SmokeParticles3D"
 
-var anim_state: AnimationNodeStateMachinePlayback
+## Look-at Modifiers
+@onready var lookat_modifier_left: LookAtModifier3D = $Armature/Skeleton3D/LookAtModifierLeft
+@onready var lookat_modifier_right: LookAtModifier3D = $Armature/Skeleton3D/LookAtModifierRight
 
-## Decide which state to aim for after opening up
+## Plasma bolts
+@onready var plasma_bolt_left: DronePlasmaBolt = $Armature/Skeleton3D/DronePlasmaBoltLeft
+@onready var plasma_bolt_right: DronePlasmaBolt = $Armature/Skeleton3D/DronePlasmaBoltRight
+
+## Animation Tree Gates
+# Decide which state to aim for after opening up
 var trans_openup_to_idle_opened: bool = true
 var trans_openup_to_targeting_opened: bool = false
 
-## Decide which state to aim for after stopping thrust
+# Decide which state to aim for after stopping thrust
 var trans_stopthrust_to_idle_opened: bool = true
 var trans_stopthrust_to_targeting_opened: bool = false
 
-## Decide which state to aim for after firing
+# Decide which state to aim for after firing
 var trans_fire_to_idle_opened: bool = true
 var trans_fire_to_targeting_opened: bool = false
 
+## Signals
+signal anim_state_finished(anim_name: String)
+signal anim_state_started(anim_name: String)
+
+
+func _ready() -> void:
+	## Initialize lightning particles
+	lightning_particles.emitting = false
+	lightning_particles.amount_ratio = 0.0
+	
+	## Initialize smoke particles
+	smoke_particles.emitting = false
+	smoke_particles.amount_ratio = 0.0
+	
+	## Initialize state machine
+	anim_state = anim_tree.get("parameters/playback")
+
+	
+	## Connect signals
+	$AnimationTree/AnimationStateChangeTracker.anim_state_finished.connect(_on_anim_state_finished)
+	$AnimationTree/AnimationStateChangeTracker.anim_state_started.connect(_on_anim_state_started)
+
+	for bone in physical_bones.get_children():
+		bone.drone = drone
+
+
+## Animation Tree Path Controls
+## ---------------------------------------
 func open_paths_to_targeting() -> void:
 	trans_openup_to_idle_opened = false
 	trans_stopthrust_to_idle_opened = false
@@ -42,23 +90,9 @@ func open_paths_to_idle() -> void:
 	trans_stopthrust_to_targeting_opened = false
 	trans_fire_to_targeting_opened = false
 
-## More reliable animation signals
-signal anim_state_finished(anim_name: String)
-signal anim_state_started(anim_name: String)
 
-func _ready() -> void:
-	lightning_particles.emitting = false
-	lightning_particles.amount_ratio = 0.0
-	smoke_particles.emitting = false
-	smoke_particles.amount_ratio = 0.0
-	anim_state = anim_tree.get("parameters/playback")
-	$AnimationTree/AnimationStateChangeTracker.anim_state_finished.connect(_on_anim_state_finished)
-	$AnimationTree/AnimationStateChangeTracker.anim_state_started.connect(_on_anim_state_started)
-
-	for bone in physical_bones.get_children():
-		bone.drone = drone
-
-
+## Signals
+## ---------------------------------------
 func _on_anim_state_finished(anim_name: String) -> void:
 	anim_state_finished.emit(anim_name)
 
@@ -67,9 +101,11 @@ func _on_anim_state_started(anim_name: String) -> void:
 	anim_state_started.emit(anim_name)
 
 
-## Controls
+## Animations
 ## ---------------------------------------
-func die_particles() -> void:
+func die() -> void:
+	em_spinners_animations.turn_off()
+	
 	lightning_particles.emitting = true
 	lightning_particles.amount_ratio = 1.0
 	var lightning_tween: Tween = get_tree().create_tween()
@@ -86,3 +122,34 @@ func die_particles() -> void:
 	
 	await smoke_tween.finished
 	smoke_particles.emitting = false
+
+
+func charge_spinners(duration: float) -> void:
+	em_spinners_animations.charge(duration)
+
+
+func fire_spinners(duration: float) -> void:
+	em_spinners_animations.fire(duration)
+	plasma_bolt_left.fire()
+	plasma_bolt_right.fire()
+
+
+## Spinners Targeting
+## ----------------------------------------
+func spinners_acquire_target(target: Node3D) -> void:
+	lookat_modifier_left.target_node = target.get_path()
+	lookat_modifier_right.target_node = target.get_path()
+
+
+func spinners_engage_target() -> void:
+	lookat_modifier_left.active = true
+	lookat_modifier_left.influence = 1.0
+	lookat_modifier_right.active = true
+	lookat_modifier_right.influence = 1.0
+
+
+func spinners_disengage_target() -> void:
+	lookat_modifier_left.active = false
+	lookat_modifier_left.influence = 0.0
+	lookat_modifier_right.active = false
+	lookat_modifier_right.influence = 0.0

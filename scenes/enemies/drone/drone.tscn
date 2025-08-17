@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://bc323ftwy8i7t"]
+[gd_scene load_steps=58 format=3 uid="uid://bc323ftwy8i7t"]
 
 [ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone.gd" id="1_irn00"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_g2as1"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://cn8skwd81rq27" path="res://scripts/enemies/drone/states/drone_targeting_states.gd" id="11_wmq8b"]
 [ext_resource type="Script" uid="uid://dqr71asyjiu46" path="res://scripts/enemies/drone/drone_field_of_view.gd" id="12_0sc46"]
 [ext_resource type="Script" uid="uid://c2e3ru6va1vkg" path="res://scripts/enemies/drone/states/drone_vulnerability_states.gd" id="12_43bu3"]
+[ext_resource type="Script" uid="uid://dhflbfkisqwcd" path="res://scripts/enemies/drone/states/drone_spinners_states.gd" id="12_adu0m"]
 [ext_resource type="Script" uid="uid://djscy8uidfy3g" path="res://scripts/enemies/drone/states/drone_position_states.gd" id="12_glddf"]
 [ext_resource type="Script" uid="uid://bjs30qhms2c1n" path="res://scripts/enemies/drone/states/drone_behavior_states.gd" id="12_r1v31"]
 [ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/utilities/behavior_tree/behavior_manager.gd" id="12_voq0c"]
@@ -34,6 +35,8 @@
 [ext_resource type="BehaviorTree" uid="uid://begvv6rs4ydt5" path="res://ai/trees/enemies/drone/drone_attack_track_pre_tree.tres" id="26_x77yf"]
 [ext_resource type="PackedScene" uid="uid://qcbmkep1csam" path="res://scenes/enemies/drone/drone_shield.tscn" id="27_fv7v3"]
 [ext_resource type="BehaviorTree" uid="uid://cndng00i0jfr3" path="res://ai/trees/enemies/drone/drone_attack_ram_attack_pre_tree.tres" id="28_ebp85"]
+[ext_resource type="BehaviorTree" uid="uid://nlwtwirr4cbo" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_tree.tres" id="30_0fgvh"]
+[ext_resource type="BehaviorTree" uid="uid://dgk4we0m2af0" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_pre_tree.tres" id="30_sikjo"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_doilr"]
 
@@ -54,6 +57,10 @@
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_h1ejm"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_adu0m"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_sikjo"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_0fgvh"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fv7v3"]
 radius = 0.507499
@@ -90,12 +97,13 @@ margin = 0.1
 radius = 1.3
 height = 3.0
 
-[node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_states", "behavior_attack_states")]
+[node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_states", "behavior_attack_states")]
 script = ExtResource("1_irn00")
 physics_mode_states = NodePath("State/Root/Physics/Physics States")
 direction_faced_states = NodePath("State/Root/Direction Faced/Direction Faced States")
 engagement_mode_states = NodePath("State/Root/Engagement Mode/Engagement Mode States")
 engines_states = NodePath("State/Root/Engines/Engines States")
+spinners_states = NodePath("State/Root/Spinners/Spinners States")
 vulnerability_states = NodePath("State/Root/Vulnerability/Vulnerability States")
 targeting_states = NodePath("State/Root/Monitoring/Targeting/Targeting States")
 proximity_states = NodePath("State/Root/Monitoring/Proximity/Proximity States")
@@ -379,6 +387,49 @@ script = ExtResource("5_voq0c")
 script = ExtResource("6_doilr")
 to = NodePath("../../off")
 event = &"Engines: stopping to off"
+delay_in_seconds = "0.0"
+
+[node name="Spinners" type="Node" parent="State/Root"]
+script = ExtResource("4_kl701")
+initial_state = NodePath("off")
+
+[node name="Spinners States" type="Node" parent="State/Root/Spinners" node_paths=PackedStringArray("drone", "sc", "model")]
+script = ExtResource("12_adu0m")
+drone = NodePath("../../../..")
+sc = NodePath("../../..")
+model = NodePath("../../../../TrackTransformContainer/DroneModel")
+
+[node name="off" type="Node" parent="State/Root/Spinners"]
+script = ExtResource("5_voq0c")
+
+[node name="to charging" type="Node" parent="State/Root/Spinners/off"]
+script = ExtResource("6_doilr")
+to = NodePath("../../charging")
+event = &"Spinners: to charging"
+delay_in_seconds = "0.0"
+
+[node name="charging" type="Node" parent="State/Root/Spinners"]
+script = ExtResource("5_voq0c")
+
+[node name="to fire" type="Node" parent="State/Root/Spinners/charging"]
+script = ExtResource("6_doilr")
+to = NodePath("../../fire")
+event = &"Spinners: to fire"
+delay_in_seconds = "0.0"
+
+[node name="to off" type="Node" parent="State/Root/Spinners/charging"]
+script = ExtResource("6_doilr")
+to = NodePath("../../off")
+event = &"Spinners: to off"
+delay_in_seconds = "0.0"
+
+[node name="fire" type="Node" parent="State/Root/Spinners"]
+script = ExtResource("5_voq0c")
+
+[node name="to off" type="Node" parent="State/Root/Spinners/fire"]
+script = ExtResource("6_doilr")
+to = NodePath("../../off")
+event = &"Spinners: to off"
 delay_in_seconds = "0.0"
 
 [node name="Vulnerability" type="Node" parent="State/Root"]
@@ -707,12 +758,13 @@ script = ExtResource("5_voq0c")
 script = ExtResource("4_kl701")
 initial_state = NodePath("track")
 
-[node name="Attack States" type="Node" parent="State/Root/Behavior/attack" node_paths=PackedStringArray("drone", "sc", "behavior_states", "targeting_states")]
+[node name="Attack States" type="Node" parent="State/Root/Behavior/attack" node_paths=PackedStringArray("drone", "sc", "behavior_states", "targeting_states", "internal_representation")]
 script = ExtResource("15_unmda")
 drone = NodePath("../../../../..")
 sc = NodePath("../../../..")
 behavior_states = NodePath("../../Behavior States")
 targeting_states = NodePath("../../../Monitoring/Targeting/Targeting States")
+internal_representation = NodePath("../../../../../InternalRepresentation")
 
 [node name="track" type="Node" parent="State/Root/Behavior/attack"]
 script = ExtResource("5_voq0c")
@@ -739,6 +791,12 @@ to = NodePath("../../ram attack")
 event = &"Attack: track to ram attack"
 delay_in_seconds = "0.0"
 
+[node name="to beam attack" type="Node" parent="State/Root/Behavior/attack/track"]
+script = ExtResource("6_doilr")
+to = NodePath("../../beam attack")
+event = &"Attack: track to beam attack"
+delay_in_seconds = "0.0"
+
 [node name="ram attack" type="Node" parent="State/Root/Behavior/attack"]
 script = ExtResource("5_voq0c")
 
@@ -761,7 +819,7 @@ blackboard_plan = SubResource("BlackboardPlan_adu0m")
 [node name="to track" type="Node" parent="State/Root/Behavior/attack/ram attack"]
 script = ExtResource("6_doilr")
 to = NodePath("../../track")
-event = &"Behavior: ram attack to track"
+event = &"Behavior: to track"
 delay_in_seconds = "0.0"
 
 [node name="to go to patrol" type="Node" parent="State/Root/Behavior/attack"]
@@ -775,6 +833,31 @@ script = ExtResource("6_doilr")
 to = NodePath("../../block")
 event = &"Behavior: attack to block"
 delay_in_seconds = "0.0"
+
+[node name="beam attack" type="Node" parent="State/Root/Behavior/attack"]
+script = ExtResource("5_voq0c")
+
+[node name="to track" type="Node" parent="State/Root/Behavior/attack/beam attack"]
+script = ExtResource("6_doilr")
+to = NodePath("../../track")
+event = &"Behavior: to track"
+delay_in_seconds = "0.0"
+
+[node name="BehaviorManager" type="Node" parent="State/Root/Behavior/attack/beam attack"]
+script = ExtResource("12_voq0c")
+metadata/_custom_type_script = "uid://d4epqky6heqvb"
+
+[node name="BTPlayer" type="BTPlayer" parent="State/Root/Behavior/attack/beam attack/BehaviorManager"]
+behavior_tree = ExtResource("30_0fgvh")
+agent_node = NodePath("../../../../../../..")
+active = false
+blackboard_plan = SubResource("BlackboardPlan_sikjo")
+
+[node name="PreBTPlayer" type="BTPlayer" parent="State/Root/Behavior/attack/beam attack/BehaviorManager"]
+behavior_tree = ExtResource("30_sikjo")
+agent_node = NodePath("../../../../../../..")
+active = false
+blackboard_plan = SubResource("BlackboardPlan_0fgvh")
 
 [node name="CharNode" type="CharacterBody3D" parent="."]
 collision_layer = 0
@@ -818,6 +901,66 @@ drone = NodePath("../..")
 
 [node name="DroneModel" parent="TrackTransformContainer" node_paths=PackedStringArray("drone") instance=ExtResource("11_glddf")]
 drone = NodePath("../..")
+
+[node name="Physical Bone DEF_VERTEBRAE_01_T" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="1"]
+transform = Transform3D(-3.1926e-07, 1.37262e-07, 1, -0.200047, 0.979786, -1.98354e-07, -0.979786, -0.200047, -2.85348e-07, -7.33771e-08, -1.32822e-08, 0.512002)
+body_offset = Transform3D(1, 9.38773e-07, 4.83309e-08, -1.10269e-06, 1, -4.42464e-08, 2.19925e-08, -2.22983e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_02_T" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="2"]
+transform = Transform3D(-2.75281e-07, 2.2618e-07, 1, -0.559766, 0.828651, -3.41517e-07, -0.828651, -0.559766, -1.01504e-07, -4.48028e-08, 0.200705, 0.471023)
+body_offset = Transform3D(1, 8.04663e-07, 8.09855e-08, -8.34465e-07, 1, -3.4121e-08, 1.77059e-09, 1.80942e-08, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_03_T" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="3"]
+transform = Transform3D(-7.54247e-08, 1.89951e-07, 1, -0.828684, 0.559717, -1.68822e-07, -0.559717, -0.828684, 1.15193e-07, -4.28928e-09, 0.36204, 0.362039)
+body_offset = Transform3D(1, 5.68926e-05, 7.83432e-08, -5.68926e-05, 1, 1.52094e-08, 4.41281e-09, 8.17856e-10, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_PANEL_T" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="4"]
+transform = Transform3D(-1.03882e-07, 7.98833e-08, 1, -0.942415, -0.334445, -7.1183e-08, 0.334445, -0.942415, 1.10026e-07, 3.2535e-08, 0.471024, 0.200704)
+body_offset = Transform3D(1, 7.7486e-07, 3.5009e-08, -8.04663e-07, 1, 8.11858e-08, 1.22888e-09, -5.0791e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_01_B" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="5"]
+transform = Transform3D(-7.30474e-08, -5.96676e-08, -1, 0.200044, -0.979787, 4.38488e-08, -0.979787, -0.200044, 8.3507e-08, -7.33771e-08, 8.61776e-09, 0.512002)
+body_offset = Transform3D(1, 2.98023e-08, -4.62663e-08, 2.98023e-08, 1, -6.56081e-08, -2.09987e-10, -4.71532e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_02_B" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="6"]
+transform = Transform3D(-5.16505e-08, -8.73187e-08, -1, 0.559765, -0.828651, 4.34446e-08, -0.828651, -0.559765, 9.16783e-08, -8.65657e-08, -0.200705, 0.471024)
+body_offset = Transform3D(1, 3.57628e-07, -1.55714e-08, -3.27826e-07, 1, -8.26902e-08, -4.55429e-10, -6.59206e-11, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_03_B" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="7"]
+transform = Transform3D(3.53238e-08, 1.42578e-07, -1, 0.828655, -0.55976, -5.05381e-08, -0.55976, -0.828655, -1.37921e-07, -1.03579e-07, -0.36204, 0.36204)
+body_offset = Transform3D(1, 5.99027e-06, 1.65911e-08, -6.02007e-06, 1, -8.27934e-08, -5.64235e-10, 3.73674e-11, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_PANEL_B" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="8"]
+transform = Transform3D(1.3279e-08, 1.61153e-07, -1, 0.942416, 0.334444, 6.64108e-08, 0.334444, -0.942416, -1.47432e-07, -7.58126e-08, -0.471024, 0.200705)
+body_offset = Transform3D(1, -5.36442e-07, 7.61285e-08, 5.06639e-07, 1, -3.63172e-08, -2.1803e-11, 7.93108e-11, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_01_L" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="10"]
+transform = Transform3D(-0.200045, 0.979787, -1.34221e-07, -7.3069e-07, -1.2197e-08, 1, 0.979787, 0.200045, 7.1836e-07, 1.36317e-07, -4.68125e-16, -0.512002)
+body_offset = Transform3D(1, 3.42727e-07, 6.48443e-07, -3.57628e-07, 1, 1.17073e-07, -7.3069e-07, -4.19993e-08, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_03_L" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="12"]
+transform = Transform3D(-0.82865, 0.559767, -1.04378e-06, -1.09531e-06, 2.4323e-07, 1, 0.559767, 0.82865, 4.11569e-07, 0.362041, 8.64998e-09, -0.36204)
+body_offset = Transform3D(1, -2.98023e-06, 1.03106e-06, 3.06964e-06, 1, -1.52765e-07, -1.14235e-06, 1.48821e-07, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_PANEL_L" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="13"]
+transform = Transform3D(-0.94242, -0.334432, 6.72942e-07, 5.15845e-07, 5.58558e-07, 1, -0.334432, 0.94242, -3.53881e-07, 0.471024, 2.7031e-08, -0.200705)
+body_offset = Transform3D(1, -1.41561e-05, -5.20171e-07, 1.42455e-05, 1, -6.35545e-07, 4.57281e-07, 5.43644e-07, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_01_R" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="14"]
+transform = Transform3D(-0.200051, -0.979786, 1.80117e-08, -3.88033e-08, 2.63061e-08, 1, -0.979786, 0.200051, -4.32815e-08, 1.09793e-07, 4.43217e-16, -0.512002)
+body_offset = Transform3D(1, -5.49853e-06, 2.3785e-07, 5.54323e-06, 1, 5.47228e-08, -2.77222e-07, -3.4949e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_02_R" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="15"]
+transform = Transform3D(-0.559764, -0.828652, -6.96735e-07, -1.1717e-06, -4.93107e-08, 1, -0.828652, 0.559764, -9.43326e-07, -0.200705, 6.10489e-09, -0.471024)
+body_offset = Transform3D(1, 9.23872e-07, 1.28146e-06, -8.34465e-07, 1, 6.83884e-08, -1.29823e-06, -5.99567e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_03_R" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="16"]
+transform = Transform3D(-0.828652, -0.559764, -5.96343e-06, -7.51836e-06, 4.76404e-07, 1, -0.559764, 0.828652, -4.60327e-06, -0.36204, -2.32839e-09, -0.36204)
+body_offset = Transform3D(1, -1.37091e-06, 7.57527e-06, 1.3113e-06, 1, -4.29538e-07, -7.56753e-06, 4.93693e-07, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_PANEL_R" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="17"]
+transform = Transform3D(-0.942432, 0.334399, -1.85852e-07, -2.16908e-07, -5.5531e-08, 1, 0.334399, 0.942432, 1.24868e-07, -0.471024, -5.69436e-09, -0.200705)
+body_offset = Transform3D(1, 4.8697e-05, 1.57799e-07, -4.87566e-05, 1, -6.62487e-08, -1.01597e-07, 9.81039e-08, 1, 0, 0, 0)
 
 [node name="FieldOfView" type="Node3D" parent="TrackTransformContainer"]
 script = ExtResource("12_0sc46")
@@ -893,6 +1036,11 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [connection signal="taken" from="State/Root/Engines/burst/to quick off" to="State/Root/Engines/Engines States" method="_on_burst_to_quick_off_taken"]
 [connection signal="taken" from="State/Root/Engines/burst/to thrust" to="State/Root/Engines/Engines States" method="_on_burst_to_thrust_taken"]
 [connection signal="state_entered" from="State/Root/Engines/stopping" to="State/Root/Engines/Engines States" method="_on_stopping_state_entered"]
+[connection signal="state_entered" from="State/Root/Spinners/off" to="State/Root/Spinners/Spinners States" method="_on_off_state_entered"]
+[connection signal="state_entered" from="State/Root/Spinners/charging" to="State/Root/Spinners/Spinners States" method="_on_charging_state_entered"]
+[connection signal="taken" from="State/Root/Spinners/charging/to off" to="State/Root/Spinners/Spinners States" method="_on_to_off_taken"]
+[connection signal="state_entered" from="State/Root/Spinners/fire" to="State/Root/Spinners/Spinners States" method="_on_fire_state_entered"]
+[connection signal="taken" from="State/Root/Spinners/fire/to off" to="State/Root/Spinners/Spinners States" method="_on_to_off_taken"]
 [connection signal="state_entered" from="State/Root/Vulnerability/invulnerable" to="State/Root/Vulnerability/Vulnerability States" method="_on_invulnerable_state_entered"]
 [connection signal="state_entered" from="State/Root/Vulnerability/defendable" to="State/Root/Vulnerability/Vulnerability States" method="_on_defendable_state_entered"]
 [connection signal="state_entered" from="State/Root/Vulnerability/vulnerable" to="State/Root/Vulnerability/Vulnerability States" method="_on_vulnerable_state_entered"]
@@ -925,4 +1073,8 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [connection signal="state_entered" from="State/Root/Behavior/attack/ram attack" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_state_entered"]
 [connection signal="state_exited" from="State/Root/Behavior/attack/ram attack" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_state_exited"]
 [connection signal="finished" from="State/Root/Behavior/attack/ram attack/BehaviorManager" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_bt_finished"]
+[connection signal="state_entered" from="State/Root/Behavior/attack/beam attack" to="State/Root/Behavior/attack/Attack States" method="_on_beam_attack_state_entered"]
+[connection signal="behavior_tree_finished" from="State/Root/Behavior/attack/beam attack/BehaviorManager/BTPlayer" to="State/Root/Behavior/attack/Attack States" method="_on_beam_attack_bt_finished"]
 [connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]
+
+[editable path="TrackTransformContainer/DroneModel"]

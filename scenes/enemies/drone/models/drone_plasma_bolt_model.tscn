@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dd3qiywytn0rt"]
+
+[ext_resource type="PackedScene" uid="uid://cmqskx1alufnj" path="res://assets/3D/Enemies/Drone/drone_bolt.glb" id="1_dvdjj"]
+[ext_resource type="Material" uid="uid://bkhlca22tyfnh" path="res://assets/3D/Enemies/Drone/materials/drone_plasma_bolt_material.tres" id="2_14qjs"]
+
+[node name="DronePlasmaBoltModel" instance=ExtResource("1_dvdjj")]
+
+[node name="bolt" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_14qjs")

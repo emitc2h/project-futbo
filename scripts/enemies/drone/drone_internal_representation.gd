@@ -20,6 +20,7 @@ class WorldRepresentation:
 ## Information about the player
 class PlayerRepresentation:
 	var last_known_player_pos_x: float = 0.0
+	var player_is_dribbling: bool = false
 	
 	func initialize() -> void:
 		pass
@@ -27,6 +28,7 @@ class PlayerRepresentation:
 ## Information about the control node
 class ControlNodeRepresentation:
 	var last_known_control_node_pos_x: float = 0.0
+	var control_node_charge: ControlNodeChargeStates.State
 	
 	func initialize() -> void:
 		pass
@@ -40,3 +42,13 @@ func initialize() -> void:
 	worldRepresentation.initialize()
 	playerRepresentation.initialize()
 	controlNodeRepresentation.initialize()
+
+
+func _ready() -> void:
+	Signals.updated_control_node_charge_level.connect(_on_updated_control_node_charge_level)
+
+
+## Signal handling
+##=========================================
+func _on_updated_control_node_charge_level(level: ControlNodeChargeStates.State) -> void:
+	controlNodeRepresentation.control_node_charge = level

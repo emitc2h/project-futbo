@@ -67,6 +67,7 @@ func _on_dribbling_state_entered() -> void:
 		#start tracking the ball with the DribbleCast
 		dribble_cast.start_tracking(ball)
 		is_dribbling = true
+		player.is_dribbling = true
 	else:
 		state.send_event("dribbling to not ready")
 
@@ -89,6 +90,7 @@ func _on_dribbling_state_exited() -> void:
 	dribble_cast.end_tracking(direction_faced)
 	
 	is_dribbling = false
+	player.is_dribbling = false
 
 
 #=======================================================

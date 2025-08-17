@@ -19,7 +19,6 @@ extends Node
 @export_group("Tracking Parameters")
 @export var look_down_lerp_factor: float = 10.0
 @export_range(0, 360, 0.1, "radians_as_degrees") var max_look_down_angle: float = 0.5
-@export var look_down_target_height: float = 1.0
 @export var look_up_lerp_factor: float = 5.0
 
 ## States Enum
@@ -64,8 +63,12 @@ signal target_none()
 ## Utils
 func scan_for_target() -> bool:
 	if field_of_view.sees_target:
-		target = field_of_view.target
-		repr.playerRepresentation.last_known_player_pos_x = target.global_position.x
+		if field_of_view.target is Player:
+			target = field_of_view.target.target_marker
+			repr.playerRepresentation.last_known_player_pos_x = field_of_view.target.global_position.x
+			repr.playerRepresentation.player_is_dribbling = field_of_view.target.is_dribbling
+		else:
+			target = field_of_view.target
 		return true
 	return false
 
@@ -135,6 +138,9 @@ func _on_acquired_state_entered() -> void:
 	
 	target_acquired.emit()
 	
+	## Target the spinners at the target
+	drone_model.spinners_acquire_target(target)
+	
 	## Make the drone transition animations land on the targeting state
 	drone_model.open_paths_to_targeting()
 	
@@ -147,7 +153,7 @@ func _on_acquired_state_physics_processing(delta: float) -> void:
 		sc.send_event(TRANS_ACQUIRED_TO_ACQUIRING)
 	else:
 		## Compute where the target is, and the angle need to look down at it
-		var pointer_to_target: Vector3 = char_node.global_position - target.global_position - Vector3.UP * look_down_target_height
+		var pointer_to_target: Vector3 = char_node.global_position - target.global_position
 		var new_rotation_x: float = min(asin(abs(pointer_to_target.y) / pointer_to_target.length()), max_look_down_angle)
 		drone.physics_mode_states.look_down_angle = new_rotation_x
 		

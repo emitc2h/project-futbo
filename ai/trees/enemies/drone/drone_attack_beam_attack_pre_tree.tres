@@ -1,0 +1,145 @@
+[gd_resource type="BehaviorTree" load_steps=46 format=3 uid="uid://dgk4we0m2af0"]
+
+[ext_resource type="Script" uid="uid://c6ocf77l1pyn7" path="res://ai/tasks/drone/set_targeting_action.gd" id="2_365fn"]
+[ext_resource type="Script" uid="uid://b467pd73p0l2y" path="res://ai/tasks/drone/is_in_vulnerability_state_condition.gd" id="3_ettmp"]
+[ext_resource type="Script" uid="uid://cetf63fmdqa02" path="res://ai/tasks/drone/set_vulnerability_action.gd" id="4_ac66w"]
+[ext_resource type="Script" uid="uid://cryuu1jycrokl" path="res://ai/tasks/drone/is_in_engines_state_condition.gd" id="5_kl6h7"]
+[ext_resource type="Script" uid="uid://cjmmtaigaxfy3" path="res://ai/tasks/drone/set_engines_action.gd" id="6_5dkk2"]
+[ext_resource type="Script" uid="uid://bq6jhax0oj50u" path="res://ai/tasks/drone/is_in_engagement_state_condition.gd" id="7_kwkdq"]
+[ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/drone/open_action.gd" id="8_brcvc"]
+[ext_resource type="Script" uid="uid://og2wfxp7v822" path="res://ai/tasks/drone/is_in_physics_state_condition.gd" id="9_1b3sx"]
+[ext_resource type="Script" uid="uid://dhptod8wkftxr" path="res://ai/tasks/drone/set_physics_action.gd" id="10_6qnwr"]
+[ext_resource type="Script" uid="uid://d1tnddd353x4b" path="res://ai/tasks/drone/force_update_player_pos_action.gd" id="11_ac66w"]
+[ext_resource type="Script" uid="uid://c57f4wu7njwuq" path="res://ai/tasks/drone/is_facing_condition.gd" id="12_kl6h7"]
+[ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/drone/face_node_action.gd" id="13_5dkk2"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_evj1u"]
+
+[sub_resource type="BTAction" id="BTAction_v8g6f"]
+script = ExtResource("2_365fn")
+targ_type = "enabled"
+enable_to_acquiring = false
+
+[sub_resource type="BTSequence" id="BTSequence_nopmi"]
+custom_name = "Targeting Sequence"
+children = [SubResource("BTAction_v8g6f")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_ac66w"]
+children = [SubResource("BTSequence_nopmi")]
+
+[sub_resource type="BTCondition" id="BTCondition_oiwdp"]
+script = ExtResource("3_ettmp")
+expected_state = 1
+
+[sub_resource type="BTInvert" id="BTInvert_5ge8t"]
+children = [SubResource("BTCondition_oiwdp")]
+
+[sub_resource type="BTAction" id="BTAction_oc56j"]
+script = ExtResource("4_ac66w")
+vuln_type = "defendable"
+
+[sub_resource type="BTSequence" id="BTSequence_deuh0"]
+custom_name = "Vulnerability Sequence"
+children = [SubResource("BTInvert_5ge8t"), SubResource("BTAction_oc56j")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_kl6h7"]
+children = [SubResource("BTSequence_deuh0")]
+
+[sub_resource type="BTCondition" id="BTCondition_htmdm"]
+script = ExtResource("5_kl6h7")
+expected_state = 0
+
+[sub_resource type="BTInvert" id="BTInvert_fomh7"]
+children = [SubResource("BTCondition_htmdm")]
+
+[sub_resource type="BTAction" id="BTAction_x2ptq"]
+script = ExtResource("6_5dkk2")
+eng_type = "stop"
+quick_stop_keep_speed = false
+async = true
+
+[sub_resource type="BTSequence" id="BTSequence_a60oe"]
+custom_name = "Engines Sequence"
+children = [SubResource("BTInvert_fomh7"), SubResource("BTAction_x2ptq")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_5dkk2"]
+children = [SubResource("BTSequence_a60oe")]
+
+[sub_resource type="BTCondition" id="BTCondition_5ge8t"]
+script = ExtResource("7_kwkdq")
+expected_state = 2
+
+[sub_resource type="BTInvert" id="BTInvert_oc56j"]
+children = [SubResource("BTCondition_5ge8t")]
+
+[sub_resource type="BTAction" id="BTAction_deuh0"]
+script = ExtResource("8_brcvc")
+check_signal_id = false
+async = false
+
+[sub_resource type="BTSequence" id="BTSequence_htmdm"]
+custom_name = "Engagement Sequence"
+children = [SubResource("BTInvert_oc56j"), SubResource("BTAction_deuh0")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_kwkdq"]
+children = [SubResource("BTSequence_htmdm")]
+
+[sub_resource type="BTCondition" id="BTCondition_oc56j"]
+script = ExtResource("9_1b3sx")
+expected_state = 0
+
+[sub_resource type="BTInvert" id="BTInvert_deuh0"]
+children = [SubResource("BTCondition_oc56j")]
+
+[sub_resource type="BTAction" id="BTAction_htmdm"]
+script = ExtResource("10_6qnwr")
+phys_type = "char"
+
+[sub_resource type="BTSequence" id="BTSequence_fomh7"]
+custom_name = "Physics Sequence"
+children = [SubResource("BTInvert_deuh0"), SubResource("BTAction_htmdm")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_brcvc"]
+children = [SubResource("BTSequence_fomh7")]
+
+[sub_resource type="BTAction" id="BTAction_kwkdq"]
+script = ExtResource("11_ac66w")
+
+[sub_resource type="BBNode" id="BBNode_brcvc"]
+saved_value = NodePath("")
+
+[sub_resource type="BTCondition" id="BTCondition_1b3sx"]
+script = ExtResource("12_kl6h7")
+custom_node = SubResource("BBNode_brcvc")
+world_repr_pos_x_name = ""
+target_type = "player representation"
+away = false
+
+[sub_resource type="BTInvert" id="BTInvert_6qnwr"]
+children = [SubResource("BTCondition_1b3sx")]
+
+[sub_resource type="BBNode" id="BBNode_jf6ce"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_t03md"]
+script = ExtResource("13_5dkk2")
+custom_node = SubResource("BBNode_jf6ce")
+world_repr_pos_x_name = ""
+target_type = "player representation"
+away = false
+async = false
+
+[sub_resource type="BTSequence" id="BTSequence_1d16f"]
+custom_name = "Face Player Sequence"
+children = [SubResource("BTAction_kwkdq"), SubResource("BTInvert_6qnwr"), SubResource("BTAction_t03md")]
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_1b3sx"]
+children = [SubResource("BTSequence_1d16f")]
+
+[sub_resource type="BTParallel" id="BTParallel_sc5pp"]
+num_successes_required = 6
+children = [SubResource("BTAlwaysSucceed_ac66w"), SubResource("BTAlwaysSucceed_kl6h7"), SubResource("BTAlwaysSucceed_5dkk2"), SubResource("BTAlwaysSucceed_kwkdq"), SubResource("BTAlwaysSucceed_brcvc"), SubResource("BTAlwaysSucceed_1b3sx")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_evj1u")
+root_task = SubResource("BTParallel_sc5pp")

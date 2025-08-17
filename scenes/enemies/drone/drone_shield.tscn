@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://qcbmkep1csam"]
 
 [ext_resource type="Script" uid="uid://difl4gfbctex2" path="res://scenes/enemies/drone/drone_shield.gd" id="1_4ir5k"]
-[ext_resource type="PackedScene" uid="uid://cjmtqo5slxoa0" path="res://scenes/enemies/drone/drone_closed_shield_model.tscn" id="1_6kxxw"]
+[ext_resource type="PackedScene" uid="uid://cjmtqo5slxoa0" path="res://scenes/enemies/drone/models/drone_closed_shield_model.tscn" id="1_6kxxw"]
 [ext_resource type="Material" uid="uid://br5ojrodx245g" path="res://assets/3D/Enemies/Drone/materials/shield_material.tres" id="3_nbgyc"]
 [ext_resource type="Material" uid="uid://c8gqdee3l4wgm" path="res://assets/3D/Particles/dart/dart_material.tres" id="3_quikv"]
 

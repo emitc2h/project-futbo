@@ -81,12 +81,14 @@ func _on_open_state_entered() -> void:
 # closing state
 #----------------------------------------
 func _on_closing_state_entered() -> void:
+	model.spinners_disengage_target()
 	state = State.CLOSING
 
 
 # quick close state
 #----------------------------------------
 func _on_quick_close_state_entered() -> void:
+	model.spinners_disengage_target()
 	state = State.QUICK_CLOSE
 
 
