@@ -14,8 +14,8 @@ enum State {BETWEEN_PATROL_MARKERS = 0, OUTSIDE_PATROL_MARKERS = 1}
 var state: State = State.BETWEEN_PATROL_MARKERS
 
 ## State transition constants
-const TRANS_BETWEEN_TO_OUTSIDE_PATROL_MARKERS: String = "Position: between patrol markers to outside patrol markers"
-const TRANS_OUTSIDE_TO_BETWEEN_PATROL_MARKERS: String = "Behavior: outside patrol markers to between patrol markers"
+const TRANS_TO_OUTSIDE_PATROL_MARKERS: String = "Position: to outside patrol markers"
+const TRANS_TO_BETWEEN_PATROL_MARKERS: String = "Behavior: to between patrol markers"
 
 ## Drone nodes controlled by this state
 @onready var char_node: CharacterBody3D = drone.get_node("CharNode")
@@ -60,7 +60,7 @@ func _on_between_patrol_markers_state_entered() -> void:
 
 func _on_between_patrol_markers_state_physics_processing(delta: float) -> void:
 	if not is_between_patrol_markers():
-		sc.send_event(TRANS_BETWEEN_TO_OUTSIDE_PATROL_MARKERS)
+		sc.send_event(TRANS_TO_OUTSIDE_PATROL_MARKERS)
 
 
 # outside patrol markers state
@@ -72,4 +72,4 @@ func _on_outside_patrol_markers_state_entered() -> void:
 
 func _on_outside_patrol_markers_state_physics_processing(delta: float) -> void:
 	if is_between_patrol_markers():
-		sc.send_event(TRANS_OUTSIDE_TO_BETWEEN_PATROL_MARKERS)
+		sc.send_event(TRANS_TO_BETWEEN_PATROL_MARKERS)

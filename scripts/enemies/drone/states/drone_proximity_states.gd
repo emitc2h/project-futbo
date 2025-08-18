@@ -18,8 +18,8 @@ enum State {DISABLED = 0, ENABLED = 1}
 var state: State = State.ENABLED
 
 ## State transition constants
-const TRANS_DISABLED_TO_ENABLED: String = "Proximity: disabled to enabled"
-const TRANS_ENABLED_TO_DISABLED: String = "Proximity: enabled to disabled"
+const TRANS_TO_ENABLED: String = "Proximity: to enabled"
+const TRANS_TO_DISABLED: String = "Proximity: to disabled"
 
 ## Internal variables
 var control_node_in_detector: bool = false

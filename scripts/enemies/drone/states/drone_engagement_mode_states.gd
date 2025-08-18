@@ -18,20 +18,11 @@ enum State {CLOSED = 0, OPENING = 1, OPEN = 2, CLOSING = 3, QUICK_CLOSE = 4}
 var state: State = State.CLOSED
 
 ## State transition constants
-const TRANS_CLOSED_TO_OPENING: String = "Engagement Mode: closed to opening"
-
-const TRANS_OPENING_TO_OPEN: String = "Engagement Mode: opening to open"
-const TRANS_OPENING_TO_QUICK_CLOSE: String = "Engagement Mode: opening to quick close"
-const TRANS_OPENING_TO_CLOSING: String = "Engagement Mode: opening to closing"
-
-const TRANS_OPEN_TO_CLOSING: String = "Engagement Mode: open to closing"
-const TRANS_OPEN_TO_QUICK_CLOSE: String = "Engagement Mode: open to quick close"
-
-const TRANS_CLOSING_TO_CLOSED: String = "Engagement Mode: closing to closed"
-const TRANS_CLOSING_TO_QUICK_CLOSE: String = "Engagement Mode: closing to quick close"
-const TRANS_CLOSING_TO_OPENING: String = "Engagement Mode: closing to opening"
-
-const TRANS_QUICK_CLOSE_TO_CLOSED: String = "Engagement Mode: quick close to closed"
+const TRANS_TO_OPENING: String = "Engagement Mode: to opening"
+const TRANS_TO_OPEN: String = "Engagement Mode: to open"
+const TRANS_TO_QUICK_CLOSE: String = "Engagement Mode: to quick close"
+const TRANS_TO_CLOSING: String = "Engagement Mode: to closing"
+const TRANS_TO_CLOSED: String = "Engagement Mode: to closed"
 
 ## Drone nodes controlled by this state
 @onready var float_distortion_mesh: MeshInstance3D = drone.get_node("TrackPositionContainer/Distortion")
@@ -96,10 +87,10 @@ func _on_quick_close_state_entered() -> void:
 #========================================
 func _on_anim_state_finished(anim_name: String) -> void:
 	if anim_name == "open up":
-		sc.send_event(TRANS_OPENING_TO_OPEN)
+		sc.send_event(TRANS_TO_OPEN)
 	
 	if anim_name == "close up":
-		sc.send_event(TRANS_CLOSING_TO_CLOSED)
+		sc.send_event(TRANS_TO_CLOSED)
 	
 	if anim_name in ["quick close", "thrust close"]:
-		sc.send_event(TRANS_QUICK_CLOSE_TO_CLOSED)
+		sc.send_event(TRANS_TO_CLOSED)

@@ -26,19 +26,10 @@ enum State {DISABLED = 0, NONE = 1, ACQUIRING = 2, ACQUIRED = 3}
 var state: State = State.NONE
 
 ## State transition constants
-const TRANS_DISABLED_TO_NONE: String = "Targeting: disabled to none"
-const TRANS_DISABLED_TO_ACQUIRING: String = "Targeting: disabled to acquiring"
-
-const TRANS_NONE_TO_DISABLED: String = "Targeting: none to disabled"
-const TRANS_NONE_TO_ACQUIRING: String = "Targeting: none to acquiring"
-const TRANS_NONE_TO_ACQUIRED: String = "Targeting: none to acquired"
-
-const TRANS_ACQUIRING_TO_DISABLED: String = "Targeting: acquiring to disabled"
-const TRANS_ACQUIRING_TO_NONE: String = "Targeting: acquiring to none"
-const TRANS_ACQUIRING_TO_ACQUIRED: String = "Targeting: acquiring to acquired"
-
-const TRANS_ACQUIRED_TO_DISABLED: String = "Targeting: acquired to disabled"
-const TRANS_ACQUIRED_TO_ACQUIRING: String = "Targeting: acquired to acquiring"
+const TRANS_TO_DISABLED: String = "Targeting: to disabled"
+const TRANS_TO_NONE: String = "Targeting: to none"
+const TRANS_TO_ACQUIRING: String = "Targeting: to acquiring"
+const TRANS_TO_ACQUIRED: String = "Targeting: to acquired"
 
 ## Drone nodes controlled by this state
 @onready var field_of_view: DroneFieldOfView = drone.get_node("TrackTransformContainer/FieldOfView")
@@ -95,7 +86,7 @@ func _on_none_state_entered() -> void:
 
 func _on_none_state_physics_processing(delta: float) -> void:
 	if scan_for_target():
-		sc.send_event(TRANS_NONE_TO_ACQUIRED)
+		sc.send_event(TRANS_TO_ACQUIRED)
 
 
 # acquiring state
@@ -110,12 +101,12 @@ func _on_acquiring_state_entered() -> void:
 
 func _on_acquiring_state_physics_processing(delta: float) -> void:
 	if scan_for_target():
-		sc.send_event(TRANS_ACQUIRING_TO_ACQUIRED)
+		sc.send_event(TRANS_TO_ACQUIRED)
 
 
 func _on_acquiring_timer_timeout() -> void:
 	acquiring_timer.stop()
-	sc.send_event(TRANS_ACQUIRING_TO_NONE)
+	sc.send_event(TRANS_TO_NONE)
 
 
 # acquired state
@@ -139,7 +130,6 @@ func _on_acquired_state_entered() -> void:
 	target_acquired.emit()
 	
 	## Target the spinners at the target
-	print("Acquired target: ", target.name)
 	drone_model.spinners_acquire_target(target)
 	
 	## Make the drone transition animations land on the targeting state
@@ -151,7 +141,7 @@ func _on_acquired_state_entered() -> void:
 
 func _on_acquired_state_physics_processing(delta: float) -> void:
 	if not scan_for_target():
-		sc.send_event(TRANS_ACQUIRED_TO_ACQUIRING)
+		sc.send_event(TRANS_TO_ACQUIRING)
 	else:
 		## Compute where the target is, and the angle need to look down at it
 		var pointer_to_target: Vector3 = char_node.global_position - target.global_position

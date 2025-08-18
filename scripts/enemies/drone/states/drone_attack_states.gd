@@ -21,8 +21,8 @@ var state: State = State.TRACK
 
 ## State transition constants
 const TRANS_TO_TRACK: String = "Behavior: to track"
-const TRANS_TRACK_TO_RAM_ATTACK: String = "Attack: track to ram attack"
-const TRANS_TRACK_TO_BEAM_ATTACK: String = "Attack: track to beam attack"
+const TRANS_TO_RAM_ATTACK: String = "Attack: to ram attack"
+const TRANS_TO_BEAM_ATTACK: String = "Attack: to beam attack"
 
 ## Internal variables
 var time_spent_in_track_state: float = 0.0
@@ -40,7 +40,7 @@ func _on_track_state_physics_processing(delta: float) -> void:
 	
 	## If the player gets too close, immediately initiate a beam attack
 	if _distance_to_player() < player_is_near_threshold:
-		sc.send_event(TRANS_TRACK_TO_BEAM_ATTACK)
+		sc.send_event(TRANS_TO_BEAM_ATTACK)
 	
 	
 	## If the drone is continuously tracking the player for a time, it initiates the attack
@@ -54,7 +54,7 @@ func _on_track_state_physics_processing(delta: float) -> void:
 		if targeting_states.state == targeting_states.State.ACQUIRED:
 			sc.send_event(pick_attack())
 		else:
-			sc.send_event(drone.behavior_states.TRANS_ATTACK_TO_GO_TO_PATROL)
+			sc.send_event(drone.behavior_states.TO_GO_TO_PATROL)
 
 
 # ram attack state
@@ -97,10 +97,10 @@ func _distance_to_player() -> float:
 
 func pick_attack() -> String:
 	if _distance_to_player() < player_is_near_threshold:
-		return TRANS_TRACK_TO_BEAM_ATTACK
+		return TRANS_TO_BEAM_ATTACK
 	
 	if internal_representation.playerRepresentation.player_is_dribbling:
-		return TRANS_TRACK_TO_BEAM_ATTACK
+		return TRANS_TO_BEAM_ATTACK
 	
-	return TRANS_TRACK_TO_RAM_ATTACK
+	return TRANS_TO_RAM_ATTACK
 	

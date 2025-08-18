@@ -20,18 +20,10 @@ enum State {PATROL = 0, GO_TO_PATROL = 1, SEEK = 2, BLOCK = 3, SLEEP = 4, ATTACK
 var state: State = State.PATROL
 
 ## State transition constants
-const TRANS_PATROL_TO_ATTACK: String = "Behavior: patrol to attack"
-const TRANS_PATROL_TO_BLOCK: String = "Behavior: patrol to block"
-
-const TRANS_GO_TO_PATROL_TO_PATROL: String = "Behavior: go to patrol to patrol"
-const TRANS_GO_TO_PATROL_TO_ATTACK: String = "Behavior: go to patrol to attack"
-const TRANS_GO_TO_PATROL_TO_BLOCK: String = "Behavior: go to patrol to block"
-
-const TRANS_BLOCK_TO_ATTACK: String = "Behavior: block to attack"
-
-const TRANS_ATTACK_TO_GO_TO_PATROL: String = "Behavior: attack to go to patrol"
-const TRANS_ATTACK_TO_BLOCK: String = "Behavior: attack to block"
-
+const TRANS_TO_PATROL: String = "Behavior: to patrol"
+const TRANS_TO_GO_TO_PATROL: String = "Behavior: to go to patrol"
+const TRANS_TO_BLOCK: String = "Behavior: to block"
+const TRANS_TO_ATTACK: String = "Behavior: to attack"
 const TRANS_TO_DEAD: String = "Behavior: to dead"
 
 
@@ -56,14 +48,14 @@ func _on_patrol_state_entered() -> void:
 func _on_go_to_patrol_state_entered() -> void:
 	state = State.GO_TO_PATROL
 	if position_states.state == position_states.State.BETWEEN_PATROL_MARKERS:
-		sc.send_event(TRANS_GO_TO_PATROL_TO_PATROL)
+		sc.send_event(TRANS_TO_PATROL)
 	
 	## Zoom back in
 	Signals.update_zoom.emit(Enums.Zoom.DEFAULT)
 
 
 func _on_go_to_patrol_bt_finished(status: int) -> void:
-	sc.send_event(TRANS_GO_TO_PATROL_TO_PATROL)
+	sc.send_event(TRANS_TO_PATROL)
 
 
 # seek state
@@ -79,7 +71,7 @@ func _on_block_state_entered() -> void:
 
 
 func _on_block_bt_finished(status: int) -> void:
-	sc.send_event(TRANS_BLOCK_TO_ATTACK)
+	sc.send_event(TRANS_TO_ATTACK)
 
 
 # attack state
@@ -96,14 +88,11 @@ func _on_attack_state_entered() -> void:
 #========================================
 func _on_target_none() -> void:
 	if state == State.ATTACK:
-		sc.send_event(TRANS_ATTACK_TO_GO_TO_PATROL)
+		sc.send_event(TRANS_TO_GO_TO_PATROL)
 
 func _on_target_acquired() -> void:
 	## If the drone sees the player, go to attack state
-	if state == State.PATROL:
-		sc.send_event(TRANS_PATROL_TO_ATTACK)
-	if state == State.GO_TO_PATROL:
-		sc.send_event(TRANS_GO_TO_PATROL_TO_ATTACK)
+	sc.send_event(TRANS_TO_ATTACK)
 
 
 func _on_control_node_proximity_entered(control_node: ControlNode) -> void:
@@ -113,17 +102,9 @@ func _on_control_node_proximity_entered(control_node: ControlNode) -> void:
 	
 	## If the control node is detected within the proximity detector, go to block state
 	if vulnerabiliy_states.state == vulnerabiliy_states.State.DEFENDABLE:
-		if state == State.PATROL:
-			sc.send_event(TRANS_PATROL_TO_BLOCK)
-		if state == State.GO_TO_PATROL:
-			sc.send_event(TRANS_GO_TO_PATROL_TO_BLOCK)
-		if state == State.ATTACK:
-			sc.send_event(TRANS_ATTACK_TO_BLOCK)
+		sc.send_event(TRANS_TO_BLOCK)
 
 
 func _on_player_proximity_entered() -> void:
 	## If the the player is detected within the proximity detector, go to attack state
-	if state == State.PATROL:
-		sc.send_event(TRANS_PATROL_TO_ATTACK)
-	if state == State.GO_TO_PATROL:
-		sc.send_event(TRANS_GO_TO_PATROL_TO_ATTACK)
+	sc.send_event(TRANS_TO_ATTACK)

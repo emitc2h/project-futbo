@@ -46,15 +46,15 @@ func _ready() -> void:
 ## Physics Controls
 ## ---------------------------------------
 func become_rigid() -> void:
-	sc.send_event(physics_mode_states.TRANS_CHAR_TO_RIGID)
+	sc.send_event(physics_mode_states.TRANS_TO_RIGID)
 
 
 func become_char() -> void:
-	sc.send_event(physics_mode_states.TRANS_RIGID_TO_CHAR)
+	sc.send_event(physics_mode_states.TRANS_TO_CHAR)
 
 
 func become_ragdoll() -> void:
-	sc.send_event(physics_mode_states.TRANS_CHAR_TO_RAGDOLL)
+	sc.send_event(physics_mode_states.TRANS_TO_RAGDOLL)
 
 
 func get_global_pos_x() -> float:
@@ -67,8 +67,7 @@ signal face_right_finished(id: int)
 
 func face_right(id: int = 0) -> void:
 	if not direction_faced_states.state == direction_faced_states.State.FACE_RIGHT:
-		sc.send_event(direction_faced_states.TRANS_FACE_LEFT_TO_TURN_RIGHT)
-		sc.send_event(direction_faced_states.TRANS_TURN_LEFT_TO_TURN_RIGHT)
+		sc.send_event(direction_faced_states.TRANS_TO_TURN_RIGHT)
 		await direction_faced_states.is_now_facing_right
 	face_right_finished.emit(id)
 
@@ -77,8 +76,7 @@ signal face_left_finished(id: int)
 
 func face_left(id: int = 0) -> void:
 	if not direction_faced_states.state == direction_faced_states.State.FACE_LEFT:
-		sc.send_event(direction_faced_states.TRANS_FACE_RIGHT_TO_TURN_LEFT)
-		sc.send_event(direction_faced_states.TRANS_TURN_RIGHT_TO_TURN_LEFT)
+		sc.send_event(direction_faced_states.TRANS_TO_TURN_LEFT)
 		await direction_faced_states.is_now_facing_left
 	face_left_finished.emit(id)
 
@@ -126,8 +124,7 @@ signal open_finished(id: int)
 
 func open(id: int = 0) -> void:
 	anim_state.travel("open up")
-	sc.send_event(engagement_mode_states.TRANS_CLOSED_TO_OPENING)
-	sc.send_event(engagement_mode_states.TRANS_CLOSING_TO_OPENING)
+	sc.send_event(engagement_mode_states.TRANS_TO_OPENING)
 	await engagement_mode_states.opening_finished
 	open_finished.emit(id)
 
@@ -136,8 +133,7 @@ signal close_finished(id: int)
 
 func close(id: int = 0) -> void:
 	anim_state.travel("close up")
-	sc.send_event(engagement_mode_states.TRANS_OPEN_TO_CLOSING)
-	sc.send_event(engagement_mode_states.TRANS_OPENING_TO_CLOSING)
+	sc.send_event(engagement_mode_states.TRANS_TO_CLOSING)
 	await engagement_mode_states.closing_finished
 	close_finished.emit(id)
 
@@ -149,9 +145,7 @@ func quick_close(id: int = 0) -> void:
 		anim_state.travel("thrust close")
 	else:
 		anim_state.travel("quick close")
-	sc.send_event(engagement_mode_states.TRANS_OPEN_TO_QUICK_CLOSE)
-	sc.send_event(engagement_mode_states.TRANS_OPENING_TO_QUICK_CLOSE)
-	sc.send_event(engagement_mode_states.TRANS_CLOSING_TO_QUICK_CLOSE)
+	sc.send_event(engagement_mode_states.TRANS_TO_QUICK_CLOSE)
 	await engagement_mode_states.closing_finished
 	quick_close_finished.emit(id)
 
@@ -209,43 +203,41 @@ func fire(id: int = 0) -> void:
 ## Vulnerability Controls
 ## ---------------------------------------
 func become_vulnerable() -> void:
-	sc.send_event(vulnerability_states.TRANS_DEFENDABLE_TO_VULNERABLE)
-	sc.send_event(vulnerability_states.TRANS_INVULNERABLE_TO_VULNERABLE)
+	sc.send_event(vulnerability_states.TRANS_TO_VULNERABLE)
+
 
 
 func become_defendable() -> void:
-	sc.send_event(vulnerability_states.TRANS_INVULNERABLE_TO_DEFENDABLE)
-	sc.send_event(vulnerability_states.TRANS_VULNERABLE_TO_DEFENDABLE)
+	sc.send_event(vulnerability_states.TRANS_TO_DEFENDABLE)
+
 
 
 func become_invulnerable() -> void:
-	sc.send_event(vulnerability_states.TRANS_DEFENDABLE_TO_INVULNERABLE)
-	sc.send_event(vulnerability_states.TRANS_VULNERABLE_TO_INVULNERABLE)
+	sc.send_event(vulnerability_states.TRANS_TO_INVULNERABLE)
+
 
 
 ## Targeting Controls
 ## ---------------------------------------
 func enable_targeting(to_acquiring: bool = false) -> void:
 	if to_acquiring:
-		sc.send_event(targeting_states.TRANS_DISABLED_TO_ACQUIRING)
+		sc.send_event(targeting_states.TRANS_TO_ACQUIRING)
 	else:
-		sc.send_event(targeting_states.TRANS_DISABLED_TO_NONE)
+		sc.send_event(targeting_states.TRANS_TO_NONE)
 
 
 func disable_targeting() -> void:
-	sc.send_event(targeting_states.TRANS_ACQUIRED_TO_DISABLED)
-	sc.send_event(targeting_states.TRANS_ACQUIRING_TO_DISABLED)
-	sc.send_event(targeting_states.TRANS_NONE_TO_DISABLED)
+	sc.send_event(targeting_states.TRANS_TO_DISABLED)
 
 
 ## Proximity Controls
 ## ---------------------------------------
 func enable_proximity_detector() -> void:
-	sc.send_event(proximity_states.TRANS_DISABLED_TO_ENABLED)
+	sc.send_event(proximity_states.TRANS_TO_ENABLED)
 
 
 func disable_proximity_detector() -> void:
-	sc.send_event(proximity_states.TRANS_ENABLED_TO_DISABLED)
+	sc.send_event(proximity_states.TRANS_TO_DISABLED)
 
 
 ## Hitbox
@@ -253,7 +245,7 @@ func disable_proximity_detector() -> void:
 func die(force: Vector3) -> void:
 	if vulnerability_states.state == vulnerability_states.State.VULNERABLE:
 		model.die()
-		sc.send_event(physics_mode_states.TRANS_CHAR_TO_RAGDOLL)
+		sc.send_event(physics_mode_states.TRANS_TO_RAGDOLL)
 		sc.send_event(behavior_states.TRANS_TO_DEAD)
 		model.body_bone.apply_central_impulse(force * 5.0)
 

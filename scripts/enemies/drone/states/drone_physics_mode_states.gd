@@ -29,10 +29,10 @@ enum State {CHAR = 0, RIGID = 1, RAGDOLL = 2, DEAD = 3}
 var state: State = State.CHAR
 
 ## State transition constants
-const TRANS_CHAR_TO_RIGID: String = "Physics Mode: char to rigid"
-const TRANS_RIGID_TO_CHAR: String = "Physics Mode: rigid to char"
-const TRANS_CHAR_TO_RAGDOLL: String = "Physics Mode: char to ragdoll"
-const TRANS_RAGDOLL_TO_DEAD: String = "Physics Mode: ragdoll to dead"
+const TRANS_TO_RIGID: String = "Physics Mode: to rigid"
+const TRANS_TO_CHAR: String = "Physics Mode: to char"
+const TRANS_TO_RAGDOLL: String = "Physics Mode: to ragdoll"
+const TRANS_TO_DEAD: String = "Physics Mode: to dead"
 
 ## Drone nodes controlled by this state
 @onready var char_node: CharacterBody3D = drone.get_node("CharNode")
@@ -209,7 +209,7 @@ func _on_ragdoll_state_entered() -> void:
 
 func _on_dead_timer_timeout() -> void:
 	dead_timer.stop()
-	sc.send_event(TRANS_RAGDOLL_TO_DEAD)
+	sc.send_event(TRANS_TO_DEAD)
 
 
 func _on_ragdoll_state_exited() -> void:

@@ -15,15 +15,11 @@ enum Mode {FACING = 0, TURNING = 1}
 var mode: Mode = Mode.FACING
 
 ## State transition constants
-const TRANS_FACE_RIGHT_TO_TURN_LEFT: String = "Direction Faced: face right to turn left"
+const TRANS_TO_TURN_LEFT: String = "Direction Faced: to turn left"
+const TRANS_TO_TURN_RIGHT: String = "Direction Faced: to turn right"
+const TRANS_TO_FACE_RIGHT: String = "Direction Faced: to face right"
+const TRANS_TO_FACE_LEFT: String = "Direction Faced: to face left"
 
-const TRANS_FACE_LEFT_TO_TURN_RIGHT: String = "Direction Faced: face left to turn right"
-
-const TRANS_TURN_RIGHT_TO_FACE_RIGHT: String = "Direction Faced: turn right to face right"
-const TRANS_TURN_RIGHT_TO_TURN_LEFT: String = "Direction Faced: turn right to turn left"
-
-const TRANS_TURN_LEFT_TO_FACE_LEFT: String = "Direction Faced: turn left to face left"
-const TRANS_TURN_LEFT_TO_TURN_RIGHT: String = "Direction Faced: turn left to turn right"
 
 ## Drone nodes controlled by this state
 @onready var char_node: CharacterBody3D = drone.get_node("CharNode")
@@ -91,7 +87,7 @@ func _on_turn_right_state_entered() -> void:
 		.from(Vector3.ZERO)
 		
 	await tween.finished
-	sc.send_event(TRANS_TURN_RIGHT_TO_FACE_RIGHT)
+	sc.send_event(TRANS_TO_FACE_RIGHT)
 
 
 # turn left state
@@ -114,4 +110,4 @@ func _on_turn_left_state_entered() -> void:
 		.from(Vector3.ZERO)
 		
 	await tween.finished
-	sc.send_event(TRANS_TURN_LEFT_TO_FACE_LEFT)
+	sc.send_event(TRANS_TO_FACE_LEFT)

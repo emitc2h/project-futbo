@@ -141,13 +141,13 @@ script = ExtResource("5_voq0c")
 [node name="to rigid" type="Node" parent="State/Root/Physics/char"]
 script = ExtResource("6_doilr")
 to = NodePath("../../rigid")
-event = &"Physics Mode: char to rigid"
+event = &"Physics Mode: to rigid"
 delay_in_seconds = "0.0"
 
 [node name="to ragdoll" type="Node" parent="State/Root/Physics/char"]
 script = ExtResource("6_doilr")
 to = NodePath("../../ragdoll")
-event = &"Physics Mode: char to ragdoll"
+event = &"Physics Mode: to ragdoll"
 delay_in_seconds = "0.0"
 
 [node name="rigid" type="Node" parent="State/Root/Physics"]
@@ -156,7 +156,7 @@ script = ExtResource("5_voq0c")
 [node name="to char" type="Node" parent="State/Root/Physics/rigid"]
 script = ExtResource("6_doilr")
 to = NodePath("../../char")
-event = &"Physics Mode: rigid to char"
+event = &"Physics Mode: to char"
 delay_in_seconds = "0.0"
 
 [node name="ragdoll" type="Node" parent="State/Root/Physics"]
@@ -165,7 +165,7 @@ script = ExtResource("5_voq0c")
 [node name="to dead" type="Node" parent="State/Root/Physics/ragdoll"]
 script = ExtResource("6_doilr")
 to = NodePath("../../dead")
-event = &"Physics Mode: ragdoll to dead"
+event = &"Physics Mode: to dead"
 delay_in_seconds = "0.0"
 
 [node name="dead" type="Node" parent="State/Root/Physics"]
@@ -186,7 +186,7 @@ script = ExtResource("5_voq0c")
 [node name="to turn left" type="Node" parent="State/Root/Direction Faced/face right"]
 script = ExtResource("6_doilr")
 to = NodePath("../../turn left")
-event = &"Direction Faced: face right to turn left"
+event = &"Direction Faced: to turn left"
 delay_in_seconds = "0.0"
 
 [node name="face left" type="Node" parent="State/Root/Direction Faced"]
@@ -195,7 +195,7 @@ script = ExtResource("5_voq0c")
 [node name="to turn right" type="Node" parent="State/Root/Direction Faced/face left"]
 script = ExtResource("6_doilr")
 to = NodePath("../../turn right")
-event = &"Direction Faced: face left to turn right"
+event = &"Direction Faced: to turn right"
 delay_in_seconds = "0.0"
 
 [node name="turn right" type="Node" parent="State/Root/Direction Faced"]
@@ -204,13 +204,13 @@ script = ExtResource("5_voq0c")
 [node name="to face right" type="Node" parent="State/Root/Direction Faced/turn right"]
 script = ExtResource("6_doilr")
 to = NodePath("../../face right")
-event = &"Direction Faced: turn right to face right"
+event = &"Direction Faced: to face right"
 delay_in_seconds = "0.0"
 
 [node name="to turn left" type="Node" parent="State/Root/Direction Faced/turn right"]
 script = ExtResource("6_doilr")
 to = NodePath("../../turn left")
-event = &"Direction Faced: turn right to turn left"
+event = &"Direction Faced: to turn left"
 delay_in_seconds = "0.0"
 
 [node name="turn left" type="Node" parent="State/Root/Direction Faced"]
@@ -219,13 +219,13 @@ script = ExtResource("5_voq0c")
 [node name="to face left" type="Node" parent="State/Root/Direction Faced/turn left"]
 script = ExtResource("6_doilr")
 to = NodePath("../../face left")
-event = &"Direction Faced: turn left to face left"
+event = &"Direction Faced: to face left"
 delay_in_seconds = "0.0"
 
 [node name="to turn right" type="Node" parent="State/Root/Direction Faced/turn left"]
 script = ExtResource("6_doilr")
 to = NodePath("../../turn right")
-event = &"Direction Faced: turn left to turn right"
+event = &"Direction Faced: to turn right"
 delay_in_seconds = "0.0"
 
 [node name="Engagement Mode" type="Node" parent="State/Root"]
@@ -245,7 +245,7 @@ script = ExtResource("5_voq0c")
 [node name="to opening" type="Node" parent="State/Root/Engagement Mode/closed"]
 script = ExtResource("6_doilr")
 to = NodePath("../../opening")
-event = &"Engagement Mode: closed to opening"
+event = &"Engagement Mode: to opening"
 delay_in_seconds = "0.0"
 
 [node name="opening" type="Node" parent="State/Root/Engagement Mode"]
@@ -254,19 +254,19 @@ script = ExtResource("5_voq0c")
 [node name="to open" type="Node" parent="State/Root/Engagement Mode/opening"]
 script = ExtResource("6_doilr")
 to = NodePath("../../open")
-event = &"Engagement Mode: opening to open"
+event = &"Engagement Mode: to open"
 delay_in_seconds = "0.0"
 
 [node name="to quick close" type="Node" parent="State/Root/Engagement Mode/opening"]
 script = ExtResource("6_doilr")
 to = NodePath("../../quick close")
-event = &"Engagement Mode: opening to quick close"
+event = &"Engagement Mode: to quick close"
 delay_in_seconds = "0.0"
 
 [node name="to closing" type="Node" parent="State/Root/Engagement Mode/opening"]
 script = ExtResource("6_doilr")
 to = NodePath("../../closing")
-event = &"Engagement Mode: opening to closing"
+event = &"Engagement Mode: to closing"
 delay_in_seconds = "0.0"
 
 [node name="open" type="Node" parent="State/Root/Engagement Mode"]
@@ -275,13 +275,13 @@ script = ExtResource("5_voq0c")
 [node name="to closing" type="Node" parent="State/Root/Engagement Mode/open"]
 script = ExtResource("6_doilr")
 to = NodePath("../../closing")
-event = &"Engagement Mode: open to closing"
+event = &"Engagement Mode: to closing"
 delay_in_seconds = "0.0"
 
 [node name="to quick close" type="Node" parent="State/Root/Engagement Mode/open"]
 script = ExtResource("6_doilr")
 to = NodePath("../../quick close")
-event = &"Engagement Mode: open to quick close"
+event = &"Engagement Mode: to quick close"
 delay_in_seconds = "0.0"
 
 [node name="closing" type="Node" parent="State/Root/Engagement Mode"]
@@ -290,19 +290,19 @@ script = ExtResource("5_voq0c")
 [node name="to closed" type="Node" parent="State/Root/Engagement Mode/closing"]
 script = ExtResource("6_doilr")
 to = NodePath("../../closed")
-event = &"Engagement Mode: closing to closed"
+event = &"Engagement Mode: to closed"
 delay_in_seconds = "0.0"
 
 [node name="to quick close" type="Node" parent="State/Root/Engagement Mode/closing"]
 script = ExtResource("6_doilr")
 to = NodePath("../../quick close")
-event = &"Engagement Mode: closing to quick close"
+event = &"Engagement Mode: to quick close"
 delay_in_seconds = "0.0"
 
 [node name="to opening" type="Node" parent="State/Root/Engagement Mode/closing"]
 script = ExtResource("6_doilr")
 to = NodePath("../../opening")
-event = &"Engagement Mode: closing to opening"
+event = &"Engagement Mode: to opening"
 delay_in_seconds = "0.0"
 
 [node name="quick close" type="Node" parent="State/Root/Engagement Mode"]
@@ -311,7 +311,7 @@ script = ExtResource("5_voq0c")
 [node name="to closed" type="Node" parent="State/Root/Engagement Mode/quick close"]
 script = ExtResource("6_doilr")
 to = NodePath("../../closed")
-event = &"Engagement Mode: quick close to closed"
+event = &"Engagement Mode: to closed"
 delay_in_seconds = "0.0"
 
 [node name="Engines" type="Node" parent="State/Root"]
@@ -449,13 +449,13 @@ script = ExtResource("5_voq0c")
 [node name="to defendable" type="Node" parent="State/Root/Vulnerability/invulnerable"]
 script = ExtResource("6_doilr")
 to = NodePath("../../defendable")
-event = &"Vulnerability: invulnerable to defendable"
+event = &"Vulnerability: to defendable"
 delay_in_seconds = "0.0"
 
 [node name="to vulnerable" type="Node" parent="State/Root/Vulnerability/invulnerable"]
 script = ExtResource("6_doilr")
 to = NodePath("../../vulnerable")
-event = &"Vulnerability: invulnerable to vulnerable"
+event = &"Vulnerability: to vulnerable"
 delay_in_seconds = "0.0"
 
 [node name="defendable" type="Node" parent="State/Root/Vulnerability"]
@@ -464,13 +464,13 @@ script = ExtResource("5_voq0c")
 [node name="to invulnerable" type="Node" parent="State/Root/Vulnerability/defendable"]
 script = ExtResource("6_doilr")
 to = NodePath("../../invulnerable")
-event = &"Vulnerability: defendable to invulnerable"
+event = &"Vulnerability: to invulnerable"
 delay_in_seconds = "0.0"
 
 [node name="to vulnerable" type="Node" parent="State/Root/Vulnerability/defendable"]
 script = ExtResource("6_doilr")
 to = NodePath("../../vulnerable")
-event = &"Vulnerability: defendable to vulnerable"
+event = &"Vulnerability: to vulnerable"
 delay_in_seconds = "0.0"
 
 [node name="vulnerable" type="Node" parent="State/Root/Vulnerability"]
@@ -479,13 +479,13 @@ script = ExtResource("5_voq0c")
 [node name="to defendable" type="Node" parent="State/Root/Vulnerability/vulnerable"]
 script = ExtResource("6_doilr")
 to = NodePath("../../defendable")
-event = &"Vulnerability: vulnerable to defendable"
+event = &"Vulnerability: to defendable"
 delay_in_seconds = "0.0"
 
 [node name="to invulnerable" type="Node" parent="State/Root/Vulnerability/vulnerable"]
 script = ExtResource("6_doilr")
 to = NodePath("../../invulnerable")
-event = &"Vulnerability: vulnerable to invulnerable"
+event = &"Vulnerability: to invulnerable"
 delay_in_seconds = "0.0"
 
 [node name="Monitoring" type="Node" parent="State/Root"]
@@ -511,13 +511,13 @@ script = ExtResource("5_voq0c")
 [node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/disabled"]
 script = ExtResource("6_doilr")
 to = NodePath("../../none")
-event = &"Targeting: disabled to none"
+event = &"Targeting: to none"
 delay_in_seconds = "0.0"
 
 [node name="to acquiring" type="Node" parent="State/Root/Monitoring/Targeting/disabled"]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquiring")
-event = &"Targeting: disabled to acquiring"
+event = &"Targeting: to acquiring"
 delay_in_seconds = "0.0"
 
 [node name="none" type="Node" parent="State/Root/Monitoring/Targeting"]
@@ -526,19 +526,19 @@ script = ExtResource("5_voq0c")
 [node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/none"]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
-event = &"Targeting: none to disabled"
+event = &"Targeting: to disabled"
 delay_in_seconds = "0.0"
 
 [node name="to acquiring" type="Node" parent="State/Root/Monitoring/Targeting/none"]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquiring")
-event = &"Targeting: none to acquiring"
+event = &"Targeting: to acquiring"
 delay_in_seconds = "0.0"
 
 [node name="to acquired" type="Node" parent="State/Root/Monitoring/Targeting/none"]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquired")
-event = &"Targeting: none to acquired"
+event = &"Targeting: to acquired"
 delay_in_seconds = "0.0"
 
 [node name="acquiring" type="Node" parent="State/Root/Monitoring/Targeting"]
@@ -547,19 +547,19 @@ script = ExtResource("5_voq0c")
 [node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/acquiring"]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
-event = &"Targeting: acquiring to disabled"
+event = &"Targeting: to disabled"
 delay_in_seconds = "0.0"
 
 [node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/acquiring"]
 script = ExtResource("6_doilr")
 to = NodePath("../../none")
-event = &"Targeting: acquiring to none"
+event = &"Targeting: to none"
 delay_in_seconds = "0.0"
 
 [node name="to acquired" type="Node" parent="State/Root/Monitoring/Targeting/acquiring"]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquired")
-event = &"Targeting: acquiring to acquired"
+event = &"Targeting: to acquired"
 delay_in_seconds = "0.0"
 
 [node name="acquired" type="Node" parent="State/Root/Monitoring/Targeting"]
@@ -568,13 +568,13 @@ script = ExtResource("5_voq0c")
 [node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/acquired"]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
-event = &"Targeting: acquired to disabled"
+event = &"Targeting: to disabled"
 delay_in_seconds = "0.0"
 
 [node name="to acquiring" type="Node" parent="State/Root/Monitoring/Targeting/acquired"]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquiring")
-event = &"Targeting: acquired to acquiring"
+event = &"Targeting: to acquiring"
 delay_in_seconds = "0.0"
 
 [node name="Proximity" type="Node" parent="State/Root/Monitoring"]
@@ -594,7 +594,7 @@ script = ExtResource("5_voq0c")
 [node name="to enabled" type="Node" parent="State/Root/Monitoring/Proximity/disabled"]
 script = ExtResource("6_doilr")
 to = NodePath("../../enabled")
-event = &"Proximity: disabled to enabled"
+event = &"Proximity: to enabled"
 delay_in_seconds = "0.0"
 
 [node name="enabled" type="Node" parent="State/Root/Monitoring/Proximity"]
@@ -603,7 +603,7 @@ script = ExtResource("5_voq0c")
 [node name="to disabled" type="Node" parent="State/Root/Monitoring/Proximity/enabled"]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
-event = &"Proximity: enabled to disabled"
+event = &"Proximity: to disabled"
 delay_in_seconds = "0.0"
 
 [node name="Position" type="Node" parent="State/Root/Monitoring"]
@@ -624,7 +624,7 @@ script = ExtResource("5_voq0c")
 [node name="to outside patrol markers" type="Node" parent="State/Root/Monitoring/Position/between patrol markers"]
 script = ExtResource("6_doilr")
 to = NodePath("../../outside patrol markers")
-event = &"Position: between patrol markers to outside patrol markers"
+event = &"Position: to outside patrol markers"
 delay_in_seconds = "0.0"
 
 [node name="outside patrol markers" type="Node" parent="State/Root/Monitoring/Position"]
@@ -633,7 +633,7 @@ script = ExtResource("5_voq0c")
 [node name="to between patrol markers" type="Node" parent="State/Root/Monitoring/Position/outside patrol markers"]
 script = ExtResource("6_doilr")
 to = NodePath("../../between patrol markers")
-event = &"Behavior: outside patrol markers to between patrol markers"
+event = &"Behavior: to between patrol markers"
 delay_in_seconds = "0.0"
 
 [node name="Behavior" type="Node" parent="State/Root"]
@@ -672,13 +672,13 @@ blackboard_plan = SubResource("BlackboardPlan_fv7v3")
 [node name="to attack" type="Node" parent="State/Root/Behavior/patrol"]
 script = ExtResource("6_doilr")
 to = NodePath("../../attack")
-event = &"Behavior: patrol to attack"
+event = &"Behavior: to attack"
 delay_in_seconds = "0.0"
 
 [node name="to block" type="Node" parent="State/Root/Behavior/patrol"]
 script = ExtResource("6_doilr")
 to = NodePath("../../block")
-event = &"Behavior: patrol to block"
+event = &"Behavior: to block"
 delay_in_seconds = "0.0"
 
 [node name="to dead" type="Node" parent="State/Root/Behavior/patrol"]
@@ -709,19 +709,19 @@ blackboard_plan = SubResource("BlackboardPlan_2baop")
 [node name="to patrol" type="Node" parent="State/Root/Behavior/go to patrol"]
 script = ExtResource("6_doilr")
 to = NodePath("../../patrol")
-event = &"Behavior: go to patrol to patrol"
+event = &"Behavior: to patrol"
 delay_in_seconds = "0.0"
 
 [node name="to attack" type="Node" parent="State/Root/Behavior/go to patrol"]
 script = ExtResource("6_doilr")
 to = NodePath("../../attack")
-event = &"Behavior: go to patrol to attack"
+event = &"Behavior: to attack"
 delay_in_seconds = "0.0"
 
 [node name="to block" type="Node" parent="State/Root/Behavior/go to patrol"]
 script = ExtResource("6_doilr")
 to = NodePath("../../block")
-event = &"Behavior: go to patrol to block"
+event = &"Behavior: to block"
 delay_in_seconds = "0.0"
 
 [node name="to dead" type="Node" parent="State/Root/Behavior/go to patrol"]
@@ -736,7 +736,7 @@ script = ExtResource("5_voq0c")
 [node name="to go to patrol" type="Node" parent="State/Root/Behavior/seek"]
 script = ExtResource("6_doilr")
 to = NodePath("../../go to patrol")
-event = &"Behavior: seek to go to patrol"
+event = &"Behavior: to go to patrol"
 delay_in_seconds = "0.0"
 
 [node name="to dead" type="Node" parent="State/Root/Behavior/seek"]
@@ -767,7 +767,7 @@ blackboard_plan = SubResource("BlackboardPlan_x77yf")
 [node name="to attack" type="Node" parent="State/Root/Behavior/block"]
 script = ExtResource("6_doilr")
 to = NodePath("../../attack")
-event = &"Behavior: block to attack"
+event = &"Behavior: to attack"
 delay_in_seconds = "0.0"
 
 [node name="to dead" type="Node" parent="State/Root/Behavior/block"]
@@ -819,13 +819,13 @@ blackboard_plan = SubResource("BlackboardPlan_ebp85")
 [node name="to ram attack" type="Node" parent="State/Root/Behavior/attack/track"]
 script = ExtResource("6_doilr")
 to = NodePath("../../ram attack")
-event = &"Attack: track to ram attack"
+event = &"Attack: to ram attack"
 delay_in_seconds = "0.0"
 
 [node name="to beam attack" type="Node" parent="State/Root/Behavior/attack/track"]
 script = ExtResource("6_doilr")
 to = NodePath("../../beam attack")
-event = &"Attack: track to beam attack"
+event = &"Attack: to beam attack"
 delay_in_seconds = "0.0"
 
 [node name="ram attack" type="Node" parent="State/Root/Behavior/attack"]
@@ -881,13 +881,13 @@ blackboard_plan = SubResource("BlackboardPlan_0fgvh")
 [node name="to go to patrol" type="Node" parent="State/Root/Behavior/attack"]
 script = ExtResource("6_doilr")
 to = NodePath("../../go to patrol")
-event = &"Behavior: attack to go to patrol"
+event = &"Behavior: to go to patrol"
 delay_in_seconds = "0.0"
 
 [node name="to block" type="Node" parent="State/Root/Behavior/attack"]
 script = ExtResource("6_doilr")
 to = NodePath("../../block")
-event = &"Behavior: attack to block"
+event = &"Behavior: to block"
 delay_in_seconds = "0.0"
 
 [node name="to dead" type="Node" parent="State/Root/Behavior/attack"]
