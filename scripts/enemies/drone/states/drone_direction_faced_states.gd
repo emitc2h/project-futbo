@@ -81,11 +81,11 @@ func _on_turn_right_state_entered() -> void:
 	if tween:
 		tween.kill()
 	tween = get_tree().create_tween()
-	tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.5)\
+	tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.375)\
 		.set_trans(Tween.TRANS_QUAD)\
 		.set_ease(Tween.EASE_IN)\
 		.from(char_node.rotation)
-	tween.tween_property(char_node, "rotation", FACE_RIGHT_Y_ROT, 1.0)\
+	tween.tween_property(char_node, "rotation", FACE_RIGHT_Y_ROT, 0.75)\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)\
 		.from(Vector3.ZERO)
@@ -104,11 +104,11 @@ func _on_turn_left_state_entered() -> void:
 	if tween:
 		tween.kill()
 	tween = get_tree().create_tween()
-	tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.5)\
+	tween.tween_property(char_node, "rotation", Vector3.ZERO, 0.375)\
 		.set_trans(Tween.TRANS_QUAD)\
 		.set_ease(Tween.EASE_IN)\
 		.from(char_node.rotation)
-	tween.tween_property(char_node, "rotation", FACE_LEFT_Y_ROT, 1.0)\
+	tween.tween_property(char_node, "rotation", FACE_LEFT_Y_ROT, 0.75)\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)\
 		.from(Vector3.ZERO)

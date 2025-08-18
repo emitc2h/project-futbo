@@ -34,12 +34,12 @@ void fragment() {
 
 	vec4 dissolve_in_tex = texture(dissolve_texture, dissolve_uv);
 	float burn_size_step_in = burn_size * step(0.001, dissolve_value_in) * step(dissolve_value_in, 0.999);
-	float threshold_in = smoothstep(dissolve_in_tex.x-burn_size_step_in, dissolve_in_tex.x, dissolve_value_in);
+	float threshold_in = smoothstep(dissolve_in_tex.x - burn_size_step_in, dissolve_in_tex.x, dissolve_value_in);
 	float border_in = smoothstep(dissolve_in_tex.x, dissolve_in_tex.x + burn_size_step_in, dissolve_value_in);
 
 	vec4 dissolve_out_tex = texture(dissolve_texture, vec2(-dissolve_uv.x, -dissolve_uv.y));
 	float burn_size_step_out = burn_size * step(0.001, dissolve_value_out) * step(dissolve_value_out, 0.999);
-	float threshold_out = smoothstep(dissolve_out_tex.x-burn_size_step_in, dissolve_out_tex.x, dissolve_value_out);
+	float threshold_out = smoothstep(dissolve_out_tex.x - burn_size_step_out, dissolve_out_tex.x, dissolve_value_out);
 	float border_out = smoothstep(dissolve_out_tex.x, dissolve_out_tex.x + burn_size_step_out, dissolve_value_out);
 
 	vec3 main_albedo = (albedo_tex_1.rgb + albedo_tex_2.rgb);
@@ -47,19 +47,8 @@ void fragment() {
 	ALBEDO = mix(burn_color.rgb, mix(burn_color.rgb, main_albedo, border_in), border_out);
 
 	float burn_boost_in = (1.0 - dissolve_value_in) * burn_boost;
-	//if (dissolve_value_in > 0.1) {
-		//burn_boost_in = 20.0;
-	//}
-
 	float burn_boost_out = dissolve_value_out * burn_boost;
-	//if (dissolve_value_in < 0.9) {
-		//burn_boost_out = 20.0;
-	//}
-
-	//EMISSION = mix(burn_color.rgb * burn_boost, emission_tex, border) * emission_energy * 1000.0;
-	//ALPHA *= alpha * albedo.a * albedo_tex.a * threshold;
 
 	EMISSION = 1000.0 * emission_energy * mix(burn_color.rgb * burn_boost_out, mix(burn_color.rgb * burn_boost_in, main_albedo, border_in), border_out);
-
 	ALPHA *= alpha * (albedo_tex_1.a + albedo_tex_2.a) * alpha_tex.r * threshold_in * threshold_out;
 }

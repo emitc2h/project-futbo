@@ -32,6 +32,8 @@ const TRANS_BLOCK_TO_ATTACK: String = "Behavior: block to attack"
 const TRANS_ATTACK_TO_GO_TO_PATROL: String = "Behavior: attack to go to patrol"
 const TRANS_ATTACK_TO_BLOCK: String = "Behavior: attack to block"
 
+const TRANS_TO_DEAD: String = "Behavior: to dead"
+
 
 func _ready() -> void:
 	targeting_states.target_none.connect(_on_target_none)

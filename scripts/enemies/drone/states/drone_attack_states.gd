@@ -12,8 +12,8 @@ extends Node
 @export_group("Parameters")
 @export var min_time_in_track_state: float = 2.5
 @export var max_time_in_track_state: float = 6.0
-@export var time_track_to_ram_attack: float = 3.0
-@export var player_is_near_threshold: float = 2.8
+@export var time_track_to_attack: float = 4.0
+@export var player_is_near_threshold: float = 3.0
 
 ## States Enum
 enum State {TRACK = 0, RAM_ATTACK = 1, BEAM_ATTACK = 2}
@@ -44,7 +44,7 @@ func _on_track_state_physics_processing(delta: float) -> void:
 	
 	
 	## If the drone is continuously tracking the player for a time, it initiates the attack
-	if targeting_states.time_spent_in_acquired_state > time_track_to_ram_attack and \
+	if targeting_states.time_spent_in_acquired_state > time_track_to_attack and \
 		time_spent_in_track_state > min_time_in_track_state:
 		sc.send_event(pick_attack())
 	

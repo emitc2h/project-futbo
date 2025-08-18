@@ -139,6 +139,7 @@ func _on_acquired_state_entered() -> void:
 	target_acquired.emit()
 	
 	## Target the spinners at the target
+	print("Acquired target: ", target.name)
 	drone_model.spinners_acquire_target(target)
 	
 	## Make the drone transition animations land on the targeting state

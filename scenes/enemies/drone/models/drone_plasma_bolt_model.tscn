@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dd3qiywytn0rt"]
+[gd_scene load_steps=4 format=3 uid="uid://dd3qiywytn0rt"]
 
 [ext_resource type="PackedScene" uid="uid://cmqskx1alufnj" path="res://assets/3D/Enemies/Drone/drone_bolt.glb" id="1_dvdjj"]
 [ext_resource type="Material" uid="uid://bkhlca22tyfnh" path="res://assets/3D/Enemies/Drone/materials/drone_plasma_bolt_material.tres" id="2_14qjs"]
+[ext_resource type="Material" uid="uid://dpspa8chrv1w6" path="res://assets/3D/Enemies/Drone/materials/drone_plasma_bolt_impact_material.tres" id="3_cfndj"]
 
 [node name="DronePlasmaBoltModel" instance=ExtResource("1_dvdjj")]
 
 [node name="bolt" parent="." index="0"]
 surface_material_override/0 = ExtResource("2_14qjs")
+
+[node name="impact" parent="." index="1"]
+surface_material_override/0 = ExtResource("3_cfndj")

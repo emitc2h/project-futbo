@@ -29,6 +29,7 @@ var is_dribbling: bool = false
 func _ready() -> void:
 	Signals.facing_left.connect(_on_facing_left)
 	Signals.facing_right.connect(_on_facing_right)
+	Signals.player_knocked.connect(_on_player_knocked)
 	pickup_zone_position_x = pickup_zone.position.x
 	dribble_marker_position_x = dribble_marker.position.x
 	player_id = player.get_instance_id()
@@ -121,6 +122,12 @@ func _on_facing_right() -> void:
 	pickup_zone.position.x = pickup_zone_position_x
 	dribble_marker.position.x = dribble_marker_position_x
 	direction_faced = Enums.Direction.RIGHT
+
+
+# From globals
+#----------------------------------------
+func _on_player_knocked() -> void:
+	end_dribble()
 
 
 #=======================================================

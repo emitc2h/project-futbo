@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://invfr68fmeed"]
+[gd_scene load_steps=15 format=3 uid="uid://invfr68fmeed"]
 
 [ext_resource type="Script" uid="uid://cwk5rr6qkn52l" path="res://scripts/enemies/drone/drone_plasma_bolt.gd" id="1_8q3t1"]
 [ext_resource type="PackedScene" uid="uid://dd3qiywytn0rt" path="res://scenes/enemies/drone/models/drone_plasma_bolt_model.tscn" id="1_357h2"]
@@ -6,6 +6,41 @@
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_xtwlp"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_fjnq5"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_kyqan"]
+[ext_resource type="Script" uid="uid://cqha6oa4b32v7" path="res://scripts/enemies/drone/animation/drone_plasma_bolt_impact_animation.gd" id="7_xtwlp"]
+[ext_resource type="Script" uid="uid://bfiuobm6wij26" path="res://scripts/enemies/drone/animation/drone_plasma_bolt_impact_props.gd" id="8_fjnq5"]
+[ext_resource type="Texture2D" uid="uid://ufu6wds3282p" path="res://assets/3D/Particles/dart/dart_map.png" id="9_kyqan"]
+
+[sub_resource type="Gradient" id="Gradient_vaw05"]
+offsets = PackedFloat32Array(0, 0.792793, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.0470588, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ekexi"]
+gradient = SubResource("Gradient_vaw05")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kyqan"]
+particle_flag_align_y = true
+direction = Vector3(0, -1, 0)
+spread = 60.0
+initial_velocity_min = 5.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+color_ramp = SubResource("GradientTexture1D_ekexi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kyqan"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("9_kyqan")
+emission_enabled = true
+emission = Color(1, 0.39, 0.562833, 1)
+emission_energy_multiplier = 20.0
+emission_intensity = 50000.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_kyqan"]
+material = SubResource("StandardMaterial3D_kyqan")
+size = Vector2(0.3, 0.1)
 
 [node name="DronePlasmaBolt" type="Node3D"]
 script = ExtResource("1_8q3t1")
@@ -13,8 +48,9 @@ script = ExtResource("1_8q3t1")
 [node name="DronePlasmaBoltModel" parent="." instance=ExtResource("1_357h2")]
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
-target_position = Vector3(0, 8, 0)
+target_position = Vector3(0, 12, 0)
 collision_mask = 3
+hit_from_inside = true
 debug_shape_custom_color = Color(0.234374, 0.379617, 1, 1)
 debug_shape_thickness = 5
 
@@ -67,6 +103,35 @@ script = ExtResource("6_kyqan")
 to = NodePath("../../off")
 event = &"to off"
 delay_in_seconds = "0.0"
+
+[node name="ImpactAnimation" type="Node" parent="." node_paths=PackedStringArray("bolt")]
+script = ExtResource("7_xtwlp")
+bolt = NodePath("..")
+
+[node name="ImpactOffProps" type="Node" parent="ImpactAnimation"]
+script = ExtResource("8_fjnq5")
+
+[node name="ImpactHitProps" type="Node" parent="ImpactAnimation"]
+script = ExtResource("8_fjnq5")
+alpha = 1.0
+dissolve_value_in = 1.0
+metadata/_custom_type_script = "uid://bfiuobm6wij26"
+
+[node name="ImpactFadedProps" type="Node" parent="ImpactAnimation"]
+script = ExtResource("8_fjnq5")
+alpha = 1.0
+dissolve_value_in = 1.0
+dissolve_value_out = 0.0
+metadata/_custom_type_script = "uid://bfiuobm6wij26"
+
+[node name="ShrapnelParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_kyqan")
+draw_pass_1 = SubResource("QuadMesh_kyqan")
 
 [connection signal="state_entered" from="StateChart/Root/off" to="." method="_on_off_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/fire" to="." method="_on_fire_state_entered"]

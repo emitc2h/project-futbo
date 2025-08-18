@@ -5,6 +5,7 @@ extends Node
 @export_group("Dependencies")
 @export var drone: Drone
 @export var sc: StateChart
+@export var model: DroneModel
 
 ## Parameters
 @export_group("Exhaust Parameters")
@@ -16,8 +17,8 @@ extends Node
 @export var burst_noise_speed: float = 3.0
 
 @export_group("Movement Speed")
-@export var off_speed: float = 3.0
-@export var thrust_speed: float = 5.0
+@export var off_speed: float = 4.0
+@export var thrust_speed: float = 7.0
 @export var burst_speed: float = 12.0
 
 ## States Enum
@@ -25,56 +26,15 @@ enum State {OFF = 0, THRUST = 1, BURST = 2, STOPPING = 3}
 var state: State = State.OFF
 
 ## State transition constants
-const TRANS_OFF_TO_THRUST: String = "Engines: off to thrust"
-const TRANS_OFF_TO_BURST: String = "Engines: off to burst"
+const TRANS_TO_THRUST: String = "Engines: to thrust"
+const TRANS_TO_BURST: String = "Engines: to burst"
+const TRANS_TO_STOPPING: String = "Engines: to stopping"
+const TRANS_TO_QUICK_OFF: String = "Engines: to quick off"
+const TRANS_TO_OFF: String = "Engines: to off"
 
-const TRANS_THRUST_TO_STOPPING: String = "Engines: thrust to stopping"
-const TRANS_THRUST_TO_QUICK_OFF: String = "Engines: thrust to quick off"
-const TRANS_THRUST_TO_BURST: String = "Engines: thrust to burst"
-
-const TRANS_BURST_TO_STOPPING: String = "Engines: burst to stopping"
-const TRANS_BURST_TO_QUICK_OFF: String = "Engines: burst to quick off"
-const TRANS_BURST_TO_THRUST: String = "Engines: burst to thrust"
-
-const TRANS_STOPPING_TO_OFF: String = "Engines: stopping to off"
-
-## Drone nodes controlled by this state
-@onready var model_mesh: Node3D = drone.get_node("TrackTransformContainer/DroneModel/Armature/Skeleton3D/drone")
-@onready var exhaust_material: ShaderMaterial = model_mesh.get_surface_override_material(6)
-
-@onready var model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
-
-## Internal variables
-var engine_tween: Tween
 
 ## Signals
 signal engines_are_off
-
-## Utils
-func _tween_engines(
-	noise_speed: float,
-	noise_intensity_from: float,
-	noise_intensity_to: float,
-	ease: Tween.EaseType,
-	trans: Tween.TransitionType,
-	duration: float) -> Tween:
-		exhaust_material.set_shader_parameter("noise_speed", noise_speed)
-		## Interrupt any ongoing tween so animations don't conflict
-		if engine_tween:
-			engine_tween.kill()
-			if state == State.STOPPING:
-				sc.send_event(TRANS_STOPPING_TO_OFF)
-		
-		engine_tween = get_tree().create_tween()
-		engine_tween.tween_property(
-			exhaust_material,
-			"shader_parameter/noise_intensity",
-			noise_intensity_to,
-			duration)\
-			.set_ease(ease)\
-			.set_trans(trans)\
-			.from(noise_intensity_from)
-		return engine_tween
 
 
 # off state
@@ -85,21 +45,11 @@ func _on_off_state_entered() -> void:
 
 
 func _on_off_to_thrust_taken() -> void:
-	_tween_engines(
-		thrust_noise_speed,
-		off_noise_intensity, thrust_noise_intensity,
-		Tween.EASE_OUT,
-		Tween.TRANS_BACK,
-		0.6)
+	model.engines_animation.off_to_thrust(0.6)
 
 
 func _on_off_to_burst_taken() -> void:
-	_tween_engines(
-		burst_noise_speed,
-		off_noise_intensity, burst_noise_intensity,
-		Tween.EASE_OUT,
-		Tween.TRANS_BACK,
-		0.4)
+	model.engines_animation.off_to_burst(0.4)
 
 
 # thrust state
@@ -109,32 +59,16 @@ func _on_thrust_state_entered() -> void:
 
 
 func _on_thrust_to_stopping_taken() -> void:
-	_tween_engines(
-		off_noise_speed,
-		thrust_noise_intensity, off_noise_intensity,
-		Tween.EASE_OUT,
-		Tween.TRANS_QUART,
-		0.8)	
-	await engine_tween.finished
-	sc.send_event(TRANS_STOPPING_TO_OFF)
+	await model.engines_animation.thrust_to_off(0.8)
+	sc.send_event(TRANS_TO_OFF)
 
 
 func _on_thrust_to_quick_off_taken() -> void:
-	_tween_engines(
-		off_noise_speed,
-		thrust_noise_intensity, off_noise_intensity,
-		Tween.EASE_OUT,
-		Tween.TRANS_QUART,
-		0.15)
+	model.engines_animation.thrust_to_off(0.15)
 
 
 func _on_thrust_to_burst_taken() -> void:
-	_tween_engines(
-		burst_noise_speed,
-		thrust_noise_intensity, burst_noise_intensity,
-		Tween.EASE_OUT,
-		Tween.TRANS_LINEAR,
-		0.6)
+	model.engines_animation.thrust_to_burst(0.4)
 
 
 # burst state
@@ -144,32 +78,16 @@ func _on_burst_state_entered() -> void:
 
 
 func _on_burst_to_stopping_taken() -> void:
-	_tween_engines(
-		off_noise_speed,
-		burst_noise_intensity, off_noise_intensity,
-		Tween.EASE_OUT,
-		Tween.TRANS_QUART,
-		0.8)
-	await engine_tween.finished
-	sc.send_event(TRANS_STOPPING_TO_OFF)
+	await model.engines_animation.burst_to_off(0.8)
+	sc.send_event(TRANS_TO_OFF)
 
 
 func _on_burst_to_quick_off_taken() -> void:
-	_tween_engines(
-		off_noise_speed,
-		burst_noise_intensity, off_noise_intensity,
-		Tween.EASE_OUT,
-		Tween.TRANS_QUART,
-		0.15)
+	model.engines_animation.burst_to_off(0.15)
 
 
 func _on_burst_to_thrust_taken() -> void:
-	_tween_engines(
-		thrust_noise_speed,
-		burst_noise_intensity, thrust_noise_intensity,
-		Tween.EASE_OUT,
-		Tween.TRANS_LINEAR,
-		0.6)
+	model.engines_animation.burst_to_thrust(0.6)
 
 
 # stopping state

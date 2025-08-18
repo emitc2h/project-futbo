@@ -5,7 +5,8 @@ extends Node3D
 @export var drone: Drone
 
 ## Animation Managers
-@onready var em_spinners_animations: DroneEMSpinnersAnimation = $EMSpinnersAnimation
+@onready var em_spinners_animation: DroneEMSpinnersAnimation = $EMSpinnersAnimation
+@onready var engines_animation: DroneEnginesAnimation = $EnginesAnimation
 
 ## Main Drone Model Mesh
 @onready var drone_mesh: MeshInstance3D = $Armature/Skeleton3D/drone
@@ -59,8 +60,11 @@ func _ready() -> void:
 	
 	## Initialize state machine
 	anim_state = anim_tree.get("parameters/playback")
-
 	
+	## Initialize modifiers
+	lookat_modifier_left.influence = 0.0
+	lookat_modifier_right.influence = 0.0
+
 	## Connect signals
 	$AnimationTree/AnimationStateChangeTracker.anim_state_finished.connect(_on_anim_state_finished)
 	$AnimationTree/AnimationStateChangeTracker.anim_state_started.connect(_on_anim_state_started)
@@ -104,7 +108,7 @@ func _on_anim_state_started(anim_name: String) -> void:
 ## Animations
 ## ---------------------------------------
 func die() -> void:
-	em_spinners_animations.turn_off()
+	em_spinners_animation.turn_off()
 	
 	lightning_particles.emitting = true
 	lightning_particles.amount_ratio = 1.0
@@ -125,11 +129,11 @@ func die() -> void:
 
 
 func charge_spinners(duration: float) -> void:
-	em_spinners_animations.charge(duration)
+	em_spinners_animation.charge(duration)
 
 
 func fire_spinners(duration: float) -> void:
-	em_spinners_animations.fire(duration)
+	em_spinners_animation.fire(duration)
 	plasma_bolt_left.fire()
 	plasma_bolt_right.fire()
 
@@ -142,14 +146,10 @@ func spinners_acquire_target(target: Node3D) -> void:
 
 
 func spinners_engage_target() -> void:
-	lookat_modifier_left.active = true
 	lookat_modifier_left.influence = 1.0
-	lookat_modifier_right.active = true
 	lookat_modifier_right.influence = 1.0
 
 
 func spinners_disengage_target() -> void:
-	lookat_modifier_left.active = false
 	lookat_modifier_left.influence = 0.0
-	lookat_modifier_right.active = false
 	lookat_modifier_right.influence = 0.0

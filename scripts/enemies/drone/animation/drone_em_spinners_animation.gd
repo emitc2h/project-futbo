@@ -57,7 +57,7 @@ func _ready() -> void:
 	_apply_props(spinners_off_props)
 
 
-## Properties Data Structure
+## Apply Properties
 func _apply_props(props: DroneEMSpinnersProps) -> void:
 	## Apply Aura properties
 	spinner_aura_left_material.albedo_color = props.aura_color

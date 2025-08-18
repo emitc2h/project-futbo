@@ -162,16 +162,14 @@ func thrust() -> void:
 	if not anim_state.get_current_node() in ["start thrust", "idle thrust"]:
 		anim_state.travel("start thrust")
 	physics_mode_states.speed = engines_states.thrust_speed
-	sc.send_event(engines_states.TRANS_OFF_TO_THRUST)
-	sc.send_event(engines_states.TRANS_BURST_TO_THRUST)
+	sc.send_event(engines_states.TRANS_TO_THRUST)
 
 
 func burst() -> void:
 	if not anim_state.get_current_node() in ["start thrust", "idle thrust"]:
 		anim_state.travel("start thrust")
 	physics_mode_states.speed = engines_states.burst_speed
-	sc.send_event(engines_states.TRANS_OFF_TO_BURST)
-	sc.send_event(engines_states.TRANS_THRUST_TO_BURST)
+	sc.send_event(engines_states.TRANS_TO_BURST)
 
 signal stop_engines_finished
 
@@ -179,8 +177,7 @@ func stop_engines() -> void:
 	if anim_state.get_current_node() in ["start thrust", "idle thrust"]:
 		anim_state.travel("stop thrust")
 	physics_mode_states.speed = engines_states.off_speed
-	sc.send_event(engines_states.TRANS_THRUST_TO_STOPPING)
-	sc.send_event(engines_states.TRANS_BURST_TO_STOPPING)
+	sc.send_event(engines_states.TRANS_TO_STOPPING)
 	await engines_states.engines_are_off
 	stop_engines_finished.emit()
 
@@ -189,12 +186,11 @@ func quick_stop_engines(keep_speed: bool = false) -> void:
 	if not keep_speed and anim_state.get_current_node() in ["start thrust", "idle thrust"]:
 		anim_state.travel("stop thrust")
 		physics_mode_states.speed = engines_states.off_speed
-	sc.send_event(engines_states.TRANS_THRUST_TO_QUICK_OFF)
-	sc.send_event(engines_states.TRANS_BURST_TO_QUICK_OFF)
+	sc.send_event(engines_states.TRANS_TO_QUICK_OFF)
 
 
 func reset_engines() -> void:
-	sc.send_event(engines_states.TRANS_STOPPING_TO_OFF)
+	sc.send_event(engines_states.TRANS_TO_OFF)
 
 
 ## Spinner Controls
@@ -258,6 +254,7 @@ func die(force: Vector3) -> void:
 	if vulnerability_states.state == vulnerability_states.State.VULNERABLE:
 		model.die()
 		sc.send_event(physics_mode_states.TRANS_CHAR_TO_RAGDOLL)
+		sc.send_event(behavior_states.TRANS_TO_DEAD)
 		model.body_bone.apply_central_impulse(force * 5.0)
 
 
