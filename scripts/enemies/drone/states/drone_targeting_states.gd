@@ -18,7 +18,7 @@ extends Node
 
 @export_group("Tracking Parameters")
 @export var look_down_lerp_factor: float = 10.0
-@export_range(0, 360, 0.1, "radians_as_degrees") var max_look_down_angle: float = 0.5
+@export_range(0, 360, 0.1, "radians_as_degrees") var max_look_down_angle: float = 1.0
 @export var look_up_lerp_factor: float = 5.0
 
 ## States Enum
@@ -143,9 +143,10 @@ func _on_acquired_state_physics_processing(delta: float) -> void:
 	if not scan_for_target():
 		sc.send_event(TRANS_TO_ACQUIRING)
 	else:
-		## Compute where the target is, and the angle need to look down at it
-		var pointer_to_target: Vector3 = char_node.global_position - target.global_position
-		var new_rotation_x: float = min(asin(abs(pointer_to_target.y) / pointer_to_target.length()), max_look_down_angle)
+		## Compute where the target is, and the angle needed to look down at it
+		var pointer_to_target_3D: Vector3 = char_node.global_position - target.global_position + Vector3.UP * 0.58
+		var angle_to_target: float = Vector2(abs(pointer_to_target_3D.x), pointer_to_target_3D.y).angle()
+		var new_rotation_x: float = min(angle_to_target, max_look_down_angle)
 		drone.physics_mode_states.look_down_angle = new_rotation_x
 		
 		## accumulate the time spent

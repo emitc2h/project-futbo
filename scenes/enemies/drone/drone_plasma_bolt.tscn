@@ -51,11 +51,10 @@ script = ExtResource("1_8q3t1")
 target_position = Vector3(0, 12, 0)
 collision_mask = 3
 hit_from_inside = true
-debug_shape_custom_color = Color(0.234374, 0.379617, 1, 1)
-debug_shape_thickness = 5
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("3_mjux0")
+track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="Root" type="Node" parent="StateChart"]

@@ -58,7 +58,7 @@ const TRANS_TO_DEAD: String = "Physics Mode: to dead"
 var time_floating: float = 0.0
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
 var look_down_angle: float = 0.0
-var look_down_lerp_factor: float = 4.0
+var look_down_lerp_factor: float = 1.0
 
 ## Settable Parameters
 var speed: float = 3.0

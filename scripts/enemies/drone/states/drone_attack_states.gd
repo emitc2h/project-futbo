@@ -54,7 +54,7 @@ func _on_track_state_physics_processing(delta: float) -> void:
 		if targeting_states.state == targeting_states.State.ACQUIRED:
 			sc.send_event(pick_attack())
 		else:
-			sc.send_event(drone.behavior_states.TO_GO_TO_PATROL)
+			sc.send_event(drone.behavior_states.TRANS_TO_GO_TO_PATROL)
 
 
 # ram attack state

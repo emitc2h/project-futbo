@@ -500,7 +500,6 @@ script = ExtResource("11_wmq8b")
 drone = NodePath("../../../../..")
 sc = NodePath("../../../..")
 repr = NodePath("../../../../../InternalRepresentation")
-max_look_down_angle = 1.0472
 
 [node name="AcquiringTimer" type="Timer" parent="State/Root/Monitoring/Targeting/Targeting States"]
 wait_time = 2.0
@@ -638,7 +637,7 @@ delay_in_seconds = "0.0"
 
 [node name="Behavior" type="Node" parent="State/Root"]
 script = ExtResource("4_kl701")
-initial_state = NodePath("patrol")
+initial_state = NodePath("idle")
 
 [node name="Behavior States" type="Node" parent="State/Root/Behavior" node_paths=PackedStringArray("drone", "sc", "vulnerabiliy_states", "targeting_states", "proximity_states", "position_states", "attack_states")]
 script = ExtResource("12_r1v31")
@@ -649,6 +648,15 @@ targeting_states = NodePath("../../Monitoring/Targeting/Targeting States")
 proximity_states = NodePath("../../Monitoring/Proximity/Proximity States")
 position_states = NodePath("../../Monitoring/Position/Position States")
 attack_states = NodePath("../attack/Attack States")
+
+[node name="idle" type="Node" parent="State/Root/Behavior"]
+script = ExtResource("5_voq0c")
+
+[node name="to patrol" type="Node" parent="State/Root/Behavior/idle"]
+script = ExtResource("6_doilr")
+to = NodePath("../../patrol")
+event = &"Behavior: to patrol"
+delay_in_seconds = "0.0"
 
 [node name="patrol" type="Node" parent="State/Root/Behavior"]
 script = ExtResource("5_voq0c")

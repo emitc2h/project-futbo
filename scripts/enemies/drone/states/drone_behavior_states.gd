@@ -16,8 +16,8 @@ extends Node
 @export var attack_states: DroneAttackStates
 
 ## States Enum
-enum State {PATROL = 0, GO_TO_PATROL = 1, SEEK = 2, BLOCK = 3, SLEEP = 4, ATTACK = 5}
-var state: State = State.PATROL
+enum State {PATROL = 0, GO_TO_PATROL = 1, SEEK = 2, BLOCK = 3, SLEEP = 4, ATTACK = 5, IDLE = 6}
+var state: State = State.IDLE
 
 ## State transition constants
 const TRANS_TO_PATROL: String = "Behavior: to patrol"
@@ -108,3 +108,13 @@ func _on_control_node_proximity_entered(control_node: ControlNode) -> void:
 func _on_player_proximity_entered() -> void:
 	## If the the player is detected within the proximity detector, go to attack state
 	sc.send_event(TRANS_TO_ATTACK)
+
+
+# signal handling
+#========================================
+func enter_initial_behavior(initial_behavior: State) -> void:
+	match(initial_behavior):
+		State.IDLE:
+			pass
+		State.PATROL:
+			sc.send_event(TRANS_TO_PATROL)

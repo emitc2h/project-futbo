@@ -26,6 +26,7 @@ player = NodePath("..")
 
 [node name="PlayerKickAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_t2xeb")]
 player = NodePath("..")
+kick_force = 7.5
 
 [node name="PlayerDribbleAbility" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_0pbqm")]
 player = NodePath("..")

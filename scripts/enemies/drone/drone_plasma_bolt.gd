@@ -65,7 +65,8 @@ func _on_fire_state_physics_processing(delta: float) -> void:
 	
 	## If the bolt has made it the whole way then consider if it's a hit
 	if updated_distance > travel_distance:
-		if raycast.get_collider() is Player:
+		var collider: Object = raycast.get_collider()
+		if (collider is Player) or (collider is TargetMesh):
 			sc.send_event(TRANS_TO_HIT)
 		else:
 			sc.send_event(TRANS_TO_MISS)
