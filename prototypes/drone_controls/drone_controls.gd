@@ -4,7 +4,8 @@ extends Node3D
 @export var drone_scene_path: String = "res://scenes/enemies/drone/drone.tscn"
 var drone_scene: Resource
 
-@onready var target: TargetMesh = $TargetMesh
+@onready var target_left: TargetMesh = $TargetMeshLeft
+@onready var target_right: TargetMesh = $TargetMeshRight
 @onready var block: Node3D = $Block
 
 var initial_drone_transform: Transform3D
@@ -123,4 +124,5 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 ## TARGET
 ## ==================================
 func _on_target_bob_button_toggled(toggled_on: bool) -> void:
-	target.bob = !target.bob
+	target_left.bob = !target_left.bob
+	target_right.bob = !target_right.bob

@@ -30,6 +30,7 @@ const FACE_LEFT_Y_ROT = Vector3(0.0, -PI/2, 0.0)
 
 ## Internal variables
 var tween: Tween
+var target_vec: Vector3 = Vector3.ZERO
 
 ## Signals
 signal is_now_facing_right
@@ -52,7 +53,11 @@ func _on_face_right_state_entered() -> void:
 
 
 func _on_face_right_state_physics_processing(delta: float) -> void:
-	self._rotate_toward(FACE_RIGHT_Y_ROT)
+	if target_vec != Vector3.ZERO:
+		var x_rot: Vector3 = Vector3.RIGHT * Vector3.LEFT.angle_to(target_vec)
+		self._rotate_toward(FACE_RIGHT_Y_ROT + x_rot)
+	else:
+		self._rotate_toward(FACE_RIGHT_Y_ROT)
 
 
 # face left state
@@ -64,7 +69,11 @@ func _on_face_left_state_entered() -> void:
 
 
 func _on_face_left_state_physics_processing(delta: float) -> void:
-	self._rotate_toward(FACE_LEFT_Y_ROT)
+	if target_vec != Vector3.ZERO:
+		var x_rot: Vector3 = Vector3.RIGHT * Vector3.RIGHT.angle_to(target_vec)
+		self._rotate_toward(FACE_LEFT_Y_ROT + x_rot)
+	else:
+		self._rotate_toward(FACE_LEFT_Y_ROT)
 
 
 # turn right state

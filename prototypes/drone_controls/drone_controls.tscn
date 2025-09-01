@@ -66,207 +66,224 @@ initial_behavior = 6
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.998844, 0.00277772, 0.047985, 0, 0.998329, -0.0577906, -0.0480653, 0.0577238, 0.997175, -1.26748, 1.32559, 7.70359)
-fov = 32.2
+fov = 50.3
 
 [node name="Interface" type="CanvasLayer" parent="."]
 
-[node name="Rows" type="VBoxContainer" parent="Interface"]
+[node name="ColorRect" type="ColorRect" parent="Interface"]
+offset_right = 579.0
+offset_bottom = 471.0
+color = Color(0, 0, 0, 0.309804)
+
+[node name="Rows" type="VBoxContainer" parent="Interface/ColorRect"]
+layout_mode = 0
 offset_left = 15.0
 offset_top = 14.0
-offset_right = 434.0
-offset_bottom = 366.0
+offset_right = 560.0
+offset_bottom = 458.0
 metadata/_edit_use_anchors_ = true
 
-[node name="Row1" type="HBoxContainer" parent="Interface/Rows"]
+[node name="Row1" type="HBoxContainer" parent="Interface/ColorRect/Rows"]
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="PhysicsVContainer" type="VBoxContainer" parent="Interface/Rows/Row1"]
+[node name="PhysicsVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/Rows/Row1/PhysicsVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "Physics"
 horizontal_alignment = 1
 
-[node name="CharacterModeButton" type="Button" parent="Interface/Rows/Row1/PhysicsVContainer"]
+[node name="CharacterModeButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
 layout_mode = 2
 text = "Character Mode"
 
-[node name="RigidModeButton" type="Button" parent="Interface/Rows/Row1/PhysicsVContainer"]
+[node name="RigidModeButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
 layout_mode = 2
 text = "Rigid Mode"
 
-[node name="RagdollModeButton" type="Button" parent="Interface/Rows/Row1/PhysicsVContainer"]
+[node name="RagdollModeButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
 layout_mode = 2
 text = "Ragdoll Mode"
 
-[node name="ResetButton" type="Button" parent="Interface/Rows/Row1/PhysicsVContainer"]
+[node name="ResetButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
 layout_mode = 2
 text = "Reset
 "
 
-[node name="DirectionVContainer" type="VBoxContainer" parent="Interface/Rows/Row1"]
+[node name="DirectionVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/Rows/Row1/DirectionVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row1/DirectionVContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Direction "
 horizontal_alignment = 1
 
-[node name="LeftButton" type="Button" parent="Interface/Rows/Row1/DirectionVContainer"]
+[node name="LeftButton" type="Button" parent="Interface/ColorRect/Rows/Row1/DirectionVContainer"]
 layout_mode = 2
 text = "Left"
 
-[node name="RightButton" type="Button" parent="Interface/Rows/Row1/DirectionVContainer"]
+[node name="RightButton" type="Button" parent="Interface/ColorRect/Rows/Row1/DirectionVContainer"]
 layout_mode = 2
 text = "Right"
 
-[node name="VulnerabilityVContainer" type="VBoxContainer" parent="Interface/Rows/Row1"]
+[node name="VulnerabilityVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="Interface/Rows/Row1/VulnerabilityVContainer"]
+[node name="Label2" type="Label" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Vulnerability "
 horizontal_alignment = 1
 
-[node name="InvulnerableButton" type="Button" parent="Interface/Rows/Row1/VulnerabilityVContainer"]
+[node name="InvulnerableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
 layout_mode = 2
 text = "Invulnerable"
 
-[node name="DefendableButton" type="Button" parent="Interface/Rows/Row1/VulnerabilityVContainer"]
+[node name="DefendableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
 layout_mode = 2
 text = "Defendable"
 
-[node name="VulnerableButton" type="Button" parent="Interface/Rows/Row1/VulnerabilityVContainer"]
+[node name="VulnerableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
 layout_mode = 2
 text = "Vulnerable"
 
-[node name="DieButton" type="Button" parent="Interface/Rows/Row1/VulnerabilityVContainer"]
+[node name="DieButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
 layout_mode = 2
 text = "Die"
 
-[node name="TargetingVContainer" type="VBoxContainer" parent="Interface/Rows/Row1"]
+[node name="TargetingVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/Rows/Row1/TargetingVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row1/TargetingVContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Targeting "
 horizontal_alignment = 1
 
-[node name="EnableButton" type="Button" parent="Interface/Rows/Row1/TargetingVContainer"]
+[node name="EnableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/TargetingVContainer"]
 layout_mode = 2
 text = "Enable"
 
-[node name="DisableButton" type="Button" parent="Interface/Rows/Row1/TargetingVContainer"]
+[node name="DisableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/TargetingVContainer"]
 layout_mode = 2
 text = "Disable"
 
-[node name="Row2" type="HBoxContainer" parent="Interface/Rows"]
+[node name="Row2" type="HBoxContainer" parent="Interface/ColorRect/Rows"]
 layout_mode = 2
 
-[node name="EngagementVContainer" type="VBoxContainer" parent="Interface/Rows/Row2"]
+[node name="EngagementVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/Rows/Row2/EngagementVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Engagement "
 horizontal_alignment = 1
 
-[node name="OpenButton" type="Button" parent="Interface/Rows/Row2/EngagementVContainer"]
+[node name="OpenButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer"]
 layout_mode = 2
 text = "Open"
 
-[node name="CloseButton" type="Button" parent="Interface/Rows/Row2/EngagementVContainer"]
+[node name="CloseButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer"]
 layout_mode = 2
 text = "Close
 "
 
-[node name="QuickCloseButton" type="Button" parent="Interface/Rows/Row2/EngagementVContainer"]
+[node name="QuickCloseButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer"]
 layout_mode = 2
 text = "Quick Close
 "
 
-[node name="EnginesVContainer" type="VBoxContainer" parent="Interface/Rows/Row2"]
+[node name="EnginesVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/Rows/Row2/EnginesVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Engines "
 horizontal_alignment = 1
 
-[node name="ThrustButton" type="Button" parent="Interface/Rows/Row2/EnginesVContainer"]
+[node name="ThrustButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
 layout_mode = 2
 text = "Thrust"
 
-[node name="BurstButton" type="Button" parent="Interface/Rows/Row2/EnginesVContainer"]
+[node name="BurstButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
 layout_mode = 2
 text = "Burst"
 
-[node name="StopButton" type="Button" parent="Interface/Rows/Row2/EnginesVContainer"]
+[node name="StopButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
 layout_mode = 2
 text = "Stop"
 
-[node name="QuickStopButton" type="Button" parent="Interface/Rows/Row2/EnginesVContainer"]
+[node name="QuickStopButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
 layout_mode = 2
 text = "Quick Stop"
 
-[node name="SpinnersVContainer" type="VBoxContainer" parent="Interface/Rows/Row2"]
+[node name="SpinnersVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/Rows/Row2/SpinnersVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/SpinnersVContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Spinners "
 horizontal_alignment = 1
 
-[node name="FireButton" type="Button" parent="Interface/Rows/Row2/SpinnersVContainer"]
+[node name="FireButton" type="Button" parent="Interface/ColorRect/Rows/Row2/SpinnersVContainer"]
 layout_mode = 2
 text = "Fire"
 
-[node name="Row3" type="HBoxContainer" parent="Interface/Rows"]
+[node name="Row3" type="HBoxContainer" parent="Interface/ColorRect/Rows"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Rows/Row3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row3"]
 layout_mode = 2
 
-[node name="BlockButton" type="CheckButton" parent="Interface/Rows/Row3/VBoxContainer"]
+[node name="BlockButton" type="CheckButton" parent="Interface/ColorRect/Rows/Row3/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "Block"
 
-[node name="TargetBobButton" type="CheckButton" parent="Interface/Rows/Row3/VBoxContainer"]
+[node name="TargetBobButton" type="CheckButton" parent="Interface/ColorRect/Rows/Row3/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "Target Bob"
 
-[node name="TargetMesh" type="StaticBody3D" parent="."]
+[node name="TargetMeshLeft" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89456, 1.24847, 0)
 collision_mask = 0
 script = ExtResource("6_nhjp0")
 
-[node name="Mesh" type="MeshInstance3D" parent="TargetMesh"]
+[node name="Mesh" type="MeshInstance3D" parent="TargetMeshLeft"]
 mesh = SubResource("SphereMesh_8gdpk")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_nhjp0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMesh"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMeshLeft"]
+shape = SubResource("SphereShape3D_8gdpk")
+
+[node name="TargetMeshRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.63781, 1.24847, 0)
+collision_mask = 0
+script = ExtResource("6_nhjp0")
+
+[node name="Mesh" type="MeshInstance3D" parent="TargetMeshRight"]
+mesh = SubResource("SphereMesh_8gdpk")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nhjp0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMeshRight"]
 shape = SubResource("SphereShape3D_8gdpk")
 
 [node name="Block" type="StaticBody3D" parent="."]
@@ -284,25 +301,25 @@ surface_material_override/0 = ExtResource("7_dyyi7")
 shape = SubResource("ConvexPolygonShape3D_tir8y")
 disabled = true
 
-[connection signal="pressed" from="Interface/Rows/Row1/PhysicsVContainer/CharacterModeButton" to="." method="_on_character_mode_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/PhysicsVContainer/RigidModeButton" to="." method="_on_rigid_mode_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/PhysicsVContainer/RagdollModeButton" to="." method="_on_ragdoll_mode_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/PhysicsVContainer/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/DirectionVContainer/LeftButton" to="." method="_on_left_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/DirectionVContainer/RightButton" to="." method="_on_right_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/VulnerabilityVContainer/InvulnerableButton" to="." method="_on_invulnerable_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/VulnerabilityVContainer/DefendableButton" to="." method="_on_defendable_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/VulnerabilityVContainer/VulnerableButton" to="." method="_on_vulnerable_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/VulnerabilityVContainer/DieButton" to="." method="_on_die_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/TargetingVContainer/EnableButton" to="." method="_on_enable_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row1/TargetingVContainer/DisableButton" to="." method="_on_disable_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row2/EngagementVContainer/OpenButton" to="." method="_on_open_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row2/EngagementVContainer/CloseButton" to="." method="_on_close_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row2/EngagementVContainer/QuickCloseButton" to="." method="_on_quick_close_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row2/EnginesVContainer/ThrustButton" to="." method="_on_thrust_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row2/EnginesVContainer/BurstButton" to="." method="_on_burst_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row2/EnginesVContainer/StopButton" to="." method="_on_stop_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row2/EnginesVContainer/QuickStopButton" to="." method="_on_quick_stop_button_pressed"]
-[connection signal="pressed" from="Interface/Rows/Row2/SpinnersVContainer/FireButton" to="." method="_on_fire_button_pressed"]
-[connection signal="toggled" from="Interface/Rows/Row3/VBoxContainer/BlockButton" to="." method="_on_check_button_toggled"]
-[connection signal="toggled" from="Interface/Rows/Row3/VBoxContainer/TargetBobButton" to="." method="_on_target_bob_button_toggled"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/CharacterModeButton" to="." method="_on_character_mode_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/RigidModeButton" to="." method="_on_rigid_mode_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/RagdollModeButton" to="." method="_on_ragdoll_mode_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/DirectionVContainer/LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/DirectionVContainer/RightButton" to="." method="_on_right_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer/InvulnerableButton" to="." method="_on_invulnerable_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer/DefendableButton" to="." method="_on_defendable_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer/VulnerableButton" to="." method="_on_vulnerable_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer/DieButton" to="." method="_on_die_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/TargetingVContainer/EnableButton" to="." method="_on_enable_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row1/TargetingVContainer/DisableButton" to="." method="_on_disable_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row2/EngagementVContainer/OpenButton" to="." method="_on_open_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row2/EngagementVContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row2/EngagementVContainer/QuickCloseButton" to="." method="_on_quick_close_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row2/EnginesVContainer/ThrustButton" to="." method="_on_thrust_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row2/EnginesVContainer/BurstButton" to="." method="_on_burst_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row2/EnginesVContainer/StopButton" to="." method="_on_stop_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row2/EnginesVContainer/QuickStopButton" to="." method="_on_quick_stop_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row2/SpinnersVContainer/FireButton" to="." method="_on_fire_button_pressed"]
+[connection signal="toggled" from="Interface/ColorRect/Rows/Row3/VBoxContainer/BlockButton" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="Interface/ColorRect/Rows/Row3/VBoxContainer/TargetBobButton" to="." method="_on_target_bob_button_toggled"]

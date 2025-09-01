@@ -17,9 +17,7 @@ extends Node
 @export var acquired_focus: float = 8.0
 
 @export_group("Tracking Parameters")
-@export var look_down_lerp_factor: float = 10.0
 @export_range(0, 360, 0.1, "radians_as_degrees") var max_look_down_angle: float = 1.0
-@export var look_up_lerp_factor: float = 5.0
 
 ## States Enum
 enum State {DISABLED = 0, NONE = 1, ACQUIRING = 2, ACQUIRED = 3}
@@ -123,9 +121,6 @@ func _on_acquired_state_entered() -> void:
 		focus_tween.stop()
 	focus_tween = get_tree().create_tween()
 	focus_tween.tween_property(field_of_view, "focus", acquired_focus, 1.0)
-
-	## Let the drone look down at the target
-	drone.physics_mode_states.look_down_lerp_factor = look_down_lerp_factor
 	
 	target_acquired.emit()
 	
@@ -144,10 +139,7 @@ func _on_acquired_state_physics_processing(delta: float) -> void:
 		sc.send_event(TRANS_TO_ACQUIRING)
 	else:
 		## Compute where the target is, and the angle needed to look down at it
-		var pointer_to_target_3D: Vector3 = char_node.global_position - target.global_position + Vector3.UP * 0.58
-		var angle_to_target: float = Vector2(abs(pointer_to_target_3D.x), pointer_to_target_3D.y).angle()
-		var new_rotation_x: float = min(angle_to_target, max_look_down_angle)
-		drone.physics_mode_states.look_down_angle = new_rotation_x
+		drone.direction_faced_states.target_vec = (char_node.global_position - target.global_position).normalized()
 		
 		## accumulate the time spent
 		time_spent_in_acquired_state += delta
@@ -155,8 +147,8 @@ func _on_acquired_state_physics_processing(delta: float) -> void:
 
 func _on_acquired_state_exited() -> void:
 	## Look back up
-	drone.physics_mode_states.look_down_lerp_factor = look_up_lerp_factor
-	drone.physics_mode_states.look_down_angle = 0.0
+	drone.direction_faced_states.target_vec = Vector3.ZERO
+	
 	if range_tween:
 		range_tween.stop()
 	if focus_tween:

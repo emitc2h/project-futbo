@@ -57,8 +57,6 @@ const TRANS_TO_DEAD: String = "Physics Mode: to dead"
 ## Internal variables
 var time_floating: float = 0.0
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
-var look_down_angle: float = 0.0
-var look_down_lerp_factor: float = 1.0
 
 ## Settable Parameters
 var speed: float = 3.0
@@ -125,8 +123,6 @@ func _on_char_state_physics_processing(delta: float) -> void:
 	char_node.velocity.x = lerp(char_node.velocity.x, left_right_axis * speed, axis_lerp_strength * delta)
 	
 	char_node.move_and_slide()
-	
-	char_node.rotation.x = lerp(char_node.rotation.x, look_down_angle, look_down_lerp_factor * delta)
 	
 	## nodes tha must follow the char node
 	track_transform_container.transform = char_node.transform
