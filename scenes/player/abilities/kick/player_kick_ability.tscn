@@ -19,7 +19,6 @@ script = ExtResource("1_4ly6d")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_iosrh")
-track_in_editor = true
 
 [node name="root" type="Node" parent="State"]
 script = ExtResource("3_t7rgp")

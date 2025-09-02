@@ -637,7 +637,7 @@ delay_in_seconds = "0.0"
 
 [node name="Behavior" type="Node" parent="State/Root"]
 script = ExtResource("4_kl701")
-initial_state = NodePath("idle")
+initial_state = NodePath("patrol")
 
 [node name="Behavior States" type="Node" parent="State/Root/Behavior" node_paths=PackedStringArray("drone", "sc", "vulnerabiliy_states", "targeting_states", "proximity_states", "position_states", "attack_states")]
 script = ExtResource("12_r1v31")

@@ -75,9 +75,11 @@ func _input(event: InputEvent) -> void:
 		paused = !paused
 		get_tree().paused = !get_tree().paused
 		if paused:
+			Signals.debug_on.emit()
 			pause_log_array_idx = 0
 			tab_container.current_tab = 1
 		else:
+			Signals.debug_off.emit()
 			tab_container.current_tab = 0
 	
 	if event.is_action_pressed("debug_right"):

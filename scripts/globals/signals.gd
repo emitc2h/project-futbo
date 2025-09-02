@@ -72,3 +72,5 @@ signal update_zoom(zoom_target: Enums.Zoom)
 signal debug_log(text: String)
 signal debug_running_log(text: String)
 signal debug_advance
+signal debug_on
+signal debug_off
