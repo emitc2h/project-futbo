@@ -43,7 +43,7 @@ func _ready() -> void:
 	## initialize the internal representation
 	repr.initialize()
 	anim_state = model_anim_tree.get("parameters/playback")
-	behavior_states.enter_initial_behavior(initial_behavior)
+	behavior_states.set_initial_behavior(initial_behavior)
 	Signals.debug_advance.connect(_on_debug_advance)
 
 

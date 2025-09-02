@@ -79,3 +79,12 @@ layout_mode = 2
 size_flags_vertical = 0
 text = "awaiting logs..."
 autowrap_mode = 3
+
+[node name="AdvanceTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="AdvanceAllowedTimer" type="Timer" parent="."]
+wait_time = 0.3
+
+[connection signal="timeout" from="AdvanceTimer" to="." method="_on_advance_timer_timeout"]
+[connection signal="timeout" from="AdvanceAllowedTimer" to="." method="_on_advance_allowed_timer_timeout"]

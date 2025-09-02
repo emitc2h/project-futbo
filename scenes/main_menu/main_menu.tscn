@@ -85,7 +85,13 @@ script = ExtResource("11_jf6cj")
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 36
-text = " Prototype "
+text = " Game Loop Prototype "
+
+[node name="DroneControls" type="Button" parent="MainMenuUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 36
+text = " Drone Controls "
 
 [node name="Quit" type="Button" parent="MainMenuUI/GridContainer"]
 layout_mode = 2
@@ -100,4 +106,5 @@ libraries = {
 
 [connection signal="pressed" from="MainMenuUI/GridContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Prototype" to="." method="_on_prototype_pressed"]
+[connection signal="pressed" from="MainMenuUI/GridContainer/DroneControls" to="." method="_on_drone_controls_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Quit" to="." method="_on_exit_pressed"]

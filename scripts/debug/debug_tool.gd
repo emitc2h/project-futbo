@@ -6,9 +6,14 @@ extends CanvasLayer
 @onready var pause_header: Label = $"PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer/Label"
 @onready var running_label: Label = $"PanelContainer/MarginContainer/TabContainer/Running Logs/VBoxContainer/ScrollContainer/Label"
 
+@onready var advance_timer: Timer = $AdvanceTimer
+@onready var advance_allowed_timer: Timer = $AdvanceAllowedTimer
+
 var paused: bool = false
 var advance_one_tick: bool = false
 var process_one_tick: bool = false
+var waiting_for_next_advance: bool = false
+var auto_advance_allowed: bool = false
 
 var pause_log_array: PackedStringArray = []
 var pause_log_array_idx: int = 0
@@ -66,6 +71,11 @@ func _physics_process(delta: float) -> void:
 	
 		if advance_one_tick:
 			process_one_tick = true
+		
+		if Input.is_action_pressed("debug_right") and auto_advance_allowed:
+			if not waiting_for_next_advance:
+				advance_timer.start()
+				waiting_for_next_advance = true
 
 
 func _input(event: InputEvent) -> void:
@@ -84,8 +94,13 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("debug_right"):
 		if paused:
+			advance_allowed_timer.start()
 			_reset_pause_log_array()
 			Signals.debug_advance.emit()
+	
+	if event.is_action_released("debug_right"):
+		auto_advance_allowed = false
+		advance_allowed_timer.stop()
 	
 	if event.is_action_pressed("debug_up"):
 		pause_log_array_idx += 1
@@ -128,3 +143,13 @@ func _update_running_label() -> void:
 func _reset_pause_log_array() -> void:
 	pause_log_array_idx = 0
 	pause_log_array = []
+
+
+func _on_advance_timer_timeout() -> void:
+	waiting_for_next_advance = false
+	advance_timer.stop()
+	Signals.debug_advance.emit()
+
+
+func _on_advance_allowed_timer_timeout() -> void:
+	auto_advance_allowed = true

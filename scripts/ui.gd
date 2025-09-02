@@ -13,7 +13,7 @@ extends CanvasLayer
 var camera: Camera3D
 
 func _ready() -> void:
-	camera = camera_controller.camera
+	camera = camera_controller._camera
 	stamina_bar.visible = false
 	Signals.display_stamina.connect(_on_display_stamina)
 	Signals.hide_stamina.connect(_on_hide_stamina)

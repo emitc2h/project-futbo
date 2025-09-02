@@ -108,12 +108,11 @@ camera_controller = NodePath("../../CameraController")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784547, -0.959528)
 subject = NodePath("../Subject")
 sync_to_subject_on_ready = false
-enabled = true
 lerp_y = 1.0
 lerp_z = 1.0
 
 [node name="Subject" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.70707, 0.562556)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.643215, -3.31238)
 
 [node name="Plain" type="MeshInstance3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0.115413, 0)

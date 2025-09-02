@@ -1,4 +1,4 @@
-extends Node3D
+extends Level
 
 @onready var drone: Drone = $Drone
 @export var drone_scene_path: String = "res://scenes/enemies/drone/drone.tscn"

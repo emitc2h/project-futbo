@@ -16,8 +16,8 @@ extends Node
 @export var attack_states: DroneAttackStates
 
 ## States Enum
-enum State {PATROL = 0, GO_TO_PATROL = 1, SEEK = 2, BLOCK = 3, SLEEP = 4, ATTACK = 5, IDLE = 6}
-var state: State = State.IDLE
+enum State {PATROL = 0, GO_TO_PATROL = 1, SEEK = 2, BLOCK = 3, SLEEP = 4, ATTACK = 5, PUPPET = 6, DEAD = 7}
+var state: State = State.PUPPET
 
 ## State transition constants
 const TRANS_TO_PATROL: String = "Behavior: to patrol"
@@ -26,12 +26,25 @@ const TRANS_TO_BLOCK: String = "Behavior: to block"
 const TRANS_TO_ATTACK: String = "Behavior: to attack"
 const TRANS_TO_DEAD: String = "Behavior: to dead"
 
+## internal variables
+var initial_state: State = state
+var enter_initial_state: bool = false
+
 
 func _ready() -> void:
 	targeting_states.target_none.connect(_on_target_none)
 	targeting_states.target_acquired.connect(_on_target_acquired)
 	proximity_states.control_node_proximity_entered.connect(_on_control_node_proximity_entered)
 	proximity_states.player_proximity_entered.connect(_on_player_proximity_entered)
+
+
+# puppet state
+#----------------------------------------
+func _on_puppet_state_entered() -> void:
+	state = State.PUPPET
+	if enter_initial_state:
+		enter_initial_behavior()
+		enter_initial_state = false
 
 
 # patrol state
@@ -84,6 +97,12 @@ func _on_attack_state_entered() -> void:
 	Signals.update_zoom.emit(Enums.Zoom.FAR)
 
 
+# dead state
+#----------------------------------------
+func _on_dead_state_entered() -> void:
+	state = State.DEAD
+
+
 # signal handling
 #========================================
 func _on_target_none() -> void:
@@ -110,11 +129,24 @@ func _on_player_proximity_entered() -> void:
 	sc.send_event(TRANS_TO_ATTACK)
 
 
-# signal handling
+# controls
 #========================================
-func enter_initial_behavior(initial_behavior: State) -> void:
-	match(initial_behavior):
-		State.IDLE:
+func set_initial_behavior(initial_behavior: State) -> void:
+	initial_state = initial_behavior
+	enter_initial_state = true
+
+
+func enter_initial_behavior() -> void:
+	match(initial_state):
+		State.PUPPET:
 			pass
 		State.PATROL:
 			sc.send_event(TRANS_TO_PATROL)
+		State.GO_TO_PATROL:
+			sc.send_event(TRANS_TO_GO_TO_PATROL)
+		State.BLOCK:
+			sc.send_event(TRANS_TO_BLOCK)
+		State.ATTACK:
+			sc.send_event(TRANS_TO_ATTACK)
+		State.DEAD:
+			sc.send_event(TRANS_TO_DEAD)

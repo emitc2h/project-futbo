@@ -29,6 +29,7 @@ func _on_main_menu_state_entered() -> void:
 	active_scene = main_menu_scene
 	main_menu_scene.new_game.connect(_on_new_game_pressed)
 	main_menu_scene.load_prototype.connect(_on_prototype_pressed)
+	main_menu_scene.load_drone_controls.connect(_on_drone_controls_pressed)
 	self.add_child(main_menu_scene)
 
 
@@ -46,8 +47,19 @@ func _on_prototype_pressed() -> void:
 	state.send_event("main menu to loading screen")
 
 
+func _on_drone_controls_pressed() -> void:
+	level_path = "res://prototypes/drone_controls/drone_controls.tscn"
+	fade_screen.fade_out()
+	await fade_screen.fade_finished
+	state.send_event("main menu to loading screen")
+
+
 func _on_main_menu_state_exited() -> void:
-	active_scene.queue_free()
+	var main_menu_scene: MainMenu = active_scene
+	main_menu_scene.new_game.disconnect(_on_new_game_pressed)
+	main_menu_scene.load_prototype.disconnect(_on_prototype_pressed)
+	main_menu_scene.load_drone_controls.disconnect(_on_drone_controls_pressed)
+	main_menu_scene.queue_free()
 
 
 #=======================================================

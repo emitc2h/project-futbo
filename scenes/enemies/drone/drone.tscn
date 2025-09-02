@@ -637,7 +637,7 @@ delay_in_seconds = "0.0"
 
 [node name="Behavior" type="Node" parent="State/Root"]
 script = ExtResource("4_kl701")
-initial_state = NodePath("patrol")
+initial_state = NodePath("puppet")
 
 [node name="Behavior States" type="Node" parent="State/Root/Behavior" node_paths=PackedStringArray("drone", "sc", "vulnerabiliy_states", "targeting_states", "proximity_states", "position_states", "attack_states")]
 script = ExtResource("12_r1v31")
@@ -649,13 +649,37 @@ proximity_states = NodePath("../../Monitoring/Proximity/Proximity States")
 position_states = NodePath("../../Monitoring/Position/Position States")
 attack_states = NodePath("../attack/Attack States")
 
-[node name="idle" type="Node" parent="State/Root/Behavior"]
+[node name="puppet" type="Node" parent="State/Root/Behavior"]
 script = ExtResource("5_voq0c")
 
-[node name="to patrol" type="Node" parent="State/Root/Behavior/idle"]
+[node name="to patrol" type="Node" parent="State/Root/Behavior/puppet"]
 script = ExtResource("6_doilr")
 to = NodePath("../../patrol")
 event = &"Behavior: to patrol"
+delay_in_seconds = "0.0"
+
+[node name="to go to patrol" type="Node" parent="State/Root/Behavior/puppet"]
+script = ExtResource("6_doilr")
+to = NodePath("../../go to patrol")
+event = &"Behavior: to go to patrol"
+delay_in_seconds = "0.0"
+
+[node name="to block" type="Node" parent="State/Root/Behavior/puppet"]
+script = ExtResource("6_doilr")
+to = NodePath("../../block")
+event = &"Behavior: to block"
+delay_in_seconds = "0.0"
+
+[node name="to attack" type="Node" parent="State/Root/Behavior/puppet"]
+script = ExtResource("6_doilr")
+to = NodePath("../../attack")
+event = &"Behavior: to attack"
+delay_in_seconds = "0.0"
+
+[node name="to dead" type="Node" parent="State/Root/Behavior/puppet"]
+script = ExtResource("6_doilr")
+to = NodePath("../../dead")
+event = &"Behavior: to dead"
 delay_in_seconds = "0.0"
 
 [node name="patrol" type="Node" parent="State/Root/Behavior"]
@@ -1049,6 +1073,7 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [connection signal="state_physics_processing" from="State/Root/Monitoring/Position/between patrol markers" to="State/Root/Monitoring/Position/Position States" method="_on_between_patrol_markers_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Monitoring/Position/outside patrol markers" to="State/Root/Monitoring/Position/Position States" method="_on_outside_patrol_markers_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Monitoring/Position/outside patrol markers" to="State/Root/Monitoring/Position/Position States" method="_on_outside_patrol_markers_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Behavior/puppet" to="State/Root/Behavior/Behavior States" method="_on_puppet_state_entered"]
 [connection signal="state_entered" from="State/Root/Behavior/patrol" to="State/Root/Behavior/Behavior States" method="_on_patrol_state_entered"]
 [connection signal="state_entered" from="State/Root/Behavior/go to patrol" to="State/Root/Behavior/Behavior States" method="_on_go_to_patrol_state_entered"]
 [connection signal="finished" from="State/Root/Behavior/go to patrol/BehaviorManager" to="State/Root/Behavior/Behavior States" method="_on_go_to_patrol_bt_finished"]
@@ -1063,4 +1088,5 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [connection signal="finished" from="State/Root/Behavior/attack/ram attack/BehaviorManager" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_bt_finished"]
 [connection signal="state_entered" from="State/Root/Behavior/attack/beam attack" to="State/Root/Behavior/attack/Attack States" method="_on_beam_attack_state_entered"]
 [connection signal="behavior_tree_finished" from="State/Root/Behavior/attack/beam attack/BehaviorManager/BTPlayer" to="State/Root/Behavior/attack/Attack States" method="_on_beam_attack_bt_finished"]
+[connection signal="state_entered" from="State/Root/Behavior/dead" to="State/Root/Behavior/Behavior States" method="_on_dead_state_entered"]
 [connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]
