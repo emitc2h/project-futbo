@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://rxuskqewfa7k"]
 
-[ext_resource type="Script" uid="uid://do8igjruonjbi" path="res://scripts/control_suppressor.gd" id="1_k5amj"]
+[ext_resource type="Script" uid="uid://do8igjruonjbi" path="res://scripts/game_management/control_suppressor.gd" id="1_k5amj"]
 
 [node name="ControlSuppressor" type="Node"]
 script = ExtResource("1_k5amj")

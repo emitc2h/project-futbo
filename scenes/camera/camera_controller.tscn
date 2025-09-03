@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cno2tfxkcdwjx"]
 
-[ext_resource type="Script" uid="uid://tlxr3dwnsnpk" path="res://scripts/camera_controller.gd" id="1_halyt"]
+[ext_resource type="Script" uid="uid://tlxr3dwnsnpk" path="res://scripts/camera/camera_controller.gd" id="1_halyt"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_bojx4"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_k11f5"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_6kach"]

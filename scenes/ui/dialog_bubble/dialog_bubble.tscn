@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://c86ywxv55on5f"]
 
-[ext_resource type="Script" uid="uid://ds8ypingmg1ab" path="res://scripts/dialog_bubble/dialog_bubble.gd" id="1_ybv2r"]
+[ext_resource type="Script" uid="uid://ds8ypingmg1ab" path="res://scripts/ui/dialog_bubble/dialog_bubble.gd" id="1_ybv2r"]
 [ext_resource type="Texture2D" uid="uid://wjhv4gb21qmo" path="res://kenney_platformer-characters/PNG/Female/Limbs/head.png" id="2_hvh1x"]
 [ext_resource type="StyleBox" uid="uid://dd16w0fqwnqrq" path="res://resources/styles/dialog_stylebox.tres" id="3_d4jss"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="4_vppnn"]

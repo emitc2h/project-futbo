@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://xuvnhtg7ox3i"]
 
-[ext_resource type="Script" uid="uid://drh5o3ouklefg" path="res://scripts/main_menu/main_menu.gd" id="1_f6d7l"]
-[ext_resource type="PackedScene" uid="uid://deidkuj34u7yu" path="res://scenes/main_menu/level_1_main_menu_scene.tscn" id="4_c83o0"]
-[ext_resource type="Script" uid="uid://b8rggvq7ih7ew" path="res://scripts/main_menu/new_game.gd" id="11_jf6cj"]
+[ext_resource type="Script" uid="uid://drh5o3ouklefg" path="res://scripts/game_management/main_menu/main_menu.gd" id="1_f6d7l"]
+[ext_resource type="PackedScene" uid="uid://deidkuj34u7yu" path="res://scenes/game_management/main_menu/level_1_main_menu_scene.tscn" id="4_c83o0"]
+[ext_resource type="Script" uid="uid://b8rggvq7ih7ew" path="res://scripts/game_management/main_menu/new_game.gd" id="11_jf6cj"]
 
 [sub_resource type="Animation" id="Animation_uqeha"]
 length = 0.001

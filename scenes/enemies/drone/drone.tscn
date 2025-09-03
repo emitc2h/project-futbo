@@ -23,7 +23,7 @@
 [ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/utilities/behavior_tree/behavior_manager.gd" id="12_voq0c"]
 [ext_resource type="Script" uid="uid://kcwfn3rok7aj" path="res://scripts/enemies/drone/states/drone_proximity_states.gd" id="13_43bu3"]
 [ext_resource type="BehaviorTree" uid="uid://bnm2timop763s" path="res://ai/trees/enemies/drone/drone_patrol_tree.tres" id="13_doilr"]
-[ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="14_efc27"]
+[ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/utilities/inert_node.gd" id="14_efc27"]
 [ext_resource type="BehaviorTree" uid="uid://7euectnyhgwy" path="res://ai/trees/enemies/drone/drone_go_to_patrol_tree.tres" id="15_82hyt"]
 [ext_resource type="Script" uid="uid://bmibv0e2tf0pw" path="res://scripts/enemies/drone/states/drone_attack_states.gd" id="15_unmda"]
 [ext_resource type="BehaviorTree" uid="uid://doq0w3n8yvclw" path="res://ai/trees/enemies/drone/drone_attack_track_tree.tres" id="16_ahulk"]

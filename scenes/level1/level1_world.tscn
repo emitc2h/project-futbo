@@ -15,7 +15,7 @@
 [ext_resource type="Shader" uid="uid://bgdtmngt1o7w1" path="res://shaders/SplatMap.gdshader" id="8_pisw0"]
 [ext_resource type="Texture2D" uid="uid://dasstxd5w1ais" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles1_OnlySand_normal.png" id="9_olt5o"]
 [ext_resource type="Texture2D" uid="uid://wh0qaqcjqyx1" path="res://assets/3D/Act1/Textures/Tiles/SandyPebbles1/SandyPebbles_OnlySand_color.png" id="10_v7twt"]
-[ext_resource type="Script" uid="uid://d2luuuxr23hmo" path="res://scripts/door_detector_area_3d.gd" id="10_yiblt"]
+[ext_resource type="Script" uid="uid://d2luuuxr23hmo" path="res://scripts/level1/door_detector_area_3d.gd" id="10_yiblt"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="11_c6xia"]
 [ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="11_v2dcp"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="12_nn2hn"]

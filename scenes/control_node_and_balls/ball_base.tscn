@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="7_4jgtx"]
 [ext_resource type="Script" uid="uid://nhccnfamid2u" path="res://scripts/control_node_and_balls/states/ball_control_states.gd" id="8_q404i"]
 [ext_resource type="PhysicsMaterial" uid="uid://besahl7f6jbkx" path="res://resources/ball_physics_material.tres" id="9_qsj31"]
-[ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/inert_node.gd" id="10_k38ye"]
+[ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/utilities/inert_node.gd" id="10_k38ye"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8bm52"]
 radius = 0.152058
