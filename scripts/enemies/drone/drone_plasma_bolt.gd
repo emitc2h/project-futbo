@@ -7,6 +7,7 @@ extends Node3D
 @export var bolt_speed: float = 60.0
 @export var bolt_size: float = 0.0
 
+@onready var bolt_model: Node3D = $DronePlasmaBoltModel
 @onready var bolt_mesh: MeshInstance3D = $DronePlasmaBoltModel/bolt
 @onready var impact_mesh: MeshInstance3D = $DronePlasmaBoltModel/impact
 @onready var sc: StateChart = $StateChart
@@ -19,6 +20,8 @@ var travel_distance: float
 var trans_after_fire: String
 var hit_player: bool = false
 var recorded_collision_point: Vector3
+var recorded_bolt_global_pos: Vector3
+var recorded_impact_global_pos: Vector3
 var player: Player
 
 const TRANS_TO_FIRE: String = "to fire"
@@ -36,7 +39,14 @@ func _ready() -> void:
 func _on_off_state_entered() -> void:
 	## Reset bolt mesh
 	bolt_mesh.visible = false
-	bolt_mesh.position = Vector3.ZERO
+	
+
+
+func _on_off_state_physics_processing(delta: float) -> void:
+	if recorded_bolt_global_pos:
+		bolt_mesh.global_position = recorded_bolt_global_pos
+	if recorded_impact_global_pos:
+		impact_mesh.global_position = recorded_impact_global_pos
 
 
 # fire state
@@ -44,6 +54,8 @@ func _on_off_state_entered() -> void:
 func _on_fire_state_entered() -> void:
 	## Show the bolt
 	bolt_mesh.visible = true
+	bolt_mesh.position = Vector3.ZERO
+	impact_mesh.position = Vector3.ZERO
 
 
 func _on_fire_state_physics_processing(delta: float) -> void:
@@ -65,7 +77,12 @@ func _on_fire_state_physics_processing(delta: float) -> void:
 	
 	## If the bolt has made it the whole way then consider if it's a hit
 	if updated_distance > travel_distance:
-		var collider: Object = raycast.get_collider()
+		var collider: Node3D = raycast.get_collider() as Node3D
+		
+		bolt_mesh.position.y = travel_distance
+		recorded_bolt_global_pos = bolt_mesh.global_position
+		recorded_impact_global_pos = impact_mesh.global_position
+		
 		if (collider is Player) or (collider is TargetMesh):
 			sc.send_event(TRANS_TO_HIT)
 		else:
@@ -82,6 +99,13 @@ func _on_hit_state_entered() -> void:
 	shrapnel_particles.emitting = true
 	await impact_animation.hit()
 	sc.send_event(TRANS_TO_OFF)
+
+
+func _on_hit_state_physics_processing(delta: float) -> void:
+	if recorded_bolt_global_pos:
+		bolt_mesh.global_position = recorded_bolt_global_pos
+	if recorded_impact_global_pos:
+		impact_mesh.global_position = recorded_impact_global_pos
 
 
 # miss state

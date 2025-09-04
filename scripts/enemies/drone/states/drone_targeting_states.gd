@@ -58,6 +58,10 @@ func scan_for_target() -> bool:
 			repr.playerRepresentation.player_is_dribbling = field_of_view.target.is_dribbling
 		else:
 			target = field_of_view.target
+			
+		## Target the spinners at the target
+		drone_model.spinners_acquire_target(target)
+		
 		return true
 	return false
 
@@ -123,9 +127,6 @@ func _on_acquired_state_entered() -> void:
 	focus_tween.tween_property(field_of_view, "focus", acquired_focus, 1.0)
 	
 	target_acquired.emit()
-	
-	## Target the spinners at the target
-	drone_model.spinners_acquire_target(target)
 	
 	## Make the drone transition animations land on the targeting state
 	drone_model.open_paths_to_targeting()

@@ -15,6 +15,11 @@ func _ready() -> void:
 	initial_drone_transform = drone.transform
 	drone_scene = load(drone_scene_path)
 
+
+func _physics_process(delta: float) -> void:
+	drone.physics_mode_states.left_right_axis = Input.get_axis("move_left", "move_right")
+
+
 ## PHYSICS
 ## ==================================
 func _on_character_mode_button_pressed() -> void:
@@ -33,6 +38,7 @@ func _on_reset_button_pressed() -> void:
 	if drone:
 		drone.queue_free()
 	drone = drone_scene.instantiate() as Drone
+	drone.initial_behavior = drone.behavior_states.State.PUPPET
 	drone.transform = initial_drone_transform
 	add_child(drone)
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://bc323ftwy8i7t"]
+[gd_scene load_steps=59 format=3 uid="uid://bc323ftwy8i7t"]
 
 [ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone.gd" id="1_irn00"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_g2as1"]
@@ -37,6 +37,7 @@
 [ext_resource type="BehaviorTree" uid="uid://cndng00i0jfr3" path="res://ai/trees/enemies/drone/drone_attack_ram_attack_pre_tree.tres" id="28_ebp85"]
 [ext_resource type="BehaviorTree" uid="uid://nlwtwirr4cbo" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_tree.tres" id="30_0fgvh"]
 [ext_resource type="BehaviorTree" uid="uid://dgk4we0m2af0" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_pre_tree.tres" id="30_sikjo"]
+[ext_resource type="Script" uid="uid://darufwryr50n1" path="res://scripts/enemies/drone/animation/float_distortion_animation.gd" id="38_6t6rp"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_doilr"]
 
@@ -73,6 +74,7 @@ bounce = 0.26
 radius = 0.51341
 
 [sub_resource type="QuadMesh" id="QuadMesh_kds82"]
+size = Vector2(1.3, 1.7)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iovl4"]
 noise_type = 0
@@ -655,31 +657,31 @@ script = ExtResource("5_voq0c")
 [node name="to patrol" type="Node" parent="State/Root/Behavior/puppet"]
 script = ExtResource("6_doilr")
 to = NodePath("../../patrol")
-event = &"Behavior: to patrol"
+event = &"Behavior: puppet to patrol"
 delay_in_seconds = "0.0"
 
 [node name="to go to patrol" type="Node" parent="State/Root/Behavior/puppet"]
 script = ExtResource("6_doilr")
 to = NodePath("../../go to patrol")
-event = &"Behavior: to go to patrol"
+event = &"Behavior: puppet to go to patrol"
 delay_in_seconds = "0.0"
 
 [node name="to block" type="Node" parent="State/Root/Behavior/puppet"]
 script = ExtResource("6_doilr")
 to = NodePath("../../block")
-event = &"Behavior: to block"
+event = &"Behavior: puppet to block"
 delay_in_seconds = "0.0"
 
 [node name="to attack" type="Node" parent="State/Root/Behavior/puppet"]
 script = ExtResource("6_doilr")
 to = NodePath("../../attack")
-event = &"Behavior: to attack"
+event = &"Behavior: puppet to attack"
 delay_in_seconds = "0.0"
 
 [node name="to dead" type="Node" parent="State/Root/Behavior/puppet"]
 script = ExtResource("6_doilr")
 to = NodePath("../../dead")
-event = &"Behavior: to dead"
+event = &"Behavior: puppet to dead"
 delay_in_seconds = "0.0"
 
 [node name="patrol" type="Node" parent="State/Root/Behavior"]
@@ -956,7 +958,7 @@ shape = SubResource("SphereShape3D_md0p7")
 [node name="TrackPositionContainer" type="Node3D" parent="."]
 
 [node name="Distortion" type="MeshInstance3D" parent="TrackPositionContainer"]
-transform = Transform3D(1.3, 0, 0, 0, 2, 0, 0, 0, 1, 0, -1, -0.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.86, 0)
 sorting_offset = -0.5
 mesh = SubResource("QuadMesh_kds82")
 skeleton = NodePath("../../CharNode")
@@ -1010,6 +1012,12 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 
 [node name="PatrolMarker2" type="Marker3D" parent="."]
 transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, -3.5, 0, 0)
+
+[node name="FloatDistortionAnimation" type="Node" parent="." node_paths=PackedStringArray("mesh")]
+script = ExtResource("38_6t6rp")
+mesh = NodePath("../TrackPositionContainer/Distortion")
+float_distortion_open_pos_y = -1.15
+float_distortion_closed_pos_y = -0.86
 
 [connection signal="timeout" from="State/Root/Physics/Physics States/DeadTimer" to="State/Root/Physics/Physics States" method="_on_dead_timer_timeout"]
 [connection signal="state_entered" from="State/Root/Physics/char" to="State/Root/Physics/Physics States" method="_on_char_state_entered"]

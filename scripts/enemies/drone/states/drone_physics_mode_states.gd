@@ -8,12 +8,6 @@ extends Node
 @export var engines_states: DroneEnginesStates
 
 ## Parameters
-@export_group("Float Distortion")
-@export var distortion_mesh_intensity_off: float = 0.0
-@export var distortion_mesh_intensity_on: float = 1.0
-@export var distortion_on_duration: float = 1.0
-@export var distortion_off_duration: float = 0.5
-
 @export_group("Movement")
 @export var axis_lerp_strength: float = 4.0
 
@@ -45,8 +39,7 @@ const TRANS_TO_DEAD: String = "Physics Mode: to dead"
 @onready var collision_shape_rigid: CollisionShape3D = drone.get_node("RigidNode/CollisionShape3D")
 
 @onready var float_cast: RayCast3D = drone.get_node("TrackPositionContainer/FloatCast")
-@onready var float_distortion_mesh: MeshInstance3D = drone.get_node("TrackPositionContainer/Distortion")
-@onready var float_distortion_material: ShaderMaterial = float_distortion_mesh.get_surface_override_material(0)
+@onready var float_distortion_animation: DroneFloatDistortionAnimation = drone.get_node("FloatDistortionAnimation")
 
 @onready var model_anim_tree: AnimationTree = track_transform_container.get_node("DroneModel/AnimationTree")
 @onready var bone_simulation: PhysicalBoneSimulator3D = track_transform_container.get_node("DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D")
@@ -85,16 +78,7 @@ func _on_char_state_entered() -> void:
 	speed = engines_states.off_speed
 
 	## Turn on float distortion
-	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(
-		float_distortion_material,
-		"shader_parameter/noise_intensity",
-		distortion_mesh_intensity_on,
-		distortion_on_duration
-		)\
-		.set_ease(Tween.EASE_IN)\
-		.set_trans(Tween.TRANS_LINEAR)\
-		.from(distortion_mesh_intensity_off)
+	float_distortion_animation.turn_on()
 	
 	char_entered.emit()
 
@@ -130,20 +114,11 @@ func _on_char_state_physics_processing(delta: float) -> void:
 	
 	## rigid node follows char node
 	rigid_node.transform = char_node.transform
-	rigid_node.linear_velocity = char_node.velocity
 
 
 func _on_char_state_exited() -> void:	
 	## turn off the float distortion
-	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(
-		float_distortion_material,
-		"shader_parameter/noise_intensity",
-		distortion_mesh_intensity_off,
-		distortion_off_duration)\
-		.set_ease(Tween.EASE_IN)\
-		.set_trans(Tween.TRANS_LINEAR)\
-		.from(distortion_mesh_intensity_on)
+	float_distortion_animation.turn_off()
 
 
 # rigid state

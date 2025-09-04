@@ -7,6 +7,7 @@
 [node name="DronePlasmaBoltModel" instance=ExtResource("1_dvdjj")]
 
 [node name="bolt" parent="." index="0"]
+visible = false
 surface_material_override/0 = ExtResource("2_14qjs")
 
 [node name="impact" parent="." index="1"]

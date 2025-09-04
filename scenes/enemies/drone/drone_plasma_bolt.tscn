@@ -54,6 +54,7 @@ hit_from_inside = true
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("3_mjux0")
+track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="Root" type="Node" parent="StateChart"]
@@ -132,7 +133,9 @@ process_material = SubResource("ParticleProcessMaterial_kyqan")
 draw_pass_1 = SubResource("QuadMesh_kyqan")
 
 [connection signal="state_entered" from="StateChart/Root/off" to="." method="_on_off_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/off" to="." method="_on_off_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/fire" to="." method="_on_fire_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/fire" to="." method="_on_fire_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/hit" to="." method="_on_hit_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/hit" to="." method="_on_hit_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/miss" to="." method="_on_miss_state_entered"]

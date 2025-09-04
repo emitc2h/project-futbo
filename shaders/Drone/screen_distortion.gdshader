@@ -12,6 +12,15 @@ uniform float stretch: hint_range(0.01, 2.0);
 
 void vertex() {
 	UV2 = vec2(1.0, stretch) * (UV + vec2(0.0, -(noise_speed/stretch) * TIME));
+
+	// Make Billboard
+	mat4 modified_model_view = VIEW_MATRIX * mat4(
+        INV_VIEW_MATRIX[0],
+        INV_VIEW_MATRIX[1],
+        INV_VIEW_MATRIX[2],
+        MODEL_MATRIX[3]
+    );
+    MODELVIEW_MATRIX = modified_model_view;
 }
 
 void fragment() {

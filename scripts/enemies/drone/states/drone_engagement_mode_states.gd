@@ -25,8 +25,8 @@ const TRANS_TO_CLOSING: String = "Engagement Mode: to closing"
 const TRANS_TO_CLOSED: String = "Engagement Mode: to closed"
 
 ## Drone nodes controlled by this state
-@onready var float_distortion_mesh: MeshInstance3D = drone.get_node("TrackPositionContainer/Distortion")
 @onready var model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
+@onready var float_distortion_animation: DroneFloatDistortionAnimation = drone.get_node("FloatDistortionAnimation")
 
 ## Signals
 signal opening_finished
@@ -43,7 +43,7 @@ func _on_closed_state_entered() -> void:
 	state = State.CLOSED
 	
 	## Set the float distortion mesh position
-	float_distortion_mesh.position.y = float_distortion_closed_pos_y
+	float_distortion_animation.drone_closed_position()
 	
 	closing_finished.emit()
 
@@ -64,7 +64,7 @@ func _on_open_state_entered() -> void:
 	state = State.OPEN
 
 	## Set the float distortion mesh position
-	float_distortion_mesh.position.y = float_distortion_open_pos_y
+	float_distortion_animation.drone_open_position()
 	
 	opening_finished.emit()
 

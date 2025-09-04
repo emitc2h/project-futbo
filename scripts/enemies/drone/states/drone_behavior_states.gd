@@ -20,6 +20,12 @@ enum State {PATROL = 0, GO_TO_PATROL = 1, SEEK = 2, BLOCK = 3, SLEEP = 4, ATTACK
 var state: State = State.PUPPET
 
 ## State transition constants
+const TRANS_PUPPET_TO_PATROL: String = "Behavior: puppet to patrol"
+const TRANS_PUPPET_TO_GO_TO_PATROL: String = "Behavior: puppet to go to patrol"
+const TRANS_PUPPET_TO_BLOCK: String = "Behavior: puppet to block"
+const TRANS_PUPPET_TO_ATTACK: String = "Behavior: puppet to attack"
+const TRANS_PUPPET_TO_DEAD: String = "Behavior: puppet to dead"
+
 const TRANS_TO_PATROL: String = "Behavior: to patrol"
 const TRANS_TO_GO_TO_PATROL: String = "Behavior: to go to patrol"
 const TRANS_TO_BLOCK: String = "Behavior: to block"
@@ -141,12 +147,12 @@ func enter_initial_behavior() -> void:
 		State.PUPPET:
 			pass
 		State.PATROL:
-			sc.send_event(TRANS_TO_PATROL)
+			sc.send_event(TRANS_PUPPET_TO_PATROL)
 		State.GO_TO_PATROL:
-			sc.send_event(TRANS_TO_GO_TO_PATROL)
+			sc.send_event(TRANS_PUPPET_TO_GO_TO_PATROL)
 		State.BLOCK:
-			sc.send_event(TRANS_TO_BLOCK)
+			sc.send_event(TRANS_PUPPET_TO_BLOCK)
 		State.ATTACK:
-			sc.send_event(TRANS_TO_ATTACK)
+			sc.send_event(TRANS_PUPPET_TO_ATTACK)
 		State.DEAD:
-			sc.send_event(TRANS_TO_DEAD)
+			sc.send_event(TRANS_PUPPET_TO_DEAD)

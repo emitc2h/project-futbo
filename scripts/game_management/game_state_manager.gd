@@ -25,7 +25,7 @@ func _on_main_menu_state_entered() -> void:
 	#var screen_size: Vector2i = DisplayServer.screen_get_size()
 	#get_viewport().size = screen_size
 	fade_screen.fade_in()
-	var main_menu_scene: MainMenu = load("res://scenes/main_menu/main_menu.tscn").instantiate()
+	var main_menu_scene: MainMenu = load("res://scenes/game_management/main_menu/main_menu.tscn").instantiate()
 	active_scene = main_menu_scene
 	main_menu_scene.new_game.connect(_on_new_game_pressed)
 	main_menu_scene.load_prototype.connect(_on_prototype_pressed)
@@ -66,7 +66,7 @@ func _on_main_menu_state_exited() -> void:
 # LOADING STATE
 #=======================================================
 func _on_loading_screen_state_entered() -> void:
-	var loading_screen_scene: LoadingScreen = load("res://scenes/loading_screen/loading_screen.tscn").instantiate()
+	var loading_screen_scene: LoadingScreen = load("res://scenes/game_management/loading_screen/loading_screen.tscn").instantiate()
 	active_scene = loading_screen_scene
 	self.add_child(loading_screen_scene)
 	loading_status_array = []
