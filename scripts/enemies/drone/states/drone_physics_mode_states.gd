@@ -80,6 +80,9 @@ func _on_char_state_entered() -> void:
 	## Turn on float distortion
 	float_distortion_animation.turn_on()
 	
+	## Turn on collision shape
+	collision_shape_char.disabled = false
+	
 	char_entered.emit()
 
 
@@ -119,6 +122,9 @@ func _on_char_state_physics_processing(delta: float) -> void:
 func _on_char_state_exited() -> void:	
 	## turn off the float distortion
 	float_distortion_animation.turn_off()
+	
+	## Turn off collision shape
+	collision_shape_char.disabled = true
 
 
 # rigid state

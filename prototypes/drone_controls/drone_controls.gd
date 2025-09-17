@@ -17,7 +17,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	drone.physics_mode_states.left_right_axis = Input.get_axis("move_left", "move_right")
+	if drone:
+		drone.physics_mode_states.left_right_axis = Input.get_axis("move_left", "move_right")
 
 
 ## PHYSICS

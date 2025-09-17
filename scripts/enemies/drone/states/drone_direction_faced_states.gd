@@ -40,7 +40,7 @@ signal is_now_facing_left
 func _rotate_toward(vector: Vector3) -> void:
 	var target_orientation: Quaternion = Quaternion.from_euler(vector)
 	var current_orientation: Quaternion = Quaternion.from_euler(char_node.rotation)
-	var new_orientation: Quaternion = current_orientation.slerp(target_orientation, 0.15)
+	var new_orientation: Quaternion = current_orientation.slerp(target_orientation, 0.08)
 	char_node.rotation = new_orientation.get_euler()
 
 

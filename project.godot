@@ -13,7 +13,6 @@ config_version=5
 config/name="ProjectCodenameFutbo"
 run/main_scene="res://scenes/game_management/main.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
 
 [autoload]
 
@@ -221,6 +220,7 @@ debug_pause={
 
 [physics]
 
+3d/physics_engine="Jolt Physics"
 common/physics_interpolation=true
 
 [rendering]

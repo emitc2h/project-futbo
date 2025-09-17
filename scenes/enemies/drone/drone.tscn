@@ -63,8 +63,9 @@
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_0fgvh"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_fv7v3"]
-radius = 0.507499
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t6rp"]
+radius = 0.509587
+height = 1.02
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2myhj"]
 friction = 0.5
@@ -935,12 +936,11 @@ script = ExtResource("5_voq0c")
 
 [node name="CharNode" type="CharacterBody3D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 3
 axis_lock_linear_z = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode"]
-shape = SubResource("SphereShape3D_fv7v3")
-disabled = true
+shape = SubResource("CapsuleShape3D_6t6rp")
 
 [node name="RigidNode" type="RigidBody3D" parent="."]
 collision_layer = 256
@@ -959,7 +959,7 @@ shape = SubResource("SphereShape3D_md0p7")
 
 [node name="Distortion" type="MeshInstance3D" parent="TrackPositionContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.86, 0)
-sorting_offset = -0.5
+sorting_offset = -1.0
 mesh = SubResource("QuadMesh_kds82")
 skeleton = NodePath("../../CharNode")
 surface_material_override/0 = SubResource("ShaderMaterial_3tghu")
@@ -975,6 +975,104 @@ drone = NodePath("../..")
 
 [node name="DroneModel" parent="TrackTransformContainer" node_paths=PackedStringArray("drone") instance=ExtResource("11_glddf")]
 drone = NodePath("../..")
+
+[node name="Skeleton3D" parent="TrackTransformContainer/DroneModel/Armature" index="0"]
+bones/2/rotation = Quaternion(-0.5, 0.5, 0.5, -0.5)
+bones/3/rotation = Quaternion(0.774611, -0.632437, 2.32823e-07, 1.2314e-07)
+bones/4/rotation = Quaternion(9.39506e-08, -6.53879e-08, -0.19509, 0.980785)
+bones/5/rotation = Quaternion(2.46255e-08, -1.34576e-07, -0.190131, 0.981759)
+bones/6/rotation = Quaternion(-4.82076e-09, -5.04846e-08, -0.450708, 0.892671)
+bones/7/rotation = Quaternion(-6.45583e-08, -1.17357e-07, -0.774611, 0.632438)
+bones/8/rotation = Quaternion(-9.48713e-10, -4.43169e-09, -0.195091, 0.980785)
+bones/9/rotation = Quaternion(-1.14551e-07, 4.78914e-08, -0.190132, 0.981759)
+bones/10/rotation = Quaternion(2.51142e-09, 5.88755e-08, -0.450708, 0.892671)
+bones/11/rotation = Quaternion(-0.5, 0.5, -0.5, 0.5)
+bones/12/rotation = Quaternion(0.547733, -0.447201, -0.547733, 0.447201)
+bones/13/rotation = Quaternion(-1.01524e-08, -1.39756e-08, -0.19509, 0.980785)
+bones/14/rotation = Quaternion(3.35569e-08, -2.35018e-08, -0.190132, 0.981759)
+bones/15/rotation = Quaternion(-5.9278e-08, -2.97833e-08, -0.450709, 0.892671)
+bones/16/rotation = Quaternion(5.85938e-10, 1.48547e-08, 0.999701, 0.024451)
+bones/17/position = Vector3(-0.0549694, 0.175814, -8.31495e-10)
+bones/17/rotation = Quaternion(1.86657e-06, 1.92706e-06, 0.70707, 0.707144)
+bones/18/rotation = Quaternion(-0.547733, -0.447201, 0.547733, 0.447201)
+bones/19/rotation = Quaternion(-2.57291e-10, 5.35508e-08, 0.19509, 0.980785)
+bones/20/rotation = Quaternion(2.94796e-08, 3.22109e-08, 0.190132, 0.981759)
+bones/21/rotation = Quaternion(-7.57595e-08, 3.49025e-08, 0.450708, 0.892671)
+bones/22/rotation = Quaternion(-8.87602e-10, 1.59608e-08, 0.999701, -0.0244511)
+bones/23/position = Vector3(0.0549695, 0.175814, -2.24436e-09)
+bones/23/rotation = Quaternion(1.87355e-06, -1.96752e-06, -0.70707, 0.707144)
+
+[node name="Physical Bone DEF_FRONT_PLATE" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="0"]
+transform = Transform3D(0, -1.78814e-07, -1, -1, 5.96046e-08, -1.06581e-14, 5.96046e-08, 1, -1.78814e-07, 1.8176e-08, 2.11038e-22, -2.13483e-08)
+body_offset = Transform3D(1, -5.96046e-08, -5.96046e-08, 0, 1, 5.96046e-08, 0, 0, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_01_T" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="1"]
+transform = Transform3D(-3.10086e-07, 1.50713e-07, 1, -0.20005, 0.979786, -2.09699e-07, -0.979786, -0.20005, -2.73668e-07, -7.33771e-08, -1.32822e-08, 0.512002)
+body_offset = Transform3D(1, 3.8892e-06, 3.9157e-08, -4.06802e-06, 1, -5.76987e-08, 3.11665e-08, 1.12227e-08, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_02_T" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="2"]
+transform = Transform3D(-2.84589e-07, 2.33694e-07, 1, -0.559488, 0.828838, -3.52919e-07, -0.828838, -0.559488, -1.05129e-07, -4.48028e-08, 0.200705, 0.471023)
+body_offset = Transform3D(1, -0.000334769, 9.03721e-08, 0.00033468, 1, -4.15398e-08, -7.60746e-09, 2.55156e-08, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_03_T" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="3"]
+transform = Transform3D(-7.4932e-08, 1.81072e-07, 1, -0.829827, 0.558021, -1.63222e-07, -0.558021, -0.829827, 1.08445e-07, -4.28928e-09, 0.36204, 0.362039)
+body_offset = Transform3D(0.999998, 0.00210276, 7.74804e-08, -0.00210276, 0.999998, 2.39358e-08, 5.29231e-09, -7.89774e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_PANEL_T" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="4"]
+transform = Transform3D(-8.2443e-08, 6.65054e-08, 1, -0.942594, -0.333941, -5.55014e-08, 0.333941, -0.942594, 9.02187e-08, 3.2535e-08, 0.471024, 0.200704)
+body_offset = Transform3D(1, -0.00053367, 1.3606e-08, 0.00053367, 1, 9.46079e-08, 2.2622e-08, -1.85132e-08, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_01_B" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="5"]
+transform = Transform3D(-7.23819e-08, -5.0071e-08, -1, 0.200044, -0.979787, 3.45794e-08, -0.979787, -0.200044, 8.09352e-08, -7.33771e-08, 8.61776e-09, 0.512002)
+body_offset = Transform3D(1, 4.47035e-08, -4.56008e-08, 1.49012e-08, 1, -5.60115e-08, -8.75495e-10, -1.43119e-08, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_02_B" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="6"]
+transform = Transform3D(-4.78993e-08, -8.08579e-08, -1, 0.563174, -0.826339, 3.98404e-08, -0.826339, -0.563174, 8.5118e-08, -8.65657e-08, -0.200705, 0.471024)
+body_offset = Transform3D(0.999992, 0.00411955, -1.21529e-08, -0.00411949, 0.999992, -7.60313e-08, -3.84627e-09, -6.74068e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_03_B" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="7"]
+transform = Transform3D(3.40126e-08, 1.40837e-07, -1, 0.829084, -0.559124, -5.05459e-08, -0.559124, -0.829084, -1.35783e-07, -1.03579e-07, -0.36204, 0.36204)
+body_offset = Transform3D(1, 0.0007734, 1.5388e-08, -0.00077343, 1, -8.45605e-08, 6.37542e-10, 1.80497e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_PANEL_B" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="8"]
+transform = Transform3D(1.04264e-08, 1.71051e-07, -1, 0.942975, 0.332863, 6.67685e-08, 0.332863, -0.942975, -1.57827e-07, -7.58126e-08, -0.471024, 0.200705)
+body_offset = Transform3D(0.999999, -0.00167745, 7.29892e-08, 0.00167742, 0.999999, -2.64015e-08, 3.10108e-09, -9.84166e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_BACK_PLATE" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="9"]
+transform = Transform3D(-1.26505e-10, 2.31849e-07, 1, -1, 8.9407e-07, -1.26712e-10, -8.9407e-07, -1, 2.31849e-07, -5.5621e-23, -3.5025e-23, -2.13483e-08)
+body_offset = Transform3D(1, -8.9407e-07, 1.26712e-10, 8.9407e-07, 1, 6.56939e-09, -1.26718e-10, -6.56939e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_01_L" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="10"]
+transform = Transform3D(-0.200056, 0.979784, -0.000107919, -0.000601679, -1.27075e-05, 1, 0.979784, 0.200056, 0.000592058, 1.36317e-07, -4.68125e-16, -0.512002)
+body_offset = Transform3D(1, 1.12355e-05, 0.000601597, -1.12802e-05, 1, 1.28056e-05, -0.000601679, -1.27373e-05, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_02_L" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="11"]
+transform = Transform3D(-0.559841, 0.8286, 4.27193e-07, 9.58811e-07, 1.32258e-07, 1, 0.8286, 0.559841, -8.68514e-07, 0.200706, 6.10489e-09, -0.471024)
+body_offset = Transform3D(1, 9.22084e-05, -1.04357e-06, -9.20892e-05, 1, -8.12126e-08, 9.38841e-07, 1.19184e-07, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_03_L" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="12"]
+transform = Transform3D(-0.828498, 0.559992, -4.14064e-05, -4.81082e-05, 2.76591e-06, 1, 0.559992, 0.828498, 2.46487e-05, 0.362041, 8.64998e-09, -0.36204)
+body_offset = Transform3D(1, -0.000275046, 4.80447e-05, 0.000275165, 1, -2.66221e-06, -4.81553e-05, 2.67151e-06, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_PANEL_L" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="13"]
+transform = Transform3D(-0.942625, -0.333854, 3.85148e-05, 6.02482e-07, 0.000113663, 1, -0.333854, 0.942625, -0.00010694, 0.471024, 2.7031e-08, -0.200705)
+body_offset = Transform3D(1, -0.000626922, -5.35558e-07, 0.000626981, 1, -0.00011374, 5.43909e-07, 0.000113648, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_01_R" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="14"]
+transform = Transform3D(-0.200061, -0.979783, -9.74767e-08, -6.10947e-07, 2.52605e-08, 1, -0.979784, 0.200061, -6.03649e-07, 1.09793e-07, 4.43217e-16, -0.512002)
+body_offset = Transform3D(1, -1.57952e-05, 8.09994e-07, 1.58399e-05, 1, 5.57779e-08, -8.49366e-07, -4.53805e-09, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_02_R" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="15"]
+transform = Transform3D(-0.559799, -0.828628, -5.64307e-07, -7.67472e-07, -1.6253e-07, 1, -0.828628, 0.559799, -5.44965e-07, -0.200705, 6.10489e-09, -0.471024)
+body_offset = Transform3D(1, -4.1455e-05, 8.77225e-07, 4.14252e-05, 1, 1.8164e-07, -8.94001e-07, -1.19209e-07, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_VERTEBRAE_03_R" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="16"]
+transform = Transform3D(-0.828687, -0.559712, 3.39206e-05, 4.08188e-05, 1.68979e-07, 1, -0.559712, 0.828687, 2.27067e-05, -0.36204, -2.32839e-09, -0.36204)
+body_offset = Transform3D(1, -6.35087e-05, -4.07618e-05, 6.34491e-05, 1, -1.24714e-07, 4.07696e-05, 1.86271e-07, 1, 0, 0, 0)
+
+[node name="Physical Bone DEF_PANEL_R" parent="TrackTransformContainer/DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="17"]
+transform = Transform3D(-0.944773, 0.327727, 0.000218753, 0.000157069, -0.000214684, 1, 0.327727, 0.944773, 0.000151352, -0.471024, -5.69436e-09, -0.200705)
+body_offset = Transform3D(0.999975, 0.00711948, -0.000155596, -0.00711951, 0.999975, 0.000215675, 0.000157184, -0.000214529, 1, 0, 0, 0)
 
 [node name="FieldOfView" type="Node3D" parent="TrackTransformContainer"]
 script = ExtResource("12_0sc46")
@@ -1098,3 +1196,5 @@ float_distortion_closed_pos_y = -0.86
 [connection signal="behavior_tree_finished" from="State/Root/Behavior/attack/beam attack/BehaviorManager/BTPlayer" to="State/Root/Behavior/attack/Attack States" method="_on_beam_attack_bt_finished"]
 [connection signal="state_entered" from="State/Root/Behavior/dead" to="State/Root/Behavior/Behavior States" method="_on_dead_state_entered"]
 [connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]
+
+[editable path="TrackTransformContainer/DroneModel"]

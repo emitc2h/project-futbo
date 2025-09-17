@@ -217,7 +217,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10.84
 script = SubResource("GDScript_vum0r")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Blocks2"]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.539924, 1.56718, -0.0020504)
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.541184, 1.56655, -0.0020504)
 collision_layer = 514
 collision_mask = 261
 
@@ -243,7 +243,7 @@ surface_material_override/0 = ExtResource("11_46hk0")
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
 
 [node name="StaticBody3D6" type="StaticBody3D" parent="Blocks2"]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.07867, 0.43629, -0.0020504)
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.07709, 0.438181, -0.0020504)
 collision_layer = 514
 collision_mask = 261
 
@@ -256,7 +256,7 @@ surface_material_override/0 = ExtResource("11_46hk0")
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
 
 [node name="StaticBody3D7" type="StaticBody3D" parent="Blocks2"]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.89916, -0.136931, -0.0020504)
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.8938, -0.131259, -0.0020504)
 collision_layer = 514
 collision_mask = 261
 

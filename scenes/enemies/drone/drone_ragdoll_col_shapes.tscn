@@ -25,40 +25,25 @@ points = PackedVector3Array(-0.162331, -2.98023e-08, -0.229587, -0.150572, -2.98
 
 [node name="drone_ragdoll_col_shapes" instance=ExtResource("1_v5xx3")]
 
-[node name="FRONT_PLATE" parent="." index="0"]
-visible = false
-
 [node name="StaticBody3D" type="StaticBody3D" parent="FRONT_PLATE" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FRONT_PLATE/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_v5xx3")
-
-[node name="VERTEBRAE_01" parent="." index="1"]
-visible = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="VERTEBRAE_01" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VERTEBRAE_01/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ecrqs")
 
-[node name="VERTEBRAE_02" parent="." index="2"]
-visible = false
-
 [node name="StaticBody3D" type="StaticBody3D" parent="VERTEBRAE_02" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VERTEBRAE_02/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_fqcv6")
 
-[node name="VERTEBRAE_03" parent="." index="3"]
-visible = false
-
 [node name="StaticBody3D" type="StaticBody3D" parent="VERTEBRAE_03" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VERTEBRAE_03/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_jff30")
-
-[node name="PANEL_TB" parent="." index="4"]
-visible = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="PANEL_TB" index="0"]
 
@@ -69,9 +54,6 @@ shape = SubResource("ConvexPolygonShape3D_6tdyq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PANEL_LR/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_n4n06")
-
-[node name="BACK_PLATE" parent="." index="6"]
-visible = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="BACK_PLATE" index="0"]
 

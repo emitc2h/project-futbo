@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://deidkuj34u7yu"]
+[gd_scene load_steps=23 format=4 uid="uid://deidkuj34u7yu"]
 
 [ext_resource type="Script" uid="uid://cua4a6wcsrmb2" path="res://scripts/game_management/main_menu/level_1_main_menu_scene.gd" id="1_glui6"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_jugbg"]
@@ -8,9 +8,10 @@
 [ext_resource type="Material" uid="uid://be2gka6jbfd6a" path="res://assets/3D/Act1/materials/vegetation/grass/grass_material_swaying.tres" id="4_snxm5"]
 [ext_resource type="PackedScene" uid="uid://cu4ax72l3v1ah" path="res://assets/3D/Act1/blend/Grass2.blend" id="5_plcrp"]
 [ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="6_rf2fx"]
-[ext_resource type="Material" uid="uid://c33v812uounix" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_slightly_dried_leaves_swaying.tres" id="7_hj0m6"]
 [ext_resource type="Material" uid="uid://602a6yse0f72" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_red_leaves_swaying.tres" id="8_jv7bb"]
+[ext_resource type="Material" uid="uid://c772rq7htukcy" path="res://assets/3D/Act1/materials/vegetation/tree1/bradford_pear_yellow_leaves.tres" id="9_idfe7"]
 [ext_resource type="PackedScene" uid="uid://b28taugqi7ixx" path="res://assets/3D/Act1/blend/SoccerBall.blend" id="9_iudwe"]
+[ext_resource type="PackedScene" uid="uid://bc323ftwy8i7t" path="res://scenes/enemies/drone/drone.tscn" id="12_vy76b"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4vvqs"]
 
@@ -20,6 +21,8 @@ normal_enabled = true
 normal_scale = 2.0
 normal_texture = ExtResource("3_fq483")
 uv1_scale = Vector3(50, 5, 1)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_vy76b"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tea2h"]
 vertex_color_use_as_albedo = true
@@ -62,6 +65,72 @@ buffer = PackedFloat32Array(0.636677, 0, 0.931016, -79.525, 0, 1.1279, 0, 0.1154
 
 [sub_resource type="Animation" id="Animation_n2k7b"]
 length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Drone:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Drone:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.56387, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Drone:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(3.18267, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Drone:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Drone:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../Drone:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_4vb0h"]
 resource_name = "enter_scene"
@@ -87,6 +156,92 @@ tracks/1/keys = {
 "handle_modes": PackedInt32Array(1, 0, 0),
 "points": PackedFloat32Array(-3.0353, 0, 0, 0, 0, -3.0353, -0.25, 0, 0.2, 5.0517, 2.60704, -1.96667, 0.00881553, 0.25, 0),
 "times": PackedFloat32Array(0, 2, 5)
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Drone")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3.96667, 10.3667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [0],
+"method": &"face_left"
+}, {
+"args": [0],
+"method": &"open"
+}, {
+"args": [],
+"method": &"burst"
+}]
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Drone:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(7.8897, -0.25, 0, 0.25, 0, 7.8897, -0.25, 0, 0.25, 0, 2.39751, -1.63333, 0.0213784, 0.25, 0, 2.39751, -1.63333, 0.0213784, 3.16713, -4.56976, -28, -0.192472, 1.05335, 0.25, 0),
+"times": PackedFloat32Array(0, 1.63333, 5.9, 10.3662, 12.6)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Drone:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(1.56387, -0.25, 0, 0.25, 0, 1.56387, -0.25, 0, 0.25, 0, 1.56387, -0.25, 0, 0.25, 0, 1.56387, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.63333, 4.33333, 12.6)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../Drone:position:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(3.18267, -0.25, 0, 0.25, 0, 3.18267, -0.25, 0, 0.25, 0, 3.18267, -0.25, 0, 0.25, 0, 3.18267, -0.25, 0, 0.25, 0, 3.18267, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.63333, 4.33333, 8.16693, 12.6)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../Drone:rotation:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(4.33386, 5.9, 9.33333, 10.5)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../Drone:rotation:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.14145, -0.770125, 0.00124335, 0.25, 0, 1.14145, -0.25, 0, 0.909239, 0.00124335, 0, -0.729348, -0.00400651, 0.25, 0),
+"times": PackedFloat32Array(4.33386, 5.9, 9.33333, 10.5)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../Drone:rotation:z")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.279253, -1.00855, 0.00134227, 0.25, 0, 0.279253, -0.25, 0, 0.942573, -0.00142086, 0, -0.796015, 0.00151973, 0.25, 0),
+"times": PackedFloat32Array(4.33386, 5.9, 9.33333, 10.5)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_watdk"]
@@ -114,11 +269,19 @@ lerp_z = 1.0
 [node name="Subject" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.643215, -3.31238)
 
-[node name="Plain" type="MeshInstance3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 1797
+
+[node name="Plain" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0.115413, 0)
 mesh = SubResource("PlaneMesh_4vvqs")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_6xuex")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.115413, 0)
+shape = SubResource("WorldBoundaryShape3D_vy76b")
 
 [node name="MultiMeshGrass" type="MultiMeshInstance3D" parent="."]
 material_override = ExtResource("4_snxm5")
@@ -133,11 +296,11 @@ visible = false
 visible = false
 
 [node name="TreeBradfordPear" parent="." instance=ExtResource("6_rf2fx")]
-transform = Transform3D(-0.959883, 0, 0.280398, 0, 1, 0, -0.280398, 0, -0.959883, 3.81904, 0, 4.79814)
-material_override = ExtResource("7_hj0m6")
+transform = Transform3D(0.580973, 0, -0.813922, 0, 1, 0, 0.813922, 0, 0.580973, 4.45657, 0, 1.33904)
+material_override = ExtResource("9_idfe7")
 
 [node name="TreeBradfordPear3" parent="." instance=ExtResource("6_rf2fx")]
-transform = Transform3D(0.767993, 0, 0.640458, 0, 1, 0, -0.640458, 0, 0.767993, -6.96403, 0, -4.16227)
+transform = Transform3D(0.767993, 0, 0.640458, 0, 1, 0, -0.640458, 0, 0.767993, -2.74828, 0, -4.16227)
 material_override = ExtResource("8_jv7bb")
 
 [node name="TreeBradfordPear2" parent="." instance=ExtResource("6_rf2fx")]
@@ -145,6 +308,10 @@ transform = Transform3D(-0.896893, 0, -0.0747153, 0, 0.9, 0, 0.0747153, 0, -0.89
 
 [node name="SoccerBall" parent="." instance=ExtResource("9_iudwe")]
 transform = Transform3D(0.963839, -0.172787, -0.202874, -0.100358, -0.940608, 0.324321, -0.246864, -0.292233, -0.923936, -1.3906, 0.264268, 9.42529)
+
+[node name="Drone" parent="." instance=ExtResource("12_vy76b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56387, 3.18267)
+initial_behavior = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../SoccerBall")
