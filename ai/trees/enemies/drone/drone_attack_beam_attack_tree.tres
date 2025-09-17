@@ -13,7 +13,6 @@ vuln_type = "vulnerable"
 [sub_resource type="BTAction" id="BTAction_te6m7"]
 script = ExtResource("2_te6m7")
 check_signal_id = true
-async = false
 
 [sub_resource type="BTAction" id="BTAction_7xg1u"]
 script = ExtResource("1_te6m7")

@@ -16,7 +16,6 @@
 
 [sub_resource type="BTCondition" id="BTCondition_jdkcr"]
 script = ExtResource("1_w63lw")
-expected_state = 0
 
 [sub_resource type="BTInvert" id="BTInvert_67r2n"]
 children = [SubResource("BTCondition_jdkcr")]
@@ -34,7 +33,6 @@ children = [SubResource("BTSequence_b1nek")]
 
 [sub_resource type="BTCondition" id="BTCondition_sdjen"]
 script = ExtResource("3_gqil7")
-expected_state = 0
 
 [sub_resource type="BTInvert" id="BTInvert_et0ka"]
 children = [SubResource("BTCondition_sdjen")]
@@ -42,8 +40,6 @@ children = [SubResource("BTCondition_sdjen")]
 [sub_resource type="BTAction" id="BTAction_3q0tp"]
 script = ExtResource("4_w8312")
 eng_type = "stop"
-quick_stop_keep_speed = false
-async = true
 
 [sub_resource type="BTAction" id="BTAction_jdkcr"]
 script = ExtResource("5_tdfnr")
@@ -57,7 +53,6 @@ children = [SubResource("BTSequence_7f6ok")]
 
 [sub_resource type="BTCondition" id="BTCondition_u77j0"]
 script = ExtResource("5_37wiq")
-expected_state = 0
 
 [sub_resource type="BTInvert" id="BTInvert_rmsh3"]
 children = [SubResource("BTCondition_u77j0")]
@@ -84,9 +79,7 @@ saved_value = NodePath("")
 [sub_resource type="BTCondition" id="BTCondition_w8312"]
 script = ExtResource("1_04tl1")
 custom_node = SubResource("BBNode_gqil7")
-world_repr_pos_x_name = ""
 target_type = "target node"
-away = false
 
 [sub_resource type="BTInvert" id="BTInvert_37wiq"]
 children = [SubResource("BTCondition_w8312")]
@@ -97,10 +90,7 @@ saved_value = NodePath("")
 [sub_resource type="BTAction" id="BTAction_37wiq"]
 script = ExtResource("8_gqil7")
 custom_node = SubResource("BBNode_w8312")
-world_repr_pos_x_name = ""
 target_type = "target node"
-away = false
-async = false
 
 [sub_resource type="BTSequence" id="BTSequence_tdfnr"]
 custom_name = "Facing Sequence"
@@ -118,7 +108,6 @@ children = [SubResource("BTCondition_37wiq")]
 
 [sub_resource type="BTAction" id="BTAction_tdfnr"]
 script = ExtResource("10_37wiq")
-check_signal_id = false
 async = true
 
 [sub_resource type="BTSequence" id="BTSequence_jdkcr"]

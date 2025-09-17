@@ -13,8 +13,6 @@ script = ExtResource("2_q5h4i")
 custom_node = SubResource("BBNode_gq854")
 world_repr_pos_x_name = "patrol_marker_1_pos_x"
 target_type = "world representation x position"
-away = false
-async = false
 
 [sub_resource type="BBNode" id="BBNode_lhmdx"]
 saved_value = NodePath("")
@@ -24,11 +22,7 @@ script = ExtResource("3_gq854")
 custom_node = SubResource("BBNode_lhmdx")
 world_repr_pos_x_name = "patrol_marker_1_pos_x"
 target_type = "world representation x position"
-away = false
 close_enough_distance = 0.1
-far_enough_distance = 0.0
-use_burst = false
-use_thrust = false
 
 [sub_resource type="BBNode" id="BBNode_ux7gf"]
 saved_value = NodePath("")
@@ -38,8 +32,6 @@ script = ExtResource("2_q5h4i")
 custom_node = SubResource("BBNode_ux7gf")
 world_repr_pos_x_name = "patrol_marker_2_pos_x"
 target_type = "world representation x position"
-away = false
-async = false
 
 [sub_resource type="BBNode" id="BBNode_q5h4i"]
 saved_value = NodePath("")
@@ -49,11 +41,7 @@ script = ExtResource("3_gq854")
 custom_node = SubResource("BBNode_q5h4i")
 world_repr_pos_x_name = "patrol_marker_2_pos_x"
 target_type = "world representation x position"
-away = false
 close_enough_distance = 0.1
-far_enough_distance = 0.0
-use_burst = false
-use_thrust = false
 
 [sub_resource type="BTSequence" id="BTSequence_gq854"]
 children = [SubResource("BTAction_q5h4i"), SubResource("BTAction_anox6"), SubResource("BTAction_erkqb"), SubResource("BTAction_gq854")]

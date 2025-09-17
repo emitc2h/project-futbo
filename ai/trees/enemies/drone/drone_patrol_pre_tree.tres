@@ -13,7 +13,6 @@
 
 [sub_resource type="BTCondition" id="BTCondition_78vy3"]
 script = ExtResource("1_woip1")
-expected_state = 0
 
 [sub_resource type="BTInvert" id="BTInvert_s32mk"]
 children = [SubResource("BTCondition_78vy3")]
@@ -39,7 +38,6 @@ children = [SubResource("BTCondition_ld5ub")]
 [sub_resource type="BTAction" id="BTAction_l4uem"]
 script = ExtResource("8_5hu3r")
 targ_type = "enabled"
-enable_to_acquiring = false
 
 [sub_resource type="BTSequence" id="BTSequence_dc7wy"]
 custom_name = "Targeting Sequence"
@@ -50,7 +48,6 @@ children = [SubResource("BTSequence_dc7wy")]
 
 [sub_resource type="BTCondition" id="BTCondition_5hu3r"]
 script = ExtResource("5_jp8qy")
-expected_state = 0
 
 [sub_resource type="BTInvert" id="BTInvert_ld5ub"]
 children = [SubResource("BTCondition_5hu3r")]
@@ -58,8 +55,6 @@ children = [SubResource("BTCondition_5hu3r")]
 [sub_resource type="BTAction" id="BTAction_0h333"]
 script = ExtResource("6_12nq2")
 eng_type = "stop"
-quick_stop_keep_speed = false
-async = true
 
 [sub_resource type="BTSequence" id="BTSequence_l4uem"]
 custom_name = "Engines Sequence"
@@ -70,16 +65,12 @@ children = [SubResource("BTSequence_l4uem")]
 
 [sub_resource type="BTCondition" id="BTCondition_45ikg"]
 script = ExtResource("3_qhkcb")
-expected_state = 0
 
 [sub_resource type="BTInvert" id="BTInvert_5hu3r"]
 children = [SubResource("BTCondition_45ikg")]
 
 [sub_resource type="BTAction" id="BTAction_ld5ub"]
 script = ExtResource("4_jp8qy")
-check_signal_id = false
-async = false
-quick = false
 
 [sub_resource type="BTSequence" id="BTSequence_0h333"]
 custom_name = "Engagement Sequence"

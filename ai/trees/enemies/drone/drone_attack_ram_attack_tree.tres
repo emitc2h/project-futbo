@@ -18,10 +18,8 @@ saved_value = NodePath("")
 [sub_resource type="BTAction" id="BTAction_kuy2p"]
 script = ExtResource("1_35t0q")
 custom_node = SubResource("BBNode_35t0q")
-world_repr_pos_x_name = ""
 target_type = "target node"
 away = true
-async = false
 
 [sub_resource type="BBNode" id="BBNode_2xvos"]
 saved_value = NodePath("")
@@ -29,13 +27,10 @@ saved_value = NodePath("")
 [sub_resource type="BTAction" id="BTAction_35t0q"]
 script = ExtResource("2_2xvos")
 custom_node = SubResource("BBNode_2xvos")
-world_repr_pos_x_name = ""
 target_type = "player representation"
 away = true
-close_enough_distance = 0.0
 far_enough_distance = 11.0
 use_burst = true
-use_thrust = false
 
 [sub_resource type="BBNode" id="BBNode_6wf5b"]
 saved_value = NodePath("")
@@ -43,10 +38,7 @@ saved_value = NodePath("")
 [sub_resource type="BTAction" id="BTAction_2xvos"]
 script = ExtResource("1_35t0q")
 custom_node = SubResource("BBNode_6wf5b")
-world_repr_pos_x_name = ""
 target_type = "target node"
-away = false
-async = false
 
 [sub_resource type="BTAction" id="BTAction_1l8t3"]
 script = ExtResource("6_26juq")
@@ -56,7 +48,6 @@ script = ExtResource("6_77xo3")
 var_type = "x distance"
 operator_type = "greater than"
 value = 9.0
-tolerance = 0.0
 
 [sub_resource type="BTSequence" id="BTSequence_mq0oj"]
 children = [SubResource("BTAction_2xvos"), SubResource("BTAction_1l8t3"), SubResource("BTAction_whlnk")]
@@ -75,10 +66,7 @@ saved_value = NodePath("")
 [sub_resource type="BTAction" id="BTAction_87ako"]
 script = ExtResource("1_35t0q")
 custom_node = SubResource("BBNode_26juq")
-world_repr_pos_x_name = ""
 target_type = "target node"
-away = false
-async = false
 
 [sub_resource type="BTAction" id="BTAction_mq0oj"]
 script = ExtResource("9_oxhd1")
@@ -93,9 +81,7 @@ saved_value = NodePath("")
 [sub_resource type="BTAction" id="BTAction_77xo3"]
 script = ExtResource("1_35t0q")
 custom_node = SubResource("BBNode_mq0oj")
-world_repr_pos_x_name = ""
 target_type = "target node"
-away = false
 async = true
 
 [sub_resource type="BTAction" id="BTAction_cb5cd"]
@@ -124,12 +110,8 @@ saved_value = NodePath("")
 [sub_resource type="BTAction" id="BTAction_6wf5b"]
 script = ExtResource("2_2xvos")
 custom_node = SubResource("BBNode_77xo3")
-world_repr_pos_x_name = ""
 target_type = "target node"
-away = false
 close_enough_distance = 6.2
-far_enough_distance = 0.0
-use_burst = false
 use_thrust = true
 
 [sub_resource type="BTSequence" id="BTSequence_35t0q"]

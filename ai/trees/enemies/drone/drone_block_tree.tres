@@ -16,16 +16,12 @@ vuln_type = "invulnerable"
 [sub_resource type="BTAction" id="BTAction_wr0yp"]
 script = ExtResource("1_n8kl3")
 eng_type = "quick stop"
-quick_stop_keep_speed = false
-async = true
 
 [sub_resource type="BTAction" id="BTAction_a1jrj"]
 script = ExtResource("1_wjov6")
 
 [sub_resource type="BTAction" id="BTAction_wjov6"]
 script = ExtResource("1_nk0ob")
-check_signal_id = false
-async = false
 quick = true
 
 [sub_resource type="BTAction" id="BTAction_qns3d"]
@@ -33,8 +29,6 @@ script = ExtResource("5_bgcqb")
 
 [sub_resource type="BTAction" id="BTAction_n8kl3"]
 script = ExtResource("3_a1jrj")
-check_signal_id = false
-async = false
 
 [sub_resource type="BTAction" id="BTAction_0cetv"]
 script = ExtResource("1_wr0yp")

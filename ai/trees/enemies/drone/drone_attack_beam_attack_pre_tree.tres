@@ -18,7 +18,6 @@
 [sub_resource type="BTAction" id="BTAction_v8g6f"]
 script = ExtResource("2_365fn")
 targ_type = "enabled"
-enable_to_acquiring = false
 
 [sub_resource type="BTSequence" id="BTSequence_nopmi"]
 custom_name = "Targeting Sequence"
@@ -47,7 +46,6 @@ children = [SubResource("BTSequence_deuh0")]
 
 [sub_resource type="BTCondition" id="BTCondition_htmdm"]
 script = ExtResource("5_kl6h7")
-expected_state = 0
 
 [sub_resource type="BTInvert" id="BTInvert_fomh7"]
 children = [SubResource("BTCondition_htmdm")]
@@ -55,8 +53,6 @@ children = [SubResource("BTCondition_htmdm")]
 [sub_resource type="BTAction" id="BTAction_x2ptq"]
 script = ExtResource("6_5dkk2")
 eng_type = "stop"
-quick_stop_keep_speed = false
-async = true
 
 [sub_resource type="BTSequence" id="BTSequence_a60oe"]
 custom_name = "Engines Sequence"
@@ -74,8 +70,6 @@ children = [SubResource("BTCondition_5ge8t")]
 
 [sub_resource type="BTAction" id="BTAction_deuh0"]
 script = ExtResource("8_brcvc")
-check_signal_id = false
-async = false
 
 [sub_resource type="BTSequence" id="BTSequence_htmdm"]
 custom_name = "Engagement Sequence"
@@ -86,7 +80,6 @@ children = [SubResource("BTSequence_htmdm")]
 
 [sub_resource type="BTCondition" id="BTCondition_oc56j"]
 script = ExtResource("9_1b3sx")
-expected_state = 0
 
 [sub_resource type="BTInvert" id="BTInvert_deuh0"]
 children = [SubResource("BTCondition_oc56j")]
@@ -111,9 +104,7 @@ saved_value = NodePath("")
 [sub_resource type="BTCondition" id="BTCondition_1b3sx"]
 script = ExtResource("12_kl6h7")
 custom_node = SubResource("BBNode_brcvc")
-world_repr_pos_x_name = ""
 target_type = "player representation"
-away = false
 
 [sub_resource type="BTInvert" id="BTInvert_6qnwr"]
 children = [SubResource("BTCondition_1b3sx")]
@@ -124,10 +115,7 @@ saved_value = NodePath("")
 [sub_resource type="BTAction" id="BTAction_t03md"]
 script = ExtResource("13_5dkk2")
 custom_node = SubResource("BBNode_jf6ce")
-world_repr_pos_x_name = ""
 target_type = "player representation"
-away = false
-async = false
 
 [sub_resource type="BTSequence" id="BTSequence_1d16f"]
 custom_name = "Face Player Sequence"

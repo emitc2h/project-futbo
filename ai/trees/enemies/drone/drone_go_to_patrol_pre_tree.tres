@@ -11,7 +11,6 @@
 
 [sub_resource type="BTCondition" id="BTCondition_emxvy"]
 script = ExtResource("1_f46kp")
-expected_state = 0
 
 [sub_resource type="BTInvert" id="BTInvert_5r4qc"]
 children = [SubResource("BTCondition_emxvy")]
@@ -36,7 +35,6 @@ children = [SubResource("BTCondition_02yue")]
 
 [sub_resource type="BTAction" id="BTAction_u5ufr"]
 script = ExtResource("4_pshps")
-check_signal_id = false
 async = true
 
 [sub_resource type="BTSequence" id="BTSequence_1eo81"]
@@ -56,7 +54,6 @@ children = [SubResource("BTCondition_5r4qc")]
 [sub_resource type="BTAction" id="BTAction_lbl6w"]
 script = ExtResource("6_pshps")
 targ_type = "enabled"
-enable_to_acquiring = false
 
 [sub_resource type="BTSequence" id="BTSequence_02yue"]
 custom_name = "Targeting Sequence"

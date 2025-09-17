@@ -12,7 +12,7 @@ config_version=5
 
 config/name="ProjectCodenameFutbo"
 run/main_scene="res://scenes/game_management/main.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 
 [autoload]
 
@@ -40,9 +40,9 @@ window/stretch/mode="viewport"
 
 [editor]
 
-movie_writer/mjpeg_quality=0.9
 movie_writer/movie_file="/Users/mtrottiermcdonald/Movies/godot_test.avi"
 movie_writer/disable_vsync=true
+movie_writer/mjpeg_quality=0.9
 
 [editor_plugins]
 

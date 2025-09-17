@@ -14,7 +14,6 @@ script = ExtResource("1_hapyk")
 [sub_resource type="BTAction" id="BTAction_ccpv4"]
 script = ExtResource("2_gyocu")
 targ_type = "enabled"
-enable_to_acquiring = false
 
 [sub_resource type="BBNode" id="BBNode_hapyk"]
 saved_value = NodePath("PatrolMarker1")
@@ -25,8 +24,6 @@ script = ExtResource("3_gyocu")
 custom_node = SubResource("BBNode_hapyk")
 world_repr_pos_x_name = "patrol_center_pos_x"
 target_type = "world representation x position"
-away = false
-async = false
 
 [sub_resource type="BBNode" id="BBNode_6d301"]
 saved_value = NodePath("")
@@ -36,25 +33,17 @@ script = ExtResource("4_c133w")
 custom_node = SubResource("BBNode_6d301")
 world_repr_pos_x_name = "patrol_center_pos_x"
 target_type = "world representation x position"
-away = false
 close_enough_distance = 0.1
-far_enough_distance = 0.0
-use_burst = false
-use_thrust = false
 
 [sub_resource type="BTAction" id="BTAction_c133w"]
 script = ExtResource("5_6d301")
 eng_type = "burst"
-quick_stop_keep_speed = false
-async = true
 
 [sub_resource type="BTWait" id="BTWait_ioh2e"]
 
 [sub_resource type="BTAction" id="BTAction_2mqvs"]
 script = ExtResource("5_6d301")
 eng_type = "thrust"
-quick_stop_keep_speed = false
-async = true
 
 [sub_resource type="BTSequence" id="BTSequence_hmil3"]
 children = [SubResource("BTAction_c133w"), SubResource("BTWait_ioh2e"), SubResource("BTAction_2mqvs")]
