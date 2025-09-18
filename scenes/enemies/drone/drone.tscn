@@ -13,7 +13,7 @@
 [ext_resource type="Shader" uid="uid://ddsp10lo1rx15" path="res://shaders/Drone/screen_distortion.gdshader" id="9_ahulk"]
 [ext_resource type="Texture2D" uid="uid://cbvr58ksjt0qs" path="res://assets/3D/Textures/Drone/float_mask_rendered_128x128.png" id="10_82hyt"]
 [ext_resource type="Script" uid="uid://b3ltvqg05gn6g" path="res://scripts/enemies/drone/states/drone_engines_states.gd" id="10_g2as1"]
-[ext_resource type="PackedScene" uid="uid://blqvlawbxf74y" path="res://scenes/enemies/drone/drone_model.tscn" id="11_glddf"]
+[ext_resource type="PackedScene" uid="uid://c7f1c26mhg1k8" path="res://scenes/enemies/drone/drone_model.tscn" id="11_glddf"]
 [ext_resource type="Script" uid="uid://cn8skwd81rq27" path="res://scripts/enemies/drone/states/drone_targeting_states.gd" id="11_wmq8b"]
 [ext_resource type="Script" uid="uid://dqr71asyjiu46" path="res://scripts/enemies/drone/drone_field_of_view.gd" id="12_0sc46"]
 [ext_resource type="Script" uid="uid://c2e3ru6va1vkg" path="res://scripts/enemies/drone/states/drone_vulnerability_states.gd" id="12_43bu3"]
