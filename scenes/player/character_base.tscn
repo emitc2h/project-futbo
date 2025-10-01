@@ -1,0 +1,437 @@
+[gd_scene load_steps=19 format=3 uid="uid://b23ql0f3pehor"]
+
+[ext_resource type="Script" uid="uid://dwveh7gorkqwx" path="res://scripts/player/character_base.gd" id="1_xq4g7"]
+[ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_oqj5v"]
+[ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_ga3c3"]
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_e4l2d"]
+[ext_resource type="Script" uid="uid://cog3h07h7gar" path="res://scripts/player/states/character_direction_faced_states.gd" id="5_7bbdo"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="6_awyfk"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="7_u4lyq"]
+[ext_resource type="Script" uid="uid://cm2jb3qvh2xq4" path="res://scripts/player/states/character_damage_states.gd" id="8_5o1l8"]
+[ext_resource type="Script" uid="uid://dxnnp68yqmfh8" path="res://scripts/player/states/character_movement_states.gd" id="9_ltwfx"]
+[ext_resource type="Script" uid="uid://dao25atxg2kit" path="res://scripts/player/states/character_in_the_air_states.gd" id="10_l36pv"]
+[ext_resource type="Script" uid="uid://bd6nivyruvv11" path="res://scripts/player/states/character_grounded_states.gd" id="11_h0n7g"]
+[ext_resource type="Script" uid="uid://brc7oigmsei5g" path="res://scripts/player/states/character_path_states.gd" id="12_oqj5v"]
+[ext_resource type="PackedScene" uid="uid://jmksfugqcld7" path="res://scenes/player/abilities/dribble/dribble_cast.tscn" id="12_stbo0"]
+[ext_resource type="Script" uid="uid://c4tlgbfr87too" path="res://scripts/player/abilities/headbutt/head.gd" id="13_keip7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x41nu"]
+radius = 0.25476
+height = 1.47402
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l4eab"]
+radius = 0.257409
+height = 1.1083
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_65hks"]
+radius = 0.257409
+height = 0.757612
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r2h0o"]
+size = Vector3(1, 0.86731, 1)
+
+[node name="CharacterBase" type="CharacterBody3D" node_paths=PackedStringArray("direction_states", "movement_states", "grounded_states", "in_the_air_states", "path_states", "damage_states")]
+collision_mask = 770
+script = ExtResource("1_xq4g7")
+direction_states = NodePath("State/Root/Direction Faced/Direction Faced States")
+movement_states = NodePath("State/Root/Damage/Able/Movement/Movement States")
+grounded_states = NodePath("State/Root/Damage/Able/Movement/Grounded/Grounded States")
+in_the_air_states = NodePath("State/Root/Damage/Able/Movement/In the air/In the air States")
+path_states = NodePath("State/Root/Path Constraint/Path States")
+damage_states = NodePath("State/Root/Damage/Damage States")
+
+[node name="State" type="Node" parent="."]
+script = ExtResource("2_oqj5v")
+track_in_editor = true
+metadata/_custom_type_script = "uid://cmlfnal2o37ys"
+
+[node name="Root" type="Node" parent="State"]
+script = ExtResource("3_ga3c3")
+
+[node name="Direction Faced" type="Node" parent="State/Root"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("face left")
+
+[node name="Direction Faced States" type="Node" parent="State/Root/Direction Faced" node_paths=PackedStringArray("sc")]
+script = ExtResource("5_7bbdo")
+sc = NodePath("../../..")
+
+[node name="face left" type="Node" parent="State/Root/Direction Faced"]
+script = ExtResource("6_awyfk")
+
+[node name="to face right" type="Node" parent="State/Root/Direction Faced/face left"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../face right")
+event = &"Direction Faced: to face right"
+delay_in_seconds = "0.0"
+
+[node name="to turn right" type="Node" parent="State/Root/Direction Faced/face left"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../turn right")
+event = &"Direction Faced: to turn right"
+delay_in_seconds = "0.0"
+
+[node name="face right" type="Node" parent="State/Root/Direction Faced"]
+script = ExtResource("6_awyfk")
+
+[node name="to face left" type="Node" parent="State/Root/Direction Faced/face right"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../face left")
+event = &"Direction Faced: to face left"
+delay_in_seconds = "0.0"
+
+[node name="to turn left" type="Node" parent="State/Root/Direction Faced/face right"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../turn left")
+event = &"Direction Faced: to turn left"
+delay_in_seconds = "0.0"
+
+[node name="turn left" type="Node" parent="State/Root/Direction Faced"]
+script = ExtResource("6_awyfk")
+
+[node name="to face left" type="Node" parent="State/Root/Direction Faced/turn left"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../face left")
+event = &"Direction Faced: to face left"
+delay_in_seconds = "0.0"
+
+[node name="turn right" type="Node" parent="State/Root/Direction Faced"]
+script = ExtResource("6_awyfk")
+
+[node name="to face right" type="Node" parent="State/Root/Direction Faced/turn right"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../face right")
+event = &"Direction Faced: to face right"
+delay_in_seconds = "0.0"
+
+[node name="Damage" type="Node" parent="State/Root"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("Able")
+
+[node name="Damage States" type="Node" parent="State/Root/Damage" node_paths=PackedStringArray("sc")]
+script = ExtResource("8_5o1l8")
+sc = NodePath("../../..")
+
+[node name="Able" type="Node" parent="State/Root/Damage"]
+script = ExtResource("3_ga3c3")
+
+[node name="Movement" type="Node" parent="State/Root/Damage/Able"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("In the air")
+
+[node name="Movement States" type="Node" parent="State/Root/Damage/Able/Movement" node_paths=PackedStringArray("sc")]
+script = ExtResource("9_ltwfx")
+sc = NodePath("../../../../..")
+
+[node name="In the air" type="Node" parent="State/Root/Damage/Able/Movement"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("in the air")
+
+[node name="In the air States" type="Node" parent="State/Root/Damage/Able/Movement/In the air" node_paths=PackedStringArray("sc")]
+script = ExtResource("10_l36pv")
+sc = NodePath("../../../../../..")
+
+[node name="in the air" type="Node" parent="State/Root/Damage/Able/Movement/In the air"]
+script = ExtResource("6_awyfk")
+
+[node name="to falling" type="Node" parent="State/Root/Damage/Able/Movement/In the air/in the air"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../falling")
+event = &"In the air: to falling"
+delay_in_seconds = "0.0"
+
+[node name="falling" type="Node" parent="State/Root/Damage/Able/Movement/In the air"]
+script = ExtResource("6_awyfk")
+
+[node name="to grounded" type="Node" parent="State/Root/Damage/Able/Movement/In the air"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../Grounded")
+event = &"Movement: to grounded"
+delay_in_seconds = "0.0"
+
+[node name="Grounded" type="Node" parent="State/Root/Damage/Able/Movement"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("idle")
+
+[node name="Grounded States" type="Node" parent="State/Root/Damage/Able/Movement/Grounded"]
+script = ExtResource("11_h0n7g")
+
+[node name="idle" type="Node" parent="State/Root/Damage/Able/Movement/Grounded"]
+script = ExtResource("6_awyfk")
+
+[node name="to moving" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/idle"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../moving")
+event = &"Grounded: to moving"
+delay_in_seconds = "0.0"
+
+[node name="to jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/idle"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../jump")
+event = &"Grounded: to jump"
+delay_in_seconds = "0.0"
+
+[node name="moving" type="Node" parent="State/Root/Damage/Able/Movement/Grounded"]
+script = ExtResource("6_awyfk")
+
+[node name="to idle" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/moving"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../idle")
+event = &"Grounded: to idle"
+delay_in_seconds = "0.0"
+
+[node name="to jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/moving"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../jump")
+event = &"Grounded: to jump"
+delay_in_seconds = "0.0"
+
+[node name="jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded"]
+script = ExtResource("6_awyfk")
+
+[node name="to in the air" type="Node" parent="State/Root/Damage/Able/Movement/Grounded"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../In the air")
+event = &"Movement: to in the air"
+delay_in_seconds = "0.0"
+
+[node name="Kick" type="Node" parent="State/Root/Damage/Able"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("no ball")
+
+[node name="no ball" type="Node" parent="State/Root/Damage/Able/Kick"]
+script = ExtResource("6_awyfk")
+
+[node name="can kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+script = ExtResource("6_awyfk")
+
+[node name="kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+script = ExtResource("6_awyfk")
+
+[node name="plans to long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+script = ExtResource("6_awyfk")
+
+[node name="winding up long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+script = ExtResource("6_awyfk")
+
+[node name="long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+script = ExtResource("6_awyfk")
+
+[node name="Dribble" type="Node" parent="State/Root/Damage/Able"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("no ball")
+
+[node name="no ball" type="Node" parent="State/Root/Damage/Able/Dribble"]
+script = ExtResource("6_awyfk")
+
+[node name="plans to dribble" type="Node" parent="State/Root/Damage/Able/Dribble"]
+script = ExtResource("6_awyfk")
+
+[node name="can dribble" type="Node" parent="State/Root/Damage/Able/Dribble"]
+script = ExtResource("6_awyfk")
+
+[node name="dribbling" type="Node" parent="State/Root/Damage/Able/Dribble"]
+script = ExtResource("6_awyfk")
+
+[node name="Headbutt" type="Node" parent="State/Root/Damage/Able"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("on the ground")
+
+[node name="on the ground" type="Node" parent="State/Root/Damage/Able/Headbutt"]
+script = ExtResource("6_awyfk")
+
+[node name="jumping" type="Node" parent="State/Root/Damage/Able/Headbutt"]
+script = ExtResource("6_awyfk")
+
+[node name="headbutt" type="Node" parent="State/Root/Damage/Able/Headbutt"]
+script = ExtResource("6_awyfk")
+
+[node name="to knocked" type="Node" parent="State/Root/Damage/Able"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../knocked")
+event = &"Damage: to knocked"
+delay_in_seconds = "0.0"
+
+[node name="knocked" type="Node" parent="State/Root/Damage"]
+script = ExtResource("6_awyfk")
+
+[node name="to out" type="Node" parent="State/Root/Damage/knocked"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../out")
+event = &"Damage: to out"
+delay_in_seconds = "0.0"
+
+[node name="to recovering" type="Node" parent="State/Root/Damage/knocked"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../recovering")
+event = &"Damage: to recovering"
+delay_in_seconds = "0.0"
+
+[node name="to down" type="Node" parent="State/Root/Damage/knocked"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../down")
+event = &"Damage: to down"
+delay_in_seconds = "0.0"
+
+[node name="out" type="Node" parent="State/Root/Damage"]
+script = ExtResource("6_awyfk")
+
+[node name="to recovering" type="Node" parent="State/Root/Damage/out"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../recovering")
+event = &"Damage: to recovering"
+delay_in_seconds = "0.0"
+
+[node name="recovering" type="Node" parent="State/Root/Damage"]
+script = ExtResource("6_awyfk")
+
+[node name="to able" type="Node" parent="State/Root/Damage/recovering"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../Able/Movement")
+event = &"Damage: to able"
+delay_in_seconds = "0.0"
+
+[node name="down" type="Node" parent="State/Root/Damage"]
+script = ExtResource("6_awyfk")
+
+[node name="Stamina" type="Node" parent="State/Root"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("full")
+
+[node name="full" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("6_awyfk")
+
+[node name="draining" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("6_awyfk")
+
+[node name="repleneshing" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("6_awyfk")
+
+[node name="recovering" type="Node" parent="State/Root/Stamina"]
+script = ExtResource("6_awyfk")
+
+[node name="Path Constraint" type="Node" parent="State/Root"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("on x-axis")
+
+[node name="Path States" type="Node" parent="State/Root/Path Constraint" node_paths=PackedStringArray("character", "sc")]
+script = ExtResource("12_oqj5v")
+character = NodePath("../../../..")
+sc = NodePath("../../..")
+
+[node name="on x-axis" type="Node" parent="State/Root/Path Constraint"]
+script = ExtResource("6_awyfk")
+
+[node name="to on path" type="Node" parent="State/Root/Path Constraint/on x-axis"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../on path")
+event = &"Path: to on path"
+delay_in_seconds = "0.0"
+
+[node name="on path" type="Node" parent="State/Root/Path Constraint"]
+script = ExtResource("6_awyfk")
+
+[node name="to on x-axis" type="Node" parent="State/Root/Path Constraint/on path"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../on x-axis")
+event = &"Path: to on x-axis"
+delay_in_seconds = "0.0"
+
+[node name="Targeting" type="Node" parent="State/Root"]
+script = ExtResource("4_e4l2d")
+initial_state = NodePath("none")
+
+[node name="none" type="Node" parent="State/Root/Targeting"]
+script = ExtResource("6_awyfk")
+
+[node name="targeting" type="Node" parent="State/Root/Targeting"]
+script = ExtResource("6_awyfk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.993783, 0, -0.11133, 0, 1, 0, 0.11133, 0, 0.993783, 0, 0.734811, 0)
+shape = SubResource("CapsuleShape3D_x41nu")
+
+[node name="JumpBufferTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="TargetMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00116658, 1.06277, 0)
+
+[node name="JumpRayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+target_position = Vector3(0, -1.3, 0)
+collision_mask = 266
+
+[node name="LongKickRayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
+target_position = Vector3(1.5, 0, 0)
+collision_mask = 4
+
+[node name="SprintRayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
+target_position = Vector3(2.5, 0, 0)
+collision_mask = 4
+
+[node name="KickZone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.347968, 0.257409, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KickZone"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_l4eab")
+
+[node name="LongKickZone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.347968, 0.257409, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LongKickZone"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.176334, 0, 0)
+shape = SubResource("CapsuleShape3D_65hks")
+
+[node name="DribblePickupZone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.348, 0.257, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DribblePickupZone"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.0663452, 0.239773, 0)
+shape = SubResource("BoxShape3D_r2h0o")
+
+[node name="DribbleMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.18, 0)
+
+[node name="DribbleCast" parent="." instance=ExtResource("12_stbo0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.256985, 0)
+target_position = Vector3(0.9, 0, 0)
+
+[node name="Head" type="Node3D" parent="."]
+script = ExtResource("13_keip7")
+
+[node name="RayCastLeft" type="RayCast3D" parent="Head"]
+target_position = Vector3(-0.12, 0.16, 0)
+collision_mask = 4
+
+[node name="RayCastRight" type="RayCast3D" parent="Head"]
+target_position = Vector3(0.12, 0.16, 0)
+collision_mask = 4
+
+[connection signal="state_entered" from="State/Root/Direction Faced/face left" to="State/Root/Direction Faced/Direction Faced States" method="_on_face_left_state_entered"]
+[connection signal="state_entered" from="State/Root/Direction Faced/face right" to="State/Root/Direction Faced/Direction Faced States" method="_on_face_right_state_entered"]
+[connection signal="state_entered" from="State/Root/Direction Faced/turn left" to="State/Root/Direction Faced/Direction Faced States" method="_on_turn_left_state_entered"]
+[connection signal="state_entered" from="State/Root/Direction Faced/turn right" to="State/Root/Direction Faced/Direction Faced States" method="_on_turn_right_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able" to="State/Root/Damage/Damage States" method="_on_able_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Movement/In the air" to="State/Root/Damage/Able/Movement/Movement States" method="_on_in_the_air_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Movement/In the air/in the air" to="State/Root/Damage/Able/Movement/In the air/In the air States" method="_on_in_the_air_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Movement/In the air/falling" to="State/Root/Damage/Able/Movement/In the air/In the air States" method="_on_falling_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Movement/Grounded" to="State/Root/Damage/Able/Movement/Movement States" method="_on_grounded_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Movement/Grounded/idle" to="State/Root/Damage/Able/Movement/Grounded/Grounded States" method="_on_idle_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Movement/Grounded/moving" to="State/Root/Damage/Able/Movement/Grounded/Grounded States" method="_on_moving_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Movement/Grounded/jump" to="State/Root/Damage/Able/Movement/Grounded/Grounded States" method="_on_jump_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/knocked" to="State/Root/Damage/Damage States" method="_on_knocked_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/out" to="State/Root/Damage/Damage States" method="_on_out_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/recovering" to="State/Root/Damage/Damage States" method="_on_recovering_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/down" to="State/Root/Damage/Damage States" method="_on_down_state_entered"]
+[connection signal="state_entered" from="State/Root/Path Constraint/on x-axis" to="State/Root/Path Constraint/Path States" method="_on_on_xaxis_state_entered"]
+[connection signal="state_entered" from="State/Root/Path Constraint/on path" to="State/Root/Path Constraint/Path States" method="_on_on_path_state_entered"]

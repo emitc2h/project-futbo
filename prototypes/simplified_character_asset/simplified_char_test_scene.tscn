@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://ci6c0wd3nfi1k"]
+
+[ext_resource type="Script" uid="uid://cd2yw4w0olj6i" path="res://prototypes/simplified_character_asset/simplified_char_test_scene.gd" id="1_hbgue"]
+[ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="2_c7twb"]
+[ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera/camera_controller.tscn" id="3_ojn5c"]
+[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="3_oorf8"]
+[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="4_ojn5c"]
+[ext_resource type="PackedScene" uid="uid://dkgctb1yerg3s" path="res://prototypes/simplified_character_asset/simplified_character_asset.tscn" id="6_ih8et"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ih8et"]
+albedo_texture = ExtResource("3_oorf8")
+roughness = 0.96
+normal_enabled = true
+normal_texture = ExtResource("4_ojn5c")
+anisotropy_enabled = true
+anisotropy = 0.2
+uv1_scale = Vector3(30, 30, 30)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_g2iua"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_78uhv"]
+
+[node name="SimplifiedCharTestScene" type="Node3D"]
+script = ExtResource("1_hbgue")
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("2_c7twb")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.91504705, -0.100395314, -0.390653, 0.26192102, 0.8844404, 0.38621584, 0.30673504, -0.45572588, 0.83560014, 0.0118855, -0.0196906, -0.0371979)
+light_intensity_lux = 50000.0
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+
+[node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("3_ojn5c")]
+subject = NodePath("../SimplifiedCharacterAsset")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(70.6045, 0, -70.8167, 0, 1, 0, 70.8167, 0, 70.6045, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_ih8et")
+mesh = SubResource("PlaneMesh_g2iua")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+collision_layer = 2
+collision_mask = 261
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_78uhv")
+
+[node name="SimplifiedCharacterAsset" parent="." instance=ExtResource("6_ih8et")]

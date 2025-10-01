@@ -216,7 +216,7 @@ asset = NodePath("../../../../TrackTransformContainer/ControlNodeAsset")
 sc = NodePath("../../..")
 
 [node name="LoseChargeTimer" type="Timer" parent="State/Root/Charge/Charge States" index="0"]
-wait_time = 16.0
+wait_time = 600.0
 
 [node name="none" type="Node" parent="State/Root/Charge" index="1"]
 script = ExtResource("4_0jkta")

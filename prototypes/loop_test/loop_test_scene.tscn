@@ -1,10 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://cvaogmwqhlu3a"]
+[gd_scene load_steps=29 format=3 uid="uid://cvaogmwqhlu3a"]
 
 [ext_resource type="Script" uid="uid://bunkqcq7mgxft" path="res://prototypes/loop_test/loop_test_scene.gd" id="1_vum0r"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_vum0r"]
 [ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_i1kmq"]
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera/camera_controller.tscn" id="4_hk3aj"]
-[ext_resource type="PackedScene" uid="uid://dmyk1j8j3wpex" path="res://scenes/player/player.tscn" id="5_f8j8h"]
+[ext_resource type="PackedScene" uid="uid://cerxpglnw633f" path="res://scenes/player/test_character.tscn" id="6_lgxwc"]
+[ext_resource type="Script" uid="uid://c5ypw4nstaeac" path="res://scripts/player/player_controller.gd" id="7_mli22"]
 [ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="11_46hk0"]
 [ext_resource type="PackedScene" uid="uid://1qyvwbunehqq" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_random_patch_6m_mixed_2.tscn" id="11_pv0wt"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="12_3tfwp"]
@@ -126,9 +127,12 @@ collision_mask = 261
 shape = SubResource("WorldBoundaryShape3D_5yoqd")
 
 [node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("4_hk3aj")]
-subject = NodePath("../Player")
+subject = NodePath("../TestCharacter")
 
-[node name="Player" parent="." instance=ExtResource("5_f8j8h")]
+[node name="TestCharacter" parent="." instance=ExtResource("6_lgxwc")]
+
+[node name="PlayerController" type="Node" parent="TestCharacter"]
+script = ExtResource("7_mli22")
 
 [node name="Blocks" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.6926, -0.04813, 0)
@@ -372,5 +376,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.06864, 0.250523, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7328, 1.79018, 0)
 
 [node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]
-active = true
+active = false
 max_running_logs = 1000

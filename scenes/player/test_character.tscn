@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cerxpglnw633f"]
+
+[ext_resource type="PackedScene" uid="uid://b23ql0f3pehor" path="res://scenes/player/character_base.tscn" id="1_7jcgl"]
+[ext_resource type="PackedScene" uid="uid://fgg78lg0p617" path="res://scenes/characters/Character1/character_asset.tscn" id="2_75qt5"]
+
+[node name="TestCharacter" instance=ExtResource("1_7jcgl")]
+
+[node name="CharacterAsset" parent="." index="3" instance=ExtResource("2_75qt5")]
