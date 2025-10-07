@@ -32,7 +32,7 @@ func _ready() -> void:
 	sm = animation_tree.get(state_machine_path)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	## Load the new current state machine nodes
 	var new_current_node: String = sm.get_current_node()
 	var new_current_fading_node: String = sm.get_fading_from_node()

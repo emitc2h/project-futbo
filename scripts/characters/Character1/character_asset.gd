@@ -306,7 +306,7 @@ func to_recover_from_knocked(anim_name: String) -> void:
 
 
 ######################################
-##             SIGNALS             ##
+##             SIGNALS              ##
 ######################################
 func _on_anim_state_finished(anim_name: String) -> void:
 	anim_state_finished.emit(anim_name)

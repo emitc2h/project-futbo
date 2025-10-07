@@ -23,14 +23,19 @@ var in_the_air_callable: Callable = Callable(self, "_velocity_on_x_axis")
 ## internal variable
 var _path: CharacterPath = null
 
+## Signals
+signal path_state_changed(move_callable: Callable, in_the_air_callable: Callable)
+
 
 # on x-axis state
 #----------------------------------------
 func _on_on_xaxis_state_entered() -> void:
 	state = State.ON_X_AXIS
 	
-	move_callable = Callable(self, "_velocity_on_x_axis")
-	in_the_air_callable = Callable(self, "_velocity_on_x_axis")
+	path_state_changed.emit(
+		Callable(self, "_velocity_on_x_axis"),
+		Callable(self, "_velocity_on_x_axis")
+	)
 
 
 # on path state
@@ -38,12 +43,14 @@ func _on_on_xaxis_state_entered() -> void:
 func _on_on_path_state_entered() -> void:
 	state = State.ON_PATH
 	
-	move_callable = Callable(self, "_velocity_on_path")
-	in_the_air_callable = Callable(self, "_float_on_path")
+	path_state_changed.emit(
+		Callable(self, "_velocity_on_path"),
+		Callable(self, "_float_on_path")
+	)
 
 
 #=======================================================
-# UTILITY FUNCTIONS
+# CALLABLES
 #=======================================================
 func _velocity_on_x_axis(input_magnitude: float) -> void:
 	character.velocity.x = input_magnitude

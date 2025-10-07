@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkgctb1yerg3s"]
-
-[ext_resource type="PackedScene" uid="uid://e26c1ouynnn5" path="res://assets/3D/Characters/Character1/character1_asset.glb" id="1_wly38"]
-
-[node name="SimplifiedCharacterAsset" instance=ExtResource("1_wly38")]

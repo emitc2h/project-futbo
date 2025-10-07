@@ -12,7 +12,7 @@ func _ready() -> void:
 		enabled = true
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if enabled:
 		player_basic_movement.run(Input.get_axis("move_left", "move_right"))
 		
