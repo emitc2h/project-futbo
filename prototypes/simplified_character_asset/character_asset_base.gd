@@ -30,25 +30,52 @@ var root_motion_rotation: Quaternion:
 ## Signals
 signal turn_finished
 
+## Animation Tree Path Gates
+var jump_to_fall_path: bool = false
 
 func _ready() -> void:
 	$AnimationTree/MovementStateChangeTracker.anim_state_finished.connect(_on_anim_state_finished)
 
 
 ######################################
+##          PATH FUNCTIONS          ##
+######################################
+func open_jump_to_fall_path() -> void:
+	jump_to_fall_path = true
+
+
+func close_jump_to_fall_path() -> void:
+	jump_to_fall_path = false
+
+
+
+######################################
 ##        CONTROL FUNCTIONS         ##
 ######################################
 func idle() -> void:
+	print("TRAVEL TO IDLE")
 	movement_state.travel("idle")
 
 
 func move() -> void:
+	print("TRAVEL TO MOVE")
 	movement_state.travel("move")
 
 
 func turn() -> void:
+	print("TRAVEL TO TURN")
 	movement_state.travel("turn")
 	await turn_finished
+
+
+func jump() -> void:
+	print("TRAVEL TO JUMP")
+	movement_state.travel("jump")
+
+
+func fall() -> void:
+	print("TRAVEL TO FALL")
+	movement_state.travel("fall")
 
 
 func _on_anim_state_finished(anim_name: String) -> void:

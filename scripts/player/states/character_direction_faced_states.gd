@@ -32,16 +32,8 @@ func _on_face_left_state_entered() -> void:
 	mode = Mode.FACING
 	
 	## Set the rotation
-	if not (rotation_tween and rotation_tween.is_running()):
-		character.rotation_degrees = LEFT_ROTATION
-
-
-func _on_face_right_to_face_left_taken() -> void:
 	_tween_rotation(LEFT_ROTATION)
 
-
-func _on_turn_left_to_face_left_taken() -> void:
-	_tween_rotation(LEFT_ROTATION)
 
 # face right state
 #----------------------------------------
@@ -50,15 +42,6 @@ func _on_face_right_state_entered() -> void:
 	mode = Mode.FACING
 	
 	## Set the rotation
-	if not (rotation_tween and rotation_tween.is_running()):
-		character.rotation_degrees = RIGHT_ROTATION
-
-
-func _on_face_left_to_face_right_taken() -> void:
-	_tween_rotation(RIGHT_ROTATION)
-
-
-func _on_turn_right_to_face_right_taken() -> void:
 	_tween_rotation(RIGHT_ROTATION)
 
 

@@ -6,20 +6,19 @@ extends Node
 @export var sc: StateChart
 
 ## States Enum
-enum State {IN_THE_AIR = 0, FALLING = 1}
-var state: State = State.IN_THE_AIR
+enum State {JUMPING = 0, FALLING = 1}
+var state: State = State.FALLING
 
 ## State transition constants
 const TRANS_TO_FALLING: String = "In the air: to falling"
 
-
 # in the air state
 #----------------------------------------
-func _on_in_the_air_state_entered() -> void:
-	state = State.IN_THE_AIR
+func _on_jumping_state_entered() -> void:
+	state = State.JUMPING
 
 
-func _on_in_the_air_state_physics_processing(_delta: float) -> void:
+func _on_jumping_state_physics_processing(_delta: float) -> void:
 	## Call move_and_slide in each leaf of the movement HSM
 	character.move_and_slide()
 

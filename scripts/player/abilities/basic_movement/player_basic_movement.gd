@@ -77,7 +77,7 @@ func _ready() -> void:
 	Signals.player_knocked.connect(_on_player_knocked)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# ALWAYS read input if on ground
 	pass
 
@@ -367,7 +367,7 @@ func _on_face_right_state_entered() -> void:
 	Signals.facing_right.emit()
 
 
-func _on_face_right_state_physics_processing(delta: float) -> void:
+func _on_face_right_state_physics_processing(_delta: float) -> void:
 	if left_right_axis < 0.0 and not in_in_the_air_state \
 		and not player.can_run_backward:
 		if in_run_buffer_state or in_recovering_state:
@@ -387,7 +387,7 @@ func _on_face_left_state_entered() -> void:
 	Signals.facing_left.emit()
 
 
-func _on_face_left_state_physics_processing(delta: float) -> void:
+func _on_face_left_state_physics_processing(_delta: float) -> void:
 	if left_right_axis > 0.0 and not in_in_the_air_state \
 		and not player.can_run_backward:
 		if in_run_buffer_state or in_recovering_state:
@@ -408,7 +408,7 @@ func _on_turn_right_state_entered() -> void:
 	state.send_event("run to skid")
 
 
-func _on_turn_right_state_physics_processing(delta: float) -> void:
+func _on_turn_right_state_physics_processing(_delta: float) -> void:
 	if not player.is_on_floor():
 		state.send_event("turn right to face right")
 
@@ -430,7 +430,7 @@ func _on_turn_left_state_entered() -> void:
 	state.send_event("run to skid")
 
 
-func _on_turn_left_state_physics_processing(delta: float) -> void:
+func _on_turn_left_state_physics_processing(_delta: float) -> void:
 	if not player.is_on_floor():
 		state.send_event("turn left to face left")
 

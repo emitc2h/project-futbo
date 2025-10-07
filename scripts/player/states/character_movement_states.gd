@@ -16,6 +16,9 @@ const TRANS_TO_GROUNDED: String = "Movement: to grounded"
 # Static/Internal properties
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
 
+## Internal variables
+var fall_velocity_x: float = 0.0
+
 # in the air state
 #----------------------------------------
 func _on_in_the_air_state_entered() -> void:
@@ -25,6 +28,7 @@ func _on_in_the_air_state_entered() -> void:
 func _on_in_the_air_state_physics_processing(delta: float) -> void:
 	## Apply gravity
 	character.velocity.y += gravity * delta
+	character.velocity.x = fall_velocity_x
 	
 	if character.is_on_floor():
 		sc.send_event(TRANS_TO_GROUNDED)

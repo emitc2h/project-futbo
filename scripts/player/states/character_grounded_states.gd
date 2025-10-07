@@ -10,7 +10,7 @@ extends Node
 
 ## Parameters
 @export_group("Movement")
-@export var run_speed: float = 3.0
+@export var jump_velocity: float = 3.8
 
 ## States Enum
 enum State {IDLE = 0, MOVING= 1, MOVING_BUFFER = 2, JUMP = 3}
@@ -67,8 +67,13 @@ func _on_moving_state_physics_processing(delta: float) -> void:
 #----------------------------------------
 func _on_jump_state_entered() -> void:
 	state = State.JUMP
-
-
-func _on_jump_state_physics_processing(_delta: float) -> void:
-	## Call move_and_slide in each leaf of the movement HSM
+	
+	character.velocity.y = jump_velocity
+	character.movement_states.fall_velocity_x = character.velocity.x
+	
+	## Call move_and_slide
 	character.move_and_slide()
+	
+	character.asset.jump()
+	
+	sc.send_event(character.movement_states.TRANS_TO_IN_THE_AIR)

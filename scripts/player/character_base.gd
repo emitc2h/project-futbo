@@ -34,10 +34,14 @@ func idle() -> void:
 
 func move(left_right_axis: float) -> void:
 	grounded_states.left_right_axis = left_right_axis
-	asset.speed = left_right_axis
+	if movement_states.state == movement_states.State.GROUNDED:
+		asset.speed = left_right_axis
 	if grounded_states.state == grounded_states.State.IDLE:
 		sc.send_event(grounded_states.TRANS_TO_MOVING)
 
+
+func jump() -> void:
+	sc.send_event(grounded_states.TRANS_TO_JUMP)
 
 #################################
 ## Signal handling             ##

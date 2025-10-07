@@ -96,10 +96,11 @@ script = ExtResource("2_ax2xp")
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_motion_track = NodePath("Armature/Skeleton3D:Root")
 tree_root = SubResource("AnimationNodeBlendTree_sb256")
+advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 parameters/movement/jump/jump/blend_position = 0.0
 parameters/movement/jump/scale/scale = 1.0
-parameters/movement/move/move/move/blend_position = 0.5
+parameters/movement/move/move/move/blend_position = -0.0009331107
 parameters/movement/move/move/scale/scale = 1.0
 parameters/movement/move/recover/TimeScale/scale = 1.0
 parameters/movement/move/sprint/scale/scale = 1.0
