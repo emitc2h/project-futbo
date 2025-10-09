@@ -8,9 +8,16 @@ asset = NodePath("Character1Asset")
 
 [node name="Character1Asset" parent="." index="0" instance=ExtResource("2_nft2d")]
 
+[node name="In the air States" parent="State/Root/Damage/Able/Movement/In the air" index="0" node_paths=PackedStringArray("state_map")]
+state_map = {
+0: NodePath("../jumping"),
+1: NodePath("../falling")
+}
+
 [node name="Grounded States" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" index="0" node_paths=PackedStringArray("state_map")]
 state_map = {
 0: NodePath("../idle"),
 1: NodePath("../moving"),
-2: NodePath("../jump")
+2: NodePath("../jump"),
+3: NodePath("../turn")
 }

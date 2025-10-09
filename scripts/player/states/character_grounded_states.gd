@@ -3,6 +3,7 @@ extends CharacterStatesAbstractBase
 
 @export_group("Linked State Machines")
 @export var direction_states: CharacterDirectionFacedStates
+@export var in_the_air_states: CharacterInTheAirStates
 
 ## Parameters
 @export_group("Movement")
@@ -43,6 +44,8 @@ func _on_idle_state_physics_processing(_delta: float) -> void:
 	move_callable.call(0.0)
 	rotation_callable.call()
 	
+	character.movement_states.fall_velocity_x = character.velocity.x
+	
 	## Call move_and_slide in each leaf of the movement HSM
 	character.move_and_slide()
 
@@ -66,6 +69,8 @@ func _on_moving_state_physics_processing(delta: float) -> void:
 	if not direction_states.faced_direction_is_consistent_with_axis(left_right_axis):
 		sc.send_event(TRANS_TO_TURN)
 	
+	character.movement_states.fall_velocity_x = character.velocity.x
+	
 	## Call move_and_slide in each leaf of the movement HSM
 	character.move_and_slide()
 
@@ -84,6 +89,7 @@ func _on_jump_state_entered() -> void:
 	character.asset.jump()
 	
 	## State change
+	in_the_air_states.set_initial_state(in_the_air_states.State.JUMPING)
 	sc.send_event(character.movement_states.TRANS_TO_IN_THE_AIR)
 
 
@@ -99,6 +105,8 @@ func _on_turn_state_physics_processing(delta: float) -> void:
 	## Picks up the move function from the path states and uses the root motion to compute the velocity
 	move_callable.call(direction_states.turn_sign() * character.asset.root_motion_position.x/delta)
 	rotation_callable.call()
+	
+	character.movement_states.fall_velocity_x = character.velocity.x
 	
 	## Call move_and_slide
 	character.move_and_slide()

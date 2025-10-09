@@ -594,7 +594,7 @@ func jump() -> void:
 		state.send_event("fall to jump buffer")
 
 
-func idle_with_custom_animation(animation: String) -> void:
+func idle_with_custom_animation(_animation: String) -> void:
 	state.send_event("run to idle")
 
 

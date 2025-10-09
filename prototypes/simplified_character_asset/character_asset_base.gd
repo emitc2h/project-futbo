@@ -27,6 +27,7 @@ var root_motion_rotation: Quaternion:
 
 ## Signals
 signal turn_finished
+signal fall_started
 
 ## Animation Tree Path Gates
 var jump_to_fall_path: bool = false
@@ -69,6 +70,11 @@ func jump() -> void:
 
 func fall() -> void:
 	movement_state.travel("fall")
+
+
+func _on_anim_state_started(anim_name: String) -> void:
+	if anim_name == "fall":
+		fall_started.emit()
 
 
 func _on_anim_state_finished(anim_name: String) -> void:

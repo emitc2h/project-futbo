@@ -65,19 +65,27 @@ script = ExtResource("3_ga3c3")
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("In the air")
 
-[node name="Movement States" type="Node" parent="State/Root/Damage/Able/Movement" node_paths=PackedStringArray("character", "sc")]
+[node name="Movement States" type="Node" parent="State/Root/Damage/Able/Movement" node_paths=PackedStringArray("in_the_air_states", "character", "sc", "cs")]
 script = ExtResource("9_ltwfx")
+in_the_air_states = NodePath("../In the air/In the air States")
 character = NodePath("../../../../../..")
 sc = NodePath("../../../../..")
+cs = NodePath("..")
 
 [node name="In the air" type="Node" parent="State/Root/Damage/Able/Movement"]
 script = ExtResource("4_e4l2d")
-initial_state = NodePath("jumping")
+initial_state = NodePath("falling")
 
-[node name="In the air States" type="Node" parent="State/Root/Damage/Able/Movement/In the air" node_paths=PackedStringArray("character", "sc")]
+[node name="In the air States" type="Node" parent="State/Root/Damage/Able/Movement/In the air" node_paths=PackedStringArray("jump_raycast", "state_map", "character", "sc", "cs")]
 script = ExtResource("10_l36pv")
+jump_raycast = NodePath("../../../../../../../JumpRaycast")
+state_map = {
+0: NodePath("../jumping"),
+1: NodePath("../falling")
+}
 character = NodePath("../../../../../../..")
 sc = NodePath("../../../../../..")
+cs = NodePath("..")
 
 [node name="jumping" type="Node" parent="State/Root/Damage/Able/Movement/In the air"]
 script = ExtResource("6_awyfk")
@@ -135,9 +143,10 @@ default_state = NodePath("../face left")
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("moving")
 
-[node name="Grounded States" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" node_paths=PackedStringArray("direction_states", "state_map", "character", "sc", "cs")]
+[node name="Grounded States" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" node_paths=PackedStringArray("direction_states", "in_the_air_states", "state_map", "character", "sc", "cs")]
 script = ExtResource("11_h0n7g")
 direction_states = NodePath("../../Direction Faced/Direction Faced States")
+in_the_air_states = NodePath("../../../In the air/In the air States")
 state_map = {
 0: NodePath("../idle"),
 1: NodePath("../moving"),
@@ -331,7 +340,6 @@ initial_state = NodePath("on x-axis")
 script = ExtResource("12_oqj5v")
 character = NodePath("../../../..")
 sc = NodePath("../../..")
-stay_on_path_force = null
 
 [node name="on x-axis" type="Node" parent="State/Root/Path Constraint"]
 script = ExtResource("6_awyfk")
@@ -371,17 +379,17 @@ wait_time = 0.05
 [node name="TargetMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00116658, 1.06277, 0)
 
-[node name="JumpRayCast" type="RayCast3D" parent="."]
+[node name="JumpRaycast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 target_position = Vector3(0, -1.3, 0)
 collision_mask = 266
 
-[node name="LongKickRayCast" type="RayCast3D" parent="."]
+[node name="LongKickRaycast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
 target_position = Vector3(1.5, 0, 0)
 collision_mask = 4
 
-[node name="SprintRayCast" type="RayCast3D" parent="."]
+[node name="SprintRaycast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
 target_position = Vector3(2.5, 0, 0)
 collision_mask = 4
@@ -416,7 +424,7 @@ shape = SubResource("BoxShape3D_r2h0o")
 [node name="DribbleMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.18, 0)
 
-[node name="DribbleCast" parent="." instance=ExtResource("12_stbo0")]
+[node name="DribbleRaycast" parent="." instance=ExtResource("12_stbo0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.256985, 0)
 target_position = Vector3(0.9, 0, 0)
 
