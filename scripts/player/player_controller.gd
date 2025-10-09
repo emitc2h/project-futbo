@@ -16,6 +16,20 @@ func _physics_process(delta: float) -> void:
 	
 	## Read in the left_right_axis from the controller
 	var left_right_axis: float = Input.get_axis("move_left", "move_right")
+	var aim_vector: Vector2 = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+	
+	if Input.is_action_just_pressed("dribble"):
+		character.lock_direction_faced()
+	
+	if Input.is_action_just_released("dribble"):
+		character.unlock_direction_faced()
+	
+	if character.direction_states.locked:
+		if not aim_vector.is_zero_approx():
+			if aim_vector.x < 0.0:
+				character.face_left()
+			if aim_vector.x > 0.0:
+				character.face_right()
 	
 	## If the left_right_axis doesn't read 0 (which means the joystick is out of the dead zone)
 	if abs(left_right_axis) > 0.0:

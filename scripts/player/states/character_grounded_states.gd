@@ -63,7 +63,7 @@ func _on_moving_state_entered() -> void:
 
 func _on_moving_state_physics_processing(delta: float) -> void:
 	## Picks up the move function from the path states and uses the root motion to compute the velocity
-	move_callable.call(sign(left_right_axis) * character.asset.root_motion_position.x/delta)
+	move_callable.call(direction_states.move_sign(left_right_axis) * character.asset.root_motion_position.x/delta)
 	rotation_callable.call()
 	
 	if not direction_states.faced_direction_is_consistent_with_axis(left_right_axis):

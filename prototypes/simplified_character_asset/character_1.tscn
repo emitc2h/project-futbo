@@ -7,6 +7,7 @@
 asset = NodePath("Character1Asset")
 
 [node name="Character1Asset" parent="." index="0" instance=ExtResource("2_nft2d")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="In the air States" parent="State/Root/Damage/Able/Movement/In the air" index="0" node_paths=PackedStringArray("state_map")]
 state_map = {

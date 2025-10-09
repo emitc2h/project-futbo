@@ -35,7 +35,10 @@ func idle() -> void:
 func move(left_right_axis: float) -> void:
 	grounded_states.left_right_axis = left_right_axis
 	if movement_states.state == movement_states.State.GROUNDED:
-		asset.speed = abs(left_right_axis)
+		if direction_states.locked:
+			asset.speed = direction_states.face_sign() * left_right_axis
+		else:
+			asset.speed = abs(left_right_axis)
 		if grounded_states.state == grounded_states.State.IDLE:
 			sc.send_event(grounded_states.TRANS_TO_MOVING)
 	
@@ -60,6 +63,22 @@ func get_on_path(path: CharacterPath) -> void:
 func get_off_path() -> void:
 	path_states.path = null
 	sc.send_event(path_states.TRANS_TO_ON_X_AXIS)
+
+
+func lock_direction_faced() -> void:
+	direction_states.locked = true
+
+
+func unlock_direction_faced() -> void:
+	direction_states.locked = false
+
+
+func face_left() -> void:
+	direction_states.face_left()
+
+
+func face_right() -> void:
+	direction_states.face_right()
 
 
 #################################

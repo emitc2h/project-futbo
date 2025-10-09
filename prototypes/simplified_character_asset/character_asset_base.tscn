@@ -80,7 +80,7 @@ transitions = ["Start", "knocked", SubResource("AnimationNodeStateMachineTransit
 graph_offset = Vector2(76.275, -83.07005)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_sb256"]
-graph_offset = Vector2(-284, -197)
+graph_offset = Vector2(-270, -100)
 nodes/output/position = Vector2(670, 120)
 nodes/movement/node = ExtResource("3_pa2xb")
 nodes/movement/position = Vector2(150, -50)
@@ -97,7 +97,6 @@ script = ExtResource("2_ax2xp")
 root_motion_track = NodePath("Armature/Skeleton3D:Root")
 tree_root = SubResource("AnimationNodeBlendTree_sb256")
 advance_expression_base_node = NodePath("..")
-anim_player = NodePath("../AnimationPlayer")
 parameters/movement/jump/jump/blend_position = 0.0
 parameters/movement/jump/scale/scale = 1.0
 parameters/movement/move/move/move/blend_position = -0.0009331107

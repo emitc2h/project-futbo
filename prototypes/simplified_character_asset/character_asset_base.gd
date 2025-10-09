@@ -13,7 +13,7 @@ var speed: float:
 		# Set the speed of walking/running
 		anim_tree.set("parameters/movement/move/move/move/blend_position", value)
 		# Set the speed of jumping
-		anim_tree.set("parameters/movement/jump/jump/blend_position", value)
+		anim_tree.set("parameters/movement/jump/jump/blend_position", abs(value))
 
 ## Access the root motion
 var root_motion_position: Vector3:
