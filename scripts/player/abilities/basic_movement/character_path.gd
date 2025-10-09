@@ -48,20 +48,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 #=======================================================
-# STATES
+# AREA SIGNALS
 #=======================================================
-
-# in state
-#----------------------------------------
-func _on_in_state_entered() -> void:
-	in_path.emit(self)
-
-
-
-#=======================================================
-# RECEIVED SIGNALS
-#=======================================================
-func _on_enter_out_area_3d_body_entered(body: Node3D) -> void:
+func _on_enter_out_area_3d_body_entered(_body: Node3D) -> void:
 	if previous_area == Enums.PathArea.ENTER_IN:
 		leave_by_enter.emit()
 		previous_area = Enums.PathArea.NONE
@@ -69,7 +58,7 @@ func _on_enter_out_area_3d_body_entered(body: Node3D) -> void:
 		previous_area = Enums.PathArea.ENTER_OUT
 
 
-func _on_enter_in_area_3d_body_entered(body: Node3D) -> void:
+func _on_enter_in_area_3d_body_entered(_body: Node3D) -> void:
 	if previous_area == Enums.PathArea.ENTER_OUT:
 		in_path.emit(self)
 		previous_area = Enums.PathArea.NONE
@@ -77,7 +66,7 @@ func _on_enter_in_area_3d_body_entered(body: Node3D) -> void:
 		previous_area = Enums.PathArea.ENTER_IN
 
 
-func _on_exit_in_area_3d_body_entered(body: Node3D) -> void:
+func _on_exit_in_area_3d_body_entered(_body: Node3D) -> void:
 	if previous_area == Enums.PathArea.EXIT_OUT:
 		in_path.emit(self)
 		previous_area = Enums.PathArea.NONE
@@ -85,7 +74,7 @@ func _on_exit_in_area_3d_body_entered(body: Node3D) -> void:
 		previous_area = Enums.PathArea.EXIT_IN
 
 
-func _on_exit_out_area_3d_body_entered(body: Node3D) -> void:
+func _on_exit_out_area_3d_body_entered(_body: Node3D) -> void:
 	if previous_area == Enums.PathArea.EXIT_IN:
 		leave_by_exit.emit()
 		previous_area = Enums.PathArea.NONE

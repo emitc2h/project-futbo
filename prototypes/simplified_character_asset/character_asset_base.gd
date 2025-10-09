@@ -10,12 +10,10 @@ extends Node3D
 ## Speed parameter controls the movement speed of the character
 var speed: float:
 	set(value):
-		## I'm assuming here that speed receives value automatically. I have to test this.
-		var blend_value: float = abs(value)
 		# Set the speed of walking/running
-		anim_tree.set("parameters/movement/move/move/move/blend_position", blend_value)
+		anim_tree.set("parameters/movement/move/move/move/blend_position", value)
 		# Set the speed of jumping
-		anim_tree.set("parameters/movement/jump/jump/blend_position", blend_value)
+		anim_tree.set("parameters/movement/jump/jump/blend_position", value)
 
 ## Access the root motion
 var root_motion_position: Vector3:
@@ -53,28 +51,23 @@ func close_jump_to_fall_path() -> void:
 ##        CONTROL FUNCTIONS         ##
 ######################################
 func idle() -> void:
-	print("TRAVEL TO IDLE")
 	movement_state.travel("idle")
 
 
 func move() -> void:
-	print("TRAVEL TO MOVE")
 	movement_state.travel("move")
 
 
 func turn() -> void:
-	print("TRAVEL TO TURN")
 	movement_state.travel("turn")
 	await turn_finished
 
 
 func jump() -> void:
-	print("TRAVEL TO JUMP")
 	movement_state.travel("jump")
 
 
 func fall() -> void:
-	print("TRAVEL TO FALL")
 	movement_state.travel("fall")
 
 

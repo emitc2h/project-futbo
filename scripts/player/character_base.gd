@@ -25,27 +25,48 @@ func _ready() -> void:
 
 
 func idle() -> void:
-	grounded_states.left_right_axis = 0.0
-	asset.speed = 0.0
-	if direction_states.mode == direction_states.Mode.FACING and\
-	   grounded_states.state == grounded_states.State.MOVING:
+	if movement_states.state == movement_states.State.GROUNDED and \
+	grounded_states.state == grounded_states.State.MOVING:
 		sc.send_event(grounded_states.TRANS_TO_IDLE)
+		grounded_states.left_right_axis = 0.0
+		asset.speed = 0.0
 
 
 func move(left_right_axis: float) -> void:
 	grounded_states.left_right_axis = left_right_axis
 	if movement_states.state == movement_states.State.GROUNDED:
-		asset.speed = left_right_axis
-	if grounded_states.state == grounded_states.State.IDLE:
-		sc.send_event(grounded_states.TRANS_TO_MOVING)
-
+		asset.speed = abs(left_right_axis)
+		if grounded_states.state == grounded_states.State.IDLE:
+			sc.send_event(grounded_states.TRANS_TO_MOVING)
+	
+	## If the character is in the air, decide what state they should land on
+	if movement_states.state == movement_states.State.IN_THE_AIR:
+		if left_right_axis == 0.0:
+			grounded_states.set_initial_state(grounded_states.State.IDLE)
+		elif not direction_states.faced_direction_is_consistent_with_axis(left_right_axis):
+			grounded_states.set_initial_state(grounded_states.State.TURN)
+		else:
+			grounded_states.set_initial_state(grounded_states.State.MOVING)
 
 func jump() -> void:
 	sc.send_event(grounded_states.TRANS_TO_JUMP)
 
+
+func get_on_path(path: CharacterPath) -> void:
+	path_states.path = path
+	sc.send_event(path_states.TRANS_TO_ON_PATH)
+
+
+func get_off_path() -> void:
+	path_states.path = null
+	sc.send_event(path_states.TRANS_TO_ON_X_AXIS)
+
+
 #################################
 ## Signal handling             ##
 #################################
-func _on_path_state_changed(move_callable: Callable, in_the_air_callable: Callable) -> void:
+func _on_path_state_changed(move_callable: Callable, rotation_callable: Callable) -> void:
 	grounded_states.move_callable = move_callable
-	grounded_states.in_the_air_callable = in_the_air_callable
+	grounded_states.rotation_callable = rotation_callable
+	movement_states.move_callable = move_callable
+	movement_states.rotation_callable = rotation_callable

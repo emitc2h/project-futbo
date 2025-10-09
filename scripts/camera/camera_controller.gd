@@ -105,7 +105,7 @@ func _ready() -> void:
 	camera_initial_position = _camera_pos.global_position
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	## Always sync the skybox
 	Signals.camera_changed.emit(_camera.global_rotation, _camera.global_position - camera_initial_position, _camera.fov)
 
@@ -126,6 +126,7 @@ func _on_tracking_state_processing(delta: float) -> void:
 var _pos_node_transform: Transform3D
 var _yaw_node_transform: Transform3D
 var _pitch_node_transform: Transform3D
+
 
 func _on_fly_state_entered() -> void:
 	## If we go to fly mode, cache the transforms so they can be recovered when leaving fly mode
@@ -150,6 +151,7 @@ func _on_fly_state_processing(delta: float) -> void:
 	var movement_direction: Vector3 = _camera_yaw.basis.x * movement_vector.y -\
 		 _camera_yaw.basis.z.rotated(_camera_yaw.basis.x, _camera_pitch.rotation.x) * movement_vector.x
 	_camera_yaw.position += movement_direction * delta * movement_speed
+
 
 func _on_fly_state_exited() -> void:
 	## Recover the cached transforms

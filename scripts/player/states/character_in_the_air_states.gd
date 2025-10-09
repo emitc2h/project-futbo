@@ -12,7 +12,7 @@ var state: State = State.FALLING
 ## State transition constants
 const TRANS_TO_FALLING: String = "In the air: to falling"
 
-# in the air state
+# jumping state
 #----------------------------------------
 func _on_jumping_state_entered() -> void:
 	state = State.JUMPING

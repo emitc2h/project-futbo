@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ci6c0wd3nfi1k"]
+[gd_scene load_steps=12 format=3 uid="uid://ci6c0wd3nfi1k"]
 
 [ext_resource type="Script" uid="uid://cd2yw4w0olj6i" path="res://prototypes/simplified_character_asset/simplified_char_test_scene.gd" id="1_hbgue"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="2_c7twb"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="4_ojn5c"]
 [ext_resource type="PackedScene" uid="uid://br5xii21hsbeo" path="res://prototypes/simplified_character_asset/character_1.tscn" id="4_oorf8"]
 [ext_resource type="Script" uid="uid://c5ypw4nstaeac" path="res://scripts/player/player_controller.gd" id="5_ojn5c"]
+[ext_resource type="PackedScene" uid="uid://dd7rk2je4r01m" path="res://scenes/character_path/character_path.tscn" id="8_ih8et"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ih8et"]
 albedo_texture = ExtResource("3_oorf8")
@@ -40,9 +41,14 @@ subject = NodePath("../Character1")
 [node name="PlayerController" type="Node" parent="Character1" node_paths=PackedStringArray("character")]
 script = ExtResource("5_ojn5c")
 character = NodePath("..")
+metadata/_custom_type_script = "uid://c5ypw4nstaeac"
+
+[node name="WalkToFieldPath3D" parent="." instance=ExtResource("8_ih8et")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.67103, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(70.6045, 0, -70.8167, 0, 1, 0, 70.8167, 0, 70.6045, 0, 0, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_ih8et")
 mesh = SubResource("PlaneMesh_g2iua")
 
@@ -52,3 +58,7 @@ collision_mask = 261
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_78uhv")
+
+[connection signal="in_path" from="WalkToFieldPath3D" to="." method="_on_walk_to_field_path_3d_in_path"]
+[connection signal="leave_by_enter" from="WalkToFieldPath3D" to="." method="_on_walk_to_field_path_3d_leave_by_enter"]
+[connection signal="leave_by_exit" from="WalkToFieldPath3D" to="." method="_on_walk_to_field_path_3d_leave_by_exit"]

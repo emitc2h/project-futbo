@@ -80,7 +80,7 @@ transitions = ["Start", "knocked", SubResource("AnimationNodeStateMachineTransit
 graph_offset = Vector2(76.275, -83.07005)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_sb256"]
-graph_offset = Vector2(-472.10132, -91.04932)
+graph_offset = Vector2(-284, -197)
 nodes/output/position = Vector2(670, 120)
 nodes/movement/node = ExtResource("3_pa2xb")
 nodes/movement/position = Vector2(150, -50)
