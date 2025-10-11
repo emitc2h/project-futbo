@@ -24,7 +24,6 @@ var coyote_timer: float = 0.0
 
 ## Settable Parameters
 var move_callable: Callable
-var rotation_callable: Callable
 
 # in the air state
 #----------------------------------------
@@ -36,7 +35,10 @@ func _on_in_the_air_state_physics_processing(delta: float) -> void:
 	## Apply gravity
 	character.velocity.y += gravity * delta
 	move_callable.call(fall_velocity_x)
-	rotation_callable.call()
+	
+	## When on a path, the rotation needs to be constantly applied but only when moving
+	if character.path_states.state == character.path_states.State.ON_PATH:
+		character.direction_states.apply_rotation()
 	
 	if character.is_on_floor():
 		sc.send_event(TRANS_TO_GROUNDED)

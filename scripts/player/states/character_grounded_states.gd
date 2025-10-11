@@ -25,7 +25,6 @@ const TRANS_TO_TURN: String = "Grounded: to turn"
 ## Settable Parameters
 var left_right_axis: float = 0.0
 var move_callable: Callable
-var rotation_callable: Callable
 
 
 func _ready() -> void:
@@ -42,7 +41,6 @@ func _on_idle_state_entered() -> void:
 func _on_idle_state_physics_processing(_delta: float) -> void:
 	## Make sure to neutralize movement, but still look for collisions
 	move_callable.call(0.0)
-	rotation_callable.call()
 	
 	character.movement_states.fall_velocity_x = character.velocity.x
 	
@@ -64,15 +62,19 @@ func _on_moving_state_entered() -> void:
 func _on_moving_state_physics_processing(delta: float) -> void:
 	## Picks up the move function from the path states and uses the root motion to compute the velocity
 	move_callable.call(direction_states.move_sign(left_right_axis) * character.asset.root_motion_position.x/delta)
-	rotation_callable.call()
 	
 	if not direction_states.faced_direction_is_consistent_with_axis(left_right_axis):
 		sc.send_event(TRANS_TO_TURN)
+		return
 	
 	character.movement_states.fall_velocity_x = character.velocity.x
 	
 	## Call move_and_slide in each leaf of the movement HSM
 	character.move_and_slide()
+	
+	## When on a path, the rotation needs to be constantly applied but only when moving
+	if character.path_states.state == character.path_states.State.ON_PATH:
+		character.direction_states.apply_rotation()
 
 
 # jump state
@@ -104,12 +106,13 @@ func _on_turn_state_entered() -> void:
 func _on_turn_state_physics_processing(delta: float) -> void:
 	## Picks up the move function from the path states and uses the root motion to compute the velocity
 	move_callable.call(direction_states.turn_sign() * character.asset.root_motion_position.x/delta)
-	rotation_callable.call()
 	
 	character.movement_states.fall_velocity_x = character.velocity.x
 	
 	## Call move_and_slide
 	character.move_and_slide()
+	
+	character.quaternion *= character.asset.root_motion_rotation
 
 
 func _on_turn_finished() -> void:

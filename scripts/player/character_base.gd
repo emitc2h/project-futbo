@@ -16,6 +16,8 @@ extends CharacterBody3D
 
 @export var damage_states: CharacterDamageStates
 
+@export var kick_states: CharacterKickStates
+
 ## Internal references
 @onready var sc: StateChart = $State
 
@@ -66,11 +68,11 @@ func get_off_path() -> void:
 
 
 func lock_direction_faced() -> void:
-	direction_states.locked = true
+	direction_states.lock_direction_faced()
 
 
-func unlock_direction_faced() -> void:
-	direction_states.locked = false
+func unlock_direction_faced(left_right_axis: float) -> void:
+	direction_states.unlock_direction_faced(left_right_axis)
 
 
 func face_left() -> void:
@@ -81,11 +83,13 @@ func face_right() -> void:
 	direction_states.face_right()
 
 
+func kick() -> void:
+	kick_states.kick()
+
+
 #################################
 ## Signal handling             ##
 #################################
-func _on_path_state_changed(move_callable: Callable, rotation_callable: Callable) -> void:
+func _on_path_state_changed(move_callable: Callable) -> void:
 	grounded_states.move_callable = move_callable
-	grounded_states.rotation_callable = rotation_callable
 	movement_states.move_callable = move_callable
-	movement_states.rotation_callable = rotation_callable

@@ -1,9 +1,5 @@
 class_name CharacterDamageStates
-extends Node
-
-@export_group("Dependencies")
-@export var character: CharacterBase
-@export var sc: StateChart
+extends CharacterStatesAbstractBase
 
 ## States Enum
 enum State {ABLE = 0, KNOCKED = 1, OUT = 2, RECOVERING = 3, DOWN = 4}

@@ -14,6 +14,9 @@ var speed: float:
 		anim_tree.set("parameters/movement/move/move/move/blend_position", value)
 		# Set the speed of jumping
 		anim_tree.set("parameters/movement/jump/jump/blend_position", abs(value))
+		# Set the speed of kicking
+		anim_tree.set("parameters/kick/blend_position", abs(value))
+		speed = value
 
 ## Access the root motion
 var root_motion_position: Vector3:
@@ -28,6 +31,7 @@ var root_motion_rotation: Quaternion:
 ## Signals
 signal turn_finished
 signal fall_started
+signal long_kick_finished
 
 ## Animation Tree Path Gates
 var jump_to_fall_path: bool = false
@@ -72,6 +76,17 @@ func fall() -> void:
 	movement_state.travel("fall")
 
 
+func kick() -> void:
+	anim_tree.set("parameters/kick shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+
+func long_kick() -> void:
+	anim_tree.set("parameters/long kick shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	
+
+#=======================================================
+# SIGNALS
+#=======================================================
 func _on_anim_state_started(anim_name: String) -> void:
 	if anim_name == "fall":
 		fall_started.emit()

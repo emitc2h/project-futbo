@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ci6c0wd3nfi1k"]
+[gd_scene load_steps=18 format=3 uid="uid://ci6c0wd3nfi1k"]
 
 [ext_resource type="Script" uid="uid://cd2yw4w0olj6i" path="res://prototypes/simplified_character_asset/simplified_char_test_scene.gd" id="1_hbgue"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="2_c7twb"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://c5ypw4nstaeac" path="res://scripts/player/player_controller.gd" id="5_ojn5c"]
 [ext_resource type="PackedScene" uid="uid://dd7rk2je4r01m" path="res://scenes/character_path/character_path.tscn" id="8_ih8et"]
 [ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="9_g2iua"]
+[ext_resource type="PackedScene" uid="uid://cupvg7lj3rh2s" path="res://scenes/control_node_and_balls/control_node.tscn" id="10_d85sp"]
+[ext_resource type="PackedScene" uid="uid://cfvjtio5mdjgl" path="res://scenes/control_node_and_balls/ball.tscn" id="11_pmhdo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ih8et"]
 albedo_texture = ExtResource("3_oorf8")
@@ -67,7 +69,7 @@ character = NodePath("..")
 metadata/_custom_type_script = "uid://c5ypw4nstaeac"
 
 [node name="WalkToFieldPath3D" parent="." instance=ExtResource("8_ih8et")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.67103, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.851534, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(70.6045, 0, -70.8167, 0, 1, 0, 70.8167, 0, 70.6045, 0, 0, 0)
@@ -82,7 +84,7 @@ collision_mask = 261
 shape = SubResource("WorldBoundaryShape3D_78uhv")
 
 [node name="Blocks" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -6.2896266, -0.04813, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.48646, -0.04813, 0)
 script = SubResource("GDScript_78uhv")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Blocks"]
@@ -162,6 +164,12 @@ surface_material_override/0 = ExtResource("9_g2iua")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D8"]
 shape = SubResource("ConvexPolygonShape3D_pmhdo")
+
+[node name="ControlNode" parent="." instance=ExtResource("10_d85sp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0498505, 0.1851455, 0)
+
+[node name="Ball" parent="." instance=ExtResource("11_pmhdo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.354297, 0.16351736, 0)
 
 [connection signal="in_path" from="WalkToFieldPath3D" to="." method="_on_walk_to_field_path_3d_in_path"]
 [connection signal="leave_by_enter" from="WalkToFieldPath3D" to="." method="_on_walk_to_field_path_3d_leave_by_enter"]

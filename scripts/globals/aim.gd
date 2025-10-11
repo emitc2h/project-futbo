@@ -35,7 +35,7 @@ func _ready() -> void:
 	Signals.facing_right.connect(_on_facing_right)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	_input_vec2 = Converters.vec2_from(Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down"))
 
 
@@ -47,20 +47,20 @@ func _on_facing_right() -> void:
 	_direction_faced = Enums.Direction.RIGHT
 
 
-func _clamp_aim_angle_to_direction_faced(angle: float) -> float:
-	if angle > 0.0:
+func _clamp_aim_angle_to_direction_faced(p_angle: float) -> float:
+	if p_angle > 0.0:
 		return PI/2
 	else:
 		return -PI/2
 
 
-func _clamp_aim_angle_above_ground(angle: float, direction: Enums.Direction, ground_normal: float = PI/2) -> float:
-	if angle < 0.0:
+func _clamp_aim_angle_above_ground(p_angle: float, direction: Enums.Direction) -> float:
+	if p_angle < 0.0:
 		if direction == Enums.Direction.LEFT:
 			return Vector2.LEFT.angle()
 		else:
 			return Vector2.RIGHT.angle()
-	return angle
+	return p_angle
 
 
 func _aim_angle_face_right(aim_vector: Vector2) -> float:

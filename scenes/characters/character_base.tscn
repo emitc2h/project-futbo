@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b23ql0f3pehor"]
+[gd_scene load_steps=21 format=3 uid="uid://b23ql0f3pehor"]
 
 [ext_resource type="Script" uid="uid://dwveh7gorkqwx" path="res://scripts/player/character_base.gd" id="1_xq4g7"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_oqj5v"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://brc7oigmsei5g" path="res://scripts/player/states/character_path_states.gd" id="12_oqj5v"]
 [ext_resource type="PackedScene" uid="uid://jmksfugqcld7" path="res://scenes/player/abilities/dribble/dribble_cast.tscn" id="12_stbo0"]
 [ext_resource type="Script" uid="uid://c4tlgbfr87too" path="res://scripts/player/abilities/headbutt/head.gd" id="13_keip7"]
+[ext_resource type="Script" uid="uid://bh8l4jqmljwan" path="res://scripts/player/states/character_kick_states.gd" id="13_v0iy0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x41nu"]
 radius = 0.25476
@@ -31,7 +32,7 @@ height = 0.757612
 [sub_resource type="BoxShape3D" id="BoxShape3D_r2h0o"]
 size = Vector3(1, 0.86731, 1)
 
-[node name="CharacterBase" type="CharacterBody3D" node_paths=PackedStringArray("direction_states", "movement_states", "grounded_states", "in_the_air_states", "path_states", "damage_states")]
+[node name="CharacterBase" type="CharacterBody3D" node_paths=PackedStringArray("direction_states", "movement_states", "grounded_states", "in_the_air_states", "path_states", "damage_states", "kick_states")]
 collision_mask = 770
 script = ExtResource("1_xq4g7")
 direction_states = NodePath("State/Root/Damage/Able/Movement/Grounded/Direction Faced/Direction Faced States")
@@ -40,6 +41,7 @@ grounded_states = NodePath("State/Root/Damage/Able/Movement/Grounded/Grounded Mo
 in_the_air_states = NodePath("State/Root/Damage/Able/Movement/In the air/In the air States")
 path_states = NodePath("State/Root/Path Constraint/Path States")
 damage_states = NodePath("State/Root/Damage/Damage States")
+kick_states = NodePath("State/Root/Damage/Able/Kick/Kick States")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_oqj5v")
@@ -53,10 +55,11 @@ script = ExtResource("3_ga3c3")
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("Able")
 
-[node name="Damage States" type="Node" parent="State/Root/Damage" node_paths=PackedStringArray("character", "sc")]
+[node name="Damage States" type="Node" parent="State/Root/Damage" node_paths=PackedStringArray("character", "sc", "cs")]
 script = ExtResource("8_5o1l8")
 character = NodePath("../../../..")
 sc = NodePath("../../..")
+cs = NodePath("..")
 
 [node name="Able" type="Node" parent="State/Root/Damage"]
 script = ExtResource("3_ga3c3")
@@ -112,10 +115,11 @@ script = ExtResource("3_ga3c3")
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("HistoryState")
 
-[node name="Direction Faced States" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced" node_paths=PackedStringArray("character", "sc")]
+[node name="Direction Faced States" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced" node_paths=PackedStringArray("character", "sc", "cs")]
 script = ExtResource("5_7bbdo")
 character = NodePath("../../../../../../../..")
 sc = NodePath("../../../../../../..")
+cs = NodePath("..")
 
 [node name="face left" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced"]
 script = ExtResource("6_awyfk")
@@ -221,23 +225,99 @@ delay_in_seconds = "0.0"
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("no ball")
 
+[node name="Kick States" type="Node" parent="State/Root/Damage/Able/Kick" node_paths=PackedStringArray("kick_zone", "long_kick_zone", "long_kick_raycast", "sprint_raycast", "character", "sc", "cs")]
+script = ExtResource("13_v0iy0")
+kick_zone = NodePath("../../../../../../KickZone")
+long_kick_zone = NodePath("../../../../../../LongKickZone")
+long_kick_raycast = NodePath("../../../../../../LongKickRaycast")
+sprint_raycast = NodePath("../../../../../../SprintRaycast")
+character = NodePath("../../../../../..")
+sc = NodePath("../../../../..")
+cs = NodePath("..")
+
 [node name="no ball" type="Node" parent="State/Root/Damage/Able/Kick"]
 script = ExtResource("6_awyfk")
+
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/no ball"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../can kick")
+event = &"Kick: to can kick"
+delay_in_seconds = "0.0"
+
+[node name="to intends to long kick" type="Node" parent="State/Root/Damage/Able/Kick/no ball"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../intends to long kick")
+event = &"Kick: to intends to long kick"
+delay_in_seconds = "0.0"
 
 [node name="can kick" type="Node" parent="State/Root/Damage/Able/Kick"]
 script = ExtResource("6_awyfk")
 
+[node name="to kick" type="Node" parent="State/Root/Damage/Able/Kick/can kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../kick")
+event = &"Kick: to kick"
+delay_in_seconds = "0.0"
+
+[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/can kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../no ball")
+event = &"Kick: to no ball"
+delay_in_seconds = "0.0"
+
 [node name="kick" type="Node" parent="State/Root/Damage/Able/Kick"]
 script = ExtResource("6_awyfk")
 
-[node name="plans to long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../can kick")
+event = &"Kick: to can kick"
+delay_in_seconds = "0.0"
+
+[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../no ball")
+event = &"Kick: to no ball"
+delay_in_seconds = "0.0"
+
+[node name="intends to long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
 script = ExtResource("6_awyfk")
+
+[node name="to winding up long kick" type="Node" parent="State/Root/Damage/Able/Kick/intends to long kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../winding up long kick")
+event = &"Kick: to winding up long kick"
+delay_in_seconds = "0.0"
+
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/intends to long kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../can kick")
+event = &"Kick: long kick to can kick"
+delay_in_seconds = "0.0"
 
 [node name="winding up long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
 script = ExtResource("6_awyfk")
 
+[node name="to long kick" type="Node" parent="State/Root/Damage/Able/Kick/winding up long kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../long kick")
+event = &"Kick: to long kick"
+delay_in_seconds = "0.0"
+
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/winding up long kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../can kick")
+event = &"Kick: long kick to can kick"
+delay_in_seconds = "0.0"
+
 [node name="long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
 script = ExtResource("6_awyfk")
+
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/long kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../can kick")
+event = &"Kick: to can kick"
+delay_in_seconds = "0.0"
 
 [node name="Dribble" type="Node" parent="State/Root/Damage/Able"]
 script = ExtResource("4_e4l2d")
@@ -336,10 +416,11 @@ script = ExtResource("6_awyfk")
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("on x-axis")
 
-[node name="Path States" type="Node" parent="State/Root/Path Constraint" node_paths=PackedStringArray("character", "sc")]
+[node name="Path States" type="Node" parent="State/Root/Path Constraint" node_paths=PackedStringArray("character", "sc", "cs")]
 script = ExtResource("12_oqj5v")
 character = NodePath("../../../..")
 sc = NodePath("../../..")
+cs = NodePath("..")
 
 [node name="on x-axis" type="Node" parent="State/Root/Path Constraint"]
 script = ExtResource("6_awyfk")
@@ -386,11 +467,12 @@ collision_mask = 266
 
 [node name="LongKickRaycast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
-target_position = Vector3(1.5, 0, 0)
+target_position = Vector3(2.2, 0, 0)
 collision_mask = 4
 
 [node name="SprintRaycast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
+visible = false
 target_position = Vector3(2.5, 0, 0)
 collision_mask = 4
 
@@ -459,9 +541,21 @@ collision_mask = 4
 [connection signal="state_entered" from="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/jump" to="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/Grounded States" method="_on_jump_state_entered"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/turn" to="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/Grounded States" method="_on_turn_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/turn" to="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/Grounded States" method="_on_turn_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Kick/no ball" to="State/Root/Damage/Able/Kick/Kick States" method="_on_no_ball_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/no ball" to="State/Root/Damage/Able/Kick/Kick States" method="_on_no_ball_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Kick/can kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_can_kick_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/can kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_can_kick_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Kick/kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Kick/intends to long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_intends_to_long_kick_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/intends to long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_intends_to_long_kick_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Kick/winding up long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_winding_up_long_kick_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/winding up long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_winding_up_long_kick_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Kick/long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_long_kick_state_entered"]
 [connection signal="state_entered" from="State/Root/Damage/knocked" to="State/Root/Damage/Damage States" method="_on_knocked_state_entered"]
 [connection signal="state_entered" from="State/Root/Damage/out" to="State/Root/Damage/Damage States" method="_on_out_state_entered"]
 [connection signal="state_entered" from="State/Root/Damage/recovering" to="State/Root/Damage/Damage States" method="_on_recovering_state_entered"]
 [connection signal="state_entered" from="State/Root/Damage/down" to="State/Root/Damage/Damage States" method="_on_down_state_entered"]
 [connection signal="state_entered" from="State/Root/Path Constraint/on x-axis" to="State/Root/Path Constraint/Path States" method="_on_on_xaxis_state_entered"]
 [connection signal="state_entered" from="State/Root/Path Constraint/on path" to="State/Root/Path Constraint/Path States" method="_on_on_path_state_entered"]
+[connection signal="body_entered" from="KickZone" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_zone_body_entered"]
+[connection signal="body_exited" from="KickZone" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_zone_body_exited"]

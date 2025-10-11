@@ -67,7 +67,7 @@ func _on_not_ready_state_entered() -> void:
 	ball = null
 
 
-func _on_not_ready_state_physics_processing(delta: float) -> void:
+func _on_not_ready_state_physics_processing(_delta: float) -> void:
 	if kick_button_is_pressed and\
 	 (not long_kick_raycast.is_colliding()) and\
 	 (not sprint_raycast.is_colliding()):
@@ -80,7 +80,7 @@ func _on_standby_state_entered() -> void:
 	Signals.player_long_kick_ready.emit()
 
 
-func _on_standby_state_physics_processing(delta: float) -> void:
+func _on_standby_state_physics_processing(_delta: float) -> void:
 	if not kick_button_is_pressed:
 		state.send_event("standby to not ready")
 	
@@ -110,7 +110,7 @@ func _on_winding_up_state_entered() -> void:
 	asset.to_long_kick()
 
 
-func _on_winding_up_state_physics_processing(delta: float) -> void:
+func _on_winding_up_state_physics_processing(_delta: float) -> void:
 	if not long_kick_raycast.is_colliding():
 		state.send_event("winding up to standby")
 

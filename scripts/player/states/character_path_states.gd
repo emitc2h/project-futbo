@@ -1,9 +1,5 @@
 class_name CharacterPathStates
-extends Node
-
-@export_group("Dependencies")
-@export var character: CharacterBase
-@export var sc: StateChart
+extends CharacterStatesAbstractBase
 
 @export_group("Parameters")
 @export var stay_on_path_force: float = 50.0
@@ -25,29 +21,22 @@ var path_previous_rotation: Quaternion
 var path_current_rotation: Quaternion
 
 ## Signals
-signal path_state_changed(move_callable: Callable, rotation_callable: Callable)
+signal path_state_changed(move_callable: Callable)
 
 
 # on x-axis state
 #----------------------------------------
 func _on_on_xaxis_state_entered() -> void:
 	state = State.ON_X_AXIS
-	
-	path_state_changed.emit(
-		Callable(self, "_velocity_on_x_axis"),
-		Callable(self, "_rotation_on_x_axis")
-		)
+	character.direction_states.reset_left_right_axis()
+	path_state_changed.emit(Callable(self, "_velocity_on_x_axis"))
 
 
 # on path state
 #----------------------------------------
 func _on_on_path_state_entered() -> void:
 	state = State.ON_PATH
-	
-	path_state_changed.emit(
-		Callable(self, "_velocity_on_path"),
-		Callable(self, "_rotation_on_path")
-		)
+	path_state_changed.emit(Callable(self, "_velocity_on_path"))
 
 
 #=======================================================
@@ -55,10 +44,6 @@ func _on_on_path_state_entered() -> void:
 #=======================================================
 func _velocity_on_x_axis(input_magnitude: float) -> void:
 	character.velocity.x = input_magnitude
-
-
-func _rotation_on_x_axis() -> void:
-	character.quaternion = character.quaternion * character.asset.root_motion_rotation
 
 
 func _velocity_on_path(input_magnitude: float) -> void:
@@ -70,15 +55,9 @@ func _velocity_on_path(input_magnitude: float) -> void:
 	var direction: Vector3 = curve_transform.basis.z
 	
 	var rotation_y: float = Vector3(-1,0,0).signed_angle_to(direction, Vector3(0,1,0))
-	path_previous_rotation = path_current_rotation
-	path_current_rotation = Quaternion.from_euler(Vector3.UP * rotation_y)
+	character.direction_states.define_left_right_axis(rotation_y)
 	
 	if direction:
 		var stay_on_path_correction: Vector3 = (closest_point - player_pos)
 		character.velocity.x = -input_magnitude * direction.x + stay_on_path_force * stay_on_path_correction.x
 		character.velocity.z = -input_magnitude * direction.z + stay_on_path_force * stay_on_path_correction.z
-
-
-func _rotation_on_path() -> void:
-	var path_rotation_correction: Quaternion = path_current_rotation * path_previous_rotation.inverse()
-	character.quaternion = character.quaternion * character.asset.root_motion_rotation * path_rotation_correction

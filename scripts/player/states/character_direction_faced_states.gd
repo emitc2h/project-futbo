@@ -1,9 +1,5 @@
 class_name CharacterDirectionFacedStates
-extends Node
-
-@export_group("Dependencies")
-@export var character: CharacterBase
-@export var sc: StateChart
+extends CharacterStatesAbstractBase
 
 ## States Enum
 enum State {FACE_RIGHT = 0, FACE_LEFT = 1}
@@ -16,6 +12,9 @@ const TRANS_TO_FACE_RIGHT: String = "Direction Faced: to face right"
 ## Direction Constants
 var LEFT_ROTATION: Quaternion = Quaternion.from_euler(Vector3(0.0, PI, 0.0))
 var RIGHT_ROTATION: Quaternion = Quaternion.from_euler(Vector3(0.0, 0.0, 0.0))
+
+var left_rotation: Quaternion = LEFT_ROTATION
+var right_rotation: Quaternion = RIGHT_ROTATION
 
 ## rotation tween
 var rotation_tween: Tween
@@ -32,12 +31,14 @@ func _ready() -> void:
 #----------------------------------------
 func _on_face_left_state_entered() -> void:
 	state = State.FACE_LEFT
+	Signals.facing_left.emit()
 
 
 # face right state
 #----------------------------------------
 func _on_face_right_state_entered() -> void:
 	state = State.FACE_RIGHT
+	Signals.facing_right.emit()
 
 
 #=======================================================
@@ -48,11 +49,11 @@ func face_direction_based_on_axis(left_right_axis: float) -> void:
 	
 	if state == State.FACE_RIGHT and left_right_axis < 0.0:
 		sc.send_event(TRANS_TO_FACE_LEFT)
-		_tween_rotation(LEFT_ROTATION)
+		_tween_rotation(left_rotation)
 	
 	if state == State.FACE_LEFT and left_right_axis > 0.0:
 		sc.send_event(TRANS_TO_FACE_RIGHT)
-		_tween_rotation(RIGHT_ROTATION)
+		_tween_rotation(right_rotation)
 
 
 func switch_direction() -> void:
@@ -66,19 +67,26 @@ func switch_direction() -> void:
 
 func face_left() -> void:
 	sc.send_event(TRANS_TO_FACE_LEFT)
-	cement_rotation(0.6)
+	cement_rotation(1.0)
 
 
 func face_right() -> void:
 	sc.send_event(TRANS_TO_FACE_RIGHT)
-	cement_rotation(0.6)
+	cement_rotation(1.0)
 
 
 func cement_rotation(duration: float = 0.3) -> void:
 	if state == State.FACE_RIGHT:
-		_tween_rotation(RIGHT_ROTATION, duration)
+		_tween_rotation(right_rotation, duration)
 	else:
-		_tween_rotation(LEFT_ROTATION, duration)
+		_tween_rotation(left_rotation, duration)
+
+
+func apply_rotation() -> void:
+	if state == State.FACE_RIGHT:
+		character.quaternion = right_rotation
+	else:
+		character.quaternion = left_rotation
 
 
 func turn_sign() -> float:
@@ -102,6 +110,27 @@ func move_sign(left_right_axis: float) -> float:
 		else:
 			return -1.0
 	return sign(left_right_axis)
+
+
+func define_left_right_axis(y_rot: float) -> void:
+	right_rotation = Quaternion.from_euler(Vector3.UP * y_rot)
+	left_rotation = Quaternion.from_euler(Vector3.UP * (y_rot + PI))
+
+
+func reset_left_right_axis() -> void:
+	left_rotation = LEFT_ROTATION
+	right_rotation = RIGHT_ROTATION
+
+
+func lock_direction_faced() -> void:
+	locked = true
+
+
+func unlock_direction_faced(left_right_axis: float) -> void:
+	locked = false
+	## Makes sure the character doesn't turn when releasing the dribble button if running backward
+	face_direction_based_on_axis(left_right_axis)
+	
 
 
 #=======================================================
