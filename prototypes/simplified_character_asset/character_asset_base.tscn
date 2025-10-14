@@ -23,6 +23,8 @@ blend_point_1/node = SubResource("AnimationNodeAnimation_h32b1")
 blend_point_1/pos = 1.0
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_8kn0j"]
+fadein_time = 0.05
+fadeout_time = 0.2
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1u50n"]
 animation = &"knocked head front"
@@ -40,11 +42,11 @@ animation = &"knocked middle back"
 blend_point_0/node = SubResource("AnimationNodeAnimation_1u50n")
 blend_point_0/pos = Vector2(1, 1)
 blend_point_1/node = SubResource("AnimationNodeAnimation_e61ex")
-blend_point_1/pos = Vector2(1, -1)
+blend_point_1/pos = Vector2(1, 0)
 blend_point_2/node = SubResource("AnimationNodeAnimation_ax2xp")
 blend_point_2/pos = Vector2(-1, 1)
 blend_point_3/node = SubResource("AnimationNodeAnimation_pa2xb")
-blend_point_3/pos = Vector2(-1, -1)
+blend_point_3/pos = Vector2(-1, 0)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_7tv1u"]
 
@@ -71,7 +73,7 @@ blend_point_1/pos = 1.0
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_wlfrw"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_gg1vi"]
-graph_offset = Vector2(-317.7601, -39.359978)
+graph_offset = Vector2(-347.1997, 147.51999)
 nodes/recover/node = SubResource("AnimationNodeBlendSpace1D_7tv1u")
 nodes/recover/position = Vector2(-120, 120)
 nodes/scale/node = SubResource("AnimationNodeTimeScale_wlfrw")
@@ -82,8 +84,10 @@ node_connections = [&"output", 0, &"scale", &"scale", 0, &"recover"]
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nhbec"]
+xfade_time = 0.3
 switch_mode = 2
 advance_mode = 2
+advance_expression = "auto_recover_from_knocked"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qqcwl"]
 switch_mode = 2
@@ -95,7 +99,7 @@ states/knocked/position = Vector2(415.275, 99.71497)
 states/recover/node = SubResource("AnimationNodeBlendTree_gg1vi")
 states/recover/position = Vector2(658.275, 99.42995)
 transitions = ["Start", "knocked", SubResource("AnimationNodeStateMachineTransition_vfjh6"), "knocked", "recover", SubResource("AnimationNodeStateMachineTransition_nhbec"), "recover", "End", SubResource("AnimationNodeStateMachineTransition_qqcwl")]
-graph_offset = Vector2(76.275, -83.07005)
+graph_offset = Vector2(-141.725, 16.929932)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_e61ex"]
 
@@ -107,14 +111,14 @@ fadeout_time = 0.1
 animation = &"long kick"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_sb256"]
-graph_offset = Vector2(-853, -723)
+graph_offset = Vector2(-561, -91)
 nodes/output/position = Vector2(670, 180)
 nodes/movement/node = ExtResource("3_pa2xb")
 nodes/movement/position = Vector2(-430, -530)
 "nodes/knocked shot/node" = SubResource("AnimationNodeOneShot_8kn0j")
 "nodes/knocked shot/position" = Vector2(460, 170)
 nodes/knocked/node = SubResource("AnimationNodeStateMachine_i7nvq")
-nodes/knocked/position = Vector2(140, 240)
+nodes/knocked/position = Vector2(140, 260)
 "nodes/kick shot/node" = SubResource("AnimationNodeOneShot_h32b1")
 "nodes/kick shot/position" = Vector2(210, -70)
 nodes/kick/node = SubResource("AnimationNodeBlendSpace1D_lsro2")
@@ -134,11 +138,12 @@ script = ExtResource("2_ax2xp")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_motion_track = NodePath("Armature/Skeleton3D:Root")
+callback_mode_process = 0
 tree_root = SubResource("AnimationNodeBlendTree_sb256")
 advance_expression_base_node = NodePath("..")
 parameters/movement/jump/jump/blend_position = 0.0
-parameters/movement/jump/scale/scale = 1.0
-parameters/movement/move/move/move/blend_position = -0.0009331107
+parameters/movement/jump/scale/scale = 0.7000000000000028
+parameters/movement/move/move/move/blend_position = -0.19737458
 parameters/movement/move/move/scale/scale = 1.2999999999999972
 parameters/movement/move/recover/TimeScale/scale = 1.0
 parameters/movement/move/sprint/scale/scale = 1.0
@@ -148,7 +153,7 @@ parameters/movement/turn/scale/scale = 1.0
 "parameters/knocked shot/request" = 0
 parameters/knocked/knocked/knocked/blend_position = Vector2(0.9935484, 0.008985877)
 parameters/knocked/knocked/scale/scale = 1.0
-parameters/knocked/recover/recover/blend_position = 0.9980334
+parameters/knocked/recover/recover/blend_position = 0.0014064312
 parameters/knocked/recover/scale/scale = 1.0
 "parameters/kick shot/active" = false
 "parameters/kick shot/internal_active" = false
@@ -163,6 +168,11 @@ parameters/kick/blend_position = 0.0
 [node name="MovementStateChangeTracker" type="Node" parent="AnimationTree"]
 script = ExtResource("4_lkrag")
 state_machine_path = "parameters/movement/playback"
+metadata/_custom_type_script = "uid://r4dihe2vx3dk"
+
+[node name="KnockedStateChangeTracker" type="Node" parent="AnimationTree"]
+script = ExtResource("4_lkrag")
+state_machine_path = "parameters/knocked/playback"
 metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 
 [node name="RootMotionView" type="RootMotionView" parent="."]

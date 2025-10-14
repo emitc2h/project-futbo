@@ -73,7 +73,7 @@ func _on_dribbling_state_entered() -> void:
 		state.send_event("dribbling to not ready")
 
 
-func _on_dribbling_state_physics_processing(delta: float) -> void:
+func _on_dribbling_state_physics_processing(_delta: float) -> void:
 	if player_id == ball.dribbler_id:
 		Signals.active_dribble_marker_position_updated.emit(dribble_marker.global_position)
 		Signals.player_velocity_updated.emit(player.velocity)
@@ -106,7 +106,7 @@ func _on_pickup_zone_body_entered(body: Node3D) -> void:
 	state.send_event("standby to dribbling")
 
 
-func _on_pickup_zone_body_exited(body: Node3D) -> void:
+func _on_pickup_zone_body_exited(_body: Node3D) -> void:
 	state.send_event("ready to not ready")
 
 

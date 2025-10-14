@@ -95,7 +95,7 @@ to = NodePath("../../free")
 event = &"Control: to free"
 delay_in_seconds = "0.0"
 
-[node name="RigidNode" type="RigidBody3D" parent="."]
+[node name="RigidNode" type="RigidBody3D" parent="." groups=["BallGroup"]]
 collision_layer = 4
 collision_mask = 1802
 axis_lock_linear_z = true
@@ -111,7 +111,7 @@ script = ExtResource("10_k38ye")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode"]
 shape = SubResource("SphereShape3D_8bm52")
 
-[node name="CharNode" type="CharacterBody3D" parent="."]
+[node name="CharNode" type="CharacterBody3D" parent="." groups=["BallGroup"]]
 collision_layer = 4
 collision_mask = 1802
 axis_lock_linear_z = true

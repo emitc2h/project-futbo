@@ -11,6 +11,9 @@ extends CharacterStatesAbstractBase
 enum State {IN_THE_AIR = 0, GROUNDED = 1}
 var state: State = State.IN_THE_AIR
 
+@export_group("State Mapping")
+@export var state_map: Dictionary[State, StateChartState]
+
 ## State transition constants
 const TRANS_TO_IN_THE_AIR: String = "Movement: to in the air"
 const TRANS_TO_GROUNDED: String = "Movement: to grounded"
@@ -59,3 +62,10 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 	
 	if coyote_timer > coyote_time:
 		sc.send_event(TRANS_TO_IN_THE_AIR)
+
+
+#=======================================================
+# CONTROLS
+#=======================================================
+func set_initial_state(new_initial_state: State) -> void:
+	cs._initial_state = state_map[new_initial_state]

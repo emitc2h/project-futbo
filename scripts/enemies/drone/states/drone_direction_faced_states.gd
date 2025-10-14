@@ -52,7 +52,7 @@ func _on_face_right_state_entered() -> void:
 	is_now_facing_right.emit()
 
 
-func _on_face_right_state_physics_processing(delta: float) -> void:
+func _on_face_right_state_physics_processing(_delta: float) -> void:
 	if target_vec != Vector3.ZERO:
 		var x_rot: Vector3 = Vector3.RIGHT * Vector3.LEFT.angle_to(target_vec)
 		self._rotate_toward(FACE_RIGHT_Y_ROT + x_rot)
@@ -68,7 +68,7 @@ func _on_face_left_state_entered() -> void:
 	is_now_facing_left.emit()
 
 
-func _on_face_left_state_physics_processing(delta: float) -> void:
+func _on_face_left_state_physics_processing(_delta: float) -> void:
 	if target_vec != Vector3.ZERO:
 		var x_rot: Vector3 = Vector3.RIGHT * Vector3.RIGHT.angle_to(target_vec)
 		self._rotate_toward(FACE_LEFT_Y_ROT + x_rot)

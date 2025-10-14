@@ -22,7 +22,6 @@ var hit_player: bool = false
 var recorded_collision_point: Vector3
 var recorded_bolt_global_pos: Vector3
 var recorded_impact_global_pos: Vector3
-var player: Player
 
 const TRANS_TO_FIRE: String = "to fire"
 const TRANS_TO_HIT: String = "to hit"
@@ -42,7 +41,7 @@ func _on_off_state_entered() -> void:
 	
 
 
-func _on_off_state_physics_processing(delta: float) -> void:
+func _on_off_state_physics_processing(_delta: float) -> void:
 	if recorded_bolt_global_pos:
 		bolt_mesh.global_position = recorded_bolt_global_pos
 	if recorded_impact_global_pos:
@@ -83,7 +82,7 @@ func _on_fire_state_physics_processing(delta: float) -> void:
 		recorded_bolt_global_pos = bolt_mesh.global_position
 		recorded_impact_global_pos = impact_mesh.global_position
 		
-		if (collider is Player) or (collider is TargetMesh):
+		if (collider.is_in_group("PlayerGroup")) or (collider is TargetMesh):
 			sc.send_event(TRANS_TO_HIT)
 		else:
 			sc.send_event(TRANS_TO_MISS)
@@ -101,7 +100,7 @@ func _on_hit_state_entered() -> void:
 	sc.send_event(TRANS_TO_OFF)
 
 
-func _on_hit_state_physics_processing(delta: float) -> void:
+func _on_hit_state_physics_processing(_delta: float) -> void:
 	if recorded_bolt_global_pos:
 		bolt_mesh.global_position = recorded_bolt_global_pos
 	if recorded_impact_global_pos:

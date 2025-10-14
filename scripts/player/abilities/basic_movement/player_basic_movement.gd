@@ -34,7 +34,7 @@ var previous_velocity_y: float
 # The direction faced is independent from where the player is going. It does
 # determine among other things, the maximum velocity as the player goes slower
 # facing backward than forward.
-var direction_faced: Enums.Direction
+var direction_faced: Enums.Direction = Enums.Direction.RIGHT
 
 # State tracking
 var in_run_state: bool = false

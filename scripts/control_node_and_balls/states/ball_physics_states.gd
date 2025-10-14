@@ -25,6 +25,12 @@ const TRANS_TO_RIGID: String = "Physics: to rigid"
 @onready var collision_shape_rigid: CollisionShape3D = ball.get_node("RigidNode/CollisionShape3D")
 
 
+func _ready() -> void:
+	## Otherwise both might be enabled
+	rigid_node.set_collision_layer_value(3, true)
+	char_node.set_collision_layer_value(3, false)
+
+
 # rigid state
 #----------------------------------------
 func _on_rigid_state_entered() -> void:
@@ -41,7 +47,7 @@ func _on_rigid_state_entered() -> void:
 	rigid_node.set_collision_layer_value(3, true)
 
 
-func _on_rigid_state_physics_processing(delta: float) -> void:
+func _on_rigid_state_physics_processing(_delta: float) -> void:
 	## nodes tha must follow the rigid node
 	track_transform_container.transform = rigid_node.transform
 	track_position_container.position = rigid_node.position
@@ -72,7 +78,7 @@ func _on_char_state_entered() -> void:
 	char_node.set_collision_layer_value(3, true)
 
 
-func _on_char_state_physics_processing(delta: float) -> void:
+func _on_char_state_physics_processing(_delta: float) -> void:
 	## nodes tha must follow the rigid node
 	track_transform_container.transform = char_node.transform
 	track_position_container.position = char_node.position

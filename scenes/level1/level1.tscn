@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene load_steps=29 format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" uid="uid://dpw23mx2rrnj" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="1_j6tjs"]
@@ -20,8 +20,6 @@
 [ext_resource type="Texture2D" uid="uid://b6y8aq57ik4gn" path="res://kenney_input-prompts/Steam Deck/Default/steamdeck_button_b.png" id="22_hfmre"]
 [ext_resource type="Texture2D" uid="uid://1sygo4tcshke" path="res://kenney_input-prompts/Keyboard & Mouse/Default/keyboard_shift_icon.png" id="23_8re7r"]
 [ext_resource type="Texture2D" uid="uid://bhhkq0sw3yj7e" path="res://kenney_input-prompts/PlayStation Series/Default/playstation_button_circle.png" id="24_elchd"]
-[ext_resource type="PackedScene" uid="uid://dmyk1j8j3wpex" path="res://scenes/player/player.tscn" id="29_5g7au"]
-[ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player/controller.tscn" id="32_cyq5e"]
 
 [sub_resource type="Animation" id="Animation_hs7dl"]
 length = 0.001
@@ -387,30 +385,6 @@ tracks/10/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("../MainPlayer3D:position")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-56.9767, 0.0618566, 0)]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("../MainPlayer3D:left_right_axis")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
 
 [sub_resource type="Animation" id="Animation_lcg1f"]
 resource_name = "intro"
@@ -536,30 +510,6 @@ tracks/9/keys = {
 "method": &"play"
 }]
 }
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = false
-tracks/10/path = NodePath("../MainPlayer3D:position")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(7.98, 13.5, 23),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(-56.9767, 0.0618566, 0), Vector3(-56.9767, 0.0618566, 0), Vector3(-34.2085, 0.0618566, 0)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("../MainPlayer3D:left_right_axis")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(13.47, 14.4333, 19.5, 20.09, 22.92, 23),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 0.6, 0.6, 0.4, 0.4, 0.0]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oomc5"]
 _data = {
@@ -581,7 +531,7 @@ camera_controller = NodePath("../../CameraController")
 
 [node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("2_vcigm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.087, 3, 8)
-subject = NodePath("../MainPlayer3D")
+subject = NodePath("")
 
 [node name="World" parent="." instance=ExtResource("3_wf22a")]
 
@@ -591,15 +541,9 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.40
 [node name="GoalRight" parent="." instance=ExtResource("8_2nmo7")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 22.4937, 0, 0)
 
-[node name="MainPlayer3D" parent="." instance=ExtResource("29_5g7au")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.9767, 0.0618566, 0)
-
-[node name="Controller3D" parent="MainPlayer3D" node_paths=PackedStringArray("player") instance=ExtResource("32_cyq5e")]
-player = NodePath("..")
-
 [node name="UI" parent="." node_paths=PackedStringArray("camera_controller", "player") instance=ExtResource("11_ffwmr")]
 camera_controller = NodePath("../CameraController")
-player = NodePath("../MainPlayer3D")
+player = NodePath("")
 
 [node name="ControlSuppressor" parent="." node_paths=PackedStringArray("controlled_nodes") instance=ExtResource("13_hpf6u")]
 controlled_nodes = [NodePath("../CameraController"), null, null]
@@ -610,7 +554,7 @@ control_suppressor = NodePath("../ControlSuppressor")
 cut_scene_player = NodePath("CutScenePlayer")
 cut_scene_context_player = NodePath("CutSceneContextPlayer")
 camera_controller = NodePath("../CameraController")
-player = NodePath("../MainPlayer3D")
+player = NodePath("")
 
 [node name="StateChart" type="Node" parent="Level1Script"]
 script = ExtResource("14_ok3f3")

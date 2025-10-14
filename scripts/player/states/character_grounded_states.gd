@@ -7,7 +7,7 @@ extends CharacterStatesAbstractBase
 
 ## Parameters
 @export_group("Movement")
-@export var jump_velocity: float = 3.8
+@export var jump_velocity: float = 5.0
 
 ## States Enum
 enum State {IDLE = 0, MOVING = 1, JUMP = 2, TURN = 3}
@@ -89,6 +89,9 @@ func _on_jump_state_entered() -> void:
 	
 	## Animation
 	character.asset.jump()
+	
+	## Potential ball jump if dribbling
+	character.dribble_states.ball_jump(jump_velocity)
 	
 	## State change
 	in_the_air_states.set_initial_state(in_the_air_states.State.JUMPING)

@@ -24,7 +24,6 @@ var recovery_anim_state: String
 
 var initial_knockback_velocity_x: float
 var current_knockback_velocity_x: float = 0.0
-var inital_frame: bool = false
 
 
 func _ready() -> void:

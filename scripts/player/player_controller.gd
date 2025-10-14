@@ -9,9 +9,12 @@ extends Node
 var left_right_axis_is_zero_time_elapsed: float = 0.0
 
 
+func _ready() -> void:
+	Signals.player_knocked.connect(character.damage_states.knock)
+
+
 func _physics_process(delta: float) -> void:
-	
-	## GROUNDED MOVEMENT
+	## GROUNDED MOVEMENT CONTROLS
 	## ------------------------------------
 	
 	## Read in the left_right_axis from the controller
@@ -46,12 +49,27 @@ func _physics_process(delta: float) -> void:
 	if left_right_axis_is_zero_time_elapsed > idle_buffer_time:
 		character.idle()
 	
+	## Jumping
 	if Input.is_action_just_pressed("jump"):
 		character.jump()
+		if character.dribble_states.state == character.dribble_states.State.DRIBBLING:
+			pass
 	
+	## BALL CONTROLS
+	## ------------------------------------
+	
+	## Kicking
 	if Input.is_action_just_pressed("kick"):
 		character.kick()
 		character.kick_states.engage_long_kick_intent()
 	
 	if Input.is_action_just_released("kick"):
 		character.kick_states.disengage_long_kick_intent()
+	
+	## Dribbling
+	if Input.is_action_just_pressed("dribble"):
+		character.dribble()
+		character.dribble_states.engage_dribble_intent()
+	
+	if Input.is_action_just_released("dribble"):
+		character.dribble_states.disengage_dribble_intent()

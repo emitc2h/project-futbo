@@ -44,7 +44,7 @@ func _on_enabled_state_entered() -> void:
 	state = State.ENABLED
 
 
-func _on_enabled_state_physics_processing(delta: float) -> void:
+func _on_enabled_state_physics_processing(_delta: float) -> void:
 	var control_node_entered_confirmed: bool = false
 	var control_node: ControlNode
 	var player_entered_confirmed: bool = false
@@ -52,7 +52,7 @@ func _on_enabled_state_physics_processing(delta: float) -> void:
 	proximity_detector.force_shapecast_update()
 	if proximity_detector.is_colliding():
 		for i in range(proximity_detector.get_collision_count()):
-			var collider: Object = proximity_detector.get_collider(i)
+			var collider: Node3D = proximity_detector.get_collider(i) as Node3D
 			
 			## Scan for the control node entering the shapecast
 			if scan_for_control_node and collider.get_parent() is ControlNode:
@@ -60,8 +60,8 @@ func _on_enabled_state_physics_processing(delta: float) -> void:
 				control_node = collider.get_parent() as ControlNode
 			
 			## Scan for the player entering the shapecast
-			if scan_for_player and collider is Player:
-				var player: Player = collider as Player
+			if scan_for_player and collider.is_in_group("PlayerGroup"):
+				var player: CharacterBase = collider as CharacterBase
 				drone.targeting_states.target = player.target_marker
 				player_entered_confirmed = true
 		

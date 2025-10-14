@@ -284,6 +284,10 @@ to = NodePath("../../level2")
 event = &"charge down"
 delay_in_seconds = "0.0"
 
+[node name="RigidNode" parent="." index="1" groups=["BallGroup"]]
+
+[node name="CharNode" parent="." index="2" groups=["BallGroup"]]
+
 [node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" node_paths=PackedStringArray("wisps_particles", "lightning_particles", "ready_sphere") instance=ExtResource("7_2p3vg")]
 wisps_particles = NodePath("../../TrackPositionContainer/WispParticles3D")
 lightning_particles = NodePath("../../TrackPositionContainer/LightningParticles3D")

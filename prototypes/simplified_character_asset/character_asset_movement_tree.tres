@@ -45,11 +45,11 @@ animation = &"idle"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_uxi5a"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_l3aym")
-blend_point_0/pos = 0.2
+blend_point_0/pos = 0.1
 blend_point_1/node = SubResource("AnimationNodeAnimation_q4jim")
 blend_point_1/pos = 1.0
 blend_point_2/node = SubResource("AnimationNodeAnimation_38j8k")
-blend_point_2/pos = -0.2
+blend_point_2/pos = -0.1
 blend_point_3/node = SubResource("AnimationNodeAnimation_6hrg2")
 blend_point_3/pos = -1.0
 blend_point_4/node = SubResource("AnimationNodeAnimation_dmufb")

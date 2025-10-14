@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ci6c0wd3nfi1k"]
+[gd_scene load_steps=19 format=3 uid="uid://ci6c0wd3nfi1k"]
 
 [ext_resource type="Script" uid="uid://cd2yw4w0olj6i" path="res://prototypes/simplified_character_asset/simplified_char_test_scene.gd" id="1_hbgue"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="2_c7twb"]
@@ -11,6 +11,7 @@
 [ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="9_g2iua"]
 [ext_resource type="PackedScene" uid="uid://cupvg7lj3rh2s" path="res://scenes/control_node_and_balls/control_node.tscn" id="10_d85sp"]
 [ext_resource type="PackedScene" uid="uid://cfvjtio5mdjgl" path="res://scenes/control_node_and_balls/ball.tscn" id="11_pmhdo"]
+[ext_resource type="PackedScene" uid="uid://dl2glyig12kut" path="res://scenes/debug/debug_tool.tscn" id="12_pmhdo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ih8et"]
 albedo_texture = ExtResource("3_oorf8")
@@ -170,6 +171,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0498505, 0.1851455, 0)
 
 [node name="Ball" parent="." instance=ExtResource("11_pmhdo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.354297, 0.16351736, 0)
+
+[node name="DebugTool" parent="." instance=ExtResource("12_pmhdo")]
+active = false
 
 [connection signal="in_path" from="WalkToFieldPath3D" to="." method="_on_walk_to_field_path_3d_in_path"]
 [connection signal="leave_by_enter" from="WalkToFieldPath3D" to="." method="_on_walk_to_field_path_3d_leave_by_enter"]

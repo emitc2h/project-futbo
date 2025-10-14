@@ -52,10 +52,10 @@ signal target_none()
 ## Utils
 func scan_for_target() -> bool:
 	if field_of_view.sees_target:
-		if field_of_view.target is Player:
+		if field_of_view.target.is_in_group("PlayerGroup"):
 			target = field_of_view.target.target_marker
 			repr.playerRepresentation.last_known_player_pos_x = field_of_view.target.global_position.x
-			repr.playerRepresentation.player_is_dribbling = field_of_view.target.is_dribbling
+			repr.playerRepresentation.player_is_dribbling = field_of_view.target.is_dribbling()
 		else:
 			target = field_of_view.target
 			
@@ -86,7 +86,7 @@ func _on_none_state_entered() -> void:
 	target_none.emit()
 
 
-func _on_none_state_physics_processing(delta: float) -> void:
+func _on_none_state_physics_processing(_delta: float) -> void:
 	if scan_for_target():
 		sc.send_event(TRANS_TO_ACQUIRED)
 
@@ -101,7 +101,7 @@ func _on_acquiring_state_entered() -> void:
 	target_acquiring.emit()
 
 
-func _on_acquiring_state_physics_processing(delta: float) -> void:
+func _on_acquiring_state_physics_processing(_delta: float) -> void:
 	if scan_for_target():
 		sc.send_event(TRANS_TO_ACQUIRED)
 

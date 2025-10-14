@@ -20,23 +20,24 @@ var cart: Node3D
 var path_previous_rotation: Quaternion
 var path_current_rotation: Quaternion
 
-## Signals
-signal path_state_changed(move_callable: Callable)
-
 
 # on x-axis state
 #----------------------------------------
 func _on_on_xaxis_state_entered() -> void:
 	state = State.ON_X_AXIS
 	character.direction_states.reset_left_right_axis()
-	path_state_changed.emit(Callable(self, "_velocity_on_x_axis"))
+	character.grounded_states.move_callable = Callable(self, "_velocity_on_x_axis")
+	character.movement_states.move_callable = Callable(self, "_velocity_on_x_axis")
+	character.damage_states.move_callable = Callable(self, "_velocity_on_x_axis")
 
 
 # on path state
 #----------------------------------------
 func _on_on_path_state_entered() -> void:
 	state = State.ON_PATH
-	path_state_changed.emit(Callable(self, "_velocity_on_path"))
+	character.grounded_states.move_callable = Callable(self, "_velocity_on_path")
+	character.movement_states.move_callable = Callable(self, "_velocity_on_path")
+	character.damage_states.move_callable = Callable(self, "_velocity_on_path")
 
 
 #=======================================================

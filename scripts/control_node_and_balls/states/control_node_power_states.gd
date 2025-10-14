@@ -60,7 +60,7 @@ func _on_on_state_entered() -> void:
 	physics_material.friction = 0.6
 
 
-func _on_on_state_physics_processing(delta: float) -> void:
+func _on_on_state_physics_processing(_delta: float) -> void:
 	if Input.is_action_just_pressed("shield up"):
 		sc.send_event(TRANS_ON_TO_EXPANDED)
 
@@ -101,7 +101,7 @@ func _on_expanded_state_entered() -> void:
 	state = State.EXPANDED
 
 
-func _on_expanded_state_physics_processing(delta: float) -> void:
+func _on_expanded_state_physics_processing(_delta: float) -> void:
 	if Input.is_action_just_released("shield up"):
 		sc.send_event(TRANS_EXPANDED_TO_ON)
 

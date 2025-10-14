@@ -104,7 +104,7 @@ func _on_winding_up_long_kick_state_physics_processing(_delta: float) -> void:
 #----------------------------------------
 func _on_long_kick_state_entered() -> void:
 	state = State.LONG_KICK
-	ball.kick(Aim.vector * long_kick_force)
+	ball.long_kick(Aim.vector * long_kick_force)
 	sc.send_event(TRANS_TO_CAN_KICK)
 
 
@@ -112,13 +112,13 @@ func _on_long_kick_state_entered() -> void:
 # SIGNALS
 #=======================================================
 func _on_kick_zone_body_entered(body: Node3D) -> void:
-	if body.get_parent() is Ball:
+	if body.is_in_group("BallGroup"):
 		ball = body.get_parent() as Ball
 		sc.send_event(TRANS_TO_CAN_KICK)
 
 
 func _on_kick_zone_body_exited(body: Node3D) -> void:
-	if body.get_parent() is Ball:
+	if body.is_in_group("BallGroup"):
 		ball = body.get_parent() as Ball
 		# prevents ball from being unkickable while dribbling, even if it falls out of the kick zone
 		if (not ball) or (ball.dribbler_id != character.get_instance_id()):
@@ -126,10 +126,12 @@ func _on_kick_zone_body_exited(body: Node3D) -> void:
 
 
 #=======================================================
-# CONTROL FUNCTIONS
+# CONTROLS
 #=======================================================
 func kick() -> void:
-	sc.send_event(TRANS_TO_KICK)
+	## Disallow kicking while running backward
+	if not character.direction_states.running_backward(character.grounded_states.left_right_axis):
+		sc.send_event(TRANS_TO_KICK)
 
 
 func engage_long_kick_intent() -> void:

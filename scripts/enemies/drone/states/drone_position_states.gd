@@ -58,7 +58,7 @@ func _on_between_patrol_markers_state_entered() -> void:
 	between_markers.emit()
 
 
-func _on_between_patrol_markers_state_physics_processing(delta: float) -> void:
+func _on_between_patrol_markers_state_physics_processing(_delta: float) -> void:
 	if not is_between_patrol_markers():
 		sc.send_event(TRANS_TO_OUTSIDE_PATROL_MARKERS)
 
@@ -70,6 +70,6 @@ func _on_outside_patrol_markers_state_entered() -> void:
 	outside_markers.emit()
 
 
-func _on_outside_patrol_markers_state_physics_processing(delta: float) -> void:
+func _on_outside_patrol_markers_state_physics_processing(_delta: float) -> void:
 	if is_between_patrol_markers():
 		sc.send_event(TRANS_TO_BETWEEN_PATROL_MARKERS)

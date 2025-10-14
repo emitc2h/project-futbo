@@ -67,6 +67,13 @@ func get_ball_position() -> Vector3:
 		return physics_states.char_node.global_position
 
 
+func get_transform_without_rotation() -> Transform3D:
+	if physics_states.state == physics_states.State.RIGID:
+		return Transform3D(Basis.IDENTITY, physics_states.rigid_node.global_position)
+	else:
+		return Transform3D(Basis.IDENTITY, physics_states.char_node.global_position)
+
+
 func get_ball_velocity() -> Vector3:
 	if physics_states.state == physics_states.State.RIGID:
 		return physics_states.rigid_node.linear_velocity

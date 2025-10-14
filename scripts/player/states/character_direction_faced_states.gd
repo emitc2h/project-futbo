@@ -130,7 +130,6 @@ func unlock_direction_faced(left_right_axis: float) -> void:
 	locked = false
 	## Makes sure the character doesn't turn when releasing the dribble button if running backward
 	face_direction_based_on_axis(left_right_axis)
-	
 
 
 #=======================================================
@@ -154,3 +153,11 @@ func faced_direction_is_consistent_with_axis(left_right_axis: float) -> bool:
 	if state == State.FACE_LEFT and left_right_axis > 0.0:
 		return false
 	return true
+
+func running_backward(left_right_axis: float) -> bool:
+	if locked:
+		if left_right_axis < 0.0 and state == State.FACE_RIGHT:
+			return true
+		if left_right_axis > 0.0 and state == State.FACE_LEFT:
+			return true
+	return false

@@ -8,23 +8,17 @@ extends CharacterBody3D
 ## state machines
 @export_group("State Machines")
 @export var direction_states: CharacterDirectionFacedStates
-
 @export var movement_states: CharacterMovementStates
 @export var grounded_states: CharacterGroundedStates
 @export var in_the_air_states: CharacterInTheAirStates
 @export var path_states: CharacterPathStates
-
 @export var damage_states: CharacterDamageStates
-
 @export var kick_states: CharacterKickStates
+@export var dribble_states: CharacterDribbleStates
 
 ## Internal references
 @onready var sc: StateChart = $State
-
-
-func _ready() -> void:
-	path_states.path_state_changed.connect(_on_path_state_changed)
-
+@onready var target_marker: Marker3D = $TargetMarker
 
 func idle() -> void:
 	if movement_states.state == movement_states.State.GROUNDED and \
@@ -87,9 +81,9 @@ func kick() -> void:
 	kick_states.kick()
 
 
-#################################
-## Signal handling             ##
-#################################
-func _on_path_state_changed(move_callable: Callable) -> void:
-	grounded_states.move_callable = move_callable
-	movement_states.move_callable = move_callable
+func dribble() -> void:
+	dribble_states.dribble()
+
+
+func is_dribbling() -> bool:
+	return dribble_states.state == dribble_states.State.DRIBBLING

@@ -145,7 +145,7 @@ func _on_rigid_state_entered() -> void:
 	rigid_entered.emit()
 
 
-func _on_rigid_state_physics_processing(delta: float) -> void:
+func _on_rigid_state_physics_processing(_delta: float) -> void:
 	## nodes tha must follow the rigid node
 	track_transform_container.transform = rigid_node.transform
 	track_position_container.position = rigid_node.position

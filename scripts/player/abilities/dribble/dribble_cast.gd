@@ -31,7 +31,7 @@ func _on_tracking_state_entered() -> void:
 	is_tracking = true
 
 
-func _on_tracking_state_physics_processing(delta: float) -> void:
+func _on_tracking_state_physics_processing(_delta: float) -> void:
 	self.target_position = tracked_ball.get_ball_position() - self.global_position
 
 	self.force_update_transform()
