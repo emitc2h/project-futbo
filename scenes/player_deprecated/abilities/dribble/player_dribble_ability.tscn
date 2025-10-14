@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://bglgmij4c45oh"]
 
-[ext_resource type="Script" uid="uid://drwp2qv05ecak" path="res://scripts/player/abilities/dribble/player_dribble_ability.gd" id="1_jfi7p"]
+[ext_resource type="Script" uid="uid://drwp2qv05ecak" path="res://scripts/player_deprecated/abilities/dribble/player_dribble_ability.gd" id="1_jfi7p"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_dtk0s"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_l32tu"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_wiwfo"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_4iayt"]
-[ext_resource type="PackedScene" uid="uid://jmksfugqcld7" path="res://scenes/player/abilities/dribble/dribble_cast.tscn" id="6_jfi7p"]
+[ext_resource type="PackedScene" uid="uid://jmksfugqcld7" path="res://scenes/player_deprecated/abilities/dribble/dribble_cast.tscn" id="6_jfi7p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ci21c"]
 size = Vector3(1, 0.86731, 1)

@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://dmyk1j8j3wpex"]
 
-[ext_resource type="Script" uid="uid://2wf3c53vuykj" path="res://scripts/player/player.gd" id="1_hcsbr"]
-[ext_resource type="PackedScene" uid="uid://cneunrl3vngmw" path="res://scenes/player/abilities/basic_movement/player_basic_movement.tscn" id="2_6m232"]
-[ext_resource type="PackedScene" uid="uid://ce6sf1a6oipvf" path="res://scenes/player/abilities/kick/player_kick_ability.tscn" id="3_t2xeb"]
-[ext_resource type="PackedScene" uid="uid://bglgmij4c45oh" path="res://scenes/player/abilities/dribble/player_dribble_ability.tscn" id="4_0pbqm"]
-[ext_resource type="PackedScene" uid="uid://c28xkt5r3qdsr" path="res://scenes/player/abilities/headbutt/player_headbutt_ability.tscn" id="5_tkrpe"]
-[ext_resource type="PackedScene" uid="uid://fgg78lg0p617" path="res://scenes/characters/Character1/character_asset.tscn" id="6_0owmy"]
-[ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player/controller.tscn" id="7_qek5x"]
+[ext_resource type="Script" uid="uid://2wf3c53vuykj" path="res://scripts/player_deprecated/player.gd" id="1_hcsbr"]
+[ext_resource type="PackedScene" uid="uid://cneunrl3vngmw" path="res://scenes/player_deprecated/abilities/basic_movement/player_basic_movement.tscn" id="2_6m232"]
+[ext_resource type="PackedScene" uid="uid://ce6sf1a6oipvf" path="res://scenes/player_deprecated/abilities/kick/player_kick_ability.tscn" id="3_t2xeb"]
+[ext_resource type="PackedScene" uid="uid://bglgmij4c45oh" path="res://scenes/player_deprecated/abilities/dribble/player_dribble_ability.tscn" id="4_0pbqm"]
+[ext_resource type="PackedScene" uid="uid://c28xkt5r3qdsr" path="res://scenes/player_deprecated/abilities/headbutt/player_headbutt_ability.tscn" id="5_tkrpe"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Character1/character_asset.tscn" id="6_0owmy"]
+[ext_resource type="PackedScene" uid="uid://ck3i6045dmtgh" path="res://scenes/player_deprecated/controller.tscn" id="7_qek5x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tkrpe"]
 radius = 0.25476

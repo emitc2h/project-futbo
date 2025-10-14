@@ -1,12 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://br5xii21hsbeo"]
 
 [ext_resource type="PackedScene" uid="uid://b23ql0f3pehor" path="res://scenes/characters/character_base.tscn" id="1_2mp1t"]
-[ext_resource type="PackedScene" uid="uid://nuryuxrn3i00" path="res://prototypes/simplified_character_asset/character_1_asset.tscn" id="2_nft2d"]
+[ext_resource type="PackedScene" uid="uid://nuryuxrn3i00" path="res://scenes/characters/Character1/character_1_asset.tscn" id="2_nft2d"]
 
 [node name="Character1" node_paths=PackedStringArray("asset") instance=ExtResource("1_2mp1t")]
 asset = NodePath("Character1Asset")
 
 [node name="Character1Asset" parent="." index="0" instance=ExtResource("2_nft2d")]
+
+[node name="Movement States" parent="State/Root/Damage/Able/Movement" index="0" node_paths=PackedStringArray("state_map")]
+state_map = {
+0: NodePath("../In the air"),
+1: NodePath("../Grounded")
+}
 
 [node name="In the air States" parent="State/Root/Damage/Able/Movement/In the air" index="0" node_paths=PackedStringArray("state_map")]
 state_map = {

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ce6sf1a6oipvf"]
 
-[ext_resource type="Script" uid="uid://bcd55rfrsiitu" path="res://scripts/player/abilities/kick/player_kick_ability.gd" id="1_4ly6d"]
+[ext_resource type="Script" uid="uid://bcd55rfrsiitu" path="res://scripts/player_deprecated/abilities/kick/player_kick_ability.gd" id="1_4ly6d"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_iosrh"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_t7rgp"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_n4xlr"]

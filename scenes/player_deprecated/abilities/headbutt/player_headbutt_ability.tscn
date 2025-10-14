@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://c28xkt5r3qdsr"]
 
-[ext_resource type="Script" uid="uid://wnxmticrtog2" path="res://scripts/player/abilities/headbutt/player_headbutt_ability.gd" id="1_5k1hl"]
+[ext_resource type="Script" uid="uid://wnxmticrtog2" path="res://scripts/player_deprecated/abilities/headbutt/player_headbutt_ability.gd" id="1_5k1hl"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_13xqy"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_8vo56"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_ngqv6"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_jre33"]
-[ext_resource type="Script" uid="uid://c4tlgbfr87too" path="res://scripts/player/abilities/headbutt/head.gd" id="6_tvgam"]
+[ext_resource type="Script" uid="uid://c4tlgbfr87too" path="res://scripts/player_deprecated/abilities/headbutt/head.gd" id="6_tvgam"]
 
 [node name="PlayerHeadbuttAbility" type="Node3D"]
 script = ExtResource("1_5k1hl")

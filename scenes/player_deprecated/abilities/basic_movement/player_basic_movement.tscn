@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://cneunrl3vngmw"]
 
-[ext_resource type="Script" uid="uid://c3id3p6t12gms" path="res://scripts/player/abilities/basic_movement/player_basic_movement.gd" id="1_sejk5"]
+[ext_resource type="Script" uid="uid://c3id3p6t12gms" path="res://scripts/player_deprecated/abilities/basic_movement/player_basic_movement.gd" id="1_sejk5"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_f24ff"]
 [ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_0rigy"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_kfmla"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_6dxo6"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_uqqs6"]
-[ext_resource type="Script" uid="uid://bwkygdw6t751m" path="res://scripts/player/abilities/basic_movement/knocked_states.gd" id="7_ji52i"]
+[ext_resource type="Script" uid="uid://bwkygdw6t751m" path="res://scripts/player_deprecated/abilities/basic_movement/knocked_states.gd" id="7_ji52i"]
 
 [node name="PlayerBasicMovement" type="Node3D"]
 script = ExtResource("1_sejk5")

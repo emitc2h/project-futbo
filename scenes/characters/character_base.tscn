@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://b23ql0f3pehor"]
 
-[ext_resource type="Script" uid="uid://dwveh7gorkqwx" path="res://scripts/player/character_base.gd" id="1_xq4g7"]
+[ext_resource type="Script" uid="uid://dwveh7gorkqwx" path="res://scripts/characters/character_base.gd" id="1_xq4g7"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_oqj5v"]
 [ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_ga3c3"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_e4l2d"]
@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://bd6nivyruvv11" path="res://scripts/player/states/character_grounded_states.gd" id="11_h0n7g"]
 [ext_resource type="Script" uid="uid://oktcfwcnbwg5" path="res://addons/godot_state_charts/history_state.gd" id="11_u5sbk"]
 [ext_resource type="Script" uid="uid://brc7oigmsei5g" path="res://scripts/player/states/character_path_states.gd" id="12_oqj5v"]
-[ext_resource type="Script" uid="uid://c4tlgbfr87too" path="res://scripts/player/abilities/headbutt/head.gd" id="13_keip7"]
+[ext_resource type="Script" uid="uid://c4tlgbfr87too" path="res://scripts/player_deprecated/abilities/headbutt/head.gd" id="13_keip7"]
 [ext_resource type="Script" uid="uid://bh8l4jqmljwan" path="res://scripts/player/states/character_kick_states.gd" id="13_v0iy0"]
 [ext_resource type="Script" uid="uid://cf2edxlnxwfvj" path="res://scripts/player/states/character_dribble_states.gd" id="14_dkbyo"]
 
@@ -230,12 +230,11 @@ delay_in_seconds = "0.0"
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("no ball")
 
-[node name="Kick States" type="Node" parent="State/Root/Damage/Able/Kick" node_paths=PackedStringArray("kick_zone", "long_kick_zone", "long_kick_raycast", "sprint_raycast", "character", "sc", "cs")]
+[node name="Kick States" type="Node" parent="State/Root/Damage/Able/Kick" node_paths=PackedStringArray("kick_zone", "long_kick_zone", "long_kick_raycast", "character", "sc", "cs")]
 script = ExtResource("13_v0iy0")
 kick_zone = NodePath("../../../../../../KickZone")
 long_kick_zone = NodePath("../../../../../../LongKickZone")
 long_kick_raycast = NodePath("../../../../../../LongKickRaycast")
-sprint_raycast = NodePath("../../../../../../SprintRaycast")
 character = NodePath("../../../../../..")
 sc = NodePath("../../../../..")
 cs = NodePath("..")
@@ -508,12 +507,6 @@ collision_mask = 266
 [node name="LongKickRaycast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
 target_position = Vector3(2.2, 0, 0)
-collision_mask = 4
-
-[node name="SprintRaycast" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
-visible = false
-target_position = Vector3(2.5, 0, 0)
 collision_mask = 4
 
 [node name="KickZone" type="Area3D" parent="."]

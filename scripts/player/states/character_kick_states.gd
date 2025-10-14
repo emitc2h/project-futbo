@@ -9,7 +9,6 @@ var state: State = State.NO_BALL
 @export var kick_zone: Area3D
 @export var long_kick_zone: Area3D
 @export var long_kick_raycast: RayCast3D
-@export var sprint_raycast: RayCast3D
 
 @export_group("Properties")
 @export var kick_force: float = 7.0
