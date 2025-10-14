@@ -47,6 +47,7 @@ var root_motion_rotation: Quaternion:
 ## Signals
 signal turn_finished
 signal fall_started
+signal kick_finished
 signal long_kick_finished
 signal knocked_finished
 signal recover_finished
@@ -101,10 +102,12 @@ func fall() -> void:
 
 func kick() -> void:
 	anim_tree.set("parameters/kick shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	await kick_finished
 
 
 func long_kick() -> void:
 	anim_tree.set("parameters/long kick shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	await long_kick_finished
 
 
 func knock() -> void:
@@ -124,6 +127,7 @@ func _on_movement_anim_state_started(anim_name: String) -> void:
 func _on_movement_anim_state_finished(anim_name: String) -> void:
 	if anim_name == "turn": turn_finished.emit()
 	if anim_name == "long kick": long_kick_finished.emit()
+	if anim_name == "kick": kick_finished.emit()
 
 
 func _on_knocked_anim_state_started(_anim_name: String) -> void:

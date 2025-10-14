@@ -43,23 +43,28 @@ func _on_intends_to_dribble_state_entered() -> void:
 	state = State.INTENDS_TO_DRIBBLE
 
 
+func _on_intends_to_dribble_state_physics_processing(_delta: float) -> void:
+	## Let the ball freely leave the pickup zone if player is kicking
+	if character.kick_states.state == character.kick_states.State.KICK or\
+	   character.kick_states.state == character.kick_states.State.LONG_KICK:
+		return
+	
+	## Otherwise, scan for the ball inside the pickup zone
+	var retrieved_ball: Ball = retrieve_ball_in_pickup_zone()
+	if retrieved_ball:
+		ball = retrieved_ball
+		sc.send_event(TRANS_TO_DRIBBLING)
+	else:
+		sc.send_event(TRANS_TO_NO_BALL)
+
+
 # can dribble state
 #----------------------------------------
 func _on_can_dribble_state_entered() -> void:
 	state = State.CAN_DRIBBLE
-
-
-func _on_can_dribble_state_physics_processing(_delta: float) -> void:
 	
-	var overlapping_bodies: Array[Node3D] = dribble_pickup_zone.get_overlapping_bodies()
-	
-	if overlapping_bodies.is_empty():
+	if not retrieve_ball_in_pickup_zone():
 		sc.send_event(TRANS_TO_NO_BALL)
-	else:
-		for body in overlapping_bodies:
-			if body.is_in_group("BallGroup"):
-				ball = body.get_parent()
-				sc.send_event(TRANS_TO_DRIBBLING)
 
 
 # dribbling state
@@ -149,3 +154,13 @@ func disengage_dribble_intent() -> void:
 func ball_jump(velocity_y: float) -> void:
 	if ball and character.get_instance_id() == ball.dribbler_id:
 		ball.physics_states.char_node.velocity.y += velocity_y
+
+
+#=======================================================
+# UTILS
+#=======================================================
+func retrieve_ball_in_pickup_zone() -> Ball:
+	for body in dribble_pickup_zone.get_overlapping_bodies():
+		if body.is_in_group("BallGroup"):
+			return body.get_parent() as Ball
+	return null

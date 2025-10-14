@@ -18,6 +18,7 @@ var state: State = State.NO_BALL
 ## State transition constants
 const TRANS_TO_NO_BALL: String = "Kick: to no ball"
 const TRANS_TO_CAN_KICK: String = "Kick: to can kick"
+const TRANS_KICK_TO_CAN_KICK: String = "Kick: kick to can kick"
 const TRANS_TO_KICK: String = "Kick: to kick"
 
 const TRANS_TO_INTENDS_TO_LONG_KICK: String = "Kick: to intends to long kick"
@@ -52,9 +53,8 @@ func _on_can_kick_state_entered() -> void:
 
 func _on_can_kick_state_physics_processing(_delta: float) -> void:
 	## If the ball leaves the kick zone while not being dribbled, got to no ball state
-	if kick_zone.get_overlapping_bodies().is_empty():
-		if (not ball) or (ball.dribbler_id != character.get_instance_id()):
-			sc.send_event(TRANS_TO_NO_BALL)
+	if not retrieve_ball_in_kick_zone():
+		sc.send_event(TRANS_TO_NO_BALL)
 
 
 # kick state
@@ -62,8 +62,15 @@ func _on_can_kick_state_physics_processing(_delta: float) -> void:
 func _on_kick_state_entered() -> void:
 	state = State.KICK
 	ball.kick(Aim.vector * kick_force)
-	character.asset.kick()
-	sc.send_event(TRANS_TO_CAN_KICK)
+	await character.asset.kick()
+	sc.send_event(TRANS_KICK_TO_CAN_KICK)
+
+
+func _on_kick_state_physics_processing(_delta: float) -> void:
+	## Wait till the ball has left the zones to end the kick state
+	if (not retrieve_ball_in_kick_zone()) and (not character.dribble_states.retrieve_ball_in_pickup_zone()):
+		sc.send_event(TRANS_TO_NO_BALL)
+		
 
 
 # intends to long kick state
@@ -104,7 +111,14 @@ func _on_winding_up_long_kick_state_physics_processing(_delta: float) -> void:
 func _on_long_kick_state_entered() -> void:
 	state = State.LONG_KICK
 	ball.long_kick(Aim.vector * long_kick_force)
-	sc.send_event(TRANS_TO_CAN_KICK)
+	await character.asset.long_kick_finished
+	sc.send_event(TRANS_LONG_KICK_TO_CAN_KICK)
+
+
+func _on_long_kick_state_physics_processing(_delta: float) -> void:
+	## Wait till the ball has left the zones to end the long kick state
+	if (not retrieve_ball_in_kick_zone()) and (not character.dribble_states.retrieve_ball_in_pickup_zone()):
+		sc.send_event(TRANS_TO_NO_BALL)
 
 
 #=======================================================
@@ -140,3 +154,13 @@ func engage_long_kick_intent() -> void:
 func disengage_long_kick_intent() -> void:
 	try_to_engage_long_kick_intent = false
 	sc.send_event(TRANS_LONG_KICK_TO_CAN_KICK)
+
+
+#=======================================================
+# UTILS
+#=======================================================
+func retrieve_ball_in_kick_zone() -> Ball:
+	for body in kick_zone.get_overlapping_bodies():
+		if body.is_in_group("BallGroup"):
+			return body.get_parent() as Ball
+	return null

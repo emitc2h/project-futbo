@@ -275,7 +275,7 @@ script = ExtResource("6_awyfk")
 [node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/kick"]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../can kick")
-event = &"Kick: to can kick"
+event = &"Kick: kick to can kick"
 delay_in_seconds = "0.0"
 
 [node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/kick"]
@@ -320,7 +320,13 @@ script = ExtResource("6_awyfk")
 [node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/long kick"]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../can kick")
-event = &"Kick: to can kick"
+event = &"Kick: long kick to can kick"
+delay_in_seconds = "0.0"
+
+[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/long kick"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../no ball")
+event = &"Kick: to no ball"
 delay_in_seconds = "0.0"
 
 [node name="Dribble" type="Node" parent="State/Root/Damage/Able"]
@@ -581,15 +587,17 @@ collision_mask = 4
 [connection signal="state_entered" from="State/Root/Damage/Able/Kick/can kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_can_kick_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/can kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_can_kick_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Kick/kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Kick/intends to long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_intends_to_long_kick_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/intends to long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_intends_to_long_kick_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Kick/winding up long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_winding_up_long_kick_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/winding up long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_winding_up_long_kick_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Kick/long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_long_kick_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_long_kick_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Dribble/no ball" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_no_ball_state_entered"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Dribble/intends to dribble" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_intends_to_dribble_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Damage/Able/Dribble/intends to dribble" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_intends_to_dribble_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Dribble/can dribble" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_can_dribble_state_entered"]
-[connection signal="state_physics_processing" from="State/Root/Damage/Able/Dribble/can dribble" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_can_dribble_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Dribble/dribbling" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_dribbling_state_entered"]
 [connection signal="state_exited" from="State/Root/Damage/Able/Dribble/dribbling" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_dribbling_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Damage/Able/Dribble/dribbling" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_dribbling_state_physics_processing"]

@@ -22,7 +22,7 @@ var is_ready: bool = false
 
 # not ready state
 #----------------------------------------
-func _on_not_ready_state_physics_processing(delta: float) -> void:
+func _on_not_ready_state_physics_processing(_delta: float) -> void:
 	if player.velocity.y >= ready_velocity_threshold and not player.is_on_floor():
 		state.send_event("not ready to ready")
 
@@ -33,7 +33,7 @@ func _on_ready_state_entered() -> void:
 	is_ready = true
 
 
-func _on_ready_state_physics_processing(delta: float) -> void:
+func _on_ready_state_physics_processing(_delta: float) -> void:
 	var ball: Ball = head.scan_for_ball()
 	if ball:
 		ball.impulse(Vector3.UP * headbutt_force + Vector3.RIGHT * player.velocity.x)
