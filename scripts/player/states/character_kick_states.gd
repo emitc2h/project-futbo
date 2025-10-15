@@ -62,6 +62,11 @@ func _on_can_kick_state_physics_processing(_delta: float) -> void:
 func _on_kick_state_entered() -> void:
 	state = State.KICK
 	ball.kick(Aim.vector * kick_force)
+	
+	## End dribbling so it doesn't interfere with the kick
+	sc.send_event(character.dribble_states.TRANS_TO_CAN_DRIBBLE)
+	
+	## End the kick state when the animation is finished to make sure it ends at some point
 	await character.asset.kick()
 	sc.send_event(TRANS_KICK_TO_CAN_KICK)
 
@@ -111,6 +116,11 @@ func _on_winding_up_long_kick_state_physics_processing(_delta: float) -> void:
 func _on_long_kick_state_entered() -> void:
 	state = State.LONG_KICK
 	ball.long_kick(Aim.vector * long_kick_force)
+	
+	## End dribbling so it doesn't interfere with the kick
+	sc.send_event(character.dribble_states.TRANS_TO_CAN_DRIBBLE)
+	
+	## End the kick state when the animation is finished to make sure it ends at some point
 	await character.asset.long_kick_finished
 	sc.send_event(TRANS_LONG_KICK_TO_CAN_KICK)
 

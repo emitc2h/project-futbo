@@ -108,3 +108,10 @@ signal debug_advance
 signal debug_on
 @warning_ignore("unused_signal")
 signal debug_off
+
+
+## ===================================== ##
+## ENEMIES SIGNALS                       ##
+## ------------------------------------- ##
+@warning_ignore("unused_signal")
+signal drone_died

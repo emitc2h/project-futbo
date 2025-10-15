@@ -7,7 +7,7 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6kxxw"]
 margin = 0.1
-radius = 0.744611
+radius = 0.7930746
 
 [sub_resource type="Gradient" id="Gradient_nbgyc"]
 offsets = PackedFloat32Array(0.25, 0.824324)
@@ -60,7 +60,7 @@ collision_priority = 2.0
 script = ExtResource("1_4ir5k")
 
 [node name="DroneClosedShieldModel" parent="." instance=ExtResource("1_6kxxw")]
-transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, 0)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 
 [node name="ClosedShield" parent="DroneClosedShieldModel" index="0"]
 surface_material_override/0 = ExtResource("3_nbgyc")

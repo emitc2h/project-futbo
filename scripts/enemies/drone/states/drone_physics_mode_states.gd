@@ -198,3 +198,4 @@ func _on_ragdoll_state_exited() -> void:
 func _on_dead_state_entered() -> void:
 	state = State.DEAD
 	drone.queue_free()
+	Signals.drone_died.emit()

@@ -101,11 +101,6 @@ func _on_expanded_state_entered() -> void:
 	state = State.EXPANDED
 
 
-func _on_expanded_state_physics_processing(_delta: float) -> void:
-	if Input.is_action_just_released("shield up"):
-		sc.send_event(TRANS_EXPANDED_TO_ON)
-
-
 func _on_expanded_state_exited() -> void:
 	asset.shrink_shield()
 

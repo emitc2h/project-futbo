@@ -254,7 +254,7 @@ func die(force: Vector3) -> void:
 		model.body_bone.apply_central_impulse(force * 5.0)
 
 
-func get_hit(strength: float) -> bool:
+func get_hit(_strength: float) -> bool:
 	return false
 
 

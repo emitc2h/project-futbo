@@ -284,10 +284,6 @@ to = NodePath("../../level2")
 event = &"charge down"
 delay_in_seconds = "0.0"
 
-[node name="RigidNode" parent="." index="1" groups=["BallGroup"]]
-
-[node name="CharNode" parent="." index="2" groups=["BallGroup"]]
-
 [node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" node_paths=PackedStringArray("wisps_particles", "lightning_particles", "ready_sphere") instance=ExtResource("7_2p3vg")]
 wisps_particles = NodePath("../../TrackPositionContainer/WispParticles3D")
 lightning_particles = NodePath("../../TrackPositionContainer/LightningParticles3D")
@@ -342,7 +338,6 @@ draw_pass_1 = SubResource("ArrayMesh_r313a")
 [connection signal="taken" from="State/Root/Power/on/blow" to="State/Root/Power/Power States" method="_on_on_to_blow_taken"]
 [connection signal="state_entered" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_entered"]
 [connection signal="state_exited" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_physics_processing"]
 [connection signal="timeout" from="State/Root/Charge/Charge States/LoseChargeTimer" to="State/Root/Charge/Charge States" method="_on_lose_charge_timer_timeout"]
 [connection signal="state_entered" from="State/Root/Charge/none" to="State/Root/Charge/Charge States" method="_on_none_state_entered"]
 [connection signal="state_entered" from="State/Root/Charge/level1" to="State/Root/Charge/Charge States" method="_on_level_1_state_entered"]

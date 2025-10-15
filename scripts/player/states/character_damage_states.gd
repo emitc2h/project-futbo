@@ -1,12 +1,6 @@
 class_name CharacterDamageStates
 extends CharacterStatesAbstractBase
 
-@export_group("Knock Height")
-## The height (and above) at which the animation blend is 100% head knock, 0% middle knock
-@export var max_height_delta_y: float = 1.0
-## The height (and below) at which the animation blend is 0% head knock, 100% middle knock
-@export var min_height_delta_y: float = 0.0
-
 ## States Enum
 enum State {ABLE = 0, KNOCKED = 1, OUT = 2, RECOVERING = 3, DOWN = 4}
 var state: State = State.ABLE
@@ -51,8 +45,6 @@ func _on_knocked_state_entered() -> void:
 	## First compute the relative position of the colliding object and the player
 	var char_pos: Vector3 = character.global_position
 	var char_direction_faced: CharacterDirectionFacedStates.State = character.direction_states.state
-	var delta_y: float = _colliding_obj_position.y - char_pos.y
-	var norm_delta_y: float = clamp((delta_y - min_height_delta_y) / (max_height_delta_y - min_height_delta_y), 0.0, 1.0)
 	
 	## go straight to recovering state if the player is on the ground, otherwise pass by the out state
 	if character.is_on_floor():
@@ -143,7 +135,6 @@ func _on_down_state_entered() -> void:
 # CONTROLS
 #=======================================================
 func knock(obj_velocity: Vector3, obj_position: Vector3) -> void:
-	print("knock called")
 	_colliding_obj_velocity = obj_velocity
 	_colliding_obj_position = obj_position
 	_initial_knockback_velocity_x = obj_velocity.x
