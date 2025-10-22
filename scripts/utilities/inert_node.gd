@@ -23,10 +23,10 @@ func wake_up() -> void:
 	self.sleeping = false
 
 
-func set_transform_and_velocity(transform: Transform3D, velocity: Vector3) -> void:
+func set_transform_and_velocity(new_transform: Transform3D, new_velocity: Vector3) -> void:
 	do_set_transform_and_velocity = true
-	transform_to_set = transform
-	velocity_to_set = velocity
+	transform_to_set = new_transform
+	velocity_to_set = new_velocity
 
 
 func set_impulse(impulse: Vector3) -> void:
@@ -48,5 +48,5 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		do_set_impulse = false
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	velocity_from_previous_frame = self.linear_velocity

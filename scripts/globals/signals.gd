@@ -33,19 +33,14 @@ signal facing_left
 signal facing_right
 
 @warning_ignore("unused_signal")
+signal player_moved
+
+@warning_ignore("unused_signal")
 signal display_stamina(color: Color)
 @warning_ignore("unused_signal")
 signal hide_stamina
 @warning_ignore("unused_signal")
 signal update_stamina_value(value: float)
-
-@warning_ignore("unused_signal")
-signal started_sprinting
-@warning_ignore("unused_signal")
-signal ended_sprinting
-
-@warning_ignore("unused_signal")
-signal kicked
 
 @warning_ignore("unused_signal")
 signal aim_vector_updated(vec: Vector3)
@@ -56,17 +51,13 @@ signal active_dribble_marker_position_updated(pos: Vector3)
 signal player_velocity_updated(vel: Vector3)
 
 @warning_ignore("unused_signal")
-signal jump_left_animation_ended
+signal dribbling_entered
 @warning_ignore("unused_signal")
-signal jump_right_animation_ended
+signal dribbling_exited
 @warning_ignore("unused_signal")
-signal turn_left_animation_ended
+signal idle_entered
 @warning_ignore("unused_signal")
-signal turn_right_animation_ended
-@warning_ignore("unused_signal")
-signal kick_left_animation_ended
-@warning_ignore("unused_signal")
-signal kick_right_animation_ended
+signal idle_exited
 
 @warning_ignore("unused_signal")
 signal player_knocked(obj_velocity: Vector3, obj_position: Vector3)
@@ -84,6 +75,8 @@ signal updated_control_node_charge_level(level: ControlNodeChargeStates.State)
 signal control_node_is_charged
 @warning_ignore("unused_signal")
 signal control_node_is_discharged
+@warning_ignore("unused_signal")
+signal control_node_shield_hit(one_hit: bool)
 
 
 ## ===================================== ##

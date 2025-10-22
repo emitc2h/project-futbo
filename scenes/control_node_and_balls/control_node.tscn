@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://cupvg7lj3rh2s"]
+[gd_scene load_steps=29 format=4 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_qi4cr"]
 [ext_resource type="Script" uid="uid://b3jcml15v3wkh" path="res://scripts/control_node_and_balls/states/control_node_charge_states.gd" id="6_8s4nh"]
 [ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node_and_balls/assets/control_node_asset.tscn" id="7_2p3vg"]
+[ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="8_nbe53"]
+[ext_resource type="Script" uid="uid://1c4m2x6pib5p" path="res://scripts/control_node_and_balls/states/control_node_shield_states.gd" id="10_tehyq"]
 [ext_resource type="PackedScene" uid="uid://dvd5ic7fxna84" path="res://scenes/control_node_and_balls/models/control_node_streak.tscn" id="11_8s4nh"]
 [ext_resource type="Shader" uid="uid://c2lu8bfyo1f0b" path="res://shaders/ControlNode/control_node_wisps_shader.gdshader" id="11_r313a"]
 [ext_resource type="Texture2D" uid="uid://cmy0jxny0n8xx" path="res://assets/3D/Particles/dots/mega_dot_color.png" id="12_cnds4"]
@@ -102,10 +104,14 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_lyibg")
 
-[node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states", "asset") instance=ExtResource("1_fpwqj")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_tehyq"]
+radius = 1.8
+
+[node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states", "shield_states", "asset") instance=ExtResource("1_fpwqj")]
 script = ExtResource("2_r7e0p")
 power_states = NodePath("State/Root/Power/Power States")
-charge_states = NodePath("State/Root/Charge/Charge States")
+charge_states = NodePath("State/Root/Power/On/Charge/Charge States")
+shield_states = NodePath("State/Root/Power/On/Shield/Shield States")
 asset = NodePath("TrackTransformContainer/ControlNodeAsset")
 
 [node name="State" parent="." index="0"]
@@ -114,7 +120,7 @@ track_in_editor = true
 [node name="Control States" parent="State/Root/Control" index="0" node_paths=PackedStringArray("streak")]
 script = ExtResource("3_qi4cr")
 shot_speed = 50.0
-range = 10.0
+shot_range = 10.0
 streak = NodePath("../../../../ControlNodeStreak")
 
 [node name="to shot" type="Node" parent="State/Root/Control/free" index="2"]
@@ -150,7 +156,7 @@ script = ExtResource("4_0jkta")
 [node name="to charging" type="Node" parent="State/Root/Power/off" index="0"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../charging")
-event = &"Power: off to charging"
+event = &"Power: to charging"
 delay_in_seconds = "0.0"
 
 [node name="charging" type="Node" parent="State/Root/Power" index="2"]
@@ -158,130 +164,179 @@ script = ExtResource("4_0jkta")
 
 [node name="to on" type="Node" parent="State/Root/Power/charging" index="0"]
 script = ExtResource("5_qi4cr")
-to = NodePath("../../on")
-event = &"Power: charging to on"
+to = NodePath("../../On")
+event = &"Power: to on"
 delay_in_seconds = "0.0"
 
-[node name="on" type="Node" parent="State/Root/Power" index="3"]
-script = ExtResource("4_0jkta")
+[node name="On" type="Node" parent="State/Root/Power" index="3"]
+script = ExtResource("8_nbe53")
+metadata/_custom_type_script = "uid://duu2hhmogs378"
 
-[node name="to off" type="Node" parent="State/Root/Power/on" index="0"]
-script = ExtResource("5_qi4cr")
-to = NodePath("../../off")
-event = &"Power: to off"
-delay_in_seconds = "0.0"
-
-[node name="to expanded" type="Node" parent="State/Root/Power/on" index="1"]
-script = ExtResource("5_qi4cr")
-to = NodePath("../../expanded")
-event = &"Power: to expanded"
-delay_in_seconds = "0.0"
-
-[node name="bounce" type="Node" parent="State/Root/Power/on" index="2"]
-script = ExtResource("5_qi4cr")
-to = NodePath("..")
-event = &"Power: bounce"
-delay_in_seconds = "0.0"
-
-[node name="hit" type="Node" parent="State/Root/Power/on" index="3"]
-script = ExtResource("5_qi4cr")
-to = NodePath("..")
-event = &"Power: hit"
-delay_in_seconds = "0.0"
-
-[node name="blow" type="Node" parent="State/Root/Power/on" index="4"]
-script = ExtResource("5_qi4cr")
-to = NodePath("../../off")
-event = &"Power: blow"
-delay_in_seconds = "0.0"
-
-[node name="expanded" type="Node" parent="State/Root/Power" index="4"]
-script = ExtResource("4_0jkta")
-
-[node name="to on" type="Node" parent="State/Root/Power/expanded" index="0"]
-script = ExtResource("5_qi4cr")
-to = NodePath("../../on")
-event = &"shrink shield"
-delay_in_seconds = "0.0"
-
-[node name="Charge" type="Node" parent="State/Root" index="3"]
+[node name="Charge" type="Node" parent="State/Root/Power/On" index="0"]
 script = ExtResource("3_02qb1")
 initial_state = NodePath("none")
 
-[node name="Charge States" type="Node" parent="State/Root/Charge" index="0" node_paths=PackedStringArray("control_node", "rigid_node", "asset", "sc")]
+[node name="Charge States" type="Node" parent="State/Root/Power/On/Charge" index="0" node_paths=PackedStringArray("control_node", "rigid_node", "asset", "sc")]
 script = ExtResource("6_8s4nh")
-control_node = NodePath("../../../..")
-rigid_node = NodePath("../../../../RigidNode")
-asset = NodePath("../../../../TrackTransformContainer/ControlNodeAsset")
-sc = NodePath("../../..")
+control_node = NodePath("../../../../../..")
+rigid_node = NodePath("../../../../../../RigidNode")
+asset = NodePath("../../../../../../TrackTransformContainer/ControlNodeAsset")
+sc = NodePath("../../../../..")
 
-[node name="LoseChargeTimer" type="Timer" parent="State/Root/Charge/Charge States" index="0"]
+[node name="LoseChargeTimer" type="Timer" parent="State/Root/Power/On/Charge/Charge States" index="0"]
 wait_time = 600.0
 
-[node name="none" type="Node" parent="State/Root/Charge" index="1"]
+[node name="none" type="Node" parent="State/Root/Power/On/Charge" index="1"]
 script = ExtResource("4_0jkta")
 
-[node name="to level1" type="Node" parent="State/Root/Charge/none" index="0"]
+[node name="to level1" type="Node" parent="State/Root/Power/On/Charge/none" index="0"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level1")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
-[node name="level1" type="Node" parent="State/Root/Charge" index="2"]
+[node name="level1" type="Node" parent="State/Root/Power/On/Charge" index="2"]
 script = ExtResource("4_0jkta")
 
-[node name="to none" type="Node" parent="State/Root/Charge/level1" index="0"]
+[node name="to none" type="Node" parent="State/Root/Power/On/Charge/level1" index="0"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="to level2" type="Node" parent="State/Root/Charge/level1" index="1"]
+[node name="to level2" type="Node" parent="State/Root/Power/On/Charge/level1" index="1"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level2")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
-[node name="to none via charge down" type="Node" parent="State/Root/Charge/level1" index="2"]
+[node name="to none via charge down" type="Node" parent="State/Root/Power/On/Charge/level1" index="2"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"charge down"
 delay_in_seconds = "0.0"
 
-[node name="level2" type="Node" parent="State/Root/Charge" index="3"]
+[node name="level2" type="Node" parent="State/Root/Power/On/Charge" index="3"]
 script = ExtResource("4_0jkta")
 
-[node name="to none" type="Node" parent="State/Root/Charge/level2" index="0"]
+[node name="to none" type="Node" parent="State/Root/Power/On/Charge/level2" index="0"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="to level3" type="Node" parent="State/Root/Charge/level2" index="1"]
+[node name="to level3" type="Node" parent="State/Root/Power/On/Charge/level2" index="1"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level3")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
-[node name="to level 1" type="Node" parent="State/Root/Charge/level2" index="2"]
+[node name="to level 1" type="Node" parent="State/Root/Power/On/Charge/level2" index="2"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level1")
 event = &"charge down"
 delay_in_seconds = "0.0"
 
-[node name="level3" type="Node" parent="State/Root/Charge" index="4"]
+[node name="level3" type="Node" parent="State/Root/Power/On/Charge" index="4"]
 script = ExtResource("4_0jkta")
 
-[node name="to none" type="Node" parent="State/Root/Charge/level3" index="0"]
+[node name="to none" type="Node" parent="State/Root/Power/On/Charge/level3" index="0"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="to level 2" type="Node" parent="State/Root/Charge/level3" index="1"]
+[node name="to level 2" type="Node" parent="State/Root/Power/On/Charge/level3" index="1"]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level2")
 event = &"charge down"
+delay_in_seconds = "0.0"
+
+[node name="Shield" type="Node" parent="State/Root/Power/On" index="1"]
+script = ExtResource("3_02qb1")
+initial_state = NodePath("off")
+metadata/_custom_type_script = "uid://bhy7it06w5oxr"
+
+[node name="Shield States" type="Node" parent="State/Root/Power/On/Shield" index="0" node_paths=PackedStringArray("control_node", "asset", "sc", "shield_collision")]
+script = ExtResource("10_tehyq")
+control_node = NodePath("../../../../../..")
+asset = NodePath("../../../../../../TrackTransformContainer/ControlNodeAsset")
+sc = NodePath("../../../../..")
+shield_collision = NodePath("../../../../../../TrackPositionContainer/Shield")
+
+[node name="off" type="Node" parent="State/Root/Power/On/Shield" index="1"]
+script = ExtResource("4_0jkta")
+
+[node name="to charging" type="Node" parent="State/Root/Power/On/Shield/off" index="0"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../charging")
+event = &"Shield: to charging"
+delay_in_seconds = "0.0"
+
+[node name="charging" type="Node" parent="State/Root/Power/On/Shield" index="2"]
+script = ExtResource("4_0jkta")
+
+[node name="to off" type="Node" parent="State/Root/Power/On/Shield/charging" index="0"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../off")
+event = &"Shield: to off"
+delay_in_seconds = "0.0"
+
+[node name="to inflating" type="Node" parent="State/Root/Power/On/Shield/charging" index="1"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../inflating")
+event = &"Shield: to inflating"
+delay_in_seconds = "0.0"
+
+[node name="to dissipating" type="Node" parent="State/Root/Power/On/Shield/charging" index="2"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../dissipating")
+event = &"Shield: to dissipating"
+delay_in_seconds = "0.0"
+
+[node name="inflating" type="Node" parent="State/Root/Power/On/Shield" index="3"]
+script = ExtResource("4_0jkta")
+
+[node name="to dissipating" type="Node" parent="State/Root/Power/On/Shield/inflating" index="0"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../dissipating")
+event = &"Shield: to dissipating"
+delay_in_seconds = "0.0"
+
+[node name="to on" type="Node" parent="State/Root/Power/On/Shield/inflating" index="1"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../on")
+event = &"Shield: to on"
+delay_in_seconds = "0.0"
+
+[node name="on" type="Node" parent="State/Root/Power/On/Shield" index="4"]
+script = ExtResource("4_0jkta")
+
+[node name="to dissipating" type="Node" parent="State/Root/Power/On/Shield/on" index="0"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../dissipating")
+event = &"Shield: to dissipating"
+delay_in_seconds = "0.0"
+
+[node name="dissipating" type="Node" parent="State/Root/Power/On/Shield" index="5"]
+script = ExtResource("4_0jkta")
+
+[node name="to off" type="Node" parent="State/Root/Power/On/Shield/dissipating" index="0"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../off")
+event = &"Shield: to off"
+delay_in_seconds = "0.0"
+
+[node name="to off" type="Node" parent="State/Root/Power/On" index="2"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../off")
+event = &"Power: to off"
+delay_in_seconds = "0.0"
+
+[node name="to blow" type="Node" parent="State/Root/Power/On" index="3"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../off")
+event = &"Power: to blow"
 delay_in_seconds = "0.0"
 
 [node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" node_paths=PackedStringArray("wisps_particles", "lightning_particles", "ready_sphere") instance=ExtResource("7_2p3vg")]
@@ -320,6 +375,13 @@ draw_pass_1 = SubResource("ArrayMesh_r313a")
 
 [node name="ControlNodeReadySphere" parent="TrackPositionContainer" index="5" instance=ExtResource("13_nbe53")]
 
+[node name="Shield" type="StaticBody3D" parent="TrackPositionContainer" index="6" groups=["ControlNodeShieldGroup"]]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrackPositionContainer/Shield" index="0"]
+shape = SubResource("SphereShape3D_tehyq")
+debug_color = Color(0.031590424, 0.4735664, 0.4680773, 1)
+
 [node name="ControlNodeStreak" parent="." index="5" instance=ExtResource("11_8s4nh")]
 
 [connection signal="state_entered" from="State/Root/Control/dribbled" to="State/Root/Power/Power States" method="_on_control_states_dribbled_state_entered"]
@@ -328,19 +390,20 @@ draw_pass_1 = SubResource("ArrayMesh_r313a")
 [connection signal="state_physics_processing" from="State/Root/Control/shot" to="State/Root/Control/Control States" method="_on_shot_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Power/off" to="State/Root/Power/Power States" method="_on_off_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/charging" to="State/Root/Power/Power States" method="_on_charging_state_entered"]
-[connection signal="state_entered" from="State/Root/Power/on" to="State/Root/Power/Power States" method="_on_on_state_entered"]
-[connection signal="state_exited" from="State/Root/Power/on" to="State/Root/Power/Power States" method="_on_on_state_exited"]
-[connection signal="state_physics_processing" from="State/Root/Power/on" to="State/Root/Power/Power States" method="_on_on_state_physics_processing"]
-[connection signal="taken" from="State/Root/Power/on/to off" to="State/Root/Power/Power States" method="_on_on_to_off_taken"]
-[connection signal="taken" from="State/Root/Power/on/to expanded" to="State/Root/Power/Power States" method="_on_on_to_expanded_taken"]
-[connection signal="taken" from="State/Root/Power/on/bounce" to="State/Root/Power/Power States" method="_on_on_to_bounce_taken"]
-[connection signal="taken" from="State/Root/Power/on/hit" to="State/Root/Power/Power States" method="_on_on_to_hit_taken"]
-[connection signal="taken" from="State/Root/Power/on/blow" to="State/Root/Power/Power States" method="_on_on_to_blow_taken"]
-[connection signal="state_entered" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_entered"]
-[connection signal="state_exited" from="State/Root/Power/expanded" to="State/Root/Power/Power States" method="_on_expanded_state_exited"]
-[connection signal="timeout" from="State/Root/Charge/Charge States/LoseChargeTimer" to="State/Root/Charge/Charge States" method="_on_lose_charge_timer_timeout"]
-[connection signal="state_entered" from="State/Root/Charge/none" to="State/Root/Charge/Charge States" method="_on_none_state_entered"]
-[connection signal="state_entered" from="State/Root/Charge/level1" to="State/Root/Charge/Charge States" method="_on_level_1_state_entered"]
-[connection signal="state_entered" from="State/Root/Charge/level2" to="State/Root/Charge/Charge States" method="_on_level_2_state_entered"]
-[connection signal="state_entered" from="State/Root/Charge/level3" to="State/Root/Charge/Charge States" method="_on_level_3_state_entered"]
-[connection signal="state_exited" from="State/Root/Charge/level3" to="State/Root/Charge/Charge States" method="_on_level_3_state_exited"]
+[connection signal="state_entered" from="State/Root/Power/On" to="State/Root/Power/Power States" method="_on_on_state_entered"]
+[connection signal="state_exited" from="State/Root/Power/On" to="State/Root/Power/Power States" method="_on_on_state_exited"]
+[connection signal="timeout" from="State/Root/Power/On/Charge/Charge States/LoseChargeTimer" to="State/Root/Power/On/Charge/Charge States" method="_on_lose_charge_timer_timeout"]
+[connection signal="state_entered" from="State/Root/Power/On/Charge/none" to="State/Root/Power/On/Charge/Charge States" method="_on_none_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/On/Charge/level1" to="State/Root/Power/On/Charge/Charge States" method="_on_level_1_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/On/Charge/level2" to="State/Root/Power/On/Charge/Charge States" method="_on_level_2_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/On/Charge/level3" to="State/Root/Power/On/Charge/Charge States" method="_on_level_3_state_entered"]
+[connection signal="state_exited" from="State/Root/Power/On/Charge/level3" to="State/Root/Power/On/Charge/Charge States" method="_on_level_3_state_exited"]
+[connection signal="state_entered" from="State/Root/Power/On/Shield/off" to="State/Root/Power/On/Shield/Shield States" method="_on_off_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/On/Shield/charging" to="State/Root/Power/On/Shield/Shield States" method="_on_charging_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/On/Shield/inflating" to="State/Root/Power/On/Shield/Shield States" method="_on_inflating_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/On/Shield/on" to="State/Root/Power/On/Shield/Shield States" method="_on_on_state_entered"]
+[connection signal="state_exited" from="State/Root/Power/On/Shield/on" to="State/Root/Power/On/Shield/Shield States" method="_on_on_state_exited"]
+[connection signal="state_entered" from="State/Root/Power/On/Shield/dissipating" to="State/Root/Power/On/Shield/Shield States" method="_on_dissipating_state_entered"]
+[connection signal="taken" from="State/Root/Power/On/to off" to="State/Root/Power/Power States" method="_on_on_to_off_taken"]
+[connection signal="taken" from="State/Root/Power/On/to blow" to="State/Root/Power/Power States" method="_on_on_to_blow_taken"]
+[connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]

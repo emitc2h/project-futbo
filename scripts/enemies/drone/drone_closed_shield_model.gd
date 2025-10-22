@@ -4,6 +4,12 @@ extends Node3D
 ## Get a handle on the shader material
 @onready var material: ShaderMaterial = $ClosedShield.get_surface_override_material(0)
 
+
+func _ready() -> void:
+	material.set_shader_parameter("dissolve_value_in", 0.0)
+	material.set_shader_parameter("dissolve_value_out", 1.0)
+
+
 func hit() -> void:
 	material.set_shader_parameter("dissolve_value_in", 0.0)
 	material.set_shader_parameter("dissolve_value_out", 1.0)

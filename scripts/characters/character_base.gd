@@ -16,6 +16,9 @@ extends CharacterBody3D
 @export var kick_states: CharacterKickStates
 @export var dribble_states: CharacterDribbleStates
 
+## Settable Parameters
+var is_player: bool = false
+
 ## Internal references
 @onready var sc: StateChart = $State
 @onready var target_marker: Marker3D = $TargetMarker

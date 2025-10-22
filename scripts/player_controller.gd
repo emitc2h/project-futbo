@@ -11,6 +11,8 @@ var left_right_axis_is_zero_time_elapsed: float = 0.0
 
 func _ready() -> void:
 	Signals.player_knocked.connect(character.damage_states.knock)
+	## Make it known to the character that they are the player,  so they can send player-specific signals
+	character.is_player = true
 
 
 func _physics_process(delta: float) -> void:

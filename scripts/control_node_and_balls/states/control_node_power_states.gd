@@ -11,18 +11,14 @@ extends Node
 var physics_material: PhysicsMaterial
 
 ## States Enum
-enum State {OFF = 0, CHARGING = 1, ON = 2, EXPANDED = 3}
+enum State {OFF = 0, CHARGING = 1, ON = 2}
 var state: State = State.OFF
 
 ## State transition constants
-const TRANS_OFF_TO_CHARGING: String = "Power: off to charging"
-const TRANS_CHARGING_TO_ON: String = "Power: charging to on"
-const TRANS_ON_TO_OFF: String = "Power: to off"
-const TRANS_ON_TO_EXPANDED: String = "Power: to expanded"
-const TRANS_BOUNCE: String = "Power: bounce"
-const TRANS_HIT: String = "Power: hit"
-const TRANS_BLOW: String = "Power: blow"
-const TRANS_EXPANDED_TO_ON: String = "Power: expanded to on"
+const TRANS_TO_CHARGING: String = "Power: to charging"
+const TRANS_TO_ON: String = "Power: to on"
+const TRANS_TO_OFF: String = "Power: to off"
+const TRANS_TO_BLOW: String = "Power: to blow"
 
 ## Internal variables
 var bounce_strength: float = 0.0
@@ -38,18 +34,22 @@ func _ready() -> void:
 #----------------------------------------
 func _on_off_state_entered() -> void:
 	state = State.OFF
+	
+	## When the control node turns off while being dribbled, it should turn back on immediately
+	if control_node.control_states.state == control_node.control_states.State.DRIBBLED:
+		sc.send_event(TRANS_TO_CHARGING)
 
 
 # charging state
 #----------------------------------------
 func _on_charging_state_entered() -> void:
 	state = State.CHARGING
-	asset.power_up_shield()
+	asset.power_up()
 	direction_ray.turn_on()
 
 
 func _on_charging_finished() -> void:
-	sc.send_event(TRANS_CHARGING_TO_ON)
+	sc.send_event(TRANS_TO_ON)
 
 # on state
 #----------------------------------------
@@ -60,11 +60,6 @@ func _on_on_state_entered() -> void:
 	physics_material.friction = 0.6
 
 
-func _on_on_state_physics_processing(_delta: float) -> void:
-	if Input.is_action_just_pressed("shield up"):
-		sc.send_event(TRANS_ON_TO_EXPANDED)
-
-
 func _on_on_state_exited() -> void:
 	in_on_state = false
 	physics_material.bounce = 0.2
@@ -72,42 +67,20 @@ func _on_on_state_exited() -> void:
 
 
 func _on_on_to_off_taken() -> void:
-	asset.power_down_shield()
+	asset.power_down()
 	direction_ray.turn_off()
-
-
-func _on_on_to_expanded_taken() -> void:
-	sc.send_event(control_node.charge_states.TRANS_DISCHARGE)
-	asset.expand_shield()
-
-
-func _on_on_to_bounce_taken() -> void:
-	asset.bounce(bounce_strength)
-
-
-func _on_on_to_hit_taken() -> void:
-	asset.bounce(bounce_strength)
 
 
 func _on_on_to_blow_taken() -> void:
 	sc.send_event(control_node.charge_states.TRANS_DISCHARGE)
-	asset.blow_shield()
+	asset.shield_anim.kill_tweens()
+	asset.blow()
 	direction_ray.turn_off()
 
 
-# expanded state
-#----------------------------------------
-func _on_expanded_state_entered() -> void:
-	state = State.EXPANDED
-
-
-func _on_expanded_state_exited() -> void:
-	asset.shrink_shield()
-
-
-
-# signal handling
-#========================================
+#=======================================================
+# RECEIVED SIGNALS
+#=======================================================
 func _on_rigid_node_body_entered(body: Node) -> void:
 	var hit_strength: float = control_node.get_ball_velocity().length()
 	bounce_strength = hit_strength / 5.0
@@ -120,15 +93,15 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 	if body.get_parent() is Drone and in_on_state:
 		var drone: Drone = body.get_parent()
 		if drone.get_hit(hit_strength):
-			sc.send_event(TRANS_BLOW)
+			sc.send_event(TRANS_TO_BLOW)
 		else:
-			sc.send_event(TRANS_HIT)
+			asset.shield_anim.bounce(bounce_strength)
 	else:
-		sc.send_event(TRANS_BOUNCE)
+		asset.shield_anim.bounce(bounce_strength)
 
 
 func _on_control_states_dribbled_state_entered() -> void:
-	sc.send_event(TRANS_OFF_TO_CHARGING)
+	sc.send_event(TRANS_TO_CHARGING)
 
 
 func _on_kicked() -> void:

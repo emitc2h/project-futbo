@@ -3,7 +3,7 @@ extends BallControlStates
 
 ## Configurables
 @export var shot_speed: float = 50.0
-@export var range: float = 10.0
+@export var shot_range: float = 10.0
 
 ## Overrides
 var control_node: ControlNode
@@ -26,7 +26,7 @@ var initial_pos: Vector3
 func _ready() -> void:
 	super._ready()
 	control_node = ball as ControlNode
-	streak.duration = range / shot_speed
+	streak.duration = shot_range / shot_speed
 
 
 # shot state
@@ -53,8 +53,9 @@ func _on_shot_state_physics_processing(delta: float) -> void:
 	## Update streak end position
 	streak.end_position = control_node.get_ball_position() - control_node.global_position
 	
-	if char_node.global_position.distance_to(initial_pos) > range:
+	if char_node.global_position.distance_to(initial_pos) > shot_range:
 		## Lose a charge when you don't hit anything
+		print("lost charge, wasted shot")
 		sc.send_event(control_node.charge_states.TRANS_CHARGE_DOWN)
 		end_shot()
 	
@@ -62,7 +63,7 @@ func _on_shot_state_physics_processing(delta: float) -> void:
 		var object: Object = collision.get_collider(0)
 		if (object is DroneShield) or (object is DroneBone):
 			streak.strike()
-			control_node.blow()
+			sc.send_event(control_node.power_states.TRANS_TO_BLOW)
 			var drone: Drone = object.drone
 			drone.die(shot_vector)
 		end_shot()

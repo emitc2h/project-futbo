@@ -71,6 +71,7 @@ func _on_can_dribble_state_entered() -> void:
 #----------------------------------------
 func _on_dribbling_state_entered() -> void:
 	state = State.DRIBBLING
+	if character.is_player: Signals.dribbling_entered.emit()
 	
 	## make the ball identify the player dribbling
 	ball.own(character.get_instance_id())
@@ -95,7 +96,7 @@ func _on_dribbling_state_physics_processing(_delta: float) -> void:
 		sc.send_event(TRANS_TO_CAN_DRIBBLE)
 	
 	## Ensures the ball is attracted to the dribble marker
-	if character.get_instance_id() == ball.dribbler_id:
+	if ball and character.get_instance_id() == ball.dribbler_id:
 		Signals.active_dribble_marker_position_updated.emit(dribble_marker.global_position)
 		Signals.player_velocity_updated.emit(character.velocity)
 	else:
@@ -103,11 +104,13 @@ func _on_dribbling_state_physics_processing(_delta: float) -> void:
 
 
 func _on_dribbling_state_exited() -> void:
+	if character.is_player: Signals.dribbling_exited.emit()
+	
 	## Reset dribble cast target
 	dribble_raycast.target_position = init_raycast_target_position
 	
 	# if this character is the dribbler, end dribbling and ownership
-	if character.get_instance_id() == ball.dribbler_id:
+	if ball and character.get_instance_id() == ball.dribbler_id:
 		ball.end_dribbling()
 		ball.disown(character.get_instance_id())
 

@@ -6,6 +6,7 @@ extends Node3D
 @export var parent_bone_name: String
 @export var bolt_speed: float = 60.0
 @export var bolt_size: float = 0.0
+@export var hit_enabled: bool = false
 
 @onready var bolt_model: Node3D = $DronePlasmaBoltModel
 @onready var bolt_mesh: MeshInstance3D = $DronePlasmaBoltModel/bolt
@@ -84,6 +85,9 @@ func _on_fire_state_physics_processing(delta: float) -> void:
 		
 		if (collider.is_in_group("PlayerGroup")) or (collider is TargetMesh):
 			sc.send_event(TRANS_TO_HIT)
+		elif collider.is_in_group("ControlNodeShieldGroup"):
+			if hit_enabled: Signals.control_node_shield_hit.emit(false)
+			sc.send_event(TRANS_TO_MISS)
 		else:
 			sc.send_event(TRANS_TO_MISS)
 	else:
@@ -93,7 +97,7 @@ func _on_fire_state_physics_processing(delta: float) -> void:
 # hit state
 # -----------------------------------------
 func _on_hit_state_entered() -> void:
-	Signals.player_knocked.emit(Vector3.ZERO, recorded_collision_point)
+	if hit_enabled: Signals.player_knocked.emit(Vector3.ZERO, recorded_collision_point)
 	shrapnel_particles.restart()
 	shrapnel_particles.emitting = true
 	await impact_animation.hit()

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkp8fbjsyyhyx"]
+[gd_scene load_steps=8 format=3 uid="uid://bkp8fbjsyyhyx"]
 
 [ext_resource type="PackedScene" uid="uid://dgpqcnsegq4rs" path="res://scenes/control_node_and_balls/models/control_node_model.tscn" id="1_k14dj"]
 [ext_resource type="Script" uid="uid://crab58bvajfs3" path="res://scripts/control_node_and_balls/assets/control_node_asset.gd" id="2_fgtxj"]
-[ext_resource type="Script" uid="uid://25frarsn771f" path="res://scripts/control_node_and_balls/assets/control_node_props.gd" id="5_bbe66"]
+[ext_resource type="Script" uid="uid://cjryuynjww3dm" path="res://scripts/control_node_and_balls/assets/control_node_shield_animation.gd" id="5_uxj54"]
+[ext_resource type="Script" uid="uid://bgj3ka6xmql7i" path="res://scripts/control_node_and_balls/assets/control_node_emitters_animation.gd" id="6_3mwn8"]
 [ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="6_uxj54"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_bbe66"]
@@ -18,8 +19,10 @@ albedo_texture = ExtResource("6_uxj54")
 billboard_mode = 1
 billboard_keep_scale = true
 
-[node name="ControlNodeAsset" type="Node3D"]
+[node name="ControlNodeAsset" type="Node3D" node_paths=PackedStringArray("shield_anim", "emitters_anim")]
 script = ExtResource("2_fgtxj")
+shield_anim = NodePath("ShieldAnimation")
+emitters_anim = NodePath("EmittersAnimation")
 
 [node name="ControlNodeModel" parent="." instance=ExtResource("1_k14dj")]
 transform = Transform3D(0.153675, 0.0201601, -0.0648185, 0.0137783, 0.147817, 0.0786407, 0.0664683, -0.0772514, 0.13356, 0, 0, 0)
@@ -37,76 +40,93 @@ omni_range = 2.0
 mesh = SubResource("QuadMesh_bbe66")
 surface_material_override/0 = SubResource("StandardMaterial3D_3mwn8")
 
-[node name="ShieldOffProps" type="Node" parent="."]
-script = ExtResource("5_bbe66")
+[node name="ShieldAnimation" type="Node" parent="." node_paths=PackedStringArray("asset", "light", "model", "aura_mesh")]
+script = ExtResource("5_uxj54")
+asset = NodePath("..")
+light = NodePath("../Light")
+model = NodePath("../ControlNodeModel")
+aura_mesh = NodePath("../Aura")
+light_color = Dictionary[int, Color]({
+0: Color(0.27450982, 0.50980395, 0.7058824, 1),
+1: Color(0.27450982, 0.50980395, 0.7058824, 1),
+2: Color(0.49411765, 0.39215687, 0.85882354, 1),
+3: Color(0.6901961, 0.2627451, 0.7921569, 1),
+4: Color(0.27450982, 0.50980395, 0.7058824, 1)
+})
+light_energy = Dictionary[int, float]({
+0: 10.0,
+1: 15.0,
+2: 17.0,
+3: 20.0,
+4: 0.0
+})
+shield_modulate_factor = Dictionary[int, float]({
+0: 0.0,
+1: 0.15,
+2: 0.3,
+3: 0.55,
+4: 0.0
+})
+shield_dissolve_value = Dictionary[int, float]({
+0: 1.0,
+1: 1.0,
+2: 1.0,
+3: 1.0,
+4: 0.0
+})
+lightning_window_size = Dictionary[int, float]({
+0: 0.05,
+1: 0.05,
+2: 0.05,
+3: 0.1,
+4: 0.05
+})
+lightning_amount_ratio = Dictionary[int, float]({
+0: 0.0,
+1: 0.25,
+2: 0.35,
+3: 0.8,
+4: 0.0
+})
+lightning_emission_factor = Dictionary[int, float]({
+0: 0.0,
+1: 30.0,
+2: 120.0,
+3: 240.0,
+4: 0.0
+})
+lightning_reverse = Dictionary[int, bool]({
+0: false,
+1: false,
+2: false,
+3: true,
+4: false
+})
+aura_color = Dictionary[int, Color]({
+0: Color(0.2784314, 0.5137255, 0.70980394, 0.39215687),
+1: Color(0.2784314, 0.5137255, 0.70980394, 0.7058824),
+2: Color(0.49803922, 0.39607844, 0.85882354, 0.8627451),
+3: Color(0.6901961, 0.2627451, 0.7921569, 1),
+4: Color(0, 0, 0, 0)
+})
+shield_scale = Dictionary[int, float]({
+0: 1.0,
+1: 11.0
+})
+shield_alpha = Dictionary[int, float]({
+0: 1.0,
+1: 0.8
+})
 
-[node name="ShieldOnProps" type="Node" parent="."]
-script = ExtResource("5_bbe66")
-emitter_emission_color = Color(0.27451, 0.509804, 0.705882, 1)
-emitter_emission_energy = 1000.0
-light_energy = 10.0
-shield_dissolve_value = 1.0
-aura_color = Color(0.2769, 0.515105, 0.71, 0.392157)
-
-[node name="ShieldExpandedProps" type="Node" parent="."]
-script = ExtResource("5_bbe66")
-emitter_emission_color = Color(0.27451, 0.509804, 0.705882, 1)
-emitter_emission_energy = 1000.0
-light_energy = 10.0
-shield_alpha = 0.8
-shield_dissolve_value = 1.0
-shield_ripple_strength = 0.01
-shield_scale = 11.0
-aura_color = Color(0.2769, 0.515105, 0.71, 0.392157)
-aura_scale = 8.0
-
-[node name="ShieldBlownProps" type="Node" parent="."]
-script = ExtResource("5_bbe66")
-light_color = Color(0, 0, 0, 1)
-shield_alpha = 0.0
-shield_scale = 2.5
-
-[node name="ShieldCharge1Props" type="Node" parent="."]
-script = ExtResource("5_bbe66")
-emitter_emission_color = Color(0.27451, 0.509804, 0.705882, 1)
-emitter_emission_energy = 1000.0
-light_energy = 12.0
-shield_dissolve_value = 1.0
-shield_emission_energy = 40.0
-shield_ripple_strength = 0.04
-shield_modulate_factor = 0.15
-lightning_amount_ratio = 0.1
-lightning_emission_factor = 60.0
-aura_color = Color(0.2769, 0.515105, 0.71, 0.705882)
-
-[node name="ShieldCharge2Props" type="Node" parent="."]
-script = ExtResource("5_bbe66")
-emitter_emission_color = Color(0.27451, 0.509804, 0.705882, 1)
-emitter_emission_energy = 1000.0
-light_color = Color(0.493797, 0.393517, 0.859271, 1)
-light_energy = 16.0
-shield_dissolve_value = 1.0
-shield_emission_energy = 60.0
-shield_ripple_strength = 0.06
-shield_modulate_factor = 0.3
-lightning_amount_ratio = 0.25
-lightning_emission_factor = 120.0
-aura_color = Color(0.49622, 0.3956, 0.86, 0.862745)
-aura_scale = 0.9
-
-[node name="ShieldCharge3Props" type="Node" parent="."]
-script = ExtResource("5_bbe66")
-emitter_emission_color = Color(0.27451, 0.509804, 0.705882, 1)
-emitter_emission_energy = 1000.0
-light_color = Color(0.691933, 0.264655, 0.793064, 1)
-light_energy = 20.0
-shield_dissolve_value = 1.0
-shield_emission_energy = 100.0
-shield_ripple_strength = 0.1
-shield_modulate_factor = 0.55
-lightning_window_size = 0.1
-lightning_amount_ratio = 0.8
-lightning_emission_factor = 240.0
-lightning_reverse = true
-aura_color = Color(0.690196, 0.262745, 0.792157, 1)
-aura_scale = 1.2
+[node name="EmittersAnimation" type="Node" parent="." node_paths=PackedStringArray("asset", "model")]
+script = ExtResource("6_3mwn8")
+asset = NodePath("..")
+model = NodePath("../ControlNodeModel")
+emission_color = Dictionary[int, Color]({
+0: Color(0, 0, 0, 1),
+1: Color(0.27450982, 0.50980395, 0.7058824, 1)
+})
+emission_energy = Dictionary[int, float]({
+0: 0.0,
+1: 1000.0
+})

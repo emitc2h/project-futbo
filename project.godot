@@ -52,6 +52,7 @@ enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
 
 PlayerGroup="Contains nodes belonging to the player"
 BallGroup=""
+ControlNodeShieldGroup=""
 
 [input]
 
@@ -179,7 +180,8 @@ pause={
 }
 "shield up"={
 "deadzone": 0.2,
-"events": []
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":10,"pressure":0.0,"pressed":true,"script":null)
+]
 }
 debug_left={
 "deadzone": 0.2,
@@ -218,6 +220,8 @@ debug_pause={
 3d_physics/layer_3="Ball"
 2d_physics/layer_4="Goal"
 3d_physics/layer_4="Goal"
+3d_physics/layer_5="Player Personal Shield"
+3d_physics/layer_6="Control Node Shield"
 3d_physics/layer_9="Enemy Collision"
 3d_physics/layer_10="Enemy Ragdoll"
 3d_physics/layer_11="Enemy Shield"

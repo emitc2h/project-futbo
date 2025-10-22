@@ -62,13 +62,11 @@ func _on_knocked_state_entered() -> void:
 	
 	## Player faces right, object is to the left
 	if (_colliding_obj_position.x < char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_RIGHT:
-		print("## Player faces right, object is to the left")
 		character.asset.horizontal_knock_blend = -1.0
 		character.asset.recover_blend = -1.0
 
 	## Player faces left, object is to the left
 	if (_colliding_obj_position.x < char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_LEFT:
-		print("## Player faces left, object is to the left")
 		character.asset.horizontal_knock_blend = 1.0
 		character.asset.recover_blend = 1.0
 	

@@ -19,21 +19,22 @@ var state: State = State.FREE
 ## State transition constants
 const TRANS_FREE_TO_DRIBBLED: String = "Control: free to dribbled"
 const TRANS_FREE_TO_HELD: String = "Control: free to held"
-
 const TRANS_TO_FREE: String = "Control: to free"
 
 ## Ball nodes controlled by this state
 @onready var char_node: CharacterBody3D = ball.get_node("CharNode")
 
-# Internal properties
+## Internal properties
 var dribbler_id: int
 var is_owned: bool = false
-
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
 var dribble_time: float
 var dribble_marker_position: Vector3
 var player_velocity: Vector3
 var direction_faced: Enums.Direction = Enums.Direction.RIGHT
+
+## Settable parameters
+var spins_during_dribble: bool = true
 
 
 func _ready() -> void:
@@ -82,7 +83,8 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 	char_node.move_and_slide()
 	
 	# Ball spinning animation
-	char_node.rotation.z = -dribble_time * direction_faced * \
+	if spins_during_dribble:
+		char_node.rotation.z = -dribble_time * direction_faced * \
 		 dribble_rotation_speed * PI
 
 

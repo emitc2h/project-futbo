@@ -36,6 +36,7 @@ func _ready() -> void:
 func _on_idle_state_entered() -> void:
 	state = State.IDLE
 	character.asset.idle()
+	if character.is_player: Signals.idle_entered.emit()
 
 
 func _on_idle_state_physics_processing(_delta: float) -> void:
@@ -50,6 +51,8 @@ func _on_idle_state_physics_processing(_delta: float) -> void:
 
 func _on_idle_state_exited() -> void:
 	direction_states.face_direction_based_on_axis(left_right_axis)
+	if character.is_player: Signals.idle_exited.emit()
+	
 
 
 # moving state

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bxf0onv18bo2q" path="res://prototypes/control_node_test/control_node_test.gd" id="1_ygcf8"]
 [ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="2_rvd62"]
-[ext_resource type="PackedScene" uid="uid://bkp8fbjsyyhyx" path="res://scenes/control_node_and_balls/assets/control_node_asset.tscn" id="3_gxxsf"]
+[ext_resource type="PackedScene" uid="uid://cupvg7lj3rh2s" path="res://scenes/control_node_and_balls/control_node.tscn" id="3_ygcf8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lehrb"]
 sky_top_color = Color(0.123525, 0.15575, 0.200563, 1)
@@ -36,18 +36,6 @@ uv1_scale = Vector3(2, 2, 1)
 
 [sub_resource type="Animation" id="Animation_ygcf8"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ControlNode:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.00965017, 1.32741, 0.414284)]
-}
 
 [sub_resource type="Animation" id="Animation_mt3j1"]
 resource_name = "test_animation"
@@ -56,72 +44,37 @@ loop_mode = 1
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ControlNode")
+tracks/0/path = NodePath("ControlNode/TrackTransformContainer/ControlNodeAsset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(8.9, 14.8667, 16.7667, 19.8667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(1.1, 6.0333333, 8.033334, 10.033334, 12.066667, 15.066667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "values": [{
+"args": [],
+"method": &"power_up_shield"
+}, {
+"args": [],
+"method": &"charge_level_1"
+}, {
+"args": [],
+"method": &"charge_level_2"
+}, {
+"args": [],
+"method": &"charge_level_3"
+}, {
 "args": [],
 "method": &"expand_shield"
 }, {
 "args": [],
-"method": &"shrink_shield"
-}, {
-"args": [],
-"method": &"power_down_shield"
-}, {
-"args": [],
-"method": &"power_up_shield"
+"method": &"blow_shield"
 }]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ControlNode:position")
-tracks/1/interp = 0
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.166667),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector3(0.00965017, 1.32741, 0.414284)]
 }
 
 [sub_resource type="Animation" id="Animation_rvd62"]
 resource_name = "test_blow_animation"
 length = 6.0
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ControlNode:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.00965017, 0.139628, 0.414284)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ControlNode")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.166667, 5.03333),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"power_up_shield"
-}, {
-"args": [],
-"method": &"blow_shield"
-}]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ygcf8"]
 _data = {
@@ -161,12 +114,28 @@ shape = SubResource("WorldBoundaryShape3D_6w21h")
 transform = Transform3D(1, 0, 0, 0, 0.96509, -0.26192, 0, 0.26192, 0.96509, 0, 0.103895, 1.63813)
 fov = 50.0
 
-[node name="ControlNode" parent="." instance=ExtResource("3_gxxsf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00965017, 1.32741, 0.414284)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_ygcf8")
 }
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+
+[node name="ControlNode" parent="." instance=ExtResource("3_ygcf8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1906761, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 46.0
+offset_top = -23.0
+offset_right = 40.0
+offset_bottom = -46.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Text"
+
+[editable path="ControlNode"]
