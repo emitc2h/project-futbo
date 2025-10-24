@@ -31,6 +31,7 @@ var running_log_array: PackedStringArray = []
 
 func _ready() -> void:
 	self.visible = active
+	Signals.debug_pause.connect(_pause)
 	Signals.debug_log.connect(_on_debug_log)
 	Signals.debug_advance.connect(_on_debug_advance)
 	Signals.debug_running_log.connect(_on_debug_running_log)
@@ -63,7 +64,7 @@ func _on_debug_advance() -> void:
 		process_one_tick = false
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if active and paused:
 		if process_one_tick:
 			get_tree().paused = true
@@ -82,15 +83,7 @@ func _input(event: InputEvent) -> void:
 	if not active:
 		return
 	if event.is_action_pressed("debug_pause"):
-		paused = !paused
-		get_tree().paused = !get_tree().paused
-		if paused:
-			Signals.debug_on.emit()
-			pause_log_array_idx = 0
-			tab_container.current_tab = 1
-		else:
-			Signals.debug_off.emit()
-			tab_container.current_tab = 0
+		_pause()
 	
 	if event.is_action_pressed("debug_right"):
 		if paused:
@@ -114,6 +107,18 @@ func _input(event: InputEvent) -> void:
 	
 	_update_pause_header()
 	_update_pause_label()
+
+
+func _pause() -> void:
+	paused = !paused
+	get_tree().paused = !get_tree().paused
+	if paused:
+		Signals.debug_on.emit()
+		pause_log_array_idx = 0
+		tab_container.current_tab = 1
+	else:
+		Signals.debug_off.emit()
+		tab_container.current_tab = 0
 
 
 func _update_pause_header() -> void:

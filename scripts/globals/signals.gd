@@ -92,6 +92,8 @@ signal update_zoom(zoom_target: Enums.Zoom)
 ## DEBUG SIGNALS                         ##
 ## ------------------------------------- ##
 @warning_ignore("unused_signal")
+signal debug_pause
+@warning_ignore("unused_signal")
 signal debug_log(text: String)
 @warning_ignore("unused_signal")
 signal debug_running_log(text: String)

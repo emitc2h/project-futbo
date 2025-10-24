@@ -47,13 +47,3 @@ func blow() -> void:
 func _on_player_long_kick_ready() -> void:
 	if charge_states.state == charge_states.State.LEVEL3:
 		asset.magenta_wisps()
-
-
-func _on_rigid_node_body_entered(body: Node) -> void:
-	pass
-	#print("======================")
-	#print(body.name)
-	#if (body.get_parent()):
-		#print(body.get_parent().name)
-	#else:
-		#print("no parent")

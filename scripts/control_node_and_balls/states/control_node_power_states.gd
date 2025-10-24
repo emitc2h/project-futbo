@@ -73,7 +73,6 @@ func _on_on_to_off_taken() -> void:
 
 func _on_on_to_blow_taken() -> void:
 	sc.send_event(control_node.charge_states.TRANS_DISCHARGE)
-	asset.shield_anim.kill_tweens()
 	asset.blow()
 	direction_ray.turn_off()
 

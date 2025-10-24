@@ -12,7 +12,6 @@ var state: State = State.NO_BALL
 @export_subgroup("Dribble RayCast parameters")
 @export var dribble_raycast_max_length: float = 0.9
 
-
 # Dynamic properties
 var ball: Ball
 
@@ -89,11 +88,19 @@ func _on_dribbling_state_entered() -> void:
 func _on_dribbling_state_physics_processing(_delta: float) -> void:
 	## Track the ball with the raycast
 	dribble_raycast.target_position = (dribble_raycast.transform.inverse() * character.transform.inverse() * ball.get_transform_without_rotation()).origin
-	#dribble_raycast.force_update_transform()
 	dribble_raycast.force_raycast_update()
 	
-	if (not dribble_raycast.is_colliding()) or (dribble_raycast.target_position.length() > dribble_raycast_max_length):
+	## If the dribble cast isn't finding the ball, exit DRIBBLING
+	if (not dribble_raycast.is_colliding()):
 		sc.send_event(TRANS_TO_CAN_DRIBBLE)
+		Signals.debug_pause.emit()
+		return
+	
+	## If the raycast is too long while the ball being outside of the pickup zone, exit DRIBBLING
+	if (dribble_raycast.target_position.length() > dribble_raycast_max_length) and not (retrieve_ball_in_pickup_zone()):
+		sc.send_event(TRANS_TO_CAN_DRIBBLE)
+		Signals.debug_pause.emit()
+		return
 	
 	## Ensures the ball is attracted to the dribble marker
 	if ball and character.get_instance_id() == ball.dribbler_id:
@@ -101,6 +108,7 @@ func _on_dribbling_state_physics_processing(_delta: float) -> void:
 		Signals.player_velocity_updated.emit(character.velocity)
 	else:
 		sc.send_event(TRANS_TO_CAN_DRIBBLE)
+		return
 
 
 func _on_dribbling_state_exited() -> void:
@@ -151,7 +159,8 @@ func engage_dribble_intent() -> void:
 
 
 func disengage_dribble_intent() -> void:
-	sc.send_event(TRANS_TO_CAN_DRIBBLE)
+	if state == State.DRIBBLING:
+		sc.send_event(TRANS_TO_CAN_DRIBBLE)
 
 
 func ball_jump(velocity_y: float) -> void:

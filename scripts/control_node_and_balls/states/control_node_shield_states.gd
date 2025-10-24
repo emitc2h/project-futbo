@@ -20,6 +20,7 @@ const TRANS_TO_ON: String = "Shield: to on"
 const TRANS_TO_DISSIPATING: String = "Shield: to dissipating"
 
 ## Internal variables
+var _intends_to_shield: bool = false
 var _player_is_idle: bool = false
 var _player_is_dribbling: bool = false
 var _shield_allowed: bool = true
@@ -48,7 +49,6 @@ func _on_off_state_entered() -> void:
 	
 	## Re-enable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = true
-	asset.shield_anim.kill_tweens()
 	asset.shield_anim.animate_to_state(control_node.charge_states.state, state)
 
 
@@ -56,6 +56,10 @@ func _on_off_state_entered() -> void:
 #----------------------------------------
 func _on_charging_state_entered() -> void:
 	state = State.CHARGING
+	
+	## Disable the spinning animation
+	control_node.control_node_control_states.spins_during_dribble = false
+	
 	asset.shield_anim.charge_shield(0.5)
 
 
@@ -66,6 +70,7 @@ func _on_inflating_state_entered() -> void:
 
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
+	
 	asset.shield_anim.inflate_shield(0.3)
 
 # on state
@@ -100,29 +105,29 @@ func _on_dissipating_state_entered() -> void:
 #=======================================================
 func _on_player_idle_entered() -> void:
 	_player_is_idle = true
-	check_conditions_to_allow_shield()
+	check_conditions_to_shield()
 
 
 func _on_player_idle_exited() -> void:
 	_player_is_idle = false
-	check_conditions_to_allow_shield()
+	check_conditions_to_shield()
 	sc.send_event(TRANS_TO_DISSIPATING)
 
 
 func _on_player_dribbling_entered() -> void:
 	_player_is_dribbling = true
-	check_conditions_to_allow_shield()
+	check_conditions_to_shield()
 
 
 func _on_player_dribbling_exited() -> void:
 	_player_is_dribbling = false
-	check_conditions_to_allow_shield()
+	check_conditions_to_shield()
 	sc.send_event(TRANS_TO_DISSIPATING)
 
 
 func _on_player_moved() -> void:
 	sc.send_event(TRANS_TO_DISSIPATING)
-	check_conditions_to_allow_shield()
+	check_conditions_to_shield()
 
 
 func _on_charge_shield_finished() -> void:
@@ -143,14 +148,18 @@ func _on_blow_finished() -> void:
 #=======================================================
 # CONTROLS
 #=======================================================
-func check_conditions_to_allow_shield() -> void:
-	_shield_allowed = _player_is_idle and _player_is_dribbling
-
-
-func turn_on_shield() -> void:
+func check_conditions_to_shield() -> void:
+	_shield_allowed = _player_is_idle and _player_is_dribbling and _intends_to_shield
+	## If all conditions are met
 	if _shield_allowed:
 		sc.send_event(TRANS_TO_CHARGING)
 
 
+func turn_on_shield() -> void:
+	_intends_to_shield = true
+	check_conditions_to_shield()
+
+
 func turn_off_shield() -> void:
+	_intends_to_shield = false
 	sc.send_event(TRANS_TO_DISSIPATING)
