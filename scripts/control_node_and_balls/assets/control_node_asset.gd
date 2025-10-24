@@ -15,7 +15,11 @@ var aura_material: StandardMaterial3D
 ## Ready Sphere (needs to be placed in the TrackPositionContainer, so inject dependency)
 @export var ready_sphere: ControlNodeReadySphere
 
+## Warp effect
+@export var warp_effect: ControlNodeWarpEffect
+
 signal power_up_finished
+signal power_down_finished
 
 const blue: Color = Color.STEEL_BLUE
 const black: Color = Color.BLACK
@@ -42,6 +46,7 @@ func power_down() -> void:
 	turn_off_ready_sphere()
 	await shield_anim.power_off()
 	await emitters_anim.power_off()
+	power_down_finished.emit()
 	return
 
 
@@ -69,3 +74,27 @@ func blue_wisps() -> void:
 func magenta_wisps() -> void:
 	wisps_particles.process_material.color = magenta
 	wisps_particles.emitting = true
+
+
+func warp_out() -> void:
+	power_down()
+	await power_down_finished
+	warp_effect.open_warp_portal(1.4)
+	await warp_effect.open_warp_portal_finished
+	warp_effect.dematerialize(0.8)
+	await get_tree().create_timer(0.4).timeout
+	self.visible = false
+	warp_effect.close_warp_portal(0.7)
+	await warp_effect.close_warp_portal_finished
+	
+	await get_tree().create_timer(2.0).timeout
+	
+	warp_effect.open_warp_portal(1.4)
+	await warp_effect.open_warp_portal_finished
+	warp_effect.materialize(0.8)
+	await get_tree().create_timer(0.4).timeout
+	self.visible = true
+	warp_effect.close_warp_portal(0.7)
+	await warp_effect.close_warp_portal_finished
+	power_up()
+	await power_up_finished

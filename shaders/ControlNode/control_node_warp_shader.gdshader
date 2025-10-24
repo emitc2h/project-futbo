@@ -6,7 +6,7 @@ uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_n
 uniform sampler2D mask_texture;
 
 // Controls the intensity of the distortion (higher values = more distortion)
-uniform float power : hint_range(-1.0, 5.0, 0.0001) = 0.0;
+uniform float power : hint_range(-3.0, 5.0, 0.0001) = 0.0;
 
 varying vec2 screen_node_position;
 
@@ -28,13 +28,17 @@ void vertex() {
 void fragment() {
 	float mask = texture(mask_texture, UV).r;
 	
+	float aspect_ratio = float(VIEWPORT_SIZE.x) / float(VIEWPORT_SIZE.y);
+	
 	vec2 quad_to_screen = vec2(0.5, 0.5) + screen_node_position;
-	vec2 uv = SCREEN_UV - quad_to_screen;
-	float dist = distance(SCREEN_UV - vec2(0.5, 0.5), screen_node_position);
+	vec2 centered_uv = SCREEN_UV - quad_to_screen;
+	vec2 distance_uv = vec2((SCREEN_UV - vec2(0.5, 0.5)).x * aspect_ratio, (SCREEN_UV - vec2(0.5, 0.5)).y);
+	float dist = distance(distance_uv, screen_node_position);
 	float warp = 1.0 - mask * pow(dist, power);
-	vec2 warp_uv = uv * warp + quad_to_screen;
+	vec2 warp_uv = centered_uv * warp + quad_to_screen;
 	
 	vec3 albedo = texture(screen_texture, warp_uv).rgb;
 	
 	ALBEDO = albedo;
+	//ALPHA = 0.5;
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://cupvg7lj3rh2s"]
+[gd_scene load_steps=39 format=4 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
@@ -17,8 +17,13 @@
 [ext_resource type="Texture2D" uid="uid://cmy0jxny0n8xx" path="res://assets/3D/Particles/dots/mega_dot_color.png" id="12_cnds4"]
 [ext_resource type="Material" uid="uid://bu2l1unbjhits" path="res://assets/3D/ControlNode/materials/control_node_lightning_material.tres" id="12_r313a"]
 [ext_resource type="PackedScene" uid="uid://dr3wkl0fgpbyw" path="res://scenes/control_node_and_balls/models/control_node_ready_sphere.tscn" id="13_nbe53"]
+[ext_resource type="Shader" uid="uid://bxeenh847ea3o" path="res://shaders/ControlNode/control_node_warp_vfx_shader.gdshader" id="17_1t0mc"]
+[ext_resource type="Script" uid="uid://d3uo20hm422h2" path="res://scripts/control_node_and_balls/assets/control_node_warp_effect.gd" id="17_7vd1p"]
 [ext_resource type="Shader" uid="uid://cmpxotk6ohnpq" path="res://shaders/ControlNode/control_node_warp_shader.gdshader" id="17_l8rvj"]
-[ext_resource type="Texture2D" uid="uid://bp80q4mjfvqkb" path="res://assets/3D/Textures/ControlNode/warp_map.png" id="18_1t0mc"]
+[ext_resource type="Texture2D" uid="uid://bi6w6d2jroaxn" path="res://assets/3D/Textures/ControlNode/warp_lens_mask.png" id="18_1t0mc"]
+[ext_resource type="Texture2D" uid="uid://c17fg5mms40sa" path="res://assets/3D/Textures/ControlNode/warp_center_mask.png" id="20_yiu5s"]
+[ext_resource type="Texture2D" uid="uid://xhr4admvqewe" path="res://assets/3D/Textures/ControlNode/warp_rays_mask.png" id="21_7vd1p"]
+[ext_resource type="Texture2D" uid="uid://dvs4iuhc0rkpk" path="res://assets/3D/Textures/ControlNode/warp_ring_mask.png" id="22_hlhvm"]
 
 [sub_resource type="Curve" id="Curve_r313a"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.708835, 0.64441), -1.77206, -1.77206, 0, 0, Vector2(0.953815, 0), 0.0, 0.0, 0, 0]
@@ -111,11 +116,28 @@ radius = 1.8
 
 [sub_resource type="QuadMesh" id="QuadMesh_1t0mc"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ygoor"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xdpkx"]
 render_priority = 0
 shader = ExtResource("17_l8rvj")
 shader_parameter/mask_texture = ExtResource("18_1t0mc")
-shader_parameter/power = 4.9999998482
+shader_parameter/power = -1.0000000506
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ygoor"]
+render_priority = 1
+shader = ExtResource("17_1t0mc")
+shader_parameter/color = Color(0.50826854, 0.70329857, 0.9999984, 1)
+shader_parameter/ring_texture = ExtResource("22_hlhvm")
+shader_parameter/ring_emission_strength = 18.10000026971172
+shader_parameter/ring_threshold = 0.999999977648
+shader_parameter/ring_rotation_speed = -16.89999995380628
+shader_parameter/rays_texture = ExtResource("21_7vd1p")
+shader_parameter/rays_emission_strength = 39.70000059157764
+shader_parameter/rays_threshold = 0.0
+shader_parameter/center_texture = ExtResource("20_yiu5s")
+shader_parameter/center_emission_strength = 44.10000065714292
+shader_parameter/center_threshold = 0.999999977648
+shader_parameter/center_rotation_speed = 5.00000037253
+shader_parameter/center_scale = 1.90000002831228
 
 [node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states", "shield_states", "asset") instance=ExtResource("1_fpwqj")]
 script = ExtResource("2_r7e0p")
@@ -349,25 +371,22 @@ to = NodePath("../../off")
 event = &"Power: to blow"
 delay_in_seconds = "0.0"
 
-[node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" node_paths=PackedStringArray("wisps_particles", "lightning_particles", "ready_sphere") instance=ExtResource("7_2p3vg")]
+[node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" node_paths=PackedStringArray("wisps_particles", "lightning_particles", "ready_sphere", "warp_effect") instance=ExtResource("7_2p3vg")]
 wisps_particles = NodePath("../../TrackPositionContainer/WispParticles3D")
 lightning_particles = NodePath("../../TrackPositionContainer/LightningParticles3D")
 ready_sphere = NodePath("../../TrackPositionContainer/ControlNodeReadySphere")
+warp_effect = NodePath("../../TrackPositionContainer/WarpEffect")
 
 [node name="DirectionRay" parent="TrackPositionContainer" index="0" instance=ExtResource("4_bt07l")]
-visible = false
 
 [node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="TrackPositionContainer" index="1"]
-visible = false
 strength = 65.0
 attenuation = 2.0
 radius = 10.0
 
 [node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="TrackPositionContainer" index="2"]
-visible = false
 
 [node name="WispParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" index="3"]
-visible = false
 emitting = false
 amount = 200
 lifetime = 1.2
@@ -381,7 +400,6 @@ process_material = SubResource("ParticleProcessMaterial_1t0mc")
 draw_pass_1 = SubResource("QuadMesh_ygoor")
 
 [node name="LightningParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" index="4"]
-visible = false
 amount = 10
 amount_ratio = 0.1
 local_coords = true
@@ -389,23 +407,35 @@ process_material = SubResource("ParticleProcessMaterial_xdpkx")
 draw_pass_1 = SubResource("ArrayMesh_r313a")
 
 [node name="ControlNodeReadySphere" parent="TrackPositionContainer" index="5" instance=ExtResource("13_nbe53")]
-visible = false
 
 [node name="Shield" type="StaticBody3D" parent="TrackPositionContainer" index="6" groups=["ControlNodeShieldGroup"]]
-visible = false
 collision_layer = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrackPositionContainer/Shield" index="0"]
 shape = SubResource("SphereShape3D_tehyq")
 debug_color = Color(0.031590424, 0.4735664, 0.4680773, 1)
 
-[node name="WarpMesh" type="MeshInstance3D" parent="TrackPositionContainer" index="7"]
+[node name="WarpEffect" type="Node3D" parent="TrackPositionContainer" index="7"]
+script = ExtResource("17_7vd1p")
+
+[node name="WarpMesh" type="MeshInstance3D" parent="TrackPositionContainer/WarpEffect" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0036141872, 0.011746705, 0)
 mesh = SubResource("QuadMesh_1t0mc")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_xdpkx")
+
+[node name="VFXMesh" type="MeshInstance3D" parent="TrackPositionContainer/WarpEffect" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0036141872, 0.011746705, 0)
+mesh = SubResource("QuadMesh_1t0mc")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("ShaderMaterial_ygoor")
 
+[node name="OmniLight3D" type="OmniLight3D" parent="TrackPositionContainer/WarpEffect" index="2"]
+light_intensity_lumens = 1000000.0
+light_color = Color(0.50980395, 0.7019608, 1, 1)
+light_cull_mask = 4294967291
+
 [node name="ControlNodeStreak" parent="." index="5" instance=ExtResource("11_8s4nh")]
-visible = false
 
 [connection signal="state_entered" from="State/Root/Control/dribbled" to="State/Root/Power/Power States" method="_on_control_states_dribbled_state_entered"]
 [connection signal="state_entered" from="State/Root/Control/shot" to="State/Root/Control/Control States" method="_on_shot_state_entered"]
