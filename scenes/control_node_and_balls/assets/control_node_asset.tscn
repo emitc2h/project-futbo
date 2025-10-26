@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://bkp8fbjsyyhyx"]
 
 [ext_resource type="PackedScene" uid="uid://dgpqcnsegq4rs" path="res://scenes/control_node_and_balls/models/control_node_model.tscn" id="1_k14dj"]
-[ext_resource type="Script" uid="uid://crab58bvajfs3" path="res://scripts/control_node_and_balls/assets/control_node_asset.gd" id="2_fgtxj"]
-[ext_resource type="Script" uid="uid://cjryuynjww3dm" path="res://scripts/control_node_and_balls/assets/control_node_shield_animation.gd" id="5_uxj54"]
-[ext_resource type="Script" uid="uid://bgj3ka6xmql7i" path="res://scripts/control_node_and_balls/assets/control_node_emitters_animation.gd" id="6_3mwn8"]
+[ext_resource type="Script" uid="uid://crab58bvajfs3" path="res://scripts/control_node_and_balls/asset/control_node_asset.gd" id="2_fgtxj"]
+[ext_resource type="Script" uid="uid://cjryuynjww3dm" path="res://scripts/control_node_and_balls/asset/control_node_shield_animation.gd" id="5_uxj54"]
+[ext_resource type="Script" uid="uid://bgj3ka6xmql7i" path="res://scripts/control_node_and_balls/asset/control_node_emitters_animation.gd" id="6_3mwn8"]
 [ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="6_uxj54"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_bbe66"]

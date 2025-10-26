@@ -19,7 +19,7 @@
 [ext_resource type="Material" uid="uid://bu2l1unbjhits" path="res://assets/3D/ControlNode/materials/control_node_lightning_material.tres" id="12_r313a"]
 [ext_resource type="PackedScene" uid="uid://dr3wkl0fgpbyw" path="res://scenes/control_node_and_balls/models/control_node_ready_sphere.tscn" id="13_nbe53"]
 [ext_resource type="Shader" uid="uid://bxeenh847ea3o" path="res://shaders/ControlNode/control_node_warp_vfx_shader.gdshader" id="17_1t0mc"]
-[ext_resource type="Script" uid="uid://d3uo20hm422h2" path="res://scripts/control_node_and_balls/assets/control_node_warp_effect.gd" id="17_7vd1p"]
+[ext_resource type="Script" uid="uid://d3uo20hm422h2" path="res://scripts/control_node_and_balls/asset/control_node_warp_effect.gd" id="17_7vd1p"]
 [ext_resource type="Shader" uid="uid://cmpxotk6ohnpq" path="res://shaders/ControlNode/control_node_warp_shader.gdshader" id="17_l8rvj"]
 [ext_resource type="Texture2D" uid="uid://bi6w6d2jroaxn" path="res://assets/3D/Textures/ControlNode/warp_lens_mask.png" id="18_1t0mc"]
 [ext_resource type="Texture2D" uid="uid://c17fg5mms40sa" path="res://assets/3D/Textures/ControlNode/warp_center_mask.png" id="20_yiu5s"]
