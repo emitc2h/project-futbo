@@ -1,5 +1,5 @@
 class_name DroneShield
-extends StaticBody3D
+extends AnimatableBody3D
 
 @export var drone: Drone
 

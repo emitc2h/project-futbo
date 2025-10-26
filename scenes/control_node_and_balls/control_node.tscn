@@ -1,8 +1,9 @@
-[gd_scene load_steps=39 format=4 uid="uid://cupvg7lj3rh2s"]
+[gd_scene load_steps=40 format=4 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_02qb1"]
+[ext_resource type="Script" uid="uid://bkciqoab74gbb" path="res://scripts/control_node_and_balls/states/control_node_physics_states.gd" id="3_hlhvm"]
 [ext_resource type="Script" uid="uid://bpu4om7fscq8" path="res://scripts/control_node_and_balls/states/control_node_control_states.gd" id="3_qi4cr"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_0jkta"]
 [ext_resource type="PackedScene" uid="uid://caxwuwjjre3j2" path="res://scenes/control_node_and_balls/direction_ray.tscn" id="4_bt07l"]
@@ -120,24 +121,24 @@ radius = 1.8
 render_priority = 0
 shader = ExtResource("17_l8rvj")
 shader_parameter/mask_texture = ExtResource("18_1t0mc")
-shader_parameter/power = -1.0000000506
+shader_parameter/power = 4.9999997976
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ygoor"]
 render_priority = 1
 shader = ExtResource("17_1t0mc")
 shader_parameter/color = Color(0.50826854, 0.70329857, 0.9999984, 1)
 shader_parameter/ring_texture = ExtResource("22_hlhvm")
-shader_parameter/ring_emission_strength = 18.10000026971172
-shader_parameter/ring_threshold = 0.999999977648
-shader_parameter/ring_rotation_speed = -16.89999995380628
+shader_parameter/ring_emission_strength = 0.0
+shader_parameter/ring_threshold = 0.0
+shader_parameter/ring_rotation_speed = 0.0
 shader_parameter/rays_texture = ExtResource("21_7vd1p")
-shader_parameter/rays_emission_strength = 39.70000059157764
+shader_parameter/rays_emission_strength = 0.0
 shader_parameter/rays_threshold = 0.0
 shader_parameter/center_texture = ExtResource("20_yiu5s")
-shader_parameter/center_emission_strength = 44.10000065714292
-shader_parameter/center_threshold = 0.999999977648
-shader_parameter/center_rotation_speed = 5.00000037253
-shader_parameter/center_scale = 1.90000002831228
+shader_parameter/center_emission_strength = 0.0
+shader_parameter/center_threshold = 0.0
+shader_parameter/center_rotation_speed = 0.0
+shader_parameter/center_scale = 0.0
 
 [node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states", "shield_states", "asset") instance=ExtResource("1_fpwqj")]
 script = ExtResource("2_r7e0p")
@@ -148,6 +149,24 @@ asset = NodePath("TrackTransformContainer/ControlNodeAsset")
 
 [node name="State" parent="." index="0"]
 track_in_editor = true
+
+[node name="Physics States" parent="State/Root/Physics" index="0"]
+script = ExtResource("3_hlhvm")
+
+[node name="to warping" type="Node" parent="State/Root/Physics/rigid" index="1"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../warping")
+event = &"Physics: to warping"
+delay_in_seconds = "0.0"
+
+[node name="warping" type="Node" parent="State/Root/Physics" index="3"]
+script = ExtResource("4_0jkta")
+
+[node name="to rigid" type="Node" parent="State/Root/Physics/warping" index="0"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../rigid")
+event = &"Physics: to rigid"
+delay_in_seconds = "0.0"
 
 [node name="Control States" parent="State/Root/Control" index="0" node_paths=PackedStringArray("streak")]
 script = ExtResource("3_qi4cr")
@@ -437,6 +456,8 @@ light_cull_mask = 4294967291
 
 [node name="ControlNodeStreak" parent="." index="5" instance=ExtResource("11_8s4nh")]
 
+[connection signal="state_entered" from="State/Root/Physics/warping" to="State/Root/Physics/Physics States" method="_on_warping_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Physics/warping" to="State/Root/Physics/Physics States" method="_on_warping_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Control/dribbled" to="State/Root/Power/Power States" method="_on_control_states_dribbled_state_entered"]
 [connection signal="state_entered" from="State/Root/Control/shot" to="State/Root/Control/Control States" method="_on_shot_state_entered"]
 [connection signal="state_exited" from="State/Root/Control/shot" to="State/Root/Control/Control States" method="_on_shot_state_exited"]

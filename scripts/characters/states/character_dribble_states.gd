@@ -27,6 +27,7 @@ var init_raycast_target_position: Vector3
 
 func _ready() -> void:
 	init_raycast_target_position = dribble_raycast.target_position
+	Signals.control_node_requests_destination.connect(_on_control_node_requests_destination)
 
 
 # no ball state
@@ -93,13 +94,11 @@ func _on_dribbling_state_physics_processing(_delta: float) -> void:
 	## If the dribble cast isn't finding the ball, exit DRIBBLING
 	if (not dribble_raycast.is_colliding()):
 		sc.send_event(TRANS_TO_CAN_DRIBBLE)
-		Signals.debug_pause.emit()
 		return
 	
 	## If the raycast is too long while the ball being outside of the pickup zone, exit DRIBBLING
 	if (dribble_raycast.target_position.length() > dribble_raycast_max_length) and not (retrieve_ball_in_pickup_zone()):
 		sc.send_event(TRANS_TO_CAN_DRIBBLE)
-		Signals.debug_pause.emit()
 		return
 	
 	## Ensures the ball is attracted to the dribble marker
@@ -145,6 +144,9 @@ func _on_dribble_pickup_zone_body_exited(body: Node3D) -> void:
 		if state == State.CAN_DRIBBLE:
 			sc.send_event(TRANS_TO_NO_BALL)
 
+
+func _on_control_node_requests_destination() -> void:
+	Signals.player_update_destination.emit(dribble_marker.global_position)
 
 #=======================================================
 # CONTROLS

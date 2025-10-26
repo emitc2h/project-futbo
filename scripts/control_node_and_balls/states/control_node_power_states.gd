@@ -48,9 +48,6 @@ func _on_charging_state_entered() -> void:
 	direction_ray.turn_on()
 
 
-func _on_charging_finished() -> void:
-	sc.send_event(TRANS_TO_ON)
-
 # on state
 #----------------------------------------
 func _on_on_state_entered() -> void:
@@ -64,17 +61,17 @@ func _on_on_state_exited() -> void:
 	in_on_state = false
 	physics_material.bounce = 0.2
 	physics_material.friction = 0.5
+	direction_ray.turn_off()
 
 
 func _on_on_to_off_taken() -> void:
 	asset.power_down()
-	direction_ray.turn_off()
+	
 
 
 func _on_on_to_blow_taken() -> void:
 	sc.send_event(control_node.charge_states.TRANS_DISCHARGE)
 	asset.blow()
-	direction_ray.turn_off()
 
 
 #=======================================================
@@ -105,3 +102,7 @@ func _on_control_states_dribbled_state_entered() -> void:
 
 func _on_kicked() -> void:
 	direction_ray.was_just_kicked = true
+
+
+func _on_charging_finished() -> void:
+	sc.send_event(TRANS_TO_ON)

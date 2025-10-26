@@ -557,7 +557,7 @@ surface_material_override/9 = ExtResource("7_jsqfj")
 
 [node name="Physical Bone BODY" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="0"]
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 1
 angular_damp = 10.0
 bone_name = "BODY"
@@ -589,7 +589,7 @@ draw_pass_1 = SubResource("QuadMesh_pftr7")
 [node name="Physical Bone DEF_FRONT_PLATE" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="1"]
 transform = Transform3D(0, -1.7881393e-07, -1, -1, 5.9604645e-08, -1.0658141e-14, 5.9604645e-08, 1, -1.7881393e-07, 1.8175978e-08, 2.1103753e-22, -2.134834e-08)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(0.9999994, 0, 0, 0, 0.9999994, 0, 0, 0, 1, 0, 0, 0)
 body_offset = Transform3D(1.0000001, -5.960465e-08, -5.960464e-08, 0, 1, 5.9604645e-08, 0, 0, 1, 0, 0, 0)
@@ -599,7 +599,7 @@ joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 19.999992
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -608,20 +608,20 @@ transform = Transform3D(-7.4328405e-08, -0.99999994, 2.9802326e-08, -1.6885299e-
 shape = SubResource("ConvexPolygonShape3D_fedws")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="2"]
-transform = Transform3D(-3.1803268e-07, 1.0260532e-07, 1, -0.2000472, 0.97978634, -1.6415281e-07, -0.97978634, -0.2000472, -2.910781e-07, -7.337712e-08, -1.3282175e-08, 0.512002)
+transform = Transform3D(-3.1690627e-07, 1.02042115e-07, 1, -0.2000472, 0.97978634, -1.6337565e-07, -0.97978634, -0.2000472, -2.9008712e-07, -7.337712e-08, -1.3282175e-08, 0.512002)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.22495073, 0.97436893, 0, -0.97436893, -0.22495073, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -1.7976891)
-body_offset = Transform3D(1.0000002, 1.0877848e-06, 4.7103796e-08, -1.2814999e-06, 1.0000001, -9.590252e-09, 2.3219712e-08, -3.6885993e-08, 1, 0, 0, 0)
+body_offset = Transform3D(1.0000002, 1.0877848e-06, 4.5977387e-08, -1.2814999e-06, 1.0000001, -9.0270476e-09, 2.4346122e-08, -3.7449198e-08, 1, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_01.T"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -24.999996
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -630,20 +630,20 @@ transform = Transform3D(-3.4106472e-07, -0.20004706, -0.9797863, 1.3904688e-07, 
 shape = SubResource("ConvexPolygonShape3D_8fjvm")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="3"]
-transform = Transform3D(-2.627028e-07, 2.0645273e-07, 1, -0.5600808, 0.828438, -3.1816808e-07, -0.82843804, -0.56008077, -1.0200276e-07, -4.4802867e-08, 0.20070502, 0.47102338)
+transform = Transform3D(-2.615764e-07, 2.0701593e-07, 1, -0.5600808, 0.828438, -3.1800377e-07, -0.82843804, -0.56008077, -1.0075416e-07, -4.4802867e-08, 0.20070502, 0.47102338)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.99938977, -0.034899414, 0, 0.034899414, -0.99938977, 0, 0, 0, 0.9999995, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 3.106686)
-body_offset = Transform3D(1.0000002, 0.00038033724, 6.832868e-08, -0.00038042665, 0.9999999, -1.4493445e-08, 1.44279895e-08, -1.527944e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1.0000002, 0.00038033724, 6.7202066e-08, -0.00038042665, 0.9999999, -1.505622e-08, 1.5554399e-08, -9.647394e-10, 1, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_02.T"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -24.999996
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -652,20 +652,20 @@ transform = Transform3D(-2.766168e-07, -0.55976754, -0.8286497, 2.0735423e-07, 0
 shape = SubResource("ConvexPolygonShape3D_jsqfj")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="4"]
-transform = Transform3D(-9.271212e-08, 2.0508101e-07, 1, -0.82895494, 0.5593155, -1.9155915e-07, -0.5593155, -0.8289549, 1.18147575e-07, -4.2894293e-09, 0.3620397, 0.36203945)
+transform = Transform3D(-9.271212e-08, 2.0620742e-07, 1, -0.82895494, 0.5593155, -1.9218916e-07, -0.5593155, -0.8289549, 1.1908132e-07, -4.2894293e-09, 0.3620397, 0.36203945)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.99939036, -0.034899436, 0, 0.034899436, -0.99939036, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 3.106686)
-body_offset = Transform3D(1.0000001, 0.0005415976, 9.553027e-08, -0.0005415678, 0.9999999, 3.3367087e-11, -1.2782991e-08, 1.5986608e-08, 1, 0, 0, 0)
+body_offset = Transform3D(1.0000001, 0.0005415976, 9.552968e-08, -0.0005415678, 0.9999999, -1.0930421e-09, -1.2782991e-08, 1.7113017e-08, 1, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_03.T"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -24.999996
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -674,20 +674,20 @@ transform = Transform3D(-7.992375e-08, -0.82865757, -0.55975574, 1.9013976e-07, 
 shape = SubResource("ConvexPolygonShape3D_3yi20")
 
 [node name="Physical Bone DEF_PANEL_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="5"]
-transform = Transform3D(-9.911908e-08, 7.317171e-08, 1, -0.9424359, -0.33438697, -6.89457e-08, 0.33438697, -0.94243586, 1.0210377e-07, 3.2534835e-08, 0.47102332, 0.20070459)
+transform = Transform3D(-9.855587e-08, 7.260851e-08, 1, -0.9424359, -0.33438697, -6.860325e-08, 0.33438697, -0.94243586, 1.0138466e-07, 3.2534835e-08, 0.47102332, 0.20070459)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.8290369, 0.55919236, 0, -0.55919236, -0.8290369, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -2.5481808)
-body_offset = Transform3D(1.0000004, -6.058812e-05, 3.025106e-08, 6.0796738e-05, 1.0000004, 8.790346e-08, 5.986152e-09, -1.1797198e-08, 1, 0, 0, 0)
+body_offset = Transform3D(1.0000004, -6.058812e-05, 2.9687811e-08, 6.0796738e-05, 1.0000004, 8.846663e-08, 6.5493566e-09, -1.23604025e-08, 1, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_PANEL.T"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -698,9 +698,9 @@ shape = SubResource("ConvexPolygonShape3D_wabu4")
 [node name="Physical Bone DEF_VERTEBRAE_01_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="6"]
 transform = Transform3D(-7.544634e-08, -6.8849715e-08, -1, 0.20004621, -0.97978646, 5.2365266e-08, -0.97978646, -0.20004621, 8.7694424e-08, -7.337711e-08, 8.617755e-09, 0.512002)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
-joint_offset = Transform3D(-0.13917291, 0.9902669, 0, -0.9902669, -0.13917291, 0, 0, 0, 1, 0, 0, 0)
+joint_offset = Transform3D(-0.1391729, 0.9902668, 0, -0.9902668, -0.1391729, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -1.7104226)
 body_offset = Transform3D(1.0000001, 2.6226044e-06, -4.866543e-08, -2.592802e-06, 1, -7.479003e-08, 2.1891111e-09, 4.466635e-09, 1, 0, 0, 0)
 angular_damp = 15.0
@@ -709,7 +709,7 @@ joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -718,20 +718,20 @@ transform = Transform3D(-4.371139e-08, -0.19936793, -0.9799247, 0, 0.9799247, -0
 shape = SubResource("ConvexPolygonShape3D_8fjvm")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="7"]
-transform = Transform3D(-3.2510044e-08, -9.024724e-08, -1, 0.5599083, -0.8285546, 5.6572127e-08, -0.82855463, -0.5599083, 7.7466524e-08, -8.656565e-08, -0.20070505, 0.47102392)
+transform = Transform3D(-3.2228442e-08, -9.024724e-08, -1, 0.5599083, -0.82855463, 5.6729796e-08, -0.82855463, -0.5599082, 7.72332e-08, -8.656565e-08, -0.20070505, 0.47102392)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.99862903, 0.052336022, 0, -0.052336022, -0.99862903, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -3.0892327)
-body_offset = Transform3D(1.0000001, 0.00017306209, 3.55341e-09, -0.00017303228, 1, -8.561304e-08, -1.9580781e-08, 2.8535965e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1.0000001, 0.00017312169, 3.8350265e-09, -0.00017303228, 1, -8.561308e-08, -1.9862384e-08, 2.8535894e-09, 1, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_02.B"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -742,7 +742,7 @@ shape = SubResource("ConvexPolygonShape3D_jsqfj")
 [node name="Physical Bone DEF_VERTEBRAE_03_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="8"]
 transform = Transform3D(4.256887e-08, 1.4311993e-07, -1, 0.8287107, -0.55967736, -4.4823704e-08, -0.55967736, -0.8287107, -1.4242984e-07, -1.0357906e-07, -0.36203974, 0.36204016)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.9993902, 0.03489943, 0, -0.03489943, -0.9993902, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -3.106686)
@@ -753,7 +753,7 @@ joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -762,20 +762,20 @@ transform = Transform3D(3.7596028e-08, -0.8286516, -0.55976444, -1.9155688e-07, 
 shape = SubResource("ConvexPolygonShape3D_3yi20")
 
 [node name="Physical Bone DEF_PANEL_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="9"]
-transform = Transform3D(1.89772e-08, 1.5569113e-07, -1, 0.9424945, 0.33422175, 6.992126e-08, 0.33422175, -0.9424945, -1.4039543e-07, -7.581258e-08, -0.47102347, 0.20070544)
+transform = Transform3D(1.8836399e-08, 1.5569113e-07, -1, 0.9424945, 0.33422175, 6.9788555e-08, 0.33422175, -0.9424945, -1.4044248e-07, -7.581258e-08, -0.47102347, 0.20070544)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.8290371, 0.5591925, 0, -0.5591925, -0.8290371, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -2.5481808)
-body_offset = Transform3D(1, -0.0002362132, 8.179009e-08, 0.0002361834, 1.0000001, -4.1774356e-08, -5.6820255e-09, 5.5378706e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, -0.0002362132, 8.16493e-08, 0.0002361834, 1.0000001, -4.1774385e-08, -5.5412244e-09, 5.5378706e-09, 1, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_PANEL.B"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -786,7 +786,7 @@ shape = SubResource("ConvexPolygonShape3D_jykis")
 [node name="Physical Bone DEF_BACK_PLATE" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="10"]
 transform = Transform3D(-1.8293102e-10, 2.376505e-07, 1, -1, 9.2387205e-07, -1.8315058e-10, -9.2387205e-07, -1, 2.376505e-07, -5.562103e-23, -3.502501e-23, -2.1348344e-08)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(0.99999875, 0, 0, 0, 0.99999875, 0, 0, 0, 1, 0, 0, 0)
 body_offset = Transform3D(1, -9.2387205e-07, 1.8315058e-10, 9.2387205e-07, 1, 7.680825e-10, -1.8315129e-10, -7.680825e-10, 1, 0, 0, 0)
@@ -796,7 +796,7 @@ joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 19.999992
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -807,9 +807,9 @@ shape = SubResource("ConvexPolygonShape3D_e8q0d")
 [node name="Physical Bone DEF_VERTEBRAE_01_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="11"]
 transform = Transform3D(-0.20003618, 0.97978854, -1.0264458e-05, -5.6073084e-05, -9.718287e-07, 1, 0.97978854, 0.20003618, 5.513416e-05, 1.3631664e-07, -4.681248e-16, -0.512002)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
-joint_offset = Transform3D(-0.13917297, 0.9902673, 0, -0.9902673, -0.13917297, 0, 0, 0, 1, 0, 0, 0)
+joint_offset = Transform3D(-0.13917296, 0.99026716, 0, -0.99026716, -0.13917296, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -1.7104226)
 body_offset = Transform3D(0.99999994, -8.9854e-06, 5.5990822e-05, 8.970499e-06, 0.9999999, 1.0772083e-06, -5.6073084e-05, -1.0016311e-06, 1, 0, 0, 0)
 angular_damp = 15.0
@@ -818,7 +818,7 @@ joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -829,7 +829,7 @@ shape = SubResource("ConvexPolygonShape3D_8fjvm")
 [node name="Physical Bone DEF_VERTEBRAE_02_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="12"]
 transform = Transform3D(-0.5597641, 0.8286521, 2.705566e-06, 1.0034472e-06, -2.5871805e-06, 1, 0.8286521, 0.5597641, 6.16702e-07, 0.20070527, 6.1048784e-09, -0.47102365)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.9990474, 0.043619253, 0, -0.043619253, -0.9990474, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -3.0979595)
@@ -840,7 +840,7 @@ joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -849,20 +849,20 @@ transform = Transform3D(-1.1446063e-07, -0.55976427, -0.82865196, -2.0205633e-07
 shape = SubResource("ConvexPolygonShape3D_jsqfj")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="13"]
-transform = Transform3D(-0.82843935, 0.56007886, -8.867915e-06, -9.3640847e-07, 1.44482465e-05, 1, 0.56007886, 0.8284393, -1.1445034e-05, 0.36204004, 8.6499705e-09, -0.36203995)
+transform = Transform3D(-0.82843935, 0.56007886, -8.847727e-06, -9.3640847e-07, 1.4412201e-05, 1, 0.56007886, 0.8284393, -1.1415172e-05, 0.36204004, 8.6499705e-09, -0.36203995)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.9993904, 0.034899436, 0, -0.034899436, -0.9993904, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -3.106686)
-body_offset = Transform3D(0.9999999, -0.00037935376, 8.776333e-07, 0.00037938356, 0.9999997, -1.4357425e-05, -9.834765e-07, 1.43538555e-05, 1, 0, 0, 0)
+body_offset = Transform3D(0.9999999, -0.00037935376, 8.7761964e-07, 0.00037938356, 0.9999997, -1.432138e-05, -9.834765e-07, 1.431781e-05, 1, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_03.L"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -871,20 +871,20 @@ transform = Transform3D(-8.3192293e-07, -0.82865286, -0.5597634, 2.0791944e-07, 
 shape = SubResource("ConvexPolygonShape3D_3yi20")
 
 [node name="Physical Bone DEF_PANEL_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="14"]
-transform = Transform3D(-0.94249123, -0.33423105, 5.360252e-05, 3.5330246e-05, 6.0748625e-05, 1, -0.33423108, 0.9424912, -4.5446577e-05, 0.47102368, 2.7031003e-08, -0.20070517)
+transform = Transform3D(-0.94249123, -0.33423105, 5.3522526e-05, 3.5258156e-05, 6.071258e-05, 1, -0.33423108, 0.9424912, -4.5436704e-05, 0.47102368, 2.7031003e-08, -0.20070517)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.83388555, 0.55193675, 0, -0.55193675, -0.83388555, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -2.5569074)
-body_offset = Transform3D(0.9999998, -0.00022730231, -3.5320765e-05, 0.00022739172, 0.99999994, -6.0833634e-05, 3.5271678e-05, 6.0733724e-05, 1, 0, 0, 0)
+body_offset = Transform3D(0.9999998, -0.00022730231, -3.5248682e-05, 0.00022739172, 0.99999994, -6.079757e-05, 3.5199588e-05, 6.069768e-05, 1, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_PANEL.L"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 0.0
 joint_constraints/angular_limit_lower = -19.999992
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -898,20 +898,20 @@ mesh = SubResource("QuadMesh_acdll")
 surface_material_override/0 = SubResource("StandardMaterial3D_ag5eb")
 
 [node name="Physical Bone DEF_VERTEBRAE_01_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="15"]
-transform = Transform3D(-0.20006081, -0.97978354, -3.8753214e-07, -6.391393e-07, -2.6502326e-07, 1, -0.97978354, 0.20006081, -5.731973e-07, 1.097931e-07, 4.4321685e-16, -0.51200205)
+transform = Transform3D(-0.20006081, -0.97978354, -3.870814e-07, -6.3688645e-07, -2.6502326e-07, 1, -0.97978354, 0.20006081, -5.7099004e-07, 1.097931e-07, 4.4321685e-16, -0.51200205)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.14780936, -0.9890153, 0, 0.9890153, -0.14780936, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 1.7191494)
-body_offset = Transform3D(1.0000004, -1.578033e-05, 8.3818213e-07, 1.5810132e-05, 1.0000001, 3.4606217e-07, -8.775585e-07, -2.9482186e-07, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(1.0000004, -1.578033e-05, 8.359293e-07, 1.5810132e-05, 1.0000001, 3.4606205e-07, -8.7530566e-07, -2.9482186e-07, 1.0000001, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_01.R"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 19.999992
 joint_constraints/angular_limit_lower = 0.0
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -920,20 +920,20 @@ transform = Transform3D(-9.2064006e-08, 0.20004638, 0.97978634, 1.3868329e-07, 0
 shape = SubResource("ConvexPolygonShape3D_8fjvm")
 
 [node name="Physical Bone DEF_VERTEBRAE_02_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="16"]
-transform = Transform3D(-0.55977637, -0.82864374, -4.783691e-06, 4.6436035e-06, -8.909824e-06, 1, -0.8286438, 0.5597763, 8.835401e-06, -0.20070514, 6.10489e-09, -0.47102368)
+transform = Transform3D(-0.55977637, -0.82864374, -4.763911e-06, 4.625581e-06, -8.873779e-06, 1, -0.8286438, 0.5597763, 8.800291e-06, -0.20070514, 6.10489e-09, -0.47102368)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.9990476, -0.04361926, 0, 0.04361926, -0.9990476, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 3.0979595)
-body_offset = Transform3D(1.0000005, -1.3560057e-05, -4.533967e-06, 1.3500452e-05, 1.0000002, 8.928844e-06, 4.517074e-06, -8.866509e-06, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(1.0000005, -1.3560057e-05, -4.515944e-06, 1.3500452e-05, 1.0000002, 8.892799e-06, 4.4990516e-06, -8.830464e-06, 1.0000001, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_02.R"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 19.999992
 joint_constraints/angular_limit_lower = 0.0
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -942,20 +942,20 @@ transform = Transform3D(9.662372e-07, 0.55977196, 0.8286467, 7.471433e-08, 0.828
 shape = SubResource("ConvexPolygonShape3D_jsqfj")
 
 [node name="Physical Bone DEF_VERTEBRAE_03_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="17"]
-transform = Transform3D(-0.828657, -0.55975676, -8.671392e-05, -0.00010447992, -2.4277898e-07, 1, -0.5597568, 0.828657, -5.828216e-05, -0.36203986, -2.3283686e-09, -0.36203992)
+transform = Transform3D(-0.828657, -0.55975676, -8.7021486e-05, -0.00010476828, -3.6537733e-07, 1, -0.5597568, 0.828657, -5.8341982e-05, -0.36203986, -2.3283686e-09, -0.36203992)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.99938947, -0.034899402, 0, 0.034899402, -0.99938947, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 3.106686)
-body_offset = Transform3D(1.0000004, -9.596348e-06, 0.000104536855, 9.357929e-06, 1.0000005, 2.9061266e-07, -0.00010452911, -2.2548704e-07, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(1.0000004, -9.596348e-06, 0.00010482522, 9.357929e-06, 1.0000005, 4.1321618e-07, -0.00010481747, -3.4808542e-07, 1.0000001, 0, 0, 0)
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_03.R"
 joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 19.999992
 joint_constraints/angular_limit_lower = 0.0
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -966,7 +966,7 @@ shape = SubResource("ConvexPolygonShape3D_3yi20")
 [node name="Physical Bone DEF_PANEL_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="18"]
 transform = Transform3D(-0.9430162, 0.33274704, 5.221066e-07, 3.4689407e-07, -5.859704e-07, 1, 0.33274704, 0.9430162, 4.3715156e-07, -0.4710235, -5.694343e-09, -0.20070525)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.83388567, -0.5519368, 0, 0.5519368, -0.83388567, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 2.5569074)
@@ -977,7 +977,7 @@ joint_constraints/angular_limit_enabled = true
 joint_constraints/angular_limit_upper = 19.999992
 joint_constraints/angular_limit_lower = 0.0
 joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.4
+joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
@@ -991,13 +991,13 @@ mesh = SubResource("QuadMesh_lgmsp")
 surface_material_override/0 = SubResource("StandardMaterial3D_mn8bg")
 
 [node name="Physical Bone DEF_SPINNER_SOCKET_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="19"]
-transform = Transform3D(0.92491496, 0.3801742, -6.337057e-05, 6.570151e-05, 6.8449253e-06, 1, 0.3801742, -0.92491496, -1.8647044e-05, 0.33951586, -6.026551e-05, 0.33075154)
+transform = Transform3D(0.92491496, 0.3801742, -6.3377425e-05, 6.570151e-05, 6.862948e-06, 1, 0.3801742, -0.92491496, -1.8630373e-05, 0.33951586, -6.026551e-05, 0.33075154)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(0.8038566, 0.59482265, 0, -0.59482265, 0.8038566, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -0.6370452)
-body_offset = Transform3D(0.99999905, 6.112456e-05, -6.570086e-05, -6.106496e-05, 0.99999946, -6.7340807e-06, 6.575883e-05, 6.8329587e-06, 1, 0, 0, 0)
+body_offset = Transform3D(0.99999905, 6.112456e-05, -6.570086e-05, -6.106496e-05, 0.99999946, -6.752103e-06, 6.575883e-05, 6.850981e-06, 1, 0, 0, 0)
 angular_damp = 10.0
 bone_name = "DEF_SPINNER_SOCKET.L"
 joint_constraints/angular_limit_enabled = true
@@ -1015,7 +1015,7 @@ shape = SubResource("ConvexPolygonShape3D_mx6bm")
 [node name="Physical Bone DEF_EM_FINGER_01_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="20"]
 transform = Transform3D(0.23300928, -0.9621668, -0.14121522, -0.14145446, -0.1772017, 0.9739559, -0.9621317, -0.20696524, -0.17739242, 0.4011091, 0.119926736, 0.036264963)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(0.99999964, 0.00022663176, 0.00033552945, -0.00022681057, 0.9999994, 0.0001354292, -0.00033557415, -0.00013586506, 1, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1029,7 +1029,7 @@ shape = SubResource("ConvexPolygonShape3D_weqbu")
 [node name="Physical Bone DEF_EM_FINGER_02_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="21"]
 transform = Transform3D(0.1506006, -0.987014, 0.055883076, 0.05592333, 0.06494291, 0.9963207, -0.98701173, -0.14692132, 0.06497756, 0.41780218, -0.04396924, -0.004353583)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(0.99999976, 0.00010728836, 2.2351742e-07, -0.00010749698, 0.9999993, 5.346071e-05, -9.685755e-08, -5.3416006e-05, 0.99999994, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1043,7 +1043,7 @@ shape = SubResource("ConvexPolygonShape3D_5bbph")
 [node name="Physical Bone DEF_EM_FINGER_03_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="22"]
 transform = Transform3D(0.35532764, -0.9191993, 0.16974981, 0.17001101, 0.24212421, 0.9552341, -0.91915107, -0.31056172, 0.24230741, 0.37219554, -0.16394867, 0.1066211)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(0.99999976, 2.4586916e-05, -0.00024871528, -2.4527311e-05, 0.99999946, -5.827844e-05, 0.000248909, 5.862862e-05, 1.0000001, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1057,7 +1057,7 @@ shape = SubResource("ConvexPolygonShape3D_k1lco")
 [node name="Physical Bone DEF_EM_FINGER_04_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="23"]
 transform = Transform3D(0.5547443, -0.82653147, 0.09541757, 0.0954712, 0.17715898, 0.9795407, -0.82652533, -0.5342849, 0.17718789, 0.3098959, -0.12003218, 0.2582145)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(0.99999976, 0.00035995245, -7.919967e-05, -0.00035989285, 0.9999994, 6.4074993e-07, 7.9378486e-05, -4.0233135e-07, 1.0000001, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1071,7 +1071,7 @@ shape = SubResource("ConvexPolygonShape3D_hbbl7")
 [node name="Physical Bone DEF_EM_FINGER_05_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="24"]
 transform = Transform3D(0.59677815, -0.80175155, -0.032409385, -0.032575276, -0.06456457, 0.9973817, -0.8017449, -0.59415984, -0.064647995, 0.29320285, 0.043863777, 0.29883292)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(0.9999996, 0.00041043758, 7.0329756e-05, -0.00041028857, 0.99999934, -9.4629824e-05, -7.028505e-05, 9.445101e-05, 1.0000004, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1085,7 +1085,7 @@ shape = SubResource("ConvexPolygonShape3D_l7bqe")
 [node name="Physical Bone DEF_EM_FINGER_06_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="25"]
 transform = Transform3D(0.47134584, -0.86959267, -0.14711133, -0.14719398, -0.24202693, 0.95903957, -0.86957866, -0.43038538, -0.24207719, 0.3388094, 0.16384326, 0.18785825)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(0.9999995, 0.000120699406, 0.00024951994, -0.00012075901, 0.9999993, 0.00028669834, -0.00024949014, -0.00028720498, 0.9999999, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1097,13 +1097,13 @@ transform = Transform3D(0.47121033, -0.14699249, -0.86968607, -0.86968875, -0.24
 shape = SubResource("ConvexPolygonShape3D_1mo5d")
 
 [node name="Physical Bone DEF_SPINNER_SOCKET_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="26"]
-transform = Transform3D(0.92494065, -0.38011163, -0.0001229577, 0.0001329605, 6.0148416e-08, 1, -0.38011163, -0.92494065, 5.0595463e-05, -0.3395161, -6.03907e-05, 0.33075124)
+transform = Transform3D(0.92494065, -0.38011163, -0.00012349135, 0.00013353722, 5.9585208e-08, 1, -0.38011163, -0.92494065, 5.0814164e-05, -0.3395161, -6.03907e-05, 0.33075124)
 collision_layer = 512
-collision_mask = 7
+collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(0.80385673, -0.5948227, 0, 0.5948227, 0.80385673, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 0.6370452)
-body_offset = Transform3D(0.9999997, 5.930662e-06, -0.00013289643, -5.930662e-06, 0.9999999, 9.133146e-08, 0.00013283882, -1.1961579e-07, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(0.9999997, 5.930662e-06, -0.00013347315, -5.930662e-06, 0.9999999, 9.1895345e-08, 0.00013341554, -1.20179e-07, 1.0000001, 0, 0, 0)
 angular_damp = 10.0
 bone_name = "DEF_SPINNER_SOCKET.R"
 joint_constraints/angular_limit_enabled = true
@@ -1121,7 +1121,7 @@ shape = SubResource("ConvexPolygonShape3D_47bi5")
 [node name="Physical Bone DEF_EM_FINGER_01_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="27"]
 transform = Transform3D(0.23256345, 0.96227336, 0.14122418, 0.14117427, -0.17706746, 0.974021, 0.9622807, -0.20658447, -0.17702766, -0.40110904, 0.11992669, 0.036264792)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(1.0000001, 0.00018250942, 2.6464462e-05, -0.00018247962, 0.9999999, 5.7265162e-05, -2.6419759e-05, -5.7358295e-05, 1, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1135,7 +1135,7 @@ shape = SubResource("ConvexPolygonShape3D_paqlu")
 [node name="Physical Bone DEF_EM_FINGER_02_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="28"]
 transform = Transform3D(0.15041134, 0.98704284, -0.05588195, -0.05586997, 0.06492126, 0.99632514, 0.98704356, -0.14673647, 0.06491095, -0.41780207, -0.043969315, -0.004353866)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(1, 7.982552e-05, -6.600469e-05, -7.970631e-05, 1, 6.4724125e-05, 6.60494e-05, -6.474182e-05, 0.9999999, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1149,7 +1149,7 @@ shape = SubResource("ConvexPolygonShape3D_fmeub")
 [node name="Physical Bone DEF_EM_FINGER_03_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="29"]
 transform = Transform3D(0.3553492, 0.919239, -0.16948938, -0.1701049, 0.24189125, 0.95527637, 0.9191253, -0.31062573, 0.2423229, -0.37219554, -0.16394877, 0.10662094)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(0.99999994, -3.0726194e-05, 0.00034853816, 3.066659e-05, 0.9999999, 0.00018653274, -0.00034853816, -0.00018648803, 0.99999994, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1163,7 +1163,7 @@ shape = SubResource("ConvexPolygonShape3D_37hhl")
 [node name="Physical Bone DEF_EM_FINGER_04_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="30"]
 transform = Transform3D(0.55454504, 0.82666284, -0.09543771, -0.09548576, 0.17714168, 0.97954243, 0.8266573, -0.5340874, 0.17716758, -0.3098961, -0.12003233, 0.25821424)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(1, -0.00012353063, 5.143881e-05, 0.00012341142, 1.0000001, -4.8056245e-06, -5.1379204e-05, 4.8205256e-06, 1.0000004, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1177,7 +1177,7 @@ shape = SubResource("ConvexPolygonShape3D_a0coh")
 [node name="Physical Bone DEF_EM_FINGER_05_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="31"]
 transform = Transform3D(0.5967263, 0.8017867, 0.032492142, 0.03256754, -0.06465658, 0.997376, 0.8017837, -0.5941023, -0.06469451, -0.2932031, 0.043863684, 0.2988329)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(1.0000001, -0.00034752488, -5.8483332e-05, 0.00034731627, 0.9999999, -9.313226e-08, 5.8487058e-05, 3.7252903e-09, 1.0000001, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
@@ -1191,7 +1191,7 @@ shape = SubResource("ConvexPolygonShape3D_bt6x8")
 [node name="Physical Bone DEF_EM_FINGER_06_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="32"]
 transform = Transform3D(0.4714658, 0.86959773, 0.14669625, 0.14715712, -0.24158771, 0.959156, 0.8695199, -0.43062183, -0.24186784, -0.33880955, 0.16384318, 0.18785797)
 collision_layer = 512
-collision_mask = 519
+collision_mask = 2
 body_offset = Transform3D(0.99999994, -0.0002604127, -0.00024613738, 0.0002603233, 0.9999998, -0.00019223243, 0.0002462268, 0.00019206107, 0.9999999, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0

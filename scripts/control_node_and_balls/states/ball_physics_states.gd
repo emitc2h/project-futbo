@@ -7,7 +7,7 @@ extends Node
 @export var sc: StateChart
 
 ## States Enum
-enum State {RIGID = 0, CHAR = 1}
+enum State {RIGID = 0, CHAR = 1, WARPING = 2}
 var state: State = State.RIGID
 
 ## State transition constants

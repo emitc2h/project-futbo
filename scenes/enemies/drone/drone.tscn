@@ -936,7 +936,7 @@ script = ExtResource("5_voq0c")
 
 [node name="CharNode" type="CharacterBody3D" parent="."]
 collision_layer = 0
-collision_mask = 3
+collision_mask = 7
 axis_lock_linear_z = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode"]

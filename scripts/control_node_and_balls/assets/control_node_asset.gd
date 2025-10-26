@@ -20,6 +20,8 @@ var aura_material: StandardMaterial3D
 
 signal power_up_finished
 signal power_down_finished
+signal warp_out_finished
+signal warp_in_finished
 
 const blue: Color = Color.STEEL_BLUE
 const black: Color = Color.BLACK
@@ -35,17 +37,19 @@ func _ready() -> void:
 ##        ANIMATIONS         ##
 ###############################
 func power_up() -> void:
-	await emitters_anim.power_on()
+	emitters_anim.power_on()
+	await emitters_anim.power_on_finished
 	await shield_anim.power_on()
 	self.blue_wisps()
 	power_up_finished.emit()
 	return
 
 
-func power_down() -> void:
+func power_down(duration: float = 0.8) -> void:
 	turn_off_ready_sphere()
-	await shield_anim.power_off()
-	await emitters_anim.power_off()
+	await shield_anim.power_off(duration * (5.0/8.0))
+	emitters_anim.power_off(duration * (3.0/8.0))
+	await emitters_anim.power_off_finished
 	power_down_finished.emit()
 	return
 
@@ -77,24 +81,24 @@ func magenta_wisps() -> void:
 
 
 func warp_out() -> void:
-	power_down()
+	power_down(0.4)
 	await power_down_finished
-	warp_effect.open_warp_portal(1.4)
+	warp_effect.open_warp_portal(1.2)
 	await warp_effect.open_warp_portal_finished
 	warp_effect.dematerialize(0.8)
 	await get_tree().create_timer(0.4).timeout
 	self.visible = false
-	warp_effect.close_warp_portal(0.7)
+	warp_effect.close_warp_portal(0.5)
 	await warp_effect.close_warp_portal_finished
-	
-	await get_tree().create_timer(2.0).timeout
-	
-	warp_effect.open_warp_portal(1.4)
+	warp_out_finished.emit()
+
+
+func warp_in() -> void:
+	warp_effect.open_warp_portal(0.7)
 	await warp_effect.open_warp_portal_finished
-	warp_effect.materialize(0.8)
-	await get_tree().create_timer(0.4).timeout
+	warp_effect.materialize(0.5)
+	await get_tree().create_timer(0.25).timeout
 	self.visible = true
-	warp_effect.close_warp_portal(0.7)
+	warp_effect.close_warp_portal(0.3)
 	await warp_effect.close_warp_portal_finished
-	power_up()
-	await power_up_finished
+	warp_in_finished.emit()

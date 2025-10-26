@@ -60,7 +60,7 @@ func _on_charging_state_entered() -> void:
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
 	
-	asset.shield_anim.charge_shield(0.5)
+	asset.shield_anim.charge_shield(0.3)
 
 
 # inflating state

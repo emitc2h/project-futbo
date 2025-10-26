@@ -65,6 +65,11 @@ signal player_knocked(obj_velocity: Vector3, obj_position: Vector3)
 @warning_ignore("unused_signal")
 signal player_long_kick_ready
 
+@warning_ignore("unused_signal")
+signal player_requests_warp
+@warning_ignore("unused_signal")
+signal player_update_destination(pos: Vector3)
+
 
 ## ===================================== ##
 ## CONTROL NODE SIGNALS                  ##
@@ -77,6 +82,8 @@ signal control_node_is_charged
 signal control_node_is_discharged
 @warning_ignore("unused_signal")
 signal control_node_shield_hit(one_hit: bool)
+@warning_ignore("unused_signal")
+signal control_node_requests_destination
 
 
 ## ===================================== ##
