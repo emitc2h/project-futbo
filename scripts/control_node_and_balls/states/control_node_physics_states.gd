@@ -15,12 +15,13 @@ var update_position_to_warp_destination: bool
 ## State transition constants
 const TRANS_TO_WARPING: String = "Physics: to warping"
 
+## Animation constants
+const WARP_OUT_ANIMATION: String = "transition - warp out"
+const WARP_IN_ANIMATION: String = "transition - warp in"
 
 func _ready() -> void:
 	super._ready()
 	control_node = ball as ControlNode
-	control_node.asset.warp_out_finished.connect(_on_warp_out_finished)
-	control_node.asset.warp_effect.materialized_finished.connect(_on_warp_in_finished)
 	Signals.player_update_destination.connect(_on_player_update_destination)
 
 # warping state
@@ -42,14 +43,23 @@ func _on_warping_state_physics_processing(_delta: float) -> void:
 #=======================================================
 # RECEIVED SIGNALS
 #=======================================================
-func _on_warp_out_finished() -> void:
-	update_position_to_warp_destination = true
-	control_node.asset.warp_in()
-
-
-func _on_warp_in_finished() -> void:
-	sc.send_event(TRANS_TO_RIGID)
-
-
 func _on_player_update_destination(pos: Vector3) -> void:
 	warp_destination = pos
+
+
+func _on_animation_state_finished(anim_name: String) -> void:
+	match(anim_name):
+		WARP_OUT_ANIMATION:
+			sc.send_event(TRANS_TO_RIGID)
+			sc.send_event(control_node.power_states.TRANS_TO_CHARGING)
+		WARP_IN_ANIMATION:
+			sc.send_event(TRANS_TO_WARPING)
+			update_position_to_warp_destination = true
+			control_node.anim_state.travel(WARP_OUT_ANIMATION)
+
+
+#=======================================================
+# CONTROLS
+#=======================================================
+func warp() -> void:
+	control_node.anim_state.travel(WARP_IN_ANIMATION)

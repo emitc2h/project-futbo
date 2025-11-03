@@ -17,15 +17,25 @@ const TRANS_CHARGE_UP: String = "charge up"
 const TRANS_CHARGE_DOWN: String = "charge down"
 const TRANS_DISCHARGE: String = "discharge"
 
+## TRANS_ANIM constants
+const CHARGE_LEVEL_0_STATE_ANIM: String = "state - power on - charge level 0"
+const CHARGE_LEVEL_0_EXPANDED_STATE_ANIM: String = "state - power on - charge level 0 - expanded"
+const CHARGE_LEVEL_1_STATE_ANIM: String = "state - power on - charge level 1"
+const CHARGE_LEVEL_2_STATE_ANIM: String = "state - power on - charge level 2"
+const CHARGE_LEVEL_3_STATE_ANIM: String = "state - power on - charge level 3"
+
+const HIT_LEVEL1_TRANS_ANIM: String = "transition - hit - charge level 1 - expanded"
+const HIT_LEVEL2_TRANS_ANIM: String = "transition - hit - charge level 2 - expanded"
+const HIT_LEVEL3_TRANS_ANIM: String = "transition - hit - charge level 3 - expanded"
+
 ## Nodes controlled
 @onready var lose_charge_timer: Timer = $LoseChargeTimer
 
-## internal variables
-var blow_factor: float = 3.0
+## Internal variables
+var none_state_anim: String = CHARGE_LEVEL_0_STATE_ANIM
 
 func _ready() -> void:
 	rigid_node.body_entered.connect(_on_shield_body_entered)
-	Signals.control_node_shield_hit.connect(_on_control_node_shield_hit)
 
 
 # none state
@@ -33,10 +43,9 @@ func _ready() -> void:
 func _on_none_state_entered() -> void:
 	state = State.NONE
 	Signals.updated_control_node_charge_level.emit(state)
-	asset.shield_anim.animate_to_state(state, control_node.shield_states.state, 0.4, blow_factor)
+	control_node.anim_state.travel(none_state_anim)
+	none_state_anim = CHARGE_LEVEL_0_STATE_ANIM
 	lose_charge_timer.stop()
-	## Reset blow factor
-	blow_factor = 3.0
 
 
 # level1 state
@@ -44,7 +53,7 @@ func _on_none_state_entered() -> void:
 func _on_level_1_state_entered() -> void:
 	state = State.LEVEL1
 	Signals.updated_control_node_charge_level.emit(state)
-	asset.shield_anim.animate_to_state(state, control_node.shield_states.state, 0.4, blow_factor)
+	control_node.anim_state.travel(CHARGE_LEVEL_1_STATE_ANIM)
 	lose_charge_timer.start()
 
 
@@ -53,7 +62,7 @@ func _on_level_1_state_entered() -> void:
 func _on_level_2_state_entered() -> void:
 	state = State.LEVEL2
 	Signals.updated_control_node_charge_level.emit(state)
-	asset.shield_anim.animate_to_state(state, control_node.shield_states.state, 0.4, blow_factor)
+	control_node.anim_state.travel(CHARGE_LEVEL_2_STATE_ANIM)
 	lose_charge_timer.start()
 
 
@@ -62,14 +71,12 @@ func _on_level_2_state_entered() -> void:
 func _on_level_3_state_entered() -> void:
 	state = State.LEVEL3
 	Signals.updated_control_node_charge_level.emit(state)
-	asset.shield_anim.animate_to_state(state, control_node.shield_states.state, 0.4, blow_factor)
-	asset.turn_on_ready_sphere()
+	control_node.anim_state.travel(CHARGE_LEVEL_3_STATE_ANIM)
 	Signals.control_node_is_charged.emit()
 	lose_charge_timer.start()
 
 
 func _on_level_3_state_exited() -> void:
-	asset.turn_off_ready_sphere()
 	Signals.control_node_is_discharged.emit()
 
 
@@ -85,11 +92,24 @@ func _on_lose_charge_timer_timeout() -> void:
 	sc.send_event(TRANS_CHARGE_DOWN)
 
 
-func _on_control_node_shield_hit(one_hit: bool) -> void:
-	blow_factor = 10.0
-	## Check state before discharging, otherwise the state is always NONE
-	if state == State.NONE or one_hit:
-		sc.send_event(TRANS_DISCHARGE)
-		sc.send_event(control_node.power_states.TRANS_TO_BLOW)
-	else:
-		sc.send_event(TRANS_DISCHARGE)
+func _on_animation_state_finished(anim_name: String) -> void:
+	match(anim_name):
+		HIT_LEVEL1_TRANS_ANIM:
+			sc.send_event(TRANS_DISCHARGE)
+		HIT_LEVEL2_TRANS_ANIM:
+			sc.send_event(TRANS_DISCHARGE)
+		HIT_LEVEL3_TRANS_ANIM:
+			sc.send_event(TRANS_DISCHARGE)
+
+#=======================================================
+# ANIMATION UTILS
+#=======================================================
+func lose_charge_by_hit_anim() -> void:
+	none_state_anim = CHARGE_LEVEL_0_EXPANDED_STATE_ANIM
+	match(state):
+		State.LEVEL1:
+			control_node.anim_state.travel(HIT_LEVEL1_TRANS_ANIM)
+		State.LEVEL2:
+			control_node.anim_state.travel(HIT_LEVEL2_TRANS_ANIM)
+		State.LEVEL3:
+			control_node.anim_state.travel(HIT_LEVEL3_TRANS_ANIM)

@@ -1,65 +1,42 @@
 extends Node3D
 class_name ControlNodeAsset
 
-@export var shield_anim: ControlNodeShieldAnimation
-@export var emitters_anim: ControlNodeEmittersAnimation
-
 ## Wisps (needs to be placed in the TrackPositionContainer, so inject dependency)
 @export var wisps_particles: GPUParticles3D
-@export var lightning_particles: GPUParticles3D
 
 ## Aura
 @onready var aura_mesh: MeshInstance3D = $Aura
 var aura_material: StandardMaterial3D
 
+## Shield Mesh and Material
+@onready var shield_mesh: MeshInstance3D = $ControlNodeModel/ShieldMesh
+var shield_material: ShaderMaterial
+
+## Light
+@onready var light: OmniLight3D = $Light
+
 ## Ready Sphere (needs to be placed in the TrackPositionContainer, so inject dependency)
 @export var ready_sphere: ControlNodeReadySphere
-
-## Warp effect
-@export var warp_effect: ControlNodeWarpEffect
-
-signal power_up_finished
-signal power_down_finished
-signal warp_out_finished
-signal warp_in_finished
 
 const blue: Color = Color.STEEL_BLUE
 const black: Color = Color.BLACK
 const magenta: Color = Color.LIGHT_PINK
 
+## Bounce tweens
+var tw_shield_emission_energy: Tween
+var tw_shield_ripple_strength: Tween
+var tw_light_energy: Tween
+
 
 func _ready() -> void:
+	shield_material = shield_mesh.get_surface_override_material(0)
 	ready_sphere.visible = false
-	power_down()
+	turn_off_ready_sphere()
 
 
 ################################
 ##        ANIMATIONS         ##
-###############################
-func power_up() -> void:
-	emitters_anim.power_on()
-	await emitters_anim.power_on_finished
-	await shield_anim.power_on()
-	self.blue_wisps()
-	power_up_finished.emit()
-	return
-
-
-func power_down(duration: float = 0.8) -> void:
-	turn_off_ready_sphere()
-	await shield_anim.power_off(duration * (5.0/8.0))
-	emitters_anim.power_off(duration * (3.0/8.0))
-	await emitters_anim.power_off_finished
-	power_down_finished.emit()
-	return
-
-
-func blow() -> void:
-	shield_anim.blow()
-	emitters_anim.power_off()
-	turn_off_ready_sphere()
-
-
+################################
 func turn_on_ready_sphere() -> void:
 	ready_sphere.visible = true
 	aura_mesh.visible = false
@@ -80,25 +57,28 @@ func magenta_wisps() -> void:
 	wisps_particles.emitting = true
 
 
-func warp_out() -> void:
-	power_down(0.4)
-	await power_down_finished
-	warp_effect.open_warp_portal(1.2)
-	await warp_effect.open_warp_portal_finished
-	warp_effect.dematerialize(0.8)
-	await get_tree().create_timer(0.4).timeout
-	self.visible = false
-	warp_effect.close_warp_portal(0.5)
-	await warp_effect.close_warp_portal_finished
-	warp_out_finished.emit()
+func bounce(bounce_strength: float) -> void:
+	if tw_shield_emission_energy: tw_shield_emission_energy.kill()
+	
+	var current_shield_emission_energy: float = shield_material.get("shader_parameter/emission_energy")
+	tw_shield_emission_energy = create_tween()
+	tw_shield_emission_energy.tween_property(shield_material, "shader_parameter/emission_energy", current_shield_emission_energy, 0.5 * bounce_strength)\
+		.set_trans(Tween.TRANS_EXPO)\
+		.set_ease(Tween.EASE_OUT)\
+		.from(current_shield_emission_energy * 25.0 * bounce_strength)
 
+	var current_shield_ripple_strength: float = shield_material.get("shader_parameter/ripple_strength")
+	if tw_shield_ripple_strength: tw_shield_ripple_strength.kill()
+	tw_shield_ripple_strength = create_tween()
+	tw_shield_ripple_strength.tween_property(shield_material, "shader_parameter/ripple_strength", current_shield_ripple_strength, 0.5 * bounce_strength)\
+		.set_trans(Tween.TRANS_LINEAR)\
+		.set_ease(Tween.EASE_OUT)\
+		.from(current_shield_ripple_strength * 5.0 * bounce_strength)
 
-func warp_in() -> void:
-	warp_effect.open_warp_portal(0.7)
-	await warp_effect.open_warp_portal_finished
-	warp_effect.materialize(0.5)
-	await get_tree().create_timer(0.25).timeout
-	self.visible = true
-	warp_effect.close_warp_portal(0.3)
-	await warp_effect.close_warp_portal_finished
-	warp_in_finished.emit()
+	var current_light_energy: float = light.light_energy
+	if tw_light_energy: tw_light_energy.kill()
+	tw_light_energy = create_tween()
+	tw_light_energy.tween_property(light, "light_energy", current_light_energy, 0.5 * bounce_strength)\
+		.set_trans(Tween.TRANS_EXPO)\
+		.set_ease(Tween.EASE_OUT)\
+		.from(current_light_energy * 2.0 * bounce_strength)

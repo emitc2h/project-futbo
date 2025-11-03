@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkp8fbjsyyhyx"]
+[gd_scene load_steps=6 format=3 uid="uid://bkp8fbjsyyhyx"]
 
 [ext_resource type="PackedScene" uid="uid://dgpqcnsegq4rs" path="res://scenes/control_node_and_balls/models/control_node_model.tscn" id="1_k14dj"]
 [ext_resource type="Script" uid="uid://crab58bvajfs3" path="res://scripts/control_node_and_balls/asset/control_node_asset.gd" id="2_fgtxj"]
-[ext_resource type="Script" uid="uid://cjryuynjww3dm" path="res://scripts/control_node_and_balls/asset/control_node_shield_animation.gd" id="5_uxj54"]
-[ext_resource type="Script" uid="uid://bgj3ka6xmql7i" path="res://scripts/control_node_and_balls/asset/control_node_emitters_animation.gd" id="6_3mwn8"]
 [ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="6_uxj54"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_bbe66"]
@@ -14,15 +12,13 @@ blend_mode = 1
 shading_mode = 0
 disable_ambient_light = true
 disable_fog = true
-albedo_color = Color(1, 0, 0.65, 0.431373)
+albedo_color = Color(0.27843142, 0.5137255, 0.70980394, 0.39215687)
 albedo_texture = ExtResource("6_uxj54")
 billboard_mode = 1
 billboard_keep_scale = true
 
-[node name="ControlNodeAsset" type="Node3D" node_paths=PackedStringArray("shield_anim", "emitters_anim")]
+[node name="ControlNodeAsset" type="Node3D"]
 script = ExtResource("2_fgtxj")
-shield_anim = NodePath("ShieldAnimation")
-emitters_anim = NodePath("EmittersAnimation")
 
 [node name="ControlNodeModel" parent="." instance=ExtResource("1_k14dj")]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
@@ -37,101 +33,7 @@ light_cull_mask = 4294967291
 omni_range = 2.0
 
 [node name="Aura" type="MeshInstance3D" parent="."]
-visible = false
 mesh = SubResource("QuadMesh_bbe66")
 surface_material_override/0 = SubResource("StandardMaterial3D_3mwn8")
 
-[node name="ShieldAnimation" type="Node" parent="." node_paths=PackedStringArray("asset", "light", "model", "aura_mesh")]
-script = ExtResource("5_uxj54")
-asset = NodePath("..")
-light = NodePath("../Light")
-model = NodePath("../ControlNodeModel")
-aura_mesh = NodePath("../Aura")
-light_color = Dictionary[int, Color]({
-0: Color(0.27450982, 0.50980395, 0.7058824, 1),
-1: Color(0.27450982, 0.50980395, 0.7058824, 1),
-2: Color(0.49411765, 0.39215687, 0.85882354, 1),
-3: Color(0.6901961, 0.2627451, 0.7921569, 1),
-4: Color(0.27450982, 0.50980395, 0.7058824, 1)
-})
-light_energy = Dictionary[int, float]({
-0: 10.0,
-1: 15.0,
-2: 17.0,
-3: 20.0,
-4: 0.0
-})
-shield_modulate_factor = Dictionary[int, float]({
-0: 0.0,
-1: 0.15,
-2: 0.3,
-3: 0.55,
-4: 0.0
-})
-shield_dissolve_value = Dictionary[int, float]({
-0: 1.0,
-1: 1.0,
-2: 1.0,
-3: 1.0,
-4: 0.0
-})
-lightning_window_size = Dictionary[int, float]({
-0: 0.05,
-1: 0.05,
-2: 0.05,
-3: 0.1,
-4: 0.05
-})
-lightning_amount_ratio = Dictionary[int, float]({
-0: 0.0,
-1: 0.25,
-2: 0.35,
-3: 0.8,
-4: 0.0
-})
-lightning_emission_factor = Dictionary[int, float]({
-0: 0.0,
-1: 30.0,
-2: 120.0,
-3: 240.0,
-4: 0.0
-})
-lightning_reverse = Dictionary[int, bool]({
-0: false,
-1: false,
-2: false,
-3: true,
-4: false
-})
-aura_color = Dictionary[int, Color]({
-0: Color(0.2784314, 0.5137255, 0.70980394, 0.39215687),
-1: Color(0.2784314, 0.5137255, 0.70980394, 0.7058824),
-2: Color(0.49803922, 0.39607844, 0.85882354, 0.8627451),
-3: Color(0.6901961, 0.2627451, 0.7921569, 1),
-4: Color(0, 0, 0, 0)
-})
-shield_scale = Dictionary[int, float]({
-0: 1.0,
-1: 11.0
-})
-shield_alpha = Dictionary[int, float]({
-0: 1.0,
-1: 0.5
-})
-shield_distortion = Dictionary[int, float]({
-0: 0.0,
-1: 0.85
-})
-
-[node name="EmittersAnimation" type="Node" parent="." node_paths=PackedStringArray("asset", "model")]
-script = ExtResource("6_3mwn8")
-asset = NodePath("..")
-model = NodePath("../ControlNodeModel")
-emission_color = Dictionary[int, Color]({
-0: Color(0, 0, 0, 1),
-1: Color(0.27450982, 0.50980395, 0.7058824, 1)
-})
-emission_energy = Dictionary[int, float]({
-0: 0.0,
-1: 1000.0
-})
+[editable path="ControlNodeModel"]

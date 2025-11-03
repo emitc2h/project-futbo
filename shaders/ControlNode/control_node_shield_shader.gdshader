@@ -24,7 +24,7 @@ group_uniforms Ripple;
 uniform sampler2D ripple_map;
 uniform sampler2D ripple_mask;
 uniform vec2 ripple_stretch = vec2(1.0, 1.0);
-uniform float ripple_strength : hint_range(0.0, 0.1) = 0.02;
+uniform float ripple_strength : hint_range(0.0, 1.0) = 0.02;
 uniform float speed : hint_range(0.0, 1.0) = 0.1;
 
 void fragment() {

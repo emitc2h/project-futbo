@@ -9,15 +9,25 @@ extends Node
 @export var shield_collision: StaticBody3D
 
 ## States Enum
-enum State {OFF = 0, CHARGING = 1, INFLATING = 2, ON = 3, DISSIPATING = 4}
+enum State {OFF = 0, EXPANDING = 1, ON = 2, DISSIPATING = 3}
 var state: State = State.OFF
 
 ## State transition constants
 const TRANS_TO_OFF: String = "Shield: to off"
-const TRANS_TO_CHARGING: String = "Shield: to charging"
-const TRANS_TO_INFLATING: String = "Shield: to inflating"
+const TRANS_TO_EXPANDING: String = "Shield: to expanding"
 const TRANS_TO_ON: String = "Shield: to on"
 const TRANS_TO_DISSIPATING: String = "Shield: to dissipating"
+
+## Animation constants
+const EXPAND_LEVEL_0_TRANS_ANIM: String = "transition - power on - charge level 0 - expanding"
+const EXPAND_LEVEL_1_TRANS_ANIM: String = "transition - power on - charge level 1 - expanding"
+const EXPAND_LEVEL_2_TRANS_ANIM: String = "transition - power on - charge level 2 - expanding"
+const EXPAND_LEVEL_3_TRANS_ANIM: String = "transition - power on - charge level 3 - expanding"
+
+const DISSIPATE_LEVEL_0_TRANS_ANIM: String = "transition - power on - charge level 0 - dissipating"
+const DISSIPATE_LEVEL_1_TRANS_ANIM: String = "transition - power on - charge level 1 - dissipating"
+const DISSIPATE_LEVEL_2_TRANS_ANIM: String = "transition - power on - charge level 2 - dissipating"
+const DISSIPATE_LEVEL_3_TRANS_ANIM: String = "transition - power on - charge level 3 - dissipating"
 
 ## Internal variables
 var _intends_to_shield: bool = false
@@ -33,11 +43,6 @@ func _ready() -> void:
 	Signals.dribbling_exited.connect(_on_player_dribbling_exited)
 	Signals.player_moved.connect(_on_player_moved)
 	
-	asset.shield_anim.charge_shield_finished.connect(_on_charge_shield_finished)
-	asset.shield_anim.inflate_shield_finished.connect(_on_inflate_shield_finished)
-	asset.shield_anim.dissipate_shield_finished.connect(_on_dissipate_shield_finished)
-	asset.shield_anim.blow_finished.connect(_on_blow_finished)
-	
 	## Disable the shield collision shape by default
 	shield_collision.set_collision_layer_value(6, false)
 
@@ -49,29 +54,17 @@ func _on_off_state_entered() -> void:
 	
 	## Re-enable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = true
-	asset.shield_anim.animate_to_state(control_node.charge_states.state, state)
-
-
-# charging state
-#----------------------------------------
-func _on_charging_state_entered() -> void:
-	state = State.CHARGING
-	
-	## Disable the spinning animation
-	control_node.control_node_control_states.spins_during_dribble = false
-	
-	asset.shield_anim.charge_shield(0.3)
 
 
 # inflating state
 #----------------------------------------
-func _on_inflating_state_entered() -> void:
-	state = State.INFLATING
+func _on_expanding_state_entered() -> void:
+	state = State.EXPANDING
 
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
 	
-	asset.shield_anim.inflate_shield(0.3)
+	expand_animation()
 
 # on state
 #----------------------------------------
@@ -79,7 +72,6 @@ func _on_on_state_entered() -> void:
 	state = State.ON
 	
 	shield_collision.set_collision_layer_value(6, true)
-	asset.shield_anim.set_shield_anim_state_on()
 	
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
@@ -96,8 +88,7 @@ func _on_dissipating_state_entered() -> void:
 	
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
-	
-	asset.shield_anim.dissipate_shield(0.3)
+	dissipate_animation()
 
 
 #=======================================================
@@ -110,7 +101,6 @@ func _on_player_idle_entered() -> void:
 
 func _on_player_idle_exited() -> void:
 	_player_is_idle = false
-	check_conditions_to_shield()
 	sc.send_event(TRANS_TO_DISSIPATING)
 
 
@@ -121,29 +111,32 @@ func _on_player_dribbling_entered() -> void:
 
 func _on_player_dribbling_exited() -> void:
 	_player_is_dribbling = false
-	check_conditions_to_shield()
 	sc.send_event(TRANS_TO_DISSIPATING)
 
 
 func _on_player_moved() -> void:
 	sc.send_event(TRANS_TO_DISSIPATING)
-	check_conditions_to_shield()
 
 
-func _on_charge_shield_finished() -> void:
-	sc.send_event(TRANS_TO_INFLATING)
+func _on_animation_state_finished(anim_name: String) -> void:
+	match(anim_name):
+		EXPAND_LEVEL_0_TRANS_ANIM:
+			sc.send_event(TRANS_TO_ON)
+		EXPAND_LEVEL_1_TRANS_ANIM:
+			sc.send_event(TRANS_TO_ON)
+		EXPAND_LEVEL_2_TRANS_ANIM:
+			sc.send_event(TRANS_TO_ON)
+		EXPAND_LEVEL_3_TRANS_ANIM:
+			sc.send_event(TRANS_TO_ON)
+		DISSIPATE_LEVEL_0_TRANS_ANIM:
+			sc.send_event(TRANS_TO_OFF)
+		DISSIPATE_LEVEL_1_TRANS_ANIM:
+			sc.send_event(TRANS_TO_OFF)
+		DISSIPATE_LEVEL_2_TRANS_ANIM:
+			sc.send_event(TRANS_TO_OFF)
+		DISSIPATE_LEVEL_3_TRANS_ANIM:
+			sc.send_event(TRANS_TO_OFF)
 
-
-func _on_inflate_shield_finished() -> void:
-	sc.send_event(TRANS_TO_ON)
-
-
-func _on_dissipate_shield_finished() -> void:
-	sc.send_event(TRANS_TO_OFF)
-
-
-func _on_blow_finished() -> void:
-	control_node.control_node_control_states.spins_during_dribble = true
 
 #=======================================================
 # CONTROLS
@@ -152,7 +145,7 @@ func check_conditions_to_shield() -> void:
 	_shield_allowed = _player_is_idle and _player_is_dribbling and _intends_to_shield
 	## If all conditions are met
 	if _shield_allowed:
-		sc.send_event(TRANS_TO_CHARGING)
+		sc.send_event(TRANS_TO_EXPANDING)
 
 
 func turn_on_shield() -> void:
@@ -163,3 +156,30 @@ func turn_on_shield() -> void:
 func turn_off_shield() -> void:
 	_intends_to_shield = false
 	sc.send_event(TRANS_TO_DISSIPATING)
+
+
+#=======================================================
+# UTILITIES
+#=======================================================
+func expand_animation() -> void:
+	match(control_node.charge_states.state):
+		control_node.charge_states.State.NONE:
+			control_node.anim_state.travel(EXPAND_LEVEL_0_TRANS_ANIM)
+		control_node.charge_states.State.LEVEL1:
+			control_node.anim_state.travel(EXPAND_LEVEL_1_TRANS_ANIM)
+		control_node.charge_states.State.LEVEL2:
+			control_node.anim_state.travel(EXPAND_LEVEL_2_TRANS_ANIM)
+		control_node.charge_states.State.LEVEL3:
+			control_node.anim_state.travel(EXPAND_LEVEL_3_TRANS_ANIM)
+
+
+func dissipate_animation() -> void:
+	match(control_node.charge_states.state):
+		control_node.charge_states.State.NONE:
+			control_node.anim_state.travel(DISSIPATE_LEVEL_0_TRANS_ANIM)
+		control_node.charge_states.State.LEVEL1:
+			control_node.anim_state.travel(DISSIPATE_LEVEL_1_TRANS_ANIM)
+		control_node.charge_states.State.LEVEL2:
+			control_node.anim_state.travel(DISSIPATE_LEVEL_2_TRANS_ANIM)
+		control_node.charge_states.State.LEVEL3:
+			control_node.anim_state.travel(DISSIPATE_LEVEL_3_TRANS_ANIM)
