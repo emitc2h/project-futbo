@@ -40,6 +40,8 @@ const BLOW_LEVEL_1_EXPANDED_TRANS_ANIM: String = "transition - blow - charge lev
 const BLOW_LEVEL_2_EXPANDED_TRANS_ANIM: String = "transition - blow - charge level 2 - expanded"
 const BLOW_LEVEL_3_EXPANDED_TRANS_ANIM: String = "transition - blow - charge level 3 - expanded"
 
+const WARP_IN_TRANS_ANIM: String = "transition - warp in"
+
 ## Internal variables
 var bounce_strength: float = 0.0
 
@@ -52,7 +54,6 @@ func _ready() -> void:
 #----------------------------------------
 func _on_off_state_entered() -> void:
 	state = State.OFF
-	
 	control_node.anim_state.travel(OFF_STATE_ANIM)
 	
 	## When the control node turns off while being dribbled, it should turn back on immediately
@@ -66,6 +67,22 @@ func _on_charging_state_entered() -> void:
 	state = State.CHARGING
 	control_node.anim_state.travel(CHARGING_TRANS_ANIM)
 	direction_ray.turn_on()
+
+
+
+func _on_charging_state_physics_processing(_delta: float) -> void:
+	## Make sure the transition animation is actually happening to avoid state lock
+	match(control_node.anim_state.get_current_node()):
+		CHARGING_TRANS_ANIM:
+			return
+		## This is the end state, but leaving the charging state is handled via _on_animation_state_finished
+		ON_STATE_ANIM:
+			return
+		## Cancel the transition animation otherwise
+		_:
+			sc.send_event(TRANS_TO_OFF)
+		
+		
 
 
 # on state
@@ -175,4 +192,6 @@ func _on_animation_state_finished(anim_name: String) -> void:
 		BLOW_LEVEL_2_EXPANDED_TRANS_ANIM:
 			sc.send_event(TRANS_TO_OFF)
 		BLOW_LEVEL_3_EXPANDED_TRANS_ANIM:
+			sc.send_event(TRANS_TO_OFF)
+		WARP_IN_TRANS_ANIM:
 			sc.send_event(TRANS_TO_OFF)

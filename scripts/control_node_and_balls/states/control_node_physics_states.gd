@@ -24,6 +24,7 @@ func _ready() -> void:
 	control_node = ball as ControlNode
 	Signals.player_update_destination.connect(_on_player_update_destination)
 
+
 # warping state
 #----------------------------------------
 func _on_warping_state_entered() -> void:
@@ -38,6 +39,10 @@ func _on_warping_state_physics_processing(_delta: float) -> void:
 		track_position_container.global_position = warp_destination
 		char_node.global_position = warp_destination
 		rigid_node.global_position = warp_destination
+
+
+func _on_warping_state_exited() -> void:
+	pass
 
 
 #=======================================================

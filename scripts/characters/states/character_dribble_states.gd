@@ -103,7 +103,9 @@ func _on_dribbling_state_physics_processing(_delta: float) -> void:
 	
 	## Ensures the ball is attracted to the dribble marker
 	if ball and character.get_instance_id() == ball.dribbler_id:
-		Signals.active_dribble_marker_position_updated.emit(dribble_marker.global_position)
+		## Make sure the destination of the control node is on the xy-plane
+		var marker_pos: Vector3 = Vector3(dribble_marker.global_position.x, dribble_marker.global_position.y, 0.0)
+		Signals.active_dribble_marker_position_updated.emit(marker_pos)
 		Signals.player_velocity_updated.emit(character.velocity)
 	else:
 		sc.send_event(TRANS_TO_CAN_DRIBBLE)
@@ -146,7 +148,9 @@ func _on_dribble_pickup_zone_body_exited(body: Node3D) -> void:
 
 
 func _on_control_node_requests_destination() -> void:
-	Signals.player_update_destination.emit(dribble_marker.global_position)
+	## Make sure the destination of the control node is on the xy-plane
+	var destination: Vector3 = Vector3(dribble_marker.global_position.x, dribble_marker.global_position.y, 0.0)
+	Signals.player_update_destination.emit(destination)
 
 #=======================================================
 # CONTROLS

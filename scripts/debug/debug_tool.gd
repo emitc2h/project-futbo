@@ -83,7 +83,10 @@ func _input(event: InputEvent) -> void:
 	if not active:
 		return
 	if event.is_action_pressed("debug_pause"):
-		_pause()
+		if paused:
+			_unpause()
+		else:
+			_pause()
 	
 	if event.is_action_pressed("debug_right"):
 		if paused:
@@ -110,15 +113,24 @@ func _input(event: InputEvent) -> void:
 
 
 func _pause() -> void:
-	paused = !paused
-	get_tree().paused = !get_tree().paused
+	## If paused already don't do anything
 	if paused:
-		Signals.debug_on.emit()
-		pause_log_array_idx = 0
-		tab_container.current_tab = 1
-	else:
-		Signals.debug_off.emit()
-		tab_container.current_tab = 0
+		return
+	paused = true
+	get_tree().paused =  true
+	Signals.debug_on.emit()
+	pause_log_array_idx = 0
+	tab_container.current_tab = 1
+
+
+func _unpause() -> void:
+	## If paused already don't do anything
+	if not paused:
+		return
+	paused = false
+	get_tree().paused =  false
+	Signals.debug_off.emit()
+	tab_container.current_tab = 0
 
 
 func _update_pause_header() -> void:

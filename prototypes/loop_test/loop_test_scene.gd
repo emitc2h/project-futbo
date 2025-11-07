@@ -17,7 +17,7 @@ func _physics_process(_delta: float) -> void:
 func _spawn_new_drone() -> void:
 	await get_tree().create_timer(1.5).timeout
 	var new_drone: Drone = drone_scene.instantiate()
-	add_child(new_drone)
 	new_drone.global_position = spawn_point.global_position
+	add_child(new_drone)
 	drone = new_drone
 	

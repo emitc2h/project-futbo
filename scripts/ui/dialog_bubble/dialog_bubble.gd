@@ -20,7 +20,7 @@ var camera: Camera3D
 # The avatar of the player
 @export var texture: Texture2D
 # The player emitting dialog bubbles
-@export var player: Player
+@export var character: CharacterBase
 
 
 @export_group("Path properties")
@@ -175,7 +175,7 @@ func _track_player_position(delta: float) -> void:
 ## Computes where the bubble is aiming to be, before smoothing is applied
 func _target_bubble_position() -> Vector2:
 	# Unpack the player position in the viewport
-	var unprojected_vec2: Vector2 = camera.unproject_position(player.position)
+	var unprojected_vec2: Vector2 = camera.unproject_position(character.position)
 	var unp_x: float = unprojected_vec2.x + offset_x
 	var unp_y: float = unprojected_vec2.y + offset_y
 
@@ -210,7 +210,7 @@ func _set_to_player_position() -> void:
 ## Moves the speech line where it should be
 func _sync_line() -> void:
 	# Compute where the line should try to point to
-	var unp_player_pos: Vector2 = camera.unproject_position(player.global_position) \
+	var unp_player_pos: Vector2 = camera.unproject_position(character.global_position) \
 		+ Vector2(0.0, line_fraction*offset_y)
 	
 	line.set_point_position(0, unp_player_pos)

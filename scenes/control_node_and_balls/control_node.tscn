@@ -1,4 +1,4 @@
-[gd_scene load_steps=159 format=4 uid="uid://cupvg7lj3rh2s"]
+[gd_scene load_steps=166 format=4 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
@@ -7983,6 +7983,1245 @@ tracks/33/keys = {
 "values": [Vector3(6, 6, 6)]
 }
 
+[sub_resource type="Animation" id="Animation_xaxpm"]
+resource_name = "transition - hit - charge level 1 - expanded"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1000.0, 1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/alpha")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [0.999999977648, 0.499999988824]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/modulate_factor")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.1499999966472, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/emission_energy")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [99.9999977648, 20.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/dissolve_value")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.50000002375, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/ripple_strength")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.06000000285, 0.010000000475]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:surface_material_override/0:shader_parameter/noise_intensity")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.50000002375]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_energy")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [15.0, 10.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_color")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(8, 8, 8), Vector3(8, 8, 8)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface_material_override/0:albedo_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.2784314, 0.5137255, 0.70980394, 0.7058824), Color(0.2784314, 0.5137255, 0.70980394, 0.39215687)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/emission_factor")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [30.0, 0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/window_size")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.05000000074506, 0.05000000074506]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/reverse")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_material_override/0:shader_parameter/power")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4.9999997976, 4.9999997976]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_emission_strength")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [25.00000037253, 25.00000037253]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_threshold")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_rotation_speed")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_emission_strength")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.000000074506, 5.000000074506]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_threshold")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_emission_strength")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.000000074506, 5.000000074506]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_threshold")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_rotation_speed")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.00000037253, 5.00000037253]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_scale")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.10000000149012, 0.10000000149012]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_energy")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:scale")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [Vector3(11.5, 11.5, 11.5), Vector3(11, 11, 11)]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:scale")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(11, 11, 11), Vector3(11, 11, 11)]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:visible")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [true, true]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ratio")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.25, 0.0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [true, true]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, false]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(6, 6, 6), Vector3(6, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_o1u0d"]
+resource_name = "transition - hit - charge level 2 - expanded"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1000.0, 1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/alpha")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [0.999999977648, 0.499999988824]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/modulate_factor")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.2999999932944, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/emission_energy")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [119.99999731776, 20.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/dissolve_value")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.50000002375, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/ripple_strength")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.1200000057, 0.010000000475]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:surface_material_override/0:shader_parameter/noise_intensity")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.50000002375]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_energy")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [17.0, 10.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_color")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.49411765, 0.39215687, 0.85882354, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(8, 8, 8), Vector3(8, 8, 8)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface_material_override/0:albedo_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.49803922, 0.39607844, 0.85882354, 0.8627451), Color(0.2784314, 0.5137255, 0.70980394, 0.39215687)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/emission_factor")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [120.0, 0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/window_size")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.05000000074506, 0.05000000074506]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/reverse")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_material_override/0:shader_parameter/power")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4.9999997976, 4.9999997976]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_emission_strength")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [25.00000037253, 25.00000037253]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_threshold")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_rotation_speed")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_emission_strength")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.000000074506, 5.000000074506]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_threshold")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_emission_strength")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.000000074506, 5.000000074506]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_threshold")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_rotation_speed")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.00000037253, 5.00000037253]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_scale")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.10000000149012, 0.10000000149012]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_energy")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:scale")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [Vector3(11.5, 11.5, 11.5), Vector3(11, 11, 11)]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:scale")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(11, 11, 11), Vector3(11, 11, 11)]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:visible")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [true, true]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ratio")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.35, 0.0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [true, true]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, false]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(6, 6, 6), Vector3(6, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_16ki6"]
+resource_name = "transition - hit - charge level 3 - expanded"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1000.0, 1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/alpha")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [0.999999977648, 0.499999988824]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/modulate_factor")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5499999877064, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/emission_energy")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [199.9999955296, 20.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/dissolve_value")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.50000002375, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/ripple_strength")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.2000000095, 0.010000000475]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:surface_material_override/0:shader_parameter/noise_intensity")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.50000002375]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_energy")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [20.0, 10.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_color")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.6901961, 0.2627451, 0.7921569, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(8, 8, 8), Vector3(8, 8, 8)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface_material_override/0:albedo_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.6901961, 0.2627451, 0.7921569, 1), Color(0.2784314, 0.5137255, 0.70980394, 0.39215687)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/emission_factor")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [240.0, 0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/window_size")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.10000000149012, 0.05000000074506]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/reverse")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [true, false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_material_override/0:shader_parameter/power")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4.9999997976, 4.9999997976]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_emission_strength")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [25.00000037253, 25.00000037253]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_threshold")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_rotation_speed")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_emission_strength")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.000000074506, 5.000000074506]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_threshold")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_emission_strength")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.000000074506, 5.000000074506]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_threshold")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_rotation_speed")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.00000037253, 5.00000037253]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_scale")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.10000000149012, 0.10000000149012]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_energy")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:scale")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [Vector3(11.5, 11.5, 11.5), Vector3(11, 11, 11)]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:scale")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(11, 11, 11), Vector3(11, 11, 11)]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:visible")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [true, true]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ratio")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.8, 0.0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [true, true]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [true, false]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(6, 6, 6), Vector3(6, 6, 6)]
+}
+
 [sub_resource type="Animation" id="Animation_7ut47"]
 resource_name = "transition - power off to on"
 length = 2.0
@@ -12554,1245 +13793,6 @@ tracks/34/keys = {
 "values": [false, true]
 }
 
-[sub_resource type="Animation" id="Animation_xaxpm"]
-resource_name = "transition - hit - charge level 1 - expanded"
-length = 0.4
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_energy")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1000.0, 1000.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/alpha")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.25, 1),
-"update": 0,
-"values": [0.999999977648, 0.499999988824]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/modulate_factor")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.1499999966472, 0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/emission_energy")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.5, 1),
-"update": 0,
-"values": [99.9999977648, 20.0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/dissolve_value")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.50000002375, 1.0]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/ripple_strength")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.06000000285, 0.010000000475]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:surface_material_override/0:shader_parameter/noise_intensity")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.50000002375]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_energy")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [15.0, 10.0]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_color")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(8, 8, 8), Vector3(8, 8, 8)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface_material_override/0:albedo_color")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.2784314, 0.5137255, 0.70980394, 0.7058824), Color(0.2784314, 0.5137255, 0.70980394, 0.39215687)]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/emission_factor")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [30.0, 0.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/window_size")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.05000000074506, 0.05000000074506]
-}
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/reverse")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, false]
-}
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_material_override/0:shader_parameter/power")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [4.9999997976, 4.9999997976]
-}
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_emission_strength")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [25.00000037253, 25.00000037253]
-}
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_threshold")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_rotation_speed")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_emission_strength")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [5.000000074506, 5.000000074506]
-}
-tracks/20/type = "value"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_threshold")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/21/type = "value"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_emission_strength")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [5.000000074506, 5.000000074506]
-}
-tracks/22/type = "value"
-tracks/22/imported = false
-tracks/22/enabled = true
-tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_threshold")
-tracks/22/interp = 1
-tracks/22/loop_wrap = true
-tracks/22/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/23/type = "value"
-tracks/23/imported = false
-tracks/23/enabled = true
-tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_rotation_speed")
-tracks/23/interp = 1
-tracks/23/loop_wrap = true
-tracks/23/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [5.00000037253, 5.00000037253]
-}
-tracks/24/type = "value"
-tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_scale")
-tracks/24/interp = 1
-tracks/24/loop_wrap = true
-tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.10000000149012, 0.10000000149012]
-}
-tracks/25/type = "value"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_energy")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:scale")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.25, 1),
-"update": 0,
-"values": [Vector3(11.5, 11.5, 11.5), Vector3(11, 11, 11)]
-}
-tracks/27/type = "value"
-tracks/27/imported = false
-tracks/27/enabled = true
-tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:scale")
-tracks/27/interp = 1
-tracks/27/loop_wrap = true
-tracks/27/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(11, 11, 11), Vector3(11, 11, 11)]
-}
-tracks/28/type = "value"
-tracks/28/imported = false
-tracks/28/enabled = true
-tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:visible")
-tracks/28/interp = 1
-tracks/28/loop_wrap = true
-tracks/28/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, true]
-}
-tracks/29/type = "value"
-tracks/29/imported = false
-tracks/29/enabled = true
-tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ratio")
-tracks/29/interp = 1
-tracks/29/loop_wrap = true
-tracks/29/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.25, 0.0]
-}
-tracks/30/type = "value"
-tracks/30/imported = false
-tracks/30/enabled = true
-tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
-tracks/30/interp = 1
-tracks/30/loop_wrap = true
-tracks/30/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, false]
-}
-tracks/31/type = "value"
-tracks/31/imported = false
-tracks/31/enabled = true
-tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible")
-tracks/31/interp = 1
-tracks/31/loop_wrap = true
-tracks/31/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, true]
-}
-tracks/32/type = "value"
-tracks/32/imported = false
-tracks/32/enabled = true
-tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible")
-tracks/32/interp = 1
-tracks/32/loop_wrap = true
-tracks/32/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, false]
-}
-tracks/33/type = "value"
-tracks/33/imported = false
-tracks/33/enabled = true
-tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
-tracks/33/interp = 1
-tracks/33/loop_wrap = true
-tracks/33/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(6, 6, 6), Vector3(6, 6, 6)]
-}
-
-[sub_resource type="Animation" id="Animation_o1u0d"]
-resource_name = "transition - hit - charge level 2 - expanded"
-length = 0.4
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_energy")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1000.0, 1000.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/alpha")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.25, 1),
-"update": 0,
-"values": [0.999999977648, 0.499999988824]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/modulate_factor")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.2999999932944, 0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/emission_energy")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.5, 1),
-"update": 0,
-"values": [119.99999731776, 20.0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/dissolve_value")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.50000002375, 1.0]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/ripple_strength")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.1200000057, 0.010000000475]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:surface_material_override/0:shader_parameter/noise_intensity")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.50000002375]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_energy")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [17.0, 10.0]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_color")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.49411765, 0.39215687, 0.85882354, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(8, 8, 8), Vector3(8, 8, 8)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface_material_override/0:albedo_color")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.49803922, 0.39607844, 0.85882354, 0.8627451), Color(0.2784314, 0.5137255, 0.70980394, 0.39215687)]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/emission_factor")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [120.0, 0.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/window_size")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.05000000074506, 0.05000000074506]
-}
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/reverse")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, false]
-}
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_material_override/0:shader_parameter/power")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [4.9999997976, 4.9999997976]
-}
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_emission_strength")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [25.00000037253, 25.00000037253]
-}
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_threshold")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_rotation_speed")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_emission_strength")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [5.000000074506, 5.000000074506]
-}
-tracks/20/type = "value"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_threshold")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/21/type = "value"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_emission_strength")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [5.000000074506, 5.000000074506]
-}
-tracks/22/type = "value"
-tracks/22/imported = false
-tracks/22/enabled = true
-tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_threshold")
-tracks/22/interp = 1
-tracks/22/loop_wrap = true
-tracks/22/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/23/type = "value"
-tracks/23/imported = false
-tracks/23/enabled = true
-tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_rotation_speed")
-tracks/23/interp = 1
-tracks/23/loop_wrap = true
-tracks/23/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [5.00000037253, 5.00000037253]
-}
-tracks/24/type = "value"
-tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_scale")
-tracks/24/interp = 1
-tracks/24/loop_wrap = true
-tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.10000000149012, 0.10000000149012]
-}
-tracks/25/type = "value"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_energy")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:scale")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.25, 1),
-"update": 0,
-"values": [Vector3(11.5, 11.5, 11.5), Vector3(11, 11, 11)]
-}
-tracks/27/type = "value"
-tracks/27/imported = false
-tracks/27/enabled = true
-tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:scale")
-tracks/27/interp = 1
-tracks/27/loop_wrap = true
-tracks/27/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(11, 11, 11), Vector3(11, 11, 11)]
-}
-tracks/28/type = "value"
-tracks/28/imported = false
-tracks/28/enabled = true
-tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:visible")
-tracks/28/interp = 1
-tracks/28/loop_wrap = true
-tracks/28/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, true]
-}
-tracks/29/type = "value"
-tracks/29/imported = false
-tracks/29/enabled = true
-tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ratio")
-tracks/29/interp = 1
-tracks/29/loop_wrap = true
-tracks/29/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.35, 0.0]
-}
-tracks/30/type = "value"
-tracks/30/imported = false
-tracks/30/enabled = true
-tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
-tracks/30/interp = 1
-tracks/30/loop_wrap = true
-tracks/30/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, false]
-}
-tracks/31/type = "value"
-tracks/31/imported = false
-tracks/31/enabled = true
-tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible")
-tracks/31/interp = 1
-tracks/31/loop_wrap = true
-tracks/31/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, true]
-}
-tracks/32/type = "value"
-tracks/32/imported = false
-tracks/32/enabled = true
-tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible")
-tracks/32/interp = 1
-tracks/32/loop_wrap = true
-tracks/32/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, false]
-}
-tracks/33/type = "value"
-tracks/33/imported = false
-tracks/33/enabled = true
-tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
-tracks/33/interp = 1
-tracks/33/loop_wrap = true
-tracks/33/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(6, 6, 6), Vector3(6, 6, 6)]
-}
-
-[sub_resource type="Animation" id="Animation_16ki6"]
-resource_name = "transition - hit - charge level 3 - expanded"
-length = 0.4
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_energy")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1000.0, 1000.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ControlNodeMesh:surface_material_override/0:next_pass:shader_parameter/emission_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/alpha")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.25, 1),
-"update": 0,
-"values": [0.999999977648, 0.499999988824]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/modulate_factor")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.5499999877064, 0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/emission_energy")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.5, 1),
-"update": 0,
-"values": [199.9999955296, 20.0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/dissolve_value")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.50000002375, 1.0]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:surface_material_override/0:shader_parameter/ripple_strength")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.2000000095, 0.010000000475]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:surface_material_override/0:shader_parameter/noise_intensity")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.50000002375]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_energy")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [20.0, 10.0]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_color")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.6901961, 0.2627451, 0.7921569, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(8, 8, 8), Vector3(8, 8, 8)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface_material_override/0:albedo_color")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.6901961, 0.2627451, 0.7921569, 1), Color(0.2784314, 0.5137255, 0.70980394, 0.39215687)]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/emission_factor")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [240.0, 0.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/window_size")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.10000000149012, 0.05000000074506]
-}
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass_1:surface_0/material:shader_parameter/reverse")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, false]
-}
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_material_override/0:shader_parameter/power")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [4.9999997976, 4.9999997976]
-}
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_emission_strength")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [25.00000037253, 25.00000037253]
-}
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_threshold")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/ring_rotation_speed")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_emission_strength")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [5.000000074506, 5.000000074506]
-}
-tracks/20/type = "value"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/rays_threshold")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/21/type = "value"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_emission_strength")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [5.000000074506, 5.000000074506]
-}
-tracks/22/type = "value"
-tracks/22/imported = false
-tracks/22/enabled = true
-tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_threshold")
-tracks/22/interp = 1
-tracks/22/loop_wrap = true
-tracks/22/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/23/type = "value"
-tracks/23/imported = false
-tracks/23/enabled = true
-tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_rotation_speed")
-tracks/23/interp = 1
-tracks/23/loop_wrap = true
-tracks/23/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [5.00000037253, 5.00000037253]
-}
-tracks/24/type = "value"
-tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_material_override/0:shader_parameter/center_scale")
-tracks/24/interp = 1
-tracks/24/loop_wrap = true
-tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.10000000149012, 0.10000000149012]
-}
-tracks/25/type = "value"
-tracks/25/imported = false
-tracks/25/enabled = true
-tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_energy")
-tracks/25/interp = 1
-tracks/25/loop_wrap = true
-tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 1.0]
-}
-tracks/26/type = "value"
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/ShieldMesh:scale")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.25, 1),
-"update": 0,
-"values": [Vector3(11.5, 11.5, 11.5), Vector3(11, 11, 11)]
-}
-tracks/27/type = "value"
-tracks/27/imported = false
-tracks/27/enabled = true
-tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:scale")
-tracks/27/interp = 1
-tracks/27/loop_wrap = true
-tracks/27/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(11, 11, 11), Vector3(11, 11, 11)]
-}
-tracks/28/type = "value"
-tracks/28/imported = false
-tracks/28/enabled = true
-tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeModel/DistortionShieldMesh:visible")
-tracks/28/interp = 1
-tracks/28/loop_wrap = true
-tracks/28/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, true]
-}
-tracks/29/type = "value"
-tracks/29/imported = false
-tracks/29/enabled = true
-tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ratio")
-tracks/29/interp = 1
-tracks/29/loop_wrap = true
-tracks/29/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.8, 0.0]
-}
-tracks/30/type = "value"
-tracks/30/imported = false
-tracks/30/enabled = true
-tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
-tracks/30/interp = 1
-tracks/30/loop_wrap = true
-tracks/30/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, false]
-}
-tracks/31/type = "value"
-tracks/31/imported = false
-tracks/31/enabled = true
-tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible")
-tracks/31/interp = 1
-tracks/31/loop_wrap = true
-tracks/31/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, true]
-}
-tracks/32/type = "value"
-tracks/32/imported = false
-tracks/32/enabled = true
-tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible")
-tracks/32/interp = 1
-tracks/32/loop_wrap = true
-tracks/32/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, false]
-}
-tracks/33/type = "value"
-tracks/33/imported = false
-tracks/33/enabled = true
-tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
-tracks/33/interp = 1
-tracks/33/loop_wrap = true
-tracks/33/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(6, 6, 6), Vector3(6, 6, 6)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1ei8v"]
 _data = {
 &"RESET": SubResource("Animation_ipcb2"),
@@ -13956,7 +13956,6 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u6nro"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xvhia"]
-xfade_time = 0.07
 switch_mode = 2
 advance_mode = 2
 
@@ -14090,6 +14089,24 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pnv4w"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8lfx5"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uo6d3"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h3xn4"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ogwdh"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1x2n7"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dlasw"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4fss2"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_8lfx5"]
 states/End/position = Vector2(1976, -81.25)
 states/Start/position = Vector2(122, -27.75)
@@ -14104,11 +14121,11 @@ states/Start/position = Vector2(122, -27.75)
 "states/state - power on - charge level 1 - expanded/node" = SubResource("AnimationNodeAnimation_e3mf1")
 "states/state - power on - charge level 1 - expanded/position" = Vector2(1504.17, 327.9593)
 "states/state - power on - charge level 2/node" = SubResource("AnimationNodeAnimation_84heo")
-"states/state - power on - charge level 2/position" = Vector2(752.2431, 565.0426)
+"states/state - power on - charge level 2/position" = Vector2(752.45544, 565.7926)
 "states/state - power on - charge level 2 - expanded/node" = SubResource("AnimationNodeAnimation_j0og2")
 "states/state - power on - charge level 2 - expanded/position" = Vector2(1502.7968, 565.2926)
 "states/state - power on - charge level 3/node" = SubResource("AnimationNodeAnimation_8lfx5")
-"states/state - power on - charge level 3/position" = Vector2(753.68866, 821.8759)
+"states/state - power on - charge level 3/position" = Vector2(752.48267, 822.4384)
 "states/state - power on - charge level 3 - expanded/node" = SubResource("AnimationNodeAnimation_h18mq")
 "states/state - power on - charge level 3 - expanded/position" = Vector2(1506.4349, 822.2509)
 "states/transition - blow - charge level 0/node" = SubResource("AnimationNodeAnimation_0eo5d")
@@ -14128,7 +14145,7 @@ states/Start/position = Vector2(122, -27.75)
 "states/transition - blow - charge level 3 - expanded/node" = SubResource("AnimationNodeAnimation_7ut47")
 "states/transition - blow - charge level 3 - expanded/position" = Vector2(1870.3348, 819.06775)
 "states/transition - hit - charge level 1 - expanded/node" = SubResource("AnimationNodeAnimation_17kaf")
-"states/transition - hit - charge level 1 - expanded/position" = Vector2(1604.7256, 215.32758)
+"states/transition - hit - charge level 1 - expanded/position" = Vector2(1604.3506, 215.32758)
 "states/transition - hit - charge level 2 - expanded/node" = SubResource("AnimationNodeAnimation_beqih")
 "states/transition - hit - charge level 2 - expanded/position" = Vector2(1604.4756, 448.82758)
 "states/transition - hit - charge level 3 - expanded/node" = SubResource("AnimationNodeAnimation_kyrtq")
@@ -14138,7 +14155,7 @@ states/Start/position = Vector2(122, -27.75)
 "states/transition - power on - charge level 0 - dissipating/node" = SubResource("AnimationNodeAnimation_xvhia")
 "states/transition - power on - charge level 0 - dissipating/position" = Vector2(1115.8398, 198.0715)
 "states/transition - power on - charge level 0 - expanding/node" = SubResource("AnimationNodeAnimation_kgwo6")
-"states/transition - power on - charge level 0 - expanding/position" = Vector2(1104.9302, 98.84375)
+"states/transition - power on - charge level 0 - expanding/position" = Vector2(1104.9467, 99.46267)
 "states/transition - power on - charge level 1 - dissipating/node" = SubResource("AnimationNodeAnimation_3sl37")
 "states/transition - power on - charge level 1 - dissipating/position" = Vector2(1104.9478, 422.46124)
 "states/transition - power on - charge level 1 - expanding/node" = SubResource("AnimationNodeAnimation_8risc")
@@ -14157,8 +14174,8 @@ states/Start/position = Vector2(122, -27.75)
 "states/transition - warp in/position" = Vector2(242.72559, -172.7901)
 "states/transition - warp out/node" = SubResource("AnimationNodeAnimation_k0wgs")
 "states/transition - warp out/position" = Vector2(561.2256, -174.1651)
-transitions = ["Start", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_1ei8v"), "state - power on - charge level 0", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_kgwo6"), "state - power on - charge level 1", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_e3mf1"), "state - power on - charge level 2", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_hlhvm"), "state - power on - charge level 1", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_ipcb2"), "state - power on - charge level 3", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_8risc"), "state - power on - charge level 2", "state - power on - charge level 3", SubResource("AnimationNodeStateMachineTransition_h18mq"), "state - power on - charge level 0", "transition - power on - charge level 0 - expanding", SubResource("AnimationNodeStateMachineTransition_u6nro"), "transition - power on - charge level 0 - expanding", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_xvhia"), "state - power on - charge level 1", "transition - power on - charge level 1 - expanding", SubResource("AnimationNodeStateMachineTransition_3sl37"), "transition - power on - charge level 1 - expanding", "state - power on - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_j0og2"), "state - power on - charge level 2", "transition - power on - charge level 2 - expanding", SubResource("AnimationNodeStateMachineTransition_wfwi8"), "transition - power on - charge level 2 - expanding", "state - power on - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_k0wgs"), "state - power on - charge level 3", "transition - power on - charge level 3 - expanding", SubResource("AnimationNodeStateMachineTransition_jyysd"), "transition - power on - charge level 3 - expanding", "state - power on - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_tt2je"), "state - power on - charge level 0 - expanded", "transition - blow - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_d6luo"), "state - power on - charge level 1 - expanded", "transition - blow - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_hfc78"), "state - power on - charge level 2 - expanded", "transition - blow - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_0eo5d"), "state - power on - charge level 3 - expanded", "transition - blow - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_beqih"), "state - power on - charge level 0 - expanded", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_17kaf"), "transition - power on - charge level 0 - dissipating", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_mxocs"), "state - power on - charge level 1 - expanded", "transition - power on - charge level 1 - dissipating", SubResource("AnimationNodeStateMachineTransition_2bqhb"), "transition - power on - charge level 1 - dissipating", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_0p7cc"), "state - power on - charge level 2 - expanded", "transition - power on - charge level 2 - dissipating", SubResource("AnimationNodeStateMachineTransition_kyrtq"), "transition - power on - charge level 2 - dissipating", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_3qg61"), "state - power on - charge level 3 - expanded", "transition - power on - charge level 3 - dissipating", SubResource("AnimationNodeStateMachineTransition_xaxpm"), "transition - power on - charge level 3 - dissipating", "state - power on - charge level 3", SubResource("AnimationNodeStateMachineTransition_o1u0d"), "transition - blow - charge level 0 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_16ki6"), "transition - blow - charge level 1 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_ftdrl"), "transition - blow - charge level 2 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_a7vlu"), "transition - blow - charge level 3 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_tu2td"), "state - power off - emitters off", "transition - power off to on", SubResource("AnimationNodeStateMachineTransition_61eqg"), "transition - power off to on", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_84heo"), "state - power on - charge level 0", "transition - blow - charge level 0", SubResource("AnimationNodeStateMachineTransition_3lo66"), "transition - blow - charge level 0", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_0e3ba"), "state - power on - charge level 1", "transition - blow - charge level 1", SubResource("AnimationNodeStateMachineTransition_asug8"), "transition - blow - charge level 1", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_17cf2"), "state - power on - charge level 3", "transition - blow - charge level 3", SubResource("AnimationNodeStateMachineTransition_3eorx"), "state - power on - charge level 2", "transition - blow - charge level 2", SubResource("AnimationNodeStateMachineTransition_xgwy3"), "transition - blow - charge level 2", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_t2xr1"), "transition - blow - charge level 3", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_234th"), "state - power off - emitters off", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_7ut47"), "transition - warp out", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_6e0ag"), "transition - warp in", "transition - warp out", SubResource("AnimationNodeStateMachineTransition_0ymq0"), "state - power on - charge level 0", "transition - power on to off", SubResource("AnimationNodeStateMachineTransition_wiijf"), "transition - power on to off", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_j72sy"), "transition - hit - charge level 1 - expanded", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_w283j"), "transition - hit - charge level 2 - expanded", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_xdi6h"), "transition - hit - charge level 3 - expanded", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_u3o36"), "state - power on - charge level 3 - expanded", "transition - hit - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_ys8cf"), "state - power on - charge level 2 - expanded", "transition - hit - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_ipjfl"), "state - power on - charge level 1 - expanded", "transition - hit - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_pnv4w")]
-graph_offset = Vector2(-8.679063, -30.672424)
+transitions = ["Start", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_1ei8v"), "state - power on - charge level 0", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_kgwo6"), "state - power on - charge level 1", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_e3mf1"), "state - power on - charge level 2", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_hlhvm"), "state - power on - charge level 1", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_ipcb2"), "state - power on - charge level 3", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_8risc"), "state - power on - charge level 2", "state - power on - charge level 3", SubResource("AnimationNodeStateMachineTransition_h18mq"), "state - power on - charge level 0", "transition - power on - charge level 0 - expanding", SubResource("AnimationNodeStateMachineTransition_u6nro"), "transition - power on - charge level 0 - expanding", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_xvhia"), "state - power on - charge level 1", "transition - power on - charge level 1 - expanding", SubResource("AnimationNodeStateMachineTransition_3sl37"), "transition - power on - charge level 1 - expanding", "state - power on - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_j0og2"), "state - power on - charge level 2", "transition - power on - charge level 2 - expanding", SubResource("AnimationNodeStateMachineTransition_wfwi8"), "transition - power on - charge level 2 - expanding", "state - power on - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_k0wgs"), "state - power on - charge level 3", "transition - power on - charge level 3 - expanding", SubResource("AnimationNodeStateMachineTransition_jyysd"), "transition - power on - charge level 3 - expanding", "state - power on - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_tt2je"), "state - power on - charge level 0 - expanded", "transition - blow - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_d6luo"), "state - power on - charge level 1 - expanded", "transition - blow - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_hfc78"), "state - power on - charge level 2 - expanded", "transition - blow - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_0eo5d"), "state - power on - charge level 3 - expanded", "transition - blow - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_beqih"), "state - power on - charge level 0 - expanded", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_17kaf"), "transition - power on - charge level 0 - dissipating", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_mxocs"), "state - power on - charge level 1 - expanded", "transition - power on - charge level 1 - dissipating", SubResource("AnimationNodeStateMachineTransition_2bqhb"), "transition - power on - charge level 1 - dissipating", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_0p7cc"), "state - power on - charge level 2 - expanded", "transition - power on - charge level 2 - dissipating", SubResource("AnimationNodeStateMachineTransition_kyrtq"), "transition - power on - charge level 2 - dissipating", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_3qg61"), "state - power on - charge level 3 - expanded", "transition - power on - charge level 3 - dissipating", SubResource("AnimationNodeStateMachineTransition_xaxpm"), "transition - power on - charge level 3 - dissipating", "state - power on - charge level 3", SubResource("AnimationNodeStateMachineTransition_o1u0d"), "transition - blow - charge level 0 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_16ki6"), "transition - blow - charge level 1 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_ftdrl"), "transition - blow - charge level 2 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_a7vlu"), "transition - blow - charge level 3 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_tu2td"), "state - power off - emitters off", "transition - power off to on", SubResource("AnimationNodeStateMachineTransition_61eqg"), "transition - power off to on", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_84heo"), "state - power on - charge level 0", "transition - blow - charge level 0", SubResource("AnimationNodeStateMachineTransition_3lo66"), "transition - blow - charge level 0", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_0e3ba"), "state - power on - charge level 1", "transition - blow - charge level 1", SubResource("AnimationNodeStateMachineTransition_asug8"), "transition - blow - charge level 1", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_17cf2"), "state - power on - charge level 3", "transition - blow - charge level 3", SubResource("AnimationNodeStateMachineTransition_3eorx"), "state - power on - charge level 2", "transition - blow - charge level 2", SubResource("AnimationNodeStateMachineTransition_xgwy3"), "transition - blow - charge level 2", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_t2xr1"), "transition - blow - charge level 3", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_234th"), "state - power off - emitters off", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_7ut47"), "transition - warp out", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_6e0ag"), "transition - warp in", "transition - warp out", SubResource("AnimationNodeStateMachineTransition_0ymq0"), "state - power on - charge level 0", "transition - power on to off", SubResource("AnimationNodeStateMachineTransition_wiijf"), "transition - power on to off", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_j72sy"), "transition - hit - charge level 1 - expanded", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_w283j"), "transition - hit - charge level 2 - expanded", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_xdi6h"), "transition - hit - charge level 3 - expanded", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_u3o36"), "state - power on - charge level 3 - expanded", "transition - hit - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_ys8cf"), "state - power on - charge level 2 - expanded", "transition - hit - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_ipjfl"), "state - power on - charge level 1 - expanded", "transition - hit - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_pnv4w"), "state - power on - charge level 0", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_8lfx5"), "state - power on - charge level 1", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_uo6d3"), "state - power on - charge level 2", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_h3xn4"), "state - power on - charge level 3", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_ogwdh"), "transition - hit - charge level 1 - expanded", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_1x2n7"), "transition - hit - charge level 2 - expanded", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_dlasw"), "transition - hit - charge level 3 - expanded", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_4fss2")]
+graph_offset = Vector2(525.6127, -142.67242)
 
 [node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states", "shield_states", "asset") instance=ExtResource("1_fpwqj")]
 script = ExtResource("2_r7e0p")
@@ -14458,6 +14475,7 @@ draw_pass_1 = SubResource("ArrayMesh_r313a")
 collision_layer = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrackPositionContainer/Shield" index="0"]
+visible = false
 shape = SubResource("SphereShape3D_tehyq")
 debug_color = Color(0.031590424, 0.4735664, 0.4680773, 1)
 
@@ -14489,6 +14507,7 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="7"]
 tree_root = SubResource("AnimationNodeStateMachine_8lfx5")
+advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 
 [node name="AnimationStateChangeTracker" type="Node" parent="AnimationTree" index="0"]
@@ -14497,6 +14516,7 @@ state_machine_path = "parameters/playback"
 metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 
 [connection signal="state_entered" from="State/Root/Physics/warping" to="State/Root/Physics/Physics States" method="_on_warping_state_entered"]
+[connection signal="state_exited" from="State/Root/Physics/warping" to="State/Root/Physics/Physics States" method="_on_warping_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Physics/warping" to="State/Root/Physics/Physics States" method="_on_warping_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Control/dribbled" to="State/Root/Power/Power States" method="_on_control_states_dribbled_state_entered"]
 [connection signal="state_entered" from="State/Root/Control/shot" to="State/Root/Control/Control States" method="_on_shot_state_entered"]
@@ -14504,6 +14524,7 @@ metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 [connection signal="state_physics_processing" from="State/Root/Control/shot" to="State/Root/Control/Control States" method="_on_shot_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Power/off" to="State/Root/Power/Power States" method="_on_off_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/charging" to="State/Root/Power/Power States" method="_on_charging_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Power/charging" to="State/Root/Power/Power States" method="_on_charging_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Power/On" to="State/Root/Power/Power States" method="_on_on_state_entered"]
 [connection signal="state_exited" from="State/Root/Power/On" to="State/Root/Power/Power States" method="_on_on_state_exited"]
 [connection signal="timeout" from="State/Root/Power/On/Charge/Charge States/LoseChargeTimer" to="State/Root/Power/On/Charge/Charge States" method="_on_lose_charge_timer_timeout"]
@@ -14519,6 +14540,7 @@ metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 [connection signal="state_entered" from="State/Root/Power/On/Shield/dissipating" to="State/Root/Power/On/Shield/Shield States" method="_on_dissipating_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/discharging" to="State/Root/Power/Power States" method="_on_discharging_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/blow" to="State/Root/Power/Power States" method="_on_blow_state_entered"]
+[connection signal="body_entered" from="RigidNode" to="State/Root/Physics/Physics States" method="_on_rigid_node_body_entered"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Physics/Physics States" method="_on_animation_state_finished"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/Power States" method="_on_animation_state_finished"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/On/Charge/Charge States" method="_on_animation_state_finished"]

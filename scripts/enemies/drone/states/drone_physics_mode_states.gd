@@ -60,6 +60,12 @@ signal char_entered
 signal rigid_entered
 
 
+func _ready() -> void:
+	collision_shape_rigid.disabled = true
+	collision_shape_char.disabled = false
+	set_ragdoll_collisions(false)
+
+
 # char state
 #----------------------------------------
 func _on_char_state_entered() -> void:
@@ -171,9 +177,17 @@ func _on_ragdoll_state_entered() -> void:
 	## disable all other collision shapes
 	collision_shape_rigid.queue_free()
 	collision_shape_char.queue_free()
+	set_ragdoll_collisions(true)
 	
 	## Disable animations
 	model_anim_tree.active = false
+	
+	## Disable and queue_free everything else
+	sc.send_event(drone.targeting_states.TRANS_TO_DISABLED)
+	sc.send_event(drone.proximity_states.TRANS_TO_DISABLED)
+	track_position_container.queue_free()
+	track_transform_container.get_node("FieldOfView").queue_free()
+	track_transform_container.get_node("ProximityDetector").queue_free()
 	
 	## Start the ragdoll simulation
 	bone_simulation.physical_bones_start_simulation()
@@ -199,3 +213,12 @@ func _on_dead_state_entered() -> void:
 	state = State.DEAD
 	drone.queue_free()
 	Signals.drone_died.emit()
+
+
+#=======================================================
+# CONTROLS
+#=======================================================
+func set_ragdoll_collisions(enabled: bool) -> void:
+	for bone in bone_simulation.get_children():
+		var col_shape: CollisionShape3D = bone.get_node("CollisionShape3D")
+		col_shape.disabled = !enabled

@@ -219,7 +219,7 @@ surface_material_override/0 = ExtResource("11_46hk0")
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
 
 [node name="Blocks2" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10.8485, -0.0110137, 0)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -17.790775, -0.0110137, 0)
 script = SubResource("GDScript_vum0r")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Blocks2"]

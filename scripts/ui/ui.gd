@@ -3,7 +3,7 @@ extends CanvasLayer
 
 
 @export var camera_controller: CameraController
-@export var player: Player
+@export var character: CharacterBase
 @export var stamina_offset: Vector2
 
 @onready var score_left: Label = $ScoreLeft
@@ -28,8 +28,8 @@ func set_score_right(score: int) -> void:
 	$ScoreRight.text = str(score)
 
 
-func _process(delta: float) -> void:
-	stamina_bar.position = camera.unproject_position(player.position) + stamina_offset
+func _process(_delta: float) -> void:
+	stamina_bar.position = camera.unproject_position(character.position) + stamina_offset
 
 
 func _on_display_stamina(color: Color) -> void:

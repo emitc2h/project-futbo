@@ -8,7 +8,7 @@ extends Node3D
 @export var camera_controller: CameraController
 
 @export_group("Main Player")
-@export var player: Player
+@export var character: CharacterBase
 
 @onready var state: StateChart = $StateChart
 
@@ -26,7 +26,7 @@ func _on_intro_cutscene_state_entered() -> void:
 	cut_scene_player.play("intro")
 
 
-func _on_intro_cutscene_state_processing(delta: float) -> void:
+func _on_intro_cutscene_state_processing(_delta: float) -> void:
 	if Input.is_action_just_pressed("sprint"):
 		state.send_event("intro cutscene to walk to field")
 
@@ -72,7 +72,7 @@ func _on_game_over_state_entered() -> void:
 #=======================================================
 # RECEIVED SIGNALS
 #=======================================================
-func _on_trigger_game_over_area_3d_body_entered(body: Node3D) -> void:
+func _on_trigger_game_over_area_3d_body_entered(_body: Node3D) -> void:
 	state.send_event("walk to field to game over")
 	state.send_event("gameplay to game over")
 
@@ -80,16 +80,16 @@ func _on_trigger_game_over_area_3d_body_entered(body: Node3D) -> void:
 func _on_walk_to_field_path_3d_in_path(path: CharacterPath) -> void:
 	_path = path
 	state.send_event("walk to field to go around goal")
-	player.get_on_path(path)
+	character.get_on_path(path)
 
 
 func _on_walk_to_field_path_3d_leave_by_enter() -> void:
-	player.get_off_path()
+	character.get_off_path()
 
 
 func _on_walk_to_field_path_3d_leave_by_exit() -> void:
 	state.send_event("go around goal to gameplay")
-	player.get_off_path()
+	character.get_off_path()
 
 
 #=======================================================

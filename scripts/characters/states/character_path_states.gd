@@ -3,6 +3,7 @@ extends CharacterStatesAbstractBase
 
 @export_group("Parameters")
 @export var stay_on_path_force: float = 50.0
+@export var z_dampening: float = 0.06666666666666667
 
 ## States Enum
 enum State {ON_X_AXIS = 0, ON_PATH = 1}
@@ -45,6 +46,10 @@ func _on_on_path_state_entered() -> void:
 #=======================================================
 func _velocity_on_x_axis(input_magnitude: float) -> void:
 	character.velocity.x = input_magnitude
+	## Snap to the x-axis (z == 0)
+	var stay_on_path_correction: float = (character.global_position.z)
+	character.velocity.z = -stay_on_path_correction * stay_on_path_force
+	character.velocity.z -= character.velocity.z * z_dampening
 
 
 func _velocity_on_path(input_magnitude: float) -> void:

@@ -55,16 +55,20 @@ func _on_shot_state_physics_processing(delta: float) -> void:
 	
 	if char_node.global_position.distance_to(initial_pos) > shot_range:
 		## Lose a charge when you don't hit anything
-		print("lost charge, wasted shot")
 		sc.send_event(control_node.charge_states.TRANS_CHARGE_DOWN)
 		end_shot()
 	
 	if collision:
-		var object: Object = collision.get_collider(0)
-		if (object is DroneShield) or (object is DroneBone):
+		var node: Node3D = collision.get_collider(0)
+		if node.is_in_group("DroneGroup"):
 			streak.strike()
+			sc.send_event(control_node.charge_states.TRANS_DISCHARGE)
 			sc.send_event(control_node.power_states.TRANS_TO_BLOW)
-			var drone: Drone = object.drone
+			var drone: Drone
+			if node is DroneShield or node is DroneBone:
+				drone = node.drone
+			else:
+				drone = node.get_parent()
 			drone.die(shot_vector)
 		end_shot()
 
