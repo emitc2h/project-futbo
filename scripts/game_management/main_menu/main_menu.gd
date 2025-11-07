@@ -10,7 +10,8 @@ func _ready() -> void:
 
 
 func _on_new_game_pressed() -> void:
-	new_game.emit()
+	#new_game.emit()
+	pass
 
 
 func _on_exit_pressed() -> void:

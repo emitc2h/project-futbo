@@ -75,6 +75,7 @@ theme_override_font_sizes/font_size = 128
 text = "Project Futbo"
 
 [node name="NewGame" type="Button" parent="MainMenuUI/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 36

@@ -73,7 +73,7 @@ func _on_go_to_patrol_state_entered() -> void:
 	Signals.update_zoom.emit(Enums.Zoom.DEFAULT)
 
 
-func _on_go_to_patrol_bt_finished(status: int) -> void:
+func _on_go_to_patrol_bt_finished(_status: int) -> void:
 	sc.send_event(TRANS_TO_PATROL)
 
 
@@ -89,7 +89,7 @@ func _on_block_state_entered() -> void:
 	state = State.BLOCK
 
 
-func _on_block_bt_finished(status: int) -> void:
+func _on_block_bt_finished(_status: int) -> void:
 	sc.send_event(TRANS_TO_ATTACK)
 
 
