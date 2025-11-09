@@ -61,7 +61,7 @@ func _on_bt_finished(status: int) -> void:
 	finished.emit(status)
 
 
-func _on_pre_bt_player_finished(status: int) -> void:
+func _on_pre_bt_player_finished(_status: int) -> void:
 	pre_btplayer.active = false
 	btplayer.active = true
 	if reset_tree_on_enter:
