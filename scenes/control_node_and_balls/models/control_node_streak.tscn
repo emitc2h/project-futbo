@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://bv58qw6wja2qm" path="res://assets/3D/ControlNode/streak/control_node_streak_material.tres" id="3_ekexi"]
 [ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/3D/Textures/Drone/closed_shield_dissolve.png" id="4_uw5tb"]
 [ext_resource type="Texture2D" uid="uid://brweuwinhq7aa" path="res://assets/3D/ControlNode/streak/streak.png" id="5_d7avl"]
-[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/3D/Textures/Drone/closed_shield_alpha_mask.png" id="6_ekexi"]
+[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/3D/Characters/Character1.1/closed_shield_alpha_mask.png" id="6_ekexi"]
 [ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="7_uw5tb"]
 [ext_resource type="Texture2D" uid="uid://ufu6wds3282p" path="res://assets/3D/Particles/dart/dart_map.png" id="8_lustn"]
 
