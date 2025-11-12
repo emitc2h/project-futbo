@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkp8fbjsyyhyx"]
+[gd_scene load_steps=9 format=3 uid="uid://bkp8fbjsyyhyx"]
 
 [ext_resource type="PackedScene" uid="uid://dgpqcnsegq4rs" path="res://scenes/control_node_and_balls/models/control_node_model.tscn" id="1_k14dj"]
 [ext_resource type="Script" uid="uid://crab58bvajfs3" path="res://scripts/control_node_and_balls/asset/control_node_asset.gd" id="2_fgtxj"]
+[ext_resource type="Material" uid="uid://c88eekmr4325k" path="res://assets/3D/Materials/shield_shader_material.tres" id="3_bbe66"]
+[ext_resource type="Material" uid="uid://b5jl7ewpjx3b7" path="res://assets/3D/Materials/shield_distortion_shader_material.tres" id="3_ndvbx"]
+[ext_resource type="Material" uid="uid://dsr5mgwuaawhd" path="res://assets/3D/Materials/control_node_material.tres" id="3_uxj54"]
 [ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="6_uxj54"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_bbe66"]
@@ -22,6 +25,15 @@ script = ExtResource("2_fgtxj")
 
 [node name="ControlNodeModel" parent="." instance=ExtResource("1_k14dj")]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="ControlNodeMesh" parent="ControlNodeModel" index="0"]
+surface_material_override/0 = ExtResource("3_uxj54")
+
+[node name="ShieldMesh" parent="ControlNodeModel" index="1"]
+surface_material_override/0 = ExtResource("3_bbe66")
+
+[node name="DistortionShieldMesh" parent="ControlNodeModel" index="2"]
+surface_material_override/0 = ExtResource("3_ndvbx")
 
 [node name="Light" type="OmniLight3D" parent="."]
 light_intensity_lumens = 10000.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://bc323ftwy8i7t"]
+[gd_scene load_steps=55 format=3 uid="uid://bc323ftwy8i7t"]
 
 [ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone.gd" id="1_irn00"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_g2as1"]
@@ -10,8 +10,6 @@
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_doilr"]
 [ext_resource type="Script" uid="uid://c2rujfre7ei0g" path="res://scripts/enemies/drone/states/drone_direction_faced_states.gd" id="6_nn3ap"]
 [ext_resource type="Script" uid="uid://c6uypq5yp7yv4" path="res://scripts/enemies/drone/states/drone_engagement_mode_states.gd" id="9_3x3q1"]
-[ext_resource type="Shader" uid="uid://ddsp10lo1rx15" path="res://shaders/Drone/billboard_screen_distortion.gdshader" id="9_ahulk"]
-[ext_resource type="Texture2D" uid="uid://cbvr58ksjt0qs" path="res://assets/3D/Textures/Drone/float_mask_rendered_128x128.png" id="10_82hyt"]
 [ext_resource type="Script" uid="uid://b3ltvqg05gn6g" path="res://scripts/enemies/drone/states/drone_engines_states.gd" id="10_g2as1"]
 [ext_resource type="PackedScene" uid="uid://c7f1c26mhg1k8" path="res://scenes/enemies/drone/drone_model.tscn" id="11_glddf"]
 [ext_resource type="Script" uid="uid://cn8skwd81rq27" path="res://scripts/enemies/drone/states/drone_targeting_states.gd" id="11_wmq8b"]
@@ -37,6 +35,7 @@
 [ext_resource type="BehaviorTree" uid="uid://cndng00i0jfr3" path="res://ai/trees/enemies/drone/drone_attack_ram_attack_pre_tree.tres" id="28_ebp85"]
 [ext_resource type="BehaviorTree" uid="uid://nlwtwirr4cbo" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_tree.tres" id="30_0fgvh"]
 [ext_resource type="BehaviorTree" uid="uid://dgk4we0m2af0" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_pre_tree.tres" id="30_sikjo"]
+[ext_resource type="Material" uid="uid://dl61ykpvdxfhn" path="res://assets/3D/Materials/control_node_distortion_material.tres" id="33_0fgvh"]
 [ext_resource type="Script" uid="uid://darufwryr50n1" path="res://scripts/enemies/drone/animation/float_distortion_animation.gd" id="38_6t6rp"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_doilr"]
@@ -76,24 +75,6 @@ radius = 0.51341
 
 [sub_resource type="QuadMesh" id="QuadMesh_kds82"]
 size = Vector2(1.3, 1.7)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_iovl4"]
-noise_type = 0
-frequency = 0.0171
-fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r56iq"]
-noise = SubResource("FastNoiseLite_iovl4")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3tghu"]
-render_priority = 0
-shader = ExtResource("9_ahulk")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_r56iq")
-shader_parameter/mask_texture = ExtResource("10_82hyt")
-shader_parameter/noise_speed = 0.5
-shader_parameter/noise_intensity = 1.0
-shader_parameter/stretch = 0.2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h6a7"]
 margin = 0.1
@@ -962,7 +943,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.86, 0)
 sorting_offset = -1.0
 mesh = SubResource("QuadMesh_kds82")
 skeleton = NodePath("../../CharNode")
-surface_material_override/0 = SubResource("ShaderMaterial_3tghu")
+surface_material_override/0 = ExtResource("33_0fgvh")
 
 [node name="FloatCast" type="RayCast3D" parent="TrackPositionContainer"]
 target_position = Vector3(0, -2.6, 0)

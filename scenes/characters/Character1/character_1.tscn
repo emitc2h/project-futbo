@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://br5xii21hsbeo"]
+[gd_scene load_steps=4 format=3 uid="uid://br5xii21hsbeo"]
 
 [ext_resource type="PackedScene" uid="uid://b23ql0f3pehor" path="res://scenes/characters/character_base.tscn" id="1_2mp1t"]
 [ext_resource type="PackedScene" uid="uid://nuryuxrn3i00" path="res://scenes/characters/Character1/character_1_asset.tscn" id="2_nft2d"]
+[ext_resource type="Script" uid="uid://bfocdh3qmal3u" path="res://scripts/characters/character1/states/character1_grounded_states.gd" id="3_adl1a"]
 
 [node name="Character1" node_paths=PackedStringArray("asset") instance=ExtResource("1_2mp1t")]
 asset = NodePath("Character1Asset")
@@ -21,6 +22,7 @@ state_map = {
 }
 
 [node name="Grounded States" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" index="0" node_paths=PackedStringArray("state_map")]
+script = ExtResource("3_adl1a")
 state_map = {
 0: NodePath("../idle"),
 1: NodePath("../moving"),
