@@ -13,4 +13,4 @@ func _ready() -> void:
 #----------------------------------------
 func _on_jump_state_entered() -> void:
 	super._on_jump_state_entered()
-	character1_asset.jump(0.7)
+	character1_asset.jump()

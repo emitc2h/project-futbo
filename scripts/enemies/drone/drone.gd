@@ -293,6 +293,6 @@ func _on_debug_advance() -> void:
 
 func _on_rigid_node_body_entered(body: Node) -> void:
 	if body.is_in_group("PlayerGroup"):
-		Signals.player_knocked.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position)
+		Signals.player_knocked.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position, true)
 	if body.is_in_group("ControlNodeShieldGroup"):
 		Signals.control_node_shield_hit.emit(true)

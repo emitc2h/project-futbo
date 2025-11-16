@@ -245,6 +245,7 @@ xfade_time = 0.1
 xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_d3l0v"]
+xfade_time = 0.05
 switch_mode = 2
 advance_mode = 2
 
@@ -269,16 +270,22 @@ xfade_time = 0.1
 xfade_time = 0.05
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dmufb"]
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u3pkp"]
+xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yv513"]
+xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5rnpu"]
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cxcjk"]
+xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_elett"]
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_7ujmj"]
 states/Start/position = Vector2(196, 100.5)
@@ -296,10 +303,10 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(12.779892, -167.148)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_sb256"]
-graph_offset = Vector2(-939.3275, -503.53033)
+graph_offset = Vector2(-309.16202, 189.3042)
 nodes/output/position = Vector2(670, 180)
 nodes/movement/node = SubResource("AnimationNodeStateMachine_7ujmj")
-nodes/movement/position = Vector2(-430, -530)
+nodes/movement/position = Vector2(-430, -570)
 "nodes/knocked shot/node" = SubResource("AnimationNodeOneShot_8kn0j")
 "nodes/knocked shot/position" = Vector2(460, 170)
 nodes/knocked/node = SubResource("AnimationNodeStateMachine_i7nvq")

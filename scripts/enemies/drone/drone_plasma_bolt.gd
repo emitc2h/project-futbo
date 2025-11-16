@@ -83,9 +83,9 @@ func _on_fire_state_physics_processing(delta: float) -> void:
 		recorded_bolt_global_pos = bolt_mesh.global_position
 		recorded_impact_global_pos = impact_mesh.global_position
 		
-		if (collider.is_in_group("PlayerGroup")) or (collider is TargetMesh):
+		if collider and (collider.is_in_group("PlayerGroup")) or (collider is TargetMesh):
 			sc.send_event(TRANS_TO_HIT)
-		elif collider.is_in_group("ControlNodeShieldGroup"):
+		elif collider and collider.is_in_group("ControlNodeShieldGroup"):
 			if hit_enabled: Signals.control_node_shield_hit.emit(false)
 			sc.send_event(TRANS_TO_MISS)
 		else:
@@ -97,7 +97,7 @@ func _on_fire_state_physics_processing(delta: float) -> void:
 # hit state
 # -----------------------------------------
 func _on_hit_state_entered() -> void:
-	if hit_enabled: Signals.player_knocked.emit(Vector3.ZERO, recorded_collision_point)
+	if hit_enabled: Signals.player_knocked.emit(Vector3.ZERO, recorded_collision_point, false)
 	shrapnel_particles.restart()
 	shrapnel_particles.emitting = true
 	await impact_animation.hit()

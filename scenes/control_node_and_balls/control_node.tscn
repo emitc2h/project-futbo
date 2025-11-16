@@ -1,4 +1,4 @@
-[gd_scene load_steps=166 format=4 uid="uid://cupvg7lj3rh2s"]
+[gd_scene load_steps=174 format=4 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
@@ -25,6 +25,64 @@
 [ext_resource type="Texture2D" uid="uid://xhr4admvqewe" path="res://assets/3D/Textures/ControlNode/warp_rays_mask.png" id="21_7vd1p"]
 [ext_resource type="Texture2D" uid="uid://dvs4iuhc0rkpk" path="res://assets/3D/Textures/ControlNode/warp_ring_mask.png" id="22_hlhvm"]
 [ext_resource type="Script" uid="uid://r4dihe2vx3dk" path="res://scripts/utilities/animation_tree/animation_state_change_tracker.gd" id="26_ipcb2"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0ou1q"]
+load_path = "res://.godot/imported/ControlNode_color.png-abe8d7b0bb84f178933c5eb7cbc42879.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ltrn5"]
+load_path = "res://.godot/imported/ControlNode_metallic.png-f025bf0d57e3e2d28602e5562a70b94f.s3tc.ctex"
+
+[sub_resource type="Shader" id="Shader_nium7"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.4.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_add, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform sampler2D texture_emission : source_color, hint_default_black, filter_linear_mipmap, repeat_enable;
+uniform float emission_energy : hint_range(0.0, 1000.0, 0.1);
+uniform vec3 emission_color : source_color;
+
+void fragment() {
+	// Emission: Enabled
+	vec3 emission_tex = texture(texture_emission, UV).rgb;
+	vec3 emission_tex_colored = emission_tex;
+
+	emission_tex_colored = emission_color * emission_tex.r;
+
+	// Emission Operator: Add
+	ALBEDO = emission_tex_colored;
+	EMISSION = emission_tex_colored * emission_energy * 1000.0;
+	ALPHA *= emission_tex.r;
+	ALPHA_SCISSOR_THRESHOLD = 0.001;
+}
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5oaah"]
+load_path = "res://.godot/imported/ControlNode_emission.png-e19c70f61902b0c35e77110cb79964c2.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hlhvm"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_nium7")
+shader_parameter/texture_emission = SubResource("CompressedTexture2D_5oaah")
+shader_parameter/emission_energy = 0.0
+shader_parameter/emission_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xoq3r"]
+load_path = "res://.godot/imported/ControlNode_normal.png-90501730fccdcb587e042240876efab3.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n4b62"]
+load_path = "res://.godot/imported/ControlNode_roughness.png-c655887426a8d6936445c7811cb28beb.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipcb2"]
+resource_local_to_scene = true
+next_pass = SubResource("ShaderMaterial_hlhvm")
+albedo_texture = SubResource("CompressedTexture2D_0ou1q")
+metallic = 1.0
+metallic_texture = SubResource("CompressedTexture2D_ltrn5")
+roughness_texture = SubResource("CompressedTexture2D_n4b62")
+normal_enabled = true
+normal_texture = SubResource("CompressedTexture2D_xoq3r")
 
 [sub_resource type="Curve" id="Curve_r313a"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.708835, 0.64441), -1.77206, -1.77206, 0, 0, Vector2(0.953815, 0), 0.0, 0.0, 0, 0]
@@ -71,7 +129,7 @@ shader_parameter/emission_energy = 200.0
 material = SubResource("ShaderMaterial_cnds4")
 size = Vector2(0.02, 0.02)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xdpkx"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hlhvm"]
 particle_flag_align_y = true
 angle_min = -261.7
 angle_max = 103.2
@@ -82,7 +140,7 @@ attractor_interaction_enabled = false
 scale_min = 0.6
 scale_max = 0.6
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_lyibg"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_1ei8v"]
 _surfaces = [{
 "aabb": AABB(-0.432778, -0.190369, -0.493909, 0.920597, 0.637503, 0.907317),
 "format": 34896613377,
@@ -110,7 +168,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("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")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_lyibg")
+shadow_mesh = SubResource("ArrayMesh_1ei8v")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tehyq"]
 radius = 1.8
@@ -10062,7 +10120,7 @@ tracks/33/keys = {
 
 [sub_resource type="Animation" id="Animation_kgwo6"]
 resource_name = "transition - power on - charge level 0 - expanding"
-length = 1.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -10070,7 +10128,7 @@ tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1000.0, 1000.0, 1000.0]
@@ -10082,7 +10140,7 @@ tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
@@ -10094,7 +10152,7 @@ tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.999999977648, 0.999999977648, 0.499999988824]
@@ -10106,7 +10164,7 @@ tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -10118,7 +10176,7 @@ tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1.5157167, 2, 1),
 "update": 0,
 "values": [20.0, 499.999988824, 19.99999955296]
@@ -10130,7 +10188,7 @@ tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 1.0]
@@ -10142,7 +10200,7 @@ tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1.5157166, 2, 1),
 "update": 0,
 "values": [0.02000000095, 0.2000000095, 0.010000000475]
@@ -10154,7 +10212,7 @@ tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.50000002375]
@@ -10166,7 +10224,7 @@ tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_e
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [10.0, 100.0, 10.0]
@@ -10178,7 +10236,7 @@ tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_c
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
@@ -10190,7 +10248,7 @@ tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(0.7, 0.7, 0.7), Vector3(0.7, 0.7, 0.7), Vector3(8, 8, 8)]
@@ -10202,7 +10260,7 @@ tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.2784314, 0.5137255, 0.70980394, 0.39215687), Color(0.2784314, 0.5137255, 0.70980394, 0.39215687), Color(0.2784314, 0.5137255, 0.70980394, 0.39215687)]
@@ -10214,7 +10272,7 @@ tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -10226,7 +10284,7 @@ tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.05000000074506, 0.05000000074506, 0.05000000074506]
@@ -10238,7 +10296,7 @@ tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -10250,7 +10308,7 @@ tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_ma
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [4.9999997976, 4.9999997976, 4.9999997976]
@@ -10262,7 +10320,7 @@ tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [25.00000037253, 25.00000037253, 25.00000037253]
@@ -10274,7 +10332,7 @@ tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -10286,7 +10344,7 @@ tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -10298,7 +10356,7 @@ tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.000000074506, 5.000000074506, 5.000000074506]
@@ -10310,7 +10368,7 @@ tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -10322,7 +10380,7 @@ tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.000000074506, 5.000000074506, 5.000000074506]
@@ -10334,7 +10392,7 @@ tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -10346,7 +10404,7 @@ tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.00000037253, 5.00000037253, 5.00000037253]
@@ -10358,7 +10416,7 @@ tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.10000000149012, 0.10000000149012, 0.10000000149012]
@@ -10370,7 +10428,7 @@ tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_e
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 1.0]
@@ -10382,7 +10440,7 @@ tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(0.9999996, 0.9999996, 1), Vector3(0.9999996, 0.9999996, 1), Vector3(11, 11, 11)]
@@ -10394,7 +10452,7 @@ tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
 tracks/27/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(11, 11, 11)]
@@ -10406,7 +10464,7 @@ tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/28/interp = 1
 tracks/28/loop_wrap = true
 tracks/28/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, true, true]
@@ -10418,7 +10476,7 @@ tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ra
 tracks/29/interp = 1
 tracks/29/loop_wrap = true
 tracks/29/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -10430,7 +10488,7 @@ tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
 tracks/30/interp = 1
 tracks/30/loop_wrap = true
 tracks/30/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -10442,7 +10500,7 @@ tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible
 tracks/31/interp = 1
 tracks/31/loop_wrap = true
 tracks/31/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [true, true, true]
@@ -10454,7 +10512,7 @@ tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible
 tracks/32/interp = 1
 tracks/32/loop_wrap = true
 tracks/32/keys = {
-"times": PackedFloat32Array(0, 0.96666664, 1.3),
+"times": PackedFloat32Array(0, 0.46666667, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -10466,7 +10524,7 @@ tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
 tracks/33/interp = 1
 tracks/33/loop_wrap = true
 tracks/33/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 0.28),
 "update": 0,
 "values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(6, 6, 6)]
@@ -10886,7 +10944,7 @@ tracks/33/keys = {
 
 [sub_resource type="Animation" id="Animation_8risc"]
 resource_name = "transition - power on - charge level 1 - expanding"
-length = 1.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -10894,7 +10952,7 @@ tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1000.0, 1000.0, 1000.0]
@@ -10906,7 +10964,7 @@ tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
@@ -10918,7 +10976,7 @@ tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.999999977648, 0.999999977648, 0.499999988824]
@@ -10930,7 +10988,7 @@ tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.1499999966472, 0.1499999966472, 0.1499999966472]
@@ -10942,7 +11000,7 @@ tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 2, 1),
 "update": 0,
 "values": [39.99999910592, 499.999988824, 39.99999910592]
@@ -10954,7 +11012,7 @@ tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 1.0]
@@ -10966,7 +11024,7 @@ tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 2, 1),
 "update": 0,
 "values": [0.030000001425, 0.2000000095, 0.030000001425]
@@ -10978,7 +11036,7 @@ tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.850000040375]
@@ -10990,7 +11048,7 @@ tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_e
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [15.0, 15.0, 15.0]
@@ -11002,7 +11060,7 @@ tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_c
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
@@ -11014,7 +11072,7 @@ tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(0.7, 0.7, 0.7), Vector3(0.7, 0.7, 0.7), Vector3(8, 8, 8)]
@@ -11026,7 +11084,7 @@ tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.2784314, 0.5137255, 0.70980394, 0.7058824), Color(0.2784314, 0.5137255, 0.70980394, 0.7058824), Color(0.2784314, 0.5137255, 0.70980394, 0.7058824)]
@@ -11038,7 +11096,7 @@ tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [30.0, 30.0, 30.0]
@@ -11050,7 +11108,7 @@ tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.05000000074506, 0.05000000074506, 0.05000000074506]
@@ -11062,7 +11120,7 @@ tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -11074,7 +11132,7 @@ tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_ma
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [4.9999997976, 4.9999997976, 4.9999997976]
@@ -11086,7 +11144,7 @@ tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [25.00000037253, 25.00000037253, 25.00000037253]
@@ -11098,7 +11156,7 @@ tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -11110,7 +11168,7 @@ tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -11122,7 +11180,7 @@ tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.000000074506, 5.000000074506, 5.000000074506]
@@ -11134,7 +11192,7 @@ tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -11146,7 +11204,7 @@ tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.000000074506, 5.000000074506, 5.000000074506]
@@ -11158,7 +11216,7 @@ tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -11170,7 +11228,7 @@ tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.00000037253, 5.00000037253, 5.00000037253]
@@ -11182,7 +11240,7 @@ tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.10000000149012, 0.10000000149012, 0.10000000149012]
@@ -11194,7 +11252,7 @@ tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_e
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 1.0]
@@ -11206,7 +11264,7 @@ tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(0.9999996, 0.9999996, 1), Vector3(0.9999996, 0.9999996, 1), Vector3(11, 11, 11)]
@@ -11218,7 +11276,7 @@ tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
 tracks/27/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(11, 11, 11)]
@@ -11230,7 +11288,7 @@ tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/28/interp = 1
 tracks/28/loop_wrap = true
 tracks/28/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, true, true]
@@ -11242,7 +11300,7 @@ tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ra
 tracks/29/interp = 1
 tracks/29/loop_wrap = true
 tracks/29/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.25, 0.25, 0.25]
@@ -11254,7 +11312,7 @@ tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
 tracks/30/interp = 1
 tracks/30/loop_wrap = true
 tracks/30/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -11266,7 +11324,7 @@ tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible
 tracks/31/interp = 1
 tracks/31/loop_wrap = true
 tracks/31/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [true, true, true]
@@ -11278,7 +11336,7 @@ tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible
 tracks/32/interp = 1
 tracks/32/loop_wrap = true
 tracks/32/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -11290,7 +11348,7 @@ tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
 tracks/33/interp = 1
 tracks/33/loop_wrap = true
 tracks/33/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(6, 6, 6)]
@@ -11710,7 +11768,7 @@ tracks/33/keys = {
 
 [sub_resource type="Animation" id="Animation_u6nro"]
 resource_name = "transition - power on - charge level 2 - expanding"
-length = 1.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -11718,7 +11776,7 @@ tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1000.0, 1000.0, 1000.0]
@@ -11730,7 +11788,7 @@ tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
@@ -11742,7 +11800,7 @@ tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.999999977648, 0.999999977648, 0.499999988824]
@@ -11754,7 +11812,7 @@ tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.2999999932944, 0.2999999932944, 0.2999999932944]
@@ -11766,7 +11824,7 @@ tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 2, 1),
 "update": 0,
 "values": [59.99999865888, 499.999988824, 59.99999865888]
@@ -11778,7 +11836,7 @@ tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 1.0]
@@ -11790,7 +11848,7 @@ tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 2, 1),
 "update": 0,
 "values": [0.06000000285, 0.2000000095, 0.06000000285]
@@ -11802,7 +11860,7 @@ tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.850000040375]
@@ -11814,7 +11872,7 @@ tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_e
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [17.0, 17.0, 17.0]
@@ -11826,7 +11884,7 @@ tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_c
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.49411765, 0.39215687, 0.85882354, 1), Color(0.49411765, 0.39215687, 0.85882354, 1), Color(0.49411765, 0.39215687, 0.85882354, 1)]
@@ -11838,7 +11896,7 @@ tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(0.9, 0.9, 0.9), Vector3(0.9, 0.9, 0.9), Vector3(8, 8, 8)]
@@ -11850,7 +11908,7 @@ tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.49803922, 0.39607844, 0.85882354, 0.8627451), Color(0.49803922, 0.39607844, 0.85882354, 0.8627451), Color(0.49803922, 0.39607844, 0.85882354, 0.8627451)]
@@ -11862,7 +11920,7 @@ tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [120.0, 120.0, 120.0]
@@ -11874,7 +11932,7 @@ tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.05000000074506, 0.05000000074506, 0.05000000074506]
@@ -11886,7 +11944,7 @@ tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -11898,7 +11956,7 @@ tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_ma
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [4.9999997976, 4.9999997976, 4.9999997976]
@@ -11910,7 +11968,7 @@ tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [25.00000037253, 25.00000037253, 25.00000037253]
@@ -11922,7 +11980,7 @@ tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -11934,7 +11992,7 @@ tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -11946,7 +12004,7 @@ tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.000000074506, 5.000000074506, 5.000000074506]
@@ -11958,7 +12016,7 @@ tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -11970,7 +12028,7 @@ tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.000000074506, 5.000000074506, 5.000000074506]
@@ -11982,7 +12040,7 @@ tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -11994,7 +12052,7 @@ tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.00000037253, 5.00000037253, 5.00000037253]
@@ -12006,7 +12064,7 @@ tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.10000000149012, 0.10000000149012, 0.10000000149012]
@@ -12018,7 +12076,7 @@ tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_e
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 1.0]
@@ -12030,7 +12088,7 @@ tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(0.9999996, 0.9999996, 1), Vector3(0.9999996, 0.9999996, 1), Vector3(11, 11, 11)]
@@ -12042,7 +12100,7 @@ tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
 tracks/27/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(11, 11, 11)]
@@ -12054,7 +12112,7 @@ tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/28/interp = 1
 tracks/28/loop_wrap = true
 tracks/28/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, true, true]
@@ -12066,7 +12124,7 @@ tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ra
 tracks/29/interp = 1
 tracks/29/loop_wrap = true
 tracks/29/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.35, 0.35, 0.35]
@@ -12078,7 +12136,7 @@ tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
 tracks/30/interp = 1
 tracks/30/loop_wrap = true
 tracks/30/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -12090,7 +12148,7 @@ tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible
 tracks/31/interp = 1
 tracks/31/loop_wrap = true
 tracks/31/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [true, true, true]
@@ -12102,7 +12160,7 @@ tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible
 tracks/32/interp = 1
 tracks/32/loop_wrap = true
 tracks/32/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -12114,7 +12172,7 @@ tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
 tracks/33/interp = 1
 tracks/33/loop_wrap = true
 tracks/33/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(6, 6, 6)]
@@ -12533,7 +12591,7 @@ tracks/33/keys = {
 
 [sub_resource type="Animation" id="Animation_3sl37"]
 resource_name = "transition - power on - charge level 3 - expanding"
-length = 1.3
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -12541,7 +12599,7 @@ tracks/0/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1000.0, 1000.0, 1000.0]
@@ -12553,7 +12611,7 @@ tracks/1/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
@@ -12565,7 +12623,7 @@ tracks/2/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.999999977648, 0.999999977648, 0.499999988824]
@@ -12577,7 +12635,7 @@ tracks/3/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.5499999877064, 0.5499999877064, 0.5499999877064]
@@ -12589,7 +12647,7 @@ tracks/4/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 2, 1),
 "update": 0,
 "values": [99.9999977648, 499.999988824, 99.9999977648]
@@ -12601,7 +12659,7 @@ tracks/5/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 1.0]
@@ -12613,7 +12671,7 @@ tracks/6/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 2, 1),
 "update": 0,
 "values": [0.10000000149012, 0.2000000095, 0.10000000149012]
@@ -12625,7 +12683,7 @@ tracks/7/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeMo
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.850000040375]
@@ -12637,7 +12695,7 @@ tracks/8/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_e
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [20.0, 20.0, 20.0]
@@ -12649,7 +12707,7 @@ tracks/9/path = NodePath("TrackTransformContainer/ControlNodeAsset/Light:light_c
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.6901961, 0.2627451, 0.7921569, 1), Color(0.6901961, 0.2627451, 0.7921569, 1), Color(0.6901961, 0.2627451, 0.7921569, 1)]
@@ -12661,7 +12719,7 @@ tracks/10/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:scale")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(1.2, 1.2, 1.2), Vector3(1.2, 1.2, 1.2), Vector3(8, 8, 8)]
@@ -12673,7 +12731,7 @@ tracks/11/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:surface
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.6901961, 0.2627451, 0.7921569, 1), Color(0.6901961, 0.2627451, 0.7921569, 1), Color(0.6901961, 0.2627451, 0.7921569, 1)]
@@ -12685,7 +12743,7 @@ tracks/12/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [240.0, 240.0, 240.0]
@@ -12697,7 +12755,7 @@ tracks/13/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.10000000149012, 0.10000000149012, 0.10000000149012]
@@ -12709,7 +12767,7 @@ tracks/14/path = NodePath("TrackPositionContainer/LightningParticles3D:draw_pass
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [true, true, true]
@@ -12721,7 +12779,7 @@ tracks/15/path = NodePath("TrackPositionContainer/WarpEffect/WarpMesh:surface_ma
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [4.9999997976, 4.9999997976, 4.9999997976]
@@ -12733,7 +12791,7 @@ tracks/16/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [25.00000037253, 25.00000037253, 25.00000037253]
@@ -12745,7 +12803,7 @@ tracks/17/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -12757,7 +12815,7 @@ tracks/18/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -12769,7 +12827,7 @@ tracks/19/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.000000074506, 5.000000074506, 5.000000074506]
@@ -12781,7 +12839,7 @@ tracks/20/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -12793,7 +12851,7 @@ tracks/21/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.000000074506, 5.000000074506, 5.000000074506]
@@ -12805,7 +12863,7 @@ tracks/22/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.0]
@@ -12817,7 +12875,7 @@ tracks/23/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [5.00000037253, 5.00000037253, 5.00000037253]
@@ -12829,7 +12887,7 @@ tracks/24/path = NodePath("TrackPositionContainer/WarpEffect/VFXMesh:surface_mat
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.10000000149012, 0.10000000149012, 0.10000000149012]
@@ -12841,7 +12899,7 @@ tracks/25/path = NodePath("TrackPositionContainer/WarpEffect/OmniLight3D:light_e
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 1.0]
@@ -12853,7 +12911,7 @@ tracks/26/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(0.9999996, 0.9999996, 1), Vector3(0.9999996, 0.9999996, 1), Vector3(11, 11, 11)]
@@ -12865,7 +12923,7 @@ tracks/27/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
 tracks/27/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(11, 11, 11)]
@@ -12877,7 +12935,7 @@ tracks/28/path = NodePath("TrackTransformContainer/ControlNodeAsset/ControlNodeM
 tracks/28/interp = 1
 tracks/28/loop_wrap = true
 tracks/28/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, true, true]
@@ -12889,7 +12947,7 @@ tracks/29/path = NodePath("TrackPositionContainer/LightningParticles3D:amount_ra
 tracks/29/interp = 1
 tracks/29/loop_wrap = true
 tracks/29/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.8, 0.8, 0.8]
@@ -12901,7 +12959,7 @@ tracks/30/path = NodePath("TrackPositionContainer/WarpEffect:visible")
 tracks/30/interp = 1
 tracks/30/loop_wrap = true
 tracks/30/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [false, false, false]
@@ -12913,7 +12971,7 @@ tracks/31/path = NodePath("TrackTransformContainer/ControlNodeAsset/Aura:visible
 tracks/31/interp = 1
 tracks/31/loop_wrap = true
 tracks/31/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [true, true, true]
@@ -12925,7 +12983,7 @@ tracks/32/path = NodePath("TrackPositionContainer/ControlNodeReadySphere:visible
 tracks/32/interp = 1
 tracks/32/loop_wrap = true
 tracks/32/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [true, true, true]
@@ -12937,7 +12995,7 @@ tracks/33/path = NodePath("TrackPositionContainer/LightningParticles3D:scale")
 tracks/33/interp = 1
 tracks/33/loop_wrap = true
 tracks/33/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.3),
+"times": PackedFloat32Array(0, 0.4, 0.79999995),
 "transitions": PackedFloat32Array(1, 0.28, 1),
 "update": 0,
 "values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(6, 6, 6)]
@@ -14440,6 +14498,9 @@ delay_in_seconds = "0.0"
 wisps_particles = NodePath("../../TrackPositionContainer/WispParticles3D")
 ready_sphere = NodePath("../../TrackPositionContainer/ControlNodeReadySphere")
 
+[node name="ControlNodeMesh" parent="TrackTransformContainer/ControlNodeAsset/ControlNodeModel" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ipcb2")
+
 [node name="DirectionRay" parent="TrackPositionContainer" index="0" instance=ExtResource("4_bt07l")]
 
 [node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="TrackPositionContainer" index="1"]
@@ -14466,7 +14527,7 @@ draw_pass_1 = SubResource("QuadMesh_ygoor")
 amount = 10
 amount_ratio = 0.1
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_xdpkx")
+process_material = SubResource("ParticleProcessMaterial_hlhvm")
 draw_pass_1 = SubResource("ArrayMesh_r313a")
 
 [node name="ControlNodeReadySphere" parent="TrackPositionContainer" index="5" instance=ExtResource("13_nbe53")]
@@ -14545,6 +14606,7 @@ metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/Power States" method="_on_animation_state_finished"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/On/Charge/Charge States" method="_on_animation_state_finished"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/On/Shield/Shield States" method="_on_animation_state_finished"]
+[connection signal="anim_state_started" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/On/Shield/Shield States" method="_on_animation_state_started"]
 
 [editable path="TrackTransformContainer/ControlNodeAsset"]
 [editable path="TrackTransformContainer/ControlNodeAsset/ControlNodeModel"]

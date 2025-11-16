@@ -1,13 +1,243 @@
-[gd_scene load_steps=4 format=3 uid="uid://br5xii21hsbeo"]
+[gd_scene load_steps=24 format=3 uid="uid://br5xii21hsbeo"]
 
 [ext_resource type="PackedScene" uid="uid://b23ql0f3pehor" path="res://scenes/characters/character_base.tscn" id="1_2mp1t"]
 [ext_resource type="PackedScene" uid="uid://nuryuxrn3i00" path="res://scenes/characters/Character1/character_1_asset.tscn" id="2_nft2d"]
 [ext_resource type="Script" uid="uid://bfocdh3qmal3u" path="res://scripts/characters/character1/states/character1_grounded_states.gd" id="3_adl1a"]
+[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/3D/Characters/Character1.1/closed_shield_alpha_mask.png" id="4_qqrog"]
+[ext_resource type="FastNoiseLite" uid="uid://bye8qwwlpfwva" path="res://assets/3D/Materials/jump_distortion_noise.tres" id="5_080d6"]
+[ext_resource type="Shader" uid="uid://byakmbr46magf" path="res://shaders/Character/character_jump_distortion_shader_material.gdshader" id="6_7e3ys"]
+[ext_resource type="Script" uid="uid://cvww34q43hede" path="res://scripts/characters/character1/character1_shield.gd" id="7_lwllx"]
 
-[node name="Character1" node_paths=PackedStringArray("asset") instance=ExtResource("1_2mp1t")]
+[sub_resource type="Shader" id="Shader_7b8oj"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.4.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_add, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;
+
+group_uniforms Albedo;
+uniform float alpha : hint_range(0.0, 1.0, 0.01);
+uniform vec4 modulate : source_color;
+uniform float modulate_factor: hint_range(0.0, 1.0, 0.01);
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+group_uniforms Emission;
+uniform float emission_energy : hint_range(0.0, 1000.0, 0.01);
+
+group_uniforms Dissolve;
+uniform sampler2D dissolve_texture : source_color;
+uniform float dissolve_value : hint_range(0,1);
+uniform float burn_size: hint_range(0.0, 1.0, 0.01);
+uniform vec4 burn_color: source_color;
+
+group_uniforms Ripple;
+uniform sampler2D ripple_map;
+uniform sampler2D ripple_mask;
+uniform vec2 ripple_stretch = vec2(1.0, 1.0);
+uniform float ripple_strength : hint_range(0.0, 1.0) = 0.02;
+uniform float speed : hint_range(0.0, 1.0) = 0.1;
+
+void fragment() {
+	vec2 ripple_offset = texture(
+		ripple_map,
+		vec2(
+			mod(UV.x * ripple_stretch.x + TIME * speed, 1.0),
+			mod(UV.y * ripple_stretch.y + TIME * speed, 1.0))).xy;
+	// Set values between -0.5 and 0.5 (instead of 0 and 1). Otherwise the reflection will move whith increased refraction_strength
+	ripple_offset -= 0.5;
+
+	float ripple_factor = texture(ripple_mask, UV).r;
+
+	vec2 ripple_effect = -ripple_offset * ripple_strength * ripple_factor;
+
+	vec4 albedo_tex = texture(texture_albedo, UV + ripple_effect);
+	vec4 noise_tex = texture(dissolve_texture, UV);
+
+	float burn_size_step = burn_size * step(0.001, dissolve_value) * step(dissolve_value, 0.999);
+	float threshold = smoothstep(noise_tex.x-burn_size_step, noise_tex.x, dissolve_value);
+	float border = smoothstep(noise_tex.x, noise_tex.x + burn_size_step, dissolve_value);
+
+	vec3 modulated_albedo = mix(albedo_tex.rgb, modulate.rgb, modulate_factor);
+	vec3 modulated_burn_color = mix(burn_color.rgb, modulate.rgb, modulate_factor);
+
+	ALBEDO = mix(modulated_burn_color, modulated_albedo, border);
+
+	float burn_boost = dissolve_value * 200.0;
+	if (dissolve_value > 0.1) {
+		burn_boost = 20.0;
+	}
+
+	EMISSION = mix(modulated_burn_color * burn_boost, modulated_albedo, border) * emission_energy * 1000.0;
+	ALPHA *= alpha * albedo_tex.a * threshold;
+}
+
+void light() {
+	DIFFUSE_LIGHT = vec3(1.0, 1.0, 1.0);
+}
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gra4y"]
+load_path = "res://.godot/imported/Shield_power_up_mask.png-319138bfcd066cd0fec44563dc56bf3e.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1e7ki"]
+load_path = "res://.godot/imported/Shield_noise.png-2297ed700483611ccc402a22c98417cc.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wrmvv"]
+load_path = "res://.godot/imported/Shield_ripple_mask.png-d4c1836d3cedee598d5aefd837b9136e.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qkpkq"]
+load_path = "res://.godot/imported/Shield_color.png-b350bc48181844974d8d59a7db1e7df5.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r1ga7"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_7b8oj")
+shader_parameter/alpha = 0.999999977648
+shader_parameter/modulate = Color(1, 0.308148, 0.6331, 1)
+shader_parameter/modulate_factor = 0.5499999877064
+shader_parameter/texture_albedo = SubResource("CompressedTexture2D_qkpkq")
+shader_parameter/albedo_texture_size = Vector2i(2048, 2048)
+shader_parameter/point_size = 0.1
+shader_parameter/emission_energy = 99.9999977648
+shader_parameter/dissolve_texture = SubResource("CompressedTexture2D_gra4y")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.0999999977648
+shader_parameter/burn_color = Color(0.39, 0.6645, 1, 1)
+shader_parameter/ripple_map = SubResource("CompressedTexture2D_1e7ki")
+shader_parameter/ripple_mask = SubResource("CompressedTexture2D_wrmvv")
+shader_parameter/ripple_stretch = Vector2(1, 1)
+shader_parameter/ripple_strength = 0.10000000475
+shader_parameter/speed = 1.0
+
+[sub_resource type="Shader" id="Shader_07gwp"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.4.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_add, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform sampler2D texture_emission : source_color, hint_default_black, filter_linear_mipmap, repeat_enable;
+uniform float emission_energy : hint_range(0.0, 1000.0, 0.1);
+uniform vec3 emission_color : source_color;
+
+void fragment() {
+	// Emission: Enabled
+	vec3 emission_tex = texture(texture_emission, UV).rgb;
+	vec3 emission_tex_colored = emission_tex;
+
+	emission_tex_colored = emission_color * emission_tex.r;
+
+	// Emission Operator: Add
+	ALBEDO = emission_tex_colored;
+	EMISSION = emission_tex_colored * emission_energy * 1000.0;
+	ALPHA *= emission_tex.r;
+	ALPHA_SCISSOR_THRESHOLD = 0.001;
+}
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r8xgb"]
+load_path = "res://.godot/imported/ControlNode_emission.png-e19c70f61902b0c35e77110cb79964c2.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lwllx"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_07gwp")
+shader_parameter/texture_emission = SubResource("CompressedTexture2D_r8xgb")
+shader_parameter/emission_energy = 727.8000108450933
+shader_parameter/emission_color = Color(0.27237135, 0.6814646, 0.922746, 1)
+
+[sub_resource type="Shader" id="Shader_kxk3x"]
+code = "shader_type spatial;
+
+render_mode blend_add, fog_disabled, cull_disabled, shadows_disabled, ambient_light_disabled;
+
+uniform sampler2D screen_texture : hint_screen_texture;
+uniform bool enabled;
+uniform sampler2D noise_texture;
+uniform sampler2D mask_texture;
+
+uniform float noise_speed: hint_range(0.0, 1.0);
+uniform float noise_intensity: hint_range(0.0, 1.0);
+uniform float stretch: hint_range(0.01, 2.0);
+
+uniform vec3 flare_color: source_color;
+uniform float flare_threshold: hint_range(0.0, 1.0);
+
+void vertex() {
+	UV2 = vec2(1.0, stretch) * (UV + vec2(0.0, -(noise_speed/stretch) * TIME));
+}
+
+void fragment() {
+	if (enabled) {
+		float noise = texture(noise_texture, UV2).r;
+		float mask = texture(mask_texture, UV).r;
+		
+		vec3 output_color = vec3(0.0, 0.0, 0.0);
+
+		if (noise > flare_threshold) {
+			float flare_factor = 1.0 - (noise - flare_threshold)/(1.0 - flare_threshold);
+			ALBEDO = flare_color * pow(flare_factor, 4);
+			EMISSION = flare_color * 800000.0 * pow(flare_factor, 4) * mask;
+			ALPHA = mask;
+		} else {
+			ALPHA = 0.0;
+		}
+		
+	} else {
+		ALPHA = 0.0;
+	}
+}
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_47ny7"]
+load_path = "res://.godot/imported/closed_shield_alpha_mask.png-c384f9a0f5798a1f5905a358055ec3d0.s3tc.ctex"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kaiw6"]
+frequency = 0.0041
+fractal_type = 3
+cellular_distance_function = 1
+cellular_return_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cqgnn"]
+noise = SubResource("FastNoiseLite_kaiw6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qqrog"]
+resource_local_to_scene = true
+render_priority = 1
+shader = SubResource("Shader_kxk3x")
+shader_parameter/enabled = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_cqgnn")
+shader_parameter/mask_texture = SubResource("CompressedTexture2D_47ny7")
+shader_parameter/noise_speed = 1.0
+shader_parameter/noise_intensity = 0.0
+shader_parameter/stretch = 0.10000000405148
+shader_parameter/flare_color = Color(0.21384141, 0.5123168, 0.7756189, 1)
+shader_parameter/flare_threshold = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wgydi"]
+noise = ExtResource("5_080d6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_080d6"]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_qqrog")
+shader = ExtResource("6_7e3ys")
+shader_parameter/enabled = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_wgydi")
+shader_parameter/mask_texture = ExtResource("4_qqrog")
+shader_parameter/noise_speed = 1.0
+shader_parameter/noise_intensity = 0.0
+shader_parameter/stretch = 0.10000000405148
+
+[node name="Character1" node_paths=PackedStringArray("asset", "shield") instance=ExtResource("1_2mp1t")]
 asset = NodePath("Character1Asset")
+shield = NodePath("Shield")
 
 [node name="Character1Asset" parent="." index="0" instance=ExtResource("2_nft2d")]
+shield_material = SubResource("ShaderMaterial_r1ga7")
+emitters_material = SubResource("ShaderMaterial_lwllx")
+jump_distortion_material = SubResource("ShaderMaterial_080d6")
+jump_flare_material = SubResource("ShaderMaterial_qqrog")
 
 [node name="Movement States" parent="State/Root/Damage/Able/Movement" index="0" node_paths=PackedStringArray("state_map")]
 state_map = {
@@ -29,3 +259,7 @@ state_map = {
 2: NodePath("../jump"),
 3: NodePath("../turn")
 }
+
+[node name="Shield" type="Node" parent="." index="13" node_paths=PackedStringArray("asset")]
+script = ExtResource("7_lwllx")
+asset = NodePath("../Character1Asset")

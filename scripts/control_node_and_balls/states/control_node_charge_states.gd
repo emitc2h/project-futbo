@@ -36,6 +36,7 @@ var none_state_anim: String = CHARGE_LEVEL_0_STATE_ANIM
 
 func _ready() -> void:
 	rigid_node.body_entered.connect(_on_shield_body_entered)
+	Signals.player_shield_taking_charges.connect(_on_player_shield_taking_charges)
 
 
 # none state
@@ -94,12 +95,13 @@ func _on_lose_charge_timer_timeout() -> void:
 
 func _on_animation_state_finished(anim_name: String) -> void:
 	match(anim_name):
-		HIT_LEVEL1_TRANS_ANIM:
+		HIT_LEVEL1_TRANS_ANIM, HIT_LEVEL2_TRANS_ANIM, HIT_LEVEL3_TRANS_ANIM:
 			sc.send_event(TRANS_DISCHARGE)
-		HIT_LEVEL2_TRANS_ANIM:
-			sc.send_event(TRANS_DISCHARGE)
-		HIT_LEVEL3_TRANS_ANIM:
-			sc.send_event(TRANS_DISCHARGE)
+
+
+func _on_player_shield_taking_charges(num_charges_taken: int) -> void:
+	for i in num_charges_taken:
+		sc.send_event(TRANS_CHARGE_DOWN)
 
 #=======================================================
 # ANIMATION UTILS
@@ -113,3 +115,10 @@ func lose_charge_by_hit_anim() -> void:
 			control_node.anim_state.travel(HIT_LEVEL2_TRANS_ANIM)
 		State.LEVEL3:
 			control_node.anim_state.travel(HIT_LEVEL3_TRANS_ANIM)
+
+
+#=======================================================
+# UTILS
+#=======================================================
+func num_charges() -> int:
+	return state as int

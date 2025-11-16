@@ -84,6 +84,7 @@ func _on_on_state_exited() -> void:
 # dissipating state
 #----------------------------------------
 func _on_dissipating_state_entered() -> void:
+	print("DISSIPATING STATE ENTERED")
 	state = State.DISSIPATING
 	
 	## Disable the spinning animation
@@ -122,23 +123,22 @@ func _on_player_moved() -> void:
 	sc.send_event(TRANS_TO_DISSIPATING)
 
 
+func _on_animation_state_started(anim_name: String) -> void:
+	## This could be unreliable, I have to thoroughly test it
+	match(anim_name):
+		## Broadcast the number of charges available to transfer to the personal shield
+		DISSIPATE_LEVEL_0_TRANS_ANIM, DISSIPATE_LEVEL_1_TRANS_ANIM,\
+		DISSIPATE_LEVEL_2_TRANS_ANIM, DISSIPATE_LEVEL_3_TRANS_ANIM:
+			Signals.control_node_shield_dissipating.emit(control_node.charge_states.num_charges())
+
+
 func _on_animation_state_finished(anim_name: String) -> void:
 	match(anim_name):
-		EXPAND_LEVEL_0_TRANS_ANIM:
+		EXPAND_LEVEL_0_TRANS_ANIM, EXPAND_LEVEL_1_TRANS_ANIM,\
+		 EXPAND_LEVEL_2_TRANS_ANIM, EXPAND_LEVEL_3_TRANS_ANIM:
 			sc.send_event(TRANS_TO_ON)
-		EXPAND_LEVEL_1_TRANS_ANIM:
-			sc.send_event(TRANS_TO_ON)
-		EXPAND_LEVEL_2_TRANS_ANIM:
-			sc.send_event(TRANS_TO_ON)
-		EXPAND_LEVEL_3_TRANS_ANIM:
-			sc.send_event(TRANS_TO_ON)
-		DISSIPATE_LEVEL_0_TRANS_ANIM:
-			sc.send_event(TRANS_TO_OFF)
-		DISSIPATE_LEVEL_1_TRANS_ANIM:
-			sc.send_event(TRANS_TO_OFF)
-		DISSIPATE_LEVEL_2_TRANS_ANIM:
-			sc.send_event(TRANS_TO_OFF)
-		DISSIPATE_LEVEL_3_TRANS_ANIM:
+		DISSIPATE_LEVEL_0_TRANS_ANIM, DISSIPATE_LEVEL_1_TRANS_ANIM,\
+		 DISSIPATE_LEVEL_2_TRANS_ANIM, DISSIPATE_LEVEL_3_TRANS_ANIM:
 			sc.send_event(TRANS_TO_OFF)
 
 

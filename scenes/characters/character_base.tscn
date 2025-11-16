@@ -415,6 +415,12 @@ to = NodePath("../../knocked")
 event = &"Damage: to knocked"
 delay_in_seconds = "0.0"
 
+[node name="to dead" type="Node" parent="State/Root/Damage/Able"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../dead")
+event = &"Damage: to dead"
+delay_in_seconds = "0.0"
+
 [node name="knocked" type="Node" parent="State/Root/Damage"]
 script = ExtResource("6_awyfk")
 
@@ -428,12 +434,6 @@ delay_in_seconds = "0.0"
 script = ExtResource("7_u4lyq")
 to = NodePath("../../recovering")
 event = &"Damage: to recovering"
-delay_in_seconds = "0.0"
-
-[node name="to down" type="Node" parent="State/Root/Damage/knocked"]
-script = ExtResource("7_u4lyq")
-to = NodePath("../../down")
-event = &"Damage: to down"
 delay_in_seconds = "0.0"
 
 [node name="out" type="Node" parent="State/Root/Damage"]
@@ -454,7 +454,13 @@ to = NodePath("../../Able/Movement")
 event = &"Damage: to able"
 delay_in_seconds = "0.0"
 
-[node name="down" type="Node" parent="State/Root/Damage"]
+[node name="to dead" type="Node" parent="State/Root/Damage/recovering"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../dead")
+event = &"Damage: to dead"
+delay_in_seconds = "0.0"
+
+[node name="dead" type="Node" parent="State/Root/Damage"]
 script = ExtResource("6_awyfk")
 
 [node name="Path Constraint" type="Node" parent="State/Root"]
@@ -607,7 +613,7 @@ collision_mask = 4
 [connection signal="state_entered" from="State/Root/Damage/recovering" to="State/Root/Damage/Damage States" method="_on_recovering_state_entered"]
 [connection signal="state_exited" from="State/Root/Damage/recovering" to="State/Root/Damage/Damage States" method="_on_recovering_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Damage/recovering" to="State/Root/Damage/Damage States" method="_on_recovering_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Damage/down" to="State/Root/Damage/Damage States" method="_on_down_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/dead" to="State/Root/Damage/Damage States" method="_on_down_state_entered"]
 [connection signal="state_entered" from="State/Root/Path Constraint/on x-axis" to="State/Root/Path Constraint/Path States" method="_on_on_xaxis_state_entered"]
 [connection signal="state_entered" from="State/Root/Path Constraint/on path" to="State/Root/Path Constraint/Path States" method="_on_on_path_state_entered"]
 [connection signal="body_entered" from="KickZone" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_zone_body_entered"]

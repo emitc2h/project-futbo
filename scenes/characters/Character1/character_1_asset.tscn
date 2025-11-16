@@ -1,101 +1,2377 @@
-[gd_scene load_steps=7 format=3 uid="uid://nuryuxrn3i00"]
+[gd_scene load_steps=51 format=4 uid="uid://nuryuxrn3i00"]
 
 [ext_resource type="PackedScene" uid="uid://brbrlddlhq7r5" path="res://assets/3D/Characters/Character1.1/CharacterAsset.glb" id="1_tjtp0"]
 [ext_resource type="PackedScene" uid="uid://c48018po2qqbq" path="res://scenes/characters/character_asset_base.tscn" id="1_y2c3x"]
 [ext_resource type="Script" uid="uid://cbgduirpbij2q" path="res://scripts/characters/character1/character1_asset.gd" id="2_hqy7p"]
 [ext_resource type="Material" uid="uid://dsr5mgwuaawhd" path="res://assets/3D/Materials/control_node_material.tres" id="3_ttdk4"]
+[ext_resource type="Material" uid="uid://dwhtshcb7df85" path="res://assets/3D/Materials/character_shield_emitters_shader_material.tres" id="4_qdc6g"]
+[ext_resource type="Material" uid="uid://lx1cf1vqbku2" path="res://assets/3D/Materials/character_jump_flare_shader_material.tres" id="5_1r58r"]
 [ext_resource type="Material" uid="uid://dfie1ur0udnic" path="res://assets/3D/Materials/character_shield_shader_material.tres" id="5_hqy7p"]
 [ext_resource type="Material" uid="uid://h1qmrtj6hri8" path="res://assets/3D/Materials/character_jump_distortion_shader_material.tres" id="6_hqy7p"]
+[ext_resource type="QuadMesh" uid="uid://crhv7ksx6xi81" path="res://assets/3D/Meshes/character_aura_mesh.tres" id="8_p8g8s"]
+[ext_resource type="Material" uid="uid://cyymxlac3w1ev" path="res://assets/3D/Materials/character_shield_aura_material.tres" id="9_8lup3"]
+[ext_resource type="Material" uid="uid://b2gi8m7ry585x" path="res://assets/3D/Materials/character_lightning_shader_material.tres" id="10_8lup3"]
 
-[node name="Character1Asset" instance=ExtResource("1_y2c3x")]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hqy7p"]
+radius = 0.01180632
+height = 0.118063204
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5iwl7"]
+radius = 0.013718803
+height = 0.13718803
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1r58r"]
+radius = 0.015512144
+height = 0.15512145
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p8g8s"]
+radius = 0.024396114
+height = 0.24396114
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8lup3"]
+radius = 0.013296658
+height = 0.13296658
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qdc6g"]
+radius = 0.027721938
+height = 0.27721938
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xger2"]
+radius = 0.021255784
+height = 0.21255784
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gkdd7"]
+radius = 0.004898897
+height = 0.048988968
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o1wew"]
+radius = 0.013296656
+height = 0.13296656
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uck2a"]
+radius = 0.027728816
+height = 0.27728817
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nffqh"]
+radius = 0.021261733
+height = 0.21261734
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oar0h"]
+radius = 0.004888907
+height = 0.04888907
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ojyey"]
+radius = 0.0056233695
+height = 0.056233693
+
+[sub_resource type="QuadMesh" id="QuadMesh_1r58r"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8lup3"]
+particle_flag_align_y = true
+emission_shape = 3
+emission_box_extents = Vector3(0.01, 0.1, 0.4)
+angle_min = -261.7
+angle_max = 103.2
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 0.00997765
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_min = 0.6
+scale_max = 0.6
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_lyibg"]
+_surfaces = [{
+"aabb": AABB(-0.432778, -0.190369, -0.493909, 0.920597, 0.637503, 0.907317),
+"format": 34896613377,
+"index_count": 309,
+"index_data": PackedByteArray("AAABAAIAAQAAAAIAAQADAAAAAAADAAEAAwABAAQAAwAFAAEAAwAEAAUABAAGAAUABAAHAAYABgAIAAUABgAJAAgABwAKAAYACgALAAYACgAMAAsABwANAAoADQAOAAoADQAPAA4ADwAQAA4ADwARABAACQASAAgAEgATAAgAEgAJABQAEgAVABMAFQAWABMAFQAXABYAFwAYABYAFwAZABgAEgAUABoAFAAbABoAGwAcABoAFAAdABsAGwAeABwAGwAdAB8AHQAgAB8AHQAhACAAIgAcAB4AIgAeACMAJAAiACMAJAAjACUAJgAkACUAJgAnACQAKAAmACUAJgApACcAKAAlACoAKQArACcALAAoACoAKQAtACsALQAuACsALQAvAC4ALwAwAC4ALwAxADAALAAqADIALAAyADMANAAsADMAMgA1ADMANAAzADYAMgA3ADUAOAA0ADYANwA5ADUANwA6ADkAOgA7ADkAOgA8ADsAOAA9ADQAPQA4AD4AOAA/AD4APgA/AEAAPwBBAEAAPwBCAEEAQwA9AD4ARAA9AEMARABDAEUARgBEAEUAQwBHAEUARgBFAEgAQwBJAEcASQBKAEcASQBLAEoATABGAEgATABIAE0ATgBMAE0ATABOAE8ATwBOAFAAUABRAE8AUABSAFEAUwBOAE0AUwBNAFQAVQBTAFQAUwBVAFYAUwBWAFcAWABVAFQAWABZAFUAWQBYAFoAWABbAFoAWgBbAFwAXQBZAFoAXQBeAFkAXgBdAF8AXQBgAF8AXQBhAGAAYgBeAF8AYgBfAGMAZABiAGMAZABlAGIA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 102,
+"vertex_data": PackedByteArray("GCAAANzkAAAgKfQ6A+wAAORCPgnK4QAAmBrBI2ngAAAAAEZE6b4AAGYlE2EozgAAfhnOeSLHAAAYHCpvU7UAAPo7M3hH3QAAqyT7pH7aAABWB9SEF68AAN0pRI0rxgAAqyRSqHGtAADoEr91aaAAAOMOs6GTngAA+RWcjkiRAAB3EV+dKXMAABYEpoE8fAAAI0rMuFbiAAAgUE+F//8AAL0g577ywAAAhFfawCfoAACMZeWmEPQAALVwocRy5QAATIfXhnj/AABrmWOMsv4AAFA9Yc8K1AAATTBv6HSuAAAOSGTZv8QAALYdAdlqmwAAS1H6/FyaAAD2Nt3jJqkAAEpQQuifigAAhTlZ3v5zAABRmlPTUsUAAMmNH/FinAAAwrvc6uuTAADumf//en4AAAqynM3lbAAA5MlO19qbAACEjBvq0F8AAK3R2KfnjAAA02vc4Dl8AABtvQjWnLsAAMJ0k99jQgAASOLku3CyAABdzCKjC70AAAbyJ5uprQAARsMmlCjPAAAD4DiUdN4AAGRaBsbCRAAAOnJUvmMyAABZn4zfBjQAAOlLB5rPKAAA8ncXsZY1AAB2TQ+wvUsAAIpveYxyJQAA8jxAo7E2AABqPp7J51UAAOsySYUdJwAA9S7shD03AAD0k8itrhwAAFV9N2nYKQAAeGP2Y2QoAACNeRdzbxwAAEF5lUjhDQAACmsmQwAAAABjpiZ/ICIAANShl6LvNwAAs7fpil83AACguQHS0U8AALawQXTgQAAAOcd0snhLAAD1pMd4HBcAAB+fPz1BDgAABo+3XqwGAACAyxuxg3kAAETP444bZgAAte+dkwV2AABs766mp44AAIvgbWy6hQAA6vuYbZSTAAB773dkV38AAMzpjmzbZwAAlM/idVZkAADu3QtLOGAAAP//NzgZZgAAcvfzUvpzAACN1XeA4UkAADPTj1kUUAAANMque7ZDAAC/yamm20MAANium3LvQAAAs7jZYGwyAACKxnRWozwAAPKygirYHwAAEKzWNiQZAAConYk4piEAADzI2jtlTwAASrQIKRtHAAARwUcbtSUAAKnLJg+fJwAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xger2"]
+resource_name = "Collection_Plane"
+_surfaces = [{
+"aabb": AABB(-0.432778, -0.190369, -0.493909, 0.920597, 0.637503, 0.907317),
+"attribute_data": PackedByteArray("AAAp8gMwnuB1D///0BVJ2NAVSdgoLjTDAzCe4CAXk7UgF5O16C/vrSguNMMgF5O1Sh1kpegv763oL++t0UzFxiguNMPKR9GvSh1kpTkvV5voL++tSh1kpZIZGJo5L1ebOS9Xm6lCA6roL++thT/ll5IZGJo5MjaKOS9Xm48c34mPHN+JjyL8cTkyNor5E517ykfRr+JgbrbRTMXG4mButopgR9PRTMXGv2pfvOJgbrY9Rj+dM1/tpcpH0a+/al+853VrzIpgR9M6e0W4OntFuPuK0t3ndWvM55fS0D1GP51SWB2MM1/tpT1GP532P+qCUlgdjDdY3oZSWB2MB2pyoTNf7aXJaiyA9j/qgrBmVnQ3WN6GFFX/Zy7wAADE4g8xnN8nFf//nQxeTXhVUU2DMllTHEBoP9g3PWDJTVlTHEA5YSk5Xk14VVqBuVMca+tS03j8QlqBuVPcdslxHGvrUoeK7WMca+tSOWEpOdN4/EI9YMlNh4rtY3aRJ3ncdslxzqDsaq+VkKLJaiyAnIoeiAdqcqHOoOxqiaOFfHaRJ3nOoOxquayigYmjhXw5u0F4iaOFfJyKHoh2kSd5r5WQojm7QXgiq2iWuayigRu8B40bvAeN3roFmiKraJaIzN6QiMzekFO1gafeugWacsPPq/OScVDTePxCYn0OQVqBuVNsjPA4EHirMMqHWCcQeKswHmgpIMqHWCfGgDsgEHirMPOScVBifQ5BbIzwOB5oKSCmg4IJxoA7INtzXwRwmzE/3p7dK+GuKDhwmzE/bIzwON6e3SvKh1gn3p7dK2C1BCjhrig4iqGdJIqhnSTXpRULYLUEKE+Y2xGcoA9b4a4oOAWzi05wmzE/gLnnawWzi07aw1dZnKAPW5jNhWmAuedr2sNXWYC552uYzYVpe8b/gDfSj3A30o9wleRYgnvG/4BE5Gpx3uiuSuzjv1wN1MhQ7OO/XNrDV1kN1MhQmM2Faezjv1zP+mJczu0ZZd7orkqK1zU4yseTQw3D9TLKx5NDhLevRQ3D9TLFsrM2yseTQ97orkoN1MhQitc1OOjR3Sb/vvkiTssiE/+++SJSwGQDTssiE3iw2gv/vvkiitc1OA3D9TLo0d0mxOIPMU7LIhOc3ycV6NHdJtAVSdgDMJ7gIBeTtQAAKfJ1D///"),
+"format": 34896613399,
+"index_count": 309,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACwAMAA0ADgAPABAADgARAA8AEgATABQAFQAWABcAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJwAoACkAJwAqACgAKwAsAC0AKwAuACwALwAwADEALwAyADAAMwA0ADUAMwA2ADQANwA4ADkAOgA7ADwAPAA7AD0APgA/AEAAPgBBAD8AQgBDAEQAQgBFAEMARgBHAEgARgBJAEcASgBLAEwASgBNAEsATgBPAFAATgBRAE8AUgBTAFQAVQBWAFcAVQBYAFYAWQBaAFsAWQBcAFoAXQBeAF8AXQBgAF4AYQBiAGMAYQBkAGIAZQBmAGcAaABpAGoAaABrAGkAbABtAG4AbABvAG0AcABxAHIAcABzAHEAdAB1AHYAdAB3AHUAeAB5AHoAeAB7AHkAfAB9AH4AfAB/AH0AgACBAIIAgwCEAIUAhQCEAIYAhwCIAIkAhwCKAIgAiwCMAI0AiwCOAIwAjwCQAJEAkgCTAJQAlACTAJUAlgCXAJgAlgCZAJcAmgCbAJwAmgCdAJsAngCfAKAAngChAJ8AogCjAKQAogClAKMApgCnAKgAqQCqAKsAqwCqAKwArQCuAK8ArQCwAK4AsQCyALMAtAC1ALYAtAC3ALUAuAC5ALoAuAC7ALkAvAC9AL4AvwDAAMEAwQDAAMIAwwDEAMUAwwDGAMQAxwDIAMkAygDLAMwAygDNAMsAzgDPANAAzgDRAM8A0gDTANQA0gDVANMA1gDXANgA1wDWANkA1wDZANoA"),
+"material": ExtResource("10_8lup3"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 219,
+"vertex_data": PackedByteArray("GCAAANzk2KIgKfQ6A+wRpORCPgnK4RKfmBrBI2ngcqyYGsEjaeCksWYlE2EoziexICn0OgPsFLMAAEZE6b4+sAAARkTpvmGjfhnOeSLHYaNmJRNhKM5howAARkTpvubPGBwqb1O15s9+Gc55Isfmz34Zznkix3Gt+jszeEfdya5mJRNhKM6qpask+6R+2le0GBwqb1O1m91WB9SEF6+b3X4Zznkix5vdGBwqb1O1r9roEr91aaCv2lYH1IQXr6/aVgfUhBevUqvdKUSNK8Y/q34ZznkixxeqqyRSqHGtL6zoEr91aaDF2OMOs6GTnu3YVgfUhBevSNj5FZyOSJGG2fkVnI5IkSC/dxFfnSlzwMLjDrOhk55DvRYEpoE8fCDFqyT7pH7av5ojSsy4VuK/mvo7M3hH3b+aI0rMuFbi9LMgUE+F///Er/o7M3hH3fGthFfawCfoOLgjSsy4VuJ7p70g577ywAuoUD1hzwrUAaarJPukftoNqYRX2sAn6O2XjGXlphD0s5ogUE+F///wn7VwocRy5d+WtXChxHLlXJdMh9eGeP9Rm4xl5aYQ9GeWa5ljjLL+kp29IOe+8sC4rk0wb+h0rriuUD1hzwrUuK69IOe+8sBrurYdAdlqmxG6TTBv6HSuJrn2Nt3jJqlRuE0wb+h0rg+uDkhk2b/EXLBQPWHPCtTfsktR+vxcmhOtth0B2WqbXcNKUELon4pkw/Y23eMmqVbDhTlZ3v5zc8MRwUcbtSVF2TzI2jtlT63XSrQIKRtHI9epyyYPnycN2mo+nsnnVcvf6zJJhR0nSODyPECjsTZt3vUu7IQ9N8Dgdk0PsL1LMdfyPECjsTZC1+lLB5rPKEzXaj6eyedVKdfCdJPfY0KQ42RaBsbCRJDjOnJUvmMykOPCdJPfY0K0xdNr3OA5fKXFZFoGxsJE1MWEjBvq0F+CxWRaBsbCRNja6UsHms8ovdo6clS+YzK72HZND7C9S0LehIwb6tBf9dPumf//en7209Nr3OA5fAzUCrKczeVsF9RRmlPTUsWiq0tR+vxcmp6ryY0f8WKcyKsOSGTZv8SpqwqynM3lbEDcwrvc6uuTQNzumf//en5A3AqynM3lbI7a5MlO19qbR9rCu9zq65PC2K3R2KfnjKnbwrvc6uuTZ7LJjR/xYpxMsu6Z//96fu6zUZpT01LFSbGt0din54wNzm29CNacu+zN5MlO19qbTMpI4uS7cLJV0Eji5LtwslOiXcwiowu9UqVtvQjWnLsZqgbyJ5uprUOdBvInm6mtF7ZGwyaUKM8Utl3MIqMLvZG1A+A4lHTehrZZn4zfBjSc8TpyVL5jMg3y8ncXsZY1q/LCdJPfY0JX8fSTyK2uHOj2im95jHIl6PZVfTdp2Cno9opveYxyJYLteGP2Y2Qoeu1VfTdp2Clj7Y15F3NvHMISim95jHIlIeRZn4zfBjQN5PJ3F7GWNW3k9JPIra4c1uN4Y/ZjZCgl4EF5lUjhDaPfjXkXc28cl+AKayZDAABi39Shl6LvN67gY6YmfyAiruCzt+mKXzeu4NShl6LvN6369JPIra4cNv1jpiZ/ICLh/VV9N2nYKVb/Y6YmfyAi8ve2sEF04EA097O36YpfNxT39aTHeBwXJ/j1pMd4HBfv+R+fPz1BDub3trBBdOBALPwGj7derAZT9KC5AdLRT0Tts7fpil83Mu05x3SyeEtk7dShl6LvNx7tgMsbsYN5ktc5x3SyeEvA2ETP444bZi7WoLkB0tFPDdq1752TBXaK4YDLG7GDeYrhRM/jjhtmiuGAyxuxg3n+1LXvnZMFdirVbO+upqeOHNWL4G1suoVL1YvgbWy6hajs6vuYbZSTTuxs766mp47A63vvd2RXf4Lu7t0LSzhgpfTM6Y5s22el9JTP4nVWZKX0zOmObNtnru9Ez+OOG2a475TP4nVWZNfvte+dkwV2ne/M6Y5s22dK5///NzgZZkrncvfzUvpzSufu3QtLOGBK5zPTj1kUUCL7jdV3gOFJIvs0yq57tkMi+43Vd4DhSSH7v8mppttDCP80yq57tkPU/tium3LvQG3+jdV3gOFJxdfu3QtLOGBc2JTP4nVWZGrWM9OPWRRQlduKxnRWozxA6rO42WBsMkDq8rKCKtgfQOqzuNlgbDL+5BCs1jYkGc/k8rKCKtgfZueonYk4piFP57O42WBsMnrrM9OPWRRQ1+o0yq57tkPm6IrGdFajPHXzPMjaO2VPZPnysoIq2B+M+0q0CCkbR0HyisZ0VqM8b+yYGsEjaeBkBiAp9DoD7LIFAABGROm+AQcYIAAA3OSvBORCPgnK4SUEdRKM9CsSHPV1E5vyhBBS+N3jmM9B44zPlOW7zxbidM863T7pOt0+6TrdPuloy2/AaMtvwGjLb8CpzQP8Lc8o+5A7ef2D1CL4MsZf+DLGX/gyxl/4IbyI/yG8iP8hvIj/VeQ1vyrkKr834W2+Qeawvwyvbeezr/rm4azr6BSyV+W4xSDbBM1+2ODA4Nzl0BjX7OG5/uzhuf7s4bn+T9aL1b3OcdZjyvXWLdzZ1MzigcTt49TEdd+Lw87lXsXo/K1ecfdgSgvzCToe7GaJxttxhpDDHYwT7+qBsry5jffd3sD33d7A993ewCLdObrL20W6ttdpuqrSlrob9W1a9e/jTX3scEX1+M9jbuo5mInrIZgK6G2YXe35lznb20a23x5OnOExUXDZ+EOA9PyzcvWfs9jxArVZ9kezNej2brHoJnD46NRw9udZbgXooKYF6KCmBeigpuPwC6WX8BOlfPH5pOrvJ6VY8y2m7/JWpmTquanr/zGh9Pbeduv1InXS+TJ+/u84a2r1enKl9iF3mvLSafH09Hkr1vBxK9bwcSvW8HF1wn5aF8KyWfC/BFXZw4ZdSdsWhfLbwYRy0wuJgePxgMzJ6Ga2yZBmv8YGW0HLlWydmd5jPZl2ZryY+2limoNeVu6LgofudIIY9Wp6XefpheX8p3Mu9kZs8e5SZAj+booZCJh9GQiYfRkImH2r7xtrb/ALbGDzpm9r89KKK/vAoNr656Bg/Ceg/PlUoaf31JOv8HmXufwtkS7s1Jkt3zR2Ld80di3fNHYp1jpkx+NidMnnI3m06XGEQg10uzkMqboMDIi6ig2ru03JkXMjxzBwyMtud3nDe2qm5ct0RuU8dFHmzXXY5JZz5bwIaHO9pWk5vBVmDr5la0nhE2lJ4RNpSeETaYq6Sl2oupVdnrp9Xb66zl1Ey+FVdslEU07Gsk5r061hxNQiWMTUIljE1CJYkNEmWeTRmFnU0t9aCNFsWHnJo1Z5yaJWd8mgVnrJpFbavIZT2ryGU9q8hlNjy5xTWexkeFDqHnaxFHhgqLSSYPK0R2H6s+hee7YJZRLJKWASySlgEskpYKTl1mms3eVcLcc7O1rnx4nDvi1Z0L29V8+6L1MXylZqrat5WU+tWVvJEwPEaKGrTS0rB0fdJ+FJIi58RAMjDk5jIFBQ")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_lyibg")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j45kv"]
+radius = 0.007541447
+height = 0.07541447
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eu5gh"]
+radius = 0.03583847
+height = 0.3583847
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7vq4b"]
+radius = 0.04019234
+height = 0.4019234
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v3rex"]
+radius = 0.016392192
+height = 0.16392192
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ouuta"]
+radius = 0.007609737
+height = 0.07609737
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_towm7"]
+radius = 0.035820708
+height = 0.35820708
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eeed2"]
+radius = 0.04021982
+height = 0.4021982
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bhyat"]
+radius = 0.01671214
+height = 0.1671214
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h43x7"]
+radius = 0.007609734
+height = 0.07609734
+
+[sub_resource type="Animation" id="Animation_5iwl7"]
+length = 0.001
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:jump_effect_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:jump_effect_stretch")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:jump_effect_noise_intensity")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:jump_effect_noise_speed")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:jump_effect_flare_threshold")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:emitters_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:emitters_color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:shield_dissolve")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:shield_alpha")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:shield_modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:shield_emission")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:shield_ripple")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.02]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:aura_scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.7]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:aura_color")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:aura_visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:light_energy")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath(".:light_color")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath(".:lightning_amount_ratio")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath(".:lightning_emission")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [50.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath(".:lightning_window")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath(".:lightning_reverse")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1r58r"]
+resource_name = "jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:jump_effect_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:jump_effect_stretch")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [0.1, 0.5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:jump_effect_noise_intensity")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:jump_effect_noise_speed")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:jump_effect_flare_threshold")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [0.5, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qdc6g"]
+_data = {
+&"RESET": SubResource("Animation_5iwl7"),
+&"jump": SubResource("Animation_1r58r")
+}
+
+[sub_resource type="Animation" id="Animation_qdc6g"]
+resource_name = "state - off"
+loop_mode = 1
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitters_emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitters_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:shield_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shield_alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shield_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:shield_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:shield_ripple")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.02]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:aura_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.7]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:aura_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:aura_visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:light_energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:light_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:lightning_amount_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:lightning_emission")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [50.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:lightning_window")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:lightning_reverse")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_xger2"]
+resource_name = "state - on - charge level 0"
+loop_mode = 1
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitters_emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitters_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:shield_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shield_alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shield_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:shield_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:shield_ripple")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.02]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:aura_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:aura_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [Color(0.2784314, 0.5137255, 0.70980394, 0.19607843)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:aura_visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:light_energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [10.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:light_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:lightning_amount_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:lightning_emission")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [50.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:lightning_window")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:lightning_reverse")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_gkdd7"]
+resource_name = "state - on - charge level 1"
+loop_mode = 1
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitters_emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitters_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:shield_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shield_alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shield_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.15]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:shield_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [40.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:shield_ripple")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.03]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:aura_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.9]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:aura_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [Color(0.3372549, 0.45882353, 0.76862746, 0.3529412)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:aura_visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:light_energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [15.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:light_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.3372549, 0.45882353, 0.76862746, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:lightning_amount_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.25]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:lightning_emission")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [30.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:lightning_window")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:lightning_reverse")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_o1wew"]
+resource_name = "state - on - charge level 2"
+loop_mode = 1
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitters_emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitters_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:shield_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shield_alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shield_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.3]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:shield_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [60.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:shield_ripple")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.06]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:aura_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:aura_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [Color(0.49803922, 0.39607844, 0.85882354, 0.47058824)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:aura_visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:light_energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [17.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:light_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.49411765, 0.39215687, 0.85882354, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:lightning_amount_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.35]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:lightning_emission")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [120.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:lightning_window")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:lightning_reverse")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_uck2a"]
+resource_name = "state - on - charge level 3"
+loop_mode = 1
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitters_emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitters_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:shield_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shield_alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shield_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.55]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:shield_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [100.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:shield_ripple")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.1]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:aura_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.1]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:aura_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [Color(0.6901961, 0.2627451, 0.7921569, 0.5882353)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:aura_visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:light_energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:light_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.6901961, 0.2627451, 0.7921569, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:lightning_amount_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:lightning_emission")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [240.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:lightning_window")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.1]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:lightning_reverse")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_j45kv"]
+resource_name = "transition - hit - charge level 0"
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitters_emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1000.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitters_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:shield_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shield_alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shield_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:shield_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [500.0, 20.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:shield_ripple")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [0.3, 0.02]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:aura_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.2, 0.7]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:aura_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 2,
+"values": [Color(1, 0.601, 0.58000004, 0.6666667), Color(0.27450982, 0.50980395, 0.7058824, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:aura_visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:light_energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [50.0, 0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:light_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.79, 0.55300003, 0.6833499, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:lightning_amount_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.8, 0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:lightning_emission")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [500.0, 50.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:lightning_window")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.1, 0.05]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:lightning_reverse")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_ojyey"]
+resource_name = "transition - hit - charge level 1"
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitters_emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1000.0, 1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitters_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:shield_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shield_alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shield_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:shield_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [500.0, 20.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:shield_ripple")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [0.3, 0.02]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:aura_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.2, 0.8]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:aura_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 2,
+"values": [Color(1, 0.601, 0.58000004, 0.6666667), Color(0.2784314, 0.5137255, 0.70980394, 0.19607843)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:aura_visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:light_energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [50.0, 10.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:light_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.79, 0.55300003, 0.6833499, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:lightning_amount_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.8, 0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:lightning_emission")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [500.0, 50.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:lightning_window")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.1, 0.05]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:lightning_reverse")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_oar0h"]
+resource_name = "transition - hit - charge level 2"
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitters_emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1000.0, 1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitters_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:shield_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shield_alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shield_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.0, 0.15]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:shield_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [500.0, 40.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:shield_ripple")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [0.3, 0.03]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:aura_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.2, 0.9]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:aura_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 2,
+"values": [Color(1, 0.601, 0.58000004, 0.6666667), Color(0.3372549, 0.45882353, 0.76862746, 0.3529412)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:aura_visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:light_energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [50.0, 15.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:light_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.79, 0.55300003, 0.6833499, 1), Color(0.3372549, 0.45882353, 0.76862746, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:lightning_amount_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.8, 0.25]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:lightning_emission")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [500.0, 30.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:lightning_window")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.1, 0.05]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:lightning_reverse")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_nffqh"]
+resource_name = "transition - hit - charge level 3"
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitters_emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1000.0, 1000.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitters_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.50980395, 0.7058824, 1), Color(0.27450982, 0.50980395, 0.7058824, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:shield_dissolve")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shield_alpha")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shield_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.0, 0.3]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:shield_emission")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [500.0, 60.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:shield_ripple")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [0.3, 0.06]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:aura_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.2, 1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:aura_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 2,
+"values": [Color(1, 0.601, 0.58000004, 0.6666667), Color(0.49803922, 0.39607844, 0.85882354, 0.47058824)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:aura_visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".:light_energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [50.0, 17.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:light_color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.79, 0.55300003, 0.6833499, 1), Color(0.49411765, 0.39215687, 0.85882354, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".:lightning_amount_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.8, 0.35]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".:lightning_emission")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [500.0, 120.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:lightning_window")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.1, 0.05]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:lightning_reverse")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1r58r"]
+_data = {
+&"RESET": SubResource("Animation_5iwl7"),
+&"state - off": SubResource("Animation_qdc6g"),
+&"state - on - charge level 0": SubResource("Animation_xger2"),
+&"state - on - charge level 1": SubResource("Animation_gkdd7"),
+&"state - on - charge level 2": SubResource("Animation_o1wew"),
+&"state - on - charge level 3": SubResource("Animation_uck2a"),
+&"transition - hit - charge level 0": SubResource("Animation_j45kv"),
+&"transition - hit - charge level 1": SubResource("Animation_ojyey"),
+&"transition - hit - charge level 2": SubResource("Animation_oar0h"),
+&"transition - hit - charge level 3": SubResource("Animation_nffqh")
+}
+
+[node name="Character1Asset" node_paths=PackedStringArray("lights", "aura_meshes", "lightning_particles") instance=ExtResource("1_y2c3x")]
 script = ExtResource("2_hqy7p")
+shield_material = ExtResource("5_hqy7p")
+emitters_material = ExtResource("4_qdc6g")
+jump_distortion_material = ExtResource("6_hqy7p")
+jump_flare_material = ExtResource("5_1r58r")
+lights = [NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_Head/OmniLight3D"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_CHEST_PLATE_ROOT/OmniLight3D"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_BACK_SHIELD_EMITTER/OmniLight3D"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftFoot/OmniLight3D"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_L/OmniLight3D"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightFoot/OmniLight3D"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_R/OmniLight3D")]
+aura_meshes = [NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_Head/Aura"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_CHEST_PLATE_ROOT/Aura"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_BACK_SHIELD_EMITTER/Aura"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftFoot/Aura"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_L/Aura"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightFoot/Aura"), NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_R/Aura")]
+aura_material = ExtResource("9_8lup3")
+lightning_particles = NodePath("CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_CHEST_PLATE_ROOT/LightningParticles3D")
+lightning_material = ExtResource("10_8lup3")
+jump_effect_stretch = 0.1
+jump_effect_noise_intensity = 0.0
+jump_effect_noise_speed = 1.0
+jump_effect_visible = false
+jump_effect_flare_threshold = 1.0
+emitters_emission = 0.0
+emitters_color = Color(0, 0, 0, 1)
+shield_dissolve = 0.0
+shield_alpha = 1.0
+shield_modulate = 0.0
+shield_emission = 20.0
+shield_ripple = 0.02
+aura_scale = 0.7
+aura_color = Color(0.27450982, 0.50980395, 0.7058824, 1)
+aura_visible = false
+light_energy = 0.0
+light_color = Color(0.27450982, 0.50980395, 0.7058824, 1)
+lightning_amount_ratio = 0.0
+lightning_emission = 50.0
+lightning_window = 0.05
+lightning_reverse = false
 
 [node name="CharacterAsset" parent="." index="0" instance=ExtResource("1_tjtp0")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CharacterAsset/Armature" index="0"]
-bones/1/position = Vector3(0.001880795, 0.9111913, 0.031331804)
-bones/1/rotation = Quaternion(-0.030825615, -0.04999768, -0.028595913, 0.99786395)
+bones/0/rotation = Quaternion(0, 0.7071068, 9.635139e-17, 0.7071067)
+bones/1/position = Vector3(0.0018675993, 0.9111852, 0.03134844)
+bones/1/rotation = Quaternion(-0.030804927, -0.050034393, -0.028539695, 0.9978643)
 bones/2/position = Vector3(-3.4924597e-09, 0.15052757, 0.0039877133)
-bones/2/rotation = Quaternion(-0.023650182, 0.011986662, 0.022174703, 0.99940246)
+bones/2/rotation = Quaternion(-0.023689881, 0.011971436, 0.022192523, 0.99940133)
 bones/3/position = Vector3(2.3283064e-10, 0.117494814, 0.0115703065)
-bones/3/rotation = Quaternion(0.005123177, 0.0013828009, 0.014278032, 0.999884)
+bones/3/rotation = Quaternion(0.0048791626, 0.0013759916, 0.014299054, 0.999885)
 bones/4/position = Vector3(-2.1973392e-09, 0.13679054, -0.010437659)
-bones/4/rotation = Quaternion(0.004900398, 0.0017696898, 0.014257852, 0.9998848)
+bones/4/rotation = Quaternion(0.0046536443, 0.0017814286, 0.014281098, 0.9998857)
 bones/5/position = Vector3(3.259629e-09, 0.15431729, -0.015775897)
-bones/5/rotation = Quaternion(0.105146006, -0.001099466, 0.0026815638, 0.99445266)
+bones/5/rotation = Quaternion(0.10526726, -0.0010997317, 0.002633038, 0.99443996)
 bones/6/position = Vector3(-1.2194505e-08, 0.060382523, 0.013941152)
-bones/6/rotation = Quaternion(0.0041875667, -0.00015399895, -0.00076090626, 0.99999094)
+bones/6/rotation = Quaternion(0.0043558963, -0.00016433006, -0.000808798, 0.99999017)
 bones/8/position = Vector3(0.06475267, 0.13552922, -0.017827215)
-bones/8/rotation = Quaternion(-0.68559104, -0.31987628, 0.52402526, -0.39120555)
-bones/9/rotation = Quaternion(0.48685446, 0.12996115, 0.03906138, 0.8628772)
-bones/10/rotation = Quaternion(-0.03488832, 0.00012193559, 0.055109486, 0.9978707)
-bones/11/rotation = Quaternion(0.14915788, -0.17534578, 0.03691222, 0.97244203)
+bones/8/rotation = Quaternion(-0.6852931, -0.32038507, 0.5237461, -0.39168477)
+bones/9/rotation = Quaternion(0.48763645, 0.13008678, 0.038845368, 0.86242634)
+bones/10/rotation = Quaternion(-0.034904264, 0.00017215288, 0.054979376, 0.99787724)
+bones/11/rotation = Quaternion(0.1491618, -0.17530507, 0.03655846, 0.972462)
 bones/12/position = Vector3(-0.028875839, 0.037738327, 0.011913058)
 bones/12/rotation = Quaternion(0.07952978, 0.024883775, 0.23232561, 0.9690618)
 bones/13/position = Vector3(-0.0052222367, 0.038841646, -1.2641138e-07)
-bones/13/rotation = Quaternion(-0.018746903, 0.10640296, -0.26705682, 0.9576052)
+bones/13/rotation = Quaternion(-0.01885886, 0.10640579, -0.26759237, 0.9574532)
 bones/14/position = Vector3(-0.00071833096, 0.03576717, -6.0148324e-08)
-bones/14/rotation = Quaternion(-0.18531157, -0.048186827, -0.007959661, 0.9814654)
+bones/14/rotation = Quaternion(-0.18528475, -0.04809492, -0.008524561, 0.9814702)
 bones/16/position = Vector3(-0.035231877, 0.11272967, 0.0015329366)
-bones/16/rotation = Quaternion(0.08590633, 0.003228012, 0.03845426, 0.9955556)
+bones/16/rotation = Quaternion(0.086471975, 0.0032522553, 0.038379885, 0.99550945)
 bones/17/position = Vector3(0.00022055022, 0.032912668, 9.283352e-08)
-bones/17/rotation = Quaternion(0.22443546, 0.0014947472, -0.020704614, 0.97426796)
+bones/17/rotation = Quaternion(0.22498414, 0.0014998574, -0.02077525, 0.9741398)
 bones/18/position = Vector3(-3.7107617e-05, 0.031280506, -1.02856944e-07)
-bones/18/rotation = Quaternion(0.12856527, 0.0010650373, -0.010484059, 0.99164516)
+bones/18/rotation = Quaternion(0.12911138, 0.0010721482, -0.010553972, 0.9915734)
 bones/20/position = Vector3(-0.010828822, 0.11654657, -0.0020220682)
-bones/20/rotation = Quaternion(0.15443106, -0.008238, -0.051549047, 0.9866235)
+bones/20/rotation = Quaternion(0.15498728, -0.0082588475, -0.05161543, 0.9865327)
 bones/21/position = Vector3(0.00017786957, 0.034538016, -2.861035e-07)
-bones/21/rotation = Quaternion(0.25041413, 0.002403153, -0.02064939, 0.96791565)
+bones/21/rotation = Quaternion(0.25095916, 0.002411335, -0.020719739, 0.96777296)
 bones/22/position = Vector3(-0.00011151098, 0.033073366, -4.0119104e-08)
-bones/22/rotation = Quaternion(0.16171615, 0.00018367368, -0.021876346, 0.98659486)
+bones/22/rotation = Quaternion(0.16227959, 0.00018427185, -0.021947986, 0.98650074)
 bones/24/position = Vector3(0.012247579, 0.11476289, -0.0025966337)
-bones/24/rotation = Quaternion(0.2708068, -0.0137738455, -0.08368492, 0.9588905)
+bones/24/rotation = Quaternion(0.2713471, -0.01379926, -0.083753064, 0.9587314)
 bones/25/position = Vector3(-1.2123957e-05, 0.02965729, -1.1678566e-07)
-bones/25/rotation = Quaternion(0.2108211, 0.00088275725, -0.02721804, 0.9771454)
+bones/25/rotation = Quaternion(0.21137047, 0.0008852926, -0.027295947, 0.97702444)
 bones/26/position = Vector3(-5.5119395e-05, 0.027901629, 1.9417614e-07)
-bones/26/rotation = Quaternion(0.110725164, -0.0017938974, -0.023499707, 0.9935716)
+bones/26/rotation = Quaternion(0.111288935, -0.0017999175, -0.023578526, 0.9935067)
 bones/28/position = Vector3(0.033813316, 0.10461731, 0.00011373076)
-bones/28/rotation = Quaternion(0.30125594, -0.017265648, -0.109228425, 0.94710934)
+bones/28/rotation = Quaternion(0.30180565, -0.017306866, -0.109295525, 0.9469258)
 bones/29/position = Vector3(0.00011476455, 0.026901098, -1.0213802e-07)
-bones/29/rotation = Quaternion(0.23125048, 0.0019420178, -0.022391971, 0.9726347)
+bones/29/rotation = Quaternion(0.23181152, 0.001948793, -0.022470213, 0.97249925)
 bones/30/position = Vector3(-5.2022282e-05, 0.02252812, 1.13671746e-07)
-bones/30/rotation = Quaternion(0.16471617, 0.0007012464, -0.021415208, 0.98610824)
+bones/30/rotation = Quaternion(0.16527852, 0.00070377695, -0.021492926, 0.98601246)
 bones/32/position = Vector3(-0.06475266, 0.13551718, -0.017713057)
-bones/32/rotation = Quaternion(0.68394935, -0.31820622, 0.54177165, 0.37073117)
-bones/33/rotation = Quaternion(0.41553143, -0.22339141, -0.052452806, 0.8801584)
-bones/34/rotation = Quaternion(-0.028113803, -0.0017449585, -0.122555785, 0.99206185)
-bones/35/rotation = Quaternion(0.13747299, 0.07337976, -0.008117701, 0.98775035)
+bones/32/rotation = Quaternion(0.6837065, -0.3186669, 0.5414828, 0.37120515)
+bones/33/rotation = Quaternion(0.4162113, -0.22355415, -0.05219275, 0.8798111)
+bones/34/rotation = Quaternion(-0.028057778, -0.0018161861, -0.12315715, 0.99198884)
+bones/35/rotation = Quaternion(0.13749185, 0.07337041, -0.007667071, 0.9877521)
 bones/36/position = Vector3(0.029191185, 0.03711297, 0.012674589)
 bones/36/rotation = Quaternion(0.08866412, -0.025736535, -0.2694453, 0.95858)
 bones/37/position = Vector3(0.004224537, 0.038882468, 5.386464e-08)
-bones/37/rotation = Quaternion(-0.010838634, -0.101655826, 0.3068941, 0.94623715)
+bones/37/rotation = Quaternion(-0.010930531, -0.10166181, 0.3074422, 0.9460575)
 bones/38/position = Vector3(-0.0016985014, 0.035995822, -5.9253935e-08)
-bones/38/rotation = Quaternion(-0.17255126, 0.059603956, 0.019418644, 0.98300385)
+bones/38/rotation = Quaternion(-0.1725318, 0.05951425, 0.01997302, 0.98300153)
 bones/40/position = Vector3(0.036042124, 0.113782294, 0.0013285956)
-bones/40/rotation = Quaternion(0.09265712, -0.003524624, -0.038558755, 0.994945)
+bones/40/rotation = Quaternion(0.093219325, -0.0035495872, -0.03850228, 0.9948946)
 bones/41/position = Vector3(-0.00011268165, 0.033137724, -1.0418489e-08)
-bones/41/rotation = Quaternion(0.22378644, -0.0014011239, 0.015739873, 0.97451013)
+bones/41/rotation = Quaternion(0.22434142, -0.0014059339, 0.015793975, 0.97438157)
 bones/42/position = Vector3(7.960014e-05, 0.030404625, 2.9225976e-07)
-bones/42/rotation = Quaternion(0.06896593, 2.9634903e-06, 0.0079763075, 0.99758714)
+bones/42/rotation = Quaternion(0.069541976, 2.9893588e-06, 0.0080319075, 0.99754673)
 bones/44/position = Vector3(0.00970709, 0.11446047, -0.0026860521)
-bones/44/rotation = Quaternion(0.15704112, 0.0029667972, 0.016619692, 0.9874478)
+bones/44/rotation = Quaternion(0.15759936, 0.0029691095, 0.016671931, 0.9873579)
 bones/45/position = Vector3(-9.106472e-05, 0.03527279, 1.8111581e-07)
-bones/45/rotation = Quaternion(0.24729598, -0.0021169498, 0.015738744, 0.96880984)
+bones/45/rotation = Quaternion(0.24784851, -0.0021241186, 0.015792828, 0.96866786)
 bones/46/position = Vector3(0.00015721563, 0.033594474, -5.5405266e-08)
-bones/46/rotation = Quaternion(0.09112506, 0.0017514813, 0.016579716, 0.99569994)
+bones/46/rotation = Quaternion(0.09169707, 0.0017572279, 0.016634144, 0.99564654)
 bones/48/position = Vector3(-0.012466695, 0.11710176, -0.0020125739)
-bones/48/rotation = Quaternion(0.25974423, 0.01132261, 0.065397166, 0.963394)
+bones/48/rotation = Quaternion(0.26030064, 0.011344821, 0.06544941, 0.96324)
 bones/49/position = Vector3(-1.3837591e-05, 0.029183496, -6.059413e-08)
-bones/49/rotation = Quaternion(0.22593872, -0.0010115678, 0.020517876, 0.9739249)
+bones/49/rotation = Quaternion(0.22650434, -0.0010145339, 0.020578261, 0.9737922)
 bones/50/position = Vector3(4.5984983e-05, 0.026878137, -2.061941e-08)
-bones/50/rotation = Quaternion(0.1177373, 0.0011301568, 0.017734278, 0.99288577)
+bones/50/rotation = Quaternion(0.11829797, 0.001133931, 0.017793221, 0.9928182)
 bones/52/position = Vector3(-0.03328273, 0.10274948, 0.00043240737)
-bones/52/rotation = Quaternion(0.28161362, 0.015334137, 0.091273226, 0.95505387)
+bones/52/rotation = Quaternion(0.2821481, 0.015371704, 0.09132044, 0.95489097)
 bones/53/position = Vector3(-0.00014655245, 0.02670765, 6.7166866e-08)
-bones/53/rotation = Quaternion(0.24203585, -0.0016219649, 0.016549142, 0.9701248)
+bones/53/rotation = Quaternion(0.24258879, -0.0016276143, 0.016606066, 0.9699857)
 bones/54/position = Vector3(4.2086467e-05, 0.023541333, 1.2249808e-07)
-bones/54/rotation = Quaternion(0.20328183, -0.0015653807, 0.015837617, 0.978991)
+bones/54/rotation = Quaternion(0.20384714, -0.00157111, 0.015895575, 0.9788725)
 bones/57/rotation = Quaternion(-0.7021867, -0.083269924, 0.70243984, 0.081107095)
 bones/58/rotation = Quaternion(0.0012569062, -0.0012613743, 0.14050218, 0.9900788)
 bones/59/rotation = Quaternion(-0.3601292, 0.60850877, 0.067247, 0.703919)
@@ -115,10 +2391,10 @@ bones/73/rotation = Quaternion(0.49341184, -0.081203714, 0.14713159, 0.8534068)
 bones/74/rotation = Quaternion(0.40186337, 0.21037026, 0.7928638, 0.40696096)
 bones/75/rotation = Quaternion(-0.12953585, -0.0871862, 0.7995568, 0.579938)
 bones/76/position = Vector3(0.09144079, -0.052687556, -0.0060449606)
-bones/76/rotation = Quaternion(0.13061741, 0.08679291, 0.9803915, -0.11932595)
+bones/76/rotation = Quaternion(0.13061403, 0.086738005, 0.98039126, -0.11937153)
 bones/77/position = Vector3(-0.0038086935, 0.35835624, -0.0024159204)
-bones/77/rotation = Quaternion(-0.13675795, -0.020555096, 0.018550383, 0.99021757)
-bones/78/rotation = Quaternion(0.49938038, -0.088672385, -0.016335703, 0.8616785)
+bones/77/rotation = Quaternion(-0.13663886, -0.020656273, 0.018413723, 0.99023443)
+bones/78/rotation = Quaternion(0.4993441, -0.088647604, -0.016301231, 0.86170256)
 bones/79/rotation = Quaternion(0.32610276, -0.028595725, 0.0068325317, 0.9448771)
 bones/81/position = Vector3(-0.067826994, 0.037967257, 0.0031719655)
 bones/81/rotation = Quaternion(0.6698408, -0.30973566, 0.35817268, 0.57191736)
@@ -127,10 +2403,10 @@ bones/83/rotation = Quaternion(0.49973577, -0.0017878058, 0.0030991482, 0.866170
 bones/84/rotation = Quaternion(0.3555162, 0.28294003, 0.69710076, 0.5546203)
 bones/85/rotation = Quaternion(-0.39486507, 0.30715054, 0.531625, 0.6834582)
 bones/86/position = Vector3(-0.0914408, -0.05268746, -0.009814544)
-bones/86/rotation = Quaternion(-0.08783208, -0.011500138, 0.99596053, 0.014693655)
+bones/86/rotation = Quaternion(-0.08782492, -0.011551453, 0.99595976, 0.014747888)
 bones/87/position = Vector3(0.0038116812, 0.35818088, -0.0020485457)
-bones/87/rotation = Quaternion(-0.07235439, 0.08562729, -0.009682112, 0.99364936)
-bones/88/rotation = Quaternion(0.535672, 0.07578027, -0.018930098, 0.84080595)
+bones/87/rotation = Quaternion(-0.07223345, 0.08563479, -0.009593974, 0.99365836)
+bones/88/rotation = Quaternion(0.53572375, 0.07561302, -0.01890923, 0.84078854)
 bones/89/rotation = Quaternion(0.33994186, 0.03815903, -0.008498939, 0.9396336)
 bones/91/position = Vector3(0.06589393, 0.040131554, 0.0067888126)
 bones/91/rotation = Quaternion(0.6733867, 0.29505202, -0.37133658, 0.5671013)
@@ -144,6 +2420,451 @@ surface_material_override/3 = ExtResource("3_ttdk4")
 surface_material_override/4 = ExtResource("5_hqy7p")
 surface_material_override/5 = ExtResource("6_hqy7p")
 
+[node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="CharacterAsset/Armature/Skeleton3D" index="1"]
+
+[node name="Physical Bone mixamorig5_Spine" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="0"]
+transform = Transform3D(-0.09284392, -1.246456, 0.01508508, 0.014697895, -0.016220445, -1.2498083, 1.2464606, -0.09265232, 0.015861, 0.026203208, 1.1651787, -0.011436121)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00014066185, 0.00066957204, 0.07309641)
+body_offset = Transform3D(-1.2500001, 0.00020806491, 2.0159408e-05, 2.8684735e-07, 0.12228474, -1.244004, -0.00020903349, -1.2440044, -0.12228474, -0.00017744023, 0.09085035, 0.009771496)
+bone_name = "mixamorig5_Spine"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_Spine" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_hqy7p")
+
+[node name="Physical Bone mixamorig5_Spine1" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="1"]
+transform = Transform3D(0.08547451, 1.2272571, 0.22143596, 0.020464798, 0.22054522, -1.2302198, -1.2469064, 0.08774727, -0.005011661, 0.015614955, 1.299664, -0.011858921)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00077163946, -0.007791437, 0.08622481)
+body_offset = Transform3D(1.2500001, -3.0577183e-05, -2.3199245e-06, -8.381903e-09, 0.09512672, -1.246375, 3.067404e-05, 1.2463753, 0.09512681, 0.0009645112, 0.10820961, 0.0015087873)
+bone_name = "mixamorig5_Spine1"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_Spine1" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_5iwl7")
+
+[node name="Physical Bone mixamorig5_Spine2" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="2"]
+transform = Transform3D(0.07751339, 1.2235183, 0.24391577, 0.055552512, 0.24075882, -1.2253363, -1.246357, 0.08682408, -0.03944598, -0.014659075, 1.4363693, -0.008607236)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00084987556, -0.0049409955, 0.08835146)
+body_offset = Transform3D(1.2499999, 1.937151e-07, 6.4074993e-07, 5.7742e-07, 0.12717311, -1.2435137, -2.5331974e-07, 1.243514, 0.12717313, 0.0010622889, 0.11049461, -0.005091734)
+bone_name = "mixamorig5_Spine2"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_Spine2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_1r58r")
+
+[node name="Physical Bone mixamorig5_Head" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="3"]
+transform = Transform3D(-0.08050867, -1.1708763, -0.43019426, -0.060033046, 0.43422663, -1.1706166, 1.2459593, -0.05473513, -0.08420022, 0.03485022, 1.6983522, 0.0050642714)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0025449463, -0.0118968375, 0.13315149)
+body_offset = Transform3D(-1.2500004, 1.7143786e-05, 4.1797757e-06, -1.7881393e-07, 0.28199005, -1.217777, -1.7680228e-05, -1.2177777, -0.2819903, 0.0031808317, 0.16550362, 0.02305977)
+bone_name = "mixamorig5_Head"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_Head" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_p8g8s")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_Head" index="1"]
+transform = Transform3D(-0.08931518, -0.04536204, 0.9949699, -0.9364044, 0.34419835, -0.068365484, -0.3393658, -0.9378004, -0.07321937, 0.00013827533, 0.17026383, -0.065238714)
+light_intensity_lumens = 10000.0
+light_color = Color(0.6901961, 0.2627451, 0.7921569, 1)
+light_energy = 40.0
+omni_range = 0.2
+
+[node name="Aura" type="MeshInstance3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_Head" index="2"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+mesh = ExtResource("8_p8g8s")
+surface_material_override/0 = ExtResource("9_8lup3")
+
+[node name="Physical Bone mixamorig5_LeftShoulder" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="4"]
+transform = Transform3D(-1.1870282, -0.11310926, -0.37506077, -0.062719114, -1.1264529, 0.53821033, -0.38669187, 0.52991545, 1.0640297, -0.0074520903, 1.4743843, -0.12784018)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0005230174, 0.028520262, 0.038477127)
+body_offset = Transform3D(1.2499986, -0.00015884638, 0.0019264221, 0.0019261837, -0.0021594763, -1.2499965, 0.00016219914, 1.249998, -0.00215891, -0.00072336383, 0.048156857, -0.035567284)
+bone_name = "mixamorig5_LeftShoulder"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftShoulder" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_8lup3")
+
+[node name="Physical Bone mixamorig5_LeftArm" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="5"]
+transform = Transform3D(-1.0504129, -0.6770383, -0.027421378, 0.04679741, -0.122951634, 1.243058, -0.67597544, 1.0435526, 0.1286669, 0.014426209, 1.3170087, -0.20187867)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0042047235, 0.0042451536, 0.072071634)
+body_offset = Transform3D(1.25, -1.7881393e-07, -2.9802322e-08, 8.195639e-08, -0.0006039813, -1.2499994, 3.5762787e-07, 1.2499999, -0.0006039664, 0.005255908, 0.09009206, -0.0052629113)
+bone_name = "mixamorig5_LeftArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftArm" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_qdc6g")
+
+[node name="Physical Bone mixamorig5_LeftForeArm" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="6"]
+transform = Transform3D(-1.0381479, -0.6697362, -0.19026932, -0.0896232, -0.21021158, 1.228934, -0.6904466, 1.0342942, 0.12656546, 0.03658824, 1.0700476, -0.22914214)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000773313, 0.0089895325, 0.050551057)
+body_offset = Transform3D(1.25, -7.688999e-06, 0.00028444082, 0.00028443336, 0.00018938631, -1.2499996, 7.8082085e-06, 1.2500002, 0.00018949062, -0.0009809509, 0.063186884, -0.011246502)
+bone_name = "mixamorig5_LeftForeArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftForeArm" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_xger2")
+
+[node name="Physical Bone mixamorig5_LeftHand" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="7"]
+transform = Transform3D(0.778103, -0.69036037, -0.6931509, -0.12679105, -0.94935924, 0.8032067, -0.9700411, -0.42967385, -0.66098464, 0.0669702, 0.92485136, -0.22984311)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0034266787, 0.010176077, 0.0069755577)
+body_offset = Transform3D(-0.5101075, 0.8997934, 0.7018988, 0.0052594543, 0.77067584, -0.984139, -1.1411673, -0.39865994, -0.3182881, -0.015800476, -0.0009595156, 0.0023666173)
+bone_name = "mixamorig5_LeftHand"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftHand" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_gkdd7")
+
+[node name="Physical Bone mixamorig5_RightShoulder" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="8"]
+transform = Transform3D(1.2336965, -0.032921482, -0.19851735, 0.08210737, -1.0434792, 0.6833079, -0.18371537, -0.6874354, -1.0277067, -0.023107398, 1.4459313, 0.11010714)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0015032309, 0.016012564, 0.04109058)
+body_offset = Transform3D(1.2499996, 2.7999282e-05, -0.00027133524, -0.00027111173, -0.00861156, -1.2499702, -2.9847026e-05, 1.2499702, -0.008611381, 0.0018897392, 0.051499486, -0.019661427)
+bone_name = "mixamorig5_RightShoulder"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightShoulder" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_o1wew")
+
+[node name="Physical Bone mixamorig5_RightArm" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="9"]
+transform = Transform3D(1.0371779, -0.69758475, 0.011731978, -0.10404139, -0.13386185, 1.2384492, -0.68988216, -1.0285702, -0.16913298, -0.013752643, 1.2993652, 0.19172022)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0060163643, 0.008388619, 0.07076537)
+body_offset = Transform3D(1.2499989, -0.000585258, -0.0015997887, -0.0016010627, -0.0027559698, -1.249996, 0.0005815029, 1.249997, -0.0027567148, -0.0074023306, 0.088489175, -0.010294169)
+bone_name = "mixamorig5_RightArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightArm" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_uck2a")
+
+[node name="Physical Bone mixamorig5_RightForeArm" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="10"]
+transform = Transform3D(1.0003258, -0.69476163, -0.28134447, 0.19931972, -0.20573543, 1.2167354, -0.7225788, -1.0185672, -0.053858202, 0.010905256, 1.0356857, 0.21452232)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002767271, 0.0077746776, 0.063359)
+body_offset = Transform3D(1.2499983, -0.0016784072, -0.0010488294, -0.0010499284, -0.0007957071, -1.2499994, 0.0016778708, 1.249999, -0.0007970892, 0.0035385862, 0.079202, -0.009663194)
+bone_name = "mixamorig5_RightForeArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightForeArm" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_nffqh")
+
+[node name="Physical Bone mixamorig5_RightHand" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="11"]
+transform = Transform3D(-0.9730822, -0.5137857, -0.5929886, 0.06264695, -0.9925812, 0.7572042, -0.7821039, 0.55973834, 0.7984401, 0.045471087, 0.90348715, 0.20351914)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.002433412, 0.008047331, 0.010576215)
+body_offset = Transform3D(-0.4882101, -0.87699175, -0.7450073, 0.002214104, 0.8085685, -0.95326436, 1.1507162, -0.37363428, -0.31424785, 0.016124815, 0.0035697222, 0.0035301447)
+bone_name = "mixamorig5_RightHand"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightHand" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_oar0h")
+
+[node name="Physical Bone DEF_CHEST_PLATE_ROOT" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="12"]
+transform = Transform3D(1.2475036, 0.077809826, 0.013424265, -0.017036064, 0.05772643, 1.2485502, 0.077099636, -1.2462397, 0.058671612, 0.16129217, 1.3202584, -0.0042962315)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0033421477, -0.0019429702, -0.01692708)
+body_offset = Transform3D(-0.00027312338, 1.2499982, -0.002180677, -1.9570347e-05, 0.0021806322, 1.249998, 1.2499999, 0.0002731681, 1.913635e-05, 0.0023908839, 0.021162987, 0.004178539)
+bone_name = "DEF_CHEST_PLATE_ROOT"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_CHEST_PLATE_ROOT" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_ojyey")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_CHEST_PLATE_ROOT" index="1"]
+transform = Transform3D(0.9976049, -0.007982187, 0.06870671, 0.06896835, 0.03921761, -0.9968476, 0.005262518, 0.99919873, 0.039674196, 0.027323514, -0.0020112917, 0.0008016825)
+light_intensity_lumens = 10000.0
+light_color = Color(0.6901961, 0.2627451, 0.7921569, 1)
+light_energy = 40.0
+omni_range = 0.4
+
+[node name="Aura" type="MeshInstance3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_CHEST_PLATE_ROOT" index="2"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+mesh = SubResource("QuadMesh_1r58r")
+surface_material_override/0 = ExtResource("9_8lup3")
+
+[node name="LightningParticles3D" type="GPUParticles3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_CHEST_PLATE_ROOT" index="3"]
+transform = Transform3D(0.9997787, 0.017872084, 0.011102172, -0.017882362, 0.9998399, 0.0008298047, -0.011085563, -0.001028154, 0.999938, -0.12818906, -0.010074977, -0.039106727)
+amount = 10
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_8lup3")
+draw_pass_1 = SubResource("ArrayMesh_xger2")
+
+[node name="Physical Bone DEF_BACK_SHIELD_EMITTER" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="13"]
+transform = Transform3D(-0.053023357, -0.8930726, 0.8729892, 0.7941509, -0.6984713, -0.6663049, 0.9638531, 0.5263643, 0.59701574, -0.17315906, 1.4378121, -0.039080862)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010401474, 0.0070279194, 0.042375725)
+body_offset = Transform3D(-0.9520949, -0.597379, -0.5469496, 4.4703484e-08, 0.8441124, -0.9219407, 0.80994767, -0.7022198, -0.64293975, 0.017472528, 0.03313555, 0.04060483)
+bone_name = "DEF_BACK_SHIELD_EMITTER"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_BACK_SHIELD_EMITTER" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_j45kv")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_BACK_SHIELD_EMITTER" index="1"]
+transform = Transform3D(-0.043120846, 0.63341874, 0.77260673, -0.6937683, -0.57545096, 0.43306065, 0.7189061, -0.5173363, 0.4642598, 0.0057345033, 0.05340278, -0.008746266)
+light_intensity_lumens = 10000.0
+light_color = Color(0.6901961, 0.2627451, 0.7921569, 1)
+light_energy = 40.0
+omni_range = 0.4
+
+[node name="Aura" type="MeshInstance3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_BACK_SHIELD_EMITTER" index="2"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+mesh = SubResource("QuadMesh_1r58r")
+surface_material_override/0 = ExtResource("9_8lup3")
+
+[node name="Physical Bone mixamorig5_LeftUpLeg" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="14"]
+transform = Transform3D(-0.87844515, 0.84808236, -0.26756373, -0.36211193, 0.0023787385, 1.1963985, 0.8122248, 0.91828674, 0.24400893, 0.0790615, 0.71325696, -0.13137692)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009341868, 0.0020363135, 0.13027427)
+body_offset = Transform3D(0.6715102, 1.0541776, 0.015245438, 0.004137501, 0.015440255, -1.2498978, -1.0542902, 0.67151254, 0.004805278, -0.010405883, 0.16275942, 0.007855624)
+bone_name = "mixamorig5_LeftUpLeg"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftUpLeg" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_eu5gh")
+
+[node name="Physical Bone mixamorig5_LeftLeg" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="15"]
+transform = Transform3D(0.29459283, 1.2129164, 0.06744562, -0.21747243, -0.015622504, 1.2308378, 1.1951656, -0.30181083, 0.20733887, 0.104177624, 0.3329134, -0.19881222)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.005554113, -0.0022318556, 0.15488832)
+body_offset = Transform3D(1.2499791, -0.00047114491, 0.0005518794, 0.0005532205, 0.00015456975, -1.2499992, 0.0004723668, 1.2499923, 0.00015059859, -0.0070290565, 0.19360754, 0.0027638525)
+bone_name = "mixamorig5_LeftLeg"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftLeg" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_7vq4b")
+
+[node name="Physical Bone mixamorig5_LeftFoot" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="16"]
+transform = Transform3D(0.46449512, 0.5883558, -1.0002909, -0.064524256, 1.0888685, 0.6104933, 1.1586981, -0.17522253, 0.4349898, 0.16461673, 0.08731068, -0.2655487)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0061829216, -0.0044349576, 0.07290246)
+body_offset = Transform3D(1.2499568, -0.0073128045, -0.0021876097, -0.0022281706, -0.0073291548, -1.2499723, 0.0073044896, 1.2499527, -0.007333558, -0.0076013356, 0.091107346, 0.0060329586)
+bone_name = "mixamorig5_LeftFoot"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftFoot" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_v3rex")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftFoot" index="1"]
+transform = Transform3D(0.35777977, -0.08386451, 0.9300325, 0.5180393, 0.84647304, -0.12295797, -0.7769356, 0.5257852, 0.34629604, 0.01457569, -0.05013839, 0.028324082)
+light_intensity_lumens = 10000.0
+light_color = Color(0.6901961, 0.2627451, 0.7921569, 1)
+light_energy = 40.0
+omni_range = 0.3
+
+[node name="Aura" type="MeshInstance3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_LeftFoot" index="2"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+mesh = SubResource("QuadMesh_1r58r")
+surface_material_override/0 = ExtResource("9_8lup3")
+
+[node name="Physical Bone DEF_LEG_SHIELD_EMITTER_L" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="17"]
+transform = Transform3D(0.016690677, -0.48800254, -1.1506845, 1.1282489, 0.50108165, -0.19614226, 0.5378439, -1.0359877, 0.44716135, 0.07156259, 0.87043, -0.18188052)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01614714, -0.010951985, 0.035238553)
+body_offset = Transform3D(0.3866154, -0.7970758, -0.88185567, -0.0028676987, 0.9266864, -0.8388699, 1.1887032, 0.26148972, 0.28479242, 0.028588489, 0.039663315, 0.012022316)
+bone_name = "DEF_LEG_SHIELD_EMITTER.L"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_L" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_ouuta")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_L" index="1"]
+transform = Transform3D(0.044883404, 0.9005464, 0.43243688, -0.3744942, 0.41647393, -0.8284343, -0.92614216, -0.124762155, 0.35594225, -0.022706032, 0.07967672, 0.0151013285)
+light_intensity_lumens = 10000.0
+light_color = Color(0.6901961, 0.2627451, 0.7921569, 1)
+light_energy = 40.0
+omni_range = 0.3
+
+[node name="Aura" type="MeshInstance3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_L" index="2"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+mesh = SubResource("QuadMesh_1r58r")
+surface_material_override/0 = ExtResource("9_8lup3")
+
+[node name="Physical Bone mixamorig5_RightUpLeg" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="18"]
+transform = Transform3D(0.89512104, 0.87206423, -0.027614072, 0.10096556, -0.06423534, 1.2442588, 0.86663973, -0.8932402, -0.116437465, 0.018894125, 0.7199069, 0.11099444)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0029553499, 0.002993645, 0.12532206)
+body_offset = Transform3D(0.59175605, -1.1009567, -0.0130822435, 2.9802322e-08, 0.014852218, -1.2499119, 1.1010466, 0.5917209, 0.0070311986, 0.006684214, 0.15659708, 0.00060141087)
+bone_name = "mixamorig5_RightUpLeg"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightUpLeg" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_towm7")
+
+[node name="Physical Bone mixamorig5_RightLeg" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="19"]
+transform = Transform3D(-0.54358625, 1.116848, 0.14023028, 0.11813538, -0.098260134, 1.2405196, 1.1194007, 0.5527165, -0.06282112, -0.0006123958, 0.32095644, 0.1403421)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.004637006, -0.0009498143, 0.15984367)
+body_offset = Transform3D(1.2499808, 0.0007921457, 1.0095537e-06, -2.9429793e-07, 0.0012341533, -1.2499994, -0.0007969439, 1.2499934, 0.0012326259, 0.0057967603, 0.19980568, 0.0009865388)
+bone_name = "mixamorig5_RightLeg"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightLeg" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_eeed2")
+
+[node name="Physical Bone mixamorig5_RightFoot" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="20"]
+transform = Transform3D(-0.7116085, 0.5306243, -0.88008595, 0.06980402, 1.0929682, 0.60253465, 1.0253003, 0.29386818, -0.6518442, 0.04203735, 0.08293575, 0.19589467)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0028371061, -0.005500177, 0.07117637)
+body_offset = Transform3D(1.2499739, 0.002290845, -0.0039693117, -0.003979206, 0.0014287084, -1.2499886, -0.0022907704, 1.2499954, 0.0014423281, 0.00384143, 0.08896622, 0.006766036)
+bone_name = "mixamorig5_RightFoot"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightFoot" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_bhyat")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightFoot" index="1"]
+transform = Transform3D(-0.57196, 0.07181522, 0.8171317, 0.45958105, 0.8531833, 0.2467049, -0.6794461, 0.51664364, -0.52099156, -0.0035507455, -0.04793285, 0.03602321)
+light_intensity_lumens = 10000.0
+light_color = Color(0.6901961, 0.2627451, 0.7921569, 1)
+light_energy = 40.0
+omni_range = 0.3
+
+[node name="Aura" type="MeshInstance3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone mixamorig5_RightFoot" index="2"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+mesh = SubResource("QuadMesh_1r58r")
+surface_material_override/0 = ExtResource("9_8lup3")
+
+[node name="Physical Bone DEF_LEG_SHIELD_EMITTER_R" type="PhysicalBone3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D" index="21"]
+transform = Transform3D(-0.24923989, -0.51962787, -1.1092188, -1.1508344, 0.4869829, 0.030457463, 0.41947526, 1.0272948, -0.57550496, 0.041823905, 0.86016417, 0.18626067)
+collision_layer = 0
+collision_mask = 0
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013154494, -0.011411676, 0.035584092)
+body_offset = Transform3D(0.33978966, 0.8121425, 0.8873802, 0.0007827878, 0.9219408, -0.84409016, -1.2029285, 0.23001653, 0.25010693, -0.026778467, 0.040546775, 0.009548962)
+bone_name = "DEF_LEG_SHIELD_EMITTER.R"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_R" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_h43x7")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_R" index="1"]
+transform = Transform3D(-0.23961402, -0.9154092, 0.32343644, -0.4018007, 0.39677382, 0.825304, -0.8838221, 0.06779743, -0.4628847, 0.016591191, 0.07414964, -0.014704153)
+light_intensity_lumens = 10000.0
+light_color = Color(0.6901961, 0.2627451, 0.7921569, 1)
+light_energy = 40.0
+omni_range = 0.3
+
+[node name="Aura" type="MeshInstance3D" parent="CharacterAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_LEG_SHIELD_EMITTER_R" index="2"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+mesh = SubResource("QuadMesh_1r58r")
+surface_material_override/0 = ExtResource("9_8lup3")
+
 [node name="AnimationPlayer" parent="CharacterAsset" index="1"]
 callback_mode_process = 0
 
@@ -151,5 +2872,15 @@ callback_mode_process = 0
 root_node = NodePath("../CharacterAsset")
 anim_player = NodePath("../CharacterAsset/AnimationPlayer")
 parameters/movement/move/move/move/blend_position = 0.8108883
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+&"": SubResource("AnimationLibrary_qdc6g")
+}
+
+[node name="ShieldAnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+libraries = {
+&"": SubResource("AnimationLibrary_1r58r")
+}
 
 [editable path="CharacterAsset"]

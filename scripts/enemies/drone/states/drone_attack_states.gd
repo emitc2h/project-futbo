@@ -10,10 +10,10 @@ extends Node
 @export var internal_representation: DroneInternalRepresentation
 
 @export_group("Parameters")
-@export var min_time_in_track_state: float = 2.0
+@export var min_time_in_track_state: float = 3.0
 @export var max_time_in_track_state: float = 5.0
-@export var time_track_to_attack: float = 2.5
-@export var player_is_near_threshold: float = 3.0
+@export var time_track_to_attack: float = 3.0
+@export var player_is_near_threshold: float = 1.75
 
 ## States Enum
 enum State {TRACK = 0, RAM_ATTACK = 1, BEAM_ATTACK = 2}

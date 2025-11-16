@@ -1,8 +1,10 @@
 class_name CharacterDamageStates
 extends CharacterStatesAbstractBase
 
+@export var min_damage_velocity: float = 5.0
+
 ## States Enum
-enum State {ABLE = 0, KNOCKED = 1, OUT = 2, RECOVERING = 3, DOWN = 4}
+enum State {ABLE = 0, KNOCKED = 1, OUT = 2, RECOVERING = 3, DEAD = 4}
 var state: State = State.ABLE
 
 ## State transition constants
@@ -10,7 +12,7 @@ const TRANS_TO_ABLE: String = "Damage: to able"
 const TRANS_TO_KNOCKED: String = "Damage: to knocked"
 const TRANS_TO_OUT: String = "Damage: to out"
 const TRANS_TO_RECOVERING: String = "Damage: to recovering"
-const TRANS_TO_DOWN: String = "Damage: to down"
+const TRANS_TO_DEAD: String = "Damage: to dead"
 
 # Static/Internal properties
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -123,20 +125,35 @@ func _on_recovering_state_exited() -> void:
 	character.movement_states.set_initial_state(character.movement_states.State.GROUNDED)
 
 
-# down state
+# dead state
 #----------------------------------------
-func _on_down_state_entered() -> void:
-	state = State.DOWN
+func _on_dead_state_entered() -> void:
+	state = State.DEAD
 
 
 #=======================================================
 # CONTROLS
 #=======================================================
-func knock(obj_velocity: Vector3, obj_position: Vector3) -> void:
-	_colliding_obj_velocity = obj_velocity
-	_colliding_obj_position = obj_position
-	_initial_knockback_velocity_x = obj_velocity.x
-	sc.send_event(TRANS_TO_KNOCKED)
+func knock(obj_velocity: Vector3, obj_position: Vector3, physical: bool) -> void:
+	print("knock called with obj_velocity: ", obj_velocity.length())
+	if physical and (obj_velocity.length() > min_damage_velocity):
+		## Physical attacks are attacks made from colliding with another body
+		## That other body needs to be traveling at a high velocity to cause damage
+		character.shield.take_single_hit()
+		_colliding_obj_velocity = obj_velocity
+		_colliding_obj_position = obj_position
+		_initial_knockback_velocity_x = obj_velocity.x
+		sc.send_event(TRANS_TO_KNOCKED)
+	elif not character.shield.take_single_hit():
+		## Non phyical attacks only knock if the shield is down
+		_colliding_obj_velocity = obj_velocity
+		_colliding_obj_position = obj_position
+		_initial_knockback_velocity_x = obj_velocity.x
+		sc.send_event(TRANS_TO_KNOCKED)
+	else:
+		## Then the only effect is to take away a charge from the shield, which is done by
+		## evaluating character.shield.take_single_hit()
+		pass
 
 
 #=======================================================
