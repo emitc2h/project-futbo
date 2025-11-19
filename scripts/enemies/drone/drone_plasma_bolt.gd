@@ -97,7 +97,7 @@ func _on_fire_state_physics_processing(delta: float) -> void:
 # hit state
 # -----------------------------------------
 func _on_hit_state_entered() -> void:
-	if hit_enabled: Signals.player_knocked.emit(Vector3.ZERO, recorded_collision_point, false)
+	if hit_enabled: Signals.player_takes_damage.emit(Vector3.ZERO, recorded_collision_point, false)
 	shrapnel_particles.restart()
 	shrapnel_particles.emitting = true
 	await impact_animation.hit()

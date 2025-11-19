@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://c48018po2qqbq"]
+[gd_scene load_steps=89 format=3 uid="uid://c48018po2qqbq"]
 
 [ext_resource type="Script" uid="uid://dfiegwgjsgyeu" path="res://scripts/characters/character_asset_base.gd" id="1_u4gyo"]
 [ext_resource type="Script" uid="uid://r4dihe2vx3dk" path="res://scripts/utilities/animation_tree/animation_state_change_tracker.gd" id="2_ihynb"]
@@ -24,6 +24,50 @@ blend_point_1/pos = 1.0
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_8kn0j"]
 fadein_time = 0.05
 fadeout_time = 0.2
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_tglvg"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tglvg"]
+animation = &"dying forward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qfdgm"]
+animation = &"dying backward"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_7ujmj"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_tglvg")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_qfdgm")
+blend_point_1/pos = 1.0
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_tglvg"]
+graph_offset = Vector2(-1032, -10)
+nodes/die/node = SubResource("AnimationNodeBlendSpace1D_7ujmj")
+nodes/die/position = Vector2(-160, 100)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_tglvg")
+nodes/TimeScale/position = Vector2(90, 100)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"die"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_qfdgm"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7ujmj"]
+animation = &"hit back"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ttyxi"]
+animation = &"hit front"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_ynp1h"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_7ujmj")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_ttyxi")
+blend_point_1/pos = 1.0
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_1kc4g"]
+graph_offset = Vector2(-807, -64)
+nodes/hit/node = SubResource("AnimationNodeBlendSpace1D_ynp1h")
+nodes/hit/position = Vector2(-70, 110)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_qfdgm")
+nodes/TimeScale/position = Vector2(130, 110)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"hit"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1u50n"]
 animation = &"knocked head front"
@@ -80,7 +124,9 @@ nodes/scale/position = Vector2(110, 120)
 node_connections = [&"output", 0, &"scale", &"scale", 0, &"recover"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vfjh6"]
+xfade_time = 0.05
 advance_mode = 2
+advance_expression = "to_knock_path"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nhbec"]
 xfade_time = 0.3
@@ -92,13 +138,32 @@ advance_expression = "auto_recover_from_knocked"
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7ujmj"]
+xfade_time = 0.05
+advance_mode = 2
+advance_expression = "to_die_path"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ttyxi"]
+xfade_time = 0.05
+advance_mode = 2
+advance_expression = "to_hit_path"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ynp1h"]
+xfade_time = 0.3
+switch_mode = 2
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_i7nvq"]
+states/die/node = SubResource("AnimationNodeBlendTree_tglvg")
+states/die/position = Vector2(414.77502, 224.42993)
+states/hit/node = SubResource("AnimationNodeBlendTree_1kc4g")
+states/hit/position = Vector2(538.775, -58.07007)
 states/knocked/node = SubResource("AnimationNodeBlendTree_wlfrw")
 states/knocked/position = Vector2(415.275, 99.71497)
 states/recover/node = SubResource("AnimationNodeBlendTree_gg1vi")
 states/recover/position = Vector2(658.275, 99.42995)
-transitions = ["Start", "knocked", SubResource("AnimationNodeStateMachineTransition_vfjh6"), "knocked", "recover", SubResource("AnimationNodeStateMachineTransition_nhbec"), "recover", "End", SubResource("AnimationNodeStateMachineTransition_qqcwl")]
-graph_offset = Vector2(-141.725, 16.929932)
+transitions = ["Start", "knocked", SubResource("AnimationNodeStateMachineTransition_vfjh6"), "knocked", "recover", SubResource("AnimationNodeStateMachineTransition_nhbec"), "recover", "End", SubResource("AnimationNodeStateMachineTransition_qqcwl"), "Start", "die", SubResource("AnimationNodeStateMachineTransition_7ujmj"), "Start", "hit", SubResource("AnimationNodeStateMachineTransition_ttyxi"), "hit", "End", SubResource("AnimationNodeStateMachineTransition_ynp1h")]
+graph_offset = Vector2(-487.72498, -135.07007)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_e61ex"]
 
@@ -303,14 +368,14 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(12.779892, -167.148)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_sb256"]
-graph_offset = Vector2(-309.16202, 189.3042)
+graph_offset = Vector2(-655, -15)
 nodes/output/position = Vector2(670, 180)
 nodes/movement/node = SubResource("AnimationNodeStateMachine_7ujmj")
 nodes/movement/position = Vector2(-430, -570)
 "nodes/knocked shot/node" = SubResource("AnimationNodeOneShot_8kn0j")
 "nodes/knocked shot/position" = Vector2(460, 170)
 nodes/knocked/node = SubResource("AnimationNodeStateMachine_i7nvq")
-nodes/knocked/position = Vector2(140, 260)
+nodes/knocked/position = Vector2(140, 270)
 "nodes/kick shot/node" = SubResource("AnimationNodeOneShot_h32b1")
 "nodes/kick shot/position" = Vector2(210, -70)
 nodes/kick/node = SubResource("AnimationNodeBlendSpace1D_lsro2")
@@ -335,7 +400,7 @@ tree_root = SubResource("AnimationNodeBlendTree_sb256")
 advance_expression_base_node = NodePath("..")
 parameters/movement/jump/jump/blend_position = 0.0
 parameters/movement/jump/scale/scale = 0.7000000000000028
-parameters/movement/move/move/move/blend_position = -0.19737458
+parameters/movement/move/move/move/blend_position = -1.0084034
 parameters/movement/move/move/scale/scale = 1.2999999999999972
 parameters/movement/move/recover/TimeScale/scale = 1.0
 parameters/movement/move/sprint/scale/scale = 1.0
@@ -343,6 +408,10 @@ parameters/movement/turn/scale/scale = 1.0
 "parameters/knocked shot/active" = false
 "parameters/knocked shot/internal_active" = false
 "parameters/knocked shot/request" = 0
+parameters/knocked/die/die/blend_position = -0.99848866
+parameters/knocked/die/TimeScale/scale = 1.0
+parameters/knocked/hit/hit/blend_position = 1.0
+parameters/knocked/hit/TimeScale/scale = 1.0
 parameters/knocked/knocked/knocked/blend_position = Vector2(0.9935484, 0.008985877)
 parameters/knocked/knocked/scale/scale = 1.0
 parameters/knocked/recover/recover/blend_position = 0.0014064312

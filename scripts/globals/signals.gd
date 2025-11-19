@@ -60,7 +60,7 @@ signal idle_entered
 signal idle_exited
 
 @warning_ignore("unused_signal")
-signal player_knocked(obj_velocity: Vector3, obj_position: Vector3, physical: bool)
+signal player_takes_damage(obj_velocity: Vector3, obj_position: Vector3, physical: bool)
 
 @warning_ignore("unused_signal")
 signal player_long_kick_ready
@@ -72,6 +72,9 @@ signal player_update_destination(pos: Vector3)
 
 @warning_ignore("unused_signal")
 signal player_shield_taking_charges(num_charges_taken: int)
+
+@warning_ignore("unused_signal")
+signal player_dead
 
 
 ## ===================================== ##

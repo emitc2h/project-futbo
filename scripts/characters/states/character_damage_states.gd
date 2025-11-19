@@ -4,7 +4,7 @@ extends CharacterStatesAbstractBase
 @export var min_damage_velocity: float = 5.0
 
 ## States Enum
-enum State {ABLE = 0, KNOCKED = 1, OUT = 2, RECOVERING = 3, DEAD = 4}
+enum State {ABLE = 0, KNOCKED = 1, OUT = 2, RECOVERING = 3, DEAD = 4, HIT = 5}
 var state: State = State.ABLE
 
 ## State transition constants
@@ -13,6 +13,7 @@ const TRANS_TO_KNOCKED: String = "Damage: to knocked"
 const TRANS_TO_OUT: String = "Damage: to out"
 const TRANS_TO_RECOVERING: String = "Damage: to recovering"
 const TRANS_TO_DEAD: String = "Damage: to dead"
+const TRANS_TO_HIT: String = "Damage: to hit"
 
 # Static/Internal properties
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -31,6 +32,7 @@ var _current_knockback_velocity_x: float = 0.0
 func _ready() -> void:
 	character.asset.knocked_finished.connect(_on_knocked_finished)
 	character.asset.recover_finished.connect(_on_recover_finished)
+	character.asset.hit_finished.connect(_on_hit_finished)
 
 
 # able state
@@ -44,9 +46,8 @@ func _on_able_state_entered() -> void:
 func _on_knocked_state_entered() -> void:
 	state = State.KNOCKED
 	
-	## First compute the relative position of the colliding object and the player
-	var char_pos: Vector3 = character.global_position
-	var char_direction_faced: CharacterDirectionFacedStates.State = character.direction_states.state
+	## Make sure the damage animation played is knock
+	character.asset.open_knock_path()
 	
 	## go straight to recovering state if the player is on the ground, otherwise pass by the out state
 	if character.is_on_floor():
@@ -54,28 +55,8 @@ func _on_knocked_state_entered() -> void:
 	else:
 		character.asset.auto_recover_from_knocked = false
 	
-	## Decide on the blending 
-	character.asset.vertical_knock_blend = 1.0
-
-	## Player faces right, object is to the right - WORKS
-	if (_colliding_obj_position.x > char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_RIGHT:
-		character.asset.horizontal_knock_blend = 1.0
-		character.asset.recover_blend = 1.0
-	
-	## Player faces right, object is to the left
-	if (_colliding_obj_position.x < char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_RIGHT:
-		character.asset.horizontal_knock_blend = -1.0
-		character.asset.recover_blend = -1.0
-
-	## Player faces left, object is to the left
-	if (_colliding_obj_position.x < char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_LEFT:
-		character.asset.horizontal_knock_blend = 1.0
-		character.asset.recover_blend = 1.0
-	
-	## Player faces left, object is to the right - WORKS
-	if (_colliding_obj_position.x > char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_LEFT:
-		character.asset.horizontal_knock_blend = -1.0
-		character.asset.recover_blend = -1.0
+	## Compute the animation blending 
+	compute_blend(character.global_position, character.direction_states.state)
 
 	character.asset.knock()
 	
@@ -129,31 +110,78 @@ func _on_recovering_state_exited() -> void:
 #----------------------------------------
 func _on_dead_state_entered() -> void:
 	state = State.DEAD
+	
+	## Make sure the damage animation played is die
+	character.asset.open_die_path()
+	
+	if character.is_on_floor():
+		pass
+	else:
+		## Immediately transition to ragdoll
+		pass
+		
+	## Compute the animation blending
+	compute_blend(character.global_position, character.direction_states.state)
+
+	character.asset.knock()
+	
+	_current_knockback_velocity_x = _initial_knockback_velocity_x
+	
+	await get_tree().create_timer(1.0).timeout
+	Signals.game_over.emit()
+
+
+# hit state
+#----------------------------------------
+func _on_hit_state_entered() -> void:
+	state = State.HIT
+
+	## Make sure the damage animation played is die
+	character.asset.open_hit_path()
+	
+	if character.is_on_floor():
+		character.movement_states.set_initial_state(character.movement_states.State.GROUNDED)
+	else:
+		## Character is already disabled from moving in the air
+		sc.send_event(TRANS_TO_ABLE)
+		return
+	
+	## Compute the animation blending
+	compute_blend(character.global_position, character.direction_states.state)
+	
+	character.asset.knock()
+	
+	_current_knockback_velocity_x = _initial_knockback_velocity_x
 
 
 #=======================================================
 # CONTROLS
 #=======================================================
-func knock(obj_velocity: Vector3, obj_position: Vector3, physical: bool) -> void:
-	print("knock called with obj_velocity: ", obj_velocity.length())
+func take_damage(obj_velocity: Vector3, obj_position: Vector3, physical: bool) -> void:
 	if physical and (obj_velocity.length() > min_damage_velocity):
 		## Physical attacks are attacks made from colliding with another body
 		## That other body needs to be traveling at a high velocity to cause damage
-		character.shield.take_single_hit()
 		_colliding_obj_velocity = obj_velocity
 		_colliding_obj_position = obj_position
 		_initial_knockback_velocity_x = obj_velocity.x
-		sc.send_event(TRANS_TO_KNOCKED)
-	elif not character.shield.take_single_hit():
-		## Non phyical attacks only knock if the shield is down
-		_colliding_obj_velocity = obj_velocity
-		_colliding_obj_position = obj_position
+		if character.shield.take_single_hit():
+			## If the shield is up, simply knock back the player
+			sc.send_event(TRANS_TO_KNOCKED)
+		else:
+			## When the shield is down, the player dies
+			sc.send_event(TRANS_TO_DEAD)
+		return
+	
+	if character.shield.take_single_hit():
+		## If the shield is up, take a hit
 		_initial_knockback_velocity_x = obj_velocity.x
-		sc.send_event(TRANS_TO_KNOCKED)
+		sc.send_event(TRANS_TO_HIT)
 	else:
-		## Then the only effect is to take away a charge from the shield, which is done by
-		## evaluating character.shield.take_single_hit()
-		pass
+		## When the shield is down, the player dies
+		_colliding_obj_velocity = obj_velocity
+		_colliding_obj_position = obj_position
+		_initial_knockback_velocity_x = obj_velocity.x
+		sc.send_event(TRANS_TO_DEAD)
 
 
 #=======================================================
@@ -170,3 +198,35 @@ func _on_knocked_finished() -> void:
 
 func _on_recover_finished() -> void:
 	sc.send_event(TRANS_TO_ABLE)
+
+
+func _on_hit_finished() -> void:
+	sc.send_event(TRANS_TO_ABLE)
+
+
+#=======================================================
+# UTILS
+#=======================================================
+func compute_blend(char_pos: Vector3, char_direction_faced: CharacterDirectionFacedStates.State) -> void:
+	## Decide on the blending 
+	character.asset.vertical_knock_blend = 1.0
+
+	## Player faces right, object is to the right
+	if (_colliding_obj_position.x > char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_RIGHT:
+		character.asset.horizontal_knock_blend = 1.0
+		character.asset.recover_blend = 1.0
+	
+	## Player faces right, object is to the left
+	if (_colliding_obj_position.x < char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_RIGHT:
+		character.asset.horizontal_knock_blend = -1.0
+		character.asset.recover_blend = -1.0
+
+	## Player faces left, object is to the left
+	if (_colliding_obj_position.x < char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_LEFT:
+		character.asset.horizontal_knock_blend = 1.0
+		character.asset.recover_blend = 1.0
+	
+	## Player faces left, object is to the right
+	if (_colliding_obj_position.x > char_pos.x) and char_direction_faced == CharacterDirectionFacedStates.State.FACE_LEFT:
+		character.asset.horizontal_knock_blend = -1.0
+		character.asset.recover_blend = -1.0

@@ -135,6 +135,11 @@ func _on_player_proximity_entered() -> void:
 	sc.send_event(TRANS_TO_ATTACK)
 
 
+func _on_player_dead() -> void:
+	sc.send_event(TRANS_TO_GO_TO_PATROL)
+	sc.send_event(targeting_states.TRANS_TO_DISABLED)
+
+
 # controls
 #========================================
 func set_initial_behavior(initial_behavior: State) -> void:

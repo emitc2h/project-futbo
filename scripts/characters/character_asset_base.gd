@@ -28,6 +28,8 @@ var horizontal_knock_blend: float:
 	set(value):
 		var current_blend: Vector2 = anim_tree.get("parameters/knocked/knocked/knocked/blend_position")
 		anim_tree.set("parameters/knocked/knocked/knocked/blend_position", Vector2(value, current_blend.y))
+		anim_tree.set("parameters/knocked/die/die/blend_position", value)
+		anim_tree.set("parameters/knocked/hit/hit/blend_position", value)
 
 ## The blending variable for the recovery animation
 var recover_blend: float:
@@ -51,10 +53,14 @@ signal kick_finished
 signal long_kick_finished
 signal knocked_finished
 signal recover_finished
+signal hit_finished
 
 ## Animation Tree Path Gates
 var jump_to_fall_path: bool = false
 var auto_recover_from_knocked: bool = false
+var to_knock_path: bool = true
+var to_die_path: bool = false
+var to_hit_path: bool = false
 
 func _ready() -> void:
 	$AnimationTree/MovementStateChangeTracker.anim_state_started.connect(_on_movement_anim_state_started)
@@ -74,6 +80,23 @@ func open_jump_to_fall_path() -> void:
 func close_jump_to_fall_path() -> void:
 	jump_to_fall_path = false
 
+
+func open_knock_path() -> void:
+	to_knock_path = true
+	to_die_path = false
+	to_hit_path = false
+
+
+func open_hit_path() -> void:
+	to_knock_path = false
+	to_die_path = false
+	to_hit_path = true
+
+
+func open_die_path() -> void:
+	to_knock_path = false
+	to_die_path = true
+	to_hit_path = false
 
 
 ######################################
@@ -136,5 +159,10 @@ func _on_knocked_anim_state_started(_anim_name: String) -> void:
 
 
 func _on_knocked_anim_state_finished(anim_name: String) -> void:
-	if anim_name == "knocked": knocked_finished.emit()
-	if anim_name == "recover": recover_finished.emit()
+	match(anim_name):
+		"knocked":
+			knocked_finished.emit()
+		"recover":
+			recover_finished.emit()
+		"hit":
+			hit_finished.emit()
