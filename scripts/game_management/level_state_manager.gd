@@ -2,6 +2,7 @@ class_name LevelStateManager
 extends Node3D
 
 var current_level: Level = null
+var current_level_resource: Resource = null
 @onready var state: StateChart = $StateChart
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var game_over_screen: GameOverScreen = $GameOverScreen
@@ -9,7 +10,6 @@ var current_level: Level = null
 signal back_to_main_menu
 
 func _ready() -> void:
-	pause_menu.hide
 	Signals.unpause.connect(_on_unpause)
 	Signals.game_over.connect(_on_game_over)
 	game_over_screen.game_over_animation_finished.connect(_on_game_over_animation_finished)
@@ -31,7 +31,7 @@ func _on_game_play_state_entered() -> void:
 	self.add_child(current_level)
 
 
-func _on_game_play_state_physics_processing(delta: float) -> void:
+func _on_game_play_state_physics_processing(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		state.send_event("game play to paused")
 
@@ -45,9 +45,9 @@ func _on_paused_state_entered() -> void:
 	get_tree().paused = true
 
 
-func _on_paused_state_physics_processing(delta: float) -> void:
+func _on_paused_state_physics_processing(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
-		state.send_event("paused to game play")
+		state.send_event("to game play")
 
 
 func _on_paused_state_exited() -> void:
@@ -66,7 +66,7 @@ func _on_game_over_state_entered() -> void:
 # SIGNALS
 #=======================================================
 func _on_unpause() -> void:
-	state.send_event("paused to game play")
+	state.send_event("to game play")
 
 
 func _on_game_over() -> void:
@@ -74,16 +74,19 @@ func _on_game_over() -> void:
 
 
 func _on_game_over_animation_finished() -> void:
-	back_to_main_menu.emit()
-	state.send_event("game over to empty")
+	open_level()
 
 
 #=======================================================
 # UTILITIES
 #=======================================================
-func open_level(level: Level) -> void:
-	current_level = level
-	state.send_event("empty to game play")
+func open_level(level_resource: Resource = current_level_resource) -> void:
+	print("open_level() called")
+	current_level_resource = level_resource
+	if current_level: current_level.queue_free()
+	current_level = current_level_resource.instantiate()
+	hide_game_over_screen()
+	state.send_event("to game play")
 
 
 func close_level() -> void:

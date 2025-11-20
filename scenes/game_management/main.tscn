@@ -49,7 +49,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_dniiw"]
 resource_name = "game over"
-length = 6.0
+length = 3.0
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -59,7 +59,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 2)
+"times": PackedFloat32Array(0, 1)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -70,7 +70,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1.03333, 3.03333, 5.03333, 6)
+"times": PackedFloat32Array(0, 0.5, 1.5, 2.5, 3)
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -201,6 +201,7 @@ script = ExtResource("6_e4ydo")
 
 [node name="StateChart" type="Node" parent="LevelStateManager"]
 script = ExtResource("13_ex211")
+track_in_editor = true
 
 [node name="Root" type="Node" parent="LevelStateManager/StateChart"]
 script = ExtResource("14_lx3lp")
@@ -212,7 +213,7 @@ script = ExtResource("15_mqd0o")
 [node name="to game play" type="Node" parent="LevelStateManager/StateChart/Root/empty"]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game play")
-event = &"empty to game play"
+event = &"to game play"
 delay_in_seconds = "0.0"
 
 [node name="game play" type="Node" parent="LevelStateManager/StateChart/Root"]
@@ -242,7 +243,7 @@ script = ExtResource("15_mqd0o")
 [node name="to game play" type="Node" parent="LevelStateManager/StateChart/Root/paused"]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game play")
-event = &"paused to game play"
+event = &"to game play"
 delay_in_seconds = "0.0"
 
 [node name="to empty" type="Node" parent="LevelStateManager/StateChart/Root/paused"]
@@ -258,6 +259,12 @@ script = ExtResource("15_mqd0o")
 script = ExtResource("5_bf3xv")
 to = NodePath("../../empty")
 event = &"game over to empty"
+delay_in_seconds = "0.0"
+
+[node name="to game play" type="Node" parent="LevelStateManager/StateChart/Root/game over"]
+script = ExtResource("5_bf3xv")
+to = NodePath("../../game play")
+event = &"to game play"
 delay_in_seconds = "0.0"
 
 [node name="PauseMenu" type="CanvasLayer" parent="LevelStateManager"]

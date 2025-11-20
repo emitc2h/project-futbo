@@ -27,15 +27,15 @@ quick = true
 [sub_resource type="BTAction" id="BTAction_qns3d"]
 script = ExtResource("5_bgcqb")
 
-[sub_resource type="BTAction" id="BTAction_n8kl3"]
-script = ExtResource("3_a1jrj")
-
 [sub_resource type="BTAction" id="BTAction_0cetv"]
 script = ExtResource("1_wr0yp")
 vuln_type = "defendable"
 
+[sub_resource type="BTAction" id="BTAction_n8kl3"]
+script = ExtResource("3_a1jrj")
+
 [sub_resource type="BTSequence" id="BTSequence_a1jrj"]
-children = [SubResource("BTAction_wjov6"), SubResource("BTAction_qns3d"), SubResource("BTAction_n8kl3"), SubResource("BTAction_0cetv")]
+children = [SubResource("BTAction_wjov6"), SubResource("BTAction_qns3d"), SubResource("BTAction_0cetv"), SubResource("BTAction_n8kl3")]
 
 [sub_resource type="BTParallel" id="BTParallel_n8kl3"]
 num_successes_required = 4

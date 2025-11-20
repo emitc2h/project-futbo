@@ -84,7 +84,6 @@ func _on_on_state_exited() -> void:
 # dissipating state
 #----------------------------------------
 func _on_dissipating_state_entered() -> void:
-	print("DISSIPATING STATE ENTERED")
 	state = State.DISSIPATING
 	
 	## Disable the spinning animation

@@ -36,6 +36,7 @@ func _enter() -> void:
 	else:
 		signal_id = rng.randi()
 		if quick:
+			print("triggering quick close at ", Engine.get_physics_frames())
 			drone.quick_close(signal_id)
 		else:
 			drone.close(signal_id)
@@ -43,7 +44,7 @@ func _enter() -> void:
 			done = true
 
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	if done:
 		return SUCCESS
 	return RUNNING

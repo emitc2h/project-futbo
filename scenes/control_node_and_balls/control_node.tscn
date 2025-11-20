@@ -14242,9 +14242,6 @@ charge_states = NodePath("State/Root/Power/On/Charge/Charge States")
 shield_states = NodePath("State/Root/Power/On/Shield/Shield States")
 asset = NodePath("TrackTransformContainer/ControlNodeAsset")
 
-[node name="State" parent="." index="0"]
-track_in_editor = true
-
 [node name="Physics States" parent="State/Root/Physics" index="0"]
 script = ExtResource("3_hlhvm")
 
