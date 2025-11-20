@@ -111,9 +111,9 @@ func _on_game_loaded_state_processing(delta: float) -> void:
 #=======================================================
 func _on_game_state_entered() -> void:
 	fade_screen.fade_in()
-	var level: Level = ResourceLoader.load_threaded_get(level_path).instantiate()
-	level_state_manager.open_level(level)
-	active_scene = level
+	var level_resource: Resource = ResourceLoader.load_threaded_get(level_path)
+	level_state_manager.open_level(level_resource)
+	active_scene = level_state_manager.current_level
 
 
 #=======================================================

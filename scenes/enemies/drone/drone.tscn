@@ -783,13 +783,19 @@ blackboard_plan = SubResource("BlackboardPlan_x77yf")
 [node name="to attack" type="Node" parent="State/Root/Behavior/block"]
 script = ExtResource("6_doilr")
 to = NodePath("../../attack")
-event = &"Behavior: to attack"
+event = &"Behavior block to attack"
 delay_in_seconds = "0.0"
 
 [node name="to dead" type="Node" parent="State/Root/Behavior/block"]
 script = ExtResource("6_doilr")
 to = NodePath("../../dead")
 event = &"Behavior: to dead"
+delay_in_seconds = "0.0"
+
+[node name="to block" type="Node" parent="State/Root/Behavior/block"]
+script = ExtResource("6_doilr")
+to = NodePath("..")
+event = &"Behavior: to block"
 delay_in_seconds = "0.0"
 
 [node name="sleep" type="Node" parent="State/Root/Behavior"]

@@ -29,6 +29,7 @@ const TRANS_PUPPET_TO_DEAD: String = "Behavior: puppet to dead"
 const TRANS_TO_PATROL: String = "Behavior: to patrol"
 const TRANS_TO_GO_TO_PATROL: String = "Behavior: to go to patrol"
 const TRANS_TO_BLOCK: String = "Behavior: to block"
+const TRANS_BLOCK_TO_ATTACK: String = "Behavior block to attack"
 const TRANS_TO_ATTACK: String = "Behavior: to attack"
 const TRANS_TO_DEAD: String = "Behavior: to dead"
 
@@ -87,10 +88,12 @@ func _on_seek_state_entered() -> void:
 #----------------------------------------
 func _on_block_state_entered() -> void:
 	state = State.BLOCK
+	print("on BLOCK state entered")
 
 
 func _on_block_bt_finished(_status: int) -> void:
-	sc.send_event(TRANS_TO_ATTACK)
+	print("TRANS_TO_ATTACK due to _on_block_bt_finished() with status: ", _status)
+	sc.send_event(TRANS_BLOCK_TO_ATTACK)
 
 
 # attack state
@@ -115,23 +118,30 @@ func _on_target_none() -> void:
 	if state == State.ATTACK:
 		sc.send_event(TRANS_TO_GO_TO_PATROL)
 
+
 func _on_target_acquired() -> void:
 	## If the drone sees the player, go to attack state
+	print("TRANS_TO_ATTACK due to _on_target_acquired()")
 	sc.send_event(TRANS_TO_ATTACK)
 
 
 func _on_control_node_proximity_entered(control_node: ControlNode) -> void:
+	print("Behavior: _on_control_node_proximity_entered() called")
 	## If the drone doesn't already have a target, use the control node
 	if not targeting_states.target:
 		targeting_states.target = control_node.physics_states.track_position_container
 	
+	print("vulnerability state: ", vulnerabiliy_states.State.keys()[vulnerabiliy_states.state])
+	
 	## If the control node is detected within the proximity detector, go to block state
 	if vulnerabiliy_states.state == vulnerabiliy_states.State.DEFENDABLE:
+		print("Initiating transition to BLOCK")
 		sc.send_event(TRANS_TO_BLOCK)
 
 
 func _on_player_proximity_entered() -> void:
 	## If the the player is detected within the proximity detector, go to attack state
+	print("TRANS_TO_ATTACK due to _on_player_proximity_entered()")
 	sc.send_event(TRANS_TO_ATTACK)
 
 

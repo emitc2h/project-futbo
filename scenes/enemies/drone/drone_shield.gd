@@ -17,6 +17,7 @@ var enabled: bool:
 		
 
 func hit() -> void:
+	print("drone shield hit()")
 	drone_shield_closed_model.hit()
 	particles.restart()
 	particles.emitting = true

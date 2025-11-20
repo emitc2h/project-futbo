@@ -54,7 +54,6 @@ hit_from_inside = true
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("3_mjux0")
-track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="Root" type="Node" parent="StateChart"]
