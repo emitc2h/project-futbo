@@ -46,6 +46,7 @@ dribble_states = NodePath("State/Root/Damage/Able/Dribble/Dribble States")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_oqj5v")
+track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="Root" type="Node" parent="State"]

@@ -201,7 +201,6 @@ script = ExtResource("6_e4ydo")
 
 [node name="StateChart" type="Node" parent="LevelStateManager"]
 script = ExtResource("13_ex211")
-track_in_editor = true
 
 [node name="Root" type="Node" parent="LevelStateManager/StateChart"]
 script = ExtResource("14_lx3lp")

@@ -42,6 +42,7 @@ func _ready() -> void:
 	Signals.dribbling_entered.connect(_on_player_dribbling_entered)
 	Signals.dribbling_exited.connect(_on_player_dribbling_exited)
 	Signals.player_moved.connect(_on_player_moved)
+	control_node.power_states.control_node_power_is_on.connect(_on_power_is_on)
 	
 	## Disable the shield collision shape by default
 	shield_collision.set_collision_layer_value(6, false)
@@ -122,6 +123,10 @@ func _on_player_moved() -> void:
 	sc.send_event(TRANS_TO_DISSIPATING)
 
 
+func _on_power_is_on() -> void:
+	check_conditions_to_shield()
+
+
 func _on_animation_state_started(anim_name: String) -> void:
 	## This could be unreliable, I have to thoroughly test it
 	match(anim_name):
@@ -149,6 +154,8 @@ func check_conditions_to_shield() -> void:
 	## If all conditions are met
 	if _shield_allowed:
 		sc.send_event(TRANS_TO_EXPANDING)
+	else:
+		sc.send_event(TRANS_TO_DISSIPATING)
 
 
 func turn_on_shield() -> void:
