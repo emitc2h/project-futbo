@@ -36,7 +36,6 @@ func _enter() -> void:
 	else:
 		signal_id = rng.randi()
 		if quick:
-			print("triggering quick close at ", Engine.get_physics_frames())
 			drone.quick_close(signal_id)
 		else:
 			drone.close(signal_id)

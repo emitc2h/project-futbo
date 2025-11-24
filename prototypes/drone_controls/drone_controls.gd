@@ -16,7 +16,7 @@ func _ready() -> void:
 	drone_scene = load(drone_scene_path)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if drone:
 		drone.physics_mode_states.left_right_axis = Input.get_axis("move_left", "move_right")
 
@@ -122,7 +122,7 @@ func _on_disable_button_pressed() -> void:
 
 ## BLOCK
 ## ==================================
-func _on_check_button_toggled(toggled_on: bool) -> void:
+func _on_check_button_toggled(_toggled_on: bool) -> void:
 	block.visible = !block.visible
 	var collision_shape: CollisionShape3D = block.get_node("CollisionShape3D")
 	collision_shape.disabled = !collision_shape.disabled
@@ -130,6 +130,6 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 
 ## TARGET
 ## ==================================
-func _on_target_bob_button_toggled(toggled_on: bool) -> void:
+func _on_target_bob_button_toggled(_toggled_on: bool) -> void:
 	target_left.bob = !target_left.bob
 	target_right.bob = !target_right.bob

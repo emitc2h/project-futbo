@@ -45,6 +45,8 @@ const WARP_IN_TRANS_ANIM: String = "transition - warp in"
 ## Internal variables
 var bounce_strength: float = 0.0
 
+signal control_node_power_is_on
+
 func _ready() -> void:
 	physics_material = rigid_node.physics_material_override
 	rigid_node.body_entered.connect(_on_rigid_node_body_entered)
@@ -55,6 +57,8 @@ func _ready() -> void:
 func _on_off_state_entered() -> void:
 	state = State.OFF
 	control_node.anim_state.travel(OFF_STATE_ANIM)
+	
+	control_node.control_node_control_states.spins_during_dribble = true
 	
 	## When the control node turns off while being dribbled, it should turn back on immediately
 	if control_node.control_states.state == control_node.control_states.State.DRIBBLED:
@@ -92,6 +96,7 @@ func _on_on_state_entered() -> void:
 	physics_material.bounce = 0.8
 	physics_material.friction = 0.6
 	control_node.anim_state.travel(ON_STATE_ANIM)
+	control_node_power_is_on.emit()
 
 
 func _on_on_state_exited() -> void:
