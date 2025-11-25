@@ -36,7 +36,6 @@ var try_to_engage_long_kick_intent: bool = false
 # no ball state
 #----------------------------------------
 func _on_no_ball_state_entered() -> void:
-	print("no ball state entered")
 	state = State.NO_BALL
 	ball = null
 
@@ -49,7 +48,6 @@ func _on_no_ball_state_physics_processing(_delta: float) -> void:
 # can kick state
 #----------------------------------------
 func _on_can_kick_state_entered() -> void:
-	print("can kick state entered")
 	state = State.CAN_KICK
 
 
@@ -62,15 +60,12 @@ func _on_can_kick_state_physics_processing(_delta: float) -> void:
 # kick state
 #----------------------------------------
 func _on_kick_state_entered() -> void:
-	print("kick state entered")
 	state = State.KICK
 	ball.kick(Aim.vector * kick_force)
 	
 	## Prevent changes in direction while kicking
 	character.direction_states.lock_direction_faced()
-	
-	## End dribbling so it doesn't interfere with the kick
-	sc.send_event(character.dribble_states.TRANS_TO_CAN_DRIBBLE)
+	character.dribble_states.character_is_kicking = true
 	
 	## End the kick state when the animation is finished to make sure it ends at some point
 	await character.asset.kick()
@@ -128,8 +123,7 @@ func _on_long_kick_state_entered() -> void:
 	## Prevent changes in direction while kicking
 	character.direction_states.lock_direction_faced()
 	
-	## End dribbling so it doesn't interfere with the kick
-	sc.send_event(character.dribble_states.TRANS_TO_CAN_DRIBBLE)
+	character.dribble_states.character_is_kicking = true
 	
 	## End the kick state when the animation is finished to make sure it ends at some point
 	await character.asset.long_kick_finished
@@ -169,8 +163,6 @@ func kick() -> void:
 	## Disallow kicking while running backward
 	if not character.direction_states.running_backward(character.grounded_states.left_right_axis):
 		sc.send_event(TRANS_TO_KICK)
-	else:
-		print("can't kick, running backwards")
 
 
 func engage_long_kick_intent() -> void:

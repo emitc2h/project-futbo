@@ -76,8 +76,6 @@ func _ready() -> void:
 ##          PATH FUNCTIONS          ##
 ######################################
 func open_jump_to_fall_path() -> void:
-	
-	print("opening jump_to_fall_path")
 	jump_to_fall_path = true
 
 
@@ -172,5 +170,4 @@ func _on_knocked_anim_state_finished(anim_name: String) -> void:
 		"recover":
 			recover_finished.emit()
 		"hit":
-			print("hit finished")
 			hit_finished.emit()

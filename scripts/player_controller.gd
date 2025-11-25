@@ -62,7 +62,6 @@ func _physics_process(delta: float) -> void:
 	
 	## Kicking
 	if Input.is_action_just_pressed("kick"):
-		print("kick button pressed")
 		character.kick()
 		character.kick_states.engage_long_kick_intent()
 	
@@ -77,6 +76,6 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("dribble"):
 		character.dribble_states.disengage_dribble_intent()
 	
-	if character.dribble_states.state == character.dribble_states.State.NO_BALL:
+	if character.dribble_states.state == character.dribble_states.State.NOT_DRIBBLING:
 		if Input.is_action_just_pressed("warp"):
 			Signals.player_requests_warp.emit()

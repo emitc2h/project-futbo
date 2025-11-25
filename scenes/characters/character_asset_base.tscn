@@ -77,18 +77,14 @@ states/knocked/position = Vector2(380.5, 267.5)
 states/movement/node = ExtResource("5_8cbqy")
 states/movement/position = Vector2(540.25, 101)
 transitions = ["Start", "movement", SubResource("AnimationNodeStateMachineTransition_tglvg"), "movement", "knocked", SubResource("AnimationNodeStateMachineTransition_guecj"), "knocked", "movement", SubResource("AnimationNodeStateMachineTransition_8cbqy"), "movement", "kick", SubResource("AnimationNodeStateMachineTransition_tf4ta"), "kick", "movement", SubResource("AnimationNodeStateMachineTransition_0csby"), "movement", "long kick", SubResource("AnimationNodeStateMachineTransition_qfdgm"), "long kick", "movement", SubResource("AnimationNodeStateMachineTransition_7ujmj")]
-graph_offset = Vector2(-250, -204)
+graph_offset = Vector2(-348.1453, -0.58502156)
 
 [node name="CharacterAssetBase" type="Node3D"]
 script = ExtResource("1_u4gyo")
 
-[node name="RootMotionView" type="RootMotionView" parent="."]
-color = Color(0.6950558, 0.43716148, 0.892653, 1)
-cell_size = 0.58
-radius = 3.12
-
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_motion_track = NodePath("Armature/Skeleton3D:Root")
+callback_mode_process = 0
 tree_root = SubResource("AnimationNodeStateMachine_cexac")
 advance_expression_base_node = NodePath("..")
 parameters/kick/scale/scale = 1.0
@@ -104,17 +100,11 @@ parameters/knocked/recover/scale/scale = 1.0
 "parameters/long kick/scale/scale" = 1.0
 parameters/movement/jump/jump/blend_position = 0.0
 parameters/movement/jump/scale/scale = 0.7999999999999972
-parameters/movement/move/move/move/blend_position = 0.0
+parameters/movement/move/move/move/blend_position = -0.0013754964
 parameters/movement/move/move/scale/scale = 1.2999999999999972
 parameters/movement/move/recover/TimeScale/scale = 1.0
 parameters/movement/move/sprint/scale/scale = 1.0
 parameters/movement/turn/scale/scale = 1.0
-
-[node name="RootStateChangeTracker" type="Node" parent="AnimationTree"]
-script = ExtResource("2_ihynb")
-state_machine_path = "parameters/playback"
-printout = true
-metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 
 [node name="MovementStateChangeTracker" type="Node" parent="AnimationTree"]
 script = ExtResource("2_ihynb")
