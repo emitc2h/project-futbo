@@ -81,7 +81,6 @@ func _on_game_over_animation_finished() -> void:
 # UTILITIES
 #=======================================================
 func open_level(level_resource: Resource = current_level_resource) -> void:
-	print("open_level() called")
 	current_level_resource = level_resource
 	if current_level: current_level.queue_free()
 	current_level = current_level_resource.instantiate()

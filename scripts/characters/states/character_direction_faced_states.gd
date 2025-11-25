@@ -31,7 +31,6 @@ func _ready() -> void:
 #----------------------------------------
 func _on_face_left_state_entered() -> void:
 	state = State.FACE_LEFT
-	print("face left entered")
 	if character.is_player:
 		Signals.player_moved.emit()
 		Signals.facing_left.emit()
@@ -41,7 +40,6 @@ func _on_face_left_state_entered() -> void:
 #----------------------------------------
 func _on_face_right_state_entered() -> void:
 	state = State.FACE_RIGHT
-	print("face right entered")
 	if character.is_player:
 		Signals.player_moved.emit()
 		Signals.facing_right.emit()

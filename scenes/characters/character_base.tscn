@@ -331,7 +331,7 @@ delay_in_seconds = "0.0"
 
 [node name="Dribble" type="Node" parent="State/Root/Damage/Able"]
 script = ExtResource("4_e4l2d")
-initial_state = NodePath("no ball")
+initial_state = NodePath("not dribbling")
 
 [node name="Dribble States" type="Node" parent="State/Root/Damage/Able/Dribble" node_paths=PackedStringArray("dribble_pickup_zone", "dribble_marker", "dribble_raycast", "character", "sc", "cs")]
 script = ExtResource("14_dkbyo")
@@ -342,46 +342,10 @@ character = NodePath("../../../../../..")
 sc = NodePath("../../../../..")
 cs = NodePath("..")
 
-[node name="no ball" type="Node" parent="State/Root/Damage/Able/Dribble"]
+[node name="not dribbling" type="Node" parent="State/Root/Damage/Able/Dribble"]
 script = ExtResource("6_awyfk")
 
-[node name="to intends to dribble" type="Node" parent="State/Root/Damage/Able/Dribble/no ball"]
-script = ExtResource("7_u4lyq")
-to = NodePath("../../intends to dribble")
-event = &"Dribble: to intends to dribble"
-delay_in_seconds = "0.0"
-
-[node name="to can dribble" type="Node" parent="State/Root/Damage/Able/Dribble/no ball"]
-script = ExtResource("7_u4lyq")
-to = NodePath("../../can dribble")
-event = &"Dribble: to can dribble"
-delay_in_seconds = "0.0"
-
-[node name="intends to dribble" type="Node" parent="State/Root/Damage/Able/Dribble"]
-script = ExtResource("6_awyfk")
-
-[node name="to dribbling" type="Node" parent="State/Root/Damage/Able/Dribble/intends to dribble"]
-script = ExtResource("7_u4lyq")
-to = NodePath("../../dribbling")
-event = &"Dribble: to dribbling"
-delay_in_seconds = "0.0"
-
-[node name="to can dribble" type="Node" parent="State/Root/Damage/Able/Dribble/intends to dribble"]
-script = ExtResource("7_u4lyq")
-to = NodePath("../../can dribble")
-event = &"Dribble: to can dribble"
-delay_in_seconds = "0.0"
-
-[node name="can dribble" type="Node" parent="State/Root/Damage/Able/Dribble"]
-script = ExtResource("6_awyfk")
-
-[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Dribble/can dribble"]
-script = ExtResource("7_u4lyq")
-to = NodePath("../../no ball")
-event = &"Dribble: to no ball"
-delay_in_seconds = "0.0"
-
-[node name="to dribbling" type="Node" parent="State/Root/Damage/Able/Dribble/can dribble"]
+[node name="to dribbling" type="Node" parent="State/Root/Damage/Able/Dribble/not dribbling"]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../dribbling")
 event = &"Dribble: to dribbling"
@@ -390,10 +354,10 @@ delay_in_seconds = "0.0"
 [node name="dribbling" type="Node" parent="State/Root/Damage/Able/Dribble"]
 script = ExtResource("6_awyfk")
 
-[node name="to can dribble" type="Node" parent="State/Root/Damage/Able/Dribble/dribbling"]
+[node name="to not dribbling" type="Node" parent="State/Root/Damage/Able/Dribble/dribbling"]
 script = ExtResource("7_u4lyq")
-to = NodePath("../../can dribble")
-event = &"Dribble: to can dribble"
+to = NodePath("../../not dribbling")
+event = &"Dribble: to not dribbling"
 delay_in_seconds = "0.0"
 
 [node name="Headbutt" type="Node" parent="State/Root/Damage/Able"]
@@ -617,10 +581,8 @@ collision_mask = 4
 [connection signal="state_entered" from="State/Root/Damage/Able/Kick/long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_long_kick_state_entered"]
 [connection signal="state_exited" from="State/Root/Damage/Able/Kick/long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_long_kick_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Damage/Able/Kick/long kick" to="State/Root/Damage/Able/Kick/Kick States" method="_on_long_kick_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Damage/Able/Dribble/no ball" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_no_ball_state_entered"]
-[connection signal="state_entered" from="State/Root/Damage/Able/Dribble/intends to dribble" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_intends_to_dribble_state_entered"]
-[connection signal="state_physics_processing" from="State/Root/Damage/Able/Dribble/intends to dribble" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_intends_to_dribble_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Damage/Able/Dribble/can dribble" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_can_dribble_state_entered"]
+[connection signal="state_entered" from="State/Root/Damage/Able/Dribble/not dribbling" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_not_dribbling_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Damage/Able/Dribble/not dribbling" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_not_dribbling_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Dribble/dribbling" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_dribbling_state_entered"]
 [connection signal="state_exited" from="State/Root/Damage/Able/Dribble/dribbling" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_dribbling_state_exited"]
 [connection signal="state_physics_processing" from="State/Root/Damage/Able/Dribble/dribbling" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_dribbling_state_physics_processing"]
