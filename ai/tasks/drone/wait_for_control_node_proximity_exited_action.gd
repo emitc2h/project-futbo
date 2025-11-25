@@ -18,7 +18,6 @@ func _enter() -> void:
 
 func _tick(_delta: float) -> Status:
 	if done:
-		print("Done waiting for control node to exit the proximity zone")
 		return SUCCESS
 	return RUNNING
 

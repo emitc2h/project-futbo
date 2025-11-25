@@ -3,6 +3,7 @@ extends Node3D
 
 ## Nodes controlled by this node
 @onready var anim_tree: AnimationTree = $AnimationTree
+@onready var root_state: AnimationNodeStateMachinePlayback = anim_tree.get("parameters/playback")
 @onready var movement_state: AnimationNodeStateMachinePlayback = anim_tree.get("parameters/movement/playback")
 @onready var move_state: AnimationNodeStateMachinePlayback = anim_tree.get("parameters/movement/move/playback")
 @onready var knocked_state: AnimationNodeStateMachinePlayback = anim_tree.get("parameters/knocked/playback")
@@ -15,7 +16,7 @@ var speed: float:
 		# Set the speed of jumping
 		anim_tree.set("parameters/movement/jump/jump/blend_position", abs(value))
 		# Set the speed of kicking
-		anim_tree.set("parameters/kick/blend_position", abs(value))
+		anim_tree.set("parameters/kick/kick/blend_position", abs(value))
 
 ## The vertical dimension of the knock animation blending
 var vertical_knock_blend: float:
@@ -62,6 +63,7 @@ var to_knock_path: bool = true
 var to_die_path: bool = false
 var to_hit_path: bool = false
 
+
 func _ready() -> void:
 	$AnimationTree/MovementStateChangeTracker.anim_state_started.connect(_on_movement_anim_state_started)
 	$AnimationTree/MovementStateChangeTracker.anim_state_finished.connect(_on_movement_anim_state_finished)
@@ -74,6 +76,8 @@ func _ready() -> void:
 ##          PATH FUNCTIONS          ##
 ######################################
 func open_jump_to_fall_path() -> void:
+	
+	print("opening jump_to_fall_path")
 	jump_to_fall_path = true
 
 
@@ -124,17 +128,20 @@ func fall() -> void:
 
 
 func kick() -> void:
-	anim_tree.set("parameters/kick shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	root_state.travel("kick")
+	#anim_tree.set("parameters/kick shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	await kick_finished
 
 
 func long_kick() -> void:
-	anim_tree.set("parameters/long kick shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	root_state.travel("long kick")
+	#anim_tree.set("parameters/long kick shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	await long_kick_finished
 
 
 func knock() -> void:
-	anim_tree.set("parameters/knocked shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	root_state.travel("knocked")
+	#anim_tree.set("parameters/knocked shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 
 func recover_from_knock() -> void:
@@ -165,4 +172,5 @@ func _on_knocked_anim_state_finished(anim_name: String) -> void:
 		"recover":
 			recover_finished.emit()
 		"hit":
+			print("hit finished")
 			hit_finished.emit()
