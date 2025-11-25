@@ -66,8 +66,6 @@ func _on_enabled_state_physics_processing(_delta: float) -> void:
 				player_entered_confirmed = true
 		
 		if control_node_entered_confirmed and not control_node_in_detector:
-			print("======================================")
-			print("Control Node has entered the proximity detector")
 			control_node_proximity_entered.emit(control_node)
 			control_node_in_detector = true
 
@@ -76,7 +74,6 @@ func _on_enabled_state_physics_processing(_delta: float) -> void:
 			player_in_detector = true
 			
 	if not control_node_entered_confirmed and control_node_in_detector:
-		print("Control Node has exited the proximity detector")
 		control_node_proximity_exited.emit()
 		control_node_in_detector = false
 		

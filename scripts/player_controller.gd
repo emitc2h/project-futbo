@@ -62,6 +62,7 @@ func _physics_process(delta: float) -> void:
 	
 	## Kicking
 	if Input.is_action_just_pressed("kick"):
+		print("kick button pressed")
 		character.kick()
 		character.kick_states.engage_long_kick_intent()
 	

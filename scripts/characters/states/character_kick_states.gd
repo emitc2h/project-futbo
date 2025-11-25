@@ -36,6 +36,7 @@ var try_to_engage_long_kick_intent: bool = false
 # no ball state
 #----------------------------------------
 func _on_no_ball_state_entered() -> void:
+	print("no ball state entered")
 	state = State.NO_BALL
 	ball = null
 
@@ -48,6 +49,7 @@ func _on_no_ball_state_physics_processing(_delta: float) -> void:
 # can kick state
 #----------------------------------------
 func _on_can_kick_state_entered() -> void:
+	print("can kick state entered")
 	state = State.CAN_KICK
 
 
@@ -60,8 +62,12 @@ func _on_can_kick_state_physics_processing(_delta: float) -> void:
 # kick state
 #----------------------------------------
 func _on_kick_state_entered() -> void:
+	print("kick state entered")
 	state = State.KICK
 	ball.kick(Aim.vector * kick_force)
+	
+	## Prevent changes in direction while kicking
+	character.direction_states.lock_direction_faced()
 	
 	## End dribbling so it doesn't interfere with the kick
 	sc.send_event(character.dribble_states.TRANS_TO_CAN_DRIBBLE)
@@ -75,7 +81,10 @@ func _on_kick_state_physics_processing(_delta: float) -> void:
 	## Wait till the ball has left the zones to end the kick state
 	if (not retrieve_ball_in_kick_zone()) and (not character.dribble_states.retrieve_ball_in_pickup_zone()):
 		sc.send_event(TRANS_TO_NO_BALL)
-		
+
+
+func _on_kick_state_exited() -> void:
+	character.direction_states.unlock_direction_faced(character.grounded_states.left_right_axis)
 
 
 # intends to long kick state
@@ -108,7 +117,6 @@ func _on_winding_up_long_kick_state_physics_processing(_delta: float) -> void:
 		var distance_to_ball: float = abs(long_kick_raycast.get_collision_point().x - character.global_position.x)
 		if distance_to_ball < long_kick_trigger_distance:
 			sc.send_event(TRANS_TO_LONG_KICK)
-	
 
 
 # long kick state
@@ -116,6 +124,9 @@ func _on_winding_up_long_kick_state_physics_processing(_delta: float) -> void:
 func _on_long_kick_state_entered() -> void:
 	state = State.LONG_KICK
 	ball.long_kick(Aim.vector * long_kick_force)
+	
+	## Prevent changes in direction while kicking
+	character.direction_states.lock_direction_faced()
 	
 	## End dribbling so it doesn't interfere with the kick
 	sc.send_event(character.dribble_states.TRANS_TO_CAN_DRIBBLE)
@@ -130,6 +141,9 @@ func _on_long_kick_state_physics_processing(_delta: float) -> void:
 	if (not retrieve_ball_in_kick_zone()) and (not character.dribble_states.retrieve_ball_in_pickup_zone()):
 		sc.send_event(TRANS_TO_NO_BALL)
 
+
+func _on_long_kick_state_exited() -> void:
+	character.direction_states.unlock_direction_faced(character.grounded_states.left_right_axis)
 
 #=======================================================
 # SIGNALS
@@ -155,6 +169,8 @@ func kick() -> void:
 	## Disallow kicking while running backward
 	if not character.direction_states.running_backward(character.grounded_states.left_right_axis):
 		sc.send_event(TRANS_TO_KICK)
+	else:
+		print("can't kick, running backwards")
 
 
 func engage_long_kick_intent() -> void:

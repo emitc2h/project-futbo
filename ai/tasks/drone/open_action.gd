@@ -17,7 +17,6 @@ func _setup() -> void:
 
 func _enter() -> void:
 	done = false
-	print("opening the drone")
 	
 	if drone.engagement_mode_states.state == drone.engagement_mode_states.State.OPEN:
 		done = true
@@ -30,7 +29,6 @@ func _enter() -> void:
 
 func _tick(_delta: float) -> Status:
 	if done:
-		print("opening finished")
 		return SUCCESS
 	return RUNNING
 	
