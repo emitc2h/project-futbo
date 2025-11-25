@@ -600,5 +600,4 @@ collision_mask = 4
 [connection signal="state_entered" from="State/Root/Path Constraint/on path" to="State/Root/Path Constraint/Path States" method="_on_on_path_state_entered"]
 [connection signal="body_entered" from="KickZone" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_zone_body_entered"]
 [connection signal="body_exited" from="KickZone" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_zone_body_exited"]
-[connection signal="body_entered" from="DribblePickupZone" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_dribble_pickup_zone_body_entered"]
 [connection signal="body_exited" from="DribblePickupZone" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_dribble_pickup_zone_body_exited"]

@@ -131,6 +131,13 @@ func _on_control_node_requests_destination() -> void:
 	Signals.player_update_destination.emit(destination)
 
 
+func _on_dribble_pickup_zone_body_exited(body: Node3D) -> void:
+	## The character is done kicking when the ball exits the pickup zone.
+	## If the ball gets confined within the pickup zone while kicking this may cause
+	## problems.
+	if body.is_in_group("BallGroup"):
+		character_is_kicking = false
+
 #=======================================================
 # CONTROLS
 #=======================================================
@@ -160,7 +167,3 @@ func retrieve_ball_in_pickup_zone() -> Ball:
 		if body.is_in_group("BallGroup"):
 			return body.get_parent() as Ball
 	return null
-
-
-func _on_dribble_pickup_zone_body_exited(body: Node3D) -> void:
-	pass # Replace with function body.
