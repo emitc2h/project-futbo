@@ -375,7 +375,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1447, 0, -1.92601)
 
 [node name="Grass" type="Node3D" parent="Props"]
 transform = Transform3D(1.77773, 0, 0, 0, 1, 0, 0, 0, 2.29965, 0, -0.0710142, -4.28457)
-visible = false
 
 [node name="LightGrassRandomPatch6MMixed1" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
 transform = Transform3D(0.0109604, 0, 0.99994, 0, 1, 0, -0.99994, 0, 0.0109604, -8.50588, -0.0734396, 7.14017)

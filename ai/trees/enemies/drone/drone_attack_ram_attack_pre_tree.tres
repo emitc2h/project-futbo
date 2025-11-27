@@ -86,6 +86,7 @@ custom_name = "Physics Sequence"
 children = [SubResource("BTInvert_deuh0"), SubResource("BTAction_htmdm")]
 
 [sub_resource type="BTParallel" id="BTParallel_sc5pp"]
+num_successes_required = 5
 children = [SubResource("BTSequence_nopmi"), SubResource("BTSequence_deuh0"), SubResource("BTSequence_a60oe"), SubResource("BTSequence_htmdm"), SubResource("BTSequence_fomh7")]
 
 [resource]

@@ -16,13 +16,14 @@ extends Node
 @export var player_is_near_threshold: float = 1.75
 
 ## States Enum
-enum State {TRACK = 0, RAM_ATTACK = 1, BEAM_ATTACK = 2}
+enum State {TRACK = 0, RAM_ATTACK = 1, BEAM_ATTACK = 2, DIVE_ATTACK = 3}
 var state: State = State.TRACK
 
 ## State transition constants
 const TRANS_TO_TRACK: String = "Behavior: to track"
 const TRANS_TO_RAM_ATTACK: String = "Attack: to ram attack"
 const TRANS_TO_BEAM_ATTACK: String = "Attack: to beam attack"
+const TRANS_TO_DIVE_ATTACK: String = "Attack: to dive attack"
 
 ## Internal variables
 var time_spent_in_track_state: float = 0.0
@@ -63,7 +64,7 @@ func _on_ram_attack_state_entered() -> void:
 	state = State.RAM_ATTACK
 
 
-func _on_ram_attack_state_exited() -> void:
+func _on_ram_attack_bt_state_exited() -> void:
 	pass
 
 
@@ -89,6 +90,20 @@ func _on_beam_attack_bt_finished(status: int) -> void:
 			sc.send_event(TRANS_TO_TRACK)
 
 
+# dive attack state
+#----------------------------------------
+func _on_dive_attack_state_entered() -> void:
+	state = State.DIVE_ATTACK
+
+
+func _on_dive_attack_bt_finished(status: int) -> void:
+	match(status):
+		BT.SUCCESS:
+			sc.send_event(TRANS_TO_TRACK)
+		BT.FAILURE:
+			sc.send_event(TRANS_TO_TRACK)
+
+
 # decision logic
 #----------------------------------------
 func _distance_to_player() -> float:
@@ -102,5 +117,4 @@ func pick_attack() -> String:
 	if internal_representation.playerRepresentation.player_is_dribbling:
 		return TRANS_TO_BEAM_ATTACK
 	
-	return TRANS_TO_RAM_ATTACK
-	
+	return TRANS_TO_DIVE_ATTACK

@@ -27,7 +27,7 @@ func _enter() -> void:
 		open_done = true
 
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	if become_char_done and open_done:
 		return SUCCESS
 	return RUNNING

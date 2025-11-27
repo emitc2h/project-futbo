@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://bc323ftwy8i7t"]
+[gd_scene load_steps=58 format=3 uid="uid://bc323ftwy8i7t"]
 
 [ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone.gd" id="1_irn00"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_g2as1"]
@@ -32,10 +32,11 @@
 [ext_resource type="BehaviorTree" uid="uid://bkoifho84nwe5" path="res://ai/trees/enemies/drone/drone_block_pre_tree.tres" id="23_2baop"]
 [ext_resource type="BehaviorTree" uid="uid://begvv6rs4ydt5" path="res://ai/trees/enemies/drone/drone_attack_track_pre_tree.tres" id="26_x77yf"]
 [ext_resource type="PackedScene" uid="uid://qcbmkep1csam" path="res://scenes/enemies/drone/drone_shield.tscn" id="27_fv7v3"]
-[ext_resource type="BehaviorTree" uid="uid://cndng00i0jfr3" path="res://ai/trees/enemies/drone/drone_attack_ram_attack_pre_tree.tres" id="28_ebp85"]
 [ext_resource type="BehaviorTree" uid="uid://nlwtwirr4cbo" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_tree.tres" id="30_0fgvh"]
 [ext_resource type="BehaviorTree" uid="uid://dgk4we0m2af0" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_pre_tree.tres" id="30_sikjo"]
+[ext_resource type="BehaviorTree" uid="uid://cuyxi6rqofhih" path="res://ai/trees/enemies/drone/drone_attack_dive_attack_tree.tres" id="32_6t6rp"]
 [ext_resource type="Material" uid="uid://dl61ykpvdxfhn" path="res://assets/3D/Materials/control_node_distortion_material.tres" id="33_0fgvh"]
+[ext_resource type="BehaviorTree" uid="uid://cndng00i0jfr3" path="res://ai/trees/enemies/drone/drone_attack_ram_attack_pre_tree.tres" id="33_gfdj0"]
 [ext_resource type="Script" uid="uid://darufwryr50n1" path="res://scripts/enemies/drone/animation/float_distortion_animation.gd" id="38_6t6rp"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_doilr"]
@@ -61,6 +62,10 @@
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_sikjo"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_0fgvh"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_6t6rp"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_gfdj0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t6rp"]
 radius = 0.509587
@@ -100,6 +105,7 @@ script = ExtResource("2_n6xh2")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_g2as1")
+track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="Root" type="Node" parent="State"]
@@ -109,11 +115,12 @@ script = ExtResource("3_wmq8b")
 script = ExtResource("4_kl701")
 initial_state = NodePath("char")
 
-[node name="Physics States" type="Node" parent="State/Root/Physics" node_paths=PackedStringArray("drone", "sc", "engines_states")]
+[node name="Physics States" type="Node" parent="State/Root/Physics" node_paths=PackedStringArray("drone", "sc", "engines_states", "float_cast")]
 script = ExtResource("5_8nca4")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
 engines_states = NodePath("../../Engines/Engines States")
+float_cast = NodePath("../../../../TrackPositionContainer/FloatCast")
 
 [node name="DeadTimer" type="Timer" parent="State/Root/Physics/Physics States"]
 wait_time = 10.0
@@ -849,6 +856,12 @@ to = NodePath("../../beam attack")
 event = &"Attack: to beam attack"
 delay_in_seconds = "0.0"
 
+[node name="to dive attack" type="Node" parent="State/Root/Behavior/attack/track"]
+script = ExtResource("6_doilr")
+to = NodePath("../../dive attack")
+event = &"Attack: to dive attack"
+delay_in_seconds = "0.0"
+
 [node name="ram attack" type="Node" parent="State/Root/Behavior/attack"]
 script = ExtResource("5_voq0c")
 
@@ -863,7 +876,7 @@ active = false
 blackboard_plan = SubResource("BlackboardPlan_h1ejm")
 
 [node name="PreBTPlayer" type="BTPlayer" parent="State/Root/Behavior/attack/ram attack/BehaviorManager"]
-behavior_tree = ExtResource("28_ebp85")
+behavior_tree = ExtResource("33_gfdj0")
 agent_node = NodePath("../../../../../../..")
 active = false
 blackboard_plan = SubResource("BlackboardPlan_adu0m")
@@ -876,12 +889,6 @@ delay_in_seconds = "0.0"
 
 [node name="beam attack" type="Node" parent="State/Root/Behavior/attack"]
 script = ExtResource("5_voq0c")
-
-[node name="to track" type="Node" parent="State/Root/Behavior/attack/beam attack"]
-script = ExtResource("6_doilr")
-to = NodePath("../../track")
-event = &"Behavior: to track"
-delay_in_seconds = "0.0"
 
 [node name="BehaviorManager" type="Node" parent="State/Root/Behavior/attack/beam attack"]
 script = ExtResource("12_voq0c")
@@ -898,6 +905,37 @@ behavior_tree = ExtResource("30_sikjo")
 agent_node = NodePath("../../../../../../..")
 active = false
 blackboard_plan = SubResource("BlackboardPlan_0fgvh")
+
+[node name="to track" type="Node" parent="State/Root/Behavior/attack/beam attack"]
+script = ExtResource("6_doilr")
+to = NodePath("../../track")
+event = &"Behavior: to track"
+delay_in_seconds = "0.0"
+
+[node name="dive attack" type="Node" parent="State/Root/Behavior/attack"]
+script = ExtResource("5_voq0c")
+
+[node name="BehaviorManager" type="Node" parent="State/Root/Behavior/attack/dive attack"]
+script = ExtResource("12_voq0c")
+metadata/_custom_type_script = "uid://d4epqky6heqvb"
+
+[node name="BTPlayer" type="BTPlayer" parent="State/Root/Behavior/attack/dive attack/BehaviorManager"]
+behavior_tree = ExtResource("32_6t6rp")
+agent_node = NodePath("../../../../../../..")
+active = false
+blackboard_plan = SubResource("BlackboardPlan_6t6rp")
+
+[node name="PreBTPlayer" type="BTPlayer" parent="State/Root/Behavior/attack/dive attack/BehaviorManager"]
+behavior_tree = ExtResource("33_gfdj0")
+agent_node = NodePath("../../../../../../..")
+active = false
+blackboard_plan = SubResource("BlackboardPlan_gfdj0")
+
+[node name="to track" type="Node" parent="State/Root/Behavior/attack/dive attack"]
+script = ExtResource("6_doilr")
+to = NodePath("../../track")
+event = &"Behavior: to track"
+delay_in_seconds = "0.0"
 
 [node name="to go to patrol" type="Node" parent="State/Root/Behavior/attack"]
 script = ExtResource("6_doilr")
@@ -1081,6 +1119,8 @@ float_distortion_closed_pos_y = -0.86
 [connection signal="state_exited" from="State/Root/Behavior/attack/ram attack" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_state_exited"]
 [connection signal="finished" from="State/Root/Behavior/attack/ram attack/BehaviorManager" to="State/Root/Behavior/attack/Attack States" method="_on_ram_attack_bt_finished"]
 [connection signal="state_entered" from="State/Root/Behavior/attack/beam attack" to="State/Root/Behavior/attack/Attack States" method="_on_beam_attack_state_entered"]
-[connection signal="behavior_tree_finished" from="State/Root/Behavior/attack/beam attack/BehaviorManager/BTPlayer" to="State/Root/Behavior/attack/Attack States" method="_on_beam_attack_bt_finished"]
+[connection signal="finished" from="State/Root/Behavior/attack/beam attack/BehaviorManager" to="State/Root/Behavior/attack/Attack States" method="_on_beam_attack_bt_finished"]
+[connection signal="state_entered" from="State/Root/Behavior/attack/dive attack" to="State/Root/Behavior/attack/Attack States" method="_on_dive_attack_state_entered"]
+[connection signal="finished" from="State/Root/Behavior/attack/dive attack/BehaviorManager" to="State/Root/Behavior/attack/Attack States" method="_on_dive_attack_bt_finished"]
 [connection signal="state_entered" from="State/Root/Behavior/dead" to="State/Root/Behavior/Behavior States" method="_on_dead_state_entered"]
 [connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]

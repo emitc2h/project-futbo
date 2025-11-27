@@ -38,6 +38,9 @@ extends Node3D
 @onready var model_anim_tree: AnimationTree = $"TrackTransformContainer/DroneModel/AnimationTree"
 @onready var anim_state: AnimationNodeStateMachinePlayback
 
+var signal_id: int
+var shockwave_ready: bool = false
+
 
 func _ready() -> void:
 	## initialize the internal representation
@@ -45,6 +48,7 @@ func _ready() -> void:
 	anim_state = model_anim_tree.get("parameters/playback")
 	behavior_states.set_initial_behavior(initial_behavior)
 	Signals.debug_advance.connect(_on_debug_advance)
+	physics_mode_states.target_velocity_reached.connect(_on_target_velocity_reached)
 
 
 ## Physics Controls
@@ -111,8 +115,8 @@ func move_toward_x_pos(target_x: float, delta: float, away: bool = false) -> voi
 	physics_mode_states.left_right_axis = lerp(physics_mode_states.left_right_axis, target_value, 20.0 * delta)
 
 
-func stop_moving(delta: float) -> void:
-	physics_mode_states.left_right_axis = lerp(physics_mode_states.left_right_axis, 0.0, 10.0 * delta)
+func stop_moving(delta: float, lerp_factor: float = 10.0) -> void:
+	physics_mode_states.left_right_axis = lerp(physics_mode_states.left_right_axis, 0.0, lerp_factor * delta)
 
 
 func track_target(offset: float, delta: float) -> void:
@@ -120,6 +124,22 @@ func track_target(offset: float, delta: float) -> void:
 	face_toward(target_x)
 	var offset_sign: float = sign(char_node.global_position.x - target_x)
 	move_toward_x_pos(target_x + offset_sign * offset, delta)
+
+
+signal accelerate_finished(id: int)
+
+func accelerate(angle: float, acceleration: float, target_velocity: float, id: int = 0) -> void:
+	physics_mode_states.target_velocity = target_velocity
+	physics_mode_states.additional_x_acc = cos(angle) * acceleration
+	physics_mode_states.additional_y_acc = sin(angle) * acceleration
+	signal_id = id
+
+
+func _on_target_velocity_reached() -> void:
+	physics_mode_states.target_velocity = 0.0
+	physics_mode_states.additional_x_acc = 0.0
+	physics_mode_states.additional_y_acc = 0.0
+	accelerate_finished.emit(signal_id)
 
 
 ## Engagement Controls
@@ -244,6 +264,12 @@ func disable_proximity_detector() -> void:
 	sc.send_event(proximity_states.TRANS_TO_DISABLED)
 
 
+## Other Controls
+## ---------------------------------------
+func prepare_shockwave() -> void:
+	shockwave_ready = true
+
+
 ## Hitbox
 ## ---------------------------------------
 func die(force: Vector3) -> void:
@@ -296,3 +322,9 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 		Signals.player_takes_damage.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position, true)
 	if body.is_in_group("ControlNodeShieldGroup"):
 		Signals.control_node_shield_hit.emit(true)
+	if body is StaticBody3D:
+		var sb: StaticBody3D = body
+		if sb.get_collision_layer_value(2):
+			if shockwave_ready:
+				print("shockwave")
+				shockwave_ready = false

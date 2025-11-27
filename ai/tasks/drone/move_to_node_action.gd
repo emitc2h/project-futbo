@@ -18,6 +18,8 @@ const CONTROL_NODE_REPR: String = "control node representation"
 @export var away: bool
 @export var close_enough_distance: float
 @export var far_enough_distance: float
+@export var use_timer: bool = false
+@export var duration: float = 0.0
 
 @export_group("Engines")
 @export var use_burst: bool
@@ -27,6 +29,7 @@ const CONTROL_NODE_REPR: String = "control node representation"
 var drone: Drone
 var target_x: float
 var arrived: bool
+var time_elapsed: float
 
 
 func _generate_name() -> String:
@@ -66,6 +69,10 @@ func _enter() -> void:
 			target_x = drone.repr.worldRepresentation.get(world_repr_pos_x_name)
 
 	arrived = false
+	
+	if use_timer:
+		time_elapsed = 0.0
+	
 	_check_arrived()
 	if not arrived:
 		if use_thrust:
@@ -75,7 +82,13 @@ func _enter() -> void:
 
 
 func _tick(delta: float) -> Status:
-	_check_arrived()
+	if use_timer:
+		time_elapsed += delta
+		if time_elapsed > duration:
+			arrived = true
+	else:
+		_check_arrived()
+	
 	if arrived:
 		if use_burst or use_thrust:
 			drone.stop_engines()
