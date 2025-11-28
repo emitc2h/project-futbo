@@ -25,6 +25,10 @@ extends Node3D
 @export_group("Behavior State Machines")
 @export var behavior_states: DroneBehaviorStates
 @export var behavior_attack_states: DroneAttackStates
+@export var behavior_attack2_states: DroneAttack2States
+
+@export_group("Behavior Configuration")
+@export var attack_behavior_tree: BehaviorTree
 
 ## Useful internal nodes to have a handle on
 @onready var char_node: CharacterBody3D = $CharNode

@@ -1,6 +1,7 @@
-[gd_scene load_steps=58 format=3 uid="uid://bc323ftwy8i7t"]
+[gd_scene load_steps=63 format=3 uid="uid://bc323ftwy8i7t"]
 
 [ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone.gd" id="1_irn00"]
+[ext_resource type="BehaviorTree" uid="uid://b228ras4xw4y7" path="res://ai/trees/enemies/drone/decision trees/drone_complete_attack.tres" id="2_ak4w2"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_g2as1"]
 [ext_resource type="Script" uid="uid://syu033xfunnk" path="res://scripts/enemies/drone/drone_internal_representation.gd" id="2_n6xh2"]
 [ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_wmq8b"]
@@ -20,23 +21,24 @@
 [ext_resource type="Script" uid="uid://bjs30qhms2c1n" path="res://scripts/enemies/drone/states/drone_behavior_states.gd" id="12_r1v31"]
 [ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/utilities/behavior_tree/behavior_manager.gd" id="12_voq0c"]
 [ext_resource type="Script" uid="uid://kcwfn3rok7aj" path="res://scripts/enemies/drone/states/drone_proximity_states.gd" id="13_43bu3"]
-[ext_resource type="BehaviorTree" uid="uid://bnm2timop763s" path="res://ai/trees/enemies/drone/drone_patrol_tree.tres" id="13_doilr"]
+[ext_resource type="BehaviorTree" uid="uid://bnm2timop763s" path="res://ai/trees/enemies/drone/action trees/drone_patrol_tree.tres" id="13_doilr"]
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/utilities/inert_node.gd" id="14_efc27"]
-[ext_resource type="BehaviorTree" uid="uid://7euectnyhgwy" path="res://ai/trees/enemies/drone/drone_go_to_patrol_tree.tres" id="15_82hyt"]
+[ext_resource type="BehaviorTree" uid="uid://7euectnyhgwy" path="res://ai/trees/enemies/drone/action trees/drone_go_to_patrol_tree.tres" id="15_82hyt"]
 [ext_resource type="Script" uid="uid://bmibv0e2tf0pw" path="res://scripts/enemies/drone/states/drone_attack_states.gd" id="15_unmda"]
-[ext_resource type="BehaviorTree" uid="uid://doq0w3n8yvclw" path="res://ai/trees/enemies/drone/drone_attack_track_tree.tres" id="16_ahulk"]
-[ext_resource type="BehaviorTree" uid="uid://45gcob0egysb" path="res://ai/trees/enemies/drone/drone_attack_ram_attack_tree.tres" id="19_0sc46"]
-[ext_resource type="BehaviorTree" uid="uid://b85ebhhwxt3bb" path="res://ai/trees/enemies/drone/drone_patrol_pre_tree.tres" id="19_khiu2"]
-[ext_resource type="BehaviorTree" uid="uid://ln0b5i3866ql" path="res://ai/trees/enemies/drone/drone_block_tree.tres" id="20_fv7v3"]
-[ext_resource type="BehaviorTree" uid="uid://qnsq1ngpk2t8" path="res://ai/trees/enemies/drone/drone_go_to_patrol_pre_tree.tres" id="21_y570w"]
-[ext_resource type="BehaviorTree" uid="uid://bkoifho84nwe5" path="res://ai/trees/enemies/drone/drone_block_pre_tree.tres" id="23_2baop"]
-[ext_resource type="BehaviorTree" uid="uid://begvv6rs4ydt5" path="res://ai/trees/enemies/drone/drone_attack_track_pre_tree.tres" id="26_x77yf"]
+[ext_resource type="BehaviorTree" uid="uid://doq0w3n8yvclw" path="res://ai/trees/enemies/drone/action trees/drone_attack_track_tree.tres" id="16_ahulk"]
+[ext_resource type="BehaviorTree" uid="uid://45gcob0egysb" path="res://ai/trees/enemies/drone/action trees/drone_attack_ram_attack_tree.tres" id="19_0sc46"]
+[ext_resource type="BehaviorTree" uid="uid://b85ebhhwxt3bb" path="res://ai/trees/enemies/drone/action trees/drone_patrol_pre_tree.tres" id="19_khiu2"]
+[ext_resource type="BehaviorTree" uid="uid://ln0b5i3866ql" path="res://ai/trees/enemies/drone/action trees/drone_block_tree.tres" id="20_fv7v3"]
+[ext_resource type="BehaviorTree" uid="uid://qnsq1ngpk2t8" path="res://ai/trees/enemies/drone/action trees/drone_go_to_patrol_pre_tree.tres" id="21_y570w"]
+[ext_resource type="BehaviorTree" uid="uid://bkoifho84nwe5" path="res://ai/trees/enemies/drone/action trees/drone_block_pre_tree.tres" id="23_2baop"]
+[ext_resource type="BehaviorTree" uid="uid://begvv6rs4ydt5" path="res://ai/trees/enemies/drone/action trees/drone_attack_track_pre_tree.tres" id="26_x77yf"]
 [ext_resource type="PackedScene" uid="uid://qcbmkep1csam" path="res://scenes/enemies/drone/drone_shield.tscn" id="27_fv7v3"]
-[ext_resource type="BehaviorTree" uid="uid://nlwtwirr4cbo" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_tree.tres" id="30_0fgvh"]
-[ext_resource type="BehaviorTree" uid="uid://dgk4we0m2af0" path="res://ai/trees/enemies/drone/drone_attack_beam_attack_pre_tree.tres" id="30_sikjo"]
-[ext_resource type="BehaviorTree" uid="uid://cuyxi6rqofhih" path="res://ai/trees/enemies/drone/drone_attack_dive_attack_tree.tres" id="32_6t6rp"]
-[ext_resource type="Material" uid="uid://dl61ykpvdxfhn" path="res://assets/3D/Materials/control_node_distortion_material.tres" id="33_0fgvh"]
-[ext_resource type="BehaviorTree" uid="uid://cndng00i0jfr3" path="res://ai/trees/enemies/drone/drone_attack_ram_attack_pre_tree.tres" id="33_gfdj0"]
+[ext_resource type="BehaviorTree" uid="uid://nlwtwirr4cbo" path="res://ai/trees/enemies/drone/action trees/drone_attack_beam_attack_tree.tres" id="30_0fgvh"]
+[ext_resource type="BehaviorTree" uid="uid://dgk4we0m2af0" path="res://ai/trees/enemies/drone/action trees/drone_attack_beam_attack_pre_tree.tres" id="30_sikjo"]
+[ext_resource type="BehaviorTree" uid="uid://cuyxi6rqofhih" path="res://ai/trees/enemies/drone/action trees/drone_attack_dive_attack_tree.tres" id="32_6t6rp"]
+[ext_resource type="Script" uid="uid://buxklwsxm3kuu" path="res://scripts/enemies/drone/states/drone_attack2_states.gd" id="33_ak4w2"]
+[ext_resource type="BehaviorTree" uid="uid://cndng00i0jfr3" path="res://ai/trees/enemies/drone/action trees/drone_attack_ram_attack_pre_tree.tres" id="33_gfdj0"]
+[ext_resource type="Material" uid="uid://h1qmrtj6hri8" path="res://assets/3D/Materials/character_jump_distortion_shader_material.tres" id="34_6t6rp"]
 [ext_resource type="Script" uid="uid://darufwryr50n1" path="res://scripts/enemies/drone/animation/float_distortion_animation.gd" id="38_6t6rp"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_doilr"]
@@ -67,6 +69,12 @@
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_gfdj0"]
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_ak4w2"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_pf7fh"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_kycb1"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t6rp"]
 radius = 0.509587
 height = 1.02
@@ -79,14 +87,14 @@ bounce = 0.26
 radius = 0.51341
 
 [sub_resource type="QuadMesh" id="QuadMesh_kds82"]
-size = Vector2(1.3, 1.7)
+size = Vector2(1.3, 2.1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h6a7"]
 margin = 0.1
 radius = 1.3
 height = 3.0
 
-[node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_states", "behavior_attack_states") groups=["Enemies"]]
+[node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_states", "behavior_attack_states", "behavior_attack2_states") groups=["Enemies"]]
 script = ExtResource("1_irn00")
 physics_mode_states = NodePath("State/Root/Physics/Physics States")
 direction_faced_states = NodePath("State/Root/Direction Faced/Direction Faced States")
@@ -99,6 +107,8 @@ proximity_states = NodePath("State/Root/Monitoring/Proximity/Proximity States")
 position_states = NodePath("State/Root/Monitoring/Position/Position States")
 behavior_states = NodePath("State/Root/Behavior/Behavior States")
 behavior_attack_states = NodePath("State/Root/Behavior/attack/Attack States")
+behavior_attack2_states = NodePath("State/Root/Behavior/attack2/Attack2 States")
+attack_behavior_tree = ExtResource("2_ak4w2")
 
 [node name="InternalRepresentation" type="Node" parent="."]
 script = ExtResource("2_n6xh2")
@@ -662,7 +672,7 @@ delay_in_seconds = "0.0"
 
 [node name="to attack" type="Node" parent="State/Root/Behavior/puppet"]
 script = ExtResource("6_doilr")
-to = NodePath("../../attack")
+to = NodePath("../../attack2")
 event = &"Behavior: puppet to attack"
 delay_in_seconds = "0.0"
 
@@ -693,7 +703,7 @@ blackboard_plan = SubResource("BlackboardPlan_fv7v3")
 
 [node name="to attack" type="Node" parent="State/Root/Behavior/patrol"]
 script = ExtResource("6_doilr")
-to = NodePath("../../attack")
+to = NodePath("../../attack2")
 event = &"Behavior: to attack"
 delay_in_seconds = "0.0"
 
@@ -736,7 +746,7 @@ delay_in_seconds = "0.0"
 
 [node name="to attack" type="Node" parent="State/Root/Behavior/go to patrol"]
 script = ExtResource("6_doilr")
-to = NodePath("../../attack")
+to = NodePath("../../attack2")
 event = &"Behavior: to attack"
 delay_in_seconds = "0.0"
 
@@ -747,21 +757,6 @@ event = &"Behavior: to block"
 delay_in_seconds = "0.0"
 
 [node name="to dead" type="Node" parent="State/Root/Behavior/go to patrol"]
-script = ExtResource("6_doilr")
-to = NodePath("../../dead")
-event = &"Behavior: to dead"
-delay_in_seconds = "0.0"
-
-[node name="seek" type="Node" parent="State/Root/Behavior"]
-script = ExtResource("5_voq0c")
-
-[node name="to go to patrol" type="Node" parent="State/Root/Behavior/seek"]
-script = ExtResource("6_doilr")
-to = NodePath("../../go to patrol")
-event = &"Behavior: to go to patrol"
-delay_in_seconds = "0.0"
-
-[node name="to dead" type="Node" parent="State/Root/Behavior/seek"]
 script = ExtResource("6_doilr")
 to = NodePath("../../dead")
 event = &"Behavior: to dead"
@@ -788,7 +783,7 @@ blackboard_plan = SubResource("BlackboardPlan_x77yf")
 
 [node name="to attack" type="Node" parent="State/Root/Behavior/block"]
 script = ExtResource("6_doilr")
-to = NodePath("../../attack")
+to = NodePath("../../attack2")
 event = &"Behavior block to attack"
 delay_in_seconds = "0.0"
 
@@ -802,15 +797,6 @@ delay_in_seconds = "0.0"
 script = ExtResource("6_doilr")
 to = NodePath("..")
 event = &"Behavior: to block"
-delay_in_seconds = "0.0"
-
-[node name="sleep" type="Node" parent="State/Root/Behavior"]
-script = ExtResource("5_voq0c")
-
-[node name="to dead" type="Node" parent="State/Root/Behavior/sleep"]
-script = ExtResource("6_doilr")
-to = NodePath("../../dead")
-event = &"Behavior: to dead"
 delay_in_seconds = "0.0"
 
 [node name="attack" type="Node" parent="State/Root/Behavior"]
@@ -955,6 +941,84 @@ to = NodePath("../../dead")
 event = &"Behavior: to dead"
 delay_in_seconds = "0.0"
 
+[node name="attack2" type="Node" parent="State/Root/Behavior"]
+script = ExtResource("4_kl701")
+initial_state = NodePath("prepare")
+
+[node name="Attack2 States" type="Node" parent="State/Root/Behavior/attack2" node_paths=PackedStringArray("drone", "sc")]
+script = ExtResource("33_ak4w2")
+drone = NodePath("../../../../..")
+sc = NodePath("../../../..")
+
+[node name="DecisionBTPlayer" type="BTPlayer" parent="State/Root/Behavior/attack2/Attack2 States"]
+agent_node = NodePath("../../../../../..")
+blackboard_plan = SubResource("BlackboardPlan_ak4w2")
+
+[node name="PreBTPlayer" type="BTPlayer" parent="State/Root/Behavior/attack2/Attack2 States"]
+agent_node = NodePath("../../../../../..")
+blackboard_plan = SubResource("BlackboardPlan_pf7fh")
+
+[node name="ActionBTPlayer" type="BTPlayer" parent="State/Root/Behavior/attack2/Attack2 States"]
+agent_node = NodePath("../../../../../..")
+blackboard_plan = SubResource("BlackboardPlan_kycb1")
+
+[node name="decide" type="Node" parent="State/Root/Behavior/attack2"]
+script = ExtResource("5_voq0c")
+
+[node name="to prepare" type="Node" parent="State/Root/Behavior/attack2/decide"]
+script = ExtResource("6_doilr")
+to = NodePath("../../prepare")
+event = &"Attack2: to prepare"
+delay_in_seconds = "0.0"
+
+[node name="to decide" type="Node" parent="State/Root/Behavior/attack2/decide"]
+script = ExtResource("6_doilr")
+to = NodePath("..")
+event = &"Attack2: to decide"
+delay_in_seconds = "0.0"
+
+[node name="prepare" type="Node" parent="State/Root/Behavior/attack2"]
+script = ExtResource("5_voq0c")
+
+[node name="to action" type="Node" parent="State/Root/Behavior/attack2/prepare"]
+script = ExtResource("6_doilr")
+to = NodePath("../../action")
+event = &"Attack2: to action"
+delay_in_seconds = "0.0"
+
+[node name="to decide" type="Node" parent="State/Root/Behavior/attack2/prepare"]
+script = ExtResource("6_doilr")
+to = NodePath("../../decide")
+event = &"Attack2: to decide"
+delay_in_seconds = "0.0"
+
+[node name="action" type="Node" parent="State/Root/Behavior/attack2"]
+script = ExtResource("5_voq0c")
+
+[node name="to decide" type="Node" parent="State/Root/Behavior/attack2/action"]
+script = ExtResource("6_doilr")
+to = NodePath("../../decide")
+event = &"Attack2: to decide"
+delay_in_seconds = "0.0"
+
+[node name="to go to patrol" type="Node" parent="State/Root/Behavior/attack2"]
+script = ExtResource("6_doilr")
+to = NodePath("../../go to patrol")
+event = &"Behavior: to go to patrol"
+delay_in_seconds = "0.0"
+
+[node name="to block" type="Node" parent="State/Root/Behavior/attack2"]
+script = ExtResource("6_doilr")
+to = NodePath("../../block")
+event = &"Behavior: to block"
+delay_in_seconds = "0.0"
+
+[node name="to dead" type="Node" parent="State/Root/Behavior/attack2"]
+script = ExtResource("6_doilr")
+to = NodePath("../../dead")
+event = &"Behavior: to dead"
+delay_in_seconds = "0.0"
+
 [node name="dead" type="Node" parent="State/Root/Behavior"]
 script = ExtResource("5_voq0c")
 
@@ -982,11 +1046,11 @@ shape = SubResource("SphereShape3D_md0p7")
 [node name="TrackPositionContainer" type="Node3D" parent="."]
 
 [node name="Distortion" type="MeshInstance3D" parent="TrackPositionContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.86, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 sorting_offset = -1.0
 mesh = SubResource("QuadMesh_kds82")
 skeleton = NodePath("../../CharNode")
-surface_material_override/0 = ExtResource("33_0fgvh")
+surface_material_override/0 = ExtResource("34_6t6rp")
 
 [node name="FloatCast" type="RayCast3D" parent="TrackPositionContainer"]
 target_position = Vector3(0, -2.6, 0)
@@ -1040,7 +1104,6 @@ transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585
 [node name="FloatDistortionAnimation" type="Node" parent="." node_paths=PackedStringArray("mesh")]
 script = ExtResource("38_6t6rp")
 mesh = NodePath("../TrackPositionContainer/Distortion")
-float_distortion_open_pos_y = -1.15
 float_distortion_closed_pos_y = -0.86
 
 [connection signal="timeout" from="State/Root/Physics/Physics States/DeadTimer" to="State/Root/Physics/Physics States" method="_on_dead_timer_timeout"]
@@ -1109,7 +1172,6 @@ float_distortion_closed_pos_y = -0.86
 [connection signal="state_entered" from="State/Root/Behavior/patrol" to="State/Root/Behavior/Behavior States" method="_on_patrol_state_entered"]
 [connection signal="state_entered" from="State/Root/Behavior/go to patrol" to="State/Root/Behavior/Behavior States" method="_on_go_to_patrol_state_entered"]
 [connection signal="finished" from="State/Root/Behavior/go to patrol/BehaviorManager" to="State/Root/Behavior/Behavior States" method="_on_go_to_patrol_bt_finished"]
-[connection signal="state_entered" from="State/Root/Behavior/seek" to="State/Root/Behavior/Behavior States" method="_on_seek_state_entered"]
 [connection signal="state_entered" from="State/Root/Behavior/block" to="State/Root/Behavior/Behavior States" method="_on_block_state_entered"]
 [connection signal="finished" from="State/Root/Behavior/block/BehaviorManager" to="State/Root/Behavior/Behavior States" method="_on_block_bt_finished"]
 [connection signal="state_entered" from="State/Root/Behavior/attack" to="State/Root/Behavior/Behavior States" method="_on_attack_state_entered"]
@@ -1122,5 +1184,11 @@ float_distortion_closed_pos_y = -0.86
 [connection signal="finished" from="State/Root/Behavior/attack/beam attack/BehaviorManager" to="State/Root/Behavior/attack/Attack States" method="_on_beam_attack_bt_finished"]
 [connection signal="state_entered" from="State/Root/Behavior/attack/dive attack" to="State/Root/Behavior/attack/Attack States" method="_on_dive_attack_state_entered"]
 [connection signal="finished" from="State/Root/Behavior/attack/dive attack/BehaviorManager" to="State/Root/Behavior/attack/Attack States" method="_on_dive_attack_bt_finished"]
+[connection signal="state_entered" from="State/Root/Behavior/attack2/decide" to="State/Root/Behavior/attack2/Attack2 States" method="_on_decide_state_entered"]
+[connection signal="state_exited" from="State/Root/Behavior/attack2/decide" to="State/Root/Behavior/attack2/Attack2 States" method="_on_decide_state_exited"]
+[connection signal="state_entered" from="State/Root/Behavior/attack2/prepare" to="State/Root/Behavior/attack2/Attack2 States" method="_on_prepare_state_entered"]
+[connection signal="state_exited" from="State/Root/Behavior/attack2/prepare" to="State/Root/Behavior/attack2/Attack2 States" method="_on_prepare_state_exited"]
+[connection signal="state_entered" from="State/Root/Behavior/attack2/action" to="State/Root/Behavior/attack2/Attack2 States" method="_on_action_state_entered"]
+[connection signal="state_exited" from="State/Root/Behavior/attack2/action" to="State/Root/Behavior/attack2/Attack2 States" method="_on_action_state_exited"]
 [connection signal="state_entered" from="State/Root/Behavior/dead" to="State/Root/Behavior/Behavior States" method="_on_dead_state_entered"]
 [connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]

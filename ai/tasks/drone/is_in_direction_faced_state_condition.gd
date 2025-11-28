@@ -17,7 +17,7 @@ func _setup() -> void:
 	state_machine = drone.direction_faced_states
 
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	if ignore:
 		return SUCCESS
 	if state_machine.state == expected_state:

@@ -16,7 +16,7 @@ extends Node
 @export var attack_states: DroneAttackStates
 
 ## States Enum
-enum State {PATROL = 0, GO_TO_PATROL = 1, SEEK = 2, BLOCK = 3, SLEEP = 4, ATTACK = 5, PUPPET = 6, DEAD = 7}
+enum State {PATROL = 0, GO_TO_PATROL = 1, BLOCK = 2, ATTACK = 3, PUPPET = 4, DEAD = 5}
 var state: State = State.PUPPET
 
 ## State transition constants
@@ -76,12 +76,6 @@ func _on_go_to_patrol_state_entered() -> void:
 
 func _on_go_to_patrol_bt_finished(_status: int) -> void:
 	sc.send_event(TRANS_TO_PATROL)
-
-
-# seek state
-#----------------------------------------
-func _on_seek_state_entered() -> void:
-	state = State.SEEK
 
 
 # block state

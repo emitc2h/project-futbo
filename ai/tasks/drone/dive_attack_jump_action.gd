@@ -22,7 +22,6 @@ func _enter() -> void:
 	done = false
 	signal_id = rng.randi()
 	var d: float = drone.targeting_states.target.global_position.x - drone.char_node.global_position.x
-	print("distance: ", d)
 	var angle_of_reach: float = PI/4 + 0.5 * acos((12.0 * d)/(target_velocity * target_velocity))
 	drone.accelerate(angle_of_reach, acceleration, target_velocity, signal_id)
 

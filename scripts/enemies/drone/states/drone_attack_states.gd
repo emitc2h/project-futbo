@@ -117,4 +117,7 @@ func pick_attack() -> String:
 	if internal_representation.playerRepresentation.player_is_dribbling:
 		return TRANS_TO_BEAM_ATTACK
 	
-	return TRANS_TO_DIVE_ATTACK
+	if randf() > 0.5:
+		return TRANS_TO_DIVE_ATTACK
+	else:
+		return TRANS_TO_RAM_ATTACK
