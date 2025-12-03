@@ -1,0 +1,100 @@
+[gd_resource type="BehaviorTree" load_steps=34 format=3 uid="uid://c7vvmbp7vehqy"]
+
+[ext_resource type="Script" uid="uid://dhngbs7qm6328" path="res://ai/tasks/drone/is_object_in_proximity_zone_condition.gd" id="1_ckfmh"]
+[ext_resource type="BehaviorTree" uid="uid://pd1pmv73hmtf" path="res://ai/trees/enemies/drone/action trees/drone_block.tres" id="2_ntcwm"]
+[ext_resource type="BehaviorTree" uid="uid://b228ras4xw4y7" path="res://ai/trees/enemies/drone/decision trees/drone_complete_attack.tres" id="3_k8dvn"]
+[ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="4_v0ahm"]
+[ext_resource type="Script" uid="uid://bbbdpq3yu2mga" path="res://ai/tasks/drone/is_between_patrol_markers_condition.gd" id="5_mcvek"]
+[ext_resource type="BehaviorTree" uid="uid://cpvyyi1eyo8ae" path="res://ai/trees/enemies/drone/action trees/drone_go_to_patrol.tres" id="6_65x83"]
+[ext_resource type="BehaviorTree" uid="uid://b1pg4qj37nru5" path="res://ai/trees/enemies/drone/action trees/drone_patrol.tres" id="7_r3tiw"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_664xi"]
+
+[sub_resource type="BTCondition" id="BTCondition_wyg27"]
+script = ExtResource("1_ckfmh")
+object_type = "Control Node"
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_bnf7k"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_8hvrt"]
+subtree = ExtResource("2_ntcwm")
+blackboard_plan = SubResource("BlackboardPlan_bnf7k")
+custom_name = "BLOCK Action"
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_wg5t1"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_vl0fi"]
+subtree = ExtResource("3_k8dvn")
+blackboard_plan = SubResource("BlackboardPlan_wg5t1")
+custom_name = "Attack"
+
+[sub_resource type="BTSequence" id="BTSequence_a6341"]
+children = [SubResource("BTSubtree_8hvrt"), SubResource("BTSubtree_vl0fi")]
+
+[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_6q15q"]
+children = [SubResource("BTCondition_wyg27"), SubResource("BTSequence_a6341")]
+
+[sub_resource type="BTCondition" id="BTCondition_cx3lo"]
+script = ExtResource("1_ckfmh")
+object_type = "Player"
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_x8clk"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_38bsc"]
+subtree = ExtResource("3_k8dvn")
+blackboard_plan = SubResource("BlackboardPlan_x8clk")
+custom_name = "Attack"
+
+[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_nl7ey"]
+children = [SubResource("BTCondition_cx3lo"), SubResource("BTSubtree_38bsc")]
+
+[sub_resource type="BTCondition" id="BTCondition_ihj3p"]
+script = ExtResource("4_v0ahm")
+expected_state = 3
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_6mfnj"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_lla6t"]
+subtree = ExtResource("3_k8dvn")
+blackboard_plan = SubResource("BlackboardPlan_6mfnj")
+custom_name = "Attack"
+
+[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_ev755"]
+children = [SubResource("BTCondition_ihj3p"), SubResource("BTSubtree_lla6t")]
+
+[sub_resource type="BTCondition" id="BTCondition_bcikk"]
+script = ExtResource("4_v0ahm")
+expected_state = 1
+
+[sub_resource type="BTCondition" id="BTCondition_bxikq"]
+script = ExtResource("5_mcvek")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_t72mi"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_y2fp6"]
+subtree = ExtResource("6_65x83")
+blackboard_plan = SubResource("BlackboardPlan_t72mi")
+custom_name = "GO TO PATROL"
+
+[sub_resource type="BTSelector" id="BTSelector_71jco"]
+children = [SubResource("BTCondition_bxikq"), SubResource("BTSubtree_y2fp6")]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_p08b8"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_4tlvj"]
+subtree = ExtResource("7_r3tiw")
+blackboard_plan = SubResource("BlackboardPlan_p08b8")
+custom_name = "PATROL"
+
+[sub_resource type="BTSequence" id="BTSequence_5rhrk"]
+children = [SubResource("BTSelector_71jco"), SubResource("BTSubtree_4tlvj")]
+
+[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_dftg4"]
+children = [SubResource("BTCondition_bcikk"), SubResource("BTSequence_5rhrk")]
+
+[sub_resource type="BTDynamicSelector" id="BTDynamicSelector_yfevx"]
+children = [SubResource("BTDynamicSequence_6q15q"), SubResource("BTDynamicSequence_nl7ey"), SubResource("BTDynamicSequence_ev755"), SubResource("BTDynamicSequence_dftg4")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_664xi")
+root_task = SubResource("BTDynamicSelector_yfevx")

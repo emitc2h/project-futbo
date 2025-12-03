@@ -29,7 +29,7 @@ func _generate_name() -> String:
 	return name
 
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	var test_value: float
 	match(var_type):
 		X_POSITION:

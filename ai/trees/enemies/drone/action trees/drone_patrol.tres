@@ -1,0 +1,134 @@
+[gd_resource type="BehaviorTree" load_steps=41 format=3 uid="uid://b1pg4qj37nru5"]
+
+[ext_resource type="Script" uid="uid://og2wfxp7v822" path="res://ai/tasks/drone/is_in_physics_state_condition.gd" id="1_2abjk"]
+[ext_resource type="Script" uid="uid://dhptod8wkftxr" path="res://ai/tasks/drone/set_physics_action.gd" id="2_1uucd"]
+[ext_resource type="Script" uid="uid://bq6jhax0oj50u" path="res://ai/tasks/drone/is_in_engagement_state_condition.gd" id="3_se4fo"]
+[ext_resource type="Script" uid="uid://bg84c7y6wffvi" path="res://ai/tasks/drone/close_action.gd" id="4_q6hk7"]
+[ext_resource type="Script" uid="uid://b467pd73p0l2y" path="res://ai/tasks/drone/is_in_vulnerability_state_condition.gd" id="5_an3wf"]
+[ext_resource type="Script" uid="uid://cetf63fmdqa02" path="res://ai/tasks/drone/set_vulnerability_action.gd" id="6_v77ke"]
+[ext_resource type="Script" uid="uid://cryuu1jycrokl" path="res://ai/tasks/drone/is_in_engines_state_condition.gd" id="7_lx1r4"]
+[ext_resource type="Script" uid="uid://cjmmtaigaxfy3" path="res://ai/tasks/drone/set_engines_action.gd" id="8_by0r7"]
+[ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="9_0gmiw"]
+[ext_resource type="Script" uid="uid://c6ocf77l1pyn7" path="res://ai/tasks/drone/set_targeting_action.gd" id="10_jy6wk"]
+[ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/drone/face_node_action.gd" id="11_se4fo"]
+[ext_resource type="Script" uid="uid://d2x8xeh13xlky" path="res://ai/tasks/drone/move_to_node_action.gd" id="12_q6hk7"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_2uw7n"]
+
+[sub_resource type="BTCondition" id="BTCondition_5360e"]
+script = ExtResource("1_2abjk")
+
+[sub_resource type="BTAction" id="BTAction_fst04"]
+script = ExtResource("2_1uucd")
+phys_type = "char"
+
+[sub_resource type="BTSelector" id="BTSelector_sav32"]
+custom_name = "Make sure drone is in CHAR mode"
+children = [SubResource("BTCondition_5360e"), SubResource("BTAction_fst04")]
+
+[sub_resource type="BTCondition" id="BTCondition_rhaii"]
+script = ExtResource("3_se4fo")
+
+[sub_resource type="BTAction" id="BTAction_l2o4q"]
+script = ExtResource("4_q6hk7")
+check_signal_id = true
+async = true
+
+[sub_resource type="BTSelector" id="BTSelector_fhi2n"]
+custom_name = "Make sure drone is CLOSED"
+children = [SubResource("BTCondition_rhaii"), SubResource("BTAction_l2o4q")]
+
+[sub_resource type="BTCondition" id="BTCondition_k4wot"]
+script = ExtResource("5_an3wf")
+expected_state = 1
+
+[sub_resource type="BTAction" id="BTAction_3m480"]
+script = ExtResource("6_v77ke")
+vuln_type = "defendable"
+
+[sub_resource type="BTSelector" id="BTSelector_25uc8"]
+custom_name = "Make sure drone is DEFENDABLE"
+children = [SubResource("BTCondition_k4wot"), SubResource("BTAction_3m480")]
+
+[sub_resource type="BTCondition" id="BTCondition_lfs2v"]
+script = ExtResource("7_lx1r4")
+
+[sub_resource type="BTAction" id="BTAction_t0apb"]
+script = ExtResource("8_by0r7")
+eng_type = "stop"
+
+[sub_resource type="BTSelector" id="BTSelector_kfsju"]
+custom_name = "Make sure engines are OFF"
+children = [SubResource("BTCondition_lfs2v"), SubResource("BTAction_t0apb")]
+
+[sub_resource type="BTCondition" id="BTCondition_l0u57"]
+script = ExtResource("9_0gmiw")
+expected_state = 1
+
+[sub_resource type="BTAction" id="BTAction_chlkq"]
+script = ExtResource("10_jy6wk")
+targ_type = "enabled"
+enable_to_acquiring = true
+
+[sub_resource type="BTSelector" id="BTSelector_hmd7s"]
+custom_name = "Make sure targeting is ENABLED and NONE"
+children = [SubResource("BTCondition_l0u57"), SubResource("BTAction_chlkq")]
+
+[sub_resource type="BTParallel" id="BTParallel_osfqk"]
+num_successes_required = 5
+custom_name = "Prepare Patrol"
+children = [SubResource("BTSelector_sav32"), SubResource("BTSelector_fhi2n"), SubResource("BTSelector_25uc8"), SubResource("BTSelector_kfsju"), SubResource("BTSelector_hmd7s")]
+
+[sub_resource type="BBNode" id="BBNode_an3wf"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_v77ke"]
+script = ExtResource("11_se4fo")
+custom_node = SubResource("BBNode_an3wf")
+world_repr_pos_x_name = "patrol_marker_1_pos_x"
+target_type = "world representation x position"
+
+[sub_resource type="BBNode" id="BBNode_lx1r4"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_by0r7"]
+script = ExtResource("12_q6hk7")
+custom_node = SubResource("BBNode_lx1r4")
+world_repr_pos_x_name = "patrol_marker_1_pos_x"
+target_type = "world representation x position"
+close_enough_distance = 0.1
+
+[sub_resource type="BBNode" id="BBNode_0gmiw"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_jy6wk"]
+script = ExtResource("11_se4fo")
+custom_node = SubResource("BBNode_0gmiw")
+world_repr_pos_x_name = "patrol_marker_2_pos_x"
+target_type = "world representation x position"
+
+[sub_resource type="BBNode" id="BBNode_2uw7n"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_5360e"]
+script = ExtResource("12_q6hk7")
+custom_node = SubResource("BBNode_2uw7n")
+world_repr_pos_x_name = "patrol_marker_2_pos_x"
+target_type = "world representation x position"
+close_enough_distance = 0.1
+
+[sub_resource type="BTSequence" id="BTSequence_fst04"]
+custom_name = "Patrol Sequence"
+children = [SubResource("BTAction_v77ke"), SubResource("BTAction_by0r7"), SubResource("BTAction_jy6wk"), SubResource("BTAction_5360e")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_se4fo"]
+forever = true
+children = [SubResource("BTSequence_fst04")]
+
+[sub_resource type="BTSequence" id="BTSequence_au74d"]
+custom_name = "Main Sequence"
+children = [SubResource("BTParallel_osfqk"), SubResource("BTRepeat_se4fo")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_2uw7n")
+root_task = SubResource("BTSequence_au74d")

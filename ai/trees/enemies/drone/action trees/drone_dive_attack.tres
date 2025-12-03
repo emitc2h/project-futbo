@@ -1,0 +1,63 @@
+[gd_resource type="BehaviorTree" load_steps=21 format=3 uid="uid://b0tjdf4nhlgkv"]
+
+[ext_resource type="BehaviorTree" uid="uid://cquw7q8b04nvv" path="res://ai/trees/enemies/drone/action trees/prepare_attack.tres" id="1_rocpm"]
+[ext_resource type="Script" uid="uid://cetf63fmdqa02" path="res://ai/tasks/drone/set_vulnerability_action.gd" id="2_fr1fn"]
+[ext_resource type="Script" uid="uid://thuen3rg5kp0" path="res://ai/tasks/drone/dive_attack_jump_action.gd" id="3_kna7o"]
+[ext_resource type="Script" uid="uid://66mhcr7w8o2f" path="res://ai/tasks/drone/face_node_action.gd" id="4_4l04f"]
+[ext_resource type="Script" uid="uid://wa54421i351d" path="res://ai/tasks/drone/recover_from_ball_action.gd" id="5_ib2e7"]
+[ext_resource type="Script" uid="uid://c6ocf77l1pyn7" path="res://ai/tasks/drone/set_targeting_action.gd" id="6_nahbv"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_568cr"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_8ystc"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_oofms"]
+subtree = ExtResource("1_rocpm")
+blackboard_plan = SubResource("BlackboardPlan_8ystc")
+custom_name = "Prepare Attack"
+
+[sub_resource type="BTAction" id="BTAction_u5bgt"]
+script = ExtResource("2_fr1fn")
+vuln_type = "invulnerable"
+
+[sub_resource type="BTAction" id="BTAction_rot6n"]
+script = ExtResource("3_kna7o")
+
+[sub_resource type="BTWait" id="BTWait_76q5s"]
+duration = 3.0
+
+[sub_resource type="BTSequence" id="BTSequence_yfyik"]
+custom_name = "Attack"
+children = [SubResource("BTAction_u5bgt"), SubResource("BTAction_rot6n"), SubResource("BTWait_76q5s")]
+
+[sub_resource type="BBNode" id="BBNode_y24mk"]
+saved_value = NodePath("")
+
+[sub_resource type="BTAction" id="BTAction_a68oj"]
+script = ExtResource("4_4l04f")
+custom_node = SubResource("BBNode_y24mk")
+target_type = "target node"
+
+[sub_resource type="BTAction" id="BTAction_xl385"]
+script = ExtResource("2_fr1fn")
+vuln_type = "defendable"
+
+[sub_resource type="BTAction" id="BTAction_l7wa1"]
+script = ExtResource("5_ib2e7")
+
+[sub_resource type="BTAction" id="BTAction_iocl8"]
+script = ExtResource("6_nahbv")
+targ_type = "enabled"
+enable_to_acquiring = true
+
+[sub_resource type="BTSequence" id="BTSequence_aj6nv"]
+custom_name = "Post-Attack"
+children = [SubResource("BTAction_a68oj"), SubResource("BTAction_xl385"), SubResource("BTAction_l7wa1"), SubResource("BTAction_iocl8")]
+
+[sub_resource type="BTSequence" id="BTSequence_20uxj"]
+custom_name = "Main Sequence"
+children = [SubResource("BTSubtree_oofms"), SubResource("BTSequence_yfyik"), SubResource("BTSequence_aj6nv")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_568cr")
+root_task = SubResource("BTSequence_20uxj")

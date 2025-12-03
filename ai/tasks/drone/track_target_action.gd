@@ -4,9 +4,11 @@ extends BTAction
 @export_group("Parameters")
 @export var default_offset: float = 5.0
 @export var cautious_offset: float = 8.0
+@export var timeout: float = 4.0
 
 var drone: Drone
 var is_cautious: bool = false
+var time_elapsed: float = 0.0
 var done: bool = false
 
 
@@ -18,10 +20,15 @@ func _setup() -> void:
 
 
 func _enter() -> void:
+	time_elapsed = 0.0
 	done = false
 
 
 func _tick(delta: float) -> Status:
+	time_elapsed += delta
+	if time_elapsed > timeout:
+		return SUCCESS
+	
 	var offset: float
 	match(is_cautious):
 		true:

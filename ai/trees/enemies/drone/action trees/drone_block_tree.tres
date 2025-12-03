@@ -1,0 +1,47 @@
+[gd_resource type="BehaviorTree" load_steps=17 format=3 uid="uid://ln0b5i3866ql"]
+
+[ext_resource type="Script" uid="uid://cjmmtaigaxfy3" path="res://ai/tasks/drone/set_engines_action.gd" id="1_n8kl3"]
+[ext_resource type="Script" uid="uid://bg84c7y6wffvi" path="res://ai/tasks/drone/close_action.gd" id="1_nk0ob"]
+[ext_resource type="Script" uid="uid://cnulieepl2f00" path="res://ai/tasks/drone/stop_moving_action.gd" id="1_wjov6"]
+[ext_resource type="Script" uid="uid://cetf63fmdqa02" path="res://ai/tasks/drone/set_vulnerability_action.gd" id="1_wr0yp"]
+[ext_resource type="Script" uid="uid://ccb4gyv0lb1qr" path="res://ai/tasks/drone/open_action.gd" id="3_a1jrj"]
+[ext_resource type="Script" uid="uid://byp755qw4t3mv" path="res://ai/tasks/drone/wait_for_control_node_proximity_exited_action.gd" id="5_bgcqb"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_n6qsu"]
+
+[sub_resource type="BTAction" id="BTAction_wjov6"]
+script = ExtResource("1_nk0ob")
+quick = true
+
+[sub_resource type="BTAction" id="BTAction_bgcqb"]
+script = ExtResource("1_wr0yp")
+vuln_type = "invulnerable"
+
+[sub_resource type="BTAction" id="BTAction_wr0yp"]
+script = ExtResource("1_n8kl3")
+eng_type = "quick stop"
+
+[sub_resource type="BTAction" id="BTAction_a1jrj"]
+script = ExtResource("1_wjov6")
+
+[sub_resource type="BTAction" id="BTAction_qns3d"]
+script = ExtResource("5_bgcqb")
+
+[sub_resource type="BTAction" id="BTAction_0cetv"]
+script = ExtResource("1_wr0yp")
+vuln_type = "defendable"
+
+[sub_resource type="BTAction" id="BTAction_n8kl3"]
+script = ExtResource("3_a1jrj")
+
+[sub_resource type="BTSequence" id="BTSequence_a1jrj"]
+children = [SubResource("BTAction_qns3d"), SubResource("BTAction_0cetv"), SubResource("BTAction_n8kl3")]
+
+[sub_resource type="BTParallel" id="BTParallel_n8kl3"]
+num_successes_required = 4
+custom_name = "Block Action"
+children = [SubResource("BTAction_wjov6"), SubResource("BTAction_bgcqb"), SubResource("BTAction_wr0yp"), SubResource("BTAction_a1jrj"), SubResource("BTSequence_a1jrj")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_n6qsu")
+root_task = SubResource("BTParallel_n8kl3")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ActionBehaviorTreeResource" load_steps=4 format=3 uid="uid://d10kmvqqnqswg"]
+
+[ext_resource type="BehaviorTree" uid="uid://cuyxi6rqofhih" path="res://ai/trees/enemies/drone/action trees/drone_attack_dive_attack_tree.tres" id="1_sapq4"]
+[ext_resource type="BehaviorTree" uid="uid://cndng00i0jfr3" path="res://ai/trees/enemies/drone/action trees/drone_attack_dive_attack_pre_tree.tres" id="2_25ad4"]
+[ext_resource type="Script" uid="uid://d0u1jstesb617" path="res://resources/custom/ai/behavior/action/ActionBehaviorTreeResource.gd" id="3_kkq5e"]
+
+[resource]
+script = ExtResource("3_kkq5e")
+pre_action_tree = ExtResource("2_25ad4")
+action_tree = ExtResource("1_sapq4")
+metadata/_custom_type_script = "uid://d0u1jstesb617"
