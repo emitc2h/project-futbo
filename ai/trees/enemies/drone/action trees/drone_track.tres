@@ -27,6 +27,7 @@ enable_to_acquiring = true
 script = ExtResource("4_xmax1")
 default_offset = 4.5
 cautious_offset = 6.5
+timeout = 2.0
 
 [sub_resource type="BTSequence" id="BTSequence_d3rlw"]
 custom_name = "Track"

@@ -39,7 +39,7 @@ func _on_reset_button_pressed() -> void:
 	if drone:
 		drone.queue_free()
 	drone = drone_scene.instantiate() as Drone
-	drone.initial_behavior = drone.behavior_states.State.PUPPET
+	drone.active = false
 	drone.transform = initial_drone_transform
 	add_child(drone)
 	

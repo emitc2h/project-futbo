@@ -3,10 +3,6 @@ extends Node3D
 
 @onready var sc: StateChart = $State
 
-## customization
-@export_group("Customization")
-@export var initial_behavior: DroneBehaviorStates.State
-
 ## state machines
 @export_group("State Machines")
 @export_subgroup("Function State Machines")
@@ -22,13 +18,14 @@ extends Node3D
 @export var proximity_states: DroneProximityStates
 @export var position_states: DronePositionStates
 
-@export_group("Behavior State Machines")
-@export var behavior_states: DroneBehaviorStates
-@export var behavior_attack_states: DroneAttackStates
-@export var behavior_attack2_states: DroneAttack2States
-
-@export_group("Behavior Configuration")
-@export var attack_behavior_tree: BehaviorTree
+@export_group("Behavior")
+@export var behavior_player: BTPlayer
+@export var behavior_tree: BehaviorTree
+@export var active: bool:
+	get:
+		return behavior_player.active
+	set(value):
+		behavior_player.active = value
 
 ## Useful internal nodes to have a handle on
 @onready var char_node: CharacterBody3D = $CharNode
@@ -50,9 +47,9 @@ func _ready() -> void:
 	## initialize the internal representation
 	repr.initialize()
 	anim_state = model_anim_tree.get("parameters/playback")
-	behavior_states.set_initial_behavior(initial_behavior)
 	Signals.debug_advance.connect(_on_debug_advance)
 	physics_mode_states.target_velocity_reached.connect(_on_target_velocity_reached)
+	behavior_player.behavior_tree = behavior_tree
 
 
 ## Physics Controls
@@ -75,6 +72,7 @@ func get_global_pos_x() -> float:
 
 ## Direction Controls
 ## ---------------------------------------
+signal face_toward_finished(id: int)
 signal face_right_finished(id: int)
 
 func face_right(id: int = 0) -> void:
@@ -82,6 +80,7 @@ func face_right(id: int = 0) -> void:
 		sc.send_event(direction_faced_states.TRANS_TO_TURN_RIGHT)
 		await direction_faced_states.is_now_facing_right
 	face_right_finished.emit(id)
+	face_toward_finished.emit(id)
 
 
 signal face_left_finished(id: int)
@@ -91,6 +90,7 @@ func face_left(id: int = 0) -> void:
 		sc.send_event(direction_faced_states.TRANS_TO_TURN_LEFT)
 		await direction_faced_states.is_now_facing_left
 	face_left_finished.emit(id)
+	face_toward_finished.emit(id)
 
 
 func face_toward(x: float, id: int = 0) -> void:
@@ -193,15 +193,15 @@ func burst() -> void:
 	physics_mode_states.speed = engines_states.burst_speed
 	sc.send_event(engines_states.TRANS_TO_BURST)
 
-signal stop_engines_finished
+signal stop_engines_finished(id: int)
 
-func stop_engines() -> void:
+func stop_engines(id: int = 0) -> void:
 	if anim_state.get_current_node() in ["start thrust", "idle thrust"]:
 		anim_state.travel("stop thrust")
 	physics_mode_states.speed = engines_states.off_speed
 	sc.send_event(engines_states.TRANS_TO_STOPPING)
 	await engines_states.engines_are_off
-	stop_engines_finished.emit()
+	stop_engines_finished.emit(id)
 
 
 func quick_stop_engines(keep_speed: bool = false) -> void:
@@ -279,8 +279,8 @@ func prepare_shockwave() -> void:
 func die(force: Vector3) -> void:
 	if vulnerability_states.state == vulnerability_states.State.VULNERABLE:
 		model.die()
+		active = false
 		sc.send_event(physics_mode_states.TRANS_TO_RAGDOLL)
-		sc.send_event(behavior_states.TRANS_TO_DEAD)
 		model.body_bone.apply_central_impulse(force * 5.0)
 
 
@@ -308,9 +308,6 @@ func generate_state_report() -> String:
 	output += "Spinners : " + spinners_states.State.keys()[spinners_states.state] + "\n"
 	output += "Vulnerability : " + vulnerability_states.State.keys()[vulnerability_states.state] + "\n"
 	output += "Targeting : " + targeting_states.State.keys()[targeting_states.state] + "\n"
-	output += "Behavior : " + behavior_states.State.keys()[behavior_states.state] + "\n"
-	if behavior_states.state == behavior_states.State.ATTACK:
-		output += "---> Attack : " + behavior_attack_states.State.keys()[behavior_attack_states.state] + "\n"
 	output += "===================================\n"
 	output += "Animation tree node: " + anim_state.get_current_node()\
 			 + " (fading : " + anim_state.get_fading_from_node() + ")"

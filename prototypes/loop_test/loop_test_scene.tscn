@@ -402,9 +402,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2464328, 0.250523, 0)
 
 [node name="Drone" parent="." instance=ExtResource("20_6uf0e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7328, 1.79018, 0)
+active = true
 
 [node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]
-active = false
 max_running_logs = 1000
 
 [node name="DroneSpawnPoint" type="Marker3D" parent="."]

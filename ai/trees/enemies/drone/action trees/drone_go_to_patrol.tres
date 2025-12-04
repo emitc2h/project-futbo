@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=34 format=3 uid="uid://cpvyyi1eyo8ae"]
+[gd_resource type="BehaviorTree" load_steps=33 format=3 uid="uid://cpvyyi1eyo8ae"]
 
 [ext_resource type="Script" uid="uid://og2wfxp7v822" path="res://ai/tasks/drone/is_in_physics_state_condition.gd" id="1_uxqot"]
 [ext_resource type="Script" uid="uid://dhptod8wkftxr" path="res://ai/tasks/drone/set_physics_action.gd" id="2_g05kx"]
@@ -53,10 +53,6 @@ num_successes_required = 3
 custom_name = "Prepare Go to Patrol"
 children = [SubResource("BTSelector_0v7h5"), SubResource("BTSelector_i4fuh"), SubResource("BTSelector_d4j7v")]
 
-[sub_resource type="BTAction" id="BTAction_hopmd"]
-script = ExtResource("6_8roe8")
-targ_type = "enabled"
-
 [sub_resource type="BBNode" id="BBNode_ii4gc"]
 saved_value = NodePath("PatrolMarker1")
 resource_name = "PatrolMarker1"
@@ -100,7 +96,7 @@ children = [SubResource("BTAction_mumd7"), SubResource("BTAlwaysFail_hhrgl")]
 
 [sub_resource type="BTSequence" id="BTSequence_05nq6"]
 custom_name = "Go to Patrol"
-children = [SubResource("BTAction_hopmd"), SubResource("BTAction_tmajn"), SubResource("BTParallel_ef1ai")]
+children = [SubResource("BTAction_tmajn"), SubResource("BTParallel_ef1ai")]
 
 [sub_resource type="BTSequence" id="BTSequence_o7f83"]
 custom_name = "Main Sequence"

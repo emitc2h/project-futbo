@@ -40,14 +40,13 @@ children = [SubResource("BTCondition_rhaii"), SubResource("BTAction_l2o4q")]
 
 [sub_resource type="BTCondition" id="BTCondition_k4wot"]
 script = ExtResource("5_an3wf")
-expected_state = 1
 
 [sub_resource type="BTAction" id="BTAction_3m480"]
 script = ExtResource("6_v77ke")
-vuln_type = "defendable"
+vuln_type = "invulnerable"
 
 [sub_resource type="BTSelector" id="BTSelector_25uc8"]
-custom_name = "Make sure drone is DEFENDABLE"
+custom_name = "Make sure drone is INVULNERABLE"
 children = [SubResource("BTCondition_k4wot"), SubResource("BTAction_3m480")]
 
 [sub_resource type="BTCondition" id="BTCondition_lfs2v"]

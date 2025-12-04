@@ -19,7 +19,7 @@ func _setup() -> void:
 	drone = agent as Drone
 
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	match(targ_type):
 		ENABLED:
 			drone.enable_targeting(enable_to_acquiring)

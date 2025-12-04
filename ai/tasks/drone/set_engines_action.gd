@@ -28,7 +28,7 @@ func _setup() -> void:
 		done = true
 
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	match(eng_type):
 		THRUST:
 			if drone.engines_states.state == drone.engines_states.State.THRUST:
@@ -53,5 +53,5 @@ func _tick(delta: float) -> Status:
 	return RUNNING
 
 
-func _on_stop_engines_finished() -> void:
+func _on_stop_engines_finished(_id: int) -> void:
 	done = true

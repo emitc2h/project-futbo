@@ -14,10 +14,10 @@ extends Node
 @export var distortion_on_duration: float = 1.0
 
 @export_group("Drone Open")
-@export var float_distortion_open_pos_y: float = -1.15
+@export var float_distortion_open_pos_y: float = -1.2
 
 @export_group("Drone Closed")
-@export var float_distortion_closed_pos_y: float = -0.95
+@export var float_distortion_closed_pos_y: float = -1.0
 
 var material: ShaderMaterial
 var material_next_pass: ShaderMaterial

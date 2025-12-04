@@ -19,7 +19,7 @@ func _setup() -> void:
 	drone = agent as Drone
 
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	match(phys_type):
 		CHAR:
 			drone.become_char()

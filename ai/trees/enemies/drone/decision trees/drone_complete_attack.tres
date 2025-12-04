@@ -1,14 +1,23 @@
-[gd_resource type="BehaviorTree" load_steps=26 format=3 uid="uid://b228ras4xw4y7"]
+[gd_resource type="BehaviorTree" load_steps=24 format=3 uid="uid://b228ras4xw4y7"]
 
 [ext_resource type="Script" uid="uid://dhngbs7qm6328" path="res://ai/tasks/drone/is_object_in_proximity_zone_condition.gd" id="1_pxu6k"]
 [ext_resource type="BehaviorTree" uid="uid://cecabytbqfdfm" path="res://ai/trees/enemies/drone/action trees/drone_beam_attack.tres" id="2_pxu6k"]
 [ext_resource type="Script" uid="uid://cwyxhwigonm30" path="res://ai/tasks/drone/check_on_player_bool_value_action.gd" id="3_2y3vf"]
-[ext_resource type="Script" uid="uid://ep64fxi6n12b" path="res://ai/tasks/drone/is_previous_attack_condition.gd" id="3_ifwe5"]
 [ext_resource type="BehaviorTree" uid="uid://b35ddti72qdx1" path="res://ai/trees/enemies/drone/action trees/drone_track.tres" id="5_224cy"]
 [ext_resource type="BehaviorTree" uid="uid://b0tjdf4nhlgkv" path="res://ai/trees/enemies/drone/action trees/drone_dive_attack.tres" id="6_jaweb"]
 [ext_resource type="BehaviorTree" uid="uid://bupxcd5gypwjw" path="res://ai/trees/enemies/drone/action trees/drone_ram_attack.tres" id="7_a2uvf"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_tqhsw"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_tbmdj"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_pxu6k"]
+subtree = ExtResource("5_224cy")
+blackboard_plan = SubResource("BlackboardPlan_tbmdj")
+custom_name = "Track"
+
+[sub_resource type="BTAlwaysFail" id="BTAlwaysFail_224cy"]
+children = [SubResource("BTSubtree_pxu6k")]
 
 [sub_resource type="BTCondition" id="BTCondition_wxeej"]
 script = ExtResource("1_pxu6k")
@@ -38,22 +47,6 @@ custom_name = "Beam Attack"
 custom_name = "Player State"
 children = [SubResource("BTAction_tbmdj"), SubResource("BTSubtree_b6j7c")]
 
-[sub_resource type="BTCondition" id="BTCondition_2y3vf"]
-script = ExtResource("3_ifwe5")
-previous_action = "track"
-is_not = true
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_xwd5a"]
-
-[sub_resource type="BTSubtree" id="BTSubtree_et2g6"]
-subtree = ExtResource("5_224cy")
-blackboard_plan = SubResource("BlackboardPlan_xwd5a")
-custom_name = "Track"
-
-[sub_resource type="BTSequence" id="BTSequence_tbmdj"]
-custom_name = "Attack History"
-children = [SubResource("BTCondition_2y3vf"), SubResource("BTSubtree_et2g6")]
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_oqseq"]
 
 [sub_resource type="BTSubtree" id="BTSubtree_6f6ee"]
@@ -74,7 +67,7 @@ children = [SubResource("BTSubtree_6f6ee"), SubResource("BTSubtree_30fh2")]
 
 [sub_resource type="BTSelector" id="BTSelector_b1bcw"]
 custom_name = "Main Selector"
-children = [SubResource("BTSequence_t3csq"), SubResource("BTSequence_pxu6k"), SubResource("BTSequence_tbmdj"), SubResource("BTRandomSelector_224cy")]
+children = [SubResource("BTAlwaysFail_224cy"), SubResource("BTSequence_t3csq"), SubResource("BTSequence_pxu6k"), SubResource("BTRandomSelector_224cy")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_tqhsw")
