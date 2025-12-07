@@ -15,7 +15,6 @@ func _setup() -> void:
 
 
 func _tick(_delta: float) -> Status:
-	print("expected: ", DroneTargetingStates.State.keys()[expected_state], " | actual: ", DroneTargetingStates.State.keys()[drone.targeting_states.state])
 	if drone.targeting_states.state == expected_state:
 		return SUCCESS
 	return FAILURE

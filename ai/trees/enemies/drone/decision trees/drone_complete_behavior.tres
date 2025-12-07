@@ -1,16 +1,67 @@
-[gd_resource type="BehaviorTree" load_steps=5 format=3 uid="uid://c7vvmbp7vehqy"]
+[gd_resource type="BehaviorTree" load_steps=25 format=3 uid="uid://c7vvmbp7vehqy"]
 
 [ext_resource type="Script" uid="uid://3wp8o6jifb3l" path="res://ai/tasks/drone/drone_patrol_action.gd" id="1_128xi"]
+[ext_resource type="Script" uid="uid://dhngbs7qm6328" path="res://ai/tasks/drone/is_object_in_proximity_zone_condition.gd" id="1_ckfmh"]
+[ext_resource type="Script" uid="uid://4tpean3rpeo8" path="res://ai/tasks/drone/drone_block_action.gd" id="2_ckfmh"]
+[ext_resource type="Script" uid="uid://bbbdpq3yu2mga" path="res://ai/tasks/drone/is_outside_patrol_markers_condition.gd" id="3_xekj4"]
+[ext_resource type="Script" uid="uid://c3n51ki08yi4c" path="res://ai/tasks/drone/drone_track_action.gd" id="4_ckfmh"]
+[ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="4_v0ahm"]
+[ext_resource type="Script" uid="uid://cw5lgdcrky3nb" path="res://ai/tasks/drone/drone_beam_attack_action.gd" id="5_ntcwm"]
+[ext_resource type="Script" uid="uid://btr4jxosdlhew" path="res://ai/tasks/drone/drone_go_to_patrol_action.gd" id="5_xekj4"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_664xi"]
 
+[sub_resource type="BTCondition" id="BTCondition_ntcwm"]
+script = ExtResource("1_ckfmh")
+object_type = "Control Node"
+
+[sub_resource type="BTAction" id="BTAction_k8dvn"]
+script = ExtResource("2_ckfmh")
+
+[sub_resource type="BTSequence" id="BTSequence_v0ahm"]
+children = [SubResource("BTCondition_ntcwm"), SubResource("BTAction_k8dvn")]
+
+[sub_resource type="BTCondition" id="BTCondition_vc7r2"]
+script = ExtResource("4_v0ahm")
+expected_state = 3
+
+[sub_resource type="BTAction" id="BTAction_ntcwm"]
+script = ExtResource("4_ckfmh")
+timeout = 3.0
+
+[sub_resource type="BTAction" id="BTAction_mcvek"]
+script = ExtResource("5_ntcwm")
+
+[sub_resource type="BTSequence" id="BTSequence_kr7to"]
+children = [SubResource("BTCondition_vc7r2"), SubResource("BTAction_ntcwm"), SubResource("BTAction_mcvek")]
+
+[sub_resource type="BTCondition" id="BTCondition_ckfmh"]
+script = ExtResource("4_v0ahm")
+expected_state = 2
+
+[sub_resource type="BTAction" id="BTAction_v0ahm"]
+script = ExtResource("4_ckfmh")
+timeout = 1.0
+
+[sub_resource type="BTSequence" id="BTSequence_k8dvn"]
+children = [SubResource("BTCondition_ckfmh"), SubResource("BTAction_v0ahm")]
+
+[sub_resource type="BTCondition" id="BTCondition_xekj4"]
+script = ExtResource("3_xekj4")
+tolerance = 2.0
+
+[sub_resource type="BTAction" id="BTAction_ckfmh"]
+script = ExtResource("5_xekj4")
+
+[sub_resource type="BTSequence" id="BTSequence_ntcwm"]
+children = [SubResource("BTCondition_xekj4"), SubResource("BTAction_ckfmh")]
+
 [sub_resource type="BTAction" id="BTAction_jhpx3"]
 script = ExtResource("1_128xi")
-pause_when_stopped_duration = 1.0
 
 [sub_resource type="BTDynamicSelector" id="BTDynamicSelector_yfevx"]
 custom_name = "Main Behavior Selector"
-children = [SubResource("BTAction_jhpx3")]
+children = [SubResource("BTSequence_v0ahm"), SubResource("BTSequence_kr7to"), SubResource("BTSequence_k8dvn"), SubResource("BTSequence_ntcwm"), SubResource("BTAction_jhpx3")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_664xi")

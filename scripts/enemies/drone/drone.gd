@@ -151,30 +151,33 @@ func _on_target_velocity_reached() -> void:
 signal open_finished(id: int)
 
 func open(id: int = 0) -> void:
-	anim_state.travel("open up")
-	sc.send_event(engagement_mode_states.TRANS_TO_OPENING)
-	await engagement_mode_states.opening_finished
+	if not anim_state.get_current_node() in ["open up", "open", "targeting"]:
+		anim_state.travel("open up")
+		sc.send_event(engagement_mode_states.TRANS_TO_OPENING)
+		await engagement_mode_states.opening_finished
 	open_finished.emit(id)
 
 
 signal close_finished(id: int)
 
 func close(id: int = 0) -> void:
-	anim_state.travel("close up")
-	sc.send_event(engagement_mode_states.TRANS_TO_CLOSING)
-	await engagement_mode_states.closing_finished
+	if not anim_state.get_current_node() in ["close up", "close", "quick close", "thrust close"]:
+		anim_state.travel("close up")
+		sc.send_event(engagement_mode_states.TRANS_TO_CLOSING)
+		await engagement_mode_states.closing_finished
 	close_finished.emit(id)
 
 
 signal quick_close_finished(id: int)
 
 func quick_close(id: int = 0) -> void:
-	if anim_state.get_current_node() in ["start thrust", "idle thrust", "stop_thrust"]:
-		anim_state.travel("thrust close")
-	else:
-		anim_state.travel("quick close")
-	sc.send_event(engagement_mode_states.TRANS_TO_QUICK_CLOSE)
-	await engagement_mode_states.closing_finished
+	if not anim_state.get_current_node() in ["quick close", "thrust close"]:
+		if anim_state.get_current_node() in ["start thrust", "idle thrust", "stop_thrust"]:
+			anim_state.travel("thrust close")
+		else:
+			anim_state.travel("quick close")
+		sc.send_event(engagement_mode_states.TRANS_TO_QUICK_CLOSE)
+		await engagement_mode_states.closing_finished
 	quick_close_finished.emit(id)
 
 
@@ -219,8 +222,9 @@ func reset_engines() -> void:
 ## ---------------------------------------
 signal fire_finished(id: int)
 
-func fire(id: int = 0) -> void:
+func fire(num_bolts: int = 1, id: int = 0) -> void:
 	if anim_state.get_current_node() in ["idle", "targeting"]:
+		spinners_states.num_bolts = num_bolts
 		sc.send_event(spinners_states.TRANS_TO_CHARGING)
 		await spinners_states.fire_finished
 		fire_finished.emit(id)

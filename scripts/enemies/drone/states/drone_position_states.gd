@@ -29,9 +29,9 @@ signal between_markers
 signal outside_markers
 
 ## Utils
-func is_between_patrol_markers() -> bool:
+func is_between_patrol_markers(tolerance: float = 0.0) -> bool:
 	var drone_pos_x: float = char_node.global_position.x
-	if drone_pos_x > left_marker_pos_x and drone_pos_x <= right_marker_pos_x:
+	if drone_pos_x > (left_marker_pos_x - tolerance) and drone_pos_x <= (right_marker_pos_x + tolerance):
 		return true
 	return false
 	

@@ -1,25 +1,27 @@
-class_name DronePatrolAction
+class_name DroneGoToPatrolAction
 extends BTAction
 
 ## Parameters
 @export var arrived_min_distance: float = 0.1
-@export var pause_when_stopped_duration: float = 1.0
+@export var burst_min_distance: float = 35.0
+@export var thrust_min_distance: float = 10.0
 
 ## Internal References
 var drone: Drone
 var signal_id: int
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-var patrol_markers: Array[float]
-var idx: int = 0
-var time_elapsed_paused: float = 0.0
+var destination: float
 
 ## Progress gates
 var ready: bool
 var facing_finished: bool
-var is_closed: bool
+var engines_stopping: bool
+var engines_stopped: bool
+var bursting: bool
+var thrusting: bool
+var is_open: bool
 var arrived: bool
 var stopped: bool
-var pause: bool
 
 
 ##########################################
@@ -30,7 +32,8 @@ func _setup() -> void:
 	
 	## Connect facing signals
 	drone.face_toward_finished.connect(_on_face_toward_finished)
-	drone.close_finished.connect(_on_close_finished)
+	drone.stop_engines_finished.connect(_on_stop_engines_finished)
+	drone.open_finished.connect(_on_open_finished)
 
 
 func _enter() -> void:
@@ -40,26 +43,26 @@ func _enter() -> void:
 	## Prepare the drone state
 	prepare()
 	
-	## Register patrol markers
-	patrol_markers.append(drone.repr.worldRepresentation.patrol_marker_1_pos_x)
-	patrol_markers.append(drone.repr.worldRepresentation.patrol_marker_2_pos_x)
-	
-	## Start by going to the furthest marker to the drone
-	idx = furthest_marker_idx()
+	## Destination is between the patrol markers
+	destination = (drone.repr.worldRepresentation.patrol_marker_1_pos_x + drone.repr.worldRepresentation.patrol_marker_2_pos_x) / 2.0
 	
 	## Assume drone might not be facing in the right direction
 	facing_finished = false
 	
+	## Assume drone might be far enough away for the engines to be on
+	engines_stopped = false
+	
 	ready = false
+	bursting = false
+	thrusting = false
 	arrived = false
 	stopped = false
-	pause = true
-	
 
 
 func _tick(delta: float) -> Status:
 	## Make sure the drone is ready
 	if not ready:
+		drone.stop_moving(delta)
 		prepare()
 		if is_ready():
 			ready = true
@@ -68,18 +71,52 @@ func _tick(delta: float) -> Status:
 	
 	## Make sure the drone is facing the marker it's going to
 	if not facing_finished:
-		drone.face_toward(patrol_markers[idx], signal_id)
+		drone.face_toward(destination, signal_id)
 		return RUNNING
 	
-	var distance_to_marker: float = abs(drone.char_node.global_position.x - patrol_markers[idx])
+	var distance_to_destination: float = abs(drone.char_node.global_position.x - destination)
+	
+	## Check if drone is far enough to burst
+	if distance_to_destination > burst_min_distance:
+		if not bursting:
+			drone.burst()
+			if engines_stopped: engines_stopped = false
+			if engines_stopping: engines_stopping = false
+			bursting = true
+		
+		drone.move_toward_x_pos(destination, delta)
+		return RUNNING
+	bursting = false
+	
+	## Check if drone is far enougn to thrust
+	if distance_to_destination > thrust_min_distance:
+		if not thrusting:
+			drone.thrust()
+			if engines_stopped: engines_stopped = false
+			if engines_stopping: engines_stopping = false
+			thrusting = true
+		
+		drone.move_toward_x_pos(destination, delta)
+		return RUNNING
+	thrusting = false
+	
+	## Check if drone is close enough to stop the engines
+	if not engines_stopping:
+		drone.stop_engines(signal_id)
+		engines_stopping = true
+	
+	## If the engines are in the process of stopping, stop moving
+	if not engines_stopped:
+		drone.stop_moving(delta)
+		return RUNNING
 	
 	## Check if drone has arrived at marker
-	if distance_to_marker < arrived_min_distance:
+	if distance_to_destination < arrived_min_distance:
 		arrived = true
 	
 	## If drone hasn't arrived, just keep moving
 	if not arrived:
-		drone.move_toward_x_pos(patrol_markers[idx], delta)
+		drone.move_toward_x_pos(destination, delta)
 		return RUNNING
 	
 	## If drone has arrived but not stopped, just keep on stopping
@@ -89,74 +126,44 @@ func _tick(delta: float) -> Status:
 			stopped = true
 		return RUNNING
 	
-	## Take a pause after stopping (to maybe stop further?)
-	if pause:
-		if time_elapsed_paused < pause_when_stopped_duration:
-			time_elapsed_paused += delta
-			drone.stop_moving(delta)
-			return RUNNING
-		else:
-			pause = false
-	
-	## If the code made it this far, the drone is ready to go toward the next marker
-	facing_finished = false
-	arrived = false
-	stopped = false
-	pause = true
-	time_elapsed_paused = 0.0
-	idx += 1
-	idx %= patrol_markers.size()
-	
-	return RUNNING
-
+	return SUCCESS
 
 ##########################################
 ## UTILITIES                           ##
 ##########################################
-func furthest_marker_idx() -> int:
-	var drone_pos_x: float = drone.char_node.global_position.x
-	var max_distance_found: float = 0.0
-	var curr_max_idx: int = 0
-	
-	for i in patrol_markers.size():
-		var curr_distance: float = abs(drone_pos_x - patrol_markers[i])
-		if curr_distance > max_distance_found:
-			curr_max_idx = i
-			max_distance_found = curr_distance
-	
-	return curr_max_idx
-
-
 func prepare() -> void:
 	## Sync state changes
 	if not drone.physics_mode_states.state == drone.physics_mode_states.State.CHAR:
 		drone.become_char()
-	if not drone.vulnerability_states.state == drone.vulnerability_states.State.INVULNERABLE:
-		drone.become_invulnerable()
+	if not drone.vulnerability_states.state == drone.vulnerability_states.State.DEFENDABLE:
+		drone.become_defendable()
 	if drone.targeting_states.state == drone.targeting_states.State.DISABLED:
 		drone.enable_targeting()
 	
 	## Async state changes
-	if not drone.engagement_mode_states.state == drone.engagement_mode_states.State.CLOSED:
-		is_closed = false
-		drone.close(signal_id)
+	if not drone.engagement_mode_states.state == drone.engagement_mode_states.State.OPEN:
+		is_open = false
+		drone.open(signal_id)
 	else:
-		is_closed = true
+		is_open = true
 
 	if not drone.engines_states.state == drone.engines_states.State.OFF:
+		engines_stopped = false
 		drone.stop_engines(signal_id)
+	else:
+		engines_stopped = true
 
 
 func is_ready() -> bool:
 	if not drone.physics_mode_states.state == drone.physics_mode_states.State.CHAR:
 		return false
-	if not drone.vulnerability_states.state == drone.vulnerability_states.State.INVULNERABLE:
+	if not drone.vulnerability_states.state == drone.vulnerability_states.State.DEFENDABLE:
 		return false
 	if drone.targeting_states.state == drone.targeting_states.State.DISABLED:
 		return false
-	if not is_closed:
+	if not is_open:
 		return false
-	if not drone.engines_states.state == drone.engines_states.State.OFF:
+	if not engines_stopped:
 		return false
 	return true
 
@@ -169,6 +176,11 @@ func _on_face_toward_finished(id: int) -> void:
 		facing_finished = true
 
 
-func _on_close_finished(id: int) -> void:
+func _on_stop_engines_finished(id: int) -> void:
 	if signal_id == id:
-		is_closed = true
+		engines_stopped = true
+
+
+func _on_open_finished(id: int) -> void:
+	if signal_id == id:
+		is_open = true

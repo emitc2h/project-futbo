@@ -137,7 +137,7 @@ character = NodePath("..")
 metadata/_custom_type_script = "uid://c5ypw4nstaeac"
 
 [node name="Blocks" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.6926, -0.04813, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.6926, -2.6560724, 0)
 script = SubResource("GDScript_vum0r")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Blocks"]
@@ -219,7 +219,7 @@ surface_material_override/0 = ExtResource("11_46hk0")
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
 
 [node name="Blocks2" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -17.790775, -0.0110137, 0)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -17.790775, -2.618956, 0)
 script = SubResource("GDScript_vum0r")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Blocks2"]
@@ -405,6 +405,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7328, 1.79018, 0)
 active = true
 
 [node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]
+active = false
 max_running_logs = 1000
 
 [node name="DroneSpawnPoint" type="Marker3D" parent="."]

@@ -22,6 +22,9 @@ var anim_state: AnimationNodeStateMachinePlayback
 ## Signals
 signal fire_finished
 
+## Parameters
+var num_bolts: int = 1
+
 
 func _ready() -> void:
 	model.anim_state_started.connect(_on_anim_state_started)
@@ -56,12 +59,13 @@ func _on_fire_state_entered() -> void:
 	model.fire_spinners(0.7)
 
 
-func _on_to_off_taken() -> void:
-	fire_finished.emit()
+func _on_fire_state_exited() -> void:
+	pass
 
 
-# signal handling
-#========================================
+##########################################
+## SIGNALS                             ##
+##########################################
 func _on_anim_state_started(anim_name: String) -> void:
 	Signals.debug_running_log.emit("anim state started: " + anim_name)
 
@@ -71,5 +75,14 @@ func _on_anim_state_finished(anim_name: String) -> void:
 	if anim_name == "charge up":
 		sc.send_event(TRANS_TO_FIRE)
 	if anim_name == "fire":
-		sc.send_event(TRANS_TO_OFF)
-		model.spinners_disengage_target()
+		num_bolts -= 1
+		## Continue firing if more bolts should be fired
+		if num_bolts > 0:
+			anim_state.travel("fire")
+			sc.send_event(TRANS_TO_FIRE)
+		else:
+			## Reset num_bolts to default
+			num_bolts = 1
+			fire_finished.emit()
+			sc.send_event(TRANS_TO_OFF)
+			model.spinners_disengage_target()
