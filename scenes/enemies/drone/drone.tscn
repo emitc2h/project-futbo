@@ -43,17 +43,17 @@ margin = 0.1
 radius = 1.1
 height = 3.0
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_j5bu2"]
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_c1bph"]
 var/tracking_offset/name = &"tracking_offset"
 var/tracking_offset/type = 3
 var/tracking_offset/value = 0.0
 var/tracking_offset/hint = 0
 var/tracking_offset/hint_string = ""
-var/is_attacking/name = &"is_attacking"
-var/is_attacking/type = 1
-var/is_attacking/value = false
-var/is_attacking/hint = 0
-var/is_attacking/hint_string = ""
+var/attacking/name = &"attacking"
+var/attacking/type = 1
+var/attacking/value = false
+var/attacking/hint = 0
+var/attacking/hint_string = ""
 
 [node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_player") groups=["Enemies"]]
 script = ExtResource("1_irn00")
@@ -685,7 +685,7 @@ mesh = NodePath("../TrackPositionContainer/Distortion")
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
 active = false
-blackboard_plan = SubResource("BlackboardPlan_j5bu2")
+blackboard_plan = SubResource("BlackboardPlan_c1bph")
 
 [connection signal="timeout" from="State/Root/Physics/Physics States/DeadTimer" to="State/Root/Physics/Physics States" method="_on_dead_timer_timeout"]
 [connection signal="state_entered" from="State/Root/Physics/char" to="State/Root/Physics/Physics States" method="_on_char_state_entered"]

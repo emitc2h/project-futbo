@@ -46,7 +46,7 @@ func _tick(delta: float) -> Status:
 		return RUNNING
 	
 	if not (abs(drone.physics_mode_states.left_right_axis) < 0.001):
-		drone.stop_moving(delta, 5.0)
+		drone.stop_moving(delta, 1.0)
 	
 	if not is_vulnerable:
 		drone.become_vulnerable()
@@ -61,6 +61,7 @@ func _tick(delta: float) -> Status:
 	
 	drone.become_defendable()
 	return SUCCESS
+
 
 ##########################################
 ## UTILITIES                           ##
@@ -85,6 +86,7 @@ func probe_initial_state() -> void:
 	
 	## just assume the drone isn't vulnerable until it is open
 	is_vulnerable = false
+
 
 ##########################################
 ## SIGNALS                             ##

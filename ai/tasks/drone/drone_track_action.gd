@@ -13,6 +13,8 @@ var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var time_elapsed: float
 
 var is_open: bool
+var engines_are_off: bool
+var is_defendable: bool
 
 ##########################################
 ## ACTION LOGIC                        ##
@@ -39,6 +41,14 @@ func _tick(delta: float) -> Status:
 	## Launch the command to open the drone async
 	if not is_open:
 		drone.open()
+		
+	if not engines_are_off:
+		drone.stop_engines()
+		engines_are_off = true
+	
+	if not is_defendable:
+		drone.become_defendable()
+		is_defendable = true
 	
 	drone.track_target(default_offset + blackboard.get_var(offset, 0.0), delta)
 	return RUNNING
@@ -53,3 +63,15 @@ func probe_initial_state() -> void:
 			is_open = true
 		_:
 			is_open = false
+	
+	match(drone.engines_states.state):
+		drone.engines_states.State.OFF:
+			engines_are_off = true
+		_:
+			engines_are_off = false
+	
+	match(drone.vulnerability_states.state):
+		drone.vulnerability_states.State.DEFENDABLE:
+			is_defendable = true
+		_:
+			is_defendable = false

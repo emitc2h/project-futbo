@@ -30,7 +30,7 @@ var stopped: bool
 func _setup() -> void:
 	drone = agent as Drone
 	
-	## Connect facing signals
+	## Connect signals
 	drone.face_toward_finished.connect(_on_face_toward_finished)
 	drone.stop_engines_finished.connect(_on_stop_engines_finished)
 	drone.open_finished.connect(_on_open_finished)

@@ -1,0 +1,13 @@
+[gd_resource type="BlackboardPlan" format=3 uid="uid://13kdtfbmqd6l"]
+
+[resource]
+var/tracking_offset/name = &"tracking_offset"
+var/tracking_offset/type = 3
+var/tracking_offset/value = 5.0
+var/tracking_offset/hint = 0
+var/tracking_offset/hint_string = ""
+var/attacking/name = &"attacking"
+var/attacking/type = 1
+var/attacking/value = true
+var/attacking/hint = 0
+var/attacking/hint_string = ""

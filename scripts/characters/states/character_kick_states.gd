@@ -11,8 +11,8 @@ var state: State = State.NO_BALL
 @export var long_kick_raycast: RayCast3D
 
 @export_group("Properties")
-@export var kick_force: float = 7.0
-@export var long_kick_force: float = 14.0
+@export var kick_force: float = 8.0
+@export var long_kick_force: float = 15.0
 @export var long_kick_trigger_distance: float = 0.4
 
 ## State transition constants
