@@ -15,7 +15,7 @@ var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var time_elapsed_closed: float
 
 
-## PROGRESS GATES
+## Progress gates
 var is_opening: bool
 var is_open: bool
 var engines_stopping: bool

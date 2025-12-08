@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=50 format=3 uid="uid://c7vvmbp7vehqy"]
+[gd_resource type="BehaviorTree" load_steps=54 format=3 uid="uid://c7vvmbp7vehqy"]
 
 [ext_resource type="Script" uid="uid://3wp8o6jifb3l" path="res://ai/tasks/drone/drone_patrol_action.gd" id="1_128xi"]
 [ext_resource type="Script" uid="uid://dhngbs7qm6328" path="res://ai/tasks/drone/is_object_in_proximity_zone_condition.gd" id="1_ckfmh"]
@@ -9,8 +9,9 @@
 [ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="4_v0ahm"]
 [ext_resource type="Script" uid="uid://b2j2u7t3dp4en" path="res://ai/tasks/drone/drone_ram_attack_action.gd" id="5_ntcwm"]
 [ext_resource type="Script" uid="uid://btr4jxosdlhew" path="res://ai/tasks/drone/drone_go_to_patrol_action.gd" id="5_xekj4"]
-[ext_resource type="Script" uid="uid://cwyxhwigonm30" path="res://ai/tasks/drone/check_on_player_bool_value_action.gd" id="8_mcvek"]
+[ext_resource type="Script" uid="uid://cwyxhwigonm30" path="res://ai/tasks/drone/check_on_player_bool_value_condition.gd" id="8_mcvek"]
 [ext_resource type="Script" uid="uid://cw5lgdcrky3nb" path="res://ai/tasks/drone/drone_beam_attack_action.gd" id="8_v0ahm"]
+[ext_resource type="Script" uid="uid://cn3tf4te6g4xt" path="res://ai/tasks/drone/drone_dive_attack_action.gd" id="11_65x83"]
 
 [sub_resource type="BTCondition" id="BTCondition_ntcwm"]
 script = ExtResource("1_ckfmh")
@@ -107,32 +108,94 @@ value = SubResource("BBVariant_664xi")
 script = ExtResource("4_ckfmh")
 timeout = 2.0
 
-[sub_resource type="BTAction" id="BTAction_65x83"]
+[sub_resource type="BTCondition" id="BTCondition_65x83"]
 script = ExtResource("8_mcvek")
 var_type = "dribbling"
 
 [sub_resource type="BTAction" id="BTAction_mcvek"]
 script = ExtResource("8_v0ahm")
-metadata/_weight_ = 4.000000000000001
+number_of_hits = 3
+metadata/_weight_ = 0.6
 
 [sub_resource type="BTAction" id="BTAction_r3tiw"]
 script = ExtResource("5_ntcwm")
+metadata/_weight_ = 0.2
+
+[sub_resource type="BTAction" id="BTAction_664xi"]
+script = ExtResource("11_65x83")
+metadata/_weight_ = 0.2
 
 [sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_65x83"]
-children = [SubResource("BTAction_mcvek"), SubResource("BTAction_r3tiw")]
+children = [SubResource("BTAction_mcvek"), SubResource("BTAction_r3tiw"), SubResource("BTAction_664xi")]
 
 [sub_resource type="BTSequence" id="BTSequence_664xi"]
-children = [SubResource("BTAction_65x83"), SubResource("BTProbabilitySelector_65x83")]
-
-[sub_resource type="BTAction" id="BTAction_wyg27"]
-script = ExtResource("5_ntcwm")
-metadata/_weight_ = 0.25
+children = [SubResource("BTCondition_65x83"), SubResource("BTProbabilitySelector_65x83")]
 
 [sub_resource type="BTAction" id="BTAction_bnf7k"]
 script = ExtResource("8_v0ahm")
+metadata/_weight_ = 0.2
+
+[sub_resource type="BTAction" id="BTAction_wyg27"]
+script = ExtResource("5_ntcwm")
+metadata/_weight_ = 0.5
+
+[sub_resource type="GDScript" id="GDScript_65x83"]
+script/source = "class_name DiveAttackJumpAction
+extends BTAction
+
+@export_group(\"Parameters\")
+@export var target_velocity: float = 12.0
+@export var acceleration: float = 60.0
+
+var drone: Drone
+var acceleration_done: bool
+var done: bool
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var signal_id: int
+
+func _setup() -> void:
+	drone = agent as Drone
+	drone.accelerate_finished.connect(_on_accelerate_finished)
+	drone.quick_close_finished.connect(_on_quick_close_finished)
+
+
+func _enter() -> void:
+	acceleration_done = false
+	done = false
+	signal_id = rng.randi()
+	var d: float = drone.targeting_states.target.global_position.x - drone.char_node.global_position.x
+	var angle_of_reach: float = PI/4 + 0.5 * acos((12.0 * d)/(target_velocity * target_velocity))
+	drone.accelerate(angle_of_reach, acceleration, target_velocity, signal_id)
+
+
+func _tick(_delta: float) -> Status:
+	if acceleration_done:
+		drone.become_rigid()
+		drone.quick_close(signal_id)
+		drone.quick_stop_engines(true)
+	
+	if done:
+		return SUCCESS
+	return RUNNING
+	
+
+func _on_accelerate_finished(id: int) -> void:
+	drone.prepare_shockwave()
+	if signal_id == id:
+		acceleration_done = true
+
+
+func _on_quick_close_finished(id: int) -> void:
+	if signal_id == id:
+		done = true
+"
+
+[sub_resource type="BTAction" id="BTAction_8hvrt"]
+script = SubResource("GDScript_65x83")
+metadata/_weight_ = 0.3
 
 [sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_8hvrt"]
-children = [SubResource("BTAction_wyg27"), SubResource("BTAction_bnf7k")]
+children = [SubResource("BTAction_bnf7k"), SubResource("BTAction_wyg27"), SubResource("BTAction_8hvrt")]
 
 [sub_resource type="BTSelector" id="BTSelector_wg5t1"]
 children = [SubResource("BTSequence_664xi"), SubResource("BTProbabilitySelector_8hvrt")]

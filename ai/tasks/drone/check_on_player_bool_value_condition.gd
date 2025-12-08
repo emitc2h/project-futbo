@@ -1,6 +1,6 @@
 @tool
-class_name CheckOnPlayerBoolValueAction
-extends BTAction
+class_name CheckOnPlayerBoolValueCondition
+extends BTCondition
 
 var drone: Drone
 
