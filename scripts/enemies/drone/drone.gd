@@ -3,10 +3,6 @@ extends Node3D
 
 @onready var sc: StateChart = $State
 
-## customization
-@export_group("Customization")
-@export var initial_behavior: DroneBehaviorStates.State
-
 ## state machines
 @export_group("State Machines")
 @export_subgroup("Function State Machines")
@@ -22,9 +18,14 @@ extends Node3D
 @export var proximity_states: DroneProximityStates
 @export var position_states: DronePositionStates
 
-@export_group("Behavior State Machines")
-@export var behavior_states: DroneBehaviorStates
-@export var behavior_attack_states: DroneAttackStates
+@export_group("Behavior")
+@export var behavior_player: BTPlayer
+@export var behavior_tree: BehaviorTree
+@export var active: bool:
+	get:
+		return behavior_player.active
+	set(value):
+		behavior_player.active = value
 
 ## Useful internal nodes to have a handle on
 @onready var char_node: CharacterBody3D = $CharNode
@@ -38,13 +39,17 @@ extends Node3D
 @onready var model_anim_tree: AnimationTree = $"TrackTransformContainer/DroneModel/AnimationTree"
 @onready var anim_state: AnimationNodeStateMachinePlayback
 
+var signal_id: int
+var shockwave_ready: bool = false
+
 
 func _ready() -> void:
 	## initialize the internal representation
 	repr.initialize()
 	anim_state = model_anim_tree.get("parameters/playback")
-	behavior_states.set_initial_behavior(initial_behavior)
 	Signals.debug_advance.connect(_on_debug_advance)
+	physics_mode_states.target_velocity_reached.connect(_on_target_velocity_reached)
+	behavior_player.behavior_tree = behavior_tree
 
 
 ## Physics Controls
@@ -67,6 +72,7 @@ func get_global_pos_x() -> float:
 
 ## Direction Controls
 ## ---------------------------------------
+signal face_toward_finished(id: int)
 signal face_right_finished(id: int)
 
 func face_right(id: int = 0) -> void:
@@ -74,6 +80,7 @@ func face_right(id: int = 0) -> void:
 		sc.send_event(direction_faced_states.TRANS_TO_TURN_RIGHT)
 		await direction_faced_states.is_now_facing_right
 	face_right_finished.emit(id)
+	face_toward_finished.emit(id)
 
 
 signal face_left_finished(id: int)
@@ -83,6 +90,7 @@ func face_left(id: int = 0) -> void:
 		sc.send_event(direction_faced_states.TRANS_TO_TURN_LEFT)
 		await direction_faced_states.is_now_facing_left
 	face_left_finished.emit(id)
+	face_toward_finished.emit(id)
 
 
 func face_toward(x: float, id: int = 0) -> void:
@@ -111,8 +119,8 @@ func move_toward_x_pos(target_x: float, delta: float, away: bool = false) -> voi
 	physics_mode_states.left_right_axis = lerp(physics_mode_states.left_right_axis, target_value, 20.0 * delta)
 
 
-func stop_moving(delta: float) -> void:
-	physics_mode_states.left_right_axis = lerp(physics_mode_states.left_right_axis, 0.0, 10.0 * delta)
+func stop_moving(delta: float, lerp_factor: float = 10.0) -> void:
+	physics_mode_states.left_right_axis = lerp(physics_mode_states.left_right_axis, 0.0, lerp_factor * delta)
 
 
 func track_target(offset: float, delta: float) -> void:
@@ -122,35 +130,54 @@ func track_target(offset: float, delta: float) -> void:
 	move_toward_x_pos(target_x + offset_sign * offset, delta)
 
 
+signal accelerate_finished(id: int)
+
+func accelerate(angle: float, acceleration: float, target_velocity: float, id: int = 0) -> void:
+	physics_mode_states.target_velocity = target_velocity
+	physics_mode_states.additional_x_acc = cos(angle) * acceleration
+	physics_mode_states.additional_y_acc = sin(angle) * acceleration
+	signal_id = id
+
+
+func _on_target_velocity_reached() -> void:
+	physics_mode_states.target_velocity = 0.0
+	physics_mode_states.additional_x_acc = 0.0
+	physics_mode_states.additional_y_acc = 0.0
+	accelerate_finished.emit(signal_id)
+
+
 ## Engagement Controls
 ## ---------------------------------------
 signal open_finished(id: int)
 
 func open(id: int = 0) -> void:
-	anim_state.travel("open up")
-	sc.send_event(engagement_mode_states.TRANS_TO_OPENING)
-	await engagement_mode_states.opening_finished
+	if not anim_state.get_current_node() in ["open up", "open", "targeting"]:
+		anim_state.travel("open up")
+		sc.send_event(engagement_mode_states.TRANS_TO_OPENING)
+		await engagement_mode_states.opening_finished
 	open_finished.emit(id)
 
 
 signal close_finished(id: int)
 
 func close(id: int = 0) -> void:
-	anim_state.travel("close up")
-	sc.send_event(engagement_mode_states.TRANS_TO_CLOSING)
-	await engagement_mode_states.closing_finished
+	if not anim_state.get_current_node() in ["close up", "close", "quick close", "thrust close"]:
+		anim_state.travel("close up")
+		sc.send_event(engagement_mode_states.TRANS_TO_CLOSING)
+		await engagement_mode_states.closing_finished
 	close_finished.emit(id)
 
 
 signal quick_close_finished(id: int)
 
 func quick_close(id: int = 0) -> void:
-	if anim_state.get_current_node() in ["start thrust", "idle thrust", "stop_thrust"]:
-		anim_state.travel("thrust close")
-	else:
-		anim_state.travel("quick close")
-	sc.send_event(engagement_mode_states.TRANS_TO_QUICK_CLOSE)
-	await engagement_mode_states.closing_finished
+	if not anim_state.get_current_node() in ["quick close", "thrust close"]:
+		if anim_state.get_current_node() in ["start thrust", "idle thrust", "stop_thrust"]:
+			anim_state.travel("thrust close")
+		else:
+			anim_state.travel("quick close")
+		sc.send_event(engagement_mode_states.TRANS_TO_QUICK_CLOSE)
+		await engagement_mode_states.closing_finished
 	quick_close_finished.emit(id)
 
 
@@ -169,15 +196,15 @@ func burst() -> void:
 	physics_mode_states.speed = engines_states.burst_speed
 	sc.send_event(engines_states.TRANS_TO_BURST)
 
-signal stop_engines_finished
+signal stop_engines_finished(id: int)
 
-func stop_engines() -> void:
+func stop_engines(id: int = 0) -> void:
 	if anim_state.get_current_node() in ["start thrust", "idle thrust"]:
 		anim_state.travel("stop thrust")
 	physics_mode_states.speed = engines_states.off_speed
 	sc.send_event(engines_states.TRANS_TO_STOPPING)
 	await engines_states.engines_are_off
-	stop_engines_finished.emit()
+	stop_engines_finished.emit(id)
 
 
 func quick_stop_engines(keep_speed: bool = false) -> void:
@@ -195,8 +222,9 @@ func reset_engines() -> void:
 ## ---------------------------------------
 signal fire_finished(id: int)
 
-func fire(id: int = 0) -> void:
+func fire(num_bolts: int = 1, id: int = 0) -> void:
 	if anim_state.get_current_node() in ["idle", "targeting"]:
+		spinners_states.num_bolts = num_bolts
 		sc.send_event(spinners_states.TRANS_TO_CHARGING)
 		await spinners_states.fire_finished
 		fire_finished.emit(id)
@@ -244,13 +272,19 @@ func disable_proximity_detector() -> void:
 	sc.send_event(proximity_states.TRANS_TO_DISABLED)
 
 
+## Other Controls
+## ---------------------------------------
+func prepare_shockwave() -> void:
+	shockwave_ready = true
+
+
 ## Hitbox
 ## ---------------------------------------
 func die(force: Vector3) -> void:
 	if vulnerability_states.state == vulnerability_states.State.VULNERABLE:
 		model.die()
+		active = false
 		sc.send_event(physics_mode_states.TRANS_TO_RAGDOLL)
-		sc.send_event(behavior_states.TRANS_TO_DEAD)
 		model.body_bone.apply_central_impulse(force * 5.0)
 
 
@@ -278,9 +312,6 @@ func generate_state_report() -> String:
 	output += "Spinners : " + spinners_states.State.keys()[spinners_states.state] + "\n"
 	output += "Vulnerability : " + vulnerability_states.State.keys()[vulnerability_states.state] + "\n"
 	output += "Targeting : " + targeting_states.State.keys()[targeting_states.state] + "\n"
-	output += "Behavior : " + behavior_states.State.keys()[behavior_states.state] + "\n"
-	if behavior_states.state == behavior_states.State.ATTACK:
-		output += "---> Attack : " + behavior_attack_states.State.keys()[behavior_attack_states.state] + "\n"
 	output += "===================================\n"
 	output += "Animation tree node: " + anim_state.get_current_node()\
 			 + " (fading : " + anim_state.get_fading_from_node() + ")"
@@ -296,3 +327,9 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 		Signals.player_takes_damage.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position, true)
 	if body.is_in_group("ControlNodeShieldGroup"):
 		Signals.control_node_shield_hit.emit(true)
+	if body is StaticBody3D:
+		var sb: StaticBody3D = body
+		if sb.get_collision_layer_value(2):
+			if shockwave_ready:
+				print("shockwave")
+				shockwave_ready = false

@@ -20,4 +20,5 @@ func _spawn_new_drone() -> void:
 	new_drone.global_position = spawn_point.global_position
 	add_child(new_drone)
 	drone = new_drone
+	drone.active = true
 	

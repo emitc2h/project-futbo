@@ -14,7 +14,7 @@ var enabled: bool:
 	set(value):
 		_enabled = value
 		collision_shape.disabled = !value
-		
+
 
 func hit() -> void:
 	drone_shield_closed_model.hit()

@@ -6,13 +6,14 @@ extends Node
 @export var drone: Drone
 @export var sc: StateChart
 @export var engines_states: DroneEnginesStates
+@export var float_cast: RayCast3D
 
 ## Parameters
 @export_group("Movement")
 @export var axis_lerp_strength: float = 4.0
 
 @export_group("Floating")
-@export var float_cast_length: float = 2.2
+@export var default_float_cast_length: float = 2.2
 @export var float_strength: float = 4.0
 @export var float_dampening: float = 4.0
 @export var oscillation_amplitude: float = 0.015
@@ -38,7 +39,6 @@ const TRANS_TO_DEAD: String = "Physics Mode: to dead"
 @onready var collision_shape_char: CollisionShape3D = drone.get_node("CharNode/CollisionShape3D")
 @onready var collision_shape_rigid: CollisionShape3D = drone.get_node("RigidNode/CollisionShape3D")
 
-@onready var float_cast: RayCast3D = drone.get_node("TrackPositionContainer/FloatCast")
 @onready var float_distortion_animation: DroneFloatDistortionAnimation = drone.get_node("FloatDistortionAnimation")
 
 @onready var model_anim_tree: AnimationTree = track_transform_container.get_node("DroneModel/AnimationTree")
@@ -51,19 +51,32 @@ const TRANS_TO_DEAD: String = "Physics Mode: to dead"
 var time_floating: float = 0.0
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
 
+## Acceleration
+var additional_y_acc: float = 0.0
+var additional_x_acc: float = 0.0
+var target_velocity: float = 0.0
+
 ## Settable Parameters
 var speed: float = 3.0
 var left_right_axis: float = 0.0
 
+var float_cast_length: float:
+	get:
+		return abs(float_cast.target_position.y)
+	set(value):
+		float_cast.target_position.y = -value
+
 ## Signals
 signal char_entered
 signal rigid_entered
+signal target_velocity_reached
 
 
 func _ready() -> void:
 	collision_shape_rigid.disabled = true
 	collision_shape_char.disabled = false
 	set_ragdoll_collisions(false)
+	reset_float_cast_length()
 
 
 # char state
@@ -114,6 +127,18 @@ func _on_char_state_physics_processing(delta: float) -> void:
 	
 	## Apply horizontal speed
 	char_node.velocity.x = lerp(char_node.velocity.x, left_right_axis * speed, axis_lerp_strength * delta)
+	
+	## Apply additional acceleration
+	if additional_y_acc != 0.0:
+		char_node.velocity.y += additional_y_acc * delta
+	
+	if additional_x_acc != 0.0:
+		char_node.velocity.x += additional_x_acc * delta
+	
+	## Send out a signal when the acceleration leads to a velocity greater than a target velocity
+	if (additional_y_acc != 0.0) or (additional_x_acc != 0.0):
+		if char_node.velocity.length() > target_velocity:
+			target_velocity_reached.emit()
 	
 	char_node.move_and_slide()
 	
@@ -222,3 +247,7 @@ func set_ragdoll_collisions(enabled: bool) -> void:
 	for bone in bone_simulation.get_children():
 		var col_shape: CollisionShape3D = bone.get_node("CollisionShape3D")
 		col_shape.disabled = !enabled
+
+
+func reset_float_cast_length() -> void:
+	float_cast_length = default_float_cast_length

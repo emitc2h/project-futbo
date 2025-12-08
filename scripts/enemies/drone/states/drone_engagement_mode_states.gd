@@ -8,11 +8,6 @@ extends Node
 @export var targeting_states: DroneTargetingStates
 @export var engines_states: DroneEnginesStates
 
-## Parameters
-@export_group("Float Distortion")
-@export var float_distortion_open_pos_y: float = -1.2
-@export var float_distortion_closed_pos_y: float = -1.0
-
 ## States Enum
 enum State {CLOSED = 0, OPENING = 1, OPEN = 2, CLOSING = 3, QUICK_CLOSE = 4}
 var state: State = State.CLOSED

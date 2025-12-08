@@ -223,6 +223,7 @@ render_priority = 0
 next_pass = SubResource("ShaderMaterial_qqrog")
 shader = ExtResource("6_7e3ys")
 shader_parameter/enabled = false
+shader_parameter/billboard = false
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_wgydi")
 shader_parameter/mask_texture = ExtResource("4_qqrog")
 shader_parameter/noise_speed = 1.0

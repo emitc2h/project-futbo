@@ -57,7 +57,7 @@ func _enter() -> void:
 			target_x = drone.repr.worldRepresentation.get(world_repr_pos_x_name)
 
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	if target_x > drone.char_node.global_position.x and\
 		(drone.direction_faced_states.state == drone.direction_faced_states.State.FACE_RIGHT or\
 		 drone.direction_faced_states.state == drone.direction_faced_states.State.TURN_RIGHT):

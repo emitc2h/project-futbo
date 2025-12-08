@@ -21,7 +21,7 @@ extends Node
 
 ## States Enum
 enum State {DISABLED = 0, NONE = 1, ACQUIRING = 2, ACQUIRED = 3}
-var state: State = State.NONE
+var state: State = State.DISABLED
 
 ## State transition constants
 const TRANS_TO_DISABLED: String = "Targeting: to disabled"

@@ -40,8 +40,8 @@ func _ready() -> void:
 	btplayer.active = false
 	pre_btplayer.active = false
 	
-	btplayer.behavior_tree_finished.connect(_on_bt_finished)
-	pre_btplayer.behavior_tree_finished.connect(_on_pre_bt_player_finished)
+	btplayer.updated.connect(_on_bt_updated)
+	pre_btplayer.updated.connect(_on_pre_bt_updated)
 	
 	var state: AtomicState = get_parent() as AtomicState
 	state.state_entered.connect(_on_behavior_entered)
@@ -57,12 +57,16 @@ func _on_behavior_exited() -> void:
 	btplayer.active = false
 	
 
-func _on_bt_finished(status: int) -> void:
-	finished.emit(status)
+func _on_bt_updated(status: int) -> void:
+	match(status):
+		BT.FAILURE, BT.SUCCESS:
+			finished.emit(status)
 
 
-func _on_pre_bt_player_finished(_status: int) -> void:
-	pre_btplayer.active = false
-	btplayer.active = true
-	if reset_tree_on_enter:
-		btplayer.restart()
+func _on_pre_bt_updated(status: int) -> void:
+	match(status):
+		BT.FAILURE, BT.SUCCESS:
+			pre_btplayer.active = false
+			btplayer.active = true
+			if reset_tree_on_enter:
+				btplayer.restart()

@@ -27,7 +27,7 @@ func _ready() -> void:
 
 # idle state
 #----------------------------------------
-func _on_idle_state_physics_processing(delta: float) -> void:
+func _on_idle_state_physics_processing(_delta: float) -> void:
 	if not Aim.input_is_zero_approx:
 		state.send_event("idle to pointing")
 
@@ -41,7 +41,7 @@ func _on_pointing_state_entered() -> void:
 		self.visible = true
 
 
-func _on_pointing_state_processing(delta: float) -> void:
+func _on_pointing_state_processing(_delta: float) -> void:
 	if Aim.input_is_zero_approx or _was_just_kicked:
 		state.send_event("pointing to idle")
 	else:

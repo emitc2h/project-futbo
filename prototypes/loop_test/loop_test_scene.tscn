@@ -137,7 +137,7 @@ character = NodePath("..")
 metadata/_custom_type_script = "uid://c5ypw4nstaeac"
 
 [node name="Blocks" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.6926, -0.04813, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.6926, -2.6560724, 0)
 script = SubResource("GDScript_vum0r")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Blocks"]
@@ -219,7 +219,7 @@ surface_material_override/0 = ExtResource("11_46hk0")
 shape = SubResource("ConvexPolygonShape3D_eqkmv")
 
 [node name="Blocks2" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -17.790775, -0.0110137, 0)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -17.790775, -2.618956, 0)
 script = SubResource("GDScript_vum0r")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Blocks2"]
@@ -375,7 +375,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1447, 0, -1.92601)
 
 [node name="Grass" type="Node3D" parent="Props"]
 transform = Transform3D(1.77773, 0, 0, 0, 1, 0, 0, 0, 2.29965, 0, -0.0710142, -4.28457)
-visible = false
 
 [node name="LightGrassRandomPatch6MMixed1" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
 transform = Transform3D(0.0109604, 0, 0.99994, 0, 1, 0, -0.99994, 0, 0.0109604, -8.50588, -0.0734396, 7.14017)
@@ -403,9 +402,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2464328, 0.250523, 0)
 
 [node name="Drone" parent="." instance=ExtResource("20_6uf0e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7328, 1.79018, 0)
+active = true
 
 [node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]
-active = false
 max_running_logs = 1000
 
 [node name="DroneSpawnPoint" type="Marker3D" parent="."]

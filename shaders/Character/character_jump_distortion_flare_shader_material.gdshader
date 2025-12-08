@@ -4,6 +4,7 @@ render_mode blend_add, fog_disabled, cull_disabled, shadows_disabled, ambient_li
 
 uniform sampler2D screen_texture : hint_screen_texture;
 uniform bool enabled;
+uniform bool billboard;
 uniform sampler2D noise_texture;
 uniform sampler2D mask_texture;
 
@@ -16,6 +17,17 @@ uniform float flare_threshold: hint_range(0.0, 1.0);
 
 void vertex() {
 	UV2 = vec2(1.0, stretch) * (UV + vec2(0.0, -(noise_speed/stretch) * TIME));
+	
+	if (billboard) {
+		// Make Billboard
+		mat4 modified_model_view = VIEW_MATRIX * mat4(
+        	INV_VIEW_MATRIX[0],
+        	INV_VIEW_MATRIX[1],
+        	INV_VIEW_MATRIX[2],
+        	MODEL_MATRIX[3]
+    	);
+    	MODELVIEW_MATRIX = modified_model_view;
+	}
 }
 
 void fragment() {
