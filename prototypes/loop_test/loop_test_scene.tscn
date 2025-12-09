@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cvaogmwqhlu3a"]
+[gd_scene load_steps=30 format=3 uid="uid://cvaogmwqhlu3a"]
 
 [ext_resource type="Script" uid="uid://bunkqcq7mgxft" path="res://prototypes/loop_test/loop_test_scene.gd" id="1_vum0r"]
 [ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_vum0r"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://r42whxkucyjl" path="res://scenes/vegetation/bush.tscn" id="20_mli22"]
 [ext_resource type="PackedScene" uid="uid://cupvg7lj3rh2s" path="res://scenes/control_node_and_balls/control_node.tscn" id="20_pv0wt"]
 [ext_resource type="PackedScene" uid="uid://dl2glyig12kut" path="res://scenes/debug/debug_tool.tscn" id="21_6uf0e"]
+[ext_resource type="PackedScene" uid="uid://d4joyty534fc" path="res://scenes/utilities/optimization/particles_preloader.tscn" id="21_pv0wt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hi8lg"]
 albedo_texture = ExtResource("2_vum0r")
@@ -405,7 +406,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7328, 1.79018, 0)
 active = true
 
 [node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]
+active = false
 max_running_logs = 1000
 
 [node name="DroneSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.733, 10, 0)
+
+[node name="ParticlesPreloader" parent="." instance=ExtResource("21_pv0wt")]

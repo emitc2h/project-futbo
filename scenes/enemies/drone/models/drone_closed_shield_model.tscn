@@ -124,5 +124,6 @@ shader_parameter/burn_boost = 0.0
 script = ExtResource("2_pyfqk")
 
 [node name="ClosedShield" parent="." index="0"]
+layers = 16
 mesh = SubResource("ArrayMesh_7di8h")
 surface_material_override/0 = SubResource("ShaderMaterial_t66pr")

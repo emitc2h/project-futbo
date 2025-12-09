@@ -21,6 +21,7 @@ class WorldRepresentation:
 class PlayerRepresentation:
 	var last_known_player_pos_x: float = 0.0
 	var player_is_dribbling: bool = false
+	var player_is_dead: bool = false
 	
 	func initialize() -> void:
 		pass
@@ -46,9 +47,14 @@ func initialize() -> void:
 
 func _ready() -> void:
 	Signals.updated_control_node_charge_level.connect(_on_updated_control_node_charge_level)
+	Signals.player_dead.connect(_on_player_dead)
 
 
 ## Signal handling
 ##=========================================
 func _on_updated_control_node_charge_level(level: ControlNodeChargeStates.State) -> void:
 	controlNodeRepresentation.control_node_charge = level
+
+
+func _on_player_dead() -> void:
+	playerRepresentation.player_is_dead = true

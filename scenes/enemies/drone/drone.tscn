@@ -625,6 +625,7 @@ shape = SubResource("SphereShape3D_md0p7")
 
 [node name="Distortion" type="MeshInstance3D" parent="TrackPositionContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+layers = 16
 sorting_offset = -1.0
 mesh = SubResource("QuadMesh_kds82")
 skeleton = NodePath("../../CharNode")

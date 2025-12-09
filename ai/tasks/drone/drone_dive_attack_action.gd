@@ -168,7 +168,7 @@ func _on_stop_engines_finished(id: int) -> void:
 
 
 func _on_accelerate_finished(id: int) -> void:
-	drone.prepare_shockwave()
+	drone.prepare_dive_impact()
 	if signal_id == id:
 		is_done_accelerating_up = true
 

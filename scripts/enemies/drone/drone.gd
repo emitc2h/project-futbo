@@ -39,9 +39,10 @@ extends Node3D
 @onready var model_anim_tree: AnimationTree = $"TrackTransformContainer/DroneModel/AnimationTree"
 @onready var anim_state: AnimationNodeStateMachinePlayback
 
+## Impact
 var signal_id: int
-var shockwave_ready: bool = false
-
+var dive_impact_ready: bool = false
+var dive_impact_scene: PackedScene = preload("res://scenes/enemies/drone/drone_dive_impact.tscn")
 
 func _ready() -> void:
 	## initialize the internal representation
@@ -274,8 +275,8 @@ func disable_proximity_detector() -> void:
 
 ## Other Controls
 ## ---------------------------------------
-func prepare_shockwave() -> void:
-	shockwave_ready = true
+func prepare_dive_impact() -> void:
+	dive_impact_ready = true
 
 
 ## Hitbox
@@ -330,6 +331,9 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 	if body is StaticBody3D:
 		var sb: StaticBody3D = body
 		if sb.get_collision_layer_value(2):
-			if shockwave_ready:
-				print("shockwave")
-				shockwave_ready = false
+			if dive_impact_ready:
+				var diveImpactNode: Node3D = dive_impact_scene.instantiate()
+				diveImpactNode.global_position = rigid_node.global_position - Vector3.UP * 0.5
+				get_tree().current_scene.add_child(diveImpactNode)
+				print("dive impact")
+				dive_impact_ready = false
