@@ -14514,6 +14514,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ipcb2")
 [node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="TrackPositionContainer" index="1"]
 strength = 65.0
 attenuation = 2.0
+cull_mask = 4293918721
 radius = 10.0
 
 [node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="TrackPositionContainer" index="2"]

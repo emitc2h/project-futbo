@@ -35,8 +35,9 @@ shapes/collision/contact_color=Color(0.88, 0.1, 1, 1)
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=3840
+window/size/viewport_height=2160
+window/size/mode=3
 window/stretch/mode="viewport"
 window/vsync/vsync_mode=2
 
@@ -220,6 +221,13 @@ warp={
 
 [layer_names]
 
+3d_render/layer_1="terrain"
+3d_render/layer_2="character"
+3d_render/layer_3="character VFX"
+3d_render/layer_4="enemy"
+3d_render/layer_5="enemy VFX"
+3d_render/layer_6="control node"
+3d_render/layer_7="control node VFX"
 2d_physics/layer_1="Player"
 3d_physics/layer_1="Player"
 2d_physics/layer_2="Terrain"

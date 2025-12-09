@@ -30,9 +30,11 @@ transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 surface_material_override/0 = ExtResource("3_uxj54")
 
 [node name="ShieldMesh" parent="ControlNodeModel" index="1"]
+layers = 4
 surface_material_override/0 = ExtResource("3_bbe66")
 
 [node name="DistortionShieldMesh" parent="ControlNodeModel" index="2"]
+layers = 4
 surface_material_override/0 = ExtResource("3_ndvbx")
 
 [node name="Light" type="OmniLight3D" parent="."]

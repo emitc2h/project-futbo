@@ -5,7 +5,8 @@ extends BTCondition
 var drone: Drone
 
 const DRIBBLING: String = "dribbling"
-@export_enum(DRIBBLING) var var_type: String
+const DEAD: String = "dead"
+@export_enum(DRIBBLING, DEAD) var var_type: String
 @export var is_not: bool = false
 
 
@@ -26,6 +27,8 @@ func _tick(_delta: float) -> Status:
 	match(var_type):
 		DRIBBLING:
 			test_value = drone.repr.playerRepresentation.player_is_dribbling
+		DEAD:
+			test_value = drone.repr.playerRepresentation.player_is_dead
 	
 	if is_not:
 		test_value = !test_value
