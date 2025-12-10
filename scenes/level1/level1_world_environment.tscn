@@ -15,10 +15,10 @@ light_intensity_lux = 50000.0
 light_temperature = 4200.0
 light_energy = 7.0
 shadow_enabled = true
-directional_shadow_split_1 = 0.04
+directional_shadow_mode = 1
 directional_shadow_split_2 = 0.11
 directional_shadow_split_3 = 0.33
-directional_shadow_max_distance = 200.0
+directional_shadow_blend_splits = true
 
 [node name="Act1SkyBox" parent="." instance=ExtResource("1_clr1m")]
 parallax_factor = 0.015

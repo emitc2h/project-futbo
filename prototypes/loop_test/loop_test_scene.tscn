@@ -114,6 +114,7 @@ transform = Transform3D(0.915047, -0.100396, -0.390652, 0.261921, 0.88444, 0.386
 light_intensity_lux = 50000.0
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
+directional_shadow_mode = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(70.6045, 0, -70.8167, 0, 1, 0, 70.8167, 0, 70.6045, 0, 0, 0)
@@ -375,7 +376,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8656, 0, -12.6798)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1447, 0, -1.92601)
 
 [node name="Grass" type="Node3D" parent="Props"]
-transform = Transform3D(1.77773, 0, 0, 0, 1, 0, 0, 0, 2.29965, 0, -0.0710142, -4.28457)
+transform = Transform3D(1.77773, 0, 0, 0, 1, 0, 0, 0, 2.29965, 0, -0.005638998, -5.638559)
+visible = false
 
 [node name="LightGrassRandomPatch6MMixed1" parent="Props/Grass" instance=ExtResource("11_pv0wt")]
 transform = Transform3D(0.0109604, 0, 0.99994, 0, 1, 0, -0.99994, 0, 0.0109604, -8.50588, -0.0734396, 7.14017)

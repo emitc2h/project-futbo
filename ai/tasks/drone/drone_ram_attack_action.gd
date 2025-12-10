@@ -11,6 +11,7 @@ var drone: Drone
 var signal_id: int
 var face_away_id: int
 var face_toward_id: int
+var open_at_end_id: int
 var facing_target_at_end_id: int
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var time_elapsed_closed: float
@@ -33,7 +34,11 @@ var proximity_detector_disabled: bool
 var is_bursting_back: bool
 var is_done_bursting_back: bool
 var is_closed: bool
+var is_char_and_defendable_again: bool
+var is_opening_at_end: bool
+var is_open_at_end: bool
 var is_facing_target_at_end: bool
+var is_done_facing_target_at_end: bool
 
 ##########################################
 ## ACTION LOGIC                        ##
@@ -42,8 +47,8 @@ func _setup() -> void:
 	drone = agent as Drone
 	drone.open_finished.connect(_on_open_finished)
 	drone.stop_engines_finished.connect(_on_stop_engines_finished)
-	drone.face_left_finished.connect(_on_face_finished)
-	drone.face_right_finished.connect(_on_face_finished)
+	drone.face_toward_finished.connect(_on_face_finished)
+	drone.face_away_finished.connect(_on_face_finished)
 	drone.quick_close_finished.connect(_on_quick_close_finished)
 
 
@@ -53,6 +58,7 @@ func _enter() -> void:
 	
 	face_away_id = rng.randi()
 	face_toward_id = rng.randi()
+	open_at_end_id = rng.randi()
 	facing_target_at_end_id = rng.randi()
 	
 	probe_initial_state()
@@ -66,6 +72,11 @@ func _enter() -> void:
 	is_done_bursting_back = false
 	is_bursting_back = false
 	is_closed = false
+	is_char_and_defendable_again = false
+	is_opening_at_end = false
+	is_open_at_end = false
+	is_facing_target_at_end = false
+	is_done_facing_target_at_end = false
 	
 	time_elapsed_closed = 0.0
 
@@ -142,12 +153,21 @@ func _tick(delta: float) -> Status:
 		time_elapsed_closed += delta
 		return RUNNING
 	
-	drone.become_char()
-	drone.become_defendable()
-	drone.open()
-	drone.face_toward(drone.targeting_states.target.global_position.x, facing_target_at_end_id)
+	if not is_char_and_defendable_again:
+		drone.become_char()
+		drone.become_defendable()
+		is_char_and_defendable_again = true
 	
-	if not is_facing_target_at_end:
+	if not is_open_at_end:
+		if not is_opening_at_end:
+			drone.open(open_at_end_id)
+			is_opening_at_end = true
+		return RUNNING
+	
+	if not is_done_facing_target_at_end:
+		if not is_facing_target_at_end:
+			drone.face_toward(drone.targeting_states.target.global_position.x, facing_target_at_end_id)
+			is_facing_target_at_end = true
 		return RUNNING
 	
 	drone.enable_targeting()
@@ -201,6 +221,8 @@ func probe_initial_state() -> void:
 func _on_open_finished(id: int) -> void:
 	if signal_id == id:
 		is_open = true
+	if open_at_end_id == id:
+		is_open_at_end = true
 
 
 func _on_stop_engines_finished(id: int) -> void:
@@ -214,7 +236,7 @@ func _on_face_finished(id: int) -> void:
 	if face_toward_id == id:
 		has_turned_back_toward_player = true
 	if facing_target_at_end_id == id:
-		is_facing_target_at_end = true
+		is_done_facing_target_at_end = true
 
 
 func _on_quick_close_finished(id: int) -> void:
