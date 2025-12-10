@@ -74,41 +74,55 @@ func get_global_pos_x() -> float:
 
 ## Direction Controls
 ## ---------------------------------------
-signal face_toward_finished(id: int)
 signal face_right_finished(id: int)
-
 func face_right(id: int = 0) -> void:
 	if not direction_faced_states.state == direction_faced_states.State.FACE_RIGHT:
 		sc.send_event(direction_faced_states.TRANS_TO_TURN_RIGHT)
 		await direction_faced_states.is_now_facing_right
 	face_right_finished.emit(id)
-	face_toward_finished.emit(id)
 
 
 signal face_left_finished(id: int)
-
 func face_left(id: int = 0) -> void:
 	if not direction_faced_states.state == direction_faced_states.State.FACE_LEFT:
 		sc.send_event(direction_faced_states.TRANS_TO_TURN_LEFT)
 		await direction_faced_states.is_now_facing_left
 	face_left_finished.emit(id)
+
+
+func is_facing_toward(x: float) -> bool:
+	## If x is to the right of the drone, drone should face right
+	if x > char_node.global_position.x:
+		return direction_faced_states.state == direction_faced_states.State.FACE_RIGHT
+	## If x is to the right of the drone, drone should face left
+	else:
+		return direction_faced_states.state == direction_faced_states.State.FACE_LEFT
+
+
+signal face_toward_finished(id: int)
+func face_toward(x: float, id: int = 0) -> void:
+	if not is_facing_toward(x):
+		## If x is to the right of the drone, drone should face right
+		if x > char_node.global_position.x:
+			face_right(id)
+			await face_right_finished
+		else:
+			face_left(id)
+			await face_left_finished
 	face_toward_finished.emit(id)
 
 
-func face_toward(x: float, id: int = 0) -> void:
-	## If x is to the right of the drone, drone should face right
-	if x > char_node.global_position.x:
-		face_right(id)
-	else:
-		face_left(id)
-
-
+signal face_away_finished(id: int)
 func face_away(x: float, id: int = 0) -> void:
-	## If x is to the right of the drone, drone should face left
-	if x > char_node.global_position.x:
-		face_left(id)
-	else:
-		face_right(id)
+	if is_facing_toward(x):
+		## If x is to the right of the drone, drone should face left
+		if x > char_node.global_position.x:
+			face_left(id)
+			await face_left_finished
+		else:
+			face_right(id)
+			await face_right_finished
+	face_away_finished.emit(id)
 
 
 ## Movement Controls
@@ -152,7 +166,6 @@ func _on_target_velocity_reached() -> void:
 ## Engagement Controls
 ## ---------------------------------------
 signal open_finished(id: int)
-
 func open(id: int = 0) -> void:
 	if not anim_state.get_current_node() in ["open up", "open", "targeting"]:
 		anim_state.travel("open up")
@@ -162,7 +175,6 @@ func open(id: int = 0) -> void:
 
 
 signal close_finished(id: int)
-
 func close(id: int = 0) -> void:
 	if not anim_state.get_current_node() in ["close up", "close", "quick close", "thrust close"]:
 		anim_state.travel("close up")

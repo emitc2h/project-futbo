@@ -12,7 +12,9 @@ var signal_id: int
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var time_elapsed: float
 
+var is_opening: bool
 var is_open: bool
+var engines_stopping: bool
 var engines_are_off: bool
 var is_defendable: bool
 
@@ -21,6 +23,8 @@ var is_defendable: bool
 ##########################################
 func _setup() -> void:
 	drone = agent as Drone
+	drone.open_finished.connect(_on_open_finished)
+	drone.stop_engines_finished.connect(_on_stop_engines_finished)
 
 
 func _enter() -> void:
@@ -38,12 +42,15 @@ func _tick(delta: float) -> Status:
 	if time_elapsed > timeout:
 		return SUCCESS
 	
-	## Launch the command to open the drone async
 	if not is_open:
-		drone.open()
+		if not is_opening:
+			drone.open(signal_id)
+			is_opening = true
 		
 	if not engines_are_off:
-		drone.stop_engines()
+		if not engines_stopping:
+			drone.stop_engines(signal_id)
+			engines_stopping = true
 		engines_are_off = true
 	
 	if not is_defendable:
@@ -59,14 +66,22 @@ func _tick(delta: float) -> Status:
 ##########################################
 func probe_initial_state() -> void:
 	match(drone.engagement_mode_states.state):
-		drone.engagement_mode_states.State.OPENING, drone.engagement_mode_states.State.OPEN:
+		drone.engagement_mode_states.State.OPENING:
+			is_opening = true
+			is_open = false
+		drone.engagement_mode_states.State.OPEN:
+			is_opening = false
 			is_open = true
 		_:
 			is_open = false
 	
 	match(drone.engines_states.state):
+		drone.engines_states.State.STOPPING:
+			engines_are_off = false
+			engines_stopping = true
 		drone.engines_states.State.OFF:
 			engines_are_off = true
+			engines_stopping = false
 		_:
 			engines_are_off = false
 	
@@ -75,3 +90,16 @@ func probe_initial_state() -> void:
 			is_defendable = true
 		_:
 			is_defendable = false
+
+
+##########################################
+## SIGNALS                             ##
+##########################################
+func _on_open_finished(id: int) -> void:
+	if signal_id == id:
+		is_open = true
+
+
+func _on_stop_engines_finished(id: int) -> void:
+	if signal_id == id:
+		engines_are_off = true
