@@ -133,3 +133,10 @@ func _on_check_button_toggled(_toggled_on: bool) -> void:
 func _on_target_bob_button_toggled(_toggled_on: bool) -> void:
 	target_left.bob = !target_left.bob
 	target_right.bob = !target_right.bob
+
+
+## ACTIONS
+## ==================================
+func _on_jump_button_pressed() -> void:
+	## PI/2 to accelerate straight up
+	drone.accelerate(PI/2, 60.0, 12.0)

@@ -33,6 +33,7 @@ extends Node3D
 @onready var repr: DroneInternalRepresentation = $InternalRepresentation
 @onready var shield: DroneShield = $TrackPositionContainer/DroneShield
 @onready var track_position_container: Node3D = $TrackPositionContainer
+@onready var float_distortion_animation: DroneFloatDistortionAnimation = $FloatDistortionAnimation
 
 ## Animation nodes
 @onready var model: DroneModel = $TrackTransformContainer/DroneModel
@@ -124,9 +125,9 @@ func stop_moving(delta: float, lerp_factor: float = 10.0) -> void:
 	physics_mode_states.left_right_axis = lerp(physics_mode_states.left_right_axis, 0.0, lerp_factor * delta)
 
 
-func track_target(offset: float, delta: float) -> void:
+func track_target(offset: float, delta: float, id: int = 0) -> void:
 	var target_x: float = targeting_states.target.global_position.x
-	face_toward(target_x)
+	face_toward(target_x, id)
 	var offset_sign: float = sign(char_node.global_position.x - target_x)
 	move_toward_x_pos(target_x + offset_sign * offset, delta)
 
@@ -134,6 +135,7 @@ func track_target(offset: float, delta: float) -> void:
 signal accelerate_finished(id: int)
 
 func accelerate(angle: float, acceleration: float, target_velocity: float, id: int = 0) -> void:
+	float_distortion_animation.drone_jump(0.5)
 	physics_mode_states.target_velocity = target_velocity
 	physics_mode_states.additional_x_acc = cos(angle) * acceleration
 	physics_mode_states.additional_y_acc = sin(angle) * acceleration

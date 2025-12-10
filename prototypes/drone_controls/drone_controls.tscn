@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bhpakjvwrso0o"]
+[gd_scene load_steps=17 format=3 uid="uid://bhpakjvwrso0o"]
 
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="1_8gdpk"]
 [ext_resource type="Script" uid="uid://bdp0724vtej6g" path="res://prototypes/drone_controls/drone_controls.gd" id="1_nhjp0"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bc323ftwy8i7t" path="res://scenes/enemies/drone/drone.tscn" id="4_5guql"]
 [ext_resource type="Script" uid="uid://bn1l2muisrfkd" path="res://prototypes/drone_controls/target_mesh.gd" id="6_nhjp0"]
 [ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="7_dyyi7"]
+[ext_resource type="PackedScene" uid="uid://d4joyty534fc" path="res://scenes/utilities/optimization/particles_preloader.tscn" id="8_5guql"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ljxl"]
 albedo_texture = ExtResource("2_nhjp0")
@@ -242,6 +243,20 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Fire"
 
+[node name="ActionsVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/ActionsVContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Actions"
+horizontal_alignment = 1
+
+[node name="JumpButton" type="Button" parent="Interface/ColorRect/Rows/Row2/ActionsVContainer"]
+layout_mode = 2
+text = "Jump"
+
 [node name="Row3" type="HBoxContainer" parent="Interface/ColorRect/Rows"]
 layout_mode = 2
 
@@ -300,6 +315,8 @@ surface_material_override/0 = ExtResource("7_dyyi7")
 shape = SubResource("ConvexPolygonShape3D_tir8y")
 disabled = true
 
+[node name="ParticlesPreloader" parent="." instance=ExtResource("8_5guql")]
+
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/CharacterModeButton" to="." method="_on_character_mode_button_pressed"]
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/RigidModeButton" to="." method="_on_rigid_mode_button_pressed"]
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/RagdollModeButton" to="." method="_on_ragdoll_mode_button_pressed"]
@@ -320,5 +337,6 @@ disabled = true
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row2/EnginesVContainer/StopButton" to="." method="_on_stop_button_pressed"]
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row2/EnginesVContainer/QuickStopButton" to="." method="_on_quick_stop_button_pressed"]
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row2/SpinnersVContainer/FireButton" to="." method="_on_fire_button_pressed"]
+[connection signal="pressed" from="Interface/ColorRect/Rows/Row2/ActionsVContainer/JumpButton" to="." method="_on_jump_button_pressed"]
 [connection signal="toggled" from="Interface/ColorRect/Rows/Row3/VBoxContainer/BlockButton" to="." method="_on_check_button_toggled"]
 [connection signal="toggled" from="Interface/ColorRect/Rows/Row3/VBoxContainer/TargetBobButton" to="." method="_on_target_bob_button_toggled"]

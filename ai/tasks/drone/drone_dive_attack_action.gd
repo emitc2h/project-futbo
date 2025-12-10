@@ -25,6 +25,7 @@ var is_accelerating_up: bool
 var is_done_accelerating_up: bool
 var is_closing: bool
 var is_closed: bool
+var is_facing_target_at_end: bool
 
 
 ##########################################
@@ -36,6 +37,8 @@ func _setup() -> void:
 	drone.stop_engines_finished.connect(_on_stop_engines_finished)
 	drone.accelerate_finished.connect(_on_accelerate_finished)
 	drone.quick_close_finished.connect(_on_quick_close_finished)
+	drone.face_left_finished.connect(_on_face_finished)
+	drone.face_right_finished.connect(_on_face_finished)
 
 
 func _enter() -> void:
@@ -49,6 +52,7 @@ func _enter() -> void:
 	is_done_accelerating_up = false
 	is_closing = false
 	is_closed = false
+	is_facing_target_at_end = false
 	
 	time_elapsed_closed = 0.0
 
@@ -100,9 +104,13 @@ func _tick(delta: float) -> Status:
 		return RUNNING
 	
 	drone.become_char()
-	drone.face_toward(drone.targeting_states.target.global_position.x)
 	drone.become_defendable()
 	drone.open()
+	drone.face_toward(drone.targeting_states.target.global_position.x, signal_id)
+	
+	if not is_facing_target_at_end:
+		return RUNNING
+	
 	drone.enable_targeting()
 	drone.enable_proximity_detector()
 	
@@ -176,3 +184,8 @@ func _on_accelerate_finished(id: int) -> void:
 func _on_quick_close_finished(id: int) -> void:
 	if signal_id == id:
 		is_closed = true
+
+
+func _on_face_finished(id: int) -> void:
+	if signal_id == id:
+		is_facing_target_at_end = true
