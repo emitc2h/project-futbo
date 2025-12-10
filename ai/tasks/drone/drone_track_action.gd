@@ -50,7 +50,7 @@ func _tick(delta: float) -> Status:
 		drone.become_defendable()
 		is_defendable = true
 	
-	drone.track_target(default_offset + blackboard.get_var(offset, 0.0), delta)
+	drone.track_target(default_offset + blackboard.get_var(offset, 0.0), delta, signal_id)
 	return RUNNING
 
 

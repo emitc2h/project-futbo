@@ -46,9 +46,6 @@ func _ready() -> void:
 func _on_closed_state_entered() -> void:
 	state = State.CLOSED
 	
-	## Set the float distortion mesh position
-	float_distortion_animation.drone_closed_position()
-	
 	## Approximate the shape of the drone when closed (sphere: capsule.height == 2 * capsule.radius)
 	collision_shape_capsule.height = closed_collision_capsule_height
 	collision_shape_capsule.radius = closed_collision_capsule_radius
@@ -64,15 +61,14 @@ func _on_closed_state_exited() -> void:
 #----------------------------------------
 func _on_opening_state_entered() -> void:
 	state = State.OPENING
+	await get_tree().create_timer(0.3).timeout
+	float_distortion_animation.drone_open(1.5)
 
 
 # open state
 #----------------------------------------
 func _on_open_state_entered() -> void:
 	state = State.OPEN
-
-	## Set the float distortion mesh position
-	float_distortion_animation.drone_open_position()
 	
 	## Approximate the shape of the drone when opened
 	collision_shape_capsule.height = open_collision_capsule_height
@@ -84,15 +80,17 @@ func _on_open_state_entered() -> void:
 # closing state
 #----------------------------------------
 func _on_closing_state_entered() -> void:
-	model.spinners_disengage_target()
 	state = State.CLOSING
+	model.spinners_disengage_target()
+	float_distortion_animation.drone_close(1.5)
 
 
 # quick close state
 #----------------------------------------
 func _on_quick_close_state_entered() -> void:
-	model.spinners_disengage_target()
 	state = State.QUICK_CLOSE
+	model.spinners_disengage_target()
+	float_distortion_animation.drone_close(0.2)
 
 
 # signal handling

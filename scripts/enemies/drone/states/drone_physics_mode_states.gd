@@ -97,7 +97,7 @@ func _on_char_state_entered() -> void:
 	speed = engines_states.off_speed
 
 	## Turn on float distortion
-	float_distortion_animation.turn_on()
+	float_distortion_animation.turn_on(1.0)
 	
 	## Turn on collision shape
 	collision_shape_char.disabled = false
@@ -152,7 +152,7 @@ func _on_char_state_physics_processing(delta: float) -> void:
 
 func _on_char_state_exited() -> void:	
 	## turn off the float distortion
-	float_distortion_animation.turn_off()
+	float_distortion_animation.turn_off(0.5)
 	
 	## Turn off collision shape
 	collision_shape_char.disabled = true
