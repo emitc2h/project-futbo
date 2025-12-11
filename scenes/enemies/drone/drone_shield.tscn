@@ -5,7 +5,7 @@
 [ext_resource type="Material" uid="uid://c8gqdee3l4wgm" path="res://assets/3D/Particles/dart/dart_material.tres" id="3_quikv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nbgyc"]
-bounce = 1.0
+bounce = 0.18
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6kxxw"]
 margin = 0.1

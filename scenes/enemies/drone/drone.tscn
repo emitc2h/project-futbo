@@ -30,7 +30,7 @@ height = 1.02
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2myhj"]
 friction = 0.5
-bounce = 0.26
+bounce = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_md0p7"]
 radius = 0.51341
@@ -601,8 +601,8 @@ event = &"Behavior: to between patrol markers"
 delay_in_seconds = "0.0"
 
 [node name="CharNode" type="CharacterBody3D" parent="." groups=["DroneGroup"]]
-collision_layer = 256
-collision_mask = 7
+collision_layer = 0
+collision_mask = 3
 axis_lock_linear_z = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode"]

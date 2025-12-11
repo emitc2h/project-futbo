@@ -14610,7 +14610,6 @@ metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 [connection signal="state_entered" from="State/Root/Power/On/Shield/dissipating" to="State/Root/Power/On/Shield/Shield States" method="_on_dissipating_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/discharging" to="State/Root/Power/Power States" method="_on_discharging_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/blow" to="State/Root/Power/Power States" method="_on_blow_state_entered"]
-[connection signal="body_entered" from="RigidNode" to="State/Root/Physics/Physics States" method="_on_rigid_node_body_entered"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Physics/Physics States" method="_on_animation_state_finished"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/Power States" method="_on_animation_state_finished"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/On/Charge/Charge States" method="_on_animation_state_finished"]

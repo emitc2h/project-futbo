@@ -75,7 +75,7 @@ signal target_velocity_reached
 func _ready() -> void:
 	collision_shape_rigid.disabled = true
 	collision_shape_char.disabled = false
-	set_ragdoll_collisions(false)
+	set_ragdoll_collisions(true)
 	reset_float_cast_length()
 
 
