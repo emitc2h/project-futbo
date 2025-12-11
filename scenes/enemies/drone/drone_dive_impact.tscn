@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://vs8nfy8j12d8" path="res://assets/3D/Enemies/Drone/drone_dive_impact_shockwave.glb" id="1_v5xiw"]
 [ext_resource type="Script" uid="uid://c58hhi4lia3w" path="res://scripts/enemies/drone/drone_dive_impact.gd" id="2_bvfu7"]
-[ext_resource type="Material" uid="uid://br5ojrodx245g" path="res://assets/3D/Enemies/Drone/materials/shield_material.tres" id="3_cr5lp"]
+[ext_resource type="Material" uid="uid://br5ojrodx245g" path="res://assets/3D/Enemies/Drone/materials/shield_material.tres" id="3_5ncvi"]
 [ext_resource type="Texture2D" uid="uid://cxd6hv2slvcv6" path="res://assets/3D/Particles/dust/dust_color.png" id="3_r8wtf"]
 [ext_resource type="Texture2D" uid="uid://bxkwkkirfpcy8" path="res://assets/3D/Particles/dust/dust_fuzzy_color.png" id="4_cr5lp"]
 [ext_resource type="Texture2D" uid="uid://k7jwo1rrexr6" path="res://assets/3D/Enemies/Drone/Impact/impact_color.png" id="5_d8ay8"]
@@ -45,7 +45,7 @@ curve = SubResource("Curve_bu2w5")
 offsets = PackedFloat32Array(0, 0.64615387, 1)
 colors = PackedColorArray(0.3538325, 0.21160424, 0.10256722, 1, 0.35, 0.20918334, 0.101500005, 0, 0.35, 0.20918334, 0.101500005, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_dhddi"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5ncvi"]
 gradient = SubResource("Gradient_tvth8")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dm7nj"]
@@ -57,11 +57,11 @@ gravity = Vector3(0, -7, 0)
 radial_accel_min = -5.000002
 radial_accel_max = -3.0000021
 scale_min = 0.29999998
-color_ramp = SubResource("GradientTexture1D_dhddi")
+color_ramp = SubResource("GradientTexture1D_5ncvi")
 alpha_curve = SubResource("CurveTexture_dhddi")
 anim_offset_max = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc7o7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5v1cd"]
 transparency = 1
 no_depth_test = true
 vertex_color_use_as_albedo = true
@@ -75,7 +75,7 @@ particles_anim_v_frames = 4
 particles_anim_loop = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_wq5a5"]
-material = SubResource("StandardMaterial3D_lc7o7")
+material = SubResource("StandardMaterial3D_5v1cd")
 size = Vector2(2, 2)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ncvi"]
@@ -86,7 +86,8 @@ height = 0.7
 script = ExtResource("2_bvfu7")
 
 [node name="Shockwave" parent="." index="0"]
-surface_material_override/0 = ExtResource("3_cr5lp")
+layers = 16
+surface_material_override/0 = ExtResource("3_5ncvi")
 
 [node name="DustParticles" type="GPUParticles3D" parent="." index="1"]
 layers = 2

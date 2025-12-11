@@ -18,7 +18,7 @@ func _ready() -> void:
 	dust_fuzzy_particles.one_shot = true
 	dust_fuzzy_particles.emitting = true
 	
-	await _animate_shockwave(0.8)
+	await _animate_shockwave(0.5)
 	shockwave_mesh.queue_free()
 	hitbox_left.queue_free()
 	hitbox_right.queue_free()
@@ -47,31 +47,31 @@ func _animate_shockwave(duration: float) -> void:
 	var tw_scale: Tween = create_tween()
 	tw_scale.tween_property(shockwave_mesh, "scale", Vector3(final_shockwave_scale, 2.0, final_shockwave_scale), duration)\
 		.set_ease(Tween.EASE_OUT)\
-		.set_trans(Tween.TRANS_QUART)\
+		.set_trans(Tween.TRANS_SINE)\
 		.from(Vector3(0.4, 1.0, 0.4))
 	
 	var tw_dissolve_in: Tween = create_tween()
 	tw_dissolve_in.tween_property(shockwave_material, "shader_parameter/dissolve_value_in", 1.0, duration)\
 		.set_ease(Tween.EASE_OUT)\
-		.set_trans(Tween.TRANS_QUAD)\
+		.set_trans(Tween.TRANS_LINEAR)\
 		.from(0.0)
 	
 	var tw_dissolve_out: Tween = create_tween()
 	tw_dissolve_out.tween_property(shockwave_material, "shader_parameter/dissolve_value_out", 0.0, duration)\
 		.set_ease(Tween.EASE_IN)\
-		.set_trans(Tween.TRANS_QUAD)\
+		.set_trans(Tween.TRANS_LINEAR)\
 		.from(1.0)
 	
 	var tw_hb_left: Tween = create_tween()
 	tw_hb_left.tween_property(hitbox_left, "position", Vector3(-(final_shockwave_scale + 0.05), 0.5, 0.0), duration)\
 		.set_ease(Tween.EASE_OUT)\
-		.set_trans(Tween.TRANS_QUART)\
+		.set_trans(Tween.TRANS_SINE)\
 		.from(Vector3(-0.3, 0.5, 0.0))
 	
 	var tw_hb_right: Tween = create_tween()
 	tw_hb_right.tween_property(hitbox_right, "position", Vector3(final_shockwave_scale + 0.05, 0.5, 0.0), duration)\
 		.set_ease(Tween.EASE_OUT)\
-		.set_trans(Tween.TRANS_QUART)\
+		.set_trans(Tween.TRANS_SINE)\
 		.from(Vector3(0.3, 0.5, 0.0))
 	
 	await get_tree().create_timer(0.8 * duration).timeout
