@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d4joyty534fc"]
 
 [ext_resource type="Script" uid="uid://dhhk03rscmxp4" path="res://scripts/utilities/optimization/particles_preloader.gd" id="1_vmmxc"]
-[ext_resource type="PackedScene" uid="uid://dvpp2jwyv8806" path="res://scenes/enemies/drone/drone_dive_impact.tscn" id="2_6854v"]
+[ext_resource type="PackedScene" uid="uid://bb06yvpaxg85c" path="res://scenes/enemies/drone/drone_dive_impact.tscn" id="2_6854v"]
 
 [node name="ParticlesPreloader" type="Node3D"]
 script = ExtResource("1_vmmxc")

@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode blend_add, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;
+render_mode blend_add, depth_draw_opaque, cull_disabled, unshaded;
 
 group_uniforms Albedo;
 uniform sampler2D texture_albedo : source_color;

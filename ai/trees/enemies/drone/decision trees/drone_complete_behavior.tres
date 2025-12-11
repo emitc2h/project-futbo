@@ -143,7 +143,7 @@ children = [SubResource("BTCondition_65x83"), SubResource("BTProbabilitySelector
 
 [sub_resource type="BTAction" id="BTAction_bnf7k"]
 script = ExtResource("8_v0ahm")
-metadata/_weight_ = 0.0
+metadata/_weight_ = 0.2
 
 [sub_resource type="BTAction" id="BTAction_wyg27"]
 script = ExtResource("5_ntcwm")
@@ -151,7 +151,7 @@ metadata/_weight_ = 0.35
 
 [sub_resource type="BTAction" id="BTAction_65x83"]
 script = ExtResource("11_65x83")
-metadata/_weight_ = 0.0
+metadata/_weight_ = 0.45
 
 [sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_8hvrt"]
 children = [SubResource("BTAction_bnf7k"), SubResource("BTAction_wyg27"), SubResource("BTAction_65x83")]

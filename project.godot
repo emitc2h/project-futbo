@@ -240,6 +240,7 @@ warp={
 3d_physics/layer_9="Enemy Collision"
 3d_physics/layer_10="Enemy Ragdoll"
 3d_physics/layer_11="Enemy Shield"
+3d_physics/layer_12="Enemy Energy"
 2d_physics/layer_32="void"
 
 [physics]

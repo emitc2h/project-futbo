@@ -1,12 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://dvpp2jwyv8806"]
+[gd_scene load_steps=19 format=3 uid="uid://bb06yvpaxg85c"]
 
-[ext_resource type="Script" uid="uid://c58hhi4lia3w" path="res://scripts/enemies/drone/drone_dive_impact.gd" id="1_b37mp"]
-[ext_resource type="Texture2D" uid="uid://cxd6hv2slvcv6" path="res://assets/3D/Particles/dust/dust_color.png" id="2_apby3"]
-[ext_resource type="Texture2D" uid="uid://bxkwkkirfpcy8" path="res://assets/3D/Particles/dust/dust_fuzzy_color.png" id="3_6fykj"]
-[ext_resource type="Texture2D" uid="uid://k7jwo1rrexr6" path="res://assets/3D/Enemies/Drone/Impact/impact_color.png" id="4_dkiyc"]
-[ext_resource type="Texture2D" uid="uid://1rqi1ej4l713" path="res://assets/3D/Enemies/Drone/Impact/impact_normal.png" id="5_dhddi"]
+[ext_resource type="PackedScene" uid="uid://vs8nfy8j12d8" path="res://assets/3D/Enemies/Drone/drone_dive_impact_shockwave.glb" id="1_v5xiw"]
+[ext_resource type="Script" uid="uid://c58hhi4lia3w" path="res://scripts/enemies/drone/drone_dive_impact.gd" id="2_bvfu7"]
+[ext_resource type="Material" uid="uid://br5ojrodx245g" path="res://assets/3D/Enemies/Drone/materials/shield_material.tres" id="3_cr5lp"]
+[ext_resource type="Texture2D" uid="uid://cxd6hv2slvcv6" path="res://assets/3D/Particles/dust/dust_color.png" id="3_r8wtf"]
+[ext_resource type="Texture2D" uid="uid://bxkwkkirfpcy8" path="res://assets/3D/Particles/dust/dust_fuzzy_color.png" id="4_cr5lp"]
+[ext_resource type="Texture2D" uid="uid://k7jwo1rrexr6" path="res://assets/3D/Enemies/Drone/Impact/impact_color.png" id="5_d8ay8"]
+[ext_resource type="Texture2D" uid="uid://1rqi1ej4l713" path="res://assets/3D/Enemies/Drone/Impact/impact_normal.png" id="6_enfmf"]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vv3ce"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_upo3n"]
 direction = Vector3(0, 1, 0)
 initial_velocity_min = 2.0
 initial_velocity_max = 8.0
@@ -19,7 +21,7 @@ anim_offset_max = 1.0
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
-albedo_texture = ExtResource("2_apby3")
+albedo_texture = ExtResource("3_r8wtf")
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 billboard_mode = 3
@@ -28,25 +30,25 @@ particles_anim_h_frames = 4
 particles_anim_v_frames = 4
 particles_anim_loop = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_b37mp"]
+[sub_resource type="QuadMesh" id="QuadMesh_c45ri"]
 material = SubResource("StandardMaterial3D_6fykj")
 size = Vector2(0.2, 0.2)
 
-[sub_resource type="Curve" id="Curve_dkiyc"]
+[sub_resource type="Curve" id="Curve_bu2w5"]
 _data = [Vector2(0.008710802, 0.99808776), 0.0, 0.0, 0, 0, Vector2(0.6062718, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_dhddi"]
-curve = SubResource("Curve_dkiyc")
+curve = SubResource("Curve_bu2w5")
 
-[sub_resource type="Gradient" id="Gradient_dkiyc"]
+[sub_resource type="Gradient" id="Gradient_tvth8"]
 offsets = PackedFloat32Array(0, 0.64615387, 1)
 colors = PackedColorArray(0.3538325, 0.21160424, 0.10256722, 1, 0.35, 0.20918334, 0.101500005, 0, 0.35, 0.20918334, 0.101500005, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_dhddi"]
-gradient = SubResource("Gradient_dkiyc")
+gradient = SubResource("Gradient_tvth8")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6fykj"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dm7nj"]
 direction = Vector3(0, 1, 0)
 spread = 75.0
 initial_velocity_min = 2.0
@@ -63,7 +65,7 @@ anim_offset_max = 1.0
 transparency = 1
 no_depth_test = true
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("3_6fykj")
+albedo_texture = ExtResource("4_cr5lp")
 backlight_enabled = true
 backlight = Color(0.6610811, 0.66108096, 0.66108096, 1)
 billboard_mode = 3
@@ -72,38 +74,59 @@ particles_anim_h_frames = 4
 particles_anim_v_frames = 4
 particles_anim_loop = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_dkiyc"]
+[sub_resource type="QuadMesh" id="QuadMesh_wq5a5"]
 material = SubResource("StandardMaterial3D_lc7o7")
 size = Vector2(2, 2)
 
-[node name="DroneDiveImpact" type="Node3D"]
-script = ExtResource("1_b37mp")
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ncvi"]
+radius = 0.2
+height = 0.7
 
-[node name="DustParticles" type="GPUParticles3D" parent="."]
+[node name="DroneDiveImpact" instance=ExtResource("1_v5xiw")]
+script = ExtResource("2_bvfu7")
+
+[node name="Shockwave" parent="." index="0"]
+surface_material_override/0 = ExtResource("3_cr5lp")
+
+[node name="DustParticles" type="GPUParticles3D" parent="." index="1"]
 layers = 2
-amount = 80
+amount = 120
 lifetime = 3.0
 explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_vv3ce")
-draw_pass_1 = SubResource("QuadMesh_b37mp")
+process_material = SubResource("ParticleProcessMaterial_upo3n")
+draw_pass_1 = SubResource("QuadMesh_c45ri")
 
-[node name="FuzzyParticles" type="GPUParticles3D" parent="."]
+[node name="FuzzyParticles" type="GPUParticles3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3080349, 0)
 layers = 2
-amount = 40
-lifetime = 2.0
+amount = 50
+lifetime = 3.0
 explosiveness = 1.0
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_6fykj")
-draw_pass_1 = SubResource("QuadMesh_dkiyc")
+process_material = SubResource("ParticleProcessMaterial_dm7nj")
+draw_pass_1 = SubResource("QuadMesh_wq5a5")
 
-[node name="CraterDecal" type="Decal" parent="."]
+[node name="CraterDecal" type="Decal" parent="." index="3"]
 size = Vector3(4.5, 0.2, 4.5)
-texture_albedo = ExtResource("4_dkiyc")
-texture_normal = ExtResource("5_dhddi")
+texture_albedo = ExtResource("5_d8ay8")
+texture_normal = ExtResource("6_enfmf")
 upper_fade = 0.1
 lower_fade = 0.1
 cull_mask = 1
 
-[connection signal="finished" from="DustParticles" to="." method="_on_dust_particles_finished"]
-[connection signal="finished" from="FuzzyParticles" to="." method="_on_fuzzy_particles_finished"]
+[node name="HitBoxLeft" type="Area3D" parent="." index="4"]
+transform = Transform3D(0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 0, 0, 1, 0, 0.35, 0)
+collision_layer = 2048
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBoxLeft" index="0"]
+shape = SubResource("CapsuleShape3D_5ncvi")
+
+[node name="HitBoxRight" type="Area3D" parent="." index="5"]
+transform = Transform3D(0.9659258, -0.25881904, 0, 0.25881904, 0.9659258, 0, 0, 0, 1, 0, 0.35, 0)
+collision_layer = 2048
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBoxRight" index="0"]
+shape = SubResource("CapsuleShape3D_5ncvi")
+
+[connection signal="body_entered" from="HitBoxLeft" to="." method="_on_hit_box_left_body_entered"]
+[connection signal="body_entered" from="HitBoxRight" to="." method="_on_hit_box_right_body_entered"]

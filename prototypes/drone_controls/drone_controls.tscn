@@ -65,8 +65,9 @@ shape = SubResource("WorldBoundaryShape3D_nc4hi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.998844, 0.00277772, 0.047985, 0, 0.998329, -0.0577906, -0.0480653, 0.0577238, 0.997175, -1.26748, 1.32559, 7.70359)
+transform = Transform3D(0.9999998, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000001, -2, 1.2, 8)
 fov = 50.3
+size = 8.491
 
 [node name="Interface" type="CanvasLayer" parent="."]
 
