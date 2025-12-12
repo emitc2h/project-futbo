@@ -86,6 +86,7 @@ height = 0.7
 script = ExtResource("2_bvfu7")
 
 [node name="Shockwave" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
 layers = 16
 surface_material_override/0 = ExtResource("3_5ncvi")
 

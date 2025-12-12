@@ -38,11 +38,11 @@ func _animate_shockwave(duration: float) -> void:
 	hitbox_left_col.disabled = false
 	hitbox_right_col.disabled = false
 	shockwave_material.set_shader_parameter("alpha", 1.0)
-	shockwave_material.set_shader_parameter("emission_energy", 1.0)
+	shockwave_material.set_shader_parameter("emission_energy", 25.0)
 	shockwave_material.set_shader_parameter("dissolve_value_in", 0.0)
 	shockwave_material.set_shader_parameter("dissolve_value_out", 1.0)
 	shockwave_material.set_shader_parameter("burn_size", 0.05)
-	shockwave_material.set_shader_parameter("burn_boost", 3.0)
+	shockwave_material.set_shader_parameter("burn_boost", 25.0)
 	
 	var tw_scale: Tween = create_tween()
 	tw_scale.tween_property(shockwave_mesh, "scale", Vector3(final_shockwave_scale, 2.0, final_shockwave_scale), duration)\
