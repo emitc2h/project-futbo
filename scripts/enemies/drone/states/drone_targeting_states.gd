@@ -5,7 +5,6 @@ extends Node
 @export_group("Dependencies")
 @export var drone: Drone
 @export var sc: StateChart
-@export var repr: DroneInternalRepresentation
 
 ## Parameters
 @export_group("Vision Parameters")
@@ -54,8 +53,9 @@ func scan_for_target() -> bool:
 	if field_of_view.sees_target:
 		if field_of_view.target.is_in_group("PlayerGroup"):
 			target = field_of_view.target.target_marker
-			repr.playerRepresentation.last_known_player_pos_x = field_of_view.target.global_position.x
-			repr.playerRepresentation.player_is_dribbling = field_of_view.target.is_dribbling()
+			drone.repr.update_player_repr_from_buffer()
+		elif field_of_view.target.is_in_group("ControlNodeGroup"):
+			drone.repr.update_control_node_repr_from_buffer()
 		else:
 			target = field_of_view.target
 			

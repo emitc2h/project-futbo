@@ -63,6 +63,8 @@ func _on_off_state_entered() -> void:
 	## When the control node turns off while being dribbled, it should turn back on immediately
 	if control_node.control_states.state == control_node.control_states.State.DRIBBLED:
 		sc.send_event(TRANS_TO_CHARGING)
+	
+	Representations.control_node_representation.power_on = false
 
 
 # charging state
@@ -97,6 +99,8 @@ func _on_on_state_entered() -> void:
 	physics_material.friction = 0.6
 	control_node.anim_state.travel(ON_STATE_ANIM)
 	control_node_power_is_on.emit()
+	
+	Representations.control_node_representation.power_on = true
 
 
 func _on_on_state_exited() -> void:

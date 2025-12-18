@@ -14502,6 +14502,10 @@ to = NodePath("../../off")
 event = &"Power: to off"
 delay_in_seconds = "0.0"
 
+[node name="RigidNode" parent="." index="1" groups=["ControlNodeGroup"]]
+
+[node name="CharNode" parent="." index="2" groups=["ControlNodeGroup"]]
+
 [node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" node_paths=PackedStringArray("wisps_particles", "ready_sphere") instance=ExtResource("7_2p3vg")]
 wisps_particles = NodePath("../../TrackPositionContainer/WispParticles3D")
 ready_sphere = NodePath("../../TrackPositionContainer/ControlNodeReadySphere")

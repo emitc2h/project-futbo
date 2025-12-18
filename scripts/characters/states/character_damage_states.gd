@@ -127,10 +127,12 @@ func _on_dead_state_entered() -> void:
 	
 	_current_knockback_velocity_x = _initial_knockback_velocity_x
 	
-	Signals.player_dead.emit()
+	if character.is_player:
+		Signals.player_dead.emit()
+		Representations.player_representation.is_dead = true
 	
-	await get_tree().create_timer(1.0).timeout
-	Signals.game_over.emit()
+		await get_tree().create_timer(1.0).timeout
+		Signals.game_over.emit()
 
 
 # hit state

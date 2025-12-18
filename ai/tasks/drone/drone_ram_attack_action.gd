@@ -107,13 +107,13 @@ func _tick(delta: float) -> Status:
 		drone.stop_moving(delta)
 		return RUNNING
 		
-	var distance_to_player: float = abs(drone.repr.playerRepresentation.last_known_player_pos_x - drone.char_node.global_position.x)
+	var distance_to_player: float = abs(drone.repr.playerRepresentation.global_position.x - drone.char_node.global_position.x)
 	
 	if not is_done_bursting_away:
 		if not is_bursting_away:
 			drone.burst()
 			is_bursting_away = true
-		drone.move_toward_x_pos(drone.repr.playerRepresentation.last_known_player_pos_x, delta, true)
+		drone.move_toward_x_pos(drone.repr.playerRepresentation.global_position.x, delta, true)
 		if distance_to_player > distance_to_turn_around:
 			is_done_bursting_away = true
 		return RUNNING
@@ -126,7 +126,7 @@ func _tick(delta: float) -> Status:
 		return RUNNING
 	
 	if not has_turned_back_toward_player:
-		drone.face_toward(drone.repr.playerRepresentation.last_known_player_pos_x, face_toward_id)
+		drone.face_toward(drone.repr.playerRepresentation.global_position.x, face_toward_id)
 		return RUNNING
 	
 	if not proximity_detector_disabled:
@@ -137,7 +137,7 @@ func _tick(delta: float) -> Status:
 		if not is_bursting_back:
 			drone.burst()
 			is_bursting_back = true
-		drone.move_toward_x_pos(drone.repr.playerRepresentation.last_known_player_pos_x, delta)
+		drone.move_toward_x_pos(drone.repr.playerRepresentation.global_position.x, delta)
 		if distance_to_player < distance_to_turn_into_ball:
 			drone.become_rigid()
 			drone.quick_close(signal_id)

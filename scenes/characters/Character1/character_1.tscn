@@ -261,6 +261,7 @@ state_map = {
 3: NodePath("../turn")
 }
 
-[node name="Shield" type="Node" parent="." index="13" node_paths=PackedStringArray("asset")]
+[node name="Shield" type="Node" parent="." index="13" node_paths=PackedStringArray("asset", "character")]
 script = ExtResource("7_lwllx")
 asset = NodePath("../Character1Asset")
+character = NodePath("..")

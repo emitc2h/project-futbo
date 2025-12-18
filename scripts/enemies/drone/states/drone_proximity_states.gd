@@ -58,6 +58,7 @@ func _on_enabled_state_physics_processing(_delta: float) -> void:
 			if scan_for_control_node and collider.get_parent() is ControlNode:
 				control_node_entered_confirmed = true
 				control_node = collider.get_parent() as ControlNode
+				drone.repr.update_control_node_repr_from_buffer()
 				## This ensures that the drone has something to target if it
 				## blocks the control node but haven't discovered the player yet
 				if not drone.targeting_states.target:
@@ -66,6 +67,7 @@ func _on_enabled_state_physics_processing(_delta: float) -> void:
 			## Scan for the player entering the shapecast
 			if scan_for_player and collider.is_in_group("PlayerGroup"):
 				var player: CharacterBase = collider as CharacterBase
+				drone.repr.update_player_repr_from_buffer()
 				drone.targeting_states.target = player.target_marker
 				player_entered_confirmed = true
 		

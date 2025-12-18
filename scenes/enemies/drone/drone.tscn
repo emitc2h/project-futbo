@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone.gd" id="1_irn00"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_g2as1"]
-[ext_resource type="Script" uid="uid://syu033xfunnk" path="res://scripts/enemies/drone/drone_internal_representation.gd" id="2_n6xh2"]
+[ext_resource type="Script" uid="uid://syu033xfunnk" path="res://scripts/enemies/drone/representation/drone_internal_representation.gd" id="2_n6xh2"]
 [ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_wmq8b"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_kl701"]
 [ext_resource type="Script" uid="uid://p1lgvym5ec5j" path="res://scripts/enemies/drone/states/drone_physics_mode_states.gd" id="5_8nca4"]
@@ -69,8 +69,9 @@ position_states = NodePath("State/Root/Monitoring/Position/Position States")
 behavior_player = NodePath("BTPlayer")
 behavior_tree = ExtResource("23_c1bph")
 
-[node name="InternalRepresentation" type="Node" parent="."]
+[node name="InternalRepresentation" type="Node" parent="." node_paths=PackedStringArray("drone")]
 script = ExtResource("2_n6xh2")
+drone = NodePath("..")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_g2as1")
@@ -460,11 +461,10 @@ script = ExtResource("3_wmq8b")
 script = ExtResource("4_kl701")
 initial_state = NodePath("disabled")
 
-[node name="Targeting States" type="Node" parent="State/Root/Monitoring/Targeting" node_paths=PackedStringArray("drone", "sc", "repr")]
+[node name="Targeting States" type="Node" parent="State/Root/Monitoring/Targeting" node_paths=PackedStringArray("drone", "sc")]
 script = ExtResource("11_wmq8b")
 drone = NodePath("../../../../..")
 sc = NodePath("../../../..")
-repr = NodePath("../../../../../InternalRepresentation")
 
 [node name="AcquiringTimer" type="Timer" parent="State/Root/Monitoring/Targeting/Targeting States"]
 wait_time = 2.0

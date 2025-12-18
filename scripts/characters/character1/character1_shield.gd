@@ -2,6 +2,7 @@ class_name CharacterShield
 extends Node
 
 @export var asset: Character1Asset
+@export var character: CharacterBase
 
 enum State {OFF = 0, LEVEL_1 = 1 , LEVEL_2 = 2 , LEVEL_3 = 3}
 var _state: State = State.OFF
@@ -9,16 +10,9 @@ var state: State:
 	get:
 		return _state
 	set(value):
-		#match(value):
-			#State.OFF:
-				#asset.shield_anim_player.play("state - off")
-			#State.LEVEL_1:
-				#asset.shield_anim_player.play("state - on - charge level 0")
-			#State.LEVEL_2:
-				#asset.shield_anim_player.play("state - on - charge level 1")
-			#State.LEVEL_3:
-				#asset.shield_anim_player.play("state - on - charge level 2")
 		_state = value
+		if character and character.is_player:
+			Representations.player_representation.personal_shield_charges = state
 
 
 func _ready() -> void:

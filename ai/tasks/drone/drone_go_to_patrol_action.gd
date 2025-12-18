@@ -44,7 +44,7 @@ func _enter() -> void:
 	prepare()
 	
 	## Destination is between the patrol markers
-	destination = (drone.repr.worldRepresentation.patrol_marker_1_pos_x + drone.repr.worldRepresentation.patrol_marker_2_pos_x) / 2.0
+	destination = (drone.repr.worldRepresentation.patrol_marker_1_pos + drone.repr.worldRepresentation.patrol_marker_2_pos) / 2.0
 	
 	## Assume drone might not be facing in the right direction
 	facing_finished = false

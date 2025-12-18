@@ -47,7 +47,6 @@ var dive_impact_scene: PackedScene = preload("res://scenes/enemies/drone/drone_d
 
 func _ready() -> void:
 	## initialize the internal representation
-	repr.initialize()
 	anim_state = model_anim_tree.get("parameters/playback")
 	Signals.debug_advance.connect(_on_debug_advance)
 	physics_mode_states.target_velocity_reached.connect(_on_target_velocity_reached)
@@ -311,7 +310,7 @@ func get_hit(_strength: float) -> bool:
 ## ---------------------------------------
 func force_update_player_pos_x() -> bool:
 	if targeting_states.target:
-		repr.playerRepresentation.last_known_player_pos_x = targeting_states.target.global_position.x
+		repr.update_player_repr_from_buffer()
 		return true
 	return false
 
@@ -349,5 +348,4 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 				var diveImpactNode: Node3D = dive_impact_scene.instantiate()
 				diveImpactNode.global_position = rigid_node.global_position - Vector3.UP * 0.5
 				get_tree().current_scene.add_child(diveImpactNode)
-				print("dive impact")
 				dive_impact_ready = false
