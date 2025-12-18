@@ -65,7 +65,9 @@ func _on_not_dribbling_state_physics_processing(_delta: float) -> void:
 #----------------------------------------
 func _on_dribbling_state_entered() -> void:
 	state = State.DRIBBLING
-	if character.is_player: Signals.dribbling_entered.emit()
+	if character.is_player:
+		Signals.dribbling_entered.emit()
+		Representations.player_representation.is_dribbling = true
 	
 	## make the ball identify the player dribbling
 	ball.own(character.get_instance_id())
@@ -111,7 +113,9 @@ func _on_dribbling_state_physics_processing(_delta: float) -> void:
 
 
 func _on_dribbling_state_exited() -> void:
-	if character.is_player: Signals.dribbling_exited.emit()
+	if character.is_player:
+		Signals.dribbling_exited.emit()
+		Representations.player_representation.is_dribbling = false
 	
 	## Reset dribble cast target
 	dribble_raycast.target_position = init_raycast_target_position

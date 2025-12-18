@@ -26,9 +26,9 @@ func _tick(_delta: float) -> Status:
 	var test_value: float
 	match(var_type):
 		DRIBBLING:
-			test_value = drone.repr.playerRepresentation.player_is_dribbling
+			test_value = drone.repr.playerRepresentation.is_dribbling
 		DEAD:
-			test_value = drone.repr.playerRepresentation.player_is_dead
+			test_value = drone.repr.playerRepresentation.is_dead
 	
 	if is_not:
 		test_value = !test_value

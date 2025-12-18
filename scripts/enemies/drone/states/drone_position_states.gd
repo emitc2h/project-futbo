@@ -47,8 +47,8 @@ func _ready() -> void:
 		right_marker_pos_x = x1
 		left_marker_pos_x = x2
 	
-	repr.worldRepresentation.patrol_marker_1_pos_x = x1
-	repr.worldRepresentation.patrol_marker_2_pos_x = x2
+	repr.worldRepresentation.patrol_marker_1_pos = x1
+	repr.worldRepresentation.patrol_marker_2_pos = x2
 
 
 # between patrol markers state

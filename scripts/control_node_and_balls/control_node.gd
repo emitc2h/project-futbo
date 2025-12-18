@@ -30,6 +30,9 @@ func _physics_process(_delta: float) -> void:
 	
 	if Input.is_action_just_released("shield up"):
 		shield_states.turn_off_shield()
+		
+	Representations.control_node_representation.global_position = get_ball_position()
+	Representations.control_node_representation.velocity = get_ball_velocity()
 
 
 #=======================================================

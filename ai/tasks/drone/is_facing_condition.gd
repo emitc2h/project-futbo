@@ -50,9 +50,9 @@ func _enter() -> void:
 		TARGET_NODE:
 			target_x = drone.targeting_states.target.global_position.x
 		PLAYER_REPR:
-			target_x = drone.repr.playerRepresentation.last_known_player_pos_x
+			target_x = drone.repr.playerRepresentation.global_position.x
 		CONTROL_NODE_REPR:
-			target_x = drone.repr.controlNodeRepresentation.last_known_control_node_pos_x
+			target_x = drone.repr.controlNodeRepresentation.global_position.x
 		WORLD_REPR_POS_X:
 			target_x = drone.repr.worldRepresentation.get(world_repr_pos_x_name)
 

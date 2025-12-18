@@ -33,9 +33,9 @@ func _tick(_delta: float) -> Status:
 	var test_value: float
 	match(var_type):
 		X_POSITION:
-			test_value = drone.repr.playerRepresentation.last_known_player_pos_x
+			test_value = drone.repr.playerRepresentation.global_position.x
 		X_DISTANCE:
-			test_value = abs(drone.get_global_pos_x() - drone.repr.playerRepresentation.last_known_player_pos_x)
+			test_value = abs(drone.get_global_pos_x() - drone.repr.playerRepresentation.global_position.x)
 	
 	var test: bool
 	match(operator_type):

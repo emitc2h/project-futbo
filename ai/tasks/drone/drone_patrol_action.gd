@@ -41,8 +41,8 @@ func _enter() -> void:
 	prepare()
 	
 	## Register patrol markers
-	patrol_markers.append(drone.repr.worldRepresentation.patrol_marker_1_pos_x)
-	patrol_markers.append(drone.repr.worldRepresentation.patrol_marker_2_pos_x)
+	patrol_markers.append(drone.repr.worldRepresentation.patrol_marker_1_pos)
+	patrol_markers.append(drone.repr.worldRepresentation.patrol_marker_2_pos)
 	
 	## Start by going to the furthest marker to the drone
 	idx = furthest_marker_idx()
