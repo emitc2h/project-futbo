@@ -21,6 +21,7 @@ var_type = "dead"
 script = ExtResource("1_128xi")
 
 [sub_resource type="BTSequence" id="BTSequence_vl0fi"]
+custom_name = "GO BACK TO PATROL WHEN PLAYER IS DEAD"
 children = [SubResource("BTCondition_r3tiw"), SubResource("BTAction_wg5t1")]
 
 [sub_resource type="BTCondition" id="BTCondition_ntcwm"]
@@ -176,7 +177,7 @@ children = [SubResource("BTCheckVar_wyg27"), SubResource("BTAction_ntcwm"), SubR
 script = ExtResource("1_128xi")
 
 [sub_resource type="BTDynamicSelector" id="BTDynamicSelector_yfevx"]
-custom_name = "Main Behavior Selector"
+custom_name = "ROOT DYNAMIC SELECTOR"
 children = [SubResource("BTSequence_vl0fi"), SubResource("BTSequence_v0ahm"), SubResource("BTDynamicSequence_v0ahm"), SubResource("BTSequence_wg5t1"), SubResource("BTAction_jhpx3")]
 
 [resource]
