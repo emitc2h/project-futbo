@@ -55,6 +55,8 @@ func _on_off_state_entered() -> void:
 	
 	## Re-enable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = true
+	
+	Representations.control_node_representation.shield_expanded = false
 
 
 # inflating state
@@ -76,6 +78,8 @@ func _on_on_state_entered() -> void:
 	
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
+	
+	Representations.control_node_representation.shield_expanded = true
 
 
 func _on_on_state_exited() -> void:

@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://kcwfn3rok7aj" path="res://scripts/enemies/drone/states/drone_proximity_states.gd" id="13_43bu3"]
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/utilities/inert_node.gd" id="14_efc27"]
 [ext_resource type="BehaviorTree" uid="uid://c7vvmbp7vehqy" path="res://ai/trees/enemies/drone/decision trees/drone_complete_behavior.tres" id="23_c1bph"]
+[ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/decision trees/drone_complete_behavior_blackboard_plan.tres" id="24_j5bu2"]
 [ext_resource type="PackedScene" uid="uid://qcbmkep1csam" path="res://scenes/enemies/drone/drone_shield.tscn" id="27_fv7v3"]
 [ext_resource type="Material" uid="uid://h1qmrtj6hri8" path="res://assets/3D/Materials/character_jump_distortion_shader_material.tres" id="34_6t6rp"]
 [ext_resource type="Script" uid="uid://darufwryr50n1" path="res://scripts/enemies/drone/animation/float_distortion_animation.gd" id="38_6t6rp"]
@@ -42,18 +43,6 @@ size = Vector2(1.3, 2.1)
 margin = 0.1
 radius = 1.1
 height = 3.0
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_c1bph"]
-var/tracking_offset/name = &"tracking_offset"
-var/tracking_offset/type = 3
-var/tracking_offset/value = 0.0
-var/tracking_offset/hint = 0
-var/tracking_offset/hint_string = ""
-var/attacking/name = &"attacking"
-var/attacking/type = 1
-var/attacking/value = false
-var/attacking/hint = 0
-var/attacking/hint_string = ""
 
 [node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_player") groups=["Enemies"]]
 script = ExtResource("1_irn00")
@@ -686,7 +675,7 @@ mesh = NodePath("../TrackPositionContainer/Distortion")
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
 active = false
-blackboard_plan = SubResource("BlackboardPlan_c1bph")
+blackboard_plan = ExtResource("24_j5bu2")
 
 [connection signal="timeout" from="State/Root/Physics/Physics States/DeadTimer" to="State/Root/Physics/Physics States" method="_on_dead_timer_timeout"]
 [connection signal="state_entered" from="State/Root/Physics/char" to="State/Root/Physics/Physics States" method="_on_char_state_entered"]
