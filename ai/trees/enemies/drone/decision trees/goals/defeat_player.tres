@@ -1,0 +1,36 @@
+[gd_resource type="BehaviorTree" load_steps=11 format=3 uid="uid://dtuwvg6fmi5cf"]
+
+[ext_resource type="Script" uid="uid://cw5lgdcrky3nb" path="res://ai/tasks/drone/drone_beam_attack_action.gd" id="1_2rpnd"]
+[ext_resource type="Script" uid="uid://b2j2u7t3dp4en" path="res://ai/tasks/drone/drone_ram_attack_action.gd" id="2_1106e"]
+[ext_resource type="Script" uid="uid://cn3tf4te6g4xt" path="res://ai/tasks/drone/drone_dive_attack_action.gd" id="3_662fq"]
+
+[sub_resource type="BTAction" id="BTAction_qhg47"]
+script = ExtResource("1_2rpnd")
+metadata/_weight_ = 0.1
+
+[sub_resource type="BTAction" id="BTAction_kqdx8"]
+script = ExtResource("2_1106e")
+metadata/_weight_ = 0.3
+
+[sub_resource type="BTAction" id="BTAction_f62sy"]
+script = ExtResource("3_662fq")
+metadata/_weight_ = 0.6
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_kecyh"]
+children = [SubResource("BTAction_qhg47"), SubResource("BTAction_kqdx8"), SubResource("BTAction_f62sy")]
+
+[sub_resource type="BBVariant" id="BBVariant_14g6j"]
+type = 1
+saved_value = false
+resource_name = "<null>"
+
+[sub_resource type="BTSetVar" id="BTSetVar_wpbc3"]
+variable = &"attacking"
+value = SubResource("BBVariant_14g6j")
+
+[sub_resource type="BTSequence" id="BTSequence_lhyaw"]
+custom_name = "ELSE GOAL: DEFEAT THE PLAYER"
+children = [SubResource("BTProbabilitySelector_kecyh"), SubResource("BTSetVar_wpbc3")]
+
+[resource]
+root_task = SubResource("BTSequence_lhyaw")

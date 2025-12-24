@@ -1,0 +1,169 @@
+[gd_resource type="BehaviorTree" load_steps=47 format=3 uid="uid://bb1isfi5avcm5"]
+
+[ext_resource type="Script" uid="uid://bsi37utyrao2r" path="res://ai/tasks/drone/update_success_buffer_condition.gd" id="1_n8h1r"]
+[ext_resource type="Script" uid="uid://cw5lgdcrky3nb" path="res://ai/tasks/drone/drone_beam_attack_action.gd" id="2_ri0pv"]
+[ext_resource type="Script" uid="uid://dd8w8ekmubvy3" path="res://ai/tasks/drone/measure_success_condition.gd" id="3_g78y0"]
+[ext_resource type="Script" uid="uid://b2j2u7t3dp4en" path="res://ai/tasks/drone/drone_ram_attack_action.gd" id="4_ewudy"]
+[ext_resource type="Script" uid="uid://bnwshcmpemp3f" path="res://ai/tasks/drone/success_learning_probability_selector.gd" id="5_aabgd"]
+[ext_resource type="Script" uid="uid://cn3tf4te6g4xt" path="res://ai/tasks/drone/drone_dive_attack_action.gd" id="6_jlx8e"]
+
+[sub_resource type="BBVariant" id="BBVariant_xfaal"]
+type = 2
+saved_value = 3
+resource_name = "3"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_nf4cm"]
+variable = &"internal_control_node_repr_charges"
+value = SubResource("BBVariant_xfaal")
+
+[sub_resource type="BBVariant" id="BBVariant_s33uo"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_sosd1"]
+variable = &"internal_control_node_repr_shield_expanded"
+value = SubResource("BBVariant_s33uo")
+
+[sub_resource type="BBVariant" id="BBVariant_fw7p7"]
+type = 2
+saved_value = 3
+resource_name = "3"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_4mj8p"]
+variable = &"internal_player_repr_shield_charges"
+value = SubResource("BBVariant_fw7p7")
+
+[sub_resource type="BTCondition" id="BTCondition_015so"]
+script = ExtResource("1_n8h1r")
+record_name = "player_shield_full_beam_attack"
+
+[sub_resource type="BTAction" id="BTAction_ipqb2"]
+script = ExtResource("2_ri0pv")
+number_of_hits = 3
+metadata/_weight_ = 0.5
+
+[sub_resource type="BTCondition" id="BTCondition_jp8cp"]
+script = ExtResource("3_g78y0")
+success_measure = "control_node_repr_charges"
+record_name = "player_shield_full_beam_attack"
+
+[sub_resource type="BTSequence" id="BTSequence_kfev3"]
+children = [SubResource("BTCondition_015so"), SubResource("BTAction_ipqb2"), SubResource("BTCondition_jp8cp")]
+
+[sub_resource type="BTCondition" id="BTCondition_gs6ho"]
+script = ExtResource("1_n8h1r")
+record_name = "player_shield_full_ram_attack"
+
+[sub_resource type="BTAction" id="BTAction_ay241"]
+script = ExtResource("4_ewudy")
+metadata/_weight_ = 0.5
+
+[sub_resource type="BTCondition" id="BTCondition_brxnr"]
+script = ExtResource("3_g78y0")
+success_measure = "control_node_repr_charges"
+record_name = "player_shield_full_ram_attack"
+
+[sub_resource type="BTSequence" id="BTSequence_r5fmr"]
+children = [SubResource("BTCondition_gs6ho"), SubResource("BTAction_ay241"), SubResource("BTCondition_brxnr")]
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_6pcop"]
+children = [SubResource("BTSequence_kfev3"), SubResource("BTSequence_r5fmr")]
+script = ExtResource("5_aabgd")
+record_names = Array[String](["player_shield_full_beam_attack", "player_shield_full_ram_attack"])
+
+[sub_resource type="BTSequence" id="BTSequence_7ec60"]
+custom_name = "IF PLAYER SHIELD FULL, DAMAGE EITHER SHIELD"
+children = [SubResource("BTCheckVar_4mj8p"), SubResource("BTProbabilitySelector_6pcop")]
+
+[sub_resource type="BTAction" id="BTAction_3l3pb"]
+script = ExtResource("6_jlx8e")
+
+[sub_resource type="BTAction" id="BTAction_vjpgk"]
+script = ExtResource("2_ri0pv")
+number_of_hits = 2
+
+[sub_resource type="BTSequence" id="BTSequence_efpxy"]
+custom_name = "ELSE THE PLAYER'S SHIELD ISN'T FULL, FORCE CONTROL NODE SHIELD DISSIPATION"
+children = [SubResource("BTAction_3l3pb"), SubResource("BTAction_vjpgk")]
+
+[sub_resource type="BTSelector" id="BTSelector_6jjyq"]
+children = [SubResource("BTSequence_7ec60"), SubResource("BTSequence_efpxy")]
+
+[sub_resource type="BTSequence" id="BTSequence_q5eme"]
+custom_name = "IF CONTROL NODE SHIELD EXPANDED"
+children = [SubResource("BTCheckVar_sosd1"), SubResource("BTSelector_6jjyq")]
+
+[sub_resource type="BBVariant" id="BBVariant_rpfjd"]
+type = 2
+saved_value = 0
+resource_name = "<null>"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_emmnp"]
+variable = &"internal_player_repr_shield_charges"
+value = SubResource("BBVariant_rpfjd")
+
+[sub_resource type="BTAction" id="BTAction_piedi"]
+script = ExtResource("2_ri0pv")
+
+[sub_resource type="BTSequence" id="BTSequence_iyftf"]
+custom_name = "IF THE PLAYER'S SHIELD IS DOWN"
+children = [SubResource("BTCheckVar_emmnp"), SubResource("BTAction_piedi")]
+
+[sub_resource type="BBVariant" id="BBVariant_rcnxg"]
+type = 1
+saved_value = false
+resource_name = "<null>"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_khip5"]
+variable = &"internal_player_repr_is_dribbling"
+value = SubResource("BBVariant_rcnxg")
+
+[sub_resource type="BTAction" id="BTAction_wrmvd"]
+script = ExtResource("6_jlx8e")
+
+[sub_resource type="BTAction" id="BTAction_khqke"]
+script = ExtResource("4_ewudy")
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_hklfs"]
+children = [SubResource("BTAction_wrmvd"), SubResource("BTAction_khqke")]
+
+[sub_resource type="BTSequence" id="BTSequence_tfkf4"]
+custom_name = "ELIF THE PLAYER ISN'T DRIBBLING, TRY TO SEPARATE PLAYER AND BALL"
+children = [SubResource("BTCheckVar_khip5"), SubResource("BTProbabilitySelector_hklfs")]
+
+[sub_resource type="BTAction" id="BTAction_31shd"]
+script = ExtResource("4_ewudy")
+
+[sub_resource type="BTAction" id="BTAction_c77qp"]
+script = ExtResource("2_ri0pv")
+
+[sub_resource type="BTAction" id="BTAction_gdjy8"]
+script = ExtResource("6_jlx8e")
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_dnuln"]
+children = [SubResource("BTAction_31shd"), SubResource("BTAction_c77qp"), SubResource("BTAction_gdjy8")]
+
+[sub_resource type="BTSequence" id="BTSequence_f0m0u"]
+custom_name = "ELSE PICK A RANDOM ATTACK"
+children = [SubResource("BTProbabilitySelector_dnuln")]
+
+[sub_resource type="BTSelector" id="BTSelector_gi4ev"]
+custom_name = "CHOOSE METHOD OF DISARMING THE CONTROL NODE"
+children = [SubResource("BTSequence_q5eme"), SubResource("BTSequence_iyftf"), SubResource("BTSequence_tfkf4"), SubResource("BTSequence_f0m0u")]
+
+[sub_resource type="BBVariant" id="BBVariant_opnoj"]
+type = 1
+saved_value = false
+resource_name = "<null>"
+
+[sub_resource type="BTSetVar" id="BTSetVar_tikep"]
+variable = &"attacking"
+value = SubResource("BBVariant_opnoj")
+
+[sub_resource type="BTSequence" id="BTSequence_4mmoq"]
+custom_name = "IF GOAL: DISARM THE CONTROL NODE"
+children = [SubResource("BTCheckVar_nf4cm"), SubResource("BTSelector_gi4ev"), SubResource("BTSetVar_tikep")]
+
+[resource]
+root_task = SubResource("BTSequence_4mmoq")

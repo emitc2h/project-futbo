@@ -54,7 +54,7 @@ func _on_none_state_entered() -> void:
 	none_state_anim = CHARGE_LEVEL_0_STATE_ANIM
 	lose_charge_timer.stop()
 	
-	Representations.control_node_representation.shield_charges = 0
+	Representations.control_node_representation.charges = 0
 
 
 # level1 state
@@ -66,7 +66,7 @@ func _on_level_1_state_entered() -> void:
 	lvl1_state_anim = CHARGE_LEVEL_1_STATE_ANIM
 	lose_charge_timer.start()
 	
-	Representations.control_node_representation.shield_charges = 1
+	Representations.control_node_representation.charges = 1
 
 
 # level2 state
@@ -78,7 +78,7 @@ func _on_level_2_state_entered() -> void:
 	lvl2_state_anim = CHARGE_LEVEL_2_STATE_ANIM
 	lose_charge_timer.start()
 	
-	Representations.control_node_representation.shield_charges = 2
+	Representations.control_node_representation.charges = 2
 
 
 # level3 state
@@ -91,7 +91,7 @@ func _on_level_3_state_entered() -> void:
 	Signals.control_node_is_charged.emit()
 	lose_charge_timer.start()
 	
-	Representations.control_node_representation.shield_charges = 3
+	Representations.control_node_representation.charges = 3
 
 
 func _on_level_3_state_exited() -> void:
@@ -128,16 +128,15 @@ func _on_player_shield_taking_charges(num_charges_taken: int) -> void:
 # ANIMATION UTILS
 #=======================================================
 func lose_charge_by_hit_anim() -> void:
-	none_state_anim = CHARGE_LEVEL_0_EXPANDED_STATE_ANIM
-	lvl1_state_anim = CHARGE_LEVEL_1_EXPANDED_STATE_ANIM
-	lvl2_state_anim = CHARGE_LEVEL_2_EXPANDED_STATE_ANIM
-	lvl3_state_anim = CHARGE_LEVEL_3_EXPANDED_STATE_ANIM
 	match(state):
 		State.LEVEL1:
+			none_state_anim = CHARGE_LEVEL_0_EXPANDED_STATE_ANIM
 			control_node.anim_state.travel(HIT_LEVEL1_TRANS_ANIM)
 		State.LEVEL2:
+			lvl1_state_anim = CHARGE_LEVEL_1_EXPANDED_STATE_ANIM
 			control_node.anim_state.travel(HIT_LEVEL2_TRANS_ANIM)
 		State.LEVEL3:
+			lvl2_state_anim = CHARGE_LEVEL_2_EXPANDED_STATE_ANIM
 			control_node.anim_state.travel(HIT_LEVEL3_TRANS_ANIM)
 
 

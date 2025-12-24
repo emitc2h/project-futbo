@@ -14587,7 +14587,6 @@ anim_player = NodePath("../AnimationPlayer")
 [node name="AnimationStateChangeTracker" type="Node" parent="AnimationTree" index="0"]
 script = ExtResource("26_ipcb2")
 state_machine_path = "parameters/playback"
-printout = true
 metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 
 [connection signal="state_entered" from="State/Root/Physics/warping" to="State/Root/Physics/Physics States" method="_on_warping_state_entered"]

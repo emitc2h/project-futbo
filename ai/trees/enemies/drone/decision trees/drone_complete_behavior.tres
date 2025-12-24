@@ -1,28 +1,38 @@
-[gd_resource type="BehaviorTree" load_steps=56 format=3 uid="uid://c7vvmbp7vehqy"]
+[gd_resource type="BehaviorTree" load_steps=44 format=3 uid="uid://c7vvmbp7vehqy"]
 
 [ext_resource type="Script" uid="uid://3wp8o6jifb3l" path="res://ai/tasks/drone/drone_patrol_action.gd" id="1_128xi"]
 [ext_resource type="Script" uid="uid://dhngbs7qm6328" path="res://ai/tasks/drone/is_object_in_proximity_zone_condition.gd" id="1_ckfmh"]
 [ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/decision trees/drone_complete_behavior_blackboard_plan.tres" id="1_k8dvn"]
 [ext_resource type="Script" uid="uid://4tpean3rpeo8" path="res://ai/tasks/drone/drone_block_action.gd" id="2_ckfmh"]
+[ext_resource type="Script" uid="uid://cu1bkrkshc51d" path="res://ai/tasks/drone/update_blackboard_condition.gd" id="2_r3tiw"]
 [ext_resource type="Script" uid="uid://bbbdpq3yu2mga" path="res://ai/tasks/drone/is_outside_patrol_markers_condition.gd" id="3_xekj4"]
 [ext_resource type="Script" uid="uid://c3n51ki08yi4c" path="res://ai/tasks/drone/drone_track_action.gd" id="4_ckfmh"]
 [ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="4_v0ahm"]
-[ext_resource type="Script" uid="uid://b2j2u7t3dp4en" path="res://ai/tasks/drone/drone_ram_attack_action.gd" id="5_ntcwm"]
 [ext_resource type="Script" uid="uid://btr4jxosdlhew" path="res://ai/tasks/drone/drone_go_to_patrol_action.gd" id="5_xekj4"]
-[ext_resource type="Script" uid="uid://cwyxhwigonm30" path="res://ai/tasks/drone/check_on_player_bool_value_condition.gd" id="8_mcvek"]
-[ext_resource type="Script" uid="uid://cw5lgdcrky3nb" path="res://ai/tasks/drone/drone_beam_attack_action.gd" id="8_v0ahm"]
-[ext_resource type="Script" uid="uid://cn3tf4te6g4xt" path="res://ai/tasks/drone/drone_dive_attack_action.gd" id="11_65x83"]
+[ext_resource type="BehaviorTree" uid="uid://b2yl7nxa3drym" path="res://ai/trees/enemies/drone/decision trees/goals/attack_test.tres" id="7_v0ahm"]
 
-[sub_resource type="BTCondition" id="BTCondition_r3tiw"]
-script = ExtResource("8_mcvek")
-var_type = "dead"
+[sub_resource type="BTCondition" id="BTCondition_664xi"]
+script = ExtResource("2_r3tiw")
+
+[sub_resource type="BTAlwaysFail" id="BTAlwaysFail_wyg27"]
+custom_name = "ALWAYS UPDATE BLACKBOARD"
+children = [SubResource("BTCondition_664xi")]
+
+[sub_resource type="BBVariant" id="BBVariant_8hvrt"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_wg5t1"]
+variable = &"internal_player_repr_is_dead"
+value = SubResource("BBVariant_8hvrt")
 
 [sub_resource type="BTAction" id="BTAction_wg5t1"]
 script = ExtResource("1_128xi")
 
 [sub_resource type="BTSequence" id="BTSequence_vl0fi"]
-custom_name = "GO BACK TO PATROL WHEN PLAYER IS DEAD"
-children = [SubResource("BTCondition_r3tiw"), SubResource("BTAction_wg5t1")]
+custom_name = "IF GOAL: GO BACK TO PATROL WHEN PLAYER IS DEAD"
+children = [SubResource("BTCheckVar_wg5t1"), SubResource("BTAction_wg5t1")]
 
 [sub_resource type="BTCondition" id="BTCondition_ntcwm"]
 script = ExtResource("1_ckfmh")
@@ -41,17 +51,27 @@ variable = &"attacking"
 value = SubResource("BBVariant_mcvek")
 
 [sub_resource type="BTSequence" id="BTSequence_v0ahm"]
-custom_name = "BLOCK"
+custom_name = "ELIF GOAL: DEFEND"
 children = [SubResource("BTCondition_ntcwm"), SubResource("BTAction_k8dvn"), SubResource("BTSetVar_65x83")]
 
-[sub_resource type="BBVariant" id="BBVariant_k8dvn"]
+[sub_resource type="BBVariant" id="BBVariant_664xi"]
 type = 1
-saved_value = false
-resource_name = "false"
+saved_value = true
+resource_name = "true"
 
-[sub_resource type="BTCheckVar" id="BTCheckVar_v0ahm"]
+[sub_resource type="BTCheckVar" id="BTCheckVar_wyg27"]
 variable = &"attacking"
-value = SubResource("BBVariant_k8dvn")
+value = SubResource("BBVariant_664xi")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_mcvek"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_65x83"]
+subtree = ExtResource("7_v0ahm")
+blackboard_plan = SubResource("BlackboardPlan_mcvek")
+
+[sub_resource type="BTSequence" id="BTSequence_wg5t1"]
+custom_name = "ELIF GOAL: ATTACK"
+children = [SubResource("BTCheckVar_wyg27"), SubResource("BTSubtree_65x83")]
 
 [sub_resource type="BTCondition" id="BTCondition_vc7r2"]
 script = ExtResource("4_v0ahm")
@@ -99,86 +119,22 @@ script = ExtResource("5_xekj4")
 [sub_resource type="BTSequence" id="BTSequence_ntcwm"]
 children = [SubResource("BTCondition_xekj4"), SubResource("BTAction_ckfmh")]
 
+[sub_resource type="BTAction" id="BTAction_cx3lo"]
+script = ExtResource("1_128xi")
+
+[sub_resource type="BTSequence" id="BTSequence_nl7ey"]
+children = [SubResource("BTAction_cx3lo")]
+
 [sub_resource type="BTDynamicSelector" id="BTDynamicSelector_v0ahm"]
-children = [SubResource("BTSequence_kr7to"), SubResource("BTSequence_k8dvn"), SubResource("BTSequence_ntcwm")]
+children = [SubResource("BTSequence_kr7to"), SubResource("BTSequence_k8dvn"), SubResource("BTSequence_ntcwm"), SubResource("BTSequence_nl7ey")]
 
 [sub_resource type="BTDynamicSequence" id="BTDynamicSequence_v0ahm"]
-custom_name = "NOT ATTACKING"
-children = [SubResource("BTCheckVar_v0ahm"), SubResource("BTDynamicSelector_v0ahm")]
-
-[sub_resource type="BBVariant" id="BBVariant_664xi"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_wyg27"]
-variable = &"attacking"
-value = SubResource("BBVariant_664xi")
-
-[sub_resource type="BTAction" id="BTAction_ntcwm"]
-script = ExtResource("4_ckfmh")
-timeout = 2.0
-
-[sub_resource type="BTCondition" id="BTCondition_65x83"]
-script = ExtResource("8_mcvek")
-var_type = "dribbling"
-
-[sub_resource type="BTAction" id="BTAction_mcvek"]
-script = ExtResource("8_v0ahm")
-number_of_hits = 2
-metadata/_weight_ = 0.6
-
-[sub_resource type="BTAction" id="BTAction_r3tiw"]
-script = ExtResource("5_ntcwm")
-metadata/_weight_ = 0.2
-
-[sub_resource type="BTAction" id="BTAction_664xi"]
-script = ExtResource("11_65x83")
-metadata/_weight_ = 0.2
-
-[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_65x83"]
-children = [SubResource("BTAction_mcvek"), SubResource("BTAction_r3tiw"), SubResource("BTAction_664xi")]
-
-[sub_resource type="BTSequence" id="BTSequence_664xi"]
-children = [SubResource("BTCondition_65x83"), SubResource("BTProbabilitySelector_65x83")]
-
-[sub_resource type="BTAction" id="BTAction_bnf7k"]
-script = ExtResource("8_v0ahm")
-metadata/_weight_ = 0.1
-
-[sub_resource type="BTAction" id="BTAction_wyg27"]
-script = ExtResource("5_ntcwm")
-metadata/_weight_ = 0.3
-
-[sub_resource type="BTAction" id="BTAction_65x83"]
-script = ExtResource("11_65x83")
-metadata/_weight_ = 0.6
-
-[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_8hvrt"]
-children = [SubResource("BTAction_bnf7k"), SubResource("BTAction_wyg27"), SubResource("BTAction_65x83")]
-
-[sub_resource type="BTSelector" id="BTSelector_wg5t1"]
-children = [SubResource("BTSequence_664xi"), SubResource("BTProbabilitySelector_8hvrt")]
-
-[sub_resource type="BBVariant" id="BBVariant_bnf7k"]
-type = 1
-saved_value = false
-resource_name = "<null>"
-
-[sub_resource type="BTSetVar" id="BTSetVar_8hvrt"]
-variable = &"attacking"
-value = SubResource("BBVariant_bnf7k")
-
-[sub_resource type="BTSequence" id="BTSequence_wg5t1"]
-custom_name = "ATTACKING"
-children = [SubResource("BTCheckVar_wyg27"), SubResource("BTAction_ntcwm"), SubResource("BTSelector_wg5t1"), SubResource("BTSetVar_8hvrt")]
-
-[sub_resource type="BTAction" id="BTAction_jhpx3"]
-script = ExtResource("1_128xi")
+custom_name = "ELSE GOAL: PATROL"
+children = [SubResource("BTDynamicSelector_v0ahm")]
 
 [sub_resource type="BTDynamicSelector" id="BTDynamicSelector_yfevx"]
 custom_name = "ROOT DYNAMIC SELECTOR"
-children = [SubResource("BTSequence_vl0fi"), SubResource("BTSequence_v0ahm"), SubResource("BTDynamicSequence_v0ahm"), SubResource("BTSequence_wg5t1"), SubResource("BTAction_jhpx3")]
+children = [SubResource("BTAlwaysFail_wyg27"), SubResource("BTSequence_vl0fi"), SubResource("BTSequence_v0ahm"), SubResource("BTSequence_wg5t1"), SubResource("BTDynamicSequence_v0ahm")]
 
 [resource]
 blackboard_plan = ExtResource("1_k8dvn")
