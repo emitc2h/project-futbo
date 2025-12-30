@@ -49,7 +49,7 @@ script = ExtResource("1_8q3t1")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 12, 0)
-collision_mask = 51
+collision_mask = 55
 hit_from_inside = true
 
 [node name="StateChart" type="Node" parent="."]
@@ -72,10 +72,16 @@ delay_in_seconds = "0.0"
 [node name="fire" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_fjnq5")
 
-[node name="to hit" type="Node" parent="StateChart/Root/fire"]
+[node name="to hit player" type="Node" parent="StateChart/Root/fire"]
 script = ExtResource("6_kyqan")
-to = NodePath("../../hit")
-event = &"to hit"
+to = NodePath("../../hit player")
+event = &"to hit player"
+delay_in_seconds = "0.0"
+
+[node name="to hit control node" type="Node" parent="StateChart/Root/fire"]
+script = ExtResource("6_kyqan")
+to = NodePath("../../hit control node")
+event = &"to hit control node"
 delay_in_seconds = "0.0"
 
 [node name="to miss" type="Node" parent="StateChart/Root/fire"]
@@ -84,10 +90,19 @@ to = NodePath("../../miss")
 event = &"to miss"
 delay_in_seconds = "0.0"
 
-[node name="hit" type="Node" parent="StateChart/Root"]
+[node name="hit player" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_fjnq5")
 
-[node name="to off" type="Node" parent="StateChart/Root/hit"]
+[node name="to off" type="Node" parent="StateChart/Root/hit player"]
+script = ExtResource("6_kyqan")
+to = NodePath("../../off")
+event = &"to off"
+delay_in_seconds = "0.0"
+
+[node name="hit control node" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_fjnq5")
+
+[node name="to off" type="Node" parent="StateChart/Root/hit control node"]
 script = ExtResource("6_kyqan")
 to = NodePath("../../off")
 event = &"to off"
@@ -135,6 +150,8 @@ draw_pass_1 = SubResource("QuadMesh_kyqan")
 [connection signal="state_physics_processing" from="StateChart/Root/off" to="." method="_on_off_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/fire" to="." method="_on_fire_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/fire" to="." method="_on_fire_state_physics_processing"]
-[connection signal="state_entered" from="StateChart/Root/hit" to="." method="_on_hit_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Root/hit" to="." method="_on_hit_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/hit player" to="." method="_on_hit_player_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/hit player" to="." method="_on_hit_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/hit control node" to="." method="_on_hit_control_node_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/hit control node" to="." method="_on_hit_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/miss" to="." method="_on_miss_state_entered"]

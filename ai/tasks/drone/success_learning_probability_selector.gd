@@ -7,8 +7,8 @@ extends BTProbabilitySelector
 func _setup() -> void:
 	## Initialize blackboard record variables
 	for record_name in record_names:
-		blackboard.set_var(record_name + "_success_count", 0)
-		blackboard.set_var(record_name + "_total_count", 0)
+		blackboard.set_var(record_name + "_success_count", 1)
+		blackboard.set_var(record_name + "_total_count", 1)
 
 
 func _enter() -> void:

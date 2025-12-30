@@ -41,6 +41,12 @@ func _on_able_state_entered() -> void:
 	state = State.ABLE
 
 
+func _on_able_state_exited() -> void:
+	## When able state is exited, the ball should be given a small impulse so it bounces away
+	if character.dribble_states.state == character.dribble_states.State.DRIBBLING:
+		character.dribble_states.ball.impulse(1.5 * Vector3(character.direction_states.face_sign(), 1.0, 0.0))
+
+
 # knocked state
 #----------------------------------------
 func _on_knocked_state_entered() -> void:

@@ -20,7 +20,6 @@
 [ext_resource type="Script" uid="uid://kcwfn3rok7aj" path="res://scripts/enemies/drone/states/drone_proximity_states.gd" id="13_43bu3"]
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/utilities/inert_node.gd" id="14_efc27"]
 [ext_resource type="BehaviorTree" uid="uid://c7vvmbp7vehqy" path="res://ai/trees/enemies/drone/decision trees/drone_complete_behavior.tres" id="23_c1bph"]
-[ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/decision trees/drone_complete_behavior_blackboard_plan.tres" id="24_j5bu2"]
 [ext_resource type="PackedScene" uid="uid://qcbmkep1csam" path="res://scenes/enemies/drone/drone_shield.tscn" id="27_fv7v3"]
 [ext_resource type="Material" uid="uid://h1qmrtj6hri8" path="res://assets/3D/Materials/character_jump_distortion_shader_material.tres" id="34_6t6rp"]
 [ext_resource type="Script" uid="uid://darufwryr50n1" path="res://scripts/enemies/drone/animation/float_distortion_animation.gd" id="38_6t6rp"]
@@ -44,6 +43,118 @@ margin = 0.1
 radius = 1.1
 height = 3.0
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_c1bph"]
+var/tracking_offset/name = &"tracking_offset"
+var/tracking_offset/type = 3
+var/tracking_offset/value = 0.0
+var/tracking_offset/hint = 0
+var/tracking_offset/hint_string = ""
+var/attacking/name = &"attacking"
+var/attacking/type = 1
+var/attacking/value = false
+var/attacking/hint = 0
+var/attacking/hint_string = ""
+var/internal_player_repr_global_position/name = &"internal_player_repr_global_position"
+var/internal_player_repr_global_position/type = 9
+var/internal_player_repr_global_position/value = Vector3(0, 0, 0)
+var/internal_player_repr_global_position/hint = 0
+var/internal_player_repr_global_position/hint_string = ""
+var/internal_player_repr_velocity/name = &"internal_player_repr_velocity"
+var/internal_player_repr_velocity/type = 9
+var/internal_player_repr_velocity/value = Vector3(0, 0, 0)
+var/internal_player_repr_velocity/hint = 0
+var/internal_player_repr_velocity/hint_string = ""
+var/internal_player_repr_is_dribbling/name = &"internal_player_repr_is_dribbling"
+var/internal_player_repr_is_dribbling/type = 1
+var/internal_player_repr_is_dribbling/value = false
+var/internal_player_repr_is_dribbling/hint = 0
+var/internal_player_repr_is_dribbling/hint_string = ""
+var/internal_player_repr_is_dead/name = &"internal_player_repr_is_dead"
+var/internal_player_repr_is_dead/type = 1
+var/internal_player_repr_is_dead/value = false
+var/internal_player_repr_is_dead/hint = 0
+var/internal_player_repr_is_dead/hint_string = ""
+var/internal_player_repr_shield_charges/name = &"internal_player_repr_shield_charges"
+var/internal_player_repr_shield_charges/type = 2
+var/internal_player_repr_shield_charges/value = 0
+var/internal_player_repr_shield_charges/hint = 0
+var/internal_player_repr_shield_charges/hint_string = ""
+var/internal_control_node_repr_global_position/name = &"internal_control_node_repr_global_position"
+var/internal_control_node_repr_global_position/type = 9
+var/internal_control_node_repr_global_position/value = Vector3(0, 0, 0)
+var/internal_control_node_repr_global_position/hint = 0
+var/internal_control_node_repr_global_position/hint_string = ""
+var/internal_control_node_repr_velocity/name = &"internal_control_node_repr_velocity"
+var/internal_control_node_repr_velocity/type = 9
+var/internal_control_node_repr_velocity/value = Vector3(0, 0, 0)
+var/internal_control_node_repr_velocity/hint = 0
+var/internal_control_node_repr_velocity/hint_string = ""
+var/internal_control_node_repr_power_on/name = &"internal_control_node_repr_power_on"
+var/internal_control_node_repr_power_on/type = 1
+var/internal_control_node_repr_power_on/value = false
+var/internal_control_node_repr_power_on/hint = 0
+var/internal_control_node_repr_power_on/hint_string = ""
+var/internal_control_node_repr_charges/name = &"internal_control_node_repr_charges"
+var/internal_control_node_repr_charges/type = 2
+var/internal_control_node_repr_charges/value = 0
+var/internal_control_node_repr_charges/hint = 0
+var/internal_control_node_repr_charges/hint_string = ""
+var/internal_control_node_repr_shield_expanded/name = &"internal_control_node_repr_shield_expanded"
+var/internal_control_node_repr_shield_expanded/type = 1
+var/internal_control_node_repr_shield_expanded/value = false
+var/internal_control_node_repr_shield_expanded/hint = 0
+var/internal_control_node_repr_shield_expanded/hint_string = ""
+var/success_buffer_player_repr_global_position/name = &"success_buffer_player_repr_global_position"
+var/success_buffer_player_repr_global_position/type = 9
+var/success_buffer_player_repr_global_position/value = Vector3(0, 0, 0)
+var/success_buffer_player_repr_global_position/hint = 0
+var/success_buffer_player_repr_global_position/hint_string = ""
+var/success_buffer_player_repr_velocity/name = &"success_buffer_player_repr_velocity"
+var/success_buffer_player_repr_velocity/type = 9
+var/success_buffer_player_repr_velocity/value = Vector3(0, 0, 0)
+var/success_buffer_player_repr_velocity/hint = 0
+var/success_buffer_player_repr_velocity/hint_string = ""
+var/success_buffer_player_repr_is_dribbling/name = &"success_buffer_player_repr_is_dribbling"
+var/success_buffer_player_repr_is_dribbling/type = 1
+var/success_buffer_player_repr_is_dribbling/value = false
+var/success_buffer_player_repr_is_dribbling/hint = 0
+var/success_buffer_player_repr_is_dribbling/hint_string = ""
+var/success_buffer_player_repr_is_dead/name = &"success_buffer_player_repr_is_dead"
+var/success_buffer_player_repr_is_dead/type = 1
+var/success_buffer_player_repr_is_dead/value = false
+var/success_buffer_player_repr_is_dead/hint = 0
+var/success_buffer_player_repr_is_dead/hint_string = ""
+var/success_buffer_player_repr_shield_charges/name = &"success_buffer_player_repr_shield_charges"
+var/success_buffer_player_repr_shield_charges/type = 2
+var/success_buffer_player_repr_shield_charges/value = 0
+var/success_buffer_player_repr_shield_charges/hint = 0
+var/success_buffer_player_repr_shield_charges/hint_string = ""
+var/success_buffer_control_node_repr_global_position/name = &"success_buffer_control_node_repr_global_position"
+var/success_buffer_control_node_repr_global_position/type = 9
+var/success_buffer_control_node_repr_global_position/value = Vector3(0, 0, 0)
+var/success_buffer_control_node_repr_global_position/hint = 0
+var/success_buffer_control_node_repr_global_position/hint_string = ""
+var/success_buffer_control_node_repr_velocity/name = &"success_buffer_control_node_repr_velocity"
+var/success_buffer_control_node_repr_velocity/type = 9
+var/success_buffer_control_node_repr_velocity/value = Vector3(0, 0, 0)
+var/success_buffer_control_node_repr_velocity/hint = 0
+var/success_buffer_control_node_repr_velocity/hint_string = ""
+var/success_buffer_control_node_repr_power_on/name = &"success_buffer_control_node_repr_power_on"
+var/success_buffer_control_node_repr_power_on/type = 1
+var/success_buffer_control_node_repr_power_on/value = false
+var/success_buffer_control_node_repr_power_on/hint = 0
+var/success_buffer_control_node_repr_power_on/hint_string = ""
+var/success_buffer_control_node_repr_charges/name = &"success_buffer_control_node_repr_charges"
+var/success_buffer_control_node_repr_charges/type = 2
+var/success_buffer_control_node_repr_charges/value = 0
+var/success_buffer_control_node_repr_charges/hint = 0
+var/success_buffer_control_node_repr_charges/hint_string = ""
+var/success_buffer_control_node_repr_shield_expanded/name = &"success_buffer_control_node_repr_shield_expanded"
+var/success_buffer_control_node_repr_shield_expanded/type = 1
+var/success_buffer_control_node_repr_shield_expanded/value = false
+var/success_buffer_control_node_repr_shield_expanded/hint = 0
+var/success_buffer_control_node_repr_shield_expanded/hint_string = ""
+
 [node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_player") groups=["Enemies"]]
 script = ExtResource("1_irn00")
 physics_mode_states = NodePath("State/Root/Physics/Physics States")
@@ -64,7 +175,6 @@ drone = NodePath("..")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_g2as1")
-track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="Root" type="Node" parent="State"]
@@ -675,7 +785,7 @@ mesh = NodePath("../TrackPositionContainer/Distortion")
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
 active = false
-blackboard_plan = ExtResource("24_j5bu2")
+blackboard_plan = SubResource("BlackboardPlan_c1bph")
 
 [connection signal="timeout" from="State/Root/Physics/Physics States/DeadTimer" to="State/Root/Physics/Physics States" method="_on_dead_timer_timeout"]
 [connection signal="state_entered" from="State/Root/Physics/char" to="State/Root/Physics/Physics States" method="_on_char_state_entered"]
