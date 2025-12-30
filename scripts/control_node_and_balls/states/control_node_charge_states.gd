@@ -19,26 +19,29 @@ const TRANS_DISCHARGE: String = "discharge"
 
 ## TRANS_ANIM constants
 const CHARGE_LEVEL_0_STATE_ANIM: String = "state - power on - charge level 0"
-const CHARGE_LEVEL_0_EXPANDED_STATE_ANIM: String = "state - power on - charge level 0 - expanded"
 const CHARGE_LEVEL_1_STATE_ANIM: String = "state - power on - charge level 1"
-const CHARGE_LEVEL_1_EXPANDED_STATE_ANIM: String = "state - power on - charge level 1 - expanded"
 const CHARGE_LEVEL_2_STATE_ANIM: String = "state - power on - charge level 2"
-const CHARGE_LEVEL_2_EXPANDED_STATE_ANIM: String = "state - power on - charge level 2 - expanded"
 const CHARGE_LEVEL_3_STATE_ANIM: String = "state - power on - charge level 3"
+const CHARGE_LEVEL_0_EXPANDED_STATE_ANIM: String = "state - power on - charge level 0 - expanded"
+const CHARGE_LEVEL_1_EXPANDED_STATE_ANIM: String = "state - power on - charge level 1 - expanded"
+const CHARGE_LEVEL_2_EXPANDED_STATE_ANIM: String = "state - power on - charge level 2 - expanded"
 const CHARGE_LEVEL_3_EXPANDED_STATE_ANIM: String = "state - power on - charge level 3 - expanded"
 
-const HIT_LEVEL1_TRANS_ANIM: String = "transition - hit - charge level 1 - expanded"
-const HIT_LEVEL2_TRANS_ANIM: String = "transition - hit - charge level 2 - expanded"
-const HIT_LEVEL3_TRANS_ANIM: String = "transition - hit - charge level 3 - expanded"
+const HIT_LEVEL_1_TRANS_ANIM: String = "transition - hit - charge level 1"
+const HIT_LEVEL_2_TRANS_ANIM: String = "transition - hit - charge level 2"
+const HIT_LEVEL_3_TRANS_ANIM: String = "transition - hit - charge level 3"
+const HIT_LEVEL_1_EXPANDED_TRANS_ANIM: String = "transition - hit - charge level 1 - expanded"
+const HIT_LEVEL_2_EXPANDED_TRANS_ANIM: String = "transition - hit - charge level 2 - expanded"
+const HIT_LEVEL_3_EXPANDED_TRANS_ANIM: String = "transition - hit - charge level 3 - expanded"
 
 ## Nodes controlled
 @onready var lose_charge_timer: Timer = $LoseChargeTimer
 
 ## Internal variables
-var none_state_anim: String = CHARGE_LEVEL_0_STATE_ANIM
-var lvl1_state_anim: String = CHARGE_LEVEL_1_STATE_ANIM
-var lvl2_state_anim: String = CHARGE_LEVEL_2_STATE_ANIM
-var lvl3_state_anim: String = CHARGE_LEVEL_3_STATE_ANIM
+var none_shield_state_anim: String = CHARGE_LEVEL_0_STATE_ANIM
+var lvl1_shield_state_anim: String = CHARGE_LEVEL_1_STATE_ANIM
+var lvl2_shield_state_anim: String = CHARGE_LEVEL_2_STATE_ANIM
+var lvl3_shield_state_anim: String = CHARGE_LEVEL_3_STATE_ANIM
 
 func _ready() -> void:
 	rigid_node.body_entered.connect(_on_shield_body_entered)
@@ -50,8 +53,8 @@ func _ready() -> void:
 func _on_none_state_entered() -> void:
 	state = State.NONE
 	Signals.updated_control_node_charge_level.emit(state)
-	control_node.anim_state.travel(none_state_anim)
-	none_state_anim = CHARGE_LEVEL_0_STATE_ANIM
+	control_node.anim_state.travel(none_shield_state_anim)
+	none_shield_state_anim = CHARGE_LEVEL_0_STATE_ANIM
 	lose_charge_timer.stop()
 	
 	Representations.control_node_representation.charges = 0
@@ -62,8 +65,8 @@ func _on_none_state_entered() -> void:
 func _on_level_1_state_entered() -> void:
 	state = State.LEVEL1
 	Signals.updated_control_node_charge_level.emit(state)
-	control_node.anim_state.travel(lvl1_state_anim)
-	lvl1_state_anim = CHARGE_LEVEL_1_STATE_ANIM
+	control_node.anim_state.travel(lvl1_shield_state_anim)
+	lvl1_shield_state_anim = CHARGE_LEVEL_1_STATE_ANIM
 	lose_charge_timer.start()
 	
 	Representations.control_node_representation.charges = 1
@@ -74,8 +77,8 @@ func _on_level_1_state_entered() -> void:
 func _on_level_2_state_entered() -> void:
 	state = State.LEVEL2
 	Signals.updated_control_node_charge_level.emit(state)
-	control_node.anim_state.travel(lvl2_state_anim)
-	lvl2_state_anim = CHARGE_LEVEL_2_STATE_ANIM
+	control_node.anim_state.travel(lvl2_shield_state_anim)
+	lvl2_shield_state_anim = CHARGE_LEVEL_2_STATE_ANIM
 	lose_charge_timer.start()
 	
 	Representations.control_node_representation.charges = 2
@@ -86,8 +89,8 @@ func _on_level_2_state_entered() -> void:
 func _on_level_3_state_entered() -> void:
 	state = State.LEVEL3
 	Signals.updated_control_node_charge_level.emit(state)
-	control_node.anim_state.travel(lvl3_state_anim)
-	lvl3_state_anim = CHARGE_LEVEL_3_STATE_ANIM
+	control_node.anim_state.travel(lvl3_shield_state_anim)
+	lvl3_shield_state_anim = CHARGE_LEVEL_3_STATE_ANIM
 	Signals.control_node_is_charged.emit()
 	lose_charge_timer.start()
 	
@@ -112,11 +115,23 @@ func _on_lose_charge_timer_timeout() -> void:
 
 func _on_animation_state_finished(anim_name: String) -> void:
 	match(anim_name):
-		HIT_LEVEL1_TRANS_ANIM:
+		HIT_LEVEL_1_TRANS_ANIM:
+			none_shield_state_anim = CHARGE_LEVEL_0_STATE_ANIM
 			sc.send_event(TRANS_CHARGE_DOWN)
-		HIT_LEVEL2_TRANS_ANIM:
+		HIT_LEVEL_2_TRANS_ANIM:
+			lvl1_shield_state_anim = CHARGE_LEVEL_1_STATE_ANIM
 			sc.send_event(TRANS_CHARGE_DOWN)
-		HIT_LEVEL3_TRANS_ANIM:
+		HIT_LEVEL_3_TRANS_ANIM:
+			lvl2_shield_state_anim = CHARGE_LEVEL_2_STATE_ANIM
+			sc.send_event(TRANS_CHARGE_DOWN)
+		HIT_LEVEL_1_EXPANDED_TRANS_ANIM:
+			none_shield_state_anim = CHARGE_LEVEL_0_EXPANDED_STATE_ANIM
+			sc.send_event(TRANS_CHARGE_DOWN)
+		HIT_LEVEL_2_EXPANDED_TRANS_ANIM:
+			lvl1_shield_state_anim = CHARGE_LEVEL_1_EXPANDED_STATE_ANIM
+			sc.send_event(TRANS_CHARGE_DOWN)
+		HIT_LEVEL_3_EXPANDED_TRANS_ANIM:
+			lvl2_shield_state_anim = CHARGE_LEVEL_2_EXPANDED_STATE_ANIM
 			sc.send_event(TRANS_CHARGE_DOWN)
 
 
@@ -128,16 +143,28 @@ func _on_player_shield_taking_charges(num_charges_taken: int) -> void:
 # ANIMATION UTILS
 #=======================================================
 func lose_charge_by_hit_anim() -> void:
-	match(state):
-		State.LEVEL1:
-			none_state_anim = CHARGE_LEVEL_0_EXPANDED_STATE_ANIM
-			control_node.anim_state.travel(HIT_LEVEL1_TRANS_ANIM)
-		State.LEVEL2:
-			lvl1_state_anim = CHARGE_LEVEL_1_EXPANDED_STATE_ANIM
-			control_node.anim_state.travel(HIT_LEVEL2_TRANS_ANIM)
-		State.LEVEL3:
-			lvl2_state_anim = CHARGE_LEVEL_2_EXPANDED_STATE_ANIM
-			control_node.anim_state.travel(HIT_LEVEL3_TRANS_ANIM)
+	if control_node.shield_states.state == control_node.shield_states.State.ON:
+		match(state):
+			State.LEVEL1:
+				none_shield_state_anim = CHARGE_LEVEL_0_EXPANDED_STATE_ANIM
+				control_node.anim_state.travel(HIT_LEVEL_1_EXPANDED_TRANS_ANIM)
+			State.LEVEL2:
+				lvl1_shield_state_anim = CHARGE_LEVEL_1_EXPANDED_STATE_ANIM
+				control_node.anim_state.travel(HIT_LEVEL_2_EXPANDED_TRANS_ANIM)
+			State.LEVEL3:
+				lvl2_shield_state_anim = CHARGE_LEVEL_2_EXPANDED_STATE_ANIM
+				control_node.anim_state.travel(HIT_LEVEL_3_EXPANDED_TRANS_ANIM)
+	else:
+		match(state):
+			State.LEVEL1:
+				none_shield_state_anim = CHARGE_LEVEL_0_STATE_ANIM
+				control_node.anim_state.travel(HIT_LEVEL_1_TRANS_ANIM)
+			State.LEVEL2:
+				lvl1_shield_state_anim = CHARGE_LEVEL_1_STATE_ANIM
+				control_node.anim_state.travel(HIT_LEVEL_2_TRANS_ANIM)
+			State.LEVEL3:
+				lvl2_shield_state_anim = CHARGE_LEVEL_2_STATE_ANIM
+				control_node.anim_state.travel(HIT_LEVEL_3_TRANS_ANIM)
 
 
 #=======================================================
@@ -145,3 +172,13 @@ func lose_charge_by_hit_anim() -> void:
 #=======================================================
 func num_charges() -> int:
 	return state as int
+
+func set_shield_state_anim(expanded: bool = false) -> void:
+	if expanded:
+		none_shield_state_anim = CHARGE_LEVEL_0_EXPANDED_STATE_ANIM
+		lvl1_shield_state_anim = CHARGE_LEVEL_1_EXPANDED_STATE_ANIM
+		lvl2_shield_state_anim = CHARGE_LEVEL_2_EXPANDED_STATE_ANIM
+	else:
+		none_shield_state_anim = CHARGE_LEVEL_0_STATE_ANIM
+		lvl1_shield_state_anim = CHARGE_LEVEL_1_STATE_ANIM
+		lvl2_shield_state_anim = CHARGE_LEVEL_2_STATE_ANIM

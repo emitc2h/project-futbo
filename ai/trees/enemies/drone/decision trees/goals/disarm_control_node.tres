@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=47 format=3 uid="uid://bb1isfi5avcm5"]
+[gd_resource type="BehaviorTree" load_steps=48 format=3 uid="uid://bb1isfi5avcm5"]
 
 [ext_resource type="Script" uid="uid://bsi37utyrao2r" path="res://ai/tasks/drone/update_success_buffer_condition.gd" id="1_n8h1r"]
 [ext_resource type="Script" uid="uid://cw5lgdcrky3nb" path="res://ai/tasks/drone/drone_beam_attack_action.gd" id="2_ri0pv"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://b2j2u7t3dp4en" path="res://ai/tasks/drone/drone_ram_attack_action.gd" id="4_ewudy"]
 [ext_resource type="Script" uid="uid://bnwshcmpemp3f" path="res://ai/tasks/drone/success_learning_probability_selector.gd" id="5_aabgd"]
 [ext_resource type="Script" uid="uid://cn3tf4te6g4xt" path="res://ai/tasks/drone/drone_dive_attack_action.gd" id="6_jlx8e"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_n8h1r"]
 
 [sub_resource type="BBVariant" id="BBVariant_xfaal"]
 type = 2
@@ -166,4 +168,5 @@ custom_name = "IF GOAL: DISARM THE CONTROL NODE"
 children = [SubResource("BTCheckVar_nf4cm"), SubResource("BTSelector_gi4ev"), SubResource("BTSetVar_tikep")]
 
 [resource]
+blackboard_plan = SubResource("BlackboardPlan_n8h1r")
 root_task = SubResource("BTSequence_4mmoq")

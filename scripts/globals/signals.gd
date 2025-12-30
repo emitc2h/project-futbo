@@ -92,6 +92,8 @@ signal control_node_shield_hit(one_hit: bool)
 signal control_node_requests_destination
 @warning_ignore("unused_signal")
 signal control_node_shield_dissipating(available_charges: int)
+@warning_ignore("unused_signal")
+signal control_node_impulse(vector: Vector3)
 
 
 ## ===================================== ##

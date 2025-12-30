@@ -486,7 +486,7 @@ shape = SubResource("CapsuleShape3D_x41nu")
 [node name="JumpBufferTimer" type="Timer" parent="."]
 wait_time = 0.05
 
-[node name="TargetMarker" type="Marker3D" parent="."]
+[node name="TargetMarker" type="Marker3D" parent="." groups=["PlayerGroup"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00116658, 1.06277, 0)
 
 [node name="JumpRaycast" type="RayCast3D" parent="."]
@@ -548,6 +548,7 @@ target_position = Vector3(0.12, 0.16, 0)
 collision_mask = 4
 
 [connection signal="state_entered" from="State/Root/Damage/Able" to="State/Root/Damage/Damage States" method="_on_able_state_entered"]
+[connection signal="state_exited" from="State/Root/Damage/Able" to="State/Root/Damage/Damage States" method="_on_able_state_exited"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Movement/In the air" to="State/Root/Damage/Able/Movement/Movement States" method="_on_in_the_air_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Damage/Able/Movement/In the air" to="State/Root/Damage/Able/Movement/Movement States" method="_on_in_the_air_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Damage/Able/Movement/In the air/jumping" to="State/Root/Damage/Able/Movement/In the air/In the air States" method="_on_jumping_state_entered"]

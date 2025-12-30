@@ -6,6 +6,10 @@ extends Node
 @export var drone: Drone
 @export var sc: StateChart
 
+## Parameters
+@export_group("Parameters")
+@export var rotation_lerp_factor: float = 1.0
+
 ## States Enum
 enum State {FACE_RIGHT = 0, FACE_LEFT = 1, TURN_RIGHT = 2, TURN_LEFT = 3}
 var state: State = State.FACE_RIGHT
@@ -37,10 +41,10 @@ signal is_now_facing_right
 signal is_now_facing_left
 
 
-func _rotate_toward(vector: Vector3) -> void:
+func _rotate_toward(vector: Vector3, delta: float) -> void:
 	var target_orientation: Quaternion = Quaternion.from_euler(vector)
 	var current_orientation: Quaternion = Quaternion.from_euler(char_node.rotation)
-	var new_orientation: Quaternion = current_orientation.slerp(target_orientation, 0.08)
+	var new_orientation: Quaternion = current_orientation.slerp(target_orientation, rotation_lerp_factor * delta)
 	char_node.rotation = new_orientation.get_euler()
 
 
@@ -52,12 +56,12 @@ func _on_face_right_state_entered() -> void:
 	is_now_facing_right.emit()
 
 
-func _on_face_right_state_physics_processing(_delta: float) -> void:
+func _on_face_right_state_physics_processing(delta: float) -> void:
 	if target_vec != Vector3.ZERO:
 		var x_rot: Vector3 = Vector3.RIGHT * Vector3.LEFT.angle_to(target_vec)
-		self._rotate_toward(FACE_RIGHT_Y_ROT + x_rot)
+		self._rotate_toward(FACE_RIGHT_Y_ROT + x_rot, delta)
 	else:
-		self._rotate_toward(FACE_RIGHT_Y_ROT)
+		self._rotate_toward(FACE_RIGHT_Y_ROT, delta)
 
 
 # face left state
@@ -68,12 +72,12 @@ func _on_face_left_state_entered() -> void:
 	is_now_facing_left.emit()
 
 
-func _on_face_left_state_physics_processing(_delta: float) -> void:
+func _on_face_left_state_physics_processing(delta: float) -> void:
 	if target_vec != Vector3.ZERO:
 		var x_rot: Vector3 = Vector3.RIGHT * Vector3.RIGHT.angle_to(target_vec)
-		self._rotate_toward(FACE_LEFT_Y_ROT + x_rot)
+		self._rotate_toward(FACE_LEFT_Y_ROT + x_rot, delta)
 	else:
-		self._rotate_toward(FACE_LEFT_Y_ROT)
+		self._rotate_toward(FACE_LEFT_Y_ROT, delta)
 
 
 # turn right state

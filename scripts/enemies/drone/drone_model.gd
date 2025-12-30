@@ -71,6 +71,9 @@ func _ready() -> void:
 
 	for bone in physical_bones.get_children():
 		bone.drone = drone
+	
+	plasma_bolt_left.did_hit.connect(_on_did_hit)
+	plasma_bolt_right.did_hit.connect(_on_did_hit)
 
 
 ## Animation Tree Path Controls
@@ -103,6 +106,10 @@ func _on_anim_state_finished(anim_name: String) -> void:
 
 func _on_anim_state_started(anim_name: String) -> void:
 	anim_state_started.emit(anim_name)
+	
+	
+func _on_did_hit() -> void:
+	spinners_disengage_target()
 
 
 ## Animations

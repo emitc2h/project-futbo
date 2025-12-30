@@ -33,6 +33,10 @@ const TRANS_TO_ACQUIRED: String = "Targeting: to acquired"
 @onready var char_node: CharacterBody3D = drone.get_node("CharNode")
 @onready var drone_model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
 
+## Target Type
+enum TargetType {PLAYER = 0, CONTROL_NODE = 1, OTHER = 2}
+var target_type: TargetType = TargetType.PLAYER
+
 ## Internal variables
 var target: Node3D
 var range_tween: Tween
@@ -51,17 +55,15 @@ signal target_none()
 ## Utils
 func scan_for_target() -> bool:
 	if field_of_view.sees_target:
-		if field_of_view.target.is_in_group("PlayerGroup"):
-			target = field_of_view.target.target_marker
-			drone.repr.update_player_repr_from_buffer()
-		elif field_of_view.target.is_in_group("ControlNodeGroup"):
-			drone.repr.update_control_node_repr_from_buffer()
-		else:
-			target = field_of_view.target
-			
-		## Target the spinners at the target
-		drone_model.spinners_acquire_target(target)
-		
+		match(target_type):
+			TargetType.PLAYER:
+				if field_of_view.target.is_in_group("PlayerGroup"):
+					target = field_of_view.target.target_marker
+			TargetType.CONTROL_NODE:
+				if field_of_view.target.is_in_group("ControlNodeGroup"):
+					target = field_of_view.target.target_marker
+			TargetType.OTHER:
+				target = field_of_view.target
 		return true
 	return false
 

@@ -113,8 +113,10 @@ func _tick(delta: float) -> Status:
 		return RUNNING
 	
 	if not is_char_and_defendable_again:
+		print_debug("drone become_char")
 		drone.become_char()
 		drone.become_defendable()
+		drone.enable_proximity_detector()
 		is_char_and_defendable_again = true
 	
 	if not is_open_at_end:
@@ -129,10 +131,15 @@ func _tick(delta: float) -> Status:
 			is_facing_target_at_end = true
 		return RUNNING
 	
+	print("enable_targeting after dive attack")
 	drone.enable_targeting()
-	drone.enable_proximity_detector()
+	print("done enabling targeting")
 	
 	return SUCCESS
+
+
+func _exit() -> void:
+	print("exiting drone_dive_attack_action")
 
 
 ##########################################

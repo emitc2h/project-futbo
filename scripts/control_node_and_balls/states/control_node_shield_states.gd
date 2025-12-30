@@ -94,8 +94,8 @@ func _on_dissipating_state_entered() -> void:
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
 	
-	## Dissipating the shield means charge 0 should reflect the non-expanded state
-	control_node.charge_states.none_state_anim = control_node.charge_states.CHARGE_LEVEL_0_STATE_ANIM
+	## Dissipating the shield means charge 0, 1 and 2 should reflect the non-expanded state
+	control_node.charge_states.set_shield_state_anim(false)
 	
 	dissipate_animation()
 

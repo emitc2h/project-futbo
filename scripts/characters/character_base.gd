@@ -24,6 +24,12 @@ var is_player: bool = false
 @onready var sc: StateChart = $State
 @onready var target_marker: Marker3D = $TargetMarker
 
+
+func _ready() -> void:
+	if is_player:
+		Representations.player_target_marker = target_marker
+
+
 ## Update the player representation
 func _physics_process(_delta: float) -> void:
 	if is_player:

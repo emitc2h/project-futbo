@@ -15,12 +15,16 @@ var control_node_physics_states: ControlNodePhysicsStates
 
 @onready var anim_state: AnimationNodeStateMachinePlayback = $AnimationTree.get("parameters/playback")
 
+@onready var target_marker: Marker3D = $TrackPositionContainer/TargetMarker
+
 func _ready() -> void:
 	control_node_control_states = control_states as ControlNodeControlStates
 	control_node_physics_states = physics_states as ControlNodePhysicsStates
 	Signals.player_long_kick_ready.connect(_on_player_long_kick_ready)
 	Signals.player_requests_warp.connect(_on_player_requesting_warp)
 	Signals.control_node_shield_hit.connect(_on_control_node_shield_hit)
+	Signals.control_node_impulse.connect(_on_control_node_impulse)
+	Representations.control_node_target_marker = target_marker
 
 
 func _physics_process(_delta: float) -> void:
@@ -73,3 +77,7 @@ func _on_control_node_shield_hit(one_hit: bool) -> void:
 		sc.send_event(power_states.TRANS_TO_BLOW)
 	else:
 		charge_states.lose_charge_by_hit_anim()
+
+
+func _on_control_node_impulse(impulse_vector: Vector3) -> void:
+	impulse(impulse_vector)
