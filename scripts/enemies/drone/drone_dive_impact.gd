@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var final_shockwave_scale: float = 6.0
+@export var final_shockwave_scale: float = 7.5
 
 @onready var dust_particles: GPUParticles3D = $DustParticles
 @onready var dust_fuzzy_particles: GPUParticles3D = $FuzzyParticles
@@ -22,6 +22,8 @@ func _ready() -> void:
 	shockwave_mesh.queue_free()
 	hitbox_left.queue_free()
 	hitbox_right.queue_free()
+	dust_particles.queue_free()
+	dust_fuzzy_particles.queue_free()
 
 
 func _on_dust_particles_finished() -> void:
@@ -81,11 +83,16 @@ func _animate_shockwave(duration: float) -> void:
 	await tw_scale.finished
 
 
-func _on_hit_box_left_body_entered(body: Node3D) -> void:
+func cause_damage(body: Node3D, damage_vector: Vector3) -> void:
 	if body.is_in_group("PlayerGroup"):
-		Signals.player_takes_damage.emit(Vector3.LEFT * 3.0, global_position, true)
+		Signals.player_takes_damage.emit(damage_vector, global_position, true)
+	if body.is_in_group("ControlNodeGroup"):
+		Signals.control_node_shield_hit.emit(true)
+		Signals.control_node_impulse.emit(2.0 * damage_vector)
+
+func _on_hit_box_left_body_entered(body: Node3D) -> void:
+	cause_damage(body, Vector3.LEFT * 3.0)
 
 
 func _on_hit_box_right_body_entered(body: Node3D) -> void:
-	if body.is_in_group("PlayerGroup"):
-		Signals.player_takes_damage.emit(Vector3.RIGHT * 3.0, global_position, true)
+	cause_damage(body, Vector3.RIGHT * 3.0)

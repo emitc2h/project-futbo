@@ -8,7 +8,7 @@ extends Node
 
 ## Parameters
 @export_group("Parameters")
-@export var rotation_lerp_factor: float = 1.0
+@export var rotation_lerp_factor: float = 5.0
 
 ## States Enum
 enum State {FACE_RIGHT = 0, FACE_LEFT = 1, TURN_RIGHT = 2, TURN_LEFT = 3}

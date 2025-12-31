@@ -13,6 +13,8 @@
 [sub_resource type="BTAction" id="BTAction_3fov2"]
 script = ExtResource("1_1vix5")
 timeout = 3.0
+jump_strength = 40.0
+jump_period = 1.0
 
 [sub_resource type="BTCondition" id="BTCondition_c2wvc"]
 script = ExtResource("2_siqkf")
@@ -70,7 +72,6 @@ metadata/_weight_ = 1.0
 children = [SubResource("BTSequence_f4qdv"), SubResource("BTSequence_eiig0"), SubResource("BTSequence_3uwdu")]
 script = ExtResource("2_5pa3u")
 record_names = Array[String](["beam_attack", "dive_attack", "ram_attack"])
-printout = true
 
 [sub_resource type="BBVariant" id="BBVariant_vpe4h"]
 type = 1

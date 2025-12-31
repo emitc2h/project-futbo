@@ -77,7 +77,7 @@ states/knocked/position = Vector2(380.5, 267.5)
 states/movement/node = ExtResource("5_8cbqy")
 states/movement/position = Vector2(540.25, 101)
 transitions = ["Start", "movement", SubResource("AnimationNodeStateMachineTransition_tglvg"), "movement", "knocked", SubResource("AnimationNodeStateMachineTransition_guecj"), "knocked", "movement", SubResource("AnimationNodeStateMachineTransition_8cbqy"), "movement", "kick", SubResource("AnimationNodeStateMachineTransition_tf4ta"), "kick", "movement", SubResource("AnimationNodeStateMachineTransition_0csby"), "movement", "long kick", SubResource("AnimationNodeStateMachineTransition_qfdgm"), "long kick", "movement", SubResource("AnimationNodeStateMachineTransition_7ujmj")]
-graph_offset = Vector2(-348.1453, -0.58502156)
+graph_offset = Vector2(-312.1453, -178.58502)
 
 [node name="CharacterAssetBase" type="Node3D"]
 script = ExtResource("1_u4gyo")
