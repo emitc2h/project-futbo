@@ -154,7 +154,6 @@ func _tick(delta: float) -> Status:
 		return RUNNING
 	
 	if not is_char_and_defendable_again:
-		print_debug("drone become_char")
 		drone.become_char()
 		drone.become_defendable()
 		drone.enable_proximity_detector()
@@ -175,6 +174,13 @@ func _tick(delta: float) -> Status:
 	drone.enable_targeting()
 	
 	return SUCCESS
+
+
+func _exit() -> void:
+	drone.become_char()
+	drone.enable_proximity_detector()
+	drone.become_defendable()
+	drone.enable_targeting()
 
 
 ##########################################

@@ -155,7 +155,7 @@ var/success_buffer_control_node_repr_shield_expanded/value = false
 var/success_buffer_control_node_repr_shield_expanded/hint = 0
 var/success_buffer_control_node_repr_shield_expanded/hint_string = ""
 
-[node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_player") groups=["Enemies"]]
+[node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_player") groups=["DroneGroup", "Enemies"]]
 script = ExtResource("1_irn00")
 physics_mode_states = NodePath("State/Root/Physics/Physics States")
 direction_faced_states = NodePath("State/Root/Direction Faced/Direction Faced States")
@@ -734,7 +734,7 @@ surface_material_override/0 = ExtResource("34_6t6rp")
 target_position = Vector3(0, -2.6, 0)
 collision_mask = 2
 
-[node name="DroneShield" parent="TrackPositionContainer" node_paths=PackedStringArray("drone") instance=ExtResource("27_fv7v3")]
+[node name="DroneShield" parent="TrackPositionContainer" node_paths=PackedStringArray("drone") groups=["DroneGroup"] instance=ExtResource("27_fv7v3")]
 drone = NodePath("../..")
 
 [node name="TrackTransformContainer" type="Node3D" parent="."]

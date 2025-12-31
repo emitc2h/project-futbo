@@ -15,6 +15,7 @@ extends CharacterBody3D
 @export var damage_states: CharacterDamageStates
 @export var kick_states: CharacterKickStates
 @export var dribble_states: CharacterDribbleStates
+@export var targeting_states: CharacterTargetingStates
 @export var shield: CharacterShield
 
 ## Settable Parameters

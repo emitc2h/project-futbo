@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://1rqi1ej4l713" path="res://assets/3D/Enemies/Drone/Impact/impact_normal.png" id="6_enfmf"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_upo3n"]
-direction = Vector3(0, 1, 0)
+direction = Vector3(0, 1.4, 0)
 initial_velocity_min = 2.0
 initial_velocity_max = 8.0
 gravity = Vector3(0, -12, 0)
@@ -49,7 +49,7 @@ colors = PackedColorArray(0.3538325, 0.21160424, 0.10256722, 1, 0.35, 0.20918334
 gradient = SubResource("Gradient_tvth8")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dm7nj"]
-direction = Vector3(0, 1, 0)
+direction = Vector3(0, 1.4, 0)
 spread = 75.0
 initial_velocity_min = 2.0
 initial_velocity_max = 6.0
@@ -63,7 +63,6 @@ anim_offset_max = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5v1cd"]
 transparency = 1
-no_depth_test = true
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("4_cr5lp")
 backlight_enabled = true
@@ -101,7 +100,7 @@ draw_pass_1 = SubResource("QuadMesh_c45ri")
 [node name="FuzzyParticles" type="GPUParticles3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3080349, 0)
 layers = 2
-amount = 50
+amount = 80
 lifetime = 3.0
 explosiveness = 1.0
 local_coords = true
@@ -119,6 +118,7 @@ cull_mask = 1
 [node name="HitBoxLeft" type="Area3D" parent="." index="4"]
 transform = Transform3D(0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 0, 0, 1, 0, 0.35, 0)
 collision_layer = 2048
+collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBoxLeft" index="0"]
 shape = SubResource("CapsuleShape3D_5ncvi")
@@ -126,6 +126,7 @@ shape = SubResource("CapsuleShape3D_5ncvi")
 [node name="HitBoxRight" type="Area3D" parent="." index="5"]
 transform = Transform3D(0.9659258, -0.25881904, 0, 0.25881904, 0.9659258, 0, 0, 0, 1, 0, 0.35, 0)
 collision_layer = 2048
+collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBoxRight" index="0"]
 shape = SubResource("CapsuleShape3D_5ncvi")

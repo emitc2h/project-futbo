@@ -9,6 +9,7 @@ var control_node_physics_states: ControlNodePhysicsStates
 @export var power_states: ControlNodePowerStates
 @export var charge_states: ControlNodeChargeStates
 @export var shield_states: ControlNodeShieldStates
+@export var attractor_states: ControlNodeAttractorStates
 
 @export_group("Assets")
 @export var asset: ControlNodeAsset
@@ -42,7 +43,13 @@ func _physics_process(_delta: float) -> void:
 #=======================================================
 # CONTROL FUNCTIONS
 #=======================================================
+func kick(force_vector: Vector3) -> void:
+	attractor_states.disable()
+	super.kick(force_vector)
+
+
 func long_kick(force_vector: Vector3) -> void:
+	attractor_states.disable()
 	if charge_states.state == charge_states.State.LEVEL3:
 		control_node_control_states.shot_vector = force_vector
 		sc.send_event(control_node_control_states.TRANS_FREE_TO_SHOT)
@@ -81,3 +88,8 @@ func _on_control_node_shield_hit(one_hit: bool) -> void:
 
 func _on_control_node_impulse(impulse_vector: Vector3) -> void:
 	impulse(impulse_vector)
+
+
+func _on_rigid_node_body_entered(body: Node) -> void:
+	if body.is_in_group("DroneGroup"):
+		attractor_states.enable()

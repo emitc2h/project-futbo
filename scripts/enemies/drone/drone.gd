@@ -354,8 +354,14 @@ func _on_debug_advance() -> void:
 func _on_rigid_node_body_entered(body: Node) -> void:
 	if body.is_in_group("PlayerGroup"):
 		Signals.player_takes_damage.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position, true)
-	if body.is_in_group("ControlNodeShieldGroup"):
+		return
+	
+	if body.is_in_group("ControlNodeShieldGroup") or body.is_in_group("ControlNodeGroup"):
 		Signals.control_node_shield_hit.emit(true)
+		## If the drone hits the control node first, then it doesn't have enough momentum to create an impact
+		dive_impact_ready = false
+		return
+	
 	if body is StaticBody3D:
 		var sb: StaticBody3D = body
 		if sb.get_collision_layer_value(2):

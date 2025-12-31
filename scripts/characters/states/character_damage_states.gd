@@ -1,7 +1,9 @@
 class_name CharacterDamageStates
 extends CharacterStatesAbstractBase
 
-@export var min_damage_velocity: float = 5.0
+@export var min_hit_velocity: float = 2.5
+@export var min_knock_velocity: float = 6.0
+@export var min_death_velocity: float = 10.0
 
 ## States Enum
 enum State {ABLE = 0, KNOCKED = 1, OUT = 2, RECOVERING = 3, DEAD = 4, HIT = 5}
@@ -168,19 +170,36 @@ func _on_hit_state_entered() -> void:
 # CONTROLS
 #=======================================================
 func take_damage(obj_velocity: Vector3, obj_position: Vector3, physical: bool) -> void:
-	if physical and (obj_velocity.length() > min_damage_velocity):
+	if physical:
 		## Physical attacks are attacks made from colliding with another body
-		## That other body needs to be traveling at a high velocity to cause damage
-		_colliding_obj_velocity = obj_velocity
-		_colliding_obj_position = obj_position
-		_initial_knockback_velocity_x = obj_velocity.x
-		if character.shield.take_single_hit():
-			## If the shield is up, simply knock back the player
+		## Only log those values from the initial hit
+		if state == State.ABLE:
+			_colliding_obj_velocity = obj_velocity
+			_colliding_obj_position = obj_position
+			_initial_knockback_velocity_x = obj_velocity.x
+		
+		## Body has enough velocity to kill the player
+		if (obj_velocity.length() > min_death_velocity):
+			if character.shield.take_single_hit():
+				## If the shield is up, simply knock back the player
+				sc.send_event(TRANS_TO_KNOCKED)
+			else:
+				## When the shield is down, the player dies
+				sc.send_event(TRANS_TO_DEAD)
+			return
+		
+		## Body has enough velocity to knock the player
+		if (obj_velocity.length() > min_knock_velocity):
+			## There's enough velocity to draw from the shield
+			character.shield.take_single_hit()
+			## Knock the player
 			sc.send_event(TRANS_TO_KNOCKED)
-		else:
-			## When the shield is down, the player dies
-			sc.send_event(TRANS_TO_DEAD)
-		return
+			return
+		
+		## Body has enough velocity to stagger the player
+		if (obj_velocity.length() > min_hit_velocity):
+			sc.send_event(TRANS_TO_HIT)
+			return
 	
 	if character.shield.take_single_hit():
 		## If the shield is up, take a hit

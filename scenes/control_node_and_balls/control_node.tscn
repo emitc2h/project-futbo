@@ -1,4 +1,4 @@
-[gd_scene load_steps=190 format=4 uid="uid://cupvg7lj3rh2s"]
+[gd_scene load_steps=191 format=4 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dvd5ic7fxna84" path="res://scenes/control_node_and_balls/models/control_node_streak.tscn" id="11_8s4nh"]
 [ext_resource type="Shader" uid="uid://c2lu8bfyo1f0b" path="res://shaders/ControlNode/control_node_wisps_shader.gdshader" id="11_r313a"]
 [ext_resource type="Texture2D" uid="uid://cmy0jxny0n8xx" path="res://assets/3D/Particles/dots/mega_dot_color.png" id="12_cnds4"]
+[ext_resource type="Script" uid="uid://c4qlhalaf8h3u" path="res://scripts/control_node_and_balls/states/control_node_attractor_states.gd" id="12_ipcb2"]
 [ext_resource type="Material" uid="uid://bu2l1unbjhits" path="res://assets/3D/ControlNode/materials/control_node_lightning_material.tres" id="12_r313a"]
 [ext_resource type="PackedScene" uid="uid://dr3wkl0fgpbyw" path="res://scenes/control_node_and_balls/models/control_node_ready_sphere.tscn" id="13_nbe53"]
 [ext_resource type="Shader" uid="uid://bxeenh847ea3o" path="res://shaders/ControlNode/control_node_warp_vfx_shader.gdshader" id="17_1t0mc"]
@@ -15521,11 +15522,12 @@ states/Start/position = Vector2(122, -27.75)
 transitions = ["Start", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_1ei8v"), "state - power on - charge level 0", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_kgwo6"), "state - power on - charge level 1", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_e3mf1"), "state - power on - charge level 2", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_hlhvm"), "state - power on - charge level 1", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_ipcb2"), "state - power on - charge level 3", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_8risc"), "state - power on - charge level 2", "state - power on - charge level 3", SubResource("AnimationNodeStateMachineTransition_h18mq"), "state - power on - charge level 0", "transition - power on - charge level 0 - expanding", SubResource("AnimationNodeStateMachineTransition_u6nro"), "transition - power on - charge level 0 - expanding", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_xvhia"), "state - power on - charge level 1", "transition - power on - charge level 1 - expanding", SubResource("AnimationNodeStateMachineTransition_3sl37"), "transition - power on - charge level 1 - expanding", "state - power on - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_j0og2"), "state - power on - charge level 2", "transition - power on - charge level 2 - expanding", SubResource("AnimationNodeStateMachineTransition_wfwi8"), "transition - power on - charge level 2 - expanding", "state - power on - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_k0wgs"), "state - power on - charge level 3", "transition - power on - charge level 3 - expanding", SubResource("AnimationNodeStateMachineTransition_jyysd"), "transition - power on - charge level 3 - expanding", "state - power on - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_tt2je"), "state - power on - charge level 0 - expanded", "transition - blow - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_d6luo"), "state - power on - charge level 1 - expanded", "transition - blow - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_hfc78"), "state - power on - charge level 2 - expanded", "transition - blow - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_0eo5d"), "state - power on - charge level 3 - expanded", "transition - blow - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_beqih"), "state - power on - charge level 0 - expanded", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_17kaf"), "transition - power on - charge level 0 - dissipating", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_mxocs"), "state - power on - charge level 1 - expanded", "transition - power on - charge level 1 - dissipating", SubResource("AnimationNodeStateMachineTransition_2bqhb"), "transition - power on - charge level 1 - dissipating", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_0p7cc"), "state - power on - charge level 2 - expanded", "transition - power on - charge level 2 - dissipating", SubResource("AnimationNodeStateMachineTransition_kyrtq"), "transition - power on - charge level 2 - dissipating", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_3qg61"), "state - power on - charge level 3 - expanded", "transition - power on - charge level 3 - dissipating", SubResource("AnimationNodeStateMachineTransition_xaxpm"), "transition - power on - charge level 3 - dissipating", "state - power on - charge level 3", SubResource("AnimationNodeStateMachineTransition_o1u0d"), "transition - blow - charge level 0 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_16ki6"), "transition - blow - charge level 1 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_ftdrl"), "transition - blow - charge level 2 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_a7vlu"), "transition - blow - charge level 3 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_tu2td"), "state - power off - emitters off", "transition - power off to on", SubResource("AnimationNodeStateMachineTransition_61eqg"), "transition - power off to on", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_84heo"), "state - power on - charge level 0", "transition - blow - charge level 0", SubResource("AnimationNodeStateMachineTransition_3lo66"), "transition - blow - charge level 0", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_0e3ba"), "state - power on - charge level 1", "transition - blow - charge level 1", SubResource("AnimationNodeStateMachineTransition_asug8"), "transition - blow - charge level 1", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_17cf2"), "state - power on - charge level 3", "transition - blow - charge level 3", SubResource("AnimationNodeStateMachineTransition_3eorx"), "state - power on - charge level 2", "transition - blow - charge level 2", SubResource("AnimationNodeStateMachineTransition_xgwy3"), "transition - blow - charge level 2", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_t2xr1"), "transition - blow - charge level 3", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_234th"), "state - power off - emitters off", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_7ut47"), "transition - warp out", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_6e0ag"), "transition - warp in", "transition - warp out", SubResource("AnimationNodeStateMachineTransition_0ymq0"), "state - power on - charge level 0", "transition - power on to off", SubResource("AnimationNodeStateMachineTransition_wiijf"), "transition - power on to off", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_j72sy"), "transition - hit - charge level 1 - expanded", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_w283j"), "state - power on - charge level 3 - expanded", "transition - hit - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_ys8cf"), "state - power on - charge level 2 - expanded", "transition - hit - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_ipjfl"), "state - power on - charge level 1 - expanded", "transition - hit - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_pnv4w"), "state - power on - charge level 0", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_8lfx5"), "state - power on - charge level 1", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_uo6d3"), "state - power on - charge level 2", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_h3xn4"), "state - power on - charge level 3", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_ogwdh"), "transition - hit - charge level 1 - expanded", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_1x2n7"), "transition - power on - charge level 0 - expanding", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_k4xti"), "transition - power on - charge level 1 - expanding", "transition - power on - charge level 1 - dissipating", SubResource("AnimationNodeStateMachineTransition_o6uow"), "transition - power on - charge level 2 - expanding", "transition - power on - charge level 2 - dissipating", SubResource("AnimationNodeStateMachineTransition_mkuq5"), "transition - power on - charge level 3 - expanding", "transition - power on - charge level 3 - dissipating", SubResource("AnimationNodeStateMachineTransition_d0teu"), "transition - hit - charge level 2 - expanded", "transition - power on - charge level 1 - dissipating", SubResource("AnimationNodeStateMachineTransition_u3o36"), "transition - hit - charge level 3 - expanded", "transition - power on - charge level 2 - dissipating", SubResource("AnimationNodeStateMachineTransition_dlasw"), "transition - hit - charge level 2 - expanded", "state - power on - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_xdi6h"), "transition - hit - charge level 3 - expanded", "state - power on - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_4fss2"), "transition - hit - charge level 1", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_apjb8"), "state - power on - charge level 1", "transition - hit - charge level 1", SubResource("AnimationNodeStateMachineTransition_bdxhu"), "state - power on - charge level 2", "transition - hit - charge level 2", SubResource("AnimationNodeStateMachineTransition_cguct"), "transition - hit - charge level 2", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_wqco7"), "state - power on - charge level 3", "transition - hit - charge level 3", SubResource("AnimationNodeStateMachineTransition_onlti"), "transition - hit - charge level 3", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_cc0gj")]
 graph_offset = Vector2(187.96281, 98.15977)
 
-[node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states", "shield_states", "asset") instance=ExtResource("1_fpwqj")]
+[node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states", "shield_states", "attractor_states", "asset") groups=["ControlNodeGroup"] instance=ExtResource("1_fpwqj")]
 script = ExtResource("2_r7e0p")
 power_states = NodePath("State/Root/Power/Power States")
 charge_states = NodePath("State/Root/Power/On/Charge/Charge States")
 shield_states = NodePath("State/Root/Power/On/Shield/Shield States")
+attractor_states = NodePath("State/Root/Power/On/Attractor/Attractor States")
 asset = NodePath("TrackTransformContainer/ControlNodeAsset")
 
 [node name="Physics States" parent="State/Root/Physics" index="0"]
@@ -15759,6 +15761,36 @@ to = NodePath("../../blow")
 event = &"Power: to blow"
 delay_in_seconds = "0.0"
 
+[node name="Attractor" type="Node" parent="State/Root/Power/On" index="4"]
+script = ExtResource("3_02qb1")
+initial_state = NodePath("enabled")
+
+[node name="Attractor States" type="Node" parent="State/Root/Power/On/Attractor" index="0" node_paths=PackedStringArray("control_node", "sc")]
+script = ExtResource("12_ipcb2")
+control_node = NodePath("../../../../../..")
+sc = NodePath("../../../../..")
+
+[node name="Timer" type="Timer" parent="State/Root/Power/On/Attractor/Attractor States" index="0"]
+wait_time = 3.0
+
+[node name="disabled" type="Node" parent="State/Root/Power/On/Attractor" index="1"]
+script = ExtResource("4_0jkta")
+
+[node name="to enabled" type="Node" parent="State/Root/Power/On/Attractor/disabled" index="0"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../enabled")
+event = &"Attractor: to enabled"
+delay_in_seconds = "0.0"
+
+[node name="enabled" type="Node" parent="State/Root/Power/On/Attractor" index="2"]
+script = ExtResource("4_0jkta")
+
+[node name="to disabled" type="Node" parent="State/Root/Power/On/Attractor/enabled" index="0"]
+script = ExtResource("5_qi4cr")
+to = NodePath("../../disabled")
+event = &"Attractor: to disabled"
+delay_in_seconds = "0.0"
+
 [node name="discharging" type="Node" parent="State/Root/Power" index="4"]
 script = ExtResource("4_0jkta")
 
@@ -15878,6 +15910,7 @@ metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 [connection signal="state_physics_processing" from="State/Root/Power/charging" to="State/Root/Power/Power States" method="_on_charging_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Power/On" to="State/Root/Power/Power States" method="_on_on_state_entered"]
 [connection signal="state_exited" from="State/Root/Power/On" to="State/Root/Power/Power States" method="_on_on_state_exited"]
+[connection signal="state_physics_processing" from="State/Root/Power/On" to="State/Root/Power/Power States" method="_on_on_state_physics_processing"]
 [connection signal="timeout" from="State/Root/Power/On/Charge/Charge States/LoseChargeTimer" to="State/Root/Power/On/Charge/Charge States" method="_on_lose_charge_timer_timeout"]
 [connection signal="state_entered" from="State/Root/Power/On/Charge/none" to="State/Root/Power/On/Charge/Charge States" method="_on_none_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/On/Charge/level1" to="State/Root/Power/On/Charge/Charge States" method="_on_level_1_state_entered"]
@@ -15889,8 +15922,13 @@ metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 [connection signal="state_entered" from="State/Root/Power/On/Shield/on" to="State/Root/Power/On/Shield/Shield States" method="_on_on_state_entered"]
 [connection signal="state_exited" from="State/Root/Power/On/Shield/on" to="State/Root/Power/On/Shield/Shield States" method="_on_on_state_exited"]
 [connection signal="state_entered" from="State/Root/Power/On/Shield/dissipating" to="State/Root/Power/On/Shield/Shield States" method="_on_dissipating_state_entered"]
+[connection signal="timeout" from="State/Root/Power/On/Attractor/Attractor States/Timer" to="State/Root/Power/On/Attractor/Attractor States" method="_on_timer_timeout"]
+[connection signal="state_entered" from="State/Root/Power/On/Attractor/disabled" to="State/Root/Power/On/Attractor/Attractor States" method="_on_disabled_state_entered"]
+[connection signal="state_entered" from="State/Root/Power/On/Attractor/enabled" to="State/Root/Power/On/Attractor/Attractor States" method="_on_enabled_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Power/On/Attractor/enabled" to="State/Root/Power/On/Attractor/Attractor States" method="_on_enabled_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Power/discharging" to="State/Root/Power/Power States" method="_on_discharging_state_entered"]
 [connection signal="state_entered" from="State/Root/Power/blow" to="State/Root/Power/Power States" method="_on_blow_state_entered"]
+[connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Physics/Physics States" method="_on_animation_state_finished"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/Power States" method="_on_animation_state_finished"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/On/Charge/Charge States" method="_on_animation_state_finished"]

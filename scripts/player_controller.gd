@@ -30,6 +30,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("dribble"):
 		character.unlock_direction_faced(left_right_axis)
 	
+	if Input.is_action_pressed("dribble"):
+		Signals.control_node_attractor.emit(character.global_position)
+	
 	if character.direction_states.locked:
 		if not aim_vector.is_zero_approx():
 			if aim_vector.x < 0.0:

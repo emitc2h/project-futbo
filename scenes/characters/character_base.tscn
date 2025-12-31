@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b23ql0f3pehor"]
+[gd_scene load_steps=22 format=3 uid="uid://b23ql0f3pehor"]
 
 [ext_resource type="Script" uid="uid://dwveh7gorkqwx" path="res://scripts/characters/character_base.gd" id="1_xq4g7"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_oqj5v"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://c4tlgbfr87too" path="res://scripts/characters/head.gd" id="13_keip7"]
 [ext_resource type="Script" uid="uid://bh8l4jqmljwan" path="res://scripts/characters/states/character_kick_states.gd" id="13_v0iy0"]
 [ext_resource type="Script" uid="uid://cf2edxlnxwfvj" path="res://scripts/characters/states/character_dribble_states.gd" id="14_dkbyo"]
+[ext_resource type="Script" uid="uid://drnj3ybh0e6mg" path="res://scripts/characters/states/character_targeting_states.gd" id="16_dkbyo"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x41nu"]
 radius = 0.25476
@@ -32,7 +33,7 @@ height = 0.757612
 [sub_resource type="BoxShape3D" id="BoxShape3D_r2h0o"]
 size = Vector3(1, 0.86731, 1)
 
-[node name="CharacterBase" type="CharacterBody3D" node_paths=PackedStringArray("direction_states", "movement_states", "grounded_states", "in_the_air_states", "path_states", "damage_states", "kick_states", "dribble_states")]
+[node name="CharacterBase" type="CharacterBody3D" node_paths=PackedStringArray("direction_states", "movement_states", "grounded_states", "in_the_air_states", "path_states", "damage_states", "kick_states", "dribble_states", "targeting_states")]
 collision_mask = 770
 script = ExtResource("1_xq4g7")
 direction_states = NodePath("State/Root/Damage/Able/Movement/Grounded/Direction Faced/Direction Faced States")
@@ -43,6 +44,7 @@ path_states = NodePath("State/Root/Path Constraint/Path States")
 damage_states = NodePath("State/Root/Damage/Damage States")
 kick_states = NodePath("State/Root/Damage/Able/Kick/Kick States")
 dribble_states = NodePath("State/Root/Damage/Able/Dribble/Dribble States")
+targeting_states = NodePath("State/Root/Targeting/TargetingStates")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_oqj5v")
@@ -473,11 +475,29 @@ delay_in_seconds = "0.0"
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("none")
 
+[node name="TargetingStates" type="Node" parent="State/Root/Targeting" node_paths=PackedStringArray("character", "sc", "cs")]
+script = ExtResource("16_dkbyo")
+character = NodePath("../../../..")
+sc = NodePath("../../..")
+cs = NodePath("..")
+
 [node name="none" type="Node" parent="State/Root/Targeting"]
 script = ExtResource("6_awyfk")
 
+[node name="to targeting" type="Node" parent="State/Root/Targeting/none"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../targeting")
+event = &"Targeting: to targeting"
+delay_in_seconds = "0.0"
+
 [node name="targeting" type="Node" parent="State/Root/Targeting"]
 script = ExtResource("6_awyfk")
+
+[node name="to none" type="Node" parent="State/Root/Targeting/targeting"]
+script = ExtResource("7_u4lyq")
+to = NodePath("../../none")
+event = &"Targeting: to none"
+delay_in_seconds = "0.0"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.99999946, 0, 0, 0, 1, 0, 0, 0, 0.99999946, 0, 0.734811, 0)
@@ -598,6 +618,9 @@ collision_mask = 4
 [connection signal="state_physics_processing" from="State/Root/Damage/hit" to="State/Root/Damage/Damage States" method="_on_knocked_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Path Constraint/on x-axis" to="State/Root/Path Constraint/Path States" method="_on_on_xaxis_state_entered"]
 [connection signal="state_entered" from="State/Root/Path Constraint/on path" to="State/Root/Path Constraint/Path States" method="_on_on_path_state_entered"]
+[connection signal="state_entered" from="State/Root/Targeting/none" to="State/Root/Targeting/TargetingStates" method="_on_none_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Targeting/none" to="State/Root/Targeting/TargetingStates" method="_on_none_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Targeting/targeting" to="State/Root/Targeting/TargetingStates" method="_on_targeting_state_entered"]
 [connection signal="body_entered" from="KickZone" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_zone_body_entered"]
 [connection signal="body_exited" from="KickZone" to="State/Root/Damage/Able/Kick/Kick States" method="_on_kick_zone_body_exited"]
 [connection signal="body_exited" from="DribblePickupZone" to="State/Root/Damage/Able/Dribble/Dribble States" method="_on_dribble_pickup_zone_body_exited"]
