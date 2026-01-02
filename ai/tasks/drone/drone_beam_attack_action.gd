@@ -16,7 +16,7 @@ const TARGET_CONTROL_NODE: String = "control node"
 @export_group("Targeting Parameters")
 @export var target_switching_delay: float = 1.2
 @export var target_control_node_while_dribbling: bool = false
-@export var switch_to_control_node_target_delay: float = 0.5
+@export var switch_back_to_player_delay: float = 0.5
 
 @export_group("Evasive Maneuvers")
 @export var evasive_maneuvers: bool = false
@@ -78,7 +78,6 @@ func _enter() -> void:
 
 
 func _tick(delta: float) -> Status:
-	
 	## Track the drone's target during the entire attack
 	drone.track_target(default_offset + blackboard.get_var(offset, 0.0), delta, signal_id)
 	
@@ -121,7 +120,7 @@ func _tick(delta: float) -> Status:
 			else:
 				not_dribbling_time_elapsed += delta
 			
-			if not_dribbling_time_elapsed > switch_to_control_node_target_delay:
+			if not_dribbling_time_elapsed > switch_back_to_player_delay:
 				drone.set_target(Representations.player_target_marker)
 		
 		## Optional evasive maneuvers: the drone will jump up periodically

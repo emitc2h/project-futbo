@@ -87,7 +87,8 @@ func _on_control_node_shield_hit(one_hit: bool) -> void:
 
 
 func _on_control_node_impulse(impulse_vector: Vector3) -> void:
-	impulse(impulse_vector)
+	if not shield_states.state == shield_states.State.ON:
+		impulse(impulse_vector)
 
 
 func _on_rigid_node_body_entered(body: Node) -> void:
