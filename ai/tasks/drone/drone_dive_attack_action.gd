@@ -140,6 +140,7 @@ func _exit() -> void:
 	drone.enable_proximity_detector()
 	drone.become_defendable()
 	drone.enable_targeting()
+	drone.negate_dive_impact()
 
 
 ##########################################
@@ -203,8 +204,8 @@ func _on_stop_engines_finished(id: int) -> void:
 
 
 func _on_accelerate_finished(id: int) -> void:
-	drone.prepare_dive_impact()
 	if signal_id == id:
+		drone.prepare_dive_impact()
 		is_done_accelerating_up = true
 
 

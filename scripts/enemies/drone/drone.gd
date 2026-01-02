@@ -307,6 +307,10 @@ func prepare_dive_impact() -> void:
 	dive_impact_ready = true
 
 
+func negate_dive_impact() -> void:
+	dive_impact_ready = false
+
+
 ## Hitbox
 ## ---------------------------------------
 func die(force: Vector3) -> void:
@@ -359,7 +363,7 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 	if body.is_in_group("ControlNodeShieldGroup") or body.is_in_group("ControlNodeGroup"):
 		Signals.control_node_shield_hit.emit(true)
 		## If the drone hits the control node first, then it doesn't have enough momentum to create an impact
-		dive_impact_ready = false
+		negate_dive_impact()
 		return
 	
 	if body is StaticBody3D:
@@ -369,4 +373,4 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 				var diveImpactNode: Node3D = dive_impact_scene.instantiate()
 				diveImpactNode.global_position = rigid_node.global_position - Vector3.UP * 0.5
 				get_tree().current_scene.add_child(diveImpactNode)
-				dive_impact_ready = false
+				negate_dive_impact()
