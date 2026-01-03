@@ -46,8 +46,7 @@ func _enter() -> void:
 func _tick(delta: float) -> Status:
 	## If the drone is VULNERABLE, you can't block so fail the BLOCK
 	if is_vulnerable:
-		## TODO: Think about the consequences of returning FAILURE here, might not be what I want
-		return FAILURE
+		return SUCCESS
 	
 	## Stop the drone in its tracks
 	if not engines_are_off:

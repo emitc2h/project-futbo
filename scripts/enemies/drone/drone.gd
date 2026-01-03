@@ -18,14 +18,21 @@ extends Node3D
 @export var proximity_states: DroneProximityStates
 @export var position_states: DronePositionStates
 
+@export_subgroup("Behavior State Machine")
+@export var behavior_states: DroneBehaviorStates
+
 @export_group("Behavior")
-@export var behavior_player: BTPlayer
-@export var behavior_tree: BehaviorTree
+@export var entrance_behavior_tree: BehaviorTree
+@export var idle_behavior_tree: BehaviorTree
+@export var combat_behavior_tree: BehaviorTree
 @export var active: bool:
 	get:
-		return behavior_player.active
+		return behavior_states.state != behavior_states.State.DISABLED
 	set(value):
-		behavior_player.active = value
+		if value:
+			behavior_states.enable(behavior_states.State.IDLE)
+		else:
+			behavior_states.disable()
 
 ## Useful internal nodes to have a handle on
 @onready var char_node: CharacterBody3D = $CharNode
@@ -50,7 +57,11 @@ func _ready() -> void:
 	anim_state = model_anim_tree.get("parameters/playback")
 	Signals.debug_advance.connect(_on_debug_advance)
 	physics_mode_states.target_velocity_reached.connect(_on_target_velocity_reached)
-	behavior_player.behavior_tree = behavior_tree
+	
+	## Pass along behavior trees
+	behavior_states.entrance_btplayer.behavior_tree = entrance_behavior_tree
+	behavior_states.idle_btplayer.behavior_tree = idle_behavior_tree
+	behavior_states.combat_bt_player.behavior_tree = combat_behavior_tree
 
 
 ## Physics Controls
@@ -345,6 +356,9 @@ func generate_state_report() -> String:
 	output += "Spinners : " + spinners_states.State.keys()[spinners_states.state] + "\n"
 	output += "Vulnerability : " + vulnerability_states.State.keys()[vulnerability_states.state] + "\n"
 	output += "Targeting : " + targeting_states.State.keys()[targeting_states.state] + "\n"
+	output += "Proximity : " + proximity_states.State.keys()[proximity_states.state] + "\n"
+	output += "Position : " + position_states.State.keys()[position_states.state] + "\n"
+	output += "Behavior : " + behavior_states.State.keys()[behavior_states.state] + "\n"
 	output += "===================================\n"
 	output += "Animation tree node: " + anim_state.get_current_node()\
 			 + " (fading : " + anim_state.get_fading_from_node() + ")"

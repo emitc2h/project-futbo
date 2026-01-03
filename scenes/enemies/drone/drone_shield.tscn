@@ -55,7 +55,7 @@ collision_mode = 2
 material = ExtResource("3_quikv")
 size = Vector2(0.1, 0.2)
 
-[node name="DroneShield" type="AnimatableBody3D" groups=["DroneGroup"]]
+[node name="DroneShield" type="AnimatableBody3D" groups=["DroneGroup", "DroneShieldGroup"]]
 collision_layer = 1024
 collision_mask = 4
 collision_priority = 2.0

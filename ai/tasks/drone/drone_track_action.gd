@@ -114,6 +114,7 @@ func probe_initial_state() -> void:
 			is_open = true
 		_:
 			is_open = false
+			is_opening = false
 	
 	match(drone.engines_states.state):
 		drone.engines_states.State.STOPPING:
@@ -124,6 +125,7 @@ func probe_initial_state() -> void:
 			engines_stopping = false
 		_:
 			engines_are_off = false
+			engines_stopping = false
 	
 	match(drone.vulnerability_states.state):
 		drone.vulnerability_states.State.DEFENDABLE:

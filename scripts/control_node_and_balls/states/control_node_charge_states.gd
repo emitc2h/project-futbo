@@ -104,8 +104,8 @@ func _on_level_3_state_exited() -> void:
 #=======================================================
 # RECEIVED SIGNALS
 #=======================================================
-func _on_shield_body_entered(body: Node) -> void:
-	if body is DroneShield:
+func _on_shield_body_entered(body: Node3D) -> void:
+	if body.is_in_group("DroneShieldGroup"):
 		sc.send_event(TRANS_CHARGE_UP)
 
 

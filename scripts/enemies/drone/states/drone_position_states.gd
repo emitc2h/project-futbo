@@ -59,7 +59,7 @@ func _on_between_patrol_markers_state_entered() -> void:
 
 
 func _on_between_patrol_markers_state_physics_processing(_delta: float) -> void:
-	if not is_between_patrol_markers():
+	if not is_between_patrol_markers(0.25):
 		sc.send_event(TRANS_TO_OUTSIDE_PATROL_MARKERS)
 
 
