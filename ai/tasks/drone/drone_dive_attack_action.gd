@@ -13,10 +13,12 @@ var time_elapsed_closed: float
 ## Progress gates
 var premature_hit: bool
 var repr_updates_disabled: bool
+var proximity_detector_disabled: bool
 var is_accelerating_up: bool
 var is_done_accelerating_up: bool
 var is_closing: bool
 var is_closed: bool
+var is_in_vulnerable_window: bool
 var is_char_and_defendable_again: bool
 var is_done_facing_target_at_end: bool
 var is_facing_target_at_end: bool
@@ -30,7 +32,6 @@ var is_open_at_end: bool
 func _setup() -> void:
 	super._setup()
 	drone.hit_player_in_char_mode.connect(_on_hit_player_in_char_mode)
-	drone.open_finished.connect(_on_open_finished)
 	drone.accelerate_finished.connect(_on_accelerate_finished)
 	drone.quick_close_finished.connect(_on_quick_close_finished)
 	drone.face_toward_finished.connect(_on_face_finished)
@@ -44,7 +45,7 @@ func _enter() -> void:
 		DronePhysicsModeStates.State.CHAR,
 		DroneVulnerabilityStates.State.DEFENDABLE,
 		DroneTargetingStates.State.DISABLED,
-		DroneProximityStates.State.DISABLED,
+		DroneProximityStates.State.ENABLED,
 		DroneTargetingStates.TargetType.PLAYER,
 		true)
 	
@@ -58,6 +59,7 @@ func _enter() -> void:
 	is_done_accelerating_up = false
 	is_closing = false
 	is_closed = false
+	is_in_vulnerable_window = false
 	is_char_and_defendable_again = false
 	is_done_facing_target_at_end = false
 	is_facing_target_at_end = false
@@ -77,6 +79,10 @@ func custom_tick(delta: float) -> Status:
 		drone.repr.enable_updates()
 		drone.enable_proximity_detector()
 		return SUCCESS
+	
+	if not proximity_detector_disabled:
+		drone.disable_proximity_detector()
+		proximity_detector_disabled = true
 
 	if not is_done_accelerating_up:
 		if not is_accelerating_up:
@@ -97,19 +103,23 @@ func custom_tick(delta: float) -> Status:
 	if not time_elapsed_closed > time_closed:
 		time_elapsed_closed += delta
 		return RUNNING
-	
-	if not is_char_and_defendable_again:
-		drone.repr.enable_updates()
+		
+	if not is_in_vulnerable_window:
+		drone.become_vulnerable()
 		drone.become_char()
-		drone.become_defendable()
-		drone.enable_proximity_detector()
-		is_char_and_defendable_again = true
+		is_in_vulnerable_window = true
 	
 	if not is_open_at_end:
 		if not is_opening_at_end:
 			drone.open(open_at_end_id)
 			is_opening_at_end = true
 		return RUNNING
+	
+	if not is_char_and_defendable_again:
+		drone.repr.enable_updates()
+		drone.become_defendable()
+		drone.enable_proximity_detector()
+		is_char_and_defendable_again = true
 	
 	if not is_done_facing_target_at_end:
 		if not is_facing_target_at_end:

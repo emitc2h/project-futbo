@@ -110,6 +110,7 @@ script = ExtResource("10_kvfr7")
 target_control_node_while_dribbling = true
 switch_back_to_player_delay = 0.1
 evasive_maneuvers = true
+jump_strength = 40.0
 
 [sub_resource type="BTSelector" id="BTSelector_6opho"]
 children = [SubResource("BTSequence_4dpw4"), SubResource("BTSequence_0nrrv"), SubResource("BTAction_mdyyd")]
@@ -151,14 +152,14 @@ value = SubResource("BBVariant_8fako")
 [sub_resource type="BTAction" id="BTAction_8fako"]
 script = ExtResource("5_5ocyq")
 timeout = 2.1
-metadata/_weight_ = 0.6
+metadata/_weight_ = 0.5
 
 [sub_resource type="BTAction" id="BTAction_kvfr7"]
 custom_name = "DroneTrackAction with Evasive Maneuvers"
 script = ExtResource("5_5ocyq")
 timeout = 2.1
 evasive_maneuvers = true
-metadata/_weight_ = 0.4
+metadata/_weight_ = 0.5
 
 [sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_dnqgn"]
 children = [SubResource("BTAction_8fako"), SubResource("BTAction_kvfr7")]
@@ -183,7 +184,7 @@ value = SubResource("BBVariant_6opho")
 script = ExtResource("5_5ocyq")
 default_offset = 4.5
 timeout = 2.6
-metadata/_weight_ = 0.8
+metadata/_weight_ = 0.85
 
 [sub_resource type="BTAction" id="BTAction_0nrrv"]
 custom_name = "DroneTrackAction with Evasive Maneuvers"
@@ -192,7 +193,8 @@ default_offset = 4.5
 timeout = 2.6
 evasive_maneuvers = true
 jump_strength = 37.0
-metadata/_weight_ = 0.2
+jump_period = 0.95
+metadata/_weight_ = 0.15
 
 [sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_mdyyd"]
 children = [SubResource("BTAction_8p1br"), SubResource("BTAction_0nrrv")]
@@ -217,7 +219,7 @@ value = SubResource("BBVariant_5ocyq")
 script = ExtResource("5_5ocyq")
 default_offset = 3.0
 timeout = 3.2
-metadata/_weight_ = 0.9
+metadata/_weight_ = 0.95
 
 [sub_resource type="BTAction" id="BTAction_6opho"]
 custom_name = "DroneTrackAction with Evasive Maneuvers"
@@ -225,8 +227,9 @@ script = ExtResource("5_5ocyq")
 default_offset = 3.0
 timeout = 3.2
 evasive_maneuvers = true
-jump_strength = 36.0
-metadata/_weight_ = 0.1
+jump_strength = 33.0
+jump_period = 1.0
+metadata/_weight_ = 0.05
 
 [sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_kvfr7"]
 children = [SubResource("BTAction_pg7f4"), SubResource("BTAction_6opho")]

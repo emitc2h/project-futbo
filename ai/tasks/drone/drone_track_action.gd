@@ -8,7 +8,7 @@ extends DroneBaseAction
 
 @export_group("Evasive Maneuvers")
 @export var evasive_maneuvers: bool = false
-@export var jump_strength: float = 42.0
+@export var jump_strength: float = 40.0
 @export var jump_period: float = 0.9
 
 @export_group("Blackboard Variables")

@@ -27,6 +27,7 @@ const TRANS_TO_FACE_LEFT: String = "Direction Faced: to face left"
 
 ## Drone nodes controlled by this state
 @onready var char_node: CharacterBody3D = drone.get_node("CharNode")
+@onready var jerk_timer: Timer = $JerkTimer
 
 ## Internal constants
 const FACE_RIGHT_Y_ROT = Vector3(0.0, PI/2, 0.0)
@@ -35,6 +36,8 @@ const FACE_LEFT_Y_ROT = Vector3(0.0, -PI/2, 0.0)
 ## Internal variables
 var tween: Tween
 var target_vec: Vector3 = Vector3.ZERO
+var accumulated_damage: float = 0.0
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 ## Signals
 signal is_now_facing_right
@@ -124,3 +127,25 @@ func _on_turn_left_state_entered() -> void:
 		
 	await tween.finished
 	sc.send_event(TRANS_TO_FACE_LEFT)
+
+
+#=======================================================
+# CONTROLS
+#=======================================================
+func damage_hit(strength: float) -> void:
+	accumulated_damage += strength / 5.0
+	jerk_timer.wait_time = 0.05
+	jerk_timer.start()
+
+
+#=======================================================
+# Signals
+#=======================================================
+func _on_jerk_timer_timeout() -> void:
+	var jerk_factor: float = (1.0 + accumulated_damage / (1.0 + accumulated_damage))
+	if rng.randf() > 0.5:
+		char_node.rotate_x(0.2 * (0.5 - rng.randf()) * jerk_factor)
+	else:
+		char_node.rotate_z(0.2 * (0.5 - rng.randf()) * jerk_factor)
+	jerk_timer.wait_time = rng.randf() * 5.0 / jerk_factor
+	jerk_timer.start()

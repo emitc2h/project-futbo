@@ -40,7 +40,7 @@ func _physics_process(_delta: float) -> void:
 		shield_states.turn_off_shield()
 		
 	Representations.control_node_representation.global_position = get_ball_position()
-	Representations.control_node_representation.velocity = get_ball_velocity()
+	# Representations.control_node_representation.velocity = get_ball_velocity()
 
 
 #=======================================================
@@ -106,8 +106,18 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 			var drone_shield: DroneShield = body as DroneShield
 			drone_shield.look_at(get_ball_position(), Vector3.UP)
 			drone_shield.hit()
+			return
+		
+		if body.is_in_group("DroneGroup"):
+			if body is DroneBone:
+				var drone: Drone = body.drone
+				if drone.get_hit(hit_strength * (1 + charge_states.state)):
+					sc.send_event(power_states.TRANS_TO_BLOW)
+				else:
+					asset.bounce(bounce_strength)
 	
 		if body.get_parent() is Drone:
+			print_debug("Does this ever happen? -> " + body.name)
 			var drone: Drone = body.get_parent()
 			if drone.get_hit(hit_strength):
 				sc.send_event(power_states.TRANS_TO_BLOW)

@@ -98,6 +98,8 @@ func _on_fire_state_physics_processing(delta: float) -> void:
 				sc.send_event(TRANS_TO_HIT_CONTROL_NODE)
 			else:
 				sc.send_event(TRANS_TO_MISS)
+		else:
+			sc.send_event(TRANS_TO_MISS)
 	else:
 		bolt_mesh.position.y = updated_distance
 

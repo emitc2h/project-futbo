@@ -42,7 +42,6 @@ children = [SubResource("BTCondition_gqadc"), SubResource("BTFail_yycr0")]
 [sub_resource type="BTAction" id="BTAction_iln2x"]
 script = ExtResource("4_7pn2i")
 timeout = 3.0
-jump_strength = 40.0
 jump_period = 1.0
 
 [sub_resource type="BTSubtree" id="BTSubtree_ma56j"]

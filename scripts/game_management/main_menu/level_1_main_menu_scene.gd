@@ -4,3 +4,4 @@ extends Node3D
 
 func _ready() -> void:
 	animation_player.play("enter_scene")
+	$Drone.active = false
