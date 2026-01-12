@@ -1,10 +1,10 @@
 [gd_scene load_steps=35 format=3 uid="uid://bc323ftwy8i7t"]
 
 [ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone.gd" id="1_irn00"]
-[ext_resource type="BehaviorTree" uid="uid://b2fm1v4kdrbwy" path="res://ai/trees/enemies/drone/patrol_idle_tree.tres" id="2_6ft1p"]
+[ext_resource type="BehaviorTree" uid="uid://b2fm1v4kdrbwy" path="res://ai/trees/enemies/drone/idle/patrol_idle_tree.tres" id="2_6ft1p"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_g2as1"]
 [ext_resource type="Script" uid="uid://syu033xfunnk" path="res://scripts/enemies/drone/representation/drone_internal_representation.gd" id="2_n6xh2"]
-[ext_resource type="BehaviorTree" uid="uid://duqvkmp4313nm" path="res://ai/trees/enemies/drone/standard_combat_tree.tres" id="3_n6xh2"]
+[ext_resource type="BehaviorTree" uid="uid://bqtyjssdjddho" path="res://ai/trees/enemies/drone/combat/standard_combat_tree.tres" id="3_6ft1p"]
 [ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="3_wmq8b"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_kl701"]
 [ext_resource type="Script" uid="uid://p1lgvym5ec5j" path="res://scripts/enemies/drone/states/drone_physics_mode_states.gd" id="5_8nca4"]
@@ -63,6 +63,11 @@ var/internal_player_repr_shield_charges/type = 2
 var/internal_player_repr_shield_charges/value = 0
 var/internal_player_repr_shield_charges/hint = 0
 var/internal_player_repr_shield_charges/hint_string = ""
+var/internal_player_repr_is_long_kicking/name = &"internal_player_repr_is_long_kicking"
+var/internal_player_repr_is_long_kicking/type = 1
+var/internal_player_repr_is_long_kicking/value = false
+var/internal_player_repr_is_long_kicking/hint = 0
+var/internal_player_repr_is_long_kicking/hint_string = ""
 var/internal_control_node_repr_global_position/name = &"internal_control_node_repr_global_position"
 var/internal_control_node_repr_global_position/type = 9
 var/internal_control_node_repr_global_position/value = Vector3(0, 0, 0)
@@ -175,6 +180,11 @@ var/internal_player_repr_shield_charges/type = 2
 var/internal_player_repr_shield_charges/value = 0
 var/internal_player_repr_shield_charges/hint = 0
 var/internal_player_repr_shield_charges/hint_string = ""
+var/internal_player_repr_is_long_kicking/name = &"internal_player_repr_is_long_kicking"
+var/internal_player_repr_is_long_kicking/type = 1
+var/internal_player_repr_is_long_kicking/value = false
+var/internal_player_repr_is_long_kicking/hint = 0
+var/internal_player_repr_is_long_kicking/hint_string = ""
 var/internal_control_node_repr_global_position/name = &"internal_control_node_repr_global_position"
 var/internal_control_node_repr_global_position/type = 9
 var/internal_control_node_repr_global_position/value = Vector3(0, 0, 0)
@@ -287,6 +297,11 @@ var/internal_player_repr_shield_charges/type = 2
 var/internal_player_repr_shield_charges/value = 0
 var/internal_player_repr_shield_charges/hint = 0
 var/internal_player_repr_shield_charges/hint_string = ""
+var/internal_player_repr_is_long_kicking/name = &"internal_player_repr_is_long_kicking"
+var/internal_player_repr_is_long_kicking/type = 1
+var/internal_player_repr_is_long_kicking/value = false
+var/internal_player_repr_is_long_kicking/hint = 0
+var/internal_player_repr_is_long_kicking/hint_string = ""
 var/internal_control_node_repr_global_position/name = &"internal_control_node_repr_global_position"
 var/internal_control_node_repr_global_position/type = 9
 var/internal_control_node_repr_global_position/value = Vector3(0, 0, 0)
@@ -380,7 +395,7 @@ size = Vector2(1.3, 2.1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4h6a7"]
 margin = 0.1
 radius = 1.1
-height = 3.0
+height = 3.2
 
 [node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_states") groups=["DroneGroup", "Enemies"]]
 script = ExtResource("1_irn00")
@@ -395,7 +410,7 @@ proximity_states = NodePath("State/Root/Monitoring/Proximity/Proximity States")
 position_states = NodePath("State/Root/Monitoring/Position/Position States")
 behavior_states = NodePath("State/Root/Behavior/Behavior States")
 idle_behavior_tree = ExtResource("2_6ft1p")
-combat_behavior_tree = ExtResource("3_n6xh2")
+combat_behavior_tree = ExtResource("3_6ft1p")
 
 [node name="InternalRepresentation" type="Node" parent="." node_paths=PackedStringArray("drone")]
 script = ExtResource("2_n6xh2")
@@ -403,6 +418,7 @@ drone = NodePath("..")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_g2as1")
+track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
 [node name="Root" type="Node" parent="State"]
@@ -1101,10 +1117,10 @@ collision_mask = 5
 debug_shape_custom_color = Color(0.138885, 0.556865, 0.774598, 1)
 
 [node name="PatrolMarker1" type="Marker3D" parent="."]
-transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, 3.5, 0, 0)
+transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, 4, 0, 0)
 
 [node name="PatrolMarker2" type="Marker3D" parent="."]
-transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, -3.5, 0, 0)
+transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, -4, 0, 0)
 
 [node name="FloatDistortionAnimation" type="Node" parent="." node_paths=PackedStringArray("mesh")]
 script = ExtResource("38_6t6rp")

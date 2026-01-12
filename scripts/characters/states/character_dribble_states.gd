@@ -146,7 +146,7 @@ func _on_dribble_pickup_zone_body_exited(body: Node3D) -> void:
 # CONTROLS
 #=======================================================
 func dribble() -> void:
-	if ball:
+	if ball and not character_is_kicking:
 		sc.send_event(TRANS_TO_DRIBBLING)
 
 

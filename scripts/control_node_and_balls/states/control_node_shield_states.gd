@@ -51,28 +51,41 @@ func _ready() -> void:
 # off state
 #----------------------------------------
 func _on_off_state_entered() -> void:
+	dbg.log("Shield OFF state entered")
 	state = State.OFF
 	
 	## Re-enable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = true
 	
 	Representations.control_node_representation.shield_expanded = false
+	
+	## Shield being off means charge 0, 1 and 2 should reflect the non-expanded state after hit
+	control_node.charge_states.set_shield_state_anim(false)
 
 
 # inflating state
 #----------------------------------------
 func _on_expanding_state_entered() -> void:
+	dbg.log("Shield EXPANDING state entered")
 	state = State.EXPANDING
-
+	
+	## Shield expanding means charge 0, 1 and 2 should reflect the expanded state after hit
+	control_node.charge_states.set_shield_state_anim(true)
+	
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
 	
 	expand_animation()
 
+
 # on state
 #----------------------------------------
 func _on_on_state_entered() -> void:
+	dbg.log("Shield ON state entered")
 	state = State.ON
+	
+	## Shield being on means charge 0, 1 and 2 should reflect the expanded state after hit
+	control_node.charge_states.set_shield_state_anim(true)
 	
 	shield_collision.set_collision_layer_value(6, true)
 	
@@ -89,13 +102,15 @@ func _on_on_state_exited() -> void:
 # dissipating state
 #----------------------------------------
 func _on_dissipating_state_entered() -> void:
+	dbg.log("Shield DISSIPATING state entered")
 	state = State.DISSIPATING
+	
+	## Dissipating the shield means charge 0, 1 and 2 should reflect the non-expanded state
+	control_node.charge_states.set_shield_state_anim(false)
 	
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
 	
-	## Dissipating the shield means charge 0, 1 and 2 should reflect the non-expanded state
-	control_node.charge_states.set_shield_state_anim(false)
 	
 	dissipate_animation()
 

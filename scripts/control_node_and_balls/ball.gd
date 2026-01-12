@@ -34,10 +34,12 @@ func impulse(force_vector: Vector3) -> void:
 
 
 func kick(force_vector: Vector3) -> void:
+	physics_states.do_not_transfer_y_velocity_to_rigid = true
 	self.impulse(force_vector)
 
 
 func long_kick(force_vector: Vector3) -> void:
+	physics_states.do_not_transfer_y_velocity_to_rigid = true
 	self.impulse(force_vector)
 
 

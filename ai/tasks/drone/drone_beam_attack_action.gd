@@ -1,5 +1,5 @@
 class_name DroneBeamAttackAction
-extends BTAction
+extends DroneBaseAction
 
 const TARGET_PLAYER: String = "player"
 const TARGET_CONTROL_NODE: String = "control node"
@@ -20,14 +20,10 @@ const TARGET_CONTROL_NODE: String = "control node"
 
 @export_group("Evasive Maneuvers")
 @export var evasive_maneuvers: bool = false
-@export var jump_strength: float = 30.0
-@export var jump_period: float = 0.8
+@export var jump_strength: float = 42.0
+@export var jump_period: float = 0.9
 
 ## Internal References
-var drone: Drone
-var signal_id: int
-var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-var initial_target: Node3D
 var targeting_delay_time_elapsed: float
 var not_dribbling_time_elapsed: float
 var time_until_next_jump: float
@@ -36,10 +32,8 @@ var time_until_next_jump: float
 var has_switched_to_real_target: bool
 
 ## Progress gates
-var is_open: bool
-var is_opening: bool
-var is_defendable: bool
 var is_vulnerable: bool
+var repr_updates_disabled: bool
 var fire_command_sent: bool
 var has_fired: bool
 var is_accelerating: bool
@@ -50,39 +44,44 @@ var is_done_jumping: bool
 ## ACTION LOGIC                        ##
 ##########################################
 func _setup() -> void:
-	drone = agent as Drone
-	drone.open_finished.connect(_on_open_finished)
+	super._setup()
 	drone.fire_finished.connect(_on_fire_finished)
 	drone.accelerate_finished.connect(_on_accelerate_finished)
 
 
 func _enter() -> void:
-	## reset the signal ID to make sure old signals don't mess up re-entry into this action
-	signal_id = rng.randi()
+	super._enter()
+	
+	set_initial_states(
+		DronePhysicsModeStates.State.CHAR,
+		DroneVulnerabilityStates.State.DEFENDABLE,
+		DroneTargetingStates.State.ACQUIRED,
+		DroneProximityStates.State.ENABLED,
+		DroneTargetingStates.TargetType.PLAYER,
+		true)
+	
+	set_initial_open()
+	set_initial_stop_engines()
+	set_initial_stop_moving()
 	
 	## Set the target
-	initial_target = drone.get_target()
 	targeting_delay_time_elapsed = 0.0
 	has_switched_to_real_target = false
 	not_dribbling_time_elapsed = 0.0
 	time_until_next_jump = 0.0
 	
-	
-	probe_initial_state()
-	
 	## Drone hasn't fired yet
+	repr_updates_disabled = false
+	is_vulnerable = false
 	fire_command_sent = false
 	has_fired = false
 	is_accelerating = false
 	is_done_jumping = false
 
 
-func _tick(delta: float) -> Status:
+func custom_tick(delta: float) -> Status:
 	## Track the drone's target during the entire attack
 	drone.track_target(default_offset + blackboard.get_var(offset, 0.0), delta, signal_id)
-	
-	#print("target_type: ", drone.targeting_states.TargetType.keys()[drone.targeting_states.target_type])
-	#print(drone.targeting_states.target.get_groups())
 	
 	## Count down to switching to actual target
 	if not has_switched_to_real_target:
@@ -95,16 +94,14 @@ func _tick(delta: float) -> Status:
 					drone.set_target(Representations.control_node_target_marker)
 			has_switched_to_real_target = true
 	
-	if not is_open:
-		if not is_opening:
-			drone.open(signal_id)
-			is_opening = true
-		return RUNNING
-	
 	if not is_vulnerable:
 		drone.become_vulnerable()
 		is_vulnerable = true
-	
+
+	if not repr_updates_disabled:
+		drone.repr.disable_updates()
+		repr_updates_disabled = true
+
 	if not fire_command_sent:
 		drone.fire(number_of_hits, signal_id)
 		fire_command_sent = true
@@ -137,48 +134,17 @@ func _tick(delta: float) -> Status:
 					is_accelerating = false
 		
 		return RUNNING
-
+	
+	drone.repr.enable_updates()
 	drone.become_defendable()
+	drone.set_target(Representations.player_target_marker)
+
 	return SUCCESS
-
-
-func _exit() -> void:
-	drone.set_target(initial_target)
-
-
-##########################################
-## UTILITIES                           ##
-##########################################
-func probe_initial_state() -> void:
-	match(drone.engagement_mode_states.state):
-		drone.engagement_mode_states.State.OPEN:
-			is_open = true
-			is_opening = false
-		drone.engagement_mode_states.State.OPENING:
-			is_open = false
-			is_opening = true
-		_:
-			is_open = false
-			is_opening = false
-	
-	match(drone.vulnerability_states.state):
-		drone.vulnerability_states.State.DEFENDABLE:
-			is_defendable = true
-		_:
-			is_defendable = false
-	
-	## just assume the drone isn't vulnerable until it is open
-	is_vulnerable = false
 
 
 ##########################################
 ## SIGNALS                             ##
 ##########################################
-func _on_open_finished(id: int) -> void:
-	if signal_id == id:
-		is_open = true
-
-
 func _on_fire_finished(id: int) -> void:
 	if signal_id == id:
 		time_until_next_jump = 0.0

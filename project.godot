@@ -27,6 +27,7 @@ Settings="*res://scripts/globals/settings.gd"
 Constants="*res://scripts/globals/constants.gd"
 Aim="*res://scripts/globals/aim.gd"
 Representations="*res://scripts/globals/representations.gd"
+dbg="*res://scripts/globals/dbg.gd"
 
 [debug]
 
@@ -131,22 +132,22 @@ kick={
 ]
 }
 aim_up={
-"deadzone": 0.5,
+"deadzone": 0.05,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":3,"axis_value":-1.0,"script":null)
 ]
 }
 aim_down={
-"deadzone": 0.5,
+"deadzone": 0.05,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":3,"axis_value":1.0,"script":null)
 ]
 }
 aim_left={
-"deadzone": 0.5,
+"deadzone": 0.05,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":-1.0,"script":null)
 ]
 }
 aim_right={
-"deadzone": 0.5,
+"deadzone": 0.05,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
 ]
 }

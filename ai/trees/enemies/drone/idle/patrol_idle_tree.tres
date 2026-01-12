@@ -1,0 +1,74 @@
+[gd_resource type="BehaviorTree" load_steps=28 format=3 uid="uid://b2fm1v4kdrbwy"]
+
+[ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/drone_blackboard_plan.tres" id="1_n583o"]
+[ext_resource type="Script" uid="uid://cu1bkrkshc51d" path="res://ai/tasks/drone/update_blackboard_condition.gd" id="2_00hdy"]
+[ext_resource type="Script" uid="uid://dhngbs7qm6328" path="res://ai/tasks/drone/is_object_in_proximity_zone_condition.gd" id="3_tn3dm"]
+[ext_resource type="Script" uid="uid://b467pd73p0l2y" path="res://ai/tasks/drone/is_in_vulnerability_state_condition.gd" id="4_00hdy"]
+[ext_resource type="Script" uid="uid://4tpean3rpeo8" path="res://ai/tasks/drone/drone_block_action.gd" id="4_d31sc"]
+[ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="5_rfl0x"]
+[ext_resource type="Script" uid="uid://basgsuohk40dp" path="res://ai/tasks/drone/is_in_position_state_condition.gd" id="6_dnujx"]
+[ext_resource type="Script" uid="uid://btr4jxosdlhew" path="res://ai/tasks/drone/drone_go_to_patrol_action.gd" id="7_hour2"]
+[ext_resource type="Script" uid="uid://3wp8o6jifb3l" path="res://ai/tasks/drone/drone_patrol_action.gd" id="8_285t0"]
+
+[sub_resource type="BTCondition" id="BTCondition_2ne4p"]
+script = ExtResource("2_00hdy")
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_1amgy"]
+custom_name = "ALWAYS UPDATE BLACKBOARD"
+children = [SubResource("BTCondition_2ne4p")]
+
+[sub_resource type="BTCondition" id="BTCondition_q1o4x"]
+script = ExtResource("3_tn3dm")
+object_type = "Control Node"
+is_not = true
+
+[sub_resource type="BTCondition" id="BTCondition_tn3dm"]
+script = ExtResource("4_00hdy")
+
+[sub_resource type="BTCondition" id="BTCondition_d31sc"]
+script = ExtResource("4_00hdy")
+expected_state = 2
+
+[sub_resource type="BTAction" id="BTAction_tboki"]
+script = ExtResource("4_d31sc")
+
+[sub_resource type="BTSelector" id="BTSelector_rfl0x"]
+children = [SubResource("BTCondition_tn3dm"), SubResource("BTCondition_d31sc"), SubResource("BTAction_tboki")]
+
+[sub_resource type="BTFail" id="BTFail_b1fry"]
+custom_name = "TRANSITION TO COMBAT"
+
+[sub_resource type="BTSequence" id="BTSequence_dhj10"]
+children = [SubResource("BTSelector_rfl0x"), SubResource("BTFail_b1fry")]
+
+[sub_resource type="BTSelector" id="BTSelector_8bner"]
+children = [SubResource("BTCondition_q1o4x"), SubResource("BTSequence_dhj10")]
+
+[sub_resource type="BTCondition" id="BTCondition_rl6kx"]
+script = ExtResource("5_rfl0x")
+expected_state = 1
+
+[sub_resource type="BTFail" id="BTFail_ndb6p"]
+custom_name = "TRANSITION TO COMBAT"
+
+[sub_resource type="BTSelector" id="BTSelector_0dr0e"]
+children = [SubResource("BTCondition_rl6kx"), SubResource("BTFail_ndb6p")]
+
+[sub_resource type="BTCondition" id="BTCondition_7vjkh"]
+script = ExtResource("6_dnujx")
+
+[sub_resource type="BTAction" id="BTAction_h0vgk"]
+script = ExtResource("7_hour2")
+
+[sub_resource type="BTSelector" id="BTSelector_8jej6"]
+children = [SubResource("BTCondition_7vjkh"), SubResource("BTAction_h0vgk")]
+
+[sub_resource type="BTAction" id="BTAction_snx2m"]
+script = ExtResource("8_285t0")
+
+[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_rctnx"]
+children = [SubResource("BTAlwaysSucceed_1amgy"), SubResource("BTSelector_8bner"), SubResource("BTSelector_0dr0e"), SubResource("BTSelector_8jej6"), SubResource("BTAction_snx2m")]
+
+[resource]
+blackboard_plan = ExtResource("1_n583o")
+root_task = SubResource("BTDynamicSequence_rctnx")

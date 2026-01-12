@@ -6,6 +6,8 @@
 process_mode = 3
 script = ExtResource("1_rtcbt")
 active = true
+max_running_logs = null
+visible_only_on_pause = null
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(450, 400)

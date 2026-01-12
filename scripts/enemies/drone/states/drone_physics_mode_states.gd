@@ -13,7 +13,7 @@ extends Node
 @export var axis_lerp_strength: float = 4.0
 
 @export_group("Floating")
-@export var default_float_cast_length: float = 2.2
+@export var default_float_cast_length: float = 2.0
 @export var float_strength: float = 4.0
 @export var float_dampening: float = 4.0
 @export var oscillation_amplitude: float = 0.015
@@ -50,6 +50,8 @@ const TRANS_TO_DEAD: String = "Physics Mode: to dead"
 ## Internal variables
 var time_floating: float = 0.0
 var gravity: float = -ProjectSettings.get_setting("physics/3d/default_gravity")
+var do_bounce: bool = false
+var bounce_velocity: Vector3 = Vector3.ZERO
 
 ## Acceleration
 var additional_y_acc: float = 0.0
@@ -140,7 +142,29 @@ func _on_char_state_physics_processing(delta: float) -> void:
 		if char_node.velocity.length() > target_velocity:
 			target_velocity_reached.emit()
 	
+	if do_bounce:
+		char_node.velocity += bounce_velocity
+		bounce_velocity = lerp(bounce_velocity, Vector3.ZERO, 20.0 * delta)
+		if bounce_velocity.length() < 0.01:
+			do_bounce = false
+	
 	char_node.move_and_slide()
+	
+	## Awkward place to put this code, but it's where the drone's CHAR node detects collisions, so...
+	var collision_with_player_index: int = -1
+	for i in char_node.get_slide_collision_count():
+		var collision: KinematicCollision3D = char_node.get_slide_collision(i)
+		if collision.get_collider().is_in_group("PlayerGroup"):
+			collision_with_player_index = i
+			break
+	
+	## Hit/kill the player if the engines are on, and bounce against the player
+	if collision_with_player_index > -1:
+		drone.hit_player_in_char_mode.emit()
+		if drone.engines_states.state != DroneEnginesStates.State.OFF:
+			Signals.player_takes_damage.emit(char_node.velocity, char_node.global_position, true)
+		bounce_velocity = -1.5 * char_node.velocity
+		do_bounce = true
 	
 	## nodes tha must follow the char node
 	track_transform_container.transform = char_node.transform
@@ -198,6 +222,9 @@ func _on_rigid_state_exited() -> void:
 func _on_ragdoll_state_entered() -> void:
 	state = State.RAGDOLL
 	
+	## Disable the behavior trees
+	sc.send_event(drone.behavior_states.TRANS_TO_DISABLED)
+	
 	## Transformation to ragdoll state is meant to be irreversible
 	## disable all other collision shapes
 	collision_shape_rigid.queue_free()
@@ -211,7 +238,11 @@ func _on_ragdoll_state_entered() -> void:
 	sc.send_event(drone.targeting_states.TRANS_TO_DISABLED)
 	sc.send_event(drone.proximity_states.TRANS_TO_DISABLED)
 	track_position_container.queue_free()
+	
+	sc.send_event(drone.targeting_states.TRANS_TO_DISABLED)
 	track_transform_container.get_node("FieldOfView").queue_free()
+	
+	sc.send_event(drone.proximity_states.TRANS_TO_DISABLED)
 	track_transform_container.get_node("ProximityDetector").queue_free()
 	
 	## Start the ragdoll simulation

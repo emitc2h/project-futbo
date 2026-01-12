@@ -52,6 +52,10 @@ var signal_id: int
 var dive_impact_ready: bool = false
 var dive_impact_scene: PackedScene = preload("res://scenes/enemies/drone/drone_dive_impact.tscn")
 
+## Misc signals
+@warning_ignore("unused_signal")
+signal hit_player_in_char_mode
+
 func _ready() -> void:
 	## initialize the internal representation
 	anim_state = model_anim_tree.get("parameters/playback")
@@ -198,11 +202,17 @@ signal quick_close_finished(id: int)
 func quick_close(id: int = 0) -> void:
 	if not anim_state.get_current_node() in ["quick close", "thrust close"]:
 		if anim_state.get_current_node() in ["start thrust", "idle thrust", "stop_thrust"]:
-			anim_state.travel("thrust close")
+			if anim_state.get_fading_from_node():
+				anim_state.start("thrust close")
+			else:
+				anim_state.travel("thrust close")
 		else:
-			anim_state.travel("quick close")
+			if anim_state.get_fading_from_node():
+				anim_state.start("quick close")
+			else:
+				anim_state.travel("quick close")
 		sc.send_event(engagement_mode_states.TRANS_TO_QUICK_CLOSE)
-		await engagement_mode_states.closing_finished
+		await engagement_mode_states.quick_close_finished
 	quick_close_finished.emit(id)
 
 
@@ -221,9 +231,13 @@ func burst() -> void:
 	physics_mode_states.speed = engines_states.burst_speed
 	sc.send_event(engines_states.TRANS_TO_BURST)
 
+
 signal stop_engines_finished(id: int)
 
 func stop_engines(id: int = 0) -> void:
+	if engines_states.state == DroneEnginesStates.State.OFF:
+		stop_engines_finished.emit(id)
+		return
 	if anim_state.get_current_node() in ["start thrust", "idle thrust"]:
 		anim_state.travel("stop thrust")
 	physics_mode_states.speed = engines_states.off_speed
@@ -336,13 +350,27 @@ func get_hit(_strength: float) -> bool:
 	return false
 
 
-## Internal Representation
+## Collisions
 ## ---------------------------------------
-func force_update_player_pos_x() -> bool:
-	if targeting_states.target:
-		repr.update_player_repr_from_buffer()
-		return true
-	return false
+func _on_rigid_node_body_entered(body: Node) -> void:
+	if body.is_in_group("PlayerGroup"):
+		Signals.player_takes_damage.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position, true)
+		return
+	
+	if body.is_in_group("ControlNodeShieldGroup") or body.is_in_group("ControlNodeGroup"):
+		Signals.control_node_shield_hit.emit(true)
+		## If the drone hits the control node first, then it doesn't have enough momentum to create an impact
+		negate_dive_impact()
+		return
+	
+	if body is StaticBody3D:
+		var sb: StaticBody3D = body
+		if sb.get_collision_layer_value(2):
+			if dive_impact_ready:
+				var diveImpactNode: Node3D = dive_impact_scene.instantiate()
+				diveImpactNode.global_position = rigid_node.global_position - Vector3.UP * 0.5
+				get_tree().current_scene.add_child(diveImpactNode)
+				negate_dive_impact()
 
 
 ## Debugging
@@ -367,24 +395,3 @@ func generate_state_report() -> String:
 
 func _on_debug_advance() -> void:
 	Signals.debug_log.emit(generate_state_report())
-
-
-func _on_rigid_node_body_entered(body: Node) -> void:
-	if body.is_in_group("PlayerGroup"):
-		Signals.player_takes_damage.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position, true)
-		return
-	
-	if body.is_in_group("ControlNodeShieldGroup") or body.is_in_group("ControlNodeGroup"):
-		Signals.control_node_shield_hit.emit(true)
-		## If the drone hits the control node first, then it doesn't have enough momentum to create an impact
-		negate_dive_impact()
-		return
-	
-	if body is StaticBody3D:
-		var sb: StaticBody3D = body
-		if sb.get_collision_layer_value(2):
-			if dive_impact_ready:
-				var diveImpactNode: Node3D = dive_impact_scene.instantiate()
-				diveImpactNode.global_position = rigid_node.global_position - Vector3.UP * 0.5
-				get_tree().current_scene.add_child(diveImpactNode)
-				negate_dive_impact()

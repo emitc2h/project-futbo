@@ -3,17 +3,17 @@ extends DroneSuccessLearningBaseCondition
 
 
 func _enter() -> void:
-	# blackboard.set_var(SUCCESS_BUFFER + player_repr_global_position, drone.repr.playerRepresentation.global_position)
-	# blackboard.set_var(SUCCESS_BUFFER +player_repr_velocity, drone.repr.playerRepresentation.velocity)
-	# blackboard.set_var(SUCCESS_BUFFER +player_repr_is_dribbling, drone.repr.playerRepresentation.is_dribbling)
-	# blackboard.set_var(SUCCESS_BUFFER +player_repr_is_dead, drone.repr.playerRepresentation.is_dead)
-	blackboard.set_var(SUCCESS_BUFFER +player_repr_shield_charges, drone.repr.playerRepresentation.personal_shield_charges)
+	blackboard.set_var(SUCCESS_BUFFER + player_repr_global_position, drone.repr.playerRepresentation.global_position)
+	blackboard.set_var(SUCCESS_BUFFER + player_repr_velocity, drone.repr.playerRepresentation.velocity)
+	blackboard.set_var(SUCCESS_BUFFER + player_repr_is_dribbling, drone.repr.playerRepresentation.is_dribbling)
+	blackboard.set_var(SUCCESS_BUFFER + player_repr_is_dead, drone.repr.playerRepresentation.is_dead)
+	blackboard.set_var(SUCCESS_BUFFER + player_repr_shield_charges, drone.repr.playerRepresentation.personal_shield_charges)
 	
-	# blackboard.set_var(SUCCESS_BUFFER +control_node_repr_global_position, drone.repr.controlNodeRepresentation.global_position)
-	# blackboard.set_var(SUCCESS_BUFFER +control_node_repr_velocity, drone.repr.controlNodeRepresentation.velocity)
-	# blackboard.set_var(SUCCESS_BUFFER +control_node_repr_power_on, drone.repr.controlNodeRepresentation.power_on)
-	blackboard.set_var(SUCCESS_BUFFER +control_node_repr_charges, drone.repr.controlNodeRepresentation.charges)
-	# blackboard.set_var(SUCCESS_BUFFER +control_node_repr_shield_expanded, drone.repr.controlNodeRepresentation.shield_expanded)
+	blackboard.set_var(SUCCESS_BUFFER + control_node_repr_global_position, drone.repr.controlNodeRepresentation.global_position)
+	blackboard.set_var(SUCCESS_BUFFER + control_node_repr_velocity, drone.repr.controlNodeRepresentation.velocity)
+	blackboard.set_var(SUCCESS_BUFFER + control_node_repr_power_on, drone.repr.controlNodeRepresentation.power_on)
+	blackboard.set_var(SUCCESS_BUFFER + control_node_repr_charges, drone.repr.controlNodeRepresentation.charges)
+	blackboard.set_var(SUCCESS_BUFFER + control_node_repr_shield_expanded, drone.repr.controlNodeRepresentation.shield_expanded)
 
 
 func _tick(_delta: float) -> Status:

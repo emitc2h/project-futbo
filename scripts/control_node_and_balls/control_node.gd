@@ -18,6 +18,9 @@ var control_node_physics_states: ControlNodePhysicsStates
 
 @onready var target_marker: Marker3D = $TrackPositionContainer/TargetMarker
 
+## Internal variables
+var bounce_strength: float = 0.0
+
 func _ready() -> void:
 	control_node_control_states = control_states as ControlNodeControlStates
 	control_node_physics_states = physics_states as ControlNodePhysicsStates
@@ -92,5 +95,23 @@ func _on_control_node_impulse(impulse_vector: Vector3) -> void:
 
 
 func _on_rigid_node_body_entered(body: Node) -> void:
-	if body.is_in_group("DroneGroup"):
+	if body.is_in_group("DroneShieldGroup"):
 		attractor_states.enable()
+
+	var hit_strength: float = get_ball_velocity().length()
+	bounce_strength = hit_strength / 5.0
+	
+	if power_states.state == power_states.State.ON:
+		if body.is_in_group("DroneShieldGroup"):
+			var drone_shield: DroneShield = body as DroneShield
+			drone_shield.look_at(get_ball_position(), Vector3.UP)
+			drone_shield.hit()
+	
+		if body.get_parent() is Drone:
+			var drone: Drone = body.get_parent()
+			if drone.get_hit(hit_strength):
+				sc.send_event(power_states.TRANS_TO_BLOW)
+			else:
+				asset.bounce(bounce_strength)
+		else:
+			asset.bounce(bounce_strength)

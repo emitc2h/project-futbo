@@ -42,9 +42,6 @@ const BLOW_LEVEL_3_EXPANDED_TRANS_ANIM: String = "transition - blow - charge lev
 
 const WARP_IN_TRANS_ANIM: String = "transition - warp in"
 
-## Internal variables
-var bounce_strength: float = 0.0
-
 signal control_node_power_is_on
 
 func _ready() -> void:
@@ -65,6 +62,10 @@ func _on_off_state_entered() -> void:
 		sc.send_event(TRANS_TO_CHARGING)
 	
 	Representations.control_node_representation.power_on = false
+	Representations.control_node_representation.charges = -1
+	
+	## Reset the shield state to not-expanded
+	control_node.charge_states.set_shield_state_anim()
 
 
 # charging state
@@ -73,7 +74,9 @@ func _on_charging_state_entered() -> void:
 	state = State.CHARGING
 	control_node.anim_state.travel(CHARGING_TRANS_ANIM)
 	direction_ray.turn_on()
-
+	
+	## Reset the shield state to not-expanded
+	control_node.charge_states.set_shield_state_anim()
 
 
 func _on_charging_state_physics_processing(_delta: float) -> void:
@@ -87,8 +90,6 @@ func _on_charging_state_physics_processing(_delta: float) -> void:
 		## Cancel the transition animation otherwise
 		_:
 			sc.send_event(TRANS_TO_OFF)
-		
-		
 
 
 # on state
@@ -101,6 +102,9 @@ func _on_on_state_entered() -> void:
 	control_node_power_is_on.emit()
 	
 	Representations.control_node_representation.power_on = true
+	
+	## Reset the shield state to not-expanded
+	control_node.charge_states.set_shield_state_anim()
 
 
 func _on_on_state_exited() -> void:
@@ -120,6 +124,8 @@ func _on_discharging_state_entered() -> void:
 #----------------------------------------
 func _on_blow_state_entered() -> void:
 	state = State.BLOW
+	Representations.control_node_representation.power_on = false
+	Representations.control_node_representation.charges = -1
 	sc.send_event(control_node.charge_states.TRANS_DISCHARGE)
 	blow_animation()
 
@@ -146,26 +152,12 @@ func blow_animation() -> void:
 			control_node.charge_states.State.LEVEL3:
 				control_node.anim_state.travel(BLOW_LEVEL_3_TRANS_ANIM)
 
+
 #=======================================================
 # RECEIVED SIGNALS
 #=======================================================
-func _on_rigid_node_body_entered(body: Node) -> void:
-	var hit_strength: float = control_node.get_ball_velocity().length()
-	bounce_strength = hit_strength / 5.0
-	
-	if body is DroneShield and state == State.ON:
-		var drone_shield: DroneShield = body as DroneShield
-		drone_shield.look_at(control_node.get_ball_position(), Vector3.UP)
-		drone_shield.hit()
-	
-	if body.get_parent() is Drone and state == State.ON:
-		var drone: Drone = body.get_parent()
-		if drone.get_hit(hit_strength):
-			sc.send_event(TRANS_TO_BLOW)
-		else:
-			asset.bounce(bounce_strength)
-	else:
-		asset.bounce(bounce_strength)
+func _on_rigid_node_body_entered(_body: Node) -> void:
+	pass
 
 
 func _on_control_states_dribbled_state_entered() -> void:

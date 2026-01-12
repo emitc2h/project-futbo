@@ -1,9 +1,9 @@
 class_name CharacterDamageStates
 extends CharacterStatesAbstractBase
 
-@export var min_hit_velocity: float = 2.5
+@export var min_hit_velocity: float = 3.0
 @export var min_knock_velocity: float = 6.0
-@export var min_death_velocity: float = 10.0
+@export var min_death_velocity: float = 9.0
 
 ## States Enum
 enum State {ABLE = 0, KNOCKED = 1, OUT = 2, RECOVERING = 3, DEAD = 4, HIT = 5}
@@ -118,6 +118,11 @@ func _on_recovering_state_exited() -> void:
 #----------------------------------------
 func _on_dead_state_entered() -> void:
 	state = State.DEAD
+	
+	## Take out player from collision layer so enemies won't detect it
+	character.set_collision_layer_value(1, false)
+	character.set_collision_mask_value(9, false)
+	character.set_collision_mask_value(10, false)
 	
 	## Make sure the damage animation played is die
 	character.asset.open_die_path()

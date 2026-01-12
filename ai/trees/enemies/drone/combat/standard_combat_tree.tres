@@ -1,0 +1,268 @@
+[gd_resource type="BehaviorTree" load_steps=71 format=3 uid="uid://bqtyjssdjddho"]
+
+[ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/drone_blackboard_plan.tres" id="1_8ur65"]
+[ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="1_yycr0"]
+[ext_resource type="Script" uid="uid://dhngbs7qm6328" path="res://ai/tasks/drone/is_object_in_proximity_zone_condition.gd" id="2_bkrkg"]
+[ext_resource type="Script" uid="uid://cu1bkrkshc51d" path="res://ai/tasks/drone/update_blackboard_condition.gd" id="2_dnqgn"]
+[ext_resource type="Script" uid="uid://4tpean3rpeo8" path="res://ai/tasks/drone/drone_block_action.gd" id="3_s6aqh"]
+[ext_resource type="Script" uid="uid://b467pd73p0l2y" path="res://ai/tasks/drone/is_in_vulnerability_state_condition.gd" id="4_6opho"]
+[ext_resource type="Script" uid="uid://c3n51ki08yi4c" path="res://ai/tasks/drone/drone_track_action.gd" id="5_5ocyq"]
+[ext_resource type="BehaviorTree" uid="uid://bvw8ltt488cc8" path="res://ai/trees/enemies/drone/combat/subtrees/probabilistic_learning_physical_attacks_tree.tres" id="6_qvy7k"]
+[ext_resource type="BehaviorTree" uid="uid://u35pdp84xg2o" path="res://ai/trees/enemies/drone/combat/subtrees/probabilistic_learning_all_attacks_tree.tres" id="9_6opho"]
+[ext_resource type="Script" uid="uid://cw5lgdcrky3nb" path="res://ai/tasks/drone/drone_beam_attack_action.gd" id="10_kvfr7"]
+
+[sub_resource type="BTCondition" id="BTCondition_0nrrv"]
+script = ExtResource("2_dnqgn")
+
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_mdyyd"]
+custom_name = "ALWAYS UPDATE BLACKBOARD"
+children = [SubResource("BTCondition_0nrrv")]
+
+[sub_resource type="BTCondition" id="BTCondition_rh5tf"]
+script = ExtResource("2_bkrkg")
+object_type = "Control Node"
+is_not = true
+
+[sub_resource type="BTCondition" id="BTCondition_6opho"]
+script = ExtResource("4_6opho")
+expected_state = 2
+
+[sub_resource type="BTAction" id="BTAction_m8eeb"]
+script = ExtResource("3_s6aqh")
+
+[sub_resource type="BTSelector" id="BTSelector_f7hq1"]
+children = [SubResource("BTCondition_rh5tf"), SubResource("BTCondition_6opho"), SubResource("BTAction_m8eeb")]
+
+[sub_resource type="BBVariant" id="BBVariant_mdyyd"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_ybes4"]
+variable = &"internal_player_repr_is_dead"
+value = SubResource("BBVariant_mdyyd")
+
+[sub_resource type="BTFail" id="BTFail_2juyw"]
+custom_name = "TRANSITION TO IDLE"
+
+[sub_resource type="BTSelector" id="BTSelector_q6tji"]
+children = [SubResource("BTCheckVar_ybes4"), SubResource("BTFail_2juyw")]
+
+[sub_resource type="BTCondition" id="BTCondition_gqadc"]
+script = ExtResource("1_yycr0")
+expected_state = 1
+is_not = true
+
+[sub_resource type="BTFail" id="BTFail_yycr0"]
+custom_name = "TRANSITION TO IDLE"
+
+[sub_resource type="BTSelector" id="BTSelector_inlo8"]
+children = [SubResource("BTCondition_gqadc"), SubResource("BTFail_yycr0")]
+
+[sub_resource type="BBVariant" id="BBVariant_qvy7k"]
+type = 2
+saved_value = 3
+resource_name = "3"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_6opho"]
+variable = &"internal_control_node_repr_charges"
+value = SubResource("BBVariant_qvy7k")
+
+[sub_resource type="BBVariant" id="BBVariant_0nrrv"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_mdyyd"]
+variable = &"internal_player_repr_is_long_kicking"
+value = SubResource("BBVariant_0nrrv")
+
+[sub_resource type="BTCondition" id="BTCondition_kvfr7"]
+script = ExtResource("4_6opho")
+expected_state = 1
+
+[sub_resource type="BTAction" id="BTAction_2juyw"]
+script = ExtResource("3_s6aqh")
+control_node_exited_buffer = 1.0
+use_proximity_zone = false
+
+[sub_resource type="BTSequence" id="BTSequence_4dpw4"]
+children = [SubResource("BTCheckVar_mdyyd"), SubResource("BTCondition_kvfr7"), SubResource("BTAction_2juyw")]
+
+[sub_resource type="BBVariant" id="BBVariant_8p1br"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_qvy7k"]
+variable = &"internal_control_node_repr_shield_expanded"
+value = SubResource("BBVariant_8p1br")
+
+[sub_resource type="BTSubtree" id="BTSubtree_kvfr7"]
+subtree = ExtResource("6_qvy7k")
+blackboard_plan = ExtResource("1_8ur65")
+
+[sub_resource type="BTSequence" id="BTSequence_0nrrv"]
+children = [SubResource("BTCheckVar_qvy7k"), SubResource("BTSubtree_kvfr7")]
+
+[sub_resource type="BTAction" id="BTAction_mdyyd"]
+script = ExtResource("10_kvfr7")
+target_control_node_while_dribbling = true
+switch_back_to_player_delay = 0.1
+evasive_maneuvers = true
+
+[sub_resource type="BTSelector" id="BTSelector_6opho"]
+children = [SubResource("BTSequence_4dpw4"), SubResource("BTSequence_0nrrv"), SubResource("BTAction_mdyyd")]
+
+[sub_resource type="BTSequence" id="BTSequence_kvfr7"]
+children = [SubResource("BTCheckVar_6opho"), SubResource("BTSelector_6opho")]
+
+[sub_resource type="BBVariant" id="BBVariant_8ur65"]
+type = 2
+saved_value = 2
+resource_name = "2"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_5ocyq"]
+variable = &"internal_control_node_repr_charges"
+value = SubResource("BBVariant_8ur65")
+
+[sub_resource type="BTAction" id="BTAction_5ocyq"]
+script = ExtResource("5_5ocyq")
+default_offset = 5.5
+timeout = 1.6
+evasive_maneuvers = true
+
+[sub_resource type="BTSubtree" id="BTSubtree_mdyyd"]
+subtree = ExtResource("9_6opho")
+blackboard_plan = ExtResource("1_8ur65")
+
+[sub_resource type="BTSequence" id="BTSequence_pg7f4"]
+children = [SubResource("BTCheckVar_5ocyq"), SubResource("BTAction_5ocyq"), SubResource("BTSubtree_mdyyd")]
+
+[sub_resource type="BBVariant" id="BBVariant_8fako"]
+type = 2
+saved_value = 1
+resource_name = "1"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_8p1br"]
+variable = &"internal_control_node_repr_charges"
+value = SubResource("BBVariant_8fako")
+
+[sub_resource type="BTAction" id="BTAction_8fako"]
+script = ExtResource("5_5ocyq")
+timeout = 2.1
+metadata/_weight_ = 0.6
+
+[sub_resource type="BTAction" id="BTAction_kvfr7"]
+custom_name = "DroneTrackAction with Evasive Maneuvers"
+script = ExtResource("5_5ocyq")
+timeout = 2.1
+evasive_maneuvers = true
+metadata/_weight_ = 0.4
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_dnqgn"]
+children = [SubResource("BTAction_8fako"), SubResource("BTAction_kvfr7")]
+
+[sub_resource type="BTSubtree" id="BTSubtree_ybes4"]
+subtree = ExtResource("9_6opho")
+blackboard_plan = ExtResource("1_8ur65")
+
+[sub_resource type="BTSequence" id="BTSequence_qvy7k"]
+children = [SubResource("BTCheckVar_8p1br"), SubResource("BTProbabilitySelector_dnqgn"), SubResource("BTSubtree_ybes4")]
+
+[sub_resource type="BBVariant" id="BBVariant_6opho"]
+type = 2
+saved_value = 0
+resource_name = "<null>"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_kvfr7"]
+variable = &"internal_control_node_repr_charges"
+value = SubResource("BBVariant_6opho")
+
+[sub_resource type="BTAction" id="BTAction_8p1br"]
+script = ExtResource("5_5ocyq")
+default_offset = 4.5
+timeout = 2.6
+metadata/_weight_ = 0.8
+
+[sub_resource type="BTAction" id="BTAction_0nrrv"]
+custom_name = "DroneTrackAction with Evasive Maneuvers"
+script = ExtResource("5_5ocyq")
+default_offset = 4.5
+timeout = 2.6
+evasive_maneuvers = true
+jump_strength = 37.0
+metadata/_weight_ = 0.2
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_mdyyd"]
+children = [SubResource("BTAction_8p1br"), SubResource("BTAction_0nrrv")]
+
+[sub_resource type="BTSubtree" id="BTSubtree_2juyw"]
+subtree = ExtResource("9_6opho")
+blackboard_plan = ExtResource("1_8ur65")
+
+[sub_resource type="BTSequence" id="BTSequence_dnqgn"]
+children = [SubResource("BTCheckVar_kvfr7"), SubResource("BTProbabilitySelector_mdyyd"), SubResource("BTSubtree_2juyw")]
+
+[sub_resource type="BBVariant" id="BBVariant_5ocyq"]
+type = 1
+saved_value = false
+resource_name = "<null>"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_pg7f4"]
+variable = &"internal_control_node_repr_power_on"
+value = SubResource("BBVariant_5ocyq")
+
+[sub_resource type="BTAction" id="BTAction_pg7f4"]
+script = ExtResource("5_5ocyq")
+default_offset = 3.0
+timeout = 3.2
+metadata/_weight_ = 0.9
+
+[sub_resource type="BTAction" id="BTAction_6opho"]
+custom_name = "DroneTrackAction with Evasive Maneuvers"
+script = ExtResource("5_5ocyq")
+default_offset = 3.0
+timeout = 3.2
+evasive_maneuvers = true
+jump_strength = 36.0
+metadata/_weight_ = 0.1
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_kvfr7"]
+children = [SubResource("BTAction_pg7f4"), SubResource("BTAction_6opho")]
+
+[sub_resource type="BBVariant" id="BBVariant_kvfr7"]
+type = 2
+saved_value = 0
+resource_name = "<null>"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_dnqgn"]
+variable = &"internal_player_repr_shield_charges"
+value = SubResource("BBVariant_kvfr7")
+
+[sub_resource type="BTSubtree" id="BTSubtree_dnqgn"]
+subtree = ExtResource("6_qvy7k")
+blackboard_plan = ExtResource("1_8ur65")
+
+[sub_resource type="BTSequence" id="BTSequence_mdyyd"]
+children = [SubResource("BTCheckVar_dnqgn"), SubResource("BTSubtree_dnqgn")]
+
+[sub_resource type="BTSubtree" id="BTSubtree_q6tji"]
+subtree = ExtResource("9_6opho")
+blackboard_plan = ExtResource("1_8ur65")
+
+[sub_resource type="BTSelector" id="BTSelector_4dpw4"]
+children = [SubResource("BTSequence_mdyyd"), SubResource("BTSubtree_q6tji")]
+
+[sub_resource type="BTSequence" id="BTSequence_8fako"]
+children = [SubResource("BTCheckVar_pg7f4"), SubResource("BTProbabilitySelector_kvfr7"), SubResource("BTSelector_4dpw4")]
+
+[sub_resource type="BTDynamicSelector" id="BTDynamicSelector_0nrrv"]
+children = [SubResource("BTSequence_kvfr7"), SubResource("BTSequence_pg7f4"), SubResource("BTSequence_qvy7k"), SubResource("BTSequence_dnqgn"), SubResource("BTSequence_8fako")]
+
+[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_bciix"]
+children = [SubResource("BTAlwaysSucceed_mdyyd"), SubResource("BTSelector_f7hq1"), SubResource("BTSelector_q6tji"), SubResource("BTSelector_inlo8"), SubResource("BTDynamicSelector_0nrrv")]
+
+[resource]
+blackboard_plan = ExtResource("1_8ur65")
+root_task = SubResource("BTDynamicSequence_bciix")
