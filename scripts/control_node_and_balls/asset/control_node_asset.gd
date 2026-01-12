@@ -61,6 +61,7 @@ func bounce(bounce_strength: float) -> void:
 	if tw_shield_emission_energy: tw_shield_emission_energy.kill()
 	
 	var current_shield_emission_energy: float = shield_material.get("shader_parameter/emission_energy")
+	if current_shield_emission_energy > 200.0: current_shield_emission_energy = 200.0
 	tw_shield_emission_energy = create_tween()
 	tw_shield_emission_energy.tween_property(shield_material, "shader_parameter/emission_energy", current_shield_emission_energy, 0.5 * bounce_strength)\
 		.set_trans(Tween.TRANS_EXPO)\
@@ -68,6 +69,7 @@ func bounce(bounce_strength: float) -> void:
 		.from(current_shield_emission_energy * 25.0 * bounce_strength)
 
 	var current_shield_ripple_strength: float = shield_material.get("shader_parameter/ripple_strength")
+	if current_shield_ripple_strength > 1.0: current_shield_ripple_strength = 1.0
 	if tw_shield_ripple_strength: tw_shield_ripple_strength.kill()
 	tw_shield_ripple_strength = create_tween()
 	tw_shield_ripple_strength.tween_property(shield_material, "shader_parameter/ripple_strength", current_shield_ripple_strength, 0.5 * bounce_strength)\
@@ -76,6 +78,7 @@ func bounce(bounce_strength: float) -> void:
 		.from(current_shield_ripple_strength * 5.0 * bounce_strength)
 
 	var current_light_energy: float = light.light_energy
+	if current_light_energy > 40.0: current_light_energy = 40.0
 	if tw_light_energy: tw_light_energy.kill()
 	tw_light_energy = create_tween()
 	tw_light_energy.tween_property(light, "light_energy", current_light_energy, 0.5 * bounce_strength)\

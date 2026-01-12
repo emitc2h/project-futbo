@@ -346,7 +346,12 @@ func die(force: Vector3) -> void:
 		model.body_bone.apply_central_impulse(force * 5.0)
 
 
-func get_hit(_strength: float) -> bool:
+func get_hit(strength: float) -> bool:
+	if vulnerability_states.state != DroneVulnerabilityStates.State.INVULNERABLE:
+		model.damage_hit(strength)
+		engines_states.damage_hit(strength)
+		direction_faced_states.damage_hit(strength)
+		return true
 	return false
 
 

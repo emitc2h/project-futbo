@@ -51,7 +51,6 @@ func _ready() -> void:
 # off state
 #----------------------------------------
 func _on_off_state_entered() -> void:
-	dbg.log("Shield OFF state entered")
 	state = State.OFF
 	
 	## Re-enable the spinning animation
@@ -66,7 +65,6 @@ func _on_off_state_entered() -> void:
 # inflating state
 #----------------------------------------
 func _on_expanding_state_entered() -> void:
-	dbg.log("Shield EXPANDING state entered")
 	state = State.EXPANDING
 	
 	## Shield expanding means charge 0, 1 and 2 should reflect the expanded state after hit
@@ -81,7 +79,6 @@ func _on_expanding_state_entered() -> void:
 # on state
 #----------------------------------------
 func _on_on_state_entered() -> void:
-	dbg.log("Shield ON state entered")
 	state = State.ON
 	
 	## Shield being on means charge 0, 1 and 2 should reflect the expanded state after hit
@@ -102,7 +99,6 @@ func _on_on_state_exited() -> void:
 # dissipating state
 #----------------------------------------
 func _on_dissipating_state_entered() -> void:
-	dbg.log("Shield DISSIPATING state entered")
 	state = State.DISSIPATING
 	
 	## Dissipating the shield means charge 0, 1 and 2 should reflect the non-expanded state

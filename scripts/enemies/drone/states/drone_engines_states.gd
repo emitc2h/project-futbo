@@ -94,3 +94,13 @@ func _on_burst_to_thrust_taken() -> void:
 #----------------------------------------
 func _on_stopping_state_entered() -> void:
 	state = State.STOPPING
+
+
+#=======================================================
+# CONTROLS
+#=======================================================
+func damage_hit(strength: float) -> void:
+	var adjusted_strength: float = strength / 5.0
+	var speed_penalty: float = 1.0 + adjusted_strength / (1.0 + adjusted_strength)
+	off_speed /= speed_penalty
+	if off_speed < 1.0: off_speed = 1.0

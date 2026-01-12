@@ -61,7 +61,6 @@ children = [SubResource("BTCondition_8bimv"), SubResource("BTAction_81txv"), Sub
 children = [SubResource("BTSequence_rujgx"), SubResource("BTSequence_7o0y7")]
 script = ExtResource("5_4bok1")
 record_names = Array[String](["ram", "dive"])
-printout = true
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_ils3d")

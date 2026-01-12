@@ -143,6 +143,7 @@ var/success_buffer_control_node_repr_shield_expanded/type = 1
 var/success_buffer_control_node_repr_shield_expanded/value = false
 var/success_buffer_control_node_repr_shield_expanded/hint = 0
 var/success_buffer_control_node_repr_shield_expanded/hint_string = ""
+resource_local_to_scene = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_n6xh2"]
 var/tracking_offset/name = &"tracking_offset"
@@ -260,6 +261,7 @@ var/success_buffer_control_node_repr_shield_expanded/type = 1
 var/success_buffer_control_node_repr_shield_expanded/value = false
 var/success_buffer_control_node_repr_shield_expanded/hint = 0
 var/success_buffer_control_node_repr_shield_expanded/hint_string = ""
+resource_local_to_scene = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_43bu3"]
 var/tracking_offset/name = &"tracking_offset"
@@ -377,6 +379,7 @@ var/success_buffer_control_node_repr_shield_expanded/type = 1
 var/success_buffer_control_node_repr_shield_expanded/value = false
 var/success_buffer_control_node_repr_shield_expanded/hint = 0
 var/success_buffer_control_node_repr_shield_expanded/hint_string = ""
+resource_local_to_scene = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t6rp"]
 radius = 0.509587
@@ -482,6 +485,8 @@ initial_state = NodePath("face right")
 script = ExtResource("6_nn3ap")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
+
+[node name="JerkTimer" type="Timer" parent="State/Root/Direction Faced/Direction Faced States"]
 
 [node name="face right" type="Node" parent="State/Root/Direction Faced"]
 script = ExtResource("5_voq0c")
@@ -1136,6 +1141,7 @@ mesh = NodePath("../TrackPositionContainer/Distortion")
 [connection signal="state_entered" from="State/Root/Physics/ragdoll" to="State/Root/Physics/Physics States" method="_on_ragdoll_state_entered"]
 [connection signal="state_exited" from="State/Root/Physics/ragdoll" to="State/Root/Physics/Physics States" method="_on_ragdoll_state_exited"]
 [connection signal="state_entered" from="State/Root/Physics/dead" to="State/Root/Physics/Physics States" method="_on_dead_state_entered"]
+[connection signal="timeout" from="State/Root/Direction Faced/Direction Faced States/JerkTimer" to="State/Root/Direction Faced/Direction Faced States" method="_on_jerk_timer_timeout"]
 [connection signal="state_entered" from="State/Root/Direction Faced/face right" to="State/Root/Direction Faced/Direction Faced States" method="_on_face_right_state_entered"]
 [connection signal="state_physics_processing" from="State/Root/Direction Faced/face right" to="State/Root/Direction Faced/Direction Faced States" method="_on_face_right_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Direction Faced/face left" to="State/Root/Direction Faced/Direction Faced States" method="_on_face_left_state_entered"]

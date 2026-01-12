@@ -19,16 +19,17 @@ var premature_stopped: bool
 var premature_stopping: bool
 var is_facing_away: bool
 var is_done_facing_away: bool
+var proximity_detector_disabled: bool
 var is_bursting_away: bool
 var is_done_bursting_away: bool
 var is_stopping_engines: bool
 var has_stopped: bool
 var has_turned_back_toward_player: bool
-var proximity_detector_disabled: bool
 var repr_updates_disabled: bool
 var is_bursting_back: bool
 var is_done_bursting_back: bool
 var is_closed: bool
+var is_in_vulnerable_window: bool
 var is_char_and_defendable_again: bool
 var is_opening_at_end: bool
 var is_open_at_end: bool
@@ -59,7 +60,7 @@ func _enter() -> void:
 		DronePhysicsModeStates.State.CHAR,
 		DroneVulnerabilityStates.State.DEFENDABLE,
 		DroneTargetingStates.State.DISABLED,
-		DroneProximityStates.State.DISABLED,
+		DroneProximityStates.State.ENABLED,
 		DroneTargetingStates.TargetType.PLAYER,
 		true)
 	
@@ -72,6 +73,7 @@ func _enter() -> void:
 	premature_stopping = false
 	is_done_facing_away = false
 	is_facing_away = false
+	proximity_detector_disabled = false
 	is_done_bursting_away = false
 	is_bursting_away = false
 	has_stopped = false
@@ -81,6 +83,7 @@ func _enter() -> void:
 	is_done_bursting_back = false
 	is_bursting_back = false
 	is_closed = false
+	is_in_vulnerable_window = false
 	is_char_and_defendable_again = false
 	is_opening_at_end = false
 	is_open_at_end = false
@@ -98,7 +101,6 @@ func custom_tick(delta: float) -> Status:
 		return RUNNING
 	
 	if premature_hit:
-		print("Premature HIT")
 		drone.repr.enable_updates()
 		drone.enable_proximity_detector()
 		drone.enable_targeting(true)
@@ -114,6 +116,10 @@ func custom_tick(delta: float) -> Status:
 		return SUCCESS
 		
 	var distance_to_player: float = abs(drone.repr.playerRepresentation.global_position.x - drone.char_node.global_position.x)
+	
+	if not proximity_detector_disabled:
+		drone.disable_proximity_detector()
+		proximity_detector_disabled = true
 	
 	if not is_done_bursting_away:
 		if not is_bursting_away:
@@ -136,10 +142,6 @@ func custom_tick(delta: float) -> Status:
 	if not has_turned_back_toward_player:
 		drone.face_toward(drone.repr.playerRepresentation.global_position.x, face_toward_id)
 		return RUNNING
-	
-	if not proximity_detector_disabled:
-		drone.disable_proximity_detector()
-		proximity_detector_disabled = true
 	
 	if not repr_updates_disabled:
 		drone.repr.disable_updates()
@@ -165,18 +167,22 @@ func custom_tick(delta: float) -> Status:
 		time_elapsed_closed += delta
 		return RUNNING
 	
-	if not is_char_and_defendable_again:
-		drone.repr.enable_updates()
+	if not is_in_vulnerable_window:
+		drone.become_vulnerable()
 		drone.become_char()
-		drone.become_defendable()
-		drone.enable_proximity_detector()
-		is_char_and_defendable_again = true
+		is_in_vulnerable_window = true
 	
 	if not is_open_at_end:
 		if not is_opening_at_end:
 			drone.open(open_at_end_id)
 			is_opening_at_end = true
 		return RUNNING
+	
+	if not is_char_and_defendable_again:
+		drone.repr.enable_updates()
+		drone.become_defendable()
+		drone.enable_proximity_detector()
+		is_char_and_defendable_again = true
 	
 	if not is_done_facing_target_at_end:
 		if not is_facing_target_at_end:

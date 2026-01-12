@@ -30,6 +30,7 @@ var time_until_next_jump: float
 
 ## Other gates
 var has_switched_to_real_target: bool
+var target_switched_to_control_node: bool
 
 ## Progress gates
 var is_vulnerable: bool
@@ -56,7 +57,7 @@ func _enter() -> void:
 		DronePhysicsModeStates.State.CHAR,
 		DroneVulnerabilityStates.State.DEFENDABLE,
 		DroneTargetingStates.State.ACQUIRED,
-		DroneProximityStates.State.ENABLED,
+		DroneProximityStates.State.DISABLED,
 		DroneTargetingStates.TargetType.PLAYER,
 		true)
 	
@@ -71,6 +72,7 @@ func _enter() -> void:
 	time_until_next_jump = 0.0
 	
 	## Drone hasn't fired yet
+	target_switched_to_control_node = false
 	repr_updates_disabled = false
 	is_vulnerable = false
 	fire_command_sent = false
@@ -111,14 +113,19 @@ func custom_tick(delta: float) -> Status:
 		## If the player stops dribbling for more than some time, the target
 		## switches to the player itself
 		if target_control_node_while_dribbling and has_switched_to_real_target:
-			if drone.repr.playerRepresentation.is_dribbling:
-				not_dribbling_time_elapsed = 0.0
-				drone.set_target(Representations.control_node_target_marker)
+			## Read from the global representation cause the local one isn't updating
+			if Representations.player_representation.is_dribbling:
+				if not target_switched_to_control_node:
+					not_dribbling_time_elapsed = 0.0
+					drone.set_target(Representations.control_node_target_marker)
+					target_switched_to_control_node = true
 			else:
 				not_dribbling_time_elapsed += delta
 			
 			if not_dribbling_time_elapsed > switch_back_to_player_delay:
-				drone.set_target(Representations.player_target_marker)
+				if target_switched_to_control_node:
+					drone.set_target(Representations.player_target_marker)
+					target_switched_to_control_node = false
 		
 		## Optional evasive maneuvers: the drone will jump up periodically
 		if evasive_maneuvers:

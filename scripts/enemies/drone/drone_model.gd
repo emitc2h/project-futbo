@@ -44,6 +44,8 @@ var trans_stopthrust_to_targeting_opened: bool = false
 var trans_fire_to_idle_opened: bool = true
 var trans_fire_to_targeting_opened: bool = false
 
+var accumulated_damage: float = 0.0
+
 ## Signals
 signal anim_state_finished(anim_name: String)
 signal anim_state_started(anim_name: String)
@@ -53,10 +55,12 @@ func _ready() -> void:
 	## Initialize lightning particles
 	lightning_particles.emitting = false
 	lightning_particles.amount_ratio = 0.0
+	lightning_particles.visible = false
 	
 	## Initialize smoke particles
 	smoke_particles.emitting = false
 	smoke_particles.amount_ratio = 0.0
+	smoke_particles.visible = false
 	
 	## Initialize state machine
 	anim_state = anim_tree.get("parameters/playback")
@@ -74,6 +78,12 @@ func _ready() -> void:
 	
 	plasma_bolt_left.did_hit.connect(_on_did_hit)
 	plasma_bolt_right.did_hit.connect(_on_did_hit)
+
+
+func _physics_process(_delta: float) -> void:
+	## Those should just track the position of the body bone
+	lightning_particles.global_rotation = Vector3.ZERO
+	smoke_particles.global_rotation = Vector3.ZERO
 
 
 ## Animation Tree Path Controls
@@ -117,15 +127,27 @@ func _on_did_hit() -> void:
 func die() -> void:
 	em_spinners_animation.turn_off()
 	
-	lightning_particles.emitting = true
+	lightning_particles.visible = true
+	lightning_particles.explosiveness = 0.0
+	lightning_particles.one_shot = false
+	lightning_particles.amount = 10
 	lightning_particles.amount_ratio = 1.0
+	lightning_particles.preprocess = 2.0
+	lightning_particles.emitting = true
+	
 	var lightning_tween: Tween = get_tree().create_tween()
 	lightning_tween.tween_property(lightning_particles, "amount_ratio", 0.2, 10.0)\
 		.set_ease(Tween.EASE_OUT)\
 		.set_trans(Tween.TRANS_EXPO)
 	
-	smoke_particles.emitting = true
+	smoke_particles.visible = true
+	smoke_particles.amount = 35
+	smoke_particles.explosiveness = 0.0
+	smoke_particles.one_shot = false
 	smoke_particles.amount_ratio = 1.0
+	smoke_particles.preprocess = 3.0
+	smoke_particles.emitting = true
+	
 	var smoke_tween: Tween = get_tree().create_tween()
 	smoke_tween.tween_property(smoke_particles, "amount_ratio", 0.2, 8.0)\
 		.set_ease(Tween.EASE_OUT)\
@@ -133,6 +155,44 @@ func die() -> void:
 	
 	await smoke_tween.finished
 	smoke_particles.emitting = false
+
+
+func damage_hit(strength: float = 1.0) -> void:
+	accumulated_damage += strength / 100.0
+	lightning_particles.visible = true
+	lightning_particles.amount = int(strength / 3.0)
+	lightning_particles.amount_ratio = 1.0
+	lightning_particles.explosiveness = 0.9
+	lightning_particles.one_shot = true
+	lightning_particles.preprocess = 0.0
+	lightning_particles.emitting = true
+	
+	smoke_particles.visible = true
+	smoke_particles.amount = int(2 * strength)
+	smoke_particles.amount_ratio = 1.0
+	smoke_particles.explosiveness = 0.65
+	smoke_particles.one_shot = true
+	smoke_particles.preprocess = 0.0
+	smoke_particles.emitting = true
+	
+	await smoke_particles.finished
+	permanent_damage()
+
+
+func permanent_damage() -> void:
+	var amount_ratio: float = accumulated_damage / (1.0 + accumulated_damage)
+	
+	lightning_particles.amount = 5
+	lightning_particles.amount_ratio = amount_ratio
+	lightning_particles.explosiveness = 0.0
+	lightning_particles.one_shot = false
+	lightning_particles.emitting = true
+	
+	smoke_particles.amount = 20
+	smoke_particles.amount_ratio = amount_ratio
+	smoke_particles.explosiveness = 0.0
+	smoke_particles.one_shot = false
+	smoke_particles.emitting = true
 
 
 func charge_spinners(duration: float) -> void:
