@@ -408,7 +408,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.086935, 1.79018, 0)
 active = true
 
 [node name="DebugTool" parent="." instance=ExtResource("21_6uf0e")]
-active = false
+max_running_logs = 100
+visible_only_on_pause = true
 
 [node name="DroneSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.733, 10, 0)

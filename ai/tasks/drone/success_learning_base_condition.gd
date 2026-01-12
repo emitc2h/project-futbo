@@ -22,3 +22,13 @@ var drone: Drone
 
 func _setup() -> void:
 	drone = agent as Drone
+
+
+func increment_record_success() -> void:
+	var current_value_success: int = blackboard.get_var(record_name + "_success_count") as int
+	blackboard.set_var(record_name + "_success_count", current_value_success + 1)
+
+
+func increment_record_total() -> void:
+	var current_value_total: int = blackboard.get_var(record_name + "_total_count") as int
+	blackboard.set_var(record_name + "_total_count", current_value_total + 1)

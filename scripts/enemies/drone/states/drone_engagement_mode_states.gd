@@ -35,6 +35,7 @@ const TRANS_TO_CLOSED: String = "Engagement Mode: to closed"
 ## Signals
 signal opening_finished
 signal closing_finished
+signal quick_close_finished
 
 
 func _ready() -> void:
@@ -49,8 +50,6 @@ func _on_closed_state_entered() -> void:
 	## Approximate the shape of the drone when closed (sphere: capsule.height == 2 * capsule.radius)
 	collision_shape_capsule.height = closed_collision_capsule_height
 	collision_shape_capsule.radius = closed_collision_capsule_radius
-	
-	closing_finished.emit()
 
 
 func _on_closed_state_exited() -> void:
@@ -101,6 +100,8 @@ func _on_anim_state_finished(anim_name: String) -> void:
 	
 	if anim_name == "close up":
 		sc.send_event(TRANS_TO_CLOSED)
+		closing_finished.emit()
 	
 	if anim_name in ["quick close", "thrust close"]:
 		sc.send_event(TRANS_TO_CLOSED)
+		quick_close_finished.emit()

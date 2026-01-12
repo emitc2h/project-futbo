@@ -261,6 +261,9 @@ state_map = {
 3: NodePath("../turn")
 }
 
+[node name="DribbleMarker" parent="." index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.15, 0)
+
 [node name="Shield" type="Node" parent="." index="13" node_paths=PackedStringArray("asset", "character")]
 script = ExtResource("7_lwllx")
 asset = NodePath("../Character1Asset")

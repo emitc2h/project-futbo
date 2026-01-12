@@ -104,8 +104,8 @@ func _on_level_3_state_exited() -> void:
 #=======================================================
 # RECEIVED SIGNALS
 #=======================================================
-func _on_shield_body_entered(body: Node) -> void:
-	if body is DroneShield:
+func _on_shield_body_entered(body: Node3D) -> void:
+	if body.is_in_group("DroneShieldGroup"):
 		sc.send_event(TRANS_CHARGE_UP)
 
 
@@ -115,24 +115,12 @@ func _on_lose_charge_timer_timeout() -> void:
 
 func _on_animation_state_finished(anim_name: String) -> void:
 	match(anim_name):
-		HIT_LEVEL_1_TRANS_ANIM:
-			none_shield_state_anim = CHARGE_LEVEL_0_STATE_ANIM
-			sc.send_event(TRANS_CHARGE_DOWN)
-		HIT_LEVEL_2_TRANS_ANIM:
-			lvl1_shield_state_anim = CHARGE_LEVEL_1_STATE_ANIM
-			sc.send_event(TRANS_CHARGE_DOWN)
-		HIT_LEVEL_3_TRANS_ANIM:
-			lvl2_shield_state_anim = CHARGE_LEVEL_2_STATE_ANIM
-			sc.send_event(TRANS_CHARGE_DOWN)
-		HIT_LEVEL_1_EXPANDED_TRANS_ANIM:
-			none_shield_state_anim = CHARGE_LEVEL_0_EXPANDED_STATE_ANIM
-			sc.send_event(TRANS_CHARGE_DOWN)
-		HIT_LEVEL_2_EXPANDED_TRANS_ANIM:
-			lvl1_shield_state_anim = CHARGE_LEVEL_1_EXPANDED_STATE_ANIM
-			sc.send_event(TRANS_CHARGE_DOWN)
-		HIT_LEVEL_3_EXPANDED_TRANS_ANIM:
-			lvl2_shield_state_anim = CHARGE_LEVEL_2_EXPANDED_STATE_ANIM
-			sc.send_event(TRANS_CHARGE_DOWN)
+		HIT_LEVEL_1_TRANS_ANIM: sc.send_event(TRANS_CHARGE_DOWN)
+		HIT_LEVEL_2_TRANS_ANIM: sc.send_event(TRANS_CHARGE_DOWN)
+		HIT_LEVEL_3_TRANS_ANIM: sc.send_event(TRANS_CHARGE_DOWN)
+		HIT_LEVEL_1_EXPANDED_TRANS_ANIM: sc.send_event(TRANS_CHARGE_DOWN)
+		HIT_LEVEL_2_EXPANDED_TRANS_ANIM: sc.send_event(TRANS_CHARGE_DOWN)
+		HIT_LEVEL_3_EXPANDED_TRANS_ANIM: sc.send_event(TRANS_CHARGE_DOWN)
 
 
 func _on_player_shield_taking_charges(num_charges_taken: int) -> void:

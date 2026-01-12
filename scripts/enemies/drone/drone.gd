@@ -18,14 +18,21 @@ extends Node3D
 @export var proximity_states: DroneProximityStates
 @export var position_states: DronePositionStates
 
+@export_subgroup("Behavior State Machine")
+@export var behavior_states: DroneBehaviorStates
+
 @export_group("Behavior")
-@export var behavior_player: BTPlayer
-@export var behavior_tree: BehaviorTree
+@export var entrance_behavior_tree: BehaviorTree
+@export var idle_behavior_tree: BehaviorTree
+@export var combat_behavior_tree: BehaviorTree
 @export var active: bool:
 	get:
-		return behavior_player.active
+		return behavior_states.state != behavior_states.State.DISABLED
 	set(value):
-		behavior_player.active = value
+		if value:
+			behavior_states.enable(behavior_states.State.IDLE)
+		else:
+			behavior_states.disable()
 
 ## Useful internal nodes to have a handle on
 @onready var char_node: CharacterBody3D = $CharNode
@@ -45,12 +52,20 @@ var signal_id: int
 var dive_impact_ready: bool = false
 var dive_impact_scene: PackedScene = preload("res://scenes/enemies/drone/drone_dive_impact.tscn")
 
+## Misc signals
+@warning_ignore("unused_signal")
+signal hit_player_in_char_mode
+
 func _ready() -> void:
 	## initialize the internal representation
 	anim_state = model_anim_tree.get("parameters/playback")
 	Signals.debug_advance.connect(_on_debug_advance)
 	physics_mode_states.target_velocity_reached.connect(_on_target_velocity_reached)
-	behavior_player.behavior_tree = behavior_tree
+	
+	## Pass along behavior trees
+	behavior_states.entrance_btplayer.behavior_tree = entrance_behavior_tree
+	behavior_states.idle_btplayer.behavior_tree = idle_behavior_tree
+	behavior_states.combat_bt_player.behavior_tree = combat_behavior_tree
 
 
 ## Physics Controls
@@ -187,11 +202,17 @@ signal quick_close_finished(id: int)
 func quick_close(id: int = 0) -> void:
 	if not anim_state.get_current_node() in ["quick close", "thrust close"]:
 		if anim_state.get_current_node() in ["start thrust", "idle thrust", "stop_thrust"]:
-			anim_state.travel("thrust close")
+			if anim_state.get_fading_from_node():
+				anim_state.start("thrust close")
+			else:
+				anim_state.travel("thrust close")
 		else:
-			anim_state.travel("quick close")
+			if anim_state.get_fading_from_node():
+				anim_state.start("quick close")
+			else:
+				anim_state.travel("quick close")
 		sc.send_event(engagement_mode_states.TRANS_TO_QUICK_CLOSE)
-		await engagement_mode_states.closing_finished
+		await engagement_mode_states.quick_close_finished
 	quick_close_finished.emit(id)
 
 
@@ -210,9 +231,13 @@ func burst() -> void:
 	physics_mode_states.speed = engines_states.burst_speed
 	sc.send_event(engines_states.TRANS_TO_BURST)
 
+
 signal stop_engines_finished(id: int)
 
 func stop_engines(id: int = 0) -> void:
+	if engines_states.state == DroneEnginesStates.State.OFF:
+		stop_engines_finished.emit(id)
+		return
 	if anim_state.get_current_node() in ["start thrust", "idle thrust"]:
 		anim_state.travel("stop thrust")
 	physics_mode_states.speed = engines_states.off_speed
@@ -325,36 +350,8 @@ func get_hit(_strength: float) -> bool:
 	return false
 
 
-## Internal Representation
+## Collisions
 ## ---------------------------------------
-func force_update_player_pos_x() -> bool:
-	if targeting_states.target:
-		repr.update_player_repr_from_buffer()
-		return true
-	return false
-
-
-## Debugging
-## ---------------------------------------
-func generate_state_report() -> String:
-	var output: String = ""
-	output += "Physics Mode : " + physics_mode_states.State.keys()[physics_mode_states.state] + "\n"
-	output += "Direction Faced : " + direction_faced_states.State.keys()[direction_faced_states.state] + "\n"
-	output += "Engagement Mode : " + engagement_mode_states.State.keys()[engagement_mode_states.state] + "\n"
-	output += "Engines : " + engines_states.State.keys()[engines_states.state] + "\n"
-	output += "Spinners : " + spinners_states.State.keys()[spinners_states.state] + "\n"
-	output += "Vulnerability : " + vulnerability_states.State.keys()[vulnerability_states.state] + "\n"
-	output += "Targeting : " + targeting_states.State.keys()[targeting_states.state] + "\n"
-	output += "===================================\n"
-	output += "Animation tree node: " + anim_state.get_current_node()\
-			 + " (fading : " + anim_state.get_fading_from_node() + ")"
-	return output
-
-
-func _on_debug_advance() -> void:
-	Signals.debug_log.emit(generate_state_report())
-
-
 func _on_rigid_node_body_entered(body: Node) -> void:
 	if body.is_in_group("PlayerGroup"):
 		Signals.player_takes_damage.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position, true)
@@ -374,3 +371,27 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 				diveImpactNode.global_position = rigid_node.global_position - Vector3.UP * 0.5
 				get_tree().current_scene.add_child(diveImpactNode)
 				negate_dive_impact()
+
+
+## Debugging
+## ---------------------------------------
+func generate_state_report() -> String:
+	var output: String = ""
+	output += "Physics Mode : " + physics_mode_states.State.keys()[physics_mode_states.state] + "\n"
+	output += "Direction Faced : " + direction_faced_states.State.keys()[direction_faced_states.state] + "\n"
+	output += "Engagement Mode : " + engagement_mode_states.State.keys()[engagement_mode_states.state] + "\n"
+	output += "Engines : " + engines_states.State.keys()[engines_states.state] + "\n"
+	output += "Spinners : " + spinners_states.State.keys()[spinners_states.state] + "\n"
+	output += "Vulnerability : " + vulnerability_states.State.keys()[vulnerability_states.state] + "\n"
+	output += "Targeting : " + targeting_states.State.keys()[targeting_states.state] + "\n"
+	output += "Proximity : " + proximity_states.State.keys()[proximity_states.state] + "\n"
+	output += "Position : " + position_states.State.keys()[position_states.state] + "\n"
+	output += "Behavior : " + behavior_states.State.keys()[behavior_states.state] + "\n"
+	output += "===================================\n"
+	output += "Animation tree node: " + anim_state.get_current_node()\
+			 + " (fading : " + anim_state.get_fading_from_node() + ")"
+	return output
+
+
+func _on_debug_advance() -> void:
+	Signals.debug_log.emit(generate_state_report())

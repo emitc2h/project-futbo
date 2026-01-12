@@ -20,7 +20,7 @@ extends Node
 
 ## States Enum
 enum State {DISABLED = 0, NONE = 1, ACQUIRING = 2, ACQUIRED = 3}
-var state: State = State.DISABLED
+var state: State = State.NONE
 
 ## State transition constants
 const TRANS_TO_DISABLED: String = "Targeting: to disabled"
@@ -71,6 +71,7 @@ func scan_for_target() -> bool:
 # disabled state
 #----------------------------------------
 func _on_disabled_state_entered() -> void:
+	acquiring_timer.stop()
 	state = State.DISABLED
 	field_of_view.enabled = false
 
@@ -110,7 +111,8 @@ func _on_acquiring_state_physics_processing(_delta: float) -> void:
 
 func _on_acquiring_timer_timeout() -> void:
 	acquiring_timer.stop()
-	sc.send_event(TRANS_TO_NONE)
+	if state == State.ACQUIRING:
+		sc.send_event(TRANS_TO_NONE)
 
 
 # acquired state

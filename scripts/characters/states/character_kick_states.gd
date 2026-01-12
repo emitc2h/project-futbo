@@ -102,6 +102,9 @@ func _on_winding_up_long_kick_state_entered() -> void:
 		if collider.get_parent() is Ball:
 			ball = collider.get_parent()
 	character.asset.long_kick()
+	
+	if character.is_player:
+		Representations.player_representation.is_long_kicking = true
 
 
 func _on_winding_up_long_kick_state_physics_processing(_delta: float) -> void:
@@ -138,6 +141,8 @@ func _on_long_kick_state_physics_processing(_delta: float) -> void:
 
 func _on_long_kick_state_exited() -> void:
 	character.direction_states.unlock_direction_faced(character.grounded_states.left_right_axis)
+	if character.is_player:
+		Representations.player_representation.is_long_kicking = false
 
 #=======================================================
 # SIGNALS

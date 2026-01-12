@@ -1,0 +1,96 @@
+[gd_resource type="BehaviorTree" load_steps=28 format=3 uid="uid://u35pdp84xg2o"]
+
+[ext_resource type="Script" uid="uid://bsi37utyrao2r" path="res://ai/tasks/drone/update_success_buffer_condition.gd" id="1_gx0i2"]
+[ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/drone_blackboard_plan.tres" id="1_qagks"]
+[ext_resource type="Script" uid="uid://cw5lgdcrky3nb" path="res://ai/tasks/drone/drone_beam_attack_action.gd" id="2_tab25"]
+[ext_resource type="Script" uid="uid://dd8w8ekmubvy3" path="res://ai/tasks/drone/record_success_condition.gd" id="3_gx0i2"]
+[ext_resource type="Script" uid="uid://cn3tf4te6g4xt" path="res://ai/tasks/drone/drone_dive_attack_action.gd" id="4_2w0k3"]
+[ext_resource type="Script" uid="uid://bvgqche0b0grm" path="res://ai/tasks/drone/record_total_condition.gd" id="4_tab25"]
+[ext_resource type="Script" uid="uid://b2j2u7t3dp4en" path="res://ai/tasks/drone/drone_ram_attack_action.gd" id="5_7aog7"]
+[ext_resource type="Script" uid="uid://bnwshcmpemp3f" path="res://ai/tasks/drone/success_learning_probability_selector.gd" id="6_5s11j"]
+
+[sub_resource type="BTCondition" id="BTCondition_q2lih"]
+script = ExtResource("1_gx0i2")
+record_name = "beam"
+
+[sub_resource type="BTAction" id="BTAction_sf03v"]
+script = ExtResource("2_tab25")
+target = "player"
+target_control_node_while_dribbling = true
+
+[sub_resource type="BTCondition" id="BTCondition_wa3dg"]
+script = ExtResource("3_gx0i2")
+success_measure = "control_node_repr_charges"
+record_name = "beam"
+
+[sub_resource type="BTCondition" id="BTCondition_qagks"]
+script = ExtResource("3_gx0i2")
+success_measure = "player_repr_shield_charges"
+record_name = "beam"
+
+[sub_resource type="BTCondition" id="BTCondition_2w0k3"]
+script = ExtResource("4_tab25")
+record_name = "beam"
+
+[sub_resource type="BTSequence" id="BTSequence_5fwpb"]
+children = [SubResource("BTCondition_q2lih"), SubResource("BTAction_sf03v"), SubResource("BTCondition_wa3dg"), SubResource("BTCondition_qagks"), SubResource("BTCondition_2w0k3")]
+metadata/_weight_ = 1.0
+
+[sub_resource type="BTCondition" id="BTCondition_kufh2"]
+script = ExtResource("1_gx0i2")
+record_name = "dive"
+
+[sub_resource type="BTAction" id="BTAction_87e2h"]
+script = ExtResource("4_2w0k3")
+
+[sub_resource type="BTCondition" id="BTCondition_tab25"]
+script = ExtResource("3_gx0i2")
+success_measure = "control_node_repr_charges"
+record_name = "dive"
+
+[sub_resource type="BTCondition" id="BTCondition_7aog7"]
+script = ExtResource("3_gx0i2")
+success_measure = "player_repr_shield_charges"
+record_name = "dive"
+
+[sub_resource type="BTCondition" id="BTCondition_5s11j"]
+script = ExtResource("4_tab25")
+record_name = "dive"
+
+[sub_resource type="BTSequence" id="BTSequence_qgp55"]
+children = [SubResource("BTCondition_kufh2"), SubResource("BTAction_87e2h"), SubResource("BTCondition_tab25"), SubResource("BTCondition_7aog7"), SubResource("BTCondition_5s11j")]
+metadata/_weight_ = 1.0
+
+[sub_resource type="BTCondition" id="BTCondition_6sqbl"]
+script = ExtResource("1_gx0i2")
+record_name = "ram"
+
+[sub_resource type="BTAction" id="BTAction_b4gcf"]
+script = ExtResource("5_7aog7")
+
+[sub_resource type="BTCondition" id="BTCondition_oicuu"]
+script = ExtResource("3_gx0i2")
+success_measure = "control_node_repr_charges"
+record_name = "ram"
+
+[sub_resource type="BTCondition" id="BTCondition_sda3w"]
+script = ExtResource("3_gx0i2")
+success_measure = "player_repr_shield_charges"
+record_name = "ram"
+
+[sub_resource type="BTCondition" id="BTCondition_15wi3"]
+script = ExtResource("4_tab25")
+record_name = "ram"
+
+[sub_resource type="BTSequence" id="BTSequence_gtyf4"]
+children = [SubResource("BTCondition_6sqbl"), SubResource("BTAction_b4gcf"), SubResource("BTCondition_oicuu"), SubResource("BTCondition_sda3w"), SubResource("BTCondition_15wi3")]
+metadata/_weight_ = 1.0
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_8p71o"]
+children = [SubResource("BTSequence_5fwpb"), SubResource("BTSequence_qgp55"), SubResource("BTSequence_gtyf4")]
+script = ExtResource("6_5s11j")
+record_names = Array[String](["beam", "dive", "ram"])
+
+[resource]
+blackboard_plan = ExtResource("1_qagks")
+root_task = SubResource("BTProbabilitySelector_8p71o")

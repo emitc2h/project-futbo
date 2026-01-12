@@ -24,6 +24,8 @@ const TRANS_TO_RIGID: String = "Physics: to rigid"
 @onready var collision_shape_char: CollisionShape3D = ball.get_node("CharNode/CollisionShape3D")
 @onready var collision_shape_rigid: CollisionShape3D = ball.get_node("RigidNode/CollisionShape3D")
 
+var do_not_transfer_y_velocity_to_rigid: bool = false
+
 
 func _ready() -> void:
 	## Otherwise both might be enabled
@@ -40,7 +42,11 @@ func _on_rigid_state_entered() -> void:
 	rigid_node.wake_up()
 	
 	## rigid node takes ownership of transform
-	rigid_node.set_transform_and_velocity(char_node.global_transform, char_node.velocity)
+	var velocity_to_hand_out: Vector3 = char_node.velocity
+	if do_not_transfer_y_velocity_to_rigid:
+		velocity_to_hand_out = Vector3(velocity_to_hand_out.x, 0.0, velocity_to_hand_out.z)
+		do_not_transfer_y_velocity_to_rigid = false
+	rigid_node.set_transform_and_velocity(char_node.global_transform, velocity_to_hand_out)
 	char_node.velocity = Vector3.ZERO
 	
 	## Enable rigid node collisions
@@ -79,7 +85,7 @@ func _on_char_state_entered() -> void:
 
 
 func _on_char_state_physics_processing(_delta: float) -> void:
-	## nodes tha must follow the rigid node
+	## nodes tha must follow the char node
 	track_transform_container.transform = char_node.transform
 	track_position_container.position = char_node.position
 	

@@ -81,7 +81,7 @@ func _on_dribbled_state_physics_processing(delta: float) -> void:
 	
 	# Compute colliding behavior
 	char_node.move_and_slide()
-	
+		
 	# Ball spinning animation
 	if spins_during_dribble:
 		char_node.rotation.z = -dribble_time * direction_faced * \

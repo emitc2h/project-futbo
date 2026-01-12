@@ -8,6 +8,7 @@ var drone: Drone
 @export var player_repr_is_dribbling: StringName = &"internal_player_repr_is_dribbling"
 @export var player_repr_is_dead: StringName = &"internal_player_repr_is_dead"
 @export var player_repr_shield_charges: StringName = &"internal_player_repr_shield_charges"
+@export var player_repr_is_long_kicking: StringName = &"internal_player_repr_is_long_kicking"
 
 @export var control_node_repr_global_position: StringName = &"internal_control_node_repr_global_position"
 @export var control_node_repr_velocity: StringName = &"internal_control_node_repr_velocity"
@@ -26,6 +27,7 @@ func _enter() -> void:
 	blackboard.set_var(player_repr_is_dribbling, drone.repr.playerRepresentation.is_dribbling)
 	blackboard.set_var(player_repr_is_dead, drone.repr.playerRepresentation.is_dead)
 	blackboard.set_var(player_repr_shield_charges, drone.repr.playerRepresentation.personal_shield_charges)
+	blackboard.set_var(player_repr_is_long_kicking, drone.repr.playerRepresentation.is_long_kicking)
 	
 	blackboard.set_var(control_node_repr_global_position, drone.repr.controlNodeRepresentation.global_position)
 	blackboard.set_var(control_node_repr_velocity, drone.repr.controlNodeRepresentation.velocity)

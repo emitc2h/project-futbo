@@ -1,6 +1,7 @@
 class_name DebugTool
 extends CanvasLayer
 
+@onready var main_container: PanelContainer = $PanelContainer
 @onready var tab_container: TabContainer = $PanelContainer/MarginContainer/TabContainer
 @onready var pause_label: Label = $"PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer/ScrollContainer/Label"
 @onready var pause_header: Label = $"PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer/Label"
@@ -28,9 +29,12 @@ var pause_log_array_idx: int = 0
 @export var max_running_logs: int = 100
 var running_log_array: PackedStringArray = []
 
+@export var visible_only_on_pause: bool = false
+
 
 func _ready() -> void:
 	self.visible = active
+	main_container.visible = !visible_only_on_pause
 	Signals.debug_pause.connect(_pause)
 	Signals.debug_log.connect(_on_debug_log)
 	Signals.debug_advance.connect(_on_debug_advance)
@@ -116,6 +120,7 @@ func _pause() -> void:
 	## If paused already don't do anything
 	if paused:
 		return
+	main_container.visible = true
 	paused = true
 	get_tree().paused =  true
 	Signals.debug_on.emit()
@@ -127,6 +132,7 @@ func _unpause() -> void:
 	## If paused already don't do anything
 	if not paused:
 		return
+	main_container.visible = false
 	paused = false
 	get_tree().paused =  false
 	Signals.debug_off.emit()

@@ -1,5 +1,5 @@
 class_name DroneRamAttackAction
-extends BTAction
+extends DroneBaseAction
 
 ## Parameters
 @export var distance_to_turn_around: float = 11.0
@@ -7,30 +7,25 @@ extends BTAction
 @export var time_closed: float = 1.5
 
 ## Internal References
-var drone: Drone
-var signal_id: int
 var face_away_id: int
 var face_toward_id: int
 var open_at_end_id: int
 var facing_target_at_end_id: int
-var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var time_elapsed_closed: float
 
-
 ## Progress gates
-var is_opening: bool
-var is_open: bool
-var engines_stopping: bool
-var engines_are_off: bool
-var is_defendable: bool
-var targeting_disabled: bool
+var premature_hit: bool
+var premature_stopped: bool
+var premature_stopping: bool
 var is_facing_away: bool
 var is_done_facing_away: bool
 var is_bursting_away: bool
 var is_done_bursting_away: bool
+var is_stopping_engines: bool
 var has_stopped: bool
 var has_turned_back_toward_player: bool
 var proximity_detector_disabled: bool
+var repr_updates_disabled: bool
 var is_bursting_back: bool
 var is_done_bursting_back: bool
 var is_closed: bool
@@ -44,31 +39,45 @@ var is_done_facing_target_at_end: bool
 ## ACTION LOGIC                        ##
 ##########################################
 func _setup() -> void:
-	drone = agent as Drone
+	super._setup()
+	drone.hit_player_in_char_mode.connect(_on_hit_player_in_char_mode)
 	drone.open_finished.connect(_on_open_finished)
-	drone.stop_engines_finished.connect(_on_stop_engines_finished)
 	drone.face_toward_finished.connect(_on_face_finished)
 	drone.face_away_finished.connect(_on_face_finished)
 	drone.quick_close_finished.connect(_on_quick_close_finished)
 
 
 func _enter() -> void:
-	## reset the signal ID to make sure old signals don't mess up re-entry into this action
-	signal_id = rng.randi()
+	super._enter()
 	
 	face_away_id = rng.randi()
 	face_toward_id = rng.randi()
 	open_at_end_id = rng.randi()
 	facing_target_at_end_id = rng.randi()
 	
-	probe_initial_state()
+	set_initial_states(
+		DronePhysicsModeStates.State.CHAR,
+		DroneVulnerabilityStates.State.DEFENDABLE,
+		DroneTargetingStates.State.DISABLED,
+		DroneProximityStates.State.DISABLED,
+		DroneTargetingStates.TargetType.PLAYER,
+		true)
 	
+	set_initial_open()
+	set_initial_stop_engines(true)
+	set_initial_stop_moving(true, 35.0)
+	
+	premature_hit = false
+	premature_stopped = false
+	premature_stopping = false
 	is_done_facing_away = false
 	is_facing_away = false
 	is_done_bursting_away = false
 	is_bursting_away = false
 	has_stopped = false
+	is_stopping_engines = false
 	has_turned_back_toward_player = false
+	repr_updates_disabled = false
 	is_done_bursting_back = false
 	is_bursting_back = false
 	is_closed = false
@@ -81,31 +90,28 @@ func _enter() -> void:
 	time_elapsed_closed = 0.0
 
 
-func _tick(delta: float) -> Status:
-	if not is_defendable:
-		drone.become_defendable()
-		is_defendable = true
-	
-	if not is_open:
-		if not is_opening:
-			drone.open(signal_id)
-			is_opening = true
-	
-	if not engines_are_off:
-		if not engines_stopping:
-			drone.stop_engines(signal_id)
-			engines_stopping = true
-	
-	if not targeting_disabled:
-		drone.disable_targeting()
-		targeting_disabled = true
-	
+func custom_tick(delta: float) -> Status:
 	if not is_done_facing_away:
 		if not is_facing_away:
 			drone.face_away(drone.targeting_states.target.global_position.x, face_away_id)
 			is_facing_away = true
-		drone.stop_moving(delta)
 		return RUNNING
+	
+	if premature_hit:
+		print("Premature HIT")
+		drone.repr.enable_updates()
+		drone.enable_proximity_detector()
+		drone.enable_targeting(true)
+		if not premature_stopped:
+			if not premature_stopping:
+				drone.quick_stop_engines()
+				premature_stopping = true
+			drone.stop_moving(delta, 50.0)
+			if abs(drone.physics_mode_states.left_right_axis) < 0.001:
+				premature_stopped = true
+			else:
+				return RUNNING
+		return SUCCESS
 		
 	var distance_to_player: float = abs(drone.repr.playerRepresentation.global_position.x - drone.char_node.global_position.x)
 	
@@ -119,9 +125,11 @@ func _tick(delta: float) -> Status:
 		return RUNNING
 	
 	if not has_stopped:
-		drone.stop_moving(delta)
-		drone.stop_engines()
-		if abs(drone.physics_mode_states.left_right_axis) < 0.01:
+		drone.stop_moving(delta, 100.0)
+		if not is_stopping_engines:
+			drone.stop_engines()
+			is_stopping_engines = true
+		if abs(drone.physics_mode_states.left_right_axis) < 0.001:
 			has_stopped = true
 		return RUNNING
 	
@@ -132,6 +140,10 @@ func _tick(delta: float) -> Status:
 	if not proximity_detector_disabled:
 		drone.disable_proximity_detector()
 		proximity_detector_disabled = true
+	
+	if not repr_updates_disabled:
+		drone.repr.disable_updates()
+		repr_updates_disabled = true
 	
 	if not is_done_bursting_back:
 		if not is_bursting_back:
@@ -154,6 +166,7 @@ func _tick(delta: float) -> Status:
 		return RUNNING
 	
 	if not is_char_and_defendable_again:
+		drone.repr.enable_updates()
 		drone.become_char()
 		drone.become_defendable()
 		drone.enable_proximity_detector()
@@ -171,70 +184,21 @@ func _tick(delta: float) -> Status:
 			is_facing_target_at_end = true
 		return RUNNING
 	
-	drone.enable_targeting()
-	
+	drone.enable_targeting(true)
 	return SUCCESS
-
-
-func _exit() -> void:
-	drone.become_char()
-	drone.enable_proximity_detector()
-	drone.become_defendable()
-	drone.enable_targeting()
-
-
-##########################################
-## UTILITIES                           ##
-##########################################
-func probe_initial_state() -> void:
-	match(drone.engagement_mode_states.state):
-		drone.engagement_mode_states.State.OPEN:
-			is_open = true
-			is_opening = false
-		drone.engagement_mode_states.State.OPENING:
-			is_open = false
-			is_opening = true
-		_:
-			is_open = false
-			is_opening = false
-	
-	match(drone.vulnerability_states.state):
-		drone.vulnerability_states.State.DEFENDABLE:
-			is_defendable = true
-		_:
-			is_defendable = false
-	
-	match(drone.engines_states.state):
-		drone.engines_states.State.OFF:
-			engines_are_off = true
-			engines_stopping = false
-		drone.engines_states.State.STOPPING:
-			engines_are_off = false
-			engines_stopping = true
-		_:
-			engines_are_off = false
-			engines_stopping = false
-	
-	match(drone.proximity_states.state):
-		drone.proximity_states.State.DISABLED:
-			proximity_detector_disabled = true
-		_:
-			proximity_detector_disabled = false
 
 
 ##########################################
 ## SIGNALS                             ##
 ##########################################
+func _on_hit_player_in_char_mode() -> void:
+	premature_hit = true
+
+
 func _on_open_finished(id: int) -> void:
-	if signal_id == id:
-		is_open = true
+	super._on_open_finished(id)
 	if open_at_end_id == id:
 		is_open_at_end = true
-
-
-func _on_stop_engines_finished(id: int) -> void:
-	if signal_id == id:
-		engines_are_off = true
 
 
 func _on_face_finished(id: int) -> void:
