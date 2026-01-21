@@ -63,9 +63,20 @@ func _ready() -> void:
 	physics_mode_states.target_velocity_reached.connect(_on_target_velocity_reached)
 	
 	## Pass along behavior trees
-	behavior_states.entrance_btplayer.behavior_tree = entrance_behavior_tree
-	behavior_states.idle_btplayer.behavior_tree = idle_behavior_tree
-	behavior_states.combat_bt_player.behavior_tree = combat_behavior_tree
+	if entrance_behavior_tree:
+		entrance_behavior_tree.reset_state()
+		entrance_behavior_tree.blackboard_plan.reset_state()
+		behavior_states.entrance_btplayer.behavior_tree = entrance_behavior_tree
+	
+	if idle_behavior_tree:
+		idle_behavior_tree.reset_state()
+		idle_behavior_tree.blackboard_plan.reset_state()
+		behavior_states.idle_btplayer.behavior_tree = idle_behavior_tree
+	
+	if combat_behavior_tree:
+		combat_behavior_tree.reset_state()
+		combat_behavior_tree.blackboard_plan.reset_state()
+		behavior_states.combat_bt_player.behavior_tree = combat_behavior_tree
 
 
 ## Physics Controls
