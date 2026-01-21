@@ -20,5 +20,19 @@ directional_shadow_split_2 = 0.11
 directional_shadow_split_3 = 0.33
 directional_shadow_blend_splits = true
 
+[node name="Sun2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7443119, 0.2811814, -0.6057536, 0, 0.90704393, 0.42103586, 0.66783303, -0.31338176, 0.67512333, 0, 0, 0)
+layers = 64
+light_intensity_lux = 50000.0
+light_temperature = 4200.0
+light_color = Color(0.66251564, 0.77631456, 0.879929, 1)
+light_energy = 5.0
+light_specular = 0.05
+light_cull_mask = 4293918784
+directional_shadow_mode = 1
+directional_shadow_split_2 = 0.11
+directional_shadow_split_3 = 0.33
+directional_shadow_blend_splits = true
+
 [node name="Act1SkyBox" parent="." instance=ExtResource("1_clr1m")]
 parallax_factor = 0.015

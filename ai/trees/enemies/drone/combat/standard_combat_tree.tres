@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=71 format=3 uid="uid://bqtyjssdjddho"]
+[gd_resource type="BehaviorTree" load_steps=74 format=3 uid="uid://bqtyjssdjddho"]
 
 [ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/drone_blackboard_plan.tres" id="1_8ur65"]
 [ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="1_yycr0"]
@@ -112,8 +112,18 @@ switch_back_to_player_delay = 0.1
 evasive_maneuvers = true
 jump_strength = 40.0
 
+[sub_resource type="BBVariant" id="BBVariant_dnqgn"]
+saved_value = null
+resource_name = "<null>"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_0nrrv"]
+value = SubResource("BBVariant_dnqgn")
+
+[sub_resource type="BTSequence" id="BTSequence_ybes4"]
+children = [SubResource("BTCheckVar_0nrrv")]
+
 [sub_resource type="BTSelector" id="BTSelector_6opho"]
-children = [SubResource("BTSequence_4dpw4"), SubResource("BTSequence_0nrrv"), SubResource("BTAction_mdyyd")]
+children = [SubResource("BTSequence_4dpw4"), SubResource("BTSequence_0nrrv"), SubResource("BTAction_mdyyd"), SubResource("BTSequence_ybes4")]
 
 [sub_resource type="BTSequence" id="BTSequence_kvfr7"]
 children = [SubResource("BTCheckVar_6opho"), SubResource("BTSelector_6opho")]

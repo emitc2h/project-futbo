@@ -29,6 +29,7 @@ var is_player: bool = false
 func _ready() -> void:
 	if is_player:
 		Representations.player_target_marker = target_marker
+		Representations.player_representation.is_dead = false
 
 
 ## Update the player representation

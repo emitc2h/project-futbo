@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://b6j57fie7ocg7"]
+[gd_scene load_steps=56 format=3 uid="uid://b6j57fie7ocg7"]
 
 [ext_resource type="Script" uid="uid://comkhi4ayaddy" path="res://scripts/skybox/sky_box_camera.gd" id="1_37btj"]
 [ext_resource type="Script" uid="uid://cporhbbxs5nmi" path="res://scripts/level1/act_1_skybox.gd" id="1_ywti0"]
@@ -17,6 +17,7 @@
 [ext_resource type="Material" uid="uid://dtjhyx51m0eao" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_5.tres" id="13_xnj6s"]
 [ext_resource type="Material" uid="uid://lljvxhhrkc7q" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_3.tres" id="15_ppmh4"]
 [ext_resource type="Material" uid="uid://c346eumdcl2wn" path="res://assets/3D/Act1/materials/sky/cloud_treadmill_4.tres" id="16_j2far"]
+[ext_resource type="PackedScene" uid="uid://ihd2x5kuenjv" path="res://scenes/enemies/mothership/mothership.tscn" id="18_mkg81"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aqkyh"]
 render_priority = 0
@@ -682,7 +683,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="BackgroundCanvas/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1920, 1080)
+size = Vector2i(3840, 2160)
 render_target_update_mode = 4
 
 [node name="SkyBoxContainer" type="Node3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport"]
@@ -874,6 +875,16 @@ cast_shadow = 0
 mesh = SubResource("ArrayMesh_vrjuy")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_xnj6s")
+
+[node name="Mothership" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("18_mkg81")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2321815, 2.7256756, -26.390404)
+wait_till_open = 5.0
+time_scale = 0.2
+
+[node name="Mothership2" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("18_mkg81")]
+transform = Transform3D(-0.46786827, 0, 0.88379824, 0, 1, 0, -0.88379824, 0, -0.46786827, -4.6965647, 2.1817722, -12.420677)
+wait_till_open = 10.0
+time_scale = 0.15
 
 [editable path="CloudLine1"]
 [editable path="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/StaticBackdrop/MountainLine1"]

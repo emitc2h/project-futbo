@@ -8,7 +8,7 @@ uniform sampler2D noise_alpha: source_color;
 
 uniform vec4 color_begin: source_color;
 uniform vec4 color_end: source_color;
-uniform float noise_speed: hint_range(0.0, 3.0);
+uniform float noise_speed: hint_range(-3.0, 3.0);
 uniform float noise_intensity: hint_range(0.0, 100.0);
 
 void vertex() {
@@ -22,5 +22,6 @@ void fragment() {
 	vec4 noise_tex = texture(noise_alpha, UV2);
 
 	ALBEDO = colored_tex.rgb;
+	//EMISSION = colored_tex.rgb * 1000000.0;
 	ALPHA = noise_intensity * noise_tex.r * albedo_tex.a;
 }
