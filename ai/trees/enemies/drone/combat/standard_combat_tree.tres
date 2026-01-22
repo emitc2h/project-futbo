@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=74 format=3 uid="uid://bqtyjssdjddho"]
+[gd_resource type="BehaviorTree" load_steps=75 format=3 uid="uid://bqtyjssdjddho"]
 
 [ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/drone_blackboard_plan.tres" id="1_8ur65"]
 [ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="1_yycr0"]
@@ -105,6 +105,22 @@ blackboard_plan = ExtResource("1_8ur65")
 [sub_resource type="BTSequence" id="BTSequence_0nrrv"]
 children = [SubResource("BTCheckVar_qvy7k"), SubResource("BTSubtree_kvfr7")]
 
+[sub_resource type="BBVariant" id="BBVariant_dnqgn"]
+type = 1
+saved_value = false
+resource_name = "<null>"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_0nrrv"]
+variable = &"internal_drone_sees_control_node"
+value = SubResource("BBVariant_dnqgn")
+
+[sub_resource type="BTSubtree" id="BTSubtree_4dpw4"]
+subtree = ExtResource("6_qvy7k")
+blackboard_plan = ExtResource("1_8ur65")
+
+[sub_resource type="BTSequence" id="BTSequence_7pnm5"]
+children = [SubResource("BTCheckVar_0nrrv"), SubResource("BTSubtree_4dpw4")]
+
 [sub_resource type="BTAction" id="BTAction_mdyyd"]
 script = ExtResource("10_kvfr7")
 target_control_node_while_dribbling = true
@@ -112,18 +128,8 @@ switch_back_to_player_delay = 0.1
 evasive_maneuvers = true
 jump_strength = 40.0
 
-[sub_resource type="BBVariant" id="BBVariant_dnqgn"]
-saved_value = null
-resource_name = "<null>"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_0nrrv"]
-value = SubResource("BBVariant_dnqgn")
-
-[sub_resource type="BTSequence" id="BTSequence_ybes4"]
-children = [SubResource("BTCheckVar_0nrrv")]
-
 [sub_resource type="BTSelector" id="BTSelector_6opho"]
-children = [SubResource("BTSequence_4dpw4"), SubResource("BTSequence_0nrrv"), SubResource("BTAction_mdyyd"), SubResource("BTSequence_ybes4")]
+children = [SubResource("BTSequence_4dpw4"), SubResource("BTSequence_0nrrv"), SubResource("BTSequence_7pnm5"), SubResource("BTAction_mdyyd")]
 
 [sub_resource type="BTSequence" id="BTSequence_kvfr7"]
 children = [SubResource("BTCheckVar_6opho"), SubResource("BTSelector_6opho")]

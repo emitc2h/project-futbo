@@ -20,6 +20,10 @@ var controlNodeRepresentation: ControlNodeRepresentation = ControlNodeRepresenta
 var player_repr_update_enabled: bool = true
 var control_node_repr_update_enabled: bool = true
 
+## meta variables
+var drone_sees_player: bool = false
+var drone_sees_control_node: bool = false
+
 
 func _ready() -> void:
 	pass
@@ -27,12 +31,16 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	var drone_pos: Vector3 = drone.char_node.global_position
+	drone_sees_player = false
 	if drone_pos.distance_to(Representations.player_representation.global_position) < visibility_range:
 		if drone.is_facing_toward(Representations.player_representation.global_position.x):
+			drone_sees_player = true
 			update_player_repr_from_buffer()
 	
+	drone_sees_control_node = false
 	if drone_pos.distance_to(Representations.control_node_representation.global_position) < visibility_range:
 		if drone.is_facing_toward(Representations.control_node_representation.global_position.x):
+			drone_sees_control_node = true
 			update_control_node_repr_from_buffer()
 
 

@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://4tpean3rpeo8" path="res://ai/tasks/drone/drone_block_action.gd" id="2_qvf6d"]
 [ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="3_1r6up"]
 [ext_resource type="Script" uid="uid://c3n51ki08yi4c" path="res://ai/tasks/drone/drone_track_action.gd" id="4_7pn2i"]
-[ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/drone_blackboard_plan.tres" id="5_5nuwn"]
 [ext_resource type="BehaviorTree" uid="uid://u35pdp84xg2o" path="res://ai/trees/enemies/drone/combat/subtrees/probabilistic_learning_all_attacks_tree.tres" id="6_5nuwn"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ntap0"]
@@ -44,9 +43,11 @@ script = ExtResource("4_7pn2i")
 timeout = 3.0
 jump_period = 1.0
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_5nuwn"]
+
 [sub_resource type="BTSubtree" id="BTSubtree_ma56j"]
 subtree = ExtResource("6_5nuwn")
-blackboard_plan = ExtResource("5_5nuwn")
+blackboard_plan = SubResource("BlackboardPlan_5nuwn")
 
 [sub_resource type="BTSequence" id="BTSequence_82cf2"]
 children = [SubResource("BTAction_iln2x"), SubResource("BTSubtree_ma56j")]
