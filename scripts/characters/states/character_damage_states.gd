@@ -119,11 +119,6 @@ func _on_recovering_state_exited() -> void:
 func _on_dead_state_entered() -> void:
 	state = State.DEAD
 	
-	## Take out player from collision layer so enemies won't detect it
-	character.set_collision_layer_value(1, false)
-	character.set_collision_mask_value(9, false)
-	character.set_collision_mask_value(10, false)
-	
 	## Make sure the damage animation played is die
 	character.asset.open_die_path()
 	
@@ -139,6 +134,8 @@ func _on_dead_state_entered() -> void:
 	character.asset.knock()
 	
 	_current_knockback_velocity_x = _initial_knockback_velocity_x
+	
+	become_untargetable(1.5)
 	
 	if character.is_player:
 		Signals.player_dead.emit()
@@ -216,6 +213,14 @@ func take_damage(obj_velocity: Vector3, obj_position: Vector3, physical: bool) -
 		_colliding_obj_position = obj_position
 		_initial_knockback_velocity_x = obj_velocity.x
 		sc.send_event(TRANS_TO_DEAD)
+
+
+func become_untargetable(delay: float = 0.0) -> void:
+	await get_tree().create_timer(delay).timeout
+	## Take out player from collision layer so enemies won't detect it
+	character.set_collision_layer_value(1, false)
+	character.set_collision_mask_value(9, false)
+	character.set_collision_mask_value(10, false)
 
 
 #=======================================================
