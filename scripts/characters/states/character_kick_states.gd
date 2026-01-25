@@ -49,6 +49,8 @@ func _on_no_ball_state_physics_processing(_delta: float) -> void:
 #----------------------------------------
 func _on_can_kick_state_entered() -> void:
 	state = State.CAN_KICK
+	if character.is_player:
+		Representations.player_representation.is_long_kicking = false
 
 
 func _on_can_kick_state_physics_processing(_delta: float) -> void:

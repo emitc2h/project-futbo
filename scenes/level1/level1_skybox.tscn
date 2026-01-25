@@ -690,7 +690,7 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26.2505, 110.984)
 
 [node name="SkyBoxCamera" type="Camera3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer"]
-transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, -1.39885, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9961948, -0.08715568, 0, 0.08715568, 0.9961948, -1.39885, 0, 0)
 cull_mask = 1016800
 environment = ExtResource("8_uv183")
 fov = 45.0
@@ -699,7 +699,7 @@ script = ExtResource("1_37btj")
 [node name="StaticBackdrop" type="Node3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer"]
 
 [node name="Layer0" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/StaticBackdrop"]
-transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0.70171, -33.4159)
+transform = Transform3D(45, 0, 0, 0, -1.9670124e-06, -45, 0, 45, -1.9670124e-06, 0, 0.702, -100.248)
 layers = 32
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_746i8")
@@ -707,7 +707,7 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_xnj6s")
 
 [node name="MountainLine1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/StaticBackdrop" instance=ExtResource("3_7sj78")]
-transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, -0.700001, -10)
+transform = Transform3D(36, 0, 0, 0, 36, 0, 0, 0, 36, 0, -3.6984138, -39.429024)
 
 [node name="Layer1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/StaticBackdrop/MountainLine1" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -0.04, 0.188)
@@ -724,7 +724,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_yg8ks")
 process_mode = 3
 
 [node name="CloudTreadmill1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/DynamicSky" instance=ExtResource("12_1l4mi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.239553, -26.806)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.6971302, -80.418)
 length = 5.0
 speed = 0.5
 
@@ -753,7 +753,7 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("4_11igr")
 
 [node name="CloudTreadmill2" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/DynamicSky" instance=ExtResource("12_1l4mi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21113, -20.4042)
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0.717144, -53.108692)
 length = 2.0
 speed = 0.1
 fade_in_end_fraction = 0.329
@@ -777,7 +777,7 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_xs643")
 
 [node name="CloudTreadmill3" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/DynamicSky" instance=ExtResource("12_1l4mi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.88972, -24.1282)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3.5865211, -72.384)
 length = 1.0
 speed = 0.1
 fade_in_end_fraction = 0.442
@@ -801,7 +801,7 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("15_ppmh4")
 
 [node name="CloudTreadmill4" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/DynamicSky" instance=ExtResource("12_1l4mi")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 2.51051, -15.3254)
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 2.9145718, -30)
 length = 6.0
 speed = 0.2
 x_drift_speed = 15.0
@@ -823,7 +823,7 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("16_j2far")
 
 [node name="Layer14" type="MeshInstance3D" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/DynamicSky/CloudTreadmill4"]
-transform = Transform3D(15, 0, 0, 0, -6.55671e-07, -15, 0, 15, -6.55671e-07, 0, 0, 0)
+transform = Transform3D(10, 0, 0, 0, -4.371139e-07, -10, 0, 10, -4.371139e-07, 0, 0, 0)
 layers = 32
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_40kq0")
@@ -839,7 +839,7 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("16_j2far")
 
 [node name="CloudTreadmill5" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/DynamicSky" instance=ExtResource("12_1l4mi")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 9.42156, -46.805)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 7.6331863, -46.805)
 length = 8.0
 speed = 0.1
 x_drift_speed = 5.0
@@ -877,12 +877,17 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_xnj6s")
 
 [node name="Mothership" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("18_mkg81")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2321815, 2.7256756, -26.390404)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.30202, 4.270756, -52.450806)
 wait_till_open = 5.0
 time_scale = 0.2
 
+[node name="Mothership3" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("18_mkg81")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07192421, 2.3823223, -9.238274)
+wait_till_open = 7.0
+time_scale = 0.1
+
 [node name="Mothership2" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" instance=ExtResource("18_mkg81")]
-transform = Transform3D(-0.46786827, 0, 0.88379824, 0, 1, 0, -0.88379824, 0, -0.46786827, -4.6965647, 2.1817722, -12.420677)
+transform = Transform3D(-0.5944861, 0, 0.8041059, 0, 1, 0, -0.8041059, 0, -0.5944861, -12.410709, 2.641859, -31.961227)
 wait_till_open = 10.0
 time_scale = 0.15
 

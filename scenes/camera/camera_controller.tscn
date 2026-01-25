@@ -69,7 +69,7 @@ delay_in_seconds = "0.0"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 10)
 
 [node name="CameraPitch" type="Node3D" parent="TargetPosition/CameraYaw"]
-transform = Transform3D(1, 0, 0, 0, 0.996917, -0.0784591, 0, 0.0784591, 0.996917, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.99691695, -0.0784591, 0, 0.0784591, 0.99691695, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="TargetPosition/CameraYaw/CameraPitch"]
 cull_mask = 31775
