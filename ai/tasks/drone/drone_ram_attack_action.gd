@@ -5,6 +5,7 @@ extends DroneBaseAction
 @export var distance_to_turn_around: float = 11.0
 @export var distance_to_turn_into_ball: float = 7.0
 @export var time_closed: float = 1.5
+@export var burst_min_distance: float = 5.0
 
 ## Internal References
 var face_away_id: int
@@ -12,6 +13,8 @@ var face_toward_id: int
 var open_at_end_id: int
 var facing_target_at_end_id: int
 var time_elapsed_closed: float
+var turn_back_pos_x: float
+var burst_distance_traveled: float = 0.0
 
 ## Progress gates
 var premature_hit: bool
@@ -67,6 +70,8 @@ func _enter() -> void:
 	set_initial_open()
 	set_initial_stop_engines(true)
 	set_initial_stop_moving(true, 35.0)
+	
+	burst_distance_traveled = 0.0
 	
 	premature_hit = false
 	premature_stopped = false
@@ -140,6 +145,7 @@ func custom_tick(delta: float) -> Status:
 		return RUNNING
 	
 	if not has_turned_back_toward_player:
+		turn_back_pos_x = drone.char_node.global_position.x
 		drone.face_toward(drone.repr.playerRepresentation.global_position.x, face_toward_id)
 		return RUNNING
 	
@@ -152,7 +158,8 @@ func custom_tick(delta: float) -> Status:
 			drone.burst()
 			is_bursting_back = true
 		drone.move_toward_x_pos(drone.repr.playerRepresentation.global_position.x, delta)
-		if distance_to_player < distance_to_turn_into_ball:
+		burst_distance_traveled = abs(drone.char_node.global_position.x - turn_back_pos_x)
+		if burst_distance_traveled > burst_min_distance and distance_to_player < distance_to_turn_into_ball:
 			drone.become_rigid()
 			drone.quick_close(signal_id)
 			drone.quick_stop_engines(true)

@@ -758,21 +758,26 @@ script = ExtResource("12_0sc46")
 [node name="RayCast3D" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
 transform = Transform3D(1, 0, 0, 0, 0.939692, 0.34202, 0, -0.34202, 0.939692, 0, 0, 0)
 target_position = Vector3(0, 0, 4)
+collision_mask = 5
 
 [node name="RayCast3D2" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
 target_position = Vector3(0, 0, 4)
+collision_mask = 5
 
 [node name="RayCast3D3" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
 transform = Transform3D(1, 0, 0, 0, 0.939693, -0.34202, 0, 0.34202, 0.939693, 0, 0, 0)
 target_position = Vector3(0, 0, 4)
+collision_mask = 5
 
 [node name="RayCast3D4" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
 transform = Transform3D(1, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, 0, 0)
 target_position = Vector3(0, 0, 4)
+collision_mask = 5
 
 [node name="RayCast3D5" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
 transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
 target_position = Vector3(0, 0, 4)
+collision_mask = 5
 
 [node name="ProximityDetector" type="ShapeCast3D" parent="TrackTransformContainer"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)

@@ -278,13 +278,14 @@ func fire(num_bolts: int = 1, id: int = 0) -> void:
 		fire_finished.emit(id)
 
 
-func set_target(target: Node3D) -> void:
+func set_target(target: Node3D, lock_target: bool = false) -> void:
 	if target.is_in_group("PlayerGroup"):
 		targeting_states.target_type = targeting_states.TargetType.PLAYER
 	elif target.is_in_group("ControlNodeGroup"):
 		targeting_states.target_type = targeting_states.TargetType.CONTROL_NODE
 	else:
 		targeting_states.target_type = targeting_states.TargetType.OTHER
+	targeting_states.target_locked = lock_target
 	targeting_states.target = target
 	model.spinners_acquire_target(target)
 

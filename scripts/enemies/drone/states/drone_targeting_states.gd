@@ -39,6 +39,7 @@ var target_type: TargetType = TargetType.PLAYER
 
 ## Internal variables
 var target: Node3D
+var target_locked: bool = false
 var range_tween: Tween
 var focus_tween: Tween
 var time_spent_in_acquired_state: float = 0.0
@@ -142,7 +143,7 @@ func _on_acquired_state_entered() -> void:
 
 
 func _on_acquired_state_physics_processing(delta: float) -> void:
-	if not scan_for_target():
+	if not scan_for_target() and not target_locked:
 		sc.send_event(TRANS_TO_ACQUIRING)
 	else:
 		## Compute where the target is, and the angle needed to look down at it
