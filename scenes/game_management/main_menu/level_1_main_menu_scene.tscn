@@ -282,7 +282,7 @@ animation_player = NodePath("AnimationPlayer")
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("2_w6ciu")]
 
-[node name="Act1SkyBox" parent="WorldEnvironment" index="1" node_paths=PackedStringArray("camera_controller")]
+[node name="Act1SkyBox" parent="WorldEnvironment" index="2" node_paths=PackedStringArray("camera_controller")]
 camera_controller = NodePath("../../CameraController")
 
 [node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("3_kwi3e")]
@@ -339,6 +339,7 @@ transform = Transform3D(0.963839, -0.17278743, -0.20287447, -0.10035795, -0.9406
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56387, 3.18267)
 idle_behavior_tree = null
 combat_behavior_tree = null
+initial_behavior_state = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../SoccerBall")

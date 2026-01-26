@@ -12,6 +12,8 @@ var initial_drone_transform: Transform3D
 
 
 func _ready() -> void:
+	drone.targeting_states.target_type = drone.targeting_states.TargetType.OTHER
+	drone.set_initial_behavior_state(DroneBehaviorStates.State.DISABLED)
 	initial_drone_transform = drone.transform
 	drone_scene = load(drone_scene_path)
 
@@ -37,9 +39,10 @@ func _on_ragdoll_mode_button_pressed() -> void:
 
 func _on_reset_button_pressed() -> void:
 	if drone:
-		drone.queue_free()
+		drone.free()
 	drone = drone_scene.instantiate() as Drone
-	drone.active = false
+	drone.targeting_states.target_type = drone.targeting_states.TargetType.OTHER
+	drone.set_initial_behavior_state(DroneBehaviorStates.State.DISABLED)
 	drone.transform = initial_drone_transform
 	add_child(drone)
 	

@@ -462,7 +462,7 @@ script = ExtResource("3_wmq8b")
 
 [node name="Targeting" type="Node" parent="State/Root/Monitoring"]
 script = ExtResource("4_kl701")
-initial_state = NodePath("none")
+initial_state = NodePath("disabled")
 
 [node name="Targeting States" type="Node" parent="State/Root/Monitoring/Targeting" node_paths=PackedStringArray("drone", "sc")]
 script = ExtResource("11_wmq8b")
@@ -605,15 +605,22 @@ delay_in_seconds = "0.0"
 
 [node name="Behavior" type="Node" parent="State/Root"]
 script = ExtResource("4_kl701")
-initial_state = NodePath("entrance")
+initial_state = NodePath("disabled")
 
-[node name="Behavior States" type="Node" parent="State/Root/Behavior" node_paths=PackedStringArray("drone", "sc", "entrance_btplayer", "idle_btplayer", "combat_bt_player")]
+[node name="Behavior States" type="Node" parent="State/Root/Behavior" node_paths=PackedStringArray("drone", "sc", "cs", "entrance_btplayer", "idle_btplayer", "combat_bt_player", "state_map")]
 script = ExtResource("18_j5bu2")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
+cs = NodePath("..")
 entrance_btplayer = NodePath("../entrance/BehaviorManager/BTPlayer")
 idle_btplayer = NodePath("../idle/BehaviorManager/BTPlayer")
 combat_bt_player = NodePath("../combat/BehaviorManager/BTPlayer")
+state_map = {
+0: NodePath("../entrance"),
+1: NodePath("../idle"),
+2: NodePath("../combat"),
+3: NodePath("../disabled")
+}
 
 [node name="entrance" type="Node" parent="State/Root/Behavior"]
 script = ExtResource("5_voq0c")

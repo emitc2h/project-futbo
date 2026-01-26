@@ -25,14 +25,7 @@ extends Node3D
 @export var entrance_behavior_tree: BehaviorTree
 @export var idle_behavior_tree: BehaviorTree
 @export var combat_behavior_tree: BehaviorTree
-@export var active: bool:
-	get:
-		return behavior_states.state != behavior_states.State.DISABLED
-	set(value):
-		if value:
-			behavior_states.enable(behavior_states.State.IDLE)
-		else:
-			behavior_states.disable()
+@export var initial_behavior_state: DroneBehaviorStates.State
 
 ## Useful internal nodes to have a handle on
 @onready var char_node: CharacterBody3D = $CharNode
@@ -61,6 +54,9 @@ func _ready() -> void:
 	anim_state = model_anim_tree.get("parameters/playback")
 	Signals.debug_advance.connect(_on_debug_advance)
 	physics_mode_states.target_velocity_reached.connect(_on_target_velocity_reached)
+	
+	## Set the initial behavior state
+	behavior_states.set_initial_state(initial_behavior_state)
 	
 	## Pass along behavior trees
 	if entrance_behavior_tree:
@@ -347,12 +343,17 @@ func negate_dive_impact() -> void:
 	dive_impact_ready = false
 
 
+func set_initial_behavior_state(initial_state: DroneBehaviorStates.State) -> void:
+	initial_behavior_state = initial_state
+	behavior_states.set_initial_state(initial_state)
+
+
 ## Hitbox
 ## ---------------------------------------
 func die(force: Vector3) -> void:
 	if vulnerability_states.state == vulnerability_states.State.VULNERABLE:
 		model.die()
-		active = false
+		behavior_states.disable()
 		sc.send_event(physics_mode_states.TRANS_TO_RAGDOLL)
 		model.body_bone.apply_central_impulse(force * 5.0)
 

@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=30 format=3 uid="uid://b2fm1v4kdrbwy"]
+[gd_resource type="BehaviorTree" load_steps=31 format=3 uid="uid://b2fm1v4kdrbwy"]
 
 [ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/drone_blackboard_plan.tres" id="1_n583o"]
 [ext_resource type="Script" uid="uid://cu1bkrkshc51d" path="res://ai/tasks/drone/update_blackboard_condition.gd" id="2_00hdy"]
@@ -53,6 +53,9 @@ resource_name = "true"
 variable = &"internal_player_repr_is_dead"
 value = SubResource("BBVariant_00hdy")
 
+[sub_resource type="BTCondition" id="BTCondition_00hdy"]
+script = ExtResource("5_rfl0x")
+
 [sub_resource type="BTCondition" id="BTCondition_rl6kx"]
 script = ExtResource("5_rfl0x")
 expected_state = 1
@@ -61,7 +64,7 @@ expected_state = 1
 custom_name = "TRANSITION TO COMBAT"
 
 [sub_resource type="BTSelector" id="BTSelector_0dr0e"]
-children = [SubResource("BTCheckVar_tn3dm"), SubResource("BTCondition_rl6kx"), SubResource("BTFail_ndb6p")]
+children = [SubResource("BTCheckVar_tn3dm"), SubResource("BTCondition_00hdy"), SubResource("BTCondition_rl6kx"), SubResource("BTFail_ndb6p")]
 
 [sub_resource type="BTCondition" id="BTCondition_7vjkh"]
 script = ExtResource("6_dnujx")
