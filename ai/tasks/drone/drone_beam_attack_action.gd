@@ -91,9 +91,9 @@ func custom_tick(delta: float) -> Status:
 		if targeting_delay_time_elapsed > target_switching_delay:
 			match(target):
 				TARGET_PLAYER:
-					drone.set_target(Representations.player_target_marker)
+					drone.set_target(Representations.player_target_marker, true)
 				TARGET_CONTROL_NODE:
-					drone.set_target(Representations.control_node_target_marker)
+					drone.set_target(Representations.control_node_target_marker, true)
 			has_switched_to_real_target = true
 	
 	if not is_vulnerable:
@@ -117,7 +117,7 @@ func custom_tick(delta: float) -> Status:
 			if Representations.player_representation.is_dribbling:
 				if not target_switched_to_control_node:
 					not_dribbling_time_elapsed = 0.0
-					drone.set_target(Representations.control_node_target_marker)
+					drone.set_target(Representations.control_node_target_marker, true)
 					target_switched_to_control_node = true
 			else:
 				not_dribbling_time_elapsed += delta

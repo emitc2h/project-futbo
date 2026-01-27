@@ -73,9 +73,7 @@ func _on_player_long_kick_ready() -> void:
 
 
 func _on_player_requesting_warp() -> void:
-	if (not control_node_physics_states.state == control_node_physics_states.State.WARPING) and \
-		## Warping requires the control node to be ON
-		power_states.state == power_states.State.ON:
+	if (not control_node_physics_states.state == control_node_physics_states.State.WARPING):
 		sc.send_event(charge_states.TRANS_DISCHARGE)
 		sc.send_event(power_states.TRANS_TO_DISCHARGING)
 		physics_states.warp()

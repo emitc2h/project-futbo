@@ -64,6 +64,7 @@ shape = SubResource("WorldBoundaryShape3D_nc4hi")
 
 [node name="Drone" parent="." instance=ExtResource("4_5guql")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+initial_behavior_state = 3
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.9999998, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000001, -2, 1.2, 8)
@@ -318,6 +319,8 @@ shape = SubResource("ConvexPolygonShape3D_tir8y")
 disabled = true
 
 [node name="ParticlesPreloader" parent="." instance=ExtResource("8_5guql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.820052, 0)
+visible = false
 
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/CharacterModeButton" to="." method="_on_character_mode_button_pressed"]
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/RigidModeButton" to="." method="_on_rigid_mode_button_pressed"]

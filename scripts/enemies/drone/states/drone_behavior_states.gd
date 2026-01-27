@@ -5,15 +5,19 @@ extends Node
 @export_group("Dependencies")
 @export var drone: Drone
 @export var sc: StateChart
+@export var cs: CompoundState
 
 @export_group("BTPlayers")
 @export var entrance_btplayer: BTPlayer
 @export var idle_btplayer: BTPlayer
 @export var combat_bt_player: BTPlayer
 
+@export_group("State Mapping")
+@export var state_map: Dictionary[State, StateChartState]
+
 ## States Enum
 enum State {ENTRANCE = 0, IDLE = 1, COMBAT = 2, DISABLED = 3}
-var state: State = State.ENTRANCE
+var state: State = State.DISABLED
 
 ## State transition constants
 const TRANS_TO_ENTRANCE: String = "Behavior: to entrance"
@@ -72,6 +76,10 @@ func _on_combat_behavior_tree_finished(status: int) -> void:
 ##########################################
 ## CONTROLS                            ##
 ##########################################
+func set_initial_state(new_initial_state: State) -> void:
+	cs._initial_state = state_map[new_initial_state]
+
+
 func enable(to_state: State = State.ENTRANCE) -> void:
 	match(to_state):
 		State.ENTRANCE:

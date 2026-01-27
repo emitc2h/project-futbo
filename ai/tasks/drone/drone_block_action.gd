@@ -18,7 +18,6 @@ var is_counting_down_to_open: bool
 var stopped: bool
 var control_node_has_exited: bool
 var in_buffer: bool
-var is_opening: bool
 
 ##########################################
 ## ACTION LOGIC                        ##

@@ -20,7 +20,7 @@ extends Node
 
 ## States Enum
 enum State {DISABLED = 0, NONE = 1, ACQUIRING = 2, ACQUIRED = 3}
-var state: State = State.NONE
+var state: State = State.DISABLED
 
 ## State transition constants
 const TRANS_TO_DISABLED: String = "Targeting: to disabled"
@@ -39,6 +39,7 @@ var target_type: TargetType = TargetType.PLAYER
 
 ## Internal variables
 var target: Node3D
+var target_locked: bool = false
 var range_tween: Tween
 var focus_tween: Tween
 var time_spent_in_acquired_state: float = 0.0
@@ -59,12 +60,14 @@ func scan_for_target() -> bool:
 			TargetType.PLAYER:
 				if field_of_view.target.is_in_group("PlayerGroup"):
 					target = field_of_view.target.target_marker
+					return true
 			TargetType.CONTROL_NODE:
 				if field_of_view.target.is_in_group("ControlNodeGroup"):
 					target = field_of_view.target.target_marker
+					return true
 			TargetType.OTHER:
 				target = field_of_view.target
-		return true
+				return true
 	return false
 
 
@@ -140,7 +143,7 @@ func _on_acquired_state_entered() -> void:
 
 
 func _on_acquired_state_physics_processing(delta: float) -> void:
-	if not scan_for_target():
+	if not scan_for_target() and not target_locked:
 		sc.send_event(TRANS_TO_ACQUIRING)
 	else:
 		## Compute where the target is, and the angle needed to look down at it
