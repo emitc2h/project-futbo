@@ -1,16 +1,52 @@
-[gd_scene load_steps=4 format=3 uid="uid://dd3qiywytn0rt"]
+[gd_scene format=3 uid="uid://dd3qiywytn0rt"]
 
-[ext_resource type="PackedScene" uid="uid://cmqskx1alufnj" path="res://assets/3D/Enemies/Drone/drone_bolt.glb" id="1_dvdjj"]
-[ext_resource type="Material" uid="uid://bkhlca22tyfnh" path="res://assets/3D/Enemies/Drone/materials/drone_plasma_bolt_material.tres" id="2_14qjs"]
-[ext_resource type="Material" uid="uid://dpspa8chrv1w6" path="res://assets/3D/Enemies/Drone/materials/drone_plasma_bolt_impact_material.tres" id="3_cfndj"]
+[ext_resource type="PackedScene" uid="uid://cmqskx1alufnj" path="res://assets/deprecated/3D/Enemies/Drone/drone_bolt.glb" id="1_dvdjj"]
+[ext_resource type="Shader" uid="uid://duoq662dp7lb5" path="res://shaders/Drone/closed_shield.gdshader" id="2_gsvhp"]
+[ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/deprecated/3D/Textures/Drone/closed_shield_dissolve.png" id="3_4ww7w"]
+[ext_resource type="Texture2D" uid="uid://dsa17hpsw1427" path="res://assets/deprecated/3D/Textures/Drone/firebeam.png" id="4_ynq10"]
+[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/krita/assets/enemies/shared/closed_shield_alpha_mask.png" id="5_mlvcm"]
 
-[node name="DronePlasmaBoltModel" instance=ExtResource("1_dvdjj")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gsvhp"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_gsvhp")
+shader_parameter/texture_albedo = ExtResource("4_ynq10")
+shader_parameter/albedo_uv_drift = 1.0
+shader_parameter/texture_alpha_mask = ExtResource("5_mlvcm")
+shader_parameter/alpha = 1.0
+shader_parameter/emission_energy = 100.0
+shader_parameter/dissolve_texture = ExtResource("3_4ww7w")
+shader_parameter/dissolve_value_in = 1.0
+shader_parameter/dissolve_value_out = 1.0
+shader_parameter/dissolve_uv_drift = 0.1
+shader_parameter/burn_size = 0.08
+shader_parameter/burn_color = Color(0.87386, 0.546692, 0.986915, 1)
+shader_parameter/burn_boost = 0.0
 
-[node name="bolt" parent="." index="0"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ww7w"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_gsvhp")
+shader_parameter/texture_albedo = ExtResource("4_ynq10")
+shader_parameter/albedo_uv_drift = 0.2
+shader_parameter/texture_alpha_mask = ExtResource("5_mlvcm")
+shader_parameter/alpha = 1.0
+shader_parameter/emission_energy = 1.0
+shader_parameter/dissolve_texture = ExtResource("3_4ww7w")
+shader_parameter/dissolve_value_in = 0.0
+shader_parameter/dissolve_value_out = 1.0
+shader_parameter/dissolve_uv_drift = 0.074
+shader_parameter/burn_size = 0.08
+shader_parameter/burn_color = Color(1, 0.259331, 0.638968, 1)
+shader_parameter/burn_boost = 100.0
+
+[node name="DronePlasmaBoltModel" unique_id=33693103 instance=ExtResource("1_dvdjj")]
+
+[node name="bolt" parent="." index="0" unique_id=181965497]
 visible = false
 layers = 16
-surface_material_override/0 = ExtResource("2_14qjs")
+surface_material_override/0 = SubResource("ShaderMaterial_gsvhp")
 
-[node name="impact" parent="." index="1"]
+[node name="impact" parent="." index="1" unique_id=1034512563]
 layers = 16
-surface_material_override/0 = ExtResource("3_cfndj")
+surface_material_override/0 = SubResource("ShaderMaterial_4ww7w")

@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7jyrasyrhgca"]
+[gd_scene format=3 uid="uid://b7jyrasyrhgca"]
 
 [ext_resource type="Script" uid="uid://d0trq3q7wbcln" path="res://scripts/skybox/cloud_treadmill.gd" id="1_4rjl7"]
 
-[node name="CloudTreadmill" type="Node3D"]
+[node name="CloudTreadmill" type="Node3D" unique_id=1298202966]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15.7493)
 script = ExtResource("1_4rjl7")
 length = 10.0

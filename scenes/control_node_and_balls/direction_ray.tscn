@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://caxwuwjjre3j2"]
+[gd_scene format=3 uid="uid://caxwuwjjre3j2"]
 
 [ext_resource type="Script" uid="uid://cvp18nk1u5oc6" path="res://scripts/control_node_and_balls/direction_ray.gd" id="2_f10p2"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_7ii86"]
@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_5mqmn"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_hr8f4"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_08vb0"]
-[ext_resource type="Texture2D" uid="uid://b4is3s6ydyd8y" path="res://assets/3D/Particles/streak/streak_64x64.png" id="7_v4urv"]
+[ext_resource type="Texture2D" uid="uid://b4is3s6ydyd8y" path="res://assets/deprecated/3D/Particles/streak/streak_64x64.png" id="7_v4urv"]
 
 [sub_resource type="Gradient" id="Gradient_v4urv"]
 offsets = PackedFloat32Array(0, 0.137168, 0.373894, 0.723451, 1)
@@ -54,70 +54,70 @@ billboard_keep_scale = true
 material = SubResource("StandardMaterial3D_55bw7")
 size = Vector2(0.1, 0.4)
 
-[node name="DirectionRay" type="Node3D"]
+[node name="DirectionRay" type="Node3D" unique_id=364490012]
 script = ExtResource("2_f10p2")
 
-[node name="State" type="Node" parent="."]
+[node name="State" type="Node" parent="." unique_id=1606031371]
 script = ExtResource("3_7ii86")
 
-[node name="ParallelState" type="Node" parent="State"]
+[node name="ParallelState" type="Node" parent="State" unique_id=1050753837]
 script = ExtResource("3_xhkeq")
 metadata/_custom_type_script = "uid://duu2hhmogs378"
 
-[node name="Pointing" type="Node" parent="State/ParallelState"]
+[node name="Pointing" type="Node" parent="State/ParallelState" unique_id=833287924]
 script = ExtResource("4_5mqmn")
 initial_state = NodePath("idle")
 
-[node name="idle" type="Node" parent="State/ParallelState/Pointing"]
+[node name="idle" type="Node" parent="State/ParallelState/Pointing" unique_id=325013285]
 script = ExtResource("5_hr8f4")
 
-[node name="to pointing" type="Node" parent="State/ParallelState/Pointing/idle"]
+[node name="to pointing" type="Node" parent="State/ParallelState/Pointing/idle" unique_id=1409855990]
 script = ExtResource("6_08vb0")
 to = NodePath("../../pointing")
 event = &"idle to pointing"
 delay_in_seconds = "0.0"
 
-[node name="pointing" type="Node" parent="State/ParallelState/Pointing"]
+[node name="pointing" type="Node" parent="State/ParallelState/Pointing" unique_id=2048356042]
 script = ExtResource("5_hr8f4")
 
-[node name="to idle" type="Node" parent="State/ParallelState/Pointing/pointing"]
+[node name="to idle" type="Node" parent="State/ParallelState/Pointing/pointing" unique_id=408312062]
 script = ExtResource("6_08vb0")
 to = NodePath("../../idle")
 event = &"pointing to idle"
 delay_in_seconds = "0.0"
 
-[node name="Power" type="Node" parent="State/ParallelState"]
+[node name="Power" type="Node" parent="State/ParallelState" unique_id=1461378775]
 script = ExtResource("4_5mqmn")
 initial_state = NodePath("off")
 
-[node name="off" type="Node" parent="State/ParallelState/Power"]
+[node name="off" type="Node" parent="State/ParallelState/Power" unique_id=1127605679]
 script = ExtResource("5_hr8f4")
 
-[node name="charge" type="Node" parent="State/ParallelState/Power/off"]
+[node name="charge" type="Node" parent="State/ParallelState/Power/off" unique_id=1480741988]
 script = ExtResource("6_08vb0")
 to = NodePath("../../charging")
 event = &"charge"
 delay_in_seconds = "0.0"
 
-[node name="charging" type="Node" parent="State/ParallelState/Power"]
+[node name="charging" type="Node" parent="State/ParallelState/Power" unique_id=426246487]
 script = ExtResource("5_hr8f4")
 
-[node name="turn on" type="Node" parent="State/ParallelState/Power/charging"]
+[node name="turn on" type="Node" parent="State/ParallelState/Power/charging" unique_id=2004213804]
 script = ExtResource("6_08vb0")
 to = NodePath("../../on")
 event = &"turn on"
 delay_in_seconds = "0.0"
 
-[node name="on" type="Node" parent="State/ParallelState/Power"]
+[node name="on" type="Node" parent="State/ParallelState/Power" unique_id=1990688050]
 script = ExtResource("5_hr8f4")
 
-[node name="turn off" type="Node" parent="State/ParallelState/Power/on"]
+[node name="turn off" type="Node" parent="State/ParallelState/Power/on" unique_id=1621640737]
 script = ExtResource("6_08vb0")
 to = NodePath("../../off")
 event = &"turn off"
 delay_in_seconds = "0.0"
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=563093037]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.124639, 0)
 amount = 150
 lifetime = 1.2

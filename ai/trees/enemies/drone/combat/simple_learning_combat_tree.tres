@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=21 format=3 uid="uid://duqvkmp4313nm"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://duqvkmp4313nm"]
 
 [ext_resource type="Script" uid="uid://dhngbs7qm6328" path="res://ai/tasks/drone/is_object_in_proximity_zone_condition.gd" id="1_3ite6"]
 [ext_resource type="Script" uid="uid://cu1bkrkshc51d" path="res://ai/tasks/drone/update_blackboard_condition.gd" id="1_ru2qc"]

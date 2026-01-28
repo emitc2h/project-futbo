@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c48018po2qqbq"]
+[gd_scene format=3 uid="uid://c48018po2qqbq"]
 
 [ext_resource type="Script" uid="uid://dfiegwgjsgyeu" path="res://scripts/characters/character_asset_base.gd" id="1_u4gyo"]
 [ext_resource type="Script" uid="uid://r4dihe2vx3dk" path="res://scripts/utilities/animation_tree/animation_state_change_tracker.gd" id="2_ihynb"]
@@ -79,10 +79,10 @@ states/movement/position = Vector2(540.25, 101)
 transitions = ["Start", "movement", SubResource("AnimationNodeStateMachineTransition_tglvg"), "movement", "knocked", SubResource("AnimationNodeStateMachineTransition_guecj"), "knocked", "movement", SubResource("AnimationNodeStateMachineTransition_8cbqy"), "movement", "kick", SubResource("AnimationNodeStateMachineTransition_tf4ta"), "kick", "movement", SubResource("AnimationNodeStateMachineTransition_0csby"), "movement", "long kick", SubResource("AnimationNodeStateMachineTransition_qfdgm"), "long kick", "movement", SubResource("AnimationNodeStateMachineTransition_7ujmj")]
 graph_offset = Vector2(-312.1453, -178.58502)
 
-[node name="CharacterAssetBase" type="Node3D"]
+[node name="CharacterAssetBase" type="Node3D" unique_id=1530518572]
 script = ExtResource("1_u4gyo")
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1574312553]
 root_motion_track = NodePath("Armature/Skeleton3D:Root")
 callback_mode_process = 0
 tree_root = SubResource("AnimationNodeStateMachine_cexac")
@@ -106,12 +106,12 @@ parameters/movement/move/recover/TimeScale/scale = 1.0
 parameters/movement/move/sprint/scale/scale = 1.0
 parameters/movement/turn/scale/scale = 1.0
 
-[node name="MovementStateChangeTracker" type="Node" parent="AnimationTree"]
+[node name="MovementStateChangeTracker" type="Node" parent="AnimationTree" unique_id=1295944280]
 script = ExtResource("2_ihynb")
 state_machine_path = "parameters/movement/playback"
 metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 
-[node name="KnockedStateChangeTracker" type="Node" parent="AnimationTree"]
+[node name="KnockedStateChangeTracker" type="Node" parent="AnimationTree" unique_id=838106220]
 script = ExtResource("2_ihynb")
 state_machine_path = "parameters/knocked/playback"
 metadata/_custom_type_script = "uid://r4dihe2vx3dk"

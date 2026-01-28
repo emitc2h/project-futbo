@@ -1,12 +1,32 @@
-[gd_scene load_steps=19 format=3 uid="uid://bb06yvpaxg85c"]
+[gd_scene format=3 uid="uid://bb06yvpaxg85c"]
 
-[ext_resource type="PackedScene" uid="uid://vs8nfy8j12d8" path="res://assets/3D/Enemies/Drone/drone_dive_impact_shockwave.glb" id="1_v5xiw"]
+[ext_resource type="PackedScene" uid="uid://vs8nfy8j12d8" path="res://assets/deprecated/3D/Enemies/Drone/drone_dive_impact_shockwave.glb" id="1_v5xiw"]
 [ext_resource type="Script" uid="uid://c58hhi4lia3w" path="res://scripts/enemies/drone/drone_dive_impact.gd" id="2_bvfu7"]
-[ext_resource type="Material" uid="uid://br5ojrodx245g" path="res://assets/3D/Enemies/Drone/materials/shield_material.tres" id="3_5ncvi"]
-[ext_resource type="Texture2D" uid="uid://cxd6hv2slvcv6" path="res://assets/3D/Particles/dust/dust_color.png" id="3_r8wtf"]
-[ext_resource type="Texture2D" uid="uid://bxkwkkirfpcy8" path="res://assets/3D/Particles/dust/dust_fuzzy_color.png" id="4_cr5lp"]
-[ext_resource type="Texture2D" uid="uid://k7jwo1rrexr6" path="res://assets/3D/Enemies/Drone/Impact/impact_color.png" id="5_d8ay8"]
-[ext_resource type="Texture2D" uid="uid://1rqi1ej4l713" path="res://assets/3D/Enemies/Drone/Impact/impact_normal.png" id="6_enfmf"]
+[ext_resource type="Shader" uid="uid://duoq662dp7lb5" path="res://shaders/Drone/closed_shield.gdshader" id="3_jsym6"]
+[ext_resource type="Texture2D" uid="uid://cxd6hv2slvcv6" path="res://assets/deprecated/3D/Particles/dust/dust_color.png" id="3_r8wtf"]
+[ext_resource type="Texture2D" uid="uid://bxkwkkirfpcy8" path="res://assets/deprecated/3D/Particles/dust/dust_fuzzy_color.png" id="4_cr5lp"]
+[ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/deprecated/3D/Textures/Drone/closed_shield_dissolve.png" id="4_ef0gb"]
+[ext_resource type="Texture2D" uid="uid://b64qyuxss5jvu" path="res://assets/deprecated/3D/Textures/Drone/closed_shield_color.png" id="5_32ba7"]
+[ext_resource type="Texture2D" uid="uid://k7jwo1rrexr6" path="res://assets/deprecated/3D/Enemies/Drone/Impact/impact_color.png" id="5_d8ay8"]
+[ext_resource type="Texture2D" uid="uid://1rqi1ej4l713" path="res://assets/deprecated/3D/Enemies/Drone/Impact/impact_normal.png" id="6_enfmf"]
+[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/krita/assets/enemies/shared/closed_shield_alpha_mask.png" id="6_rdkdd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jsym6"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("3_jsym6")
+shader_parameter/texture_albedo = ExtResource("5_32ba7")
+shader_parameter/albedo_uv_drift = 0.2
+shader_parameter/texture_alpha_mask = ExtResource("6_rdkdd")
+shader_parameter/alpha = 1.0
+shader_parameter/emission_energy = 20.0
+shader_parameter/dissolve_texture = ExtResource("4_ef0gb")
+shader_parameter/dissolve_value_in = 1.0
+shader_parameter/dissolve_value_out = 1.0
+shader_parameter/dissolve_uv_drift = 0.10000000475
+shader_parameter/burn_size = 0.0499999988824
+shader_parameter/burn_color = Color(0.87386, 0.546692, 0.986915, 1)
+shader_parameter/burn_boost = 10.0000004275
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_upo3n"]
 direction = Vector3(0, 1.4, 0)
@@ -81,15 +101,15 @@ size = Vector2(2, 2)
 radius = 0.2
 height = 0.7
 
-[node name="DroneDiveImpact" instance=ExtResource("1_v5xiw")]
+[node name="DroneDiveImpact" unique_id=1556963520 instance=ExtResource("1_v5xiw")]
 script = ExtResource("2_bvfu7")
 
-[node name="Shockwave" parent="." index="0"]
+[node name="Shockwave" parent="." index="0" unique_id=88469577]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
 layers = 16
-surface_material_override/0 = ExtResource("3_5ncvi")
+surface_material_override/0 = SubResource("ShaderMaterial_jsym6")
 
-[node name="DustParticles" type="GPUParticles3D" parent="." index="1"]
+[node name="DustParticles" type="GPUParticles3D" parent="." index="1" unique_id=1934438450]
 layers = 2
 amount = 120
 lifetime = 3.0
@@ -97,7 +117,7 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_upo3n")
 draw_pass_1 = SubResource("QuadMesh_c45ri")
 
-[node name="FuzzyParticles" type="GPUParticles3D" parent="." index="2"]
+[node name="FuzzyParticles" type="GPUParticles3D" parent="." index="2" unique_id=1805787652]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3080349, 0)
 layers = 2
 amount = 80
@@ -107,7 +127,7 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_dm7nj")
 draw_pass_1 = SubResource("QuadMesh_wq5a5")
 
-[node name="CraterDecal" type="Decal" parent="." index="3"]
+[node name="CraterDecal" type="Decal" parent="." index="3" unique_id=1247196457]
 size = Vector3(4.5, 0.2, 4.5)
 texture_albedo = ExtResource("5_d8ay8")
 texture_normal = ExtResource("6_enfmf")
@@ -115,20 +135,20 @@ upper_fade = 0.1
 lower_fade = 0.1
 cull_mask = 1
 
-[node name="HitBoxLeft" type="Area3D" parent="." index="4"]
+[node name="HitBoxLeft" type="Area3D" parent="." index="4" unique_id=108717252]
 transform = Transform3D(0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 0, 0, 1, 0, 0.35, 0)
 collision_layer = 2048
 collision_mask = 5
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBoxLeft" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBoxLeft" index="0" unique_id=1466190291]
 shape = SubResource("CapsuleShape3D_5ncvi")
 
-[node name="HitBoxRight" type="Area3D" parent="." index="5"]
+[node name="HitBoxRight" type="Area3D" parent="." index="5" unique_id=1365280231]
 transform = Transform3D(0.9659258, -0.25881904, 0, 0.25881904, 0.9659258, 0, 0, 0, 1, 0, 0.35, 0)
 collision_layer = 2048
 collision_mask = 5
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBoxRight" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBoxRight" index="0" unique_id=1248404495]
 shape = SubResource("CapsuleShape3D_5ncvi")
 
 [connection signal="body_entered" from="HitBoxLeft" to="." method="_on_hit_box_left_body_entered"]

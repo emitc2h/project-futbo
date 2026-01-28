@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dr3wkl0fgpbyw"]
+[gd_scene format=3 uid="uid://dr3wkl0fgpbyw"]
 
-[ext_resource type="PackedScene" uid="uid://npwj3b44pls6" path="res://assets/3D/ControlNode/ReadySphere.glb" id="1_d0wl0"]
+[ext_resource type="PackedScene" uid="uid://npwj3b44pls6" path="res://assets/deprecated/3D/ControlNode/ReadySphere.glb" id="1_d0wl0"]
 [ext_resource type="Script" uid="uid://bgaif4h5yg136" path="res://scripts/control_node_and_balls/asset/control_node_ready_sphere.gd" id="2_1o84y"]
-[ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/3D/Textures/Drone/closed_shield_dissolve.png" id="3_1o84y"]
+[ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/deprecated/3D/Textures/Drone/closed_shield_dissolve.png" id="3_1o84y"]
 [ext_resource type="Shader" uid="uid://3df3duark3k0" path="res://shaders/ControlNode/control_node_ready_sphere_shader.gdshader" id="3_8mhpn"]
-[ext_resource type="Texture2D" uid="uid://brweuwinhq7aa" path="res://assets/3D/ControlNode/streak/streak.png" id="4_8mhpn"]
-[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/3D/Characters/Character1.1/closed_shield_alpha_mask.png" id="5_1iaf2"]
+[ext_resource type="Texture2D" uid="uid://brweuwinhq7aa" path="res://assets/deprecated/3D/ControlNode/streak/streak.png" id="4_8mhpn"]
+[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/krita/assets/enemies/shared/closed_shield_alpha_mask.png" id="5_1iaf2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jap3d"]
 render_priority = 0
@@ -22,8 +22,8 @@ shader_parameter/burn_size = 0.08
 shader_parameter/burn_color = Color(1, 0.432344, 0.717951, 1)
 shader_parameter/burn_boost = 50.0
 
-[node name="ControlNodeReadySphere" instance=ExtResource("1_d0wl0")]
+[node name="ControlNodeReadySphere" unique_id=435315283 instance=ExtResource("1_d0wl0")]
 script = ExtResource("2_1o84y")
 
-[node name="ReadySphere" parent="." index="0"]
+[node name="ReadySphere" parent="." index="0" unique_id=129448312]
 surface_material_override/0 = SubResource("ShaderMaterial_jap3d")

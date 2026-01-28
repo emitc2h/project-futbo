@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bc323ftwy8i7t"]
+[gd_scene format=3 uid="uid://bc323ftwy8i7t"]
 
 [ext_resource type="Script" uid="uid://c0styc2pdsglo" path="res://scripts/enemies/drone/drone.gd" id="1_irn00"]
 [ext_resource type="BehaviorTree" uid="uid://b2fm1v4kdrbwy" path="res://ai/trees/enemies/drone/idle/patrol_idle_tree.tres" id="2_6ft1p"]
@@ -24,7 +24,7 @@
 [ext_resource type="Script" uid="uid://duil801h283hr" path="res://scripts/enemies/drone/states/drone_behavior_states.gd" id="18_j5bu2"]
 [ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/utilities/behavior_tree/behavior_manager.gd" id="19_4dmr7"]
 [ext_resource type="PackedScene" uid="uid://qcbmkep1csam" path="res://scenes/enemies/drone/drone_shield.tscn" id="27_fv7v3"]
-[ext_resource type="Material" uid="uid://h1qmrtj6hri8" path="res://assets/3D/Materials/character_jump_distortion_shader_material.tres" id="34_6t6rp"]
+[ext_resource type="Material" uid="uid://h1qmrtj6hri8" path="res://assets/deprecated/3D/Materials/character_jump_distortion_shader_material.tres" id="34_6t6rp"]
 [ext_resource type="Script" uid="uid://darufwryr50n1" path="res://scripts/enemies/drone/animation/float_distortion_animation.gd" id="38_6t6rp"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_6ft1p"]
@@ -55,7 +55,7 @@ margin = 0.1
 radius = 1.1
 height = 3.2
 
-[node name="Drone" type="Node3D" node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_states") groups=["DroneGroup", "Enemies"]]
+[node name="Drone" type="Node3D" unique_id=123837659 node_paths=PackedStringArray("physics_mode_states", "direction_faced_states", "engagement_mode_states", "engines_states", "spinners_states", "vulnerability_states", "targeting_states", "proximity_states", "position_states", "behavior_states") groups=["DroneGroup", "Enemies"]]
 script = ExtResource("1_irn00")
 physics_mode_states = NodePath("State/Root/Physics/Physics States")
 direction_faced_states = NodePath("State/Root/Direction Faced/Direction Faced States")
@@ -70,514 +70,514 @@ behavior_states = NodePath("State/Root/Behavior/Behavior States")
 idle_behavior_tree = ExtResource("2_6ft1p")
 combat_behavior_tree = ExtResource("3_6ft1p")
 
-[node name="InternalRepresentation" type="Node" parent="." node_paths=PackedStringArray("drone")]
+[node name="InternalRepresentation" type="Node" parent="." unique_id=633839392 node_paths=PackedStringArray("drone")]
 script = ExtResource("2_n6xh2")
 drone = NodePath("..")
 
-[node name="State" type="Node" parent="."]
+[node name="State" type="Node" parent="." unique_id=184806058]
 script = ExtResource("2_g2as1")
 track_in_editor = true
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
-[node name="Root" type="Node" parent="State"]
+[node name="Root" type="Node" parent="State" unique_id=907371086]
 script = ExtResource("3_wmq8b")
 
-[node name="Physics" type="Node" parent="State/Root"]
+[node name="Physics" type="Node" parent="State/Root" unique_id=1609973023]
 script = ExtResource("4_kl701")
 initial_state = NodePath("char")
 
-[node name="Physics States" type="Node" parent="State/Root/Physics" node_paths=PackedStringArray("drone", "sc", "engines_states", "float_cast")]
+[node name="Physics States" type="Node" parent="State/Root/Physics" unique_id=972326007 node_paths=PackedStringArray("drone", "sc", "engines_states", "float_cast")]
 script = ExtResource("5_8nca4")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
 engines_states = NodePath("../../Engines/Engines States")
 float_cast = NodePath("../../../../TrackPositionContainer/FloatCast")
 
-[node name="DeadTimer" type="Timer" parent="State/Root/Physics/Physics States"]
+[node name="DeadTimer" type="Timer" parent="State/Root/Physics/Physics States" unique_id=1649134338]
 wait_time = 10.0
 
-[node name="char" type="Node" parent="State/Root/Physics"]
+[node name="char" type="Node" parent="State/Root/Physics" unique_id=1809075233]
 script = ExtResource("5_voq0c")
 
-[node name="to rigid" type="Node" parent="State/Root/Physics/char"]
+[node name="to rigid" type="Node" parent="State/Root/Physics/char" unique_id=736672624]
 script = ExtResource("6_doilr")
 to = NodePath("../../rigid")
 event = &"Physics Mode: to rigid"
 delay_in_seconds = "0.0"
 
-[node name="to ragdoll" type="Node" parent="State/Root/Physics/char"]
+[node name="to ragdoll" type="Node" parent="State/Root/Physics/char" unique_id=964665003]
 script = ExtResource("6_doilr")
 to = NodePath("../../ragdoll")
 event = &"Physics Mode: to ragdoll"
 delay_in_seconds = "0.0"
 
-[node name="rigid" type="Node" parent="State/Root/Physics"]
+[node name="rigid" type="Node" parent="State/Root/Physics" unique_id=176317706]
 script = ExtResource("5_voq0c")
 
-[node name="to char" type="Node" parent="State/Root/Physics/rigid"]
+[node name="to char" type="Node" parent="State/Root/Physics/rigid" unique_id=1087094099]
 script = ExtResource("6_doilr")
 to = NodePath("../../char")
 event = &"Physics Mode: to char"
 delay_in_seconds = "0.0"
 
-[node name="ragdoll" type="Node" parent="State/Root/Physics"]
+[node name="ragdoll" type="Node" parent="State/Root/Physics" unique_id=1017602521]
 script = ExtResource("5_voq0c")
 
-[node name="to dead" type="Node" parent="State/Root/Physics/ragdoll"]
+[node name="to dead" type="Node" parent="State/Root/Physics/ragdoll" unique_id=1185302942]
 script = ExtResource("6_doilr")
 to = NodePath("../../dead")
 event = &"Physics Mode: to dead"
 delay_in_seconds = "0.0"
 
-[node name="dead" type="Node" parent="State/Root/Physics"]
+[node name="dead" type="Node" parent="State/Root/Physics" unique_id=1160156626]
 script = ExtResource("5_voq0c")
 
-[node name="Direction Faced" type="Node" parent="State/Root"]
+[node name="Direction Faced" type="Node" parent="State/Root" unique_id=1062284684]
 script = ExtResource("4_kl701")
 initial_state = NodePath("face right")
 
-[node name="Direction Faced States" type="Node" parent="State/Root/Direction Faced" node_paths=PackedStringArray("drone", "sc")]
+[node name="Direction Faced States" type="Node" parent="State/Root/Direction Faced" unique_id=350480643 node_paths=PackedStringArray("drone", "sc")]
 script = ExtResource("6_nn3ap")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
 
-[node name="JerkTimer" type="Timer" parent="State/Root/Direction Faced/Direction Faced States"]
+[node name="JerkTimer" type="Timer" parent="State/Root/Direction Faced/Direction Faced States" unique_id=372688609]
 
-[node name="face right" type="Node" parent="State/Root/Direction Faced"]
+[node name="face right" type="Node" parent="State/Root/Direction Faced" unique_id=714480713]
 script = ExtResource("5_voq0c")
 
-[node name="to turn left" type="Node" parent="State/Root/Direction Faced/face right"]
+[node name="to turn left" type="Node" parent="State/Root/Direction Faced/face right" unique_id=2073789882]
 script = ExtResource("6_doilr")
 to = NodePath("../../turn left")
 event = &"Direction Faced: to turn left"
 delay_in_seconds = "0.0"
 
-[node name="face left" type="Node" parent="State/Root/Direction Faced"]
+[node name="face left" type="Node" parent="State/Root/Direction Faced" unique_id=1462338579]
 script = ExtResource("5_voq0c")
 
-[node name="to turn right" type="Node" parent="State/Root/Direction Faced/face left"]
+[node name="to turn right" type="Node" parent="State/Root/Direction Faced/face left" unique_id=608434169]
 script = ExtResource("6_doilr")
 to = NodePath("../../turn right")
 event = &"Direction Faced: to turn right"
 delay_in_seconds = "0.0"
 
-[node name="turn right" type="Node" parent="State/Root/Direction Faced"]
+[node name="turn right" type="Node" parent="State/Root/Direction Faced" unique_id=1644881844]
 script = ExtResource("5_voq0c")
 
-[node name="to face right" type="Node" parent="State/Root/Direction Faced/turn right"]
+[node name="to face right" type="Node" parent="State/Root/Direction Faced/turn right" unique_id=1984268642]
 script = ExtResource("6_doilr")
 to = NodePath("../../face right")
 event = &"Direction Faced: to face right"
 delay_in_seconds = "0.0"
 
-[node name="to turn left" type="Node" parent="State/Root/Direction Faced/turn right"]
+[node name="to turn left" type="Node" parent="State/Root/Direction Faced/turn right" unique_id=209378850]
 script = ExtResource("6_doilr")
 to = NodePath("../../turn left")
 event = &"Direction Faced: to turn left"
 delay_in_seconds = "0.0"
 
-[node name="turn left" type="Node" parent="State/Root/Direction Faced"]
+[node name="turn left" type="Node" parent="State/Root/Direction Faced" unique_id=886725391]
 script = ExtResource("5_voq0c")
 
-[node name="to face left" type="Node" parent="State/Root/Direction Faced/turn left"]
+[node name="to face left" type="Node" parent="State/Root/Direction Faced/turn left" unique_id=339998857]
 script = ExtResource("6_doilr")
 to = NodePath("../../face left")
 event = &"Direction Faced: to face left"
 delay_in_seconds = "0.0"
 
-[node name="to turn right" type="Node" parent="State/Root/Direction Faced/turn left"]
+[node name="to turn right" type="Node" parent="State/Root/Direction Faced/turn left" unique_id=1414028265]
 script = ExtResource("6_doilr")
 to = NodePath("../../turn right")
 event = &"Direction Faced: to turn right"
 delay_in_seconds = "0.0"
 
-[node name="Engagement Mode" type="Node" parent="State/Root"]
+[node name="Engagement Mode" type="Node" parent="State/Root" unique_id=1459114608]
 script = ExtResource("4_kl701")
 initial_state = NodePath("closed")
 
-[node name="Engagement Mode States" type="Node" parent="State/Root/Engagement Mode" node_paths=PackedStringArray("drone", "sc", "targeting_states", "engines_states")]
+[node name="Engagement Mode States" type="Node" parent="State/Root/Engagement Mode" unique_id=1261036862 node_paths=PackedStringArray("drone", "sc", "targeting_states", "engines_states")]
 script = ExtResource("9_3x3q1")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
 targeting_states = NodePath("../../Monitoring/Targeting/Targeting States")
 engines_states = NodePath("../../Engines/Engines States")
 
-[node name="closed" type="Node" parent="State/Root/Engagement Mode"]
+[node name="closed" type="Node" parent="State/Root/Engagement Mode" unique_id=355456594]
 script = ExtResource("5_voq0c")
 
-[node name="to opening" type="Node" parent="State/Root/Engagement Mode/closed"]
+[node name="to opening" type="Node" parent="State/Root/Engagement Mode/closed" unique_id=1159816993]
 script = ExtResource("6_doilr")
 to = NodePath("../../opening")
 event = &"Engagement Mode: to opening"
 delay_in_seconds = "0.0"
 
-[node name="opening" type="Node" parent="State/Root/Engagement Mode"]
+[node name="opening" type="Node" parent="State/Root/Engagement Mode" unique_id=543211980]
 script = ExtResource("5_voq0c")
 
-[node name="to open" type="Node" parent="State/Root/Engagement Mode/opening"]
+[node name="to open" type="Node" parent="State/Root/Engagement Mode/opening" unique_id=1467915150]
 script = ExtResource("6_doilr")
 to = NodePath("../../open")
 event = &"Engagement Mode: to open"
 delay_in_seconds = "0.0"
 
-[node name="to quick close" type="Node" parent="State/Root/Engagement Mode/opening"]
+[node name="to quick close" type="Node" parent="State/Root/Engagement Mode/opening" unique_id=1204460026]
 script = ExtResource("6_doilr")
 to = NodePath("../../quick close")
 event = &"Engagement Mode: to quick close"
 delay_in_seconds = "0.0"
 
-[node name="to closing" type="Node" parent="State/Root/Engagement Mode/opening"]
+[node name="to closing" type="Node" parent="State/Root/Engagement Mode/opening" unique_id=506351727]
 script = ExtResource("6_doilr")
 to = NodePath("../../closing")
 event = &"Engagement Mode: to closing"
 delay_in_seconds = "0.0"
 
-[node name="open" type="Node" parent="State/Root/Engagement Mode"]
+[node name="open" type="Node" parent="State/Root/Engagement Mode" unique_id=144831784]
 script = ExtResource("5_voq0c")
 
-[node name="to closing" type="Node" parent="State/Root/Engagement Mode/open"]
+[node name="to closing" type="Node" parent="State/Root/Engagement Mode/open" unique_id=1571946725]
 script = ExtResource("6_doilr")
 to = NodePath("../../closing")
 event = &"Engagement Mode: to closing"
 delay_in_seconds = "0.0"
 
-[node name="to quick close" type="Node" parent="State/Root/Engagement Mode/open"]
+[node name="to quick close" type="Node" parent="State/Root/Engagement Mode/open" unique_id=520674039]
 script = ExtResource("6_doilr")
 to = NodePath("../../quick close")
 event = &"Engagement Mode: to quick close"
 delay_in_seconds = "0.0"
 
-[node name="closing" type="Node" parent="State/Root/Engagement Mode"]
+[node name="closing" type="Node" parent="State/Root/Engagement Mode" unique_id=806050418]
 script = ExtResource("5_voq0c")
 
-[node name="to closed" type="Node" parent="State/Root/Engagement Mode/closing"]
+[node name="to closed" type="Node" parent="State/Root/Engagement Mode/closing" unique_id=1272699414]
 script = ExtResource("6_doilr")
 to = NodePath("../../closed")
 event = &"Engagement Mode: to closed"
 delay_in_seconds = "0.0"
 
-[node name="to quick close" type="Node" parent="State/Root/Engagement Mode/closing"]
+[node name="to quick close" type="Node" parent="State/Root/Engagement Mode/closing" unique_id=1828813324]
 script = ExtResource("6_doilr")
 to = NodePath("../../quick close")
 event = &"Engagement Mode: to quick close"
 delay_in_seconds = "0.0"
 
-[node name="to opening" type="Node" parent="State/Root/Engagement Mode/closing"]
+[node name="to opening" type="Node" parent="State/Root/Engagement Mode/closing" unique_id=162343482]
 script = ExtResource("6_doilr")
 to = NodePath("../../opening")
 event = &"Engagement Mode: to opening"
 delay_in_seconds = "0.0"
 
-[node name="quick close" type="Node" parent="State/Root/Engagement Mode"]
+[node name="quick close" type="Node" parent="State/Root/Engagement Mode" unique_id=393733087]
 script = ExtResource("5_voq0c")
 
-[node name="to closed" type="Node" parent="State/Root/Engagement Mode/quick close"]
+[node name="to closed" type="Node" parent="State/Root/Engagement Mode/quick close" unique_id=1889535114]
 script = ExtResource("6_doilr")
 to = NodePath("../../closed")
 event = &"Engagement Mode: to closed"
 delay_in_seconds = "0.0"
 
-[node name="Engines" type="Node" parent="State/Root"]
+[node name="Engines" type="Node" parent="State/Root" unique_id=2133957119]
 script = ExtResource("4_kl701")
 initial_state = NodePath("off")
 
-[node name="Engines States" type="Node" parent="State/Root/Engines" node_paths=PackedStringArray("drone", "sc", "model")]
+[node name="Engines States" type="Node" parent="State/Root/Engines" unique_id=341288964 node_paths=PackedStringArray("drone", "sc", "model")]
 script = ExtResource("10_g2as1")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
 model = NodePath("../../../../TrackTransformContainer/DroneModel")
 
-[node name="off" type="Node" parent="State/Root/Engines"]
+[node name="off" type="Node" parent="State/Root/Engines" unique_id=1379965316]
 script = ExtResource("5_voq0c")
 
-[node name="to thrust" type="Node" parent="State/Root/Engines/off"]
+[node name="to thrust" type="Node" parent="State/Root/Engines/off" unique_id=1635881457]
 script = ExtResource("6_doilr")
 to = NodePath("../../thrust")
 event = &"Engines: to thrust"
 delay_in_seconds = "0.0"
 
-[node name="to burst" type="Node" parent="State/Root/Engines/off"]
+[node name="to burst" type="Node" parent="State/Root/Engines/off" unique_id=939980315]
 script = ExtResource("6_doilr")
 to = NodePath("../../burst")
 event = &"Engines: to burst"
 delay_in_seconds = "0.0"
 
-[node name="thrust" type="Node" parent="State/Root/Engines"]
+[node name="thrust" type="Node" parent="State/Root/Engines" unique_id=1180078089]
 script = ExtResource("5_voq0c")
 
-[node name="to stopping" type="Node" parent="State/Root/Engines/thrust"]
+[node name="to stopping" type="Node" parent="State/Root/Engines/thrust" unique_id=710455586]
 script = ExtResource("6_doilr")
 to = NodePath("../../stopping")
 event = &"Engines: to stopping"
 delay_in_seconds = "0.0"
 
-[node name="to quick off" type="Node" parent="State/Root/Engines/thrust"]
+[node name="to quick off" type="Node" parent="State/Root/Engines/thrust" unique_id=697828292]
 script = ExtResource("6_doilr")
 to = NodePath("../../off")
 event = &"Engines: to quick off"
 delay_in_seconds = "0.0"
 
-[node name="to burst" type="Node" parent="State/Root/Engines/thrust"]
+[node name="to burst" type="Node" parent="State/Root/Engines/thrust" unique_id=1260638037]
 script = ExtResource("6_doilr")
 to = NodePath("../../burst")
 event = &"Engines: to burst"
 delay_in_seconds = "0.0"
 
-[node name="burst" type="Node" parent="State/Root/Engines"]
+[node name="burst" type="Node" parent="State/Root/Engines" unique_id=1288184171]
 script = ExtResource("5_voq0c")
 
-[node name="to stopping" type="Node" parent="State/Root/Engines/burst"]
+[node name="to stopping" type="Node" parent="State/Root/Engines/burst" unique_id=167168357]
 script = ExtResource("6_doilr")
 to = NodePath("../../stopping")
 event = &"Engines: to stopping"
 delay_in_seconds = "0.0"
 
-[node name="to quick off" type="Node" parent="State/Root/Engines/burst"]
+[node name="to quick off" type="Node" parent="State/Root/Engines/burst" unique_id=1252053445]
 script = ExtResource("6_doilr")
 to = NodePath("../../off")
 event = &"Engines: to quick off"
 delay_in_seconds = "0.0"
 
-[node name="to thrust" type="Node" parent="State/Root/Engines/burst"]
+[node name="to thrust" type="Node" parent="State/Root/Engines/burst" unique_id=833606735]
 script = ExtResource("6_doilr")
 to = NodePath("../../thrust")
 event = &"Engines: to thrust"
 delay_in_seconds = "0.0"
 
-[node name="stopping" type="Node" parent="State/Root/Engines"]
+[node name="stopping" type="Node" parent="State/Root/Engines" unique_id=1224877304]
 script = ExtResource("5_voq0c")
 
-[node name="to off" type="Node" parent="State/Root/Engines/stopping"]
+[node name="to off" type="Node" parent="State/Root/Engines/stopping" unique_id=1789814962]
 script = ExtResource("6_doilr")
 to = NodePath("../../off")
 event = &"Engines: to off"
 delay_in_seconds = "0.0"
 
-[node name="Spinners" type="Node" parent="State/Root"]
+[node name="Spinners" type="Node" parent="State/Root" unique_id=529406952]
 script = ExtResource("4_kl701")
 initial_state = NodePath("off")
 
-[node name="Spinners States" type="Node" parent="State/Root/Spinners" node_paths=PackedStringArray("drone", "sc", "model")]
+[node name="Spinners States" type="Node" parent="State/Root/Spinners" unique_id=849007284 node_paths=PackedStringArray("drone", "sc", "model")]
 script = ExtResource("12_adu0m")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
 model = NodePath("../../../../TrackTransformContainer/DroneModel")
 
-[node name="off" type="Node" parent="State/Root/Spinners"]
+[node name="off" type="Node" parent="State/Root/Spinners" unique_id=1385886924]
 script = ExtResource("5_voq0c")
 
-[node name="to charging" type="Node" parent="State/Root/Spinners/off"]
+[node name="to charging" type="Node" parent="State/Root/Spinners/off" unique_id=1934530209]
 script = ExtResource("6_doilr")
 to = NodePath("../../charging")
 event = &"Spinners: to charging"
 delay_in_seconds = "0.0"
 
-[node name="charging" type="Node" parent="State/Root/Spinners"]
+[node name="charging" type="Node" parent="State/Root/Spinners" unique_id=2011838925]
 script = ExtResource("5_voq0c")
 
-[node name="to fire" type="Node" parent="State/Root/Spinners/charging"]
+[node name="to fire" type="Node" parent="State/Root/Spinners/charging" unique_id=1500813109]
 script = ExtResource("6_doilr")
 to = NodePath("../../fire")
 event = &"Spinners: to fire"
 delay_in_seconds = "0.0"
 
-[node name="to off" type="Node" parent="State/Root/Spinners/charging"]
+[node name="to off" type="Node" parent="State/Root/Spinners/charging" unique_id=977411996]
 script = ExtResource("6_doilr")
 to = NodePath("../../off")
 event = &"Spinners: to off"
 delay_in_seconds = "0.0"
 
-[node name="fire" type="Node" parent="State/Root/Spinners"]
+[node name="fire" type="Node" parent="State/Root/Spinners" unique_id=1761501604]
 script = ExtResource("5_voq0c")
 
-[node name="to off" type="Node" parent="State/Root/Spinners/fire"]
+[node name="to off" type="Node" parent="State/Root/Spinners/fire" unique_id=416282507]
 script = ExtResource("6_doilr")
 to = NodePath("../../off")
 event = &"Spinners: to off"
 delay_in_seconds = "0.0"
 
-[node name="to fire" type="Node" parent="State/Root/Spinners/fire"]
+[node name="to fire" type="Node" parent="State/Root/Spinners/fire" unique_id=1363997338]
 script = ExtResource("6_doilr")
 to = NodePath("..")
 event = &"Spinners: to fire"
 delay_in_seconds = "0.0"
 
-[node name="Vulnerability" type="Node" parent="State/Root"]
+[node name="Vulnerability" type="Node" parent="State/Root" unique_id=1175040738]
 script = ExtResource("4_kl701")
 initial_state = NodePath("defendable")
 
-[node name="Vulnerability States" type="Node" parent="State/Root/Vulnerability" node_paths=PackedStringArray("drone", "sc", "shield")]
+[node name="Vulnerability States" type="Node" parent="State/Root/Vulnerability" unique_id=1341562781 node_paths=PackedStringArray("drone", "sc", "shield")]
 script = ExtResource("12_43bu3")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
 shield = NodePath("../../../../TrackPositionContainer/DroneShield")
 
-[node name="invulnerable" type="Node" parent="State/Root/Vulnerability"]
+[node name="invulnerable" type="Node" parent="State/Root/Vulnerability" unique_id=1180042266]
 script = ExtResource("5_voq0c")
 
-[node name="to defendable" type="Node" parent="State/Root/Vulnerability/invulnerable"]
+[node name="to defendable" type="Node" parent="State/Root/Vulnerability/invulnerable" unique_id=703236621]
 script = ExtResource("6_doilr")
 to = NodePath("../../defendable")
 event = &"Vulnerability: to defendable"
 delay_in_seconds = "0.0"
 
-[node name="to vulnerable" type="Node" parent="State/Root/Vulnerability/invulnerable"]
+[node name="to vulnerable" type="Node" parent="State/Root/Vulnerability/invulnerable" unique_id=1767362869]
 script = ExtResource("6_doilr")
 to = NodePath("../../vulnerable")
 event = &"Vulnerability: to vulnerable"
 delay_in_seconds = "0.0"
 
-[node name="defendable" type="Node" parent="State/Root/Vulnerability"]
+[node name="defendable" type="Node" parent="State/Root/Vulnerability" unique_id=596373695]
 script = ExtResource("5_voq0c")
 
-[node name="to invulnerable" type="Node" parent="State/Root/Vulnerability/defendable"]
+[node name="to invulnerable" type="Node" parent="State/Root/Vulnerability/defendable" unique_id=1727120912]
 script = ExtResource("6_doilr")
 to = NodePath("../../invulnerable")
 event = &"Vulnerability: to invulnerable"
 delay_in_seconds = "0.0"
 
-[node name="to vulnerable" type="Node" parent="State/Root/Vulnerability/defendable"]
+[node name="to vulnerable" type="Node" parent="State/Root/Vulnerability/defendable" unique_id=1703553414]
 script = ExtResource("6_doilr")
 to = NodePath("../../vulnerable")
 event = &"Vulnerability: to vulnerable"
 delay_in_seconds = "0.0"
 
-[node name="vulnerable" type="Node" parent="State/Root/Vulnerability"]
+[node name="vulnerable" type="Node" parent="State/Root/Vulnerability" unique_id=530509300]
 script = ExtResource("5_voq0c")
 
-[node name="to defendable" type="Node" parent="State/Root/Vulnerability/vulnerable"]
+[node name="to defendable" type="Node" parent="State/Root/Vulnerability/vulnerable" unique_id=798994261]
 script = ExtResource("6_doilr")
 to = NodePath("../../defendable")
 event = &"Vulnerability: to defendable"
 delay_in_seconds = "0.0"
 
-[node name="to invulnerable" type="Node" parent="State/Root/Vulnerability/vulnerable"]
+[node name="to invulnerable" type="Node" parent="State/Root/Vulnerability/vulnerable" unique_id=1526237301]
 script = ExtResource("6_doilr")
 to = NodePath("../../invulnerable")
 event = &"Vulnerability: to invulnerable"
 delay_in_seconds = "0.0"
 
-[node name="Monitoring" type="Node" parent="State/Root"]
+[node name="Monitoring" type="Node" parent="State/Root" unique_id=665063762]
 script = ExtResource("3_wmq8b")
 
-[node name="Targeting" type="Node" parent="State/Root/Monitoring"]
+[node name="Targeting" type="Node" parent="State/Root/Monitoring" unique_id=1897967724]
 script = ExtResource("4_kl701")
 initial_state = NodePath("disabled")
 
-[node name="Targeting States" type="Node" parent="State/Root/Monitoring/Targeting" node_paths=PackedStringArray("drone", "sc")]
+[node name="Targeting States" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=170479264 node_paths=PackedStringArray("drone", "sc")]
 script = ExtResource("11_wmq8b")
 drone = NodePath("../../../../..")
 sc = NodePath("../../../..")
 
-[node name="AcquiringTimer" type="Timer" parent="State/Root/Monitoring/Targeting/Targeting States"]
+[node name="AcquiringTimer" type="Timer" parent="State/Root/Monitoring/Targeting/Targeting States" unique_id=1691493614]
 wait_time = 2.0
 
-[node name="disabled" type="Node" parent="State/Root/Monitoring/Targeting"]
+[node name="disabled" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=1153562778]
 script = ExtResource("5_voq0c")
 
-[node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/disabled"]
+[node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/disabled" unique_id=1803048205]
 script = ExtResource("6_doilr")
 to = NodePath("../../none")
 event = &"Targeting: to none"
 delay_in_seconds = "0.0"
 
-[node name="to acquiring" type="Node" parent="State/Root/Monitoring/Targeting/disabled"]
+[node name="to acquiring" type="Node" parent="State/Root/Monitoring/Targeting/disabled" unique_id=230523910]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquiring")
 event = &"Targeting: to acquiring"
 delay_in_seconds = "0.0"
 
-[node name="none" type="Node" parent="State/Root/Monitoring/Targeting"]
+[node name="none" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=709585834]
 script = ExtResource("5_voq0c")
 
-[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/none"]
+[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/none" unique_id=1543464066]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
 event = &"Targeting: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="to acquiring" type="Node" parent="State/Root/Monitoring/Targeting/none"]
+[node name="to acquiring" type="Node" parent="State/Root/Monitoring/Targeting/none" unique_id=204495984]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquiring")
 event = &"Targeting: to acquiring"
 delay_in_seconds = "0.0"
 
-[node name="to acquired" type="Node" parent="State/Root/Monitoring/Targeting/none"]
+[node name="to acquired" type="Node" parent="State/Root/Monitoring/Targeting/none" unique_id=442590764]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquired")
 event = &"Targeting: to acquired"
 delay_in_seconds = "0.0"
 
-[node name="acquiring" type="Node" parent="State/Root/Monitoring/Targeting"]
+[node name="acquiring" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=1493849275]
 script = ExtResource("5_voq0c")
 
-[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/acquiring"]
+[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/acquiring" unique_id=269098052]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
 event = &"Targeting: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/acquiring"]
+[node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/acquiring" unique_id=301123036]
 script = ExtResource("6_doilr")
 to = NodePath("../../none")
 event = &"Targeting: to none"
 delay_in_seconds = "0.0"
 
-[node name="to acquired" type="Node" parent="State/Root/Monitoring/Targeting/acquiring"]
+[node name="to acquired" type="Node" parent="State/Root/Monitoring/Targeting/acquiring" unique_id=1090290402]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquired")
 event = &"Targeting: to acquired"
 delay_in_seconds = "0.0"
 
-[node name="acquired" type="Node" parent="State/Root/Monitoring/Targeting"]
+[node name="acquired" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=2075416047]
 script = ExtResource("5_voq0c")
 
-[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/acquired"]
+[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/acquired" unique_id=1023375508]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
 event = &"Targeting: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="to acquiring" type="Node" parent="State/Root/Monitoring/Targeting/acquired"]
+[node name="to acquiring" type="Node" parent="State/Root/Monitoring/Targeting/acquired" unique_id=1590418671]
 script = ExtResource("6_doilr")
 to = NodePath("../../acquiring")
 event = &"Targeting: to acquiring"
 delay_in_seconds = "0.0"
 
-[node name="Proximity" type="Node" parent="State/Root/Monitoring"]
+[node name="Proximity" type="Node" parent="State/Root/Monitoring" unique_id=1853908658]
 script = ExtResource("4_kl701")
 initial_state = NodePath("enabled")
 
-[node name="Proximity States" type="Node" parent="State/Root/Monitoring/Proximity" node_paths=PackedStringArray("drone", "sc", "proximity_detector", "repr")]
+[node name="Proximity States" type="Node" parent="State/Root/Monitoring/Proximity" unique_id=654528187 node_paths=PackedStringArray("drone", "sc", "proximity_detector", "repr")]
 script = ExtResource("13_43bu3")
 drone = NodePath("../../../../..")
 sc = NodePath("../../../..")
 proximity_detector = NodePath("../../../../../TrackTransformContainer/ProximityDetector")
 repr = NodePath("../../../../../InternalRepresentation")
 
-[node name="disabled" type="Node" parent="State/Root/Monitoring/Proximity"]
+[node name="disabled" type="Node" parent="State/Root/Monitoring/Proximity" unique_id=1819991828]
 script = ExtResource("5_voq0c")
 
-[node name="to enabled" type="Node" parent="State/Root/Monitoring/Proximity/disabled"]
+[node name="to enabled" type="Node" parent="State/Root/Monitoring/Proximity/disabled" unique_id=557299080]
 script = ExtResource("6_doilr")
 to = NodePath("../../enabled")
 event = &"Proximity: to enabled"
 delay_in_seconds = "0.0"
 
-[node name="enabled" type="Node" parent="State/Root/Monitoring/Proximity"]
+[node name="enabled" type="Node" parent="State/Root/Monitoring/Proximity" unique_id=681188495]
 script = ExtResource("5_voq0c")
 
-[node name="to disabled" type="Node" parent="State/Root/Monitoring/Proximity/enabled"]
+[node name="to disabled" type="Node" parent="State/Root/Monitoring/Proximity/enabled" unique_id=2111072319]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
 event = &"Proximity: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="Position" type="Node" parent="State/Root/Monitoring"]
+[node name="Position" type="Node" parent="State/Root/Monitoring" unique_id=1659173967]
 script = ExtResource("4_kl701")
 initial_state = NodePath("between patrol markers")
 
-[node name="Position States" type="Node" parent="State/Root/Monitoring/Position" node_paths=PackedStringArray("drone", "sc", "repr", "patrol_marker_1", "patrol_marker_2")]
+[node name="Position States" type="Node" parent="State/Root/Monitoring/Position" unique_id=1212949064 node_paths=PackedStringArray("drone", "sc", "repr", "patrol_marker_1", "patrol_marker_2")]
 script = ExtResource("12_glddf")
 drone = NodePath("../../../../..")
 sc = NodePath("../../../..")
@@ -585,29 +585,29 @@ repr = NodePath("../../../../../InternalRepresentation")
 patrol_marker_1 = NodePath("../../../../../PatrolMarker1")
 patrol_marker_2 = NodePath("../../../../../PatrolMarker2")
 
-[node name="between patrol markers" type="Node" parent="State/Root/Monitoring/Position"]
+[node name="between patrol markers" type="Node" parent="State/Root/Monitoring/Position" unique_id=1525905595]
 script = ExtResource("5_voq0c")
 
-[node name="to outside patrol markers" type="Node" parent="State/Root/Monitoring/Position/between patrol markers"]
+[node name="to outside patrol markers" type="Node" parent="State/Root/Monitoring/Position/between patrol markers" unique_id=1609340416]
 script = ExtResource("6_doilr")
 to = NodePath("../../outside patrol markers")
 event = &"Position: to outside patrol markers"
 delay_in_seconds = "0.0"
 
-[node name="outside patrol markers" type="Node" parent="State/Root/Monitoring/Position"]
+[node name="outside patrol markers" type="Node" parent="State/Root/Monitoring/Position" unique_id=1061161064]
 script = ExtResource("5_voq0c")
 
-[node name="to between patrol markers" type="Node" parent="State/Root/Monitoring/Position/outside patrol markers"]
+[node name="to between patrol markers" type="Node" parent="State/Root/Monitoring/Position/outside patrol markers" unique_id=963317454]
 script = ExtResource("6_doilr")
 to = NodePath("../../between patrol markers")
 event = &"Behavior: to between patrol markers"
 delay_in_seconds = "0.0"
 
-[node name="Behavior" type="Node" parent="State/Root"]
+[node name="Behavior" type="Node" parent="State/Root" unique_id=1413289880]
 script = ExtResource("4_kl701")
 initial_state = NodePath("disabled")
 
-[node name="Behavior States" type="Node" parent="State/Root/Behavior" node_paths=PackedStringArray("drone", "sc", "cs", "entrance_btplayer", "idle_btplayer", "combat_bt_player", "state_map")]
+[node name="Behavior States" type="Node" parent="State/Root/Behavior" unique_id=1429552094 node_paths=PackedStringArray("drone", "sc", "cs", "entrance_btplayer", "idle_btplayer", "combat_bt_player", "state_map")]
 script = ExtResource("18_j5bu2")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
@@ -622,102 +622,102 @@ state_map = {
 3: NodePath("../disabled")
 }
 
-[node name="entrance" type="Node" parent="State/Root/Behavior"]
+[node name="entrance" type="Node" parent="State/Root/Behavior" unique_id=239961162]
 script = ExtResource("5_voq0c")
 
-[node name="BehaviorManager" type="Node" parent="State/Root/Behavior/entrance"]
+[node name="BehaviorManager" type="Node" parent="State/Root/Behavior/entrance" unique_id=981685082]
 script = ExtResource("19_4dmr7")
 metadata/_custom_type_script = "uid://d4epqky6heqvb"
 
-[node name="BTPlayer" type="BTPlayer" parent="State/Root/Behavior/entrance/BehaviorManager"]
+[node name="BTPlayer" type="BTPlayer" parent="State/Root/Behavior/entrance/BehaviorManager" unique_id=1751395523]
 agent_node = NodePath("../../../../../..")
 active = false
 blackboard_plan = SubResource("BlackboardPlan_6ft1p")
 
-[node name="to idle" type="Node" parent="State/Root/Behavior/entrance"]
+[node name="to idle" type="Node" parent="State/Root/Behavior/entrance" unique_id=1828251306]
 script = ExtResource("6_doilr")
 to = NodePath("../../idle")
 event = &"Behavior: to idle"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="State/Root/Behavior/entrance"]
+[node name="to disabled" type="Node" parent="State/Root/Behavior/entrance" unique_id=993292184]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
 event = &"Behavior: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="idle" type="Node" parent="State/Root/Behavior"]
+[node name="idle" type="Node" parent="State/Root/Behavior" unique_id=931007680]
 script = ExtResource("5_voq0c")
 
-[node name="BehaviorManager" type="Node" parent="State/Root/Behavior/idle"]
+[node name="BehaviorManager" type="Node" parent="State/Root/Behavior/idle" unique_id=537092187]
 script = ExtResource("19_4dmr7")
 metadata/_custom_type_script = "uid://d4epqky6heqvb"
 
-[node name="BTPlayer" type="BTPlayer" parent="State/Root/Behavior/idle/BehaviorManager"]
+[node name="BTPlayer" type="BTPlayer" parent="State/Root/Behavior/idle/BehaviorManager" unique_id=1476030363]
 agent_node = NodePath("../../../../../..")
 active = false
 blackboard_plan = SubResource("BlackboardPlan_n6xh2")
 
-[node name="to combat" type="Node" parent="State/Root/Behavior/idle"]
+[node name="to combat" type="Node" parent="State/Root/Behavior/idle" unique_id=181393861]
 script = ExtResource("6_doilr")
 to = NodePath("../../combat")
 event = &"Behavior: to combat"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="State/Root/Behavior/idle"]
+[node name="to disabled" type="Node" parent="State/Root/Behavior/idle" unique_id=538327007]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
 event = &"Behavior: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="combat" type="Node" parent="State/Root/Behavior"]
+[node name="combat" type="Node" parent="State/Root/Behavior" unique_id=379304779]
 script = ExtResource("5_voq0c")
 
-[node name="BehaviorManager" type="Node" parent="State/Root/Behavior/combat"]
+[node name="BehaviorManager" type="Node" parent="State/Root/Behavior/combat" unique_id=2131618522]
 script = ExtResource("19_4dmr7")
 metadata/_custom_type_script = "uid://d4epqky6heqvb"
 
-[node name="BTPlayer" type="BTPlayer" parent="State/Root/Behavior/combat/BehaviorManager"]
+[node name="BTPlayer" type="BTPlayer" parent="State/Root/Behavior/combat/BehaviorManager" unique_id=229631125]
 agent_node = NodePath("../../../../../..")
 active = false
 blackboard_plan = SubResource("BlackboardPlan_43bu3")
 
-[node name="to idle" type="Node" parent="State/Root/Behavior/combat"]
+[node name="to idle" type="Node" parent="State/Root/Behavior/combat" unique_id=276705641]
 script = ExtResource("6_doilr")
 to = NodePath("../../idle")
 event = &"Behavior: to idle"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="State/Root/Behavior/combat"]
+[node name="to disabled" type="Node" parent="State/Root/Behavior/combat" unique_id=38512738]
 script = ExtResource("6_doilr")
 to = NodePath("../../disabled")
 event = &"Behavior: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="disabled" type="Node" parent="State/Root/Behavior"]
+[node name="disabled" type="Node" parent="State/Root/Behavior" unique_id=1302700628]
 script = ExtResource("5_voq0c")
 
-[node name="to entrance" type="Node" parent="State/Root/Behavior/disabled"]
+[node name="to entrance" type="Node" parent="State/Root/Behavior/disabled" unique_id=2104157838]
 script = ExtResource("6_doilr")
 to = NodePath("../../entrance")
 event = &"Behavior: to entrance"
 delay_in_seconds = "0.0"
 
-[node name="to idle" type="Node" parent="State/Root/Behavior/disabled"]
+[node name="to idle" type="Node" parent="State/Root/Behavior/disabled" unique_id=1872776829]
 script = ExtResource("6_doilr")
 to = NodePath("../../idle")
 event = &"Behavior: to idle"
 delay_in_seconds = "0.0"
 
-[node name="CharNode" type="CharacterBody3D" parent="." groups=["DroneGroup"]]
+[node name="CharNode" type="CharacterBody3D" parent="." unique_id=927540122 groups=["DroneGroup"]]
 collision_layer = 0
 collision_mask = 3
 axis_lock_linear_z = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode" unique_id=113415178]
 shape = SubResource("CapsuleShape3D_6t6rp")
 
-[node name="RigidNode" type="RigidBody3D" parent="." groups=["DroneGroup"]]
+[node name="RigidNode" type="RigidBody3D" parent="." unique_id=1461502197 groups=["DroneGroup"]]
 collision_layer = 256
 collision_mask = 51
 axis_lock_linear_z = true
@@ -727,12 +727,12 @@ contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("14_efc27")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode" unique_id=746144462]
 shape = SubResource("SphereShape3D_md0p7")
 
-[node name="TrackPositionContainer" type="Node3D" parent="."]
+[node name="TrackPositionContainer" type="Node3D" parent="." unique_id=1171277265]
 
-[node name="Distortion" type="MeshInstance3D" parent="TrackPositionContainer"]
+[node name="Distortion" type="MeshInstance3D" parent="TrackPositionContainer" unique_id=810540809]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 layers = 16
 sorting_offset = -1.0
@@ -740,46 +740,46 @@ mesh = SubResource("QuadMesh_kds82")
 skeleton = NodePath("../../CharNode")
 surface_material_override/0 = ExtResource("34_6t6rp")
 
-[node name="FloatCast" type="RayCast3D" parent="TrackPositionContainer"]
+[node name="FloatCast" type="RayCast3D" parent="TrackPositionContainer" unique_id=1935600193]
 target_position = Vector3(0, -2.6, 0)
 collision_mask = 2
 
-[node name="DroneShield" parent="TrackPositionContainer" node_paths=PackedStringArray("drone") instance=ExtResource("27_fv7v3")]
+[node name="DroneShield" parent="TrackPositionContainer" unique_id=630061671 node_paths=PackedStringArray("drone") instance=ExtResource("27_fv7v3")]
 drone = NodePath("../..")
 
-[node name="TrackTransformContainer" type="Node3D" parent="."]
+[node name="TrackTransformContainer" type="Node3D" parent="." unique_id=1700008572]
 
-[node name="DroneModel" parent="TrackTransformContainer" node_paths=PackedStringArray("drone") instance=ExtResource("11_glddf")]
+[node name="DroneModel" parent="TrackTransformContainer" unique_id=1939868571 node_paths=PackedStringArray("drone") instance=ExtResource("11_glddf")]
 drone = NodePath("../..")
 
-[node name="FieldOfView" type="Node3D" parent="TrackTransformContainer"]
+[node name="FieldOfView" type="Node3D" parent="TrackTransformContainer" unique_id=878217825]
 script = ExtResource("12_0sc46")
 
-[node name="RayCast3D" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+[node name="RayCast3D" type="RayCast3D" parent="TrackTransformContainer/FieldOfView" unique_id=574542214]
 transform = Transform3D(1, 0, 0, 0, 0.939692, 0.34202, 0, -0.34202, 0.939692, 0, 0, 0)
 target_position = Vector3(0, 0, 4)
 collision_mask = 5
 
-[node name="RayCast3D2" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+[node name="RayCast3D2" type="RayCast3D" parent="TrackTransformContainer/FieldOfView" unique_id=686810002]
 target_position = Vector3(0, 0, 4)
 collision_mask = 5
 
-[node name="RayCast3D3" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+[node name="RayCast3D3" type="RayCast3D" parent="TrackTransformContainer/FieldOfView" unique_id=783239574]
 transform = Transform3D(1, 0, 0, 0, 0.939693, -0.34202, 0, 0.34202, 0.939693, 0, 0, 0)
 target_position = Vector3(0, 0, 4)
 collision_mask = 5
 
-[node name="RayCast3D4" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+[node name="RayCast3D4" type="RayCast3D" parent="TrackTransformContainer/FieldOfView" unique_id=506287213]
 transform = Transform3D(1, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, 0, 0)
 target_position = Vector3(0, 0, 4)
 collision_mask = 5
 
-[node name="RayCast3D5" type="RayCast3D" parent="TrackTransformContainer/FieldOfView"]
+[node name="RayCast3D5" type="RayCast3D" parent="TrackTransformContainer/FieldOfView" unique_id=1987449793]
 transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
 target_position = Vector3(0, 0, 4)
 collision_mask = 5
 
-[node name="ProximityDetector" type="ShapeCast3D" parent="TrackTransformContainer"]
+[node name="ProximityDetector" type="ShapeCast3D" parent="TrackTransformContainer" unique_id=403349176]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_4h6a7")
 target_position = Vector3(0, 0, 0)
@@ -788,13 +788,13 @@ max_results = 5
 collision_mask = 5
 debug_shape_custom_color = Color(0.138885, 0.556865, 0.774598, 1)
 
-[node name="PatrolMarker1" type="Marker3D" parent="."]
+[node name="PatrolMarker1" type="Marker3D" parent="." unique_id=708393460]
 transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, 4, 0, 0)
 
-[node name="PatrolMarker2" type="Marker3D" parent="."]
+[node name="PatrolMarker2" type="Marker3D" parent="." unique_id=1039249970]
 transform = Transform3D(-0.132585, 0, 0.991172, 0, 1, 0, -0.991172, 0, -0.132585, -4, 0, 0)
 
-[node name="FloatDistortionAnimation" type="Node" parent="." node_paths=PackedStringArray("mesh")]
+[node name="FloatDistortionAnimation" type="Node" parent="." unique_id=2078746636 node_paths=PackedStringArray("mesh")]
 script = ExtResource("38_6t6rp")
 mesh = NodePath("../TrackPositionContainer/Distortion")
 

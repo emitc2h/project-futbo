@@ -1,17 +1,17 @@
-[gd_scene load_steps=20 format=3 uid="uid://dgpqcnsegq4rs"]
+[gd_scene format=3 uid="uid://dgpqcnsegq4rs"]
 
-[ext_resource type="PackedScene" uid="uid://diidp43t3wfk6" path="res://assets/3D/ControlNode/ControlNode2.blend" id="1_fgtxj"]
-[ext_resource type="Texture2D" uid="uid://clt4ajeb7q4qy" path="res://assets/3D/Textures/ControlNode/ControlNode_color.png" id="2_rcgw8"]
-[ext_resource type="Texture2D" uid="uid://c0hrabvlx7ao" path="res://assets/3D/Textures/ControlNode/Shield_color.png" id="2_xm2o6"]
-[ext_resource type="Texture2D" uid="uid://dhjmwpcfeiw67" path="res://assets/3D/Textures/ControlNode/ControlNode_emission.png" id="3_rcgw8"]
-[ext_resource type="Texture2D" uid="uid://dlxo45ki7fnva" path="res://assets/3D/Textures/ControlNode/ControlNode_normal.png" id="3_u3c6g"]
-[ext_resource type="Texture2D" uid="uid://btuoe0ipvokae" path="res://assets/3D/Textures/ControlNode/ControlNode_metallic.png" id="4_v3jxs"]
+[ext_resource type="PackedScene" uid="uid://diidp43t3wfk6" path="res://assets/deprecated/3D/ControlNode/ControlNode2.blend" id="1_fgtxj"]
+[ext_resource type="Texture2D" uid="uid://clt4ajeb7q4qy" path="res://assets/krita/assets/control_node/ControlNode_color.png" id="2_rcgw8"]
+[ext_resource type="Texture2D" uid="uid://c0hrabvlx7ao" path="res://assets/krita/assets/control_node/Shield_color.png" id="2_xm2o6"]
+[ext_resource type="Texture2D" uid="uid://dhjmwpcfeiw67" path="res://assets/krita/assets/control_node/ControlNode_emission.png" id="3_rcgw8"]
+[ext_resource type="Texture2D" uid="uid://dlxo45ki7fnva" path="res://assets/krita/assets/control_node/ControlNode_normal.png" id="3_u3c6g"]
+[ext_resource type="Texture2D" uid="uid://btuoe0ipvokae" path="res://assets/krita/assets/control_node/ControlNode_metallic.png" id="4_v3jxs"]
 [ext_resource type="Shader" uid="uid://bjskv0mgvfryi" path="res://shaders/ControlNode/control_node_emission_shader.gdshader" id="4_y1t43"]
-[ext_resource type="Texture2D" uid="uid://k4rwown6iuby" path="res://assets/3D/Textures/ControlNode/ControlNode_roughness.png" id="6_0qqv4"]
+[ext_resource type="Texture2D" uid="uid://k4rwown6iuby" path="res://assets/krita/assets/control_node/ControlNode_roughness.png" id="6_0qqv4"]
 [ext_resource type="Shader" uid="uid://uhr3xm5scj6h" path="res://shaders/ControlNode/control_node_shield_shader.gdshader" id="8_cl1vl"]
-[ext_resource type="Texture2D" uid="uid://ddynp3502832v" path="res://assets/3D/Textures/ControlNode/Shield_noise.png" id="9_0ygwb"]
-[ext_resource type="Texture2D" uid="uid://cpwsx5xmbwito" path="res://assets/3D/Textures/ControlNode/Shield_power_up_mask.png" id="9_ocnbc"]
-[ext_resource type="Texture2D" uid="uid://dwfwt37k62jc7" path="res://assets/3D/Textures/ControlNode/Shield_ripple_mask.png" id="11_pg2yr"]
+[ext_resource type="Texture2D" uid="uid://ddynp3502832v" path="res://assets/krita/assets/control_node/Shield_noise.png" id="9_0ygwb"]
+[ext_resource type="Texture2D" uid="uid://cpwsx5xmbwito" path="res://assets/krita/assets/control_node/Shield_power_up_mask.png" id="9_ocnbc"]
+[ext_resource type="Texture2D" uid="uid://dwfwt37k62jc7" path="res://assets/krita/assets/control_node/Shield_ripple_mask.png" id="11_pg2yr"]
 [ext_resource type="Shader" uid="uid://71v4xn86vybp" path="res://shaders/ControlNode/screen_distortion.gdshader" id="13_r3yh6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d0b0c"]
@@ -65,16 +65,16 @@ shader_parameter/noise_speed = 0.50000002375
 shader_parameter/noise_intensity = 0.0
 shader_parameter/stretch = 1.30000006105148
 
-[node name="ControlNodeModel" instance=ExtResource("1_fgtxj")]
+[node name="ControlNodeModel" unique_id=1021459458 instance=ExtResource("1_fgtxj")]
 
-[node name="ControlNodeMesh" parent="." index="0"]
+[node name="ControlNodeMesh" parent="." index="0" unique_id=1387264145]
 layers = 4
 surface_material_override/0 = SubResource("StandardMaterial3D_i77l4")
 
-[node name="ShieldMesh" parent="." index="1"]
+[node name="ShieldMesh" parent="." index="1" unique_id=973879143]
 transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 0, 0, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_0ygwb")
 
-[node name="DistortionShieldMesh" parent="." index="2"]
+[node name="DistortionShieldMesh" parent="." index="2" unique_id=1523505457]
 sorting_offset = -0.1
 surface_material_override/0 = SubResource("ShaderMaterial_xbpbc")

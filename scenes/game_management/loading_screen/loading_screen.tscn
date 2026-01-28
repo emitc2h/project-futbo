@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dn80tmdr25k5j"]
+[gd_scene format=3 uid="uid://dn80tmdr25k5j"]
 
 [ext_resource type="Script" uid="uid://c5yaviqvxusma" path="res://scripts/game_management/loading_screen/loading_screen.gd" id="1_2187m"]
 
-[node name="LoadingScreen" type="CanvasLayer"]
+[node name="LoadingScreen" type="CanvasLayer" unique_id=1594370011]
 script = ExtResource("1_2187m")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1498548742]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect" unique_id=1678522497]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -29,12 +29,12 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="ColorRect/VBoxContainer"]
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer" unique_id=2011947081]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 64
 text = "Loading"
 
-[node name="ProgressBar" type="ProgressBar" parent="ColorRect/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="ColorRect/VBoxContainer" unique_id=1957131506]
 layout_mode = 2
 step = 1.0

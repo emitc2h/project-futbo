@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cno2tfxkcdwjx"]
+[gd_scene format=3 uid="uid://cno2tfxkcdwjx"]
 
 [ext_resource type="Script" uid="uid://tlxr3dwnsnpk" path="res://scripts/camera/camera_controller.gd" id="1_halyt"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_bojx4"]
@@ -6,72 +6,72 @@
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_6kach"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_vhp2f"]
 
-[node name="CameraController" type="Node3D"]
+[node name="CameraController" type="Node3D" unique_id=1680651998]
 process_mode = 3
 script = ExtResource("1_halyt")
 
-[node name="StateChart" type="Node" parent="."]
+[node name="StateChart" type="Node" parent="." unique_id=747010229]
 script = ExtResource("2_bojx4")
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
-[node name="Root" type="Node" parent="StateChart"]
+[node name="Root" type="Node" parent="StateChart" unique_id=1165681731]
 script = ExtResource("3_k11f5")
 initial_state = NodePath("tracking")
 
-[node name="tracking" type="Node" parent="StateChart/Root"]
+[node name="tracking" type="Node" parent="StateChart/Root" unique_id=682207962]
 script = ExtResource("4_6kach")
 
-[node name="to animated" type="Node" parent="StateChart/Root/tracking"]
+[node name="to animated" type="Node" parent="StateChart/Root/tracking" unique_id=1634403918]
 script = ExtResource("5_vhp2f")
 to = NodePath("../../animated")
 event = &"to animated"
 delay_in_seconds = "0.0"
 
-[node name="to fly" type="Node" parent="StateChart/Root/tracking"]
+[node name="to fly" type="Node" parent="StateChart/Root/tracking" unique_id=1942902137]
 script = ExtResource("5_vhp2f")
 to = NodePath("../../fly")
 event = &"to fly"
 delay_in_seconds = "0.0"
 
-[node name="animated" type="Node" parent="StateChart/Root"]
+[node name="animated" type="Node" parent="StateChart/Root" unique_id=1920915109]
 script = ExtResource("4_6kach")
 
-[node name="to tracking" type="Node" parent="StateChart/Root/animated"]
+[node name="to tracking" type="Node" parent="StateChart/Root/animated" unique_id=2035795221]
 script = ExtResource("5_vhp2f")
 to = NodePath("../../tracking")
 event = &"to tracking"
 delay_in_seconds = "0.0"
 
-[node name="to fly" type="Node" parent="StateChart/Root/animated"]
+[node name="to fly" type="Node" parent="StateChart/Root/animated" unique_id=1351077238]
 script = ExtResource("5_vhp2f")
 to = NodePath("../../fly")
 event = &"to fly"
 delay_in_seconds = "0.0"
 
-[node name="fly" type="Node" parent="StateChart/Root"]
+[node name="fly" type="Node" parent="StateChart/Root" unique_id=75150866]
 script = ExtResource("4_6kach")
 
-[node name="to tracking" type="Node" parent="StateChart/Root/fly"]
+[node name="to tracking" type="Node" parent="StateChart/Root/fly" unique_id=1928176327]
 script = ExtResource("5_vhp2f")
 to = NodePath("../../tracking")
 event = &"to tracking"
 delay_in_seconds = "0.0"
 
-[node name="to animated" type="Node" parent="StateChart/Root/fly"]
+[node name="to animated" type="Node" parent="StateChart/Root/fly" unique_id=1641624747]
 script = ExtResource("5_vhp2f")
 to = NodePath("../../animated")
 event = &"to animated"
 delay_in_seconds = "0.0"
 
-[node name="TargetPosition" type="Node3D" parent="."]
+[node name="TargetPosition" type="Node3D" parent="." unique_id=319133271]
 
-[node name="CameraYaw" type="Node3D" parent="TargetPosition"]
+[node name="CameraYaw" type="Node3D" parent="TargetPosition" unique_id=656872006]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 10)
 
-[node name="CameraPitch" type="Node3D" parent="TargetPosition/CameraYaw"]
+[node name="CameraPitch" type="Node3D" parent="TargetPosition/CameraYaw" unique_id=2052931953]
 transform = Transform3D(1, 0, 0, 0, 0.99691695, -0.0784591, 0, 0.0784591, 0.99691695, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="TargetPosition/CameraYaw/CameraPitch"]
+[node name="Camera3D" type="Camera3D" parent="TargetPosition/CameraYaw/CameraPitch" unique_id=777589933]
 cull_mask = 31775
 current = true
 fov = 38.0

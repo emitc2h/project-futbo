@@ -19,7 +19,7 @@ func _spawn_new_drone() -> void:
 	await get_tree().create_timer(1.5).timeout
 	var new_drone: Drone = drone_scene.instantiate()
 	new_drone.global_position = spawn_point.global_position
-	drone.set_initial_behavior_state(DroneBehaviorStates.State.IDLE)
+	new_drone.set_initial_behavior_state(DroneBehaviorStates.State.IDLE)
 	add_child(new_drone)
 	drone = new_drone
 	

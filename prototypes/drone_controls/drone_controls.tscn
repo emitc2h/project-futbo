@@ -1,12 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://bhpakjvwrso0o"]
+[gd_scene format=3 uid="uid://bhpakjvwrso0o"]
 
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="1_8gdpk"]
 [ext_resource type="Script" uid="uid://bdp0724vtej6g" path="res://prototypes/drone_controls/drone_controls.gd" id="1_nhjp0"]
-[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_nhjp0"]
-[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_dyyi7"]
+[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_nhjp0"]
+[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_dyyi7"]
 [ext_resource type="PackedScene" uid="uid://bc323ftwy8i7t" path="res://scenes/enemies/drone/drone.tscn" id="4_5guql"]
 [ext_resource type="Script" uid="uid://bn1l2muisrfkd" path="res://prototypes/drone_controls/target_mesh.gd" id="6_nhjp0"]
-[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="7_dyyi7"]
+[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/deprecated/3D/Act1/materials/buildings/bricks.tres" id="7_dyyi7"]
 [ext_resource type="PackedScene" uid="uid://d4joyty534fc" path="res://scenes/utilities/optimization/particles_preloader.tscn" id="8_5guql"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ljxl"]
@@ -38,47 +38,47 @@ radius = 0.3
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tir8y"]
 points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
 
-[node name="DroneControls" type="Node3D"]
+[node name="DroneControls" type="Node3D" unique_id=537804557]
 script = ExtResource("1_nhjp0")
 
-[node name="WorldEnvironment" parent="." instance=ExtResource("1_8gdpk")]
+[node name="WorldEnvironment" parent="." unique_id=401475819 instance=ExtResource("1_8gdpk")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=37171830]
 transform = Transform3D(0.915047, -0.100395, -0.390653, 0.261921, 0.88444, 0.386216, 0.306735, -0.455726, 0.8356, 0.0118855, -0.0196906, -0.0371979)
 light_energy = 1.3
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
 directional_shadow_mode = 0
 
-[node name="Ground" type="MeshInstance3D" parent="."]
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=68059084]
 transform = Transform3D(70.6045, 0, -70.8167, 0, 1, 0, 70.8167, 0, 70.6045, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_6ljxl")
 mesh = SubResource("PlaneMesh_t8cm3")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground" unique_id=802562059]
 collision_layer = 2
 collision_mask = 261
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D" unique_id=1880159439]
 shape = SubResource("WorldBoundaryShape3D_nc4hi")
 
-[node name="Drone" parent="." instance=ExtResource("4_5guql")]
+[node name="Drone" parent="." unique_id=1736014194 instance=ExtResource("4_5guql")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 initial_behavior_state = 3
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1846389354]
 transform = Transform3D(0.9999998, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000001, -2, 1.2, 8)
 fov = 50.3
 size = 8.491
 
-[node name="Interface" type="CanvasLayer" parent="."]
+[node name="Interface" type="CanvasLayer" parent="." unique_id=1415171142]
 
-[node name="ColorRect" type="ColorRect" parent="Interface"]
+[node name="ColorRect" type="ColorRect" parent="Interface" unique_id=1904798567]
 offset_right = 579.0
 offset_bottom = 471.0
 color = Color(0, 0, 0, 0.309804)
 
-[node name="Rows" type="VBoxContainer" parent="Interface/ColorRect"]
+[node name="Rows" type="VBoxContainer" parent="Interface/ColorRect" unique_id=1889987303]
 layout_mode = 0
 offset_left = 15.0
 offset_top = 14.0
@@ -86,239 +86,239 @@ offset_right = 560.0
 offset_bottom = 458.0
 metadata/_edit_use_anchors_ = true
 
-[node name="Row1" type="HBoxContainer" parent="Interface/ColorRect/Rows"]
+[node name="Row1" type="HBoxContainer" parent="Interface/ColorRect/Rows" unique_id=1129226263]
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="PhysicsVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1"]
+[node name="PhysicsVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1" unique_id=2066547907]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer" unique_id=563711057]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "Physics"
 horizontal_alignment = 1
 
-[node name="CharacterModeButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
+[node name="CharacterModeButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer" unique_id=517126624]
 layout_mode = 2
 text = "Character Mode"
 
-[node name="RigidModeButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
+[node name="RigidModeButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer" unique_id=1650806673]
 layout_mode = 2
 text = "Rigid Mode"
 
-[node name="RagdollModeButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
+[node name="RagdollModeButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer" unique_id=1223464673]
 layout_mode = 2
 text = "Ragdoll Mode"
 
-[node name="ResetButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer"]
+[node name="ResetButton" type="Button" parent="Interface/ColorRect/Rows/Row1/PhysicsVContainer" unique_id=1738916906]
 layout_mode = 2
 text = "Reset
 "
 
-[node name="DirectionVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1"]
+[node name="DirectionVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1" unique_id=838933893]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row1/DirectionVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row1/DirectionVContainer" unique_id=754133303]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Direction "
 horizontal_alignment = 1
 
-[node name="LeftButton" type="Button" parent="Interface/ColorRect/Rows/Row1/DirectionVContainer"]
+[node name="LeftButton" type="Button" parent="Interface/ColorRect/Rows/Row1/DirectionVContainer" unique_id=2133911179]
 layout_mode = 2
 text = "Left"
 
-[node name="RightButton" type="Button" parent="Interface/ColorRect/Rows/Row1/DirectionVContainer"]
+[node name="RightButton" type="Button" parent="Interface/ColorRect/Rows/Row1/DirectionVContainer" unique_id=777580874]
 layout_mode = 2
 text = "Right"
 
-[node name="VulnerabilityVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1"]
+[node name="VulnerabilityVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1" unique_id=1751396065]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
+[node name="Label2" type="Label" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer" unique_id=931655950]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Vulnerability "
 horizontal_alignment = 1
 
-[node name="InvulnerableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
+[node name="InvulnerableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer" unique_id=995041666]
 layout_mode = 2
 text = "Invulnerable"
 
-[node name="DefendableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
+[node name="DefendableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer" unique_id=861974009]
 layout_mode = 2
 text = "Defendable"
 
-[node name="VulnerableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
+[node name="VulnerableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer" unique_id=1864121477]
 layout_mode = 2
 text = "Vulnerable"
 
-[node name="DieButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer"]
+[node name="DieButton" type="Button" parent="Interface/ColorRect/Rows/Row1/VulnerabilityVContainer" unique_id=1111575414]
 layout_mode = 2
 text = "Die"
 
-[node name="TargetingVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1"]
+[node name="TargetingVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row1" unique_id=2120177435]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row1/TargetingVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row1/TargetingVContainer" unique_id=1726838892]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Targeting "
 horizontal_alignment = 1
 
-[node name="EnableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/TargetingVContainer"]
+[node name="EnableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/TargetingVContainer" unique_id=1756239326]
 layout_mode = 2
 text = "Enable"
 
-[node name="DisableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/TargetingVContainer"]
+[node name="DisableButton" type="Button" parent="Interface/ColorRect/Rows/Row1/TargetingVContainer" unique_id=1249062702]
 layout_mode = 2
 text = "Disable"
 
-[node name="Row2" type="HBoxContainer" parent="Interface/ColorRect/Rows"]
+[node name="Row2" type="HBoxContainer" parent="Interface/ColorRect/Rows" unique_id=528522776]
 layout_mode = 2
 
-[node name="EngagementVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2"]
+[node name="EngagementVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2" unique_id=1661222166]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer" unique_id=1363520764]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Engagement "
 horizontal_alignment = 1
 
-[node name="OpenButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer"]
+[node name="OpenButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer" unique_id=1717173325]
 layout_mode = 2
 text = "Open"
 
-[node name="CloseButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer"]
+[node name="CloseButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer" unique_id=396318958]
 layout_mode = 2
 text = "Close
 "
 
-[node name="QuickCloseButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer"]
+[node name="QuickCloseButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EngagementVContainer" unique_id=1920979554]
 layout_mode = 2
 text = "Quick Close
 "
 
-[node name="EnginesVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2"]
+[node name="EnginesVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2" unique_id=491586741]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer" unique_id=1588291832]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Engines "
 horizontal_alignment = 1
 
-[node name="ThrustButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
+[node name="ThrustButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer" unique_id=718161285]
 layout_mode = 2
 text = "Thrust"
 
-[node name="BurstButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
+[node name="BurstButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer" unique_id=822059285]
 layout_mode = 2
 text = "Burst"
 
-[node name="StopButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
+[node name="StopButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer" unique_id=1583748848]
 layout_mode = 2
 text = "Stop"
 
-[node name="QuickStopButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer"]
+[node name="QuickStopButton" type="Button" parent="Interface/ColorRect/Rows/Row2/EnginesVContainer" unique_id=246121313]
 layout_mode = 2
 text = "Quick Stop"
 
-[node name="SpinnersVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2"]
+[node name="SpinnersVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2" unique_id=198809203]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/SpinnersVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/SpinnersVContainer" unique_id=121919130]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = " Spinners "
 horizontal_alignment = 1
 
-[node name="FireButton" type="Button" parent="Interface/ColorRect/Rows/Row2/SpinnersVContainer"]
+[node name="FireButton" type="Button" parent="Interface/ColorRect/Rows/Row2/SpinnersVContainer" unique_id=549891844]
 layout_mode = 2
 text = "Fire"
 
-[node name="ActionsVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2"]
+[node name="ActionsVContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row2" unique_id=1741018824]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/ActionsVContainer"]
+[node name="Label" type="Label" parent="Interface/ColorRect/Rows/Row2/ActionsVContainer" unique_id=1899207792]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "Actions"
 horizontal_alignment = 1
 
-[node name="JumpButton" type="Button" parent="Interface/ColorRect/Rows/Row2/ActionsVContainer"]
+[node name="JumpButton" type="Button" parent="Interface/ColorRect/Rows/Row2/ActionsVContainer" unique_id=1090913336]
 layout_mode = 2
 text = "Jump"
 
-[node name="Row3" type="HBoxContainer" parent="Interface/ColorRect/Rows"]
+[node name="Row3" type="HBoxContainer" parent="Interface/ColorRect/Rows" unique_id=357605005]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/ColorRect/Rows/Row3" unique_id=1776949635]
 layout_mode = 2
 
-[node name="BlockButton" type="CheckButton" parent="Interface/ColorRect/Rows/Row3/VBoxContainer"]
+[node name="BlockButton" type="CheckButton" parent="Interface/ColorRect/Rows/Row3/VBoxContainer" unique_id=1287264676]
 layout_mode = 2
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "Block"
 
-[node name="TargetBobButton" type="CheckButton" parent="Interface/ColorRect/Rows/Row3/VBoxContainer"]
+[node name="TargetBobButton" type="CheckButton" parent="Interface/ColorRect/Rows/Row3/VBoxContainer" unique_id=761265637]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Target Bob"
 
-[node name="TargetMeshLeft" type="StaticBody3D" parent="."]
+[node name="TargetMeshLeft" type="StaticBody3D" parent="." unique_id=1524607193]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89456, 1.24847, 0)
 collision_mask = 0
 script = ExtResource("6_nhjp0")
 
-[node name="Mesh" type="MeshInstance3D" parent="TargetMeshLeft"]
+[node name="Mesh" type="MeshInstance3D" parent="TargetMeshLeft" unique_id=58145972]
 mesh = SubResource("SphereMesh_8gdpk")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_nhjp0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMeshLeft"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMeshLeft" unique_id=804630610]
 shape = SubResource("SphereShape3D_8gdpk")
 
-[node name="TargetMeshRight" type="StaticBody3D" parent="."]
+[node name="TargetMeshRight" type="StaticBody3D" parent="." unique_id=800388590]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.63781, 1.24847, 0)
 collision_mask = 0
 script = ExtResource("6_nhjp0")
 
-[node name="Mesh" type="MeshInstance3D" parent="TargetMeshRight"]
+[node name="Mesh" type="MeshInstance3D" parent="TargetMeshRight" unique_id=758339564]
 mesh = SubResource("SphereMesh_8gdpk")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_nhjp0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMeshRight"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMeshRight" unique_id=488410172]
 shape = SubResource("SphereShape3D_8gdpk")
 
-[node name="Block" type="StaticBody3D" parent="."]
+[node name="Block" type="StaticBody3D" parent="." unique_id=80539040]
 transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.282282, -0.142416, -0.0020504)
 visible = false
 collision_layer = 514
 collision_mask = 261
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Block"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Block" unique_id=642232696]
 mesh = SubResource("BoxMesh_5guql")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("7_dyyi7")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Block"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Block" unique_id=827506001]
 shape = SubResource("ConvexPolygonShape3D_tir8y")
 disabled = true
 
-[node name="ParticlesPreloader" parent="." instance=ExtResource("8_5guql")]
+[node name="ParticlesPreloader" parent="." unique_id=803563290 instance=ExtResource("8_5guql")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.820052, 0)
 visible = false
 

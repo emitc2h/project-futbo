@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cr47yegirh5mi"]
+[gd_scene format=3 uid="uid://cr47yegirh5mi"]
 
-[ext_resource type="PackedScene" uid="uid://bexw8vsbi85ia" path="res://assets/3D/Act1/blend/Grass1.blend" id="1_krrdv"]
-[ext_resource type="Texture2D" uid="uid://d2llgrbu53jwf" path="res://assets/3D/Act1/Textures/Vegetation/Grass1/Grass1_color.png" id="2_dlfjd"]
+[ext_resource type="PackedScene" uid="uid://bexw8vsbi85ia" path="res://assets/deprecated/3D/Act1/blend/Grass1.blend" id="1_krrdv"]
+[ext_resource type="Texture2D" uid="uid://d2llgrbu53jwf" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/Grass1/Grass1_color.png" id="2_dlfjd"]
 
 [sub_resource type="Shader" id="Shader_oo360"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's StandardMaterial3D.
@@ -63,7 +63,7 @@ shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
-[node name="Grass1" instance=ExtResource("1_krrdv")]
+[node name="Grass1" unique_id=1025752732 instance=ExtResource("1_krrdv")]
 
-[node name="Plane_001" parent="." index="0"]
+[node name="Plane_001" parent="." index="0" unique_id=40972212]
 surface_material_override/0 = SubResource("ShaderMaterial_2qnka")

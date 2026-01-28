@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://invfr68fmeed"]
+[gd_scene format=3 uid="uid://invfr68fmeed"]
 
 [ext_resource type="Script" uid="uid://cwk5rr6qkn52l" path="res://scripts/enemies/drone/drone_plasma_bolt.gd" id="1_8q3t1"]
 [ext_resource type="PackedScene" uid="uid://dd3qiywytn0rt" path="res://scenes/enemies/drone/models/drone_plasma_bolt_model.tscn" id="1_357h2"]
@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_kyqan"]
 [ext_resource type="Script" uid="uid://cqha6oa4b32v7" path="res://scripts/enemies/drone/animation/drone_plasma_bolt_impact_animation.gd" id="7_xtwlp"]
 [ext_resource type="Script" uid="uid://bfiuobm6wij26" path="res://scripts/enemies/drone/animation/drone_plasma_bolt_impact_props.gd" id="8_fjnq5"]
-[ext_resource type="Texture2D" uid="uid://ufu6wds3282p" path="res://assets/3D/Particles/dart/dart_map.png" id="9_kyqan"]
+[ext_resource type="Texture2D" uid="uid://ufu6wds3282p" path="res://assets/deprecated/3D/Particles/dart/dart_map.png" id="9_kyqan"]
 
 [sub_resource type="Gradient" id="Gradient_vaw05"]
 offsets = PackedFloat32Array(0, 0.792793, 1)
@@ -42,102 +42,102 @@ emission_intensity = 50000.0
 material = SubResource("StandardMaterial3D_kyqan")
 size = Vector2(0.3, 0.1)
 
-[node name="DronePlasmaBolt" type="Node3D"]
+[node name="DronePlasmaBolt" type="Node3D" unique_id=150487764]
 script = ExtResource("1_8q3t1")
 
-[node name="DronePlasmaBoltModel" parent="." instance=ExtResource("1_357h2")]
+[node name="DronePlasmaBoltModel" parent="." unique_id=487097792 instance=ExtResource("1_357h2")]
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1534683786]
 target_position = Vector3(0, 12, 0)
 collision_mask = 55
 hit_from_inside = true
 
-[node name="StateChart" type="Node" parent="."]
+[node name="StateChart" type="Node" parent="." unique_id=1141666928]
 script = ExtResource("3_mjux0")
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
-[node name="Root" type="Node" parent="StateChart"]
+[node name="Root" type="Node" parent="StateChart" unique_id=93173446]
 script = ExtResource("4_xtwlp")
 initial_state = NodePath("off")
 
-[node name="off" type="Node" parent="StateChart/Root"]
+[node name="off" type="Node" parent="StateChart/Root" unique_id=951818788]
 script = ExtResource("5_fjnq5")
 
-[node name="to fire" type="Node" parent="StateChart/Root/off"]
+[node name="to fire" type="Node" parent="StateChart/Root/off" unique_id=159657040]
 script = ExtResource("6_kyqan")
 to = NodePath("../../fire")
 event = &"to fire"
 delay_in_seconds = "0.0"
 
-[node name="fire" type="Node" parent="StateChart/Root"]
+[node name="fire" type="Node" parent="StateChart/Root" unique_id=1993740161]
 script = ExtResource("5_fjnq5")
 
-[node name="to hit player" type="Node" parent="StateChart/Root/fire"]
+[node name="to hit player" type="Node" parent="StateChart/Root/fire" unique_id=759599352]
 script = ExtResource("6_kyqan")
 to = NodePath("../../hit player")
 event = &"to hit player"
 delay_in_seconds = "0.0"
 
-[node name="to hit control node" type="Node" parent="StateChart/Root/fire"]
+[node name="to hit control node" type="Node" parent="StateChart/Root/fire" unique_id=1587806039]
 script = ExtResource("6_kyqan")
 to = NodePath("../../hit control node")
 event = &"to hit control node"
 delay_in_seconds = "0.0"
 
-[node name="to miss" type="Node" parent="StateChart/Root/fire"]
+[node name="to miss" type="Node" parent="StateChart/Root/fire" unique_id=411837277]
 script = ExtResource("6_kyqan")
 to = NodePath("../../miss")
 event = &"to miss"
 delay_in_seconds = "0.0"
 
-[node name="hit player" type="Node" parent="StateChart/Root"]
+[node name="hit player" type="Node" parent="StateChart/Root" unique_id=1961180825]
 script = ExtResource("5_fjnq5")
 
-[node name="to off" type="Node" parent="StateChart/Root/hit player"]
+[node name="to off" type="Node" parent="StateChart/Root/hit player" unique_id=1950028278]
 script = ExtResource("6_kyqan")
 to = NodePath("../../off")
 event = &"to off"
 delay_in_seconds = "0.0"
 
-[node name="hit control node" type="Node" parent="StateChart/Root"]
+[node name="hit control node" type="Node" parent="StateChart/Root" unique_id=1030773224]
 script = ExtResource("5_fjnq5")
 
-[node name="to off" type="Node" parent="StateChart/Root/hit control node"]
+[node name="to off" type="Node" parent="StateChart/Root/hit control node" unique_id=672997577]
 script = ExtResource("6_kyqan")
 to = NodePath("../../off")
 event = &"to off"
 delay_in_seconds = "0.0"
 
-[node name="miss" type="Node" parent="StateChart/Root"]
+[node name="miss" type="Node" parent="StateChart/Root" unique_id=504402579]
 script = ExtResource("5_fjnq5")
 
-[node name="to off" type="Node" parent="StateChart/Root/miss"]
+[node name="to off" type="Node" parent="StateChart/Root/miss" unique_id=1294174169]
 script = ExtResource("6_kyqan")
 to = NodePath("../../off")
 event = &"to off"
 delay_in_seconds = "0.0"
 
-[node name="ImpactAnimation" type="Node" parent="." node_paths=PackedStringArray("bolt")]
+[node name="ImpactAnimation" type="Node" parent="." unique_id=2079705468 node_paths=PackedStringArray("bolt")]
 script = ExtResource("7_xtwlp")
 bolt = NodePath("..")
 
-[node name="ImpactOffProps" type="Node" parent="ImpactAnimation"]
+[node name="ImpactOffProps" type="Node" parent="ImpactAnimation" unique_id=307249434]
 script = ExtResource("8_fjnq5")
 
-[node name="ImpactHitProps" type="Node" parent="ImpactAnimation"]
+[node name="ImpactHitProps" type="Node" parent="ImpactAnimation" unique_id=1044054223]
 script = ExtResource("8_fjnq5")
 alpha = 1.0
 dissolve_value_in = 1.0
 metadata/_custom_type_script = "uid://bfiuobm6wij26"
 
-[node name="ImpactFadedProps" type="Node" parent="ImpactAnimation"]
+[node name="ImpactFadedProps" type="Node" parent="ImpactAnimation" unique_id=1604047269]
 script = ExtResource("8_fjnq5")
 alpha = 1.0
 dissolve_value_in = 1.0
 dissolve_value_out = 0.0
 metadata/_custom_type_script = "uid://bfiuobm6wij26"
 
-[node name="ShrapnelParticles3D" type="GPUParticles3D" parent="."]
+[node name="ShrapnelParticles3D" type="GPUParticles3D" parent="." unique_id=1309915373]
 emitting = false
 amount = 100
 lifetime = 0.4

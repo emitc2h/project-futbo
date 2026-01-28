@@ -1,14 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://ci6c0wd3nfi1k"]
+[gd_scene format=3 uid="uid://ci6c0wd3nfi1k"]
 
 [ext_resource type="Script" uid="uid://cd2yw4w0olj6i" path="res://prototypes/simplified_character_asset/simplified_char_test_scene.gd" id="1_hbgue"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="2_c7twb"]
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera/camera_controller.tscn" id="3_ojn5c"]
-[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="3_oorf8"]
-[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="4_ojn5c"]
+[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="3_oorf8"]
+[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="4_ojn5c"]
 [ext_resource type="PackedScene" uid="uid://br5xii21hsbeo" path="res://scenes/characters/Character1/character_1.tscn" id="4_oorf8"]
 [ext_resource type="Script" uid="uid://c5ypw4nstaeac" path="res://scripts/player_controller.gd" id="5_ojn5c"]
 [ext_resource type="PackedScene" uid="uid://dd7rk2je4r01m" path="res://scenes/character_path/character_path.tscn" id="8_ih8et"]
-[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/3D/Act1/materials/buildings/bricks.tres" id="9_g2iua"]
+[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/deprecated/3D/Act1/materials/buildings/bricks.tres" id="9_g2iua"]
 [ext_resource type="PackedScene" uid="uid://cupvg7lj3rh2s" path="res://scenes/control_node_and_balls/control_node.tscn" id="10_d85sp"]
 [ext_resource type="PackedScene" uid="uid://cfvjtio5mdjgl" path="res://scenes/control_node_and_balls/ball.tscn" id="11_pmhdo"]
 [ext_resource type="PackedScene" uid="uid://dl2glyig12kut" path="res://scenes/debug/debug_tool.tscn" id="12_pmhdo"]
@@ -48,131 +48,131 @@ func _process(delta: float) -> void:
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pmhdo"]
 points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
 
-[node name="SimplifiedCharTestScene" type="Node3D"]
+[node name="SimplifiedCharTestScene" type="Node3D" unique_id=1916183126]
 script = ExtResource("1_hbgue")
 
-[node name="WorldEnvironment" parent="." instance=ExtResource("2_c7twb")]
+[node name="WorldEnvironment" parent="." unique_id=1742969850 instance=ExtResource("2_c7twb")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1170251495]
 transform = Transform3D(0.91504705, -0.100395314, -0.390653, 0.26192102, 0.8844404, 0.38621584, 0.30673504, -0.45572588, 0.83560014, 0.0118855, -0.0196906, -0.0371979)
 light_intensity_lux = 50000.0
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
 
-[node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("3_ojn5c")]
+[node name="CameraController" parent="." unique_id=1017145665 node_paths=PackedStringArray("subject") instance=ExtResource("3_ojn5c")]
 subject = NodePath("../Character1")
 
-[node name="Character1" parent="." instance=ExtResource("4_oorf8")]
+[node name="Character1" parent="." unique_id=980786342 instance=ExtResource("4_oorf8")]
 
-[node name="PlayerController" type="Node" parent="Character1" node_paths=PackedStringArray("character")]
+[node name="PlayerController" type="Node" parent="Character1" unique_id=1449545718 node_paths=PackedStringArray("character")]
 script = ExtResource("5_ojn5c")
 character = NodePath("..")
 metadata/_custom_type_script = "uid://c5ypw4nstaeac"
 
-[node name="WalkToFieldPath3D" parent="." instance=ExtResource("8_ih8et")]
+[node name="WalkToFieldPath3D" parent="." unique_id=1085388961 instance=ExtResource("8_ih8et")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.851534, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1446761893]
 transform = Transform3D(70.6045, 0, -70.8167, 0, 1, 0, 70.8167, 0, 70.6045, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_ih8et")
 mesh = SubResource("PlaneMesh_g2iua")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1887906698]
 collision_layer = 2
 collision_mask = 261
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1102887151]
 shape = SubResource("WorldBoundaryShape3D_78uhv")
 
-[node name="Blocks" type="Node3D" parent="."]
+[node name="Blocks" type="Node3D" parent="." unique_id=1590115300]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.48646, -0.04813, 0)
 script = SubResource("GDScript_78uhv")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Blocks"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Blocks" unique_id=1157512979]
 transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.539924, 1.56718, -0.0020504)
 collision_layer = 514
 collision_mask = 261
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D" unique_id=457193434]
 mesh = SubResource("BoxMesh_d85sp")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("9_g2iua")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D" unique_id=983483390]
 shape = SubResource("ConvexPolygonShape3D_pmhdo")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="Blocks"]
+[node name="StaticBody3D2" type="StaticBody3D" parent="Blocks" unique_id=930761979]
 transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -0.257867, 1.00949, -0.0020504)
 collision_layer = 514
 collision_mask = 261
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D2"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D2" unique_id=2033604904]
 mesh = SubResource("BoxMesh_d85sp")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("9_g2iua")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D2" unique_id=142723286]
 shape = SubResource("ConvexPolygonShape3D_pmhdo")
 
-[node name="StaticBody3D6" type="StaticBody3D" parent="Blocks"]
+[node name="StaticBody3D6" type="StaticBody3D" parent="Blocks" unique_id=1681301480]
 transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.07867, 0.43629, -0.0020504)
 collision_layer = 514
 collision_mask = 261
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D6"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D6" unique_id=1203760862]
 mesh = SubResource("BoxMesh_d85sp")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("9_g2iua")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D6"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D6" unique_id=395360806]
 shape = SubResource("ConvexPolygonShape3D_pmhdo")
 
-[node name="StaticBody3D7" type="StaticBody3D" parent="Blocks"]
+[node name="StaticBody3D7" type="StaticBody3D" parent="Blocks" unique_id=429374630]
 transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.89916, -0.136931, -0.0020504)
 collision_layer = 514
 collision_mask = 261
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D7"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D7" unique_id=1406025369]
 mesh = SubResource("BoxMesh_d85sp")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("9_g2iua")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D7"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D7" unique_id=1898550644]
 shape = SubResource("ConvexPolygonShape3D_pmhdo")
 
-[node name="StaticBody3D3" type="StaticBody3D" parent="Blocks"]
+[node name="StaticBody3D3" type="StaticBody3D" parent="Blocks" unique_id=2146320787]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 2.154202, 1.7570906, 0)
 collision_layer = 514
 collision_mask = 261
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D3"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D3" unique_id=1090578224]
 mesh = SubResource("BoxMesh_d85sp")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("9_g2iua")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D3" unique_id=2039323907]
 shape = SubResource("ConvexPolygonShape3D_pmhdo")
 
-[node name="StaticBody3D8" type="StaticBody3D" parent="Blocks"]
+[node name="StaticBody3D8" type="StaticBody3D" parent="Blocks" unique_id=2077267849]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 1.1667609, 1.7570207, 0)
 collision_layer = 514
 collision_mask = 261
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D8"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D8" unique_id=1288679128]
 mesh = SubResource("BoxMesh_d85sp")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("9_g2iua")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D8"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D8" unique_id=1067370346]
 shape = SubResource("ConvexPolygonShape3D_pmhdo")
 
-[node name="ControlNode" parent="." instance=ExtResource("10_d85sp")]
+[node name="ControlNode" parent="." unique_id=775271242 instance=ExtResource("10_d85sp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0498505, 0.1851455, 0)
 
-[node name="Ball" parent="." instance=ExtResource("11_pmhdo")]
+[node name="Ball" parent="." unique_id=1202109576 instance=ExtResource("11_pmhdo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.354297, 0.16351736, 0)
 
-[node name="DebugTool" parent="." instance=ExtResource("12_pmhdo")]
+[node name="DebugTool" parent="." unique_id=2116783185 instance=ExtResource("12_pmhdo")]
 active = false
 
 [connection signal="in_path" from="WalkToFieldPath3D" to="." method="_on_walk_to_field_path_3d_in_path"]
