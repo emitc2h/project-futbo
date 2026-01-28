@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b23ql0f3pehor"]
+[gd_scene format=3 uid="uid://b23ql0f3pehor"]
 
 [ext_resource type="Script" uid="uid://dwveh7gorkqwx" path="res://scripts/characters/character_base.gd" id="1_xq4g7"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_oqj5v"]
@@ -33,7 +33,7 @@ height = 0.757612
 [sub_resource type="BoxShape3D" id="BoxShape3D_r2h0o"]
 size = Vector3(1, 0.86731, 1)
 
-[node name="CharacterBase" type="CharacterBody3D" node_paths=PackedStringArray("direction_states", "movement_states", "grounded_states", "in_the_air_states", "path_states", "damage_states", "kick_states", "dribble_states", "targeting_states")]
+[node name="CharacterBase" type="CharacterBody3D" unique_id=1387008662 node_paths=PackedStringArray("direction_states", "movement_states", "grounded_states", "in_the_air_states", "path_states", "damage_states", "kick_states", "dribble_states", "targeting_states")]
 collision_mask = 770
 script = ExtResource("1_xq4g7")
 direction_states = NodePath("State/Root/Damage/Able/Movement/Grounded/Direction Faced/Direction Faced States")
@@ -46,31 +46,31 @@ kick_states = NodePath("State/Root/Damage/Able/Kick/Kick States")
 dribble_states = NodePath("State/Root/Damage/Able/Dribble/Dribble States")
 targeting_states = NodePath("State/Root/Targeting/TargetingStates")
 
-[node name="State" type="Node" parent="."]
+[node name="State" type="Node" parent="." unique_id=1249516299]
 script = ExtResource("2_oqj5v")
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
-[node name="Root" type="Node" parent="State"]
+[node name="Root" type="Node" parent="State" unique_id=646961719]
 script = ExtResource("3_ga3c3")
 
-[node name="Damage" type="Node" parent="State/Root"]
+[node name="Damage" type="Node" parent="State/Root" unique_id=221475856]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("Able")
 
-[node name="Damage States" type="Node" parent="State/Root/Damage" node_paths=PackedStringArray("character", "sc", "cs")]
+[node name="Damage States" type="Node" parent="State/Root/Damage" unique_id=1038729373 node_paths=PackedStringArray("character", "sc", "cs")]
 script = ExtResource("8_5o1l8")
 character = NodePath("../../../..")
 sc = NodePath("../../..")
 cs = NodePath("..")
 
-[node name="Able" type="Node" parent="State/Root/Damage"]
+[node name="Able" type="Node" parent="State/Root/Damage" unique_id=1437745897]
 script = ExtResource("3_ga3c3")
 
-[node name="Movement" type="Node" parent="State/Root/Damage/Able"]
+[node name="Movement" type="Node" parent="State/Root/Damage/Able" unique_id=1040835142]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("In the air")
 
-[node name="Movement States" type="Node" parent="State/Root/Damage/Able/Movement" node_paths=PackedStringArray("in_the_air_states", "state_map", "character", "sc", "cs")]
+[node name="Movement States" type="Node" parent="State/Root/Damage/Able/Movement" unique_id=1115440960 node_paths=PackedStringArray("in_the_air_states", "state_map", "character", "sc", "cs")]
 script = ExtResource("9_ltwfx")
 in_the_air_states = NodePath("../In the air/In the air States")
 state_map = {
@@ -81,11 +81,11 @@ character = NodePath("../../../../../..")
 sc = NodePath("../../../../..")
 cs = NodePath("..")
 
-[node name="In the air" type="Node" parent="State/Root/Damage/Able/Movement"]
+[node name="In the air" type="Node" parent="State/Root/Damage/Able/Movement" unique_id=633852382]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("falling")
 
-[node name="In the air States" type="Node" parent="State/Root/Damage/Able/Movement/In the air" node_paths=PackedStringArray("jump_raycast", "state_map", "character", "sc", "cs")]
+[node name="In the air States" type="Node" parent="State/Root/Damage/Able/Movement/In the air" unique_id=124805087 node_paths=PackedStringArray("jump_raycast", "state_map", "character", "sc", "cs")]
 script = ExtResource("10_l36pv")
 jump_raycast = NodePath("../../../../../../../JumpRaycast")
 state_map = {
@@ -96,64 +96,64 @@ character = NodePath("../../../../../../..")
 sc = NodePath("../../../../../..")
 cs = NodePath("..")
 
-[node name="jumping" type="Node" parent="State/Root/Damage/Able/Movement/In the air"]
+[node name="jumping" type="Node" parent="State/Root/Damage/Able/Movement/In the air" unique_id=1993829534]
 script = ExtResource("6_awyfk")
 
-[node name="to falling" type="Node" parent="State/Root/Damage/Able/Movement/In the air/jumping"]
+[node name="to falling" type="Node" parent="State/Root/Damage/Able/Movement/In the air/jumping" unique_id=629472639]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../falling")
 event = &"In the air: to falling"
 delay_in_seconds = "0.0"
 
-[node name="falling" type="Node" parent="State/Root/Damage/Able/Movement/In the air"]
+[node name="falling" type="Node" parent="State/Root/Damage/Able/Movement/In the air" unique_id=202394122]
 script = ExtResource("6_awyfk")
 
-[node name="to grounded" type="Node" parent="State/Root/Damage/Able/Movement/In the air"]
+[node name="to grounded" type="Node" parent="State/Root/Damage/Able/Movement/In the air" unique_id=1950944390]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../Grounded")
 event = &"Movement: to grounded"
 delay_in_seconds = "0.0"
 
-[node name="Grounded" type="Node" parent="State/Root/Damage/Able/Movement"]
+[node name="Grounded" type="Node" parent="State/Root/Damage/Able/Movement" unique_id=1641301921]
 script = ExtResource("3_ga3c3")
 
-[node name="Direction Faced" type="Node" parent="State/Root/Damage/Able/Movement/Grounded"]
+[node name="Direction Faced" type="Node" parent="State/Root/Damage/Able/Movement/Grounded" unique_id=1262990186]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("HistoryState")
 
-[node name="Direction Faced States" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced" node_paths=PackedStringArray("character", "sc", "cs")]
+[node name="Direction Faced States" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced" unique_id=1440932708 node_paths=PackedStringArray("character", "sc", "cs")]
 script = ExtResource("5_7bbdo")
 character = NodePath("../../../../../../../..")
 sc = NodePath("../../../../../../..")
 cs = NodePath("..")
 
-[node name="face left" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced"]
+[node name="face left" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced" unique_id=596731604]
 script = ExtResource("6_awyfk")
 
-[node name="to face right" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced/face left"]
+[node name="to face right" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced/face left" unique_id=938699269]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../face right")
 event = &"Direction Faced: to face right"
 delay_in_seconds = "0.0"
 
-[node name="face right" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced"]
+[node name="face right" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced" unique_id=247271287]
 script = ExtResource("6_awyfk")
 
-[node name="to face left" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced/face right"]
+[node name="to face left" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced/face right" unique_id=1773990026]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../face left")
 event = &"Direction Faced: to face left"
 delay_in_seconds = "0.0"
 
-[node name="HistoryState" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced"]
+[node name="HistoryState" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Direction Faced" unique_id=1319326017]
 script = ExtResource("11_u5sbk")
 default_state = NodePath("../face left")
 
-[node name="Grounded Movement" type="Node" parent="State/Root/Damage/Able/Movement/Grounded"]
+[node name="Grounded Movement" type="Node" parent="State/Root/Damage/Able/Movement/Grounded" unique_id=801385641]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("moving")
 
-[node name="Grounded States" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" node_paths=PackedStringArray("direction_states", "in_the_air_states", "state_map", "character", "sc", "cs")]
+[node name="Grounded States" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" unique_id=259290338 node_paths=PackedStringArray("direction_states", "in_the_air_states", "state_map", "character", "sc", "cs")]
 script = ExtResource("11_h0n7g")
 direction_states = NodePath("../../Direction Faced/Direction Faced States")
 in_the_air_states = NodePath("../../../In the air/In the air States")
@@ -167,71 +167,71 @@ character = NodePath("../../../../../../../..")
 sc = NodePath("../../../../../../..")
 cs = NodePath("..")
 
-[node name="idle" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement"]
+[node name="idle" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" unique_id=1235539013]
 script = ExtResource("6_awyfk")
 
-[node name="to moving" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/idle"]
+[node name="to moving" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/idle" unique_id=1849294251]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../moving")
 event = &"Grounded: to moving"
 delay_in_seconds = "0.0"
 
-[node name="to jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/idle"]
+[node name="to jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/idle" unique_id=978306945]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../jump")
 event = &"Grounded: to jump"
 delay_in_seconds = "0.0"
 
-[node name="moving" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement"]
+[node name="moving" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" unique_id=1441412007]
 script = ExtResource("6_awyfk")
 
-[node name="to idle" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/moving"]
+[node name="to idle" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/moving" unique_id=495430616]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../idle")
 event = &"Grounded: to idle"
 delay_in_seconds = "0.0"
 
-[node name="to jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/moving"]
+[node name="to jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/moving" unique_id=2001186911]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../jump")
 event = &"Grounded: to jump"
 delay_in_seconds = "0.0"
 
-[node name="to turn" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/moving"]
+[node name="to turn" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/moving" unique_id=412521696]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../turn")
 event = &"Grounded: to turn"
 delay_in_seconds = "0.0"
 
-[node name="jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement"]
+[node name="jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" unique_id=1971451878]
 script = ExtResource("6_awyfk")
 
-[node name="turn" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement"]
+[node name="turn" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement" unique_id=2074818736]
 script = ExtResource("6_awyfk")
 
-[node name="to moving" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/turn"]
+[node name="to moving" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/turn" unique_id=332111251]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../moving")
 event = &"Grounded: to moving"
 delay_in_seconds = "0.0"
 
-[node name="to jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/turn"]
+[node name="to jump" type="Node" parent="State/Root/Damage/Able/Movement/Grounded/Grounded Movement/turn" unique_id=1810241401]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../jump")
 event = &"Grounded: to jump"
 delay_in_seconds = "0.0"
 
-[node name="to in the air" type="Node" parent="State/Root/Damage/Able/Movement/Grounded"]
+[node name="to in the air" type="Node" parent="State/Root/Damage/Able/Movement/Grounded" unique_id=1903130925]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../In the air")
 event = &"Movement: to in the air"
 delay_in_seconds = "0.0"
 
-[node name="Kick" type="Node" parent="State/Root/Damage/Able"]
+[node name="Kick" type="Node" parent="State/Root/Damage/Able" unique_id=641321650]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("no ball")
 
-[node name="Kick States" type="Node" parent="State/Root/Damage/Able/Kick" node_paths=PackedStringArray("kick_zone", "long_kick_zone", "long_kick_raycast", "character", "sc", "cs")]
+[node name="Kick States" type="Node" parent="State/Root/Damage/Able/Kick" unique_id=1405842603 node_paths=PackedStringArray("kick_zone", "long_kick_zone", "long_kick_raycast", "character", "sc", "cs")]
 script = ExtResource("13_v0iy0")
 kick_zone = NodePath("../../../../../../KickZone")
 long_kick_zone = NodePath("../../../../../../LongKickZone")
@@ -240,101 +240,101 @@ character = NodePath("../../../../../..")
 sc = NodePath("../../../../..")
 cs = NodePath("..")
 
-[node name="no ball" type="Node" parent="State/Root/Damage/Able/Kick"]
+[node name="no ball" type="Node" parent="State/Root/Damage/Able/Kick" unique_id=86186842]
 script = ExtResource("6_awyfk")
 
-[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/no ball"]
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/no ball" unique_id=361105391]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../can kick")
 event = &"Kick: to can kick"
 delay_in_seconds = "0.0"
 
-[node name="to intends to long kick" type="Node" parent="State/Root/Damage/Able/Kick/no ball"]
+[node name="to intends to long kick" type="Node" parent="State/Root/Damage/Able/Kick/no ball" unique_id=1847443843]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../intends to long kick")
 event = &"Kick: to intends to long kick"
 delay_in_seconds = "0.0"
 
-[node name="can kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+[node name="can kick" type="Node" parent="State/Root/Damage/Able/Kick" unique_id=1519244913]
 script = ExtResource("6_awyfk")
 
-[node name="to kick" type="Node" parent="State/Root/Damage/Able/Kick/can kick"]
+[node name="to kick" type="Node" parent="State/Root/Damage/Able/Kick/can kick" unique_id=1686519481]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../kick")
 event = &"Kick: to kick"
 delay_in_seconds = "0.0"
 
-[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/can kick"]
+[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/can kick" unique_id=643134120]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../no ball")
 event = &"Kick: to no ball"
 delay_in_seconds = "0.0"
 
-[node name="kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+[node name="kick" type="Node" parent="State/Root/Damage/Able/Kick" unique_id=749569834]
 script = ExtResource("6_awyfk")
 
-[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/kick"]
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/kick" unique_id=252662437]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../can kick")
 event = &"Kick: kick to can kick"
 delay_in_seconds = "0.0"
 
-[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/kick"]
+[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/kick" unique_id=107274793]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../no ball")
 event = &"Kick: to no ball"
 delay_in_seconds = "0.0"
 
-[node name="intends to long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+[node name="intends to long kick" type="Node" parent="State/Root/Damage/Able/Kick" unique_id=48079148]
 script = ExtResource("6_awyfk")
 
-[node name="to winding up long kick" type="Node" parent="State/Root/Damage/Able/Kick/intends to long kick"]
+[node name="to winding up long kick" type="Node" parent="State/Root/Damage/Able/Kick/intends to long kick" unique_id=943860678]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../winding up long kick")
 event = &"Kick: to winding up long kick"
 delay_in_seconds = "0.0"
 
-[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/intends to long kick"]
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/intends to long kick" unique_id=1320777369]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../can kick")
 event = &"Kick: long kick to can kick"
 delay_in_seconds = "0.0"
 
-[node name="winding up long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+[node name="winding up long kick" type="Node" parent="State/Root/Damage/Able/Kick" unique_id=392470943]
 script = ExtResource("6_awyfk")
 
-[node name="to long kick" type="Node" parent="State/Root/Damage/Able/Kick/winding up long kick"]
+[node name="to long kick" type="Node" parent="State/Root/Damage/Able/Kick/winding up long kick" unique_id=535622234]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../long kick")
 event = &"Kick: to long kick"
 delay_in_seconds = "0.0"
 
-[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/winding up long kick"]
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/winding up long kick" unique_id=1777374267]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../can kick")
 event = &"Kick: long kick to can kick"
 delay_in_seconds = "0.0"
 
-[node name="long kick" type="Node" parent="State/Root/Damage/Able/Kick"]
+[node name="long kick" type="Node" parent="State/Root/Damage/Able/Kick" unique_id=659738880]
 script = ExtResource("6_awyfk")
 
-[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/long kick"]
+[node name="to can kick" type="Node" parent="State/Root/Damage/Able/Kick/long kick" unique_id=11530984]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../can kick")
 event = &"Kick: long kick to can kick"
 delay_in_seconds = "0.0"
 
-[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/long kick"]
+[node name="to no ball" type="Node" parent="State/Root/Damage/Able/Kick/long kick" unique_id=598407389]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../no ball")
 event = &"Kick: to no ball"
 delay_in_seconds = "0.0"
 
-[node name="Dribble" type="Node" parent="State/Root/Damage/Able"]
+[node name="Dribble" type="Node" parent="State/Root/Damage/Able" unique_id=1045531993]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("not dribbling")
 
-[node name="Dribble States" type="Node" parent="State/Root/Damage/Able/Dribble" node_paths=PackedStringArray("dribble_pickup_zone", "dribble_marker", "dribble_raycast", "character", "sc", "cs")]
+[node name="Dribble States" type="Node" parent="State/Root/Damage/Able/Dribble" unique_id=1835081576 node_paths=PackedStringArray("dribble_pickup_zone", "dribble_marker", "dribble_raycast", "character", "sc", "cs")]
 script = ExtResource("14_dkbyo")
 dribble_pickup_zone = NodePath("../../../../../../DribblePickupZone")
 dribble_marker = NodePath("../../../../../../DribbleMarker")
@@ -343,227 +343,227 @@ character = NodePath("../../../../../..")
 sc = NodePath("../../../../..")
 cs = NodePath("..")
 
-[node name="not dribbling" type="Node" parent="State/Root/Damage/Able/Dribble"]
+[node name="not dribbling" type="Node" parent="State/Root/Damage/Able/Dribble" unique_id=1406983711]
 script = ExtResource("6_awyfk")
 
-[node name="to dribbling" type="Node" parent="State/Root/Damage/Able/Dribble/not dribbling"]
+[node name="to dribbling" type="Node" parent="State/Root/Damage/Able/Dribble/not dribbling" unique_id=1648305913]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../dribbling")
 event = &"Dribble: to dribbling"
 delay_in_seconds = "0.0"
 
-[node name="dribbling" type="Node" parent="State/Root/Damage/Able/Dribble"]
+[node name="dribbling" type="Node" parent="State/Root/Damage/Able/Dribble" unique_id=2014109982]
 script = ExtResource("6_awyfk")
 
-[node name="to not dribbling" type="Node" parent="State/Root/Damage/Able/Dribble/dribbling"]
+[node name="to not dribbling" type="Node" parent="State/Root/Damage/Able/Dribble/dribbling" unique_id=722750140]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../not dribbling")
 event = &"Dribble: to not dribbling"
 delay_in_seconds = "0.0"
 
-[node name="Headbutt" type="Node" parent="State/Root/Damage/Able"]
+[node name="Headbutt" type="Node" parent="State/Root/Damage/Able" unique_id=1785617001]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("on the ground")
 
-[node name="on the ground" type="Node" parent="State/Root/Damage/Able/Headbutt"]
+[node name="on the ground" type="Node" parent="State/Root/Damage/Able/Headbutt" unique_id=525284713]
 script = ExtResource("6_awyfk")
 
-[node name="jumping" type="Node" parent="State/Root/Damage/Able/Headbutt"]
+[node name="jumping" type="Node" parent="State/Root/Damage/Able/Headbutt" unique_id=1377303633]
 script = ExtResource("6_awyfk")
 
-[node name="headbutt" type="Node" parent="State/Root/Damage/Able/Headbutt"]
+[node name="headbutt" type="Node" parent="State/Root/Damage/Able/Headbutt" unique_id=855232480]
 script = ExtResource("6_awyfk")
 
-[node name="to knocked" type="Node" parent="State/Root/Damage/Able"]
+[node name="to knocked" type="Node" parent="State/Root/Damage/Able" unique_id=1340999067]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../knocked")
 event = &"Damage: to knocked"
 delay_in_seconds = "0.0"
 
-[node name="to dead" type="Node" parent="State/Root/Damage/Able"]
+[node name="to dead" type="Node" parent="State/Root/Damage/Able" unique_id=2140344879]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../dead")
 event = &"Damage: to dead"
 delay_in_seconds = "0.0"
 
-[node name="to hit" type="Node" parent="State/Root/Damage/Able"]
+[node name="to hit" type="Node" parent="State/Root/Damage/Able" unique_id=1783882282]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../hit")
 event = &"Damage: to hit"
 delay_in_seconds = "0.0"
 
-[node name="knocked" type="Node" parent="State/Root/Damage"]
+[node name="knocked" type="Node" parent="State/Root/Damage" unique_id=1394325029]
 script = ExtResource("6_awyfk")
 
-[node name="to out" type="Node" parent="State/Root/Damage/knocked"]
+[node name="to out" type="Node" parent="State/Root/Damage/knocked" unique_id=1768721671]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../out")
 event = &"Damage: to out"
 delay_in_seconds = "0.0"
 
-[node name="to recovering" type="Node" parent="State/Root/Damage/knocked"]
+[node name="to recovering" type="Node" parent="State/Root/Damage/knocked" unique_id=103311300]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../recovering")
 event = &"Damage: to recovering"
 delay_in_seconds = "0.0"
 
-[node name="out" type="Node" parent="State/Root/Damage"]
+[node name="out" type="Node" parent="State/Root/Damage" unique_id=1488655490]
 script = ExtResource("6_awyfk")
 
-[node name="to recovering" type="Node" parent="State/Root/Damage/out"]
+[node name="to recovering" type="Node" parent="State/Root/Damage/out" unique_id=714345062]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../recovering")
 event = &"Damage: to recovering"
 delay_in_seconds = "0.0"
 
-[node name="recovering" type="Node" parent="State/Root/Damage"]
+[node name="recovering" type="Node" parent="State/Root/Damage" unique_id=6126549]
 script = ExtResource("6_awyfk")
 
-[node name="to able" type="Node" parent="State/Root/Damage/recovering"]
+[node name="to able" type="Node" parent="State/Root/Damage/recovering" unique_id=986079822]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../Able/Movement")
 event = &"Damage: to able"
 delay_in_seconds = "0.0"
 
-[node name="to dead" type="Node" parent="State/Root/Damage/recovering"]
+[node name="to dead" type="Node" parent="State/Root/Damage/recovering" unique_id=347891351]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../dead")
 event = &"Damage: to dead"
 delay_in_seconds = "0.0"
 
-[node name="dead" type="Node" parent="State/Root/Damage"]
+[node name="dead" type="Node" parent="State/Root/Damage" unique_id=1490004676]
 script = ExtResource("6_awyfk")
 
-[node name="hit" type="Node" parent="State/Root/Damage"]
+[node name="hit" type="Node" parent="State/Root/Damage" unique_id=492582432]
 script = ExtResource("6_awyfk")
 
-[node name="to able" type="Node" parent="State/Root/Damage/hit"]
+[node name="to able" type="Node" parent="State/Root/Damage/hit" unique_id=1098681911]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../Able")
 event = &"Damage: to able"
 delay_in_seconds = "0.0"
 
-[node name="Path Constraint" type="Node" parent="State/Root"]
+[node name="Path Constraint" type="Node" parent="State/Root" unique_id=2035033016]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("on x-axis")
 
-[node name="Path States" type="Node" parent="State/Root/Path Constraint" node_paths=PackedStringArray("character", "sc", "cs")]
+[node name="Path States" type="Node" parent="State/Root/Path Constraint" unique_id=1670594908 node_paths=PackedStringArray("character", "sc", "cs")]
 script = ExtResource("12_oqj5v")
 character = NodePath("../../../..")
 sc = NodePath("../../..")
 cs = NodePath("..")
 
-[node name="on x-axis" type="Node" parent="State/Root/Path Constraint"]
+[node name="on x-axis" type="Node" parent="State/Root/Path Constraint" unique_id=1728293753]
 script = ExtResource("6_awyfk")
 
-[node name="to on path" type="Node" parent="State/Root/Path Constraint/on x-axis"]
+[node name="to on path" type="Node" parent="State/Root/Path Constraint/on x-axis" unique_id=468194257]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../on path")
 event = &"Path: to on path"
 delay_in_seconds = "0.0"
 
-[node name="on path" type="Node" parent="State/Root/Path Constraint"]
+[node name="on path" type="Node" parent="State/Root/Path Constraint" unique_id=1253047024]
 script = ExtResource("6_awyfk")
 
-[node name="to on x-axis" type="Node" parent="State/Root/Path Constraint/on path"]
+[node name="to on x-axis" type="Node" parent="State/Root/Path Constraint/on path" unique_id=87398929]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../on x-axis")
 event = &"Path: to on x-axis"
 delay_in_seconds = "0.0"
 
-[node name="Targeting" type="Node" parent="State/Root"]
+[node name="Targeting" type="Node" parent="State/Root" unique_id=188321130]
 script = ExtResource("4_e4l2d")
 initial_state = NodePath("none")
 
-[node name="TargetingStates" type="Node" parent="State/Root/Targeting" node_paths=PackedStringArray("character", "sc", "cs")]
+[node name="TargetingStates" type="Node" parent="State/Root/Targeting" unique_id=447084397 node_paths=PackedStringArray("character", "sc", "cs")]
 script = ExtResource("16_dkbyo")
 character = NodePath("../../../..")
 sc = NodePath("../../..")
 cs = NodePath("..")
 
-[node name="none" type="Node" parent="State/Root/Targeting"]
+[node name="none" type="Node" parent="State/Root/Targeting" unique_id=678500544]
 script = ExtResource("6_awyfk")
 
-[node name="to targeting" type="Node" parent="State/Root/Targeting/none"]
+[node name="to targeting" type="Node" parent="State/Root/Targeting/none" unique_id=447457814]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../targeting")
 event = &"Targeting: to targeting"
 delay_in_seconds = "0.0"
 
-[node name="targeting" type="Node" parent="State/Root/Targeting"]
+[node name="targeting" type="Node" parent="State/Root/Targeting" unique_id=2025784612]
 script = ExtResource("6_awyfk")
 
-[node name="to none" type="Node" parent="State/Root/Targeting/targeting"]
+[node name="to none" type="Node" parent="State/Root/Targeting/targeting" unique_id=1611264572]
 script = ExtResource("7_u4lyq")
 to = NodePath("../../none")
 event = &"Targeting: to none"
 delay_in_seconds = "0.0"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1093255297]
 transform = Transform3D(0.99999946, 0, 0, 0, 1, 0, 0, 0, 0.99999946, 0, 0.734811, 0)
 shape = SubResource("CapsuleShape3D_x41nu")
 
-[node name="JumpBufferTimer" type="Timer" parent="."]
+[node name="JumpBufferTimer" type="Timer" parent="." unique_id=132934896]
 wait_time = 0.05
 
-[node name="TargetMarker" type="Marker3D" parent="." groups=["PlayerGroup"]]
+[node name="TargetMarker" type="Marker3D" parent="." unique_id=1483925568 groups=["PlayerGroup"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00116658, 1.06277, 0)
 
-[node name="JumpRaycast" type="RayCast3D" parent="."]
+[node name="JumpRaycast" type="RayCast3D" parent="." unique_id=1574921125]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 target_position = Vector3(0, -1.3, 0)
 collision_mask = 266
 
-[node name="LongKickRaycast" type="RayCast3D" parent="."]
+[node name="LongKickRaycast" type="RayCast3D" parent="." unique_id=1737132970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
 target_position = Vector3(2.2, 0, 0)
 collision_mask = 4
 
-[node name="KickZone" type="Area3D" parent="."]
+[node name="KickZone" type="Area3D" parent="." unique_id=1653077357]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.347968, 0.257409, 0)
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="KickZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KickZone" unique_id=903848939]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_l4eab")
 
-[node name="LongKickZone" type="Area3D" parent="."]
+[node name="LongKickZone" type="Area3D" parent="." unique_id=1532605289]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.347968, 0.257409, 0)
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongKickZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LongKickZone" unique_id=148777178]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.176334, 0, 0)
 shape = SubResource("CapsuleShape3D_65hks")
 
-[node name="DribblePickupZone" type="Area3D" parent="."]
+[node name="DribblePickupZone" type="Area3D" parent="." unique_id=1988167803]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.348, 0.257, 0)
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DribblePickupZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DribblePickupZone" unique_id=1363751787]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.0663452, 0.239773, 0)
 shape = SubResource("BoxShape3D_r2h0o")
 
-[node name="DribbleMarker" type="Marker3D" parent="."]
+[node name="DribbleMarker" type="Marker3D" parent="." unique_id=283748973]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.18, 0)
 
-[node name="DribbleRaycast" type="RayCast3D" parent="."]
+[node name="DribbleRaycast" type="RayCast3D" parent="." unique_id=88769730]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00640211, 0.257409, 0)
 target_position = Vector3(2.5, 0, 0)
 collision_mask = 4
 hit_from_inside = true
 
-[node name="Head" type="Node3D" parent="."]
+[node name="Head" type="Node3D" parent="." unique_id=533162650]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41, 0)
 script = ExtResource("13_keip7")
 
-[node name="RayCastLeft" type="RayCast3D" parent="Head"]
+[node name="RayCastLeft" type="RayCast3D" parent="Head" unique_id=109371123]
 target_position = Vector3(-0.12, 0.16, 0)
 collision_mask = 4
 
-[node name="RayCastRight" type="RayCast3D" parent="Head"]
+[node name="RayCastRight" type="RayCast3D" parent="Head" unique_id=1637655574]
 target_position = Vector3(0.12, 0.16, 0)
 collision_mask = 4
 

@@ -1,37 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://r42whxkucyjl"]
+[gd_scene format=3 uid="uid://r42whxkucyjl"]
 
-[ext_resource type="PackedScene" uid="uid://djoujpff8bvcx" path="res://assets/3D/Act1/blend/Bush3.blend" id="1_he714"]
-[ext_resource type="Material" uid="uid://c44bgubnd02se" path="res://assets/3D/Act1/materials/vegetation/bush1/bush1_swaying.tres" id="2_2nalw"]
+[ext_resource type="PackedScene" uid="uid://djoujpff8bvcx" path="res://assets/deprecated/3D/Act1/blend/Bush3.blend" id="1_he714"]
+[ext_resource type="Material" uid="uid://c44bgubnd02se" path="res://assets/deprecated/3D/Act1/materials/vegetation/bush1/bush1_swaying.tres" id="2_2nalw"]
 
-[node name="Bush" type="Node3D"]
+[node name="Bush" type="Node3D" unique_id=1668090434]
 
-[node name="Bush3" parent="." instance=ExtResource("1_he714")]
+[node name="Bush3" parent="." unique_id=582298178 instance=ExtResource("1_he714")]
 
-[node name="Plane" parent="Bush3" index="0"]
+[node name="Plane" parent="Bush3" index="0" unique_id=104679764]
 surface_material_override/0 = ExtResource("2_2nalw")
 
-[node name="Plane_001" parent="Bush3" index="1"]
+[node name="Plane_001" parent="Bush3" index="1" unique_id=349896091]
 surface_material_override/0 = ExtResource("2_2nalw")
 
-[node name="Plane_002" parent="Bush3" index="2"]
+[node name="Plane_002" parent="Bush3" index="2" unique_id=294160868]
 surface_material_override/0 = ExtResource("2_2nalw")
 
-[node name="Plane_003" parent="Bush3" index="3"]
+[node name="Plane_003" parent="Bush3" index="3" unique_id=1846484122]
 surface_material_override/0 = ExtResource("2_2nalw")
 
-[node name="Plane_004" parent="Bush3" index="4"]
+[node name="Plane_004" parent="Bush3" index="4" unique_id=546435220]
 surface_material_override/0 = ExtResource("2_2nalw")
 
-[node name="Plane_005" parent="Bush3" index="5"]
+[node name="Plane_005" parent="Bush3" index="5" unique_id=1127413774]
 surface_material_override/0 = ExtResource("2_2nalw")
 
-[node name="Plane_006" parent="Bush3" index="6"]
+[node name="Plane_006" parent="Bush3" index="6" unique_id=697672366]
 surface_material_override/0 = ExtResource("2_2nalw")
 
-[node name="Plane_007" parent="Bush3" index="7"]
+[node name="Plane_007" parent="Bush3" index="7" unique_id=1397091759]
 surface_material_override/0 = ExtResource("2_2nalw")
 
-[node name="Plane_008" parent="Bush3" index="8"]
+[node name="Plane_008" parent="Bush3" index="8" unique_id=72195102]
 surface_material_override/0 = ExtResource("2_2nalw")
 
 [editable path="Bush3"]

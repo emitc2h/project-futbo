@@ -17,6 +17,4 @@ void fragment() {
 	// Emission Operator: Add
 	ALBEDO = emission_tex_colored;
 	EMISSION = emission_tex_colored * emission_energy * 1000.0;
-	ALPHA *= emission_tex.r;
-	ALPHA_SCISSOR_THRESHOLD = 0.001;
 }

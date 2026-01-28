@@ -1,33 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl2glyig12kut"]
+[gd_scene format=3 uid="uid://dl2glyig12kut"]
 
 [ext_resource type="Script" uid="uid://c28dgpqfk275l" path="res://scripts/debug/debug_tool.gd" id="1_rtcbt"]
 
-[node name="DebugTool" type="CanvasLayer"]
+[node name="DebugTool" type="CanvasLayer" unique_id=927733864]
 process_mode = 3
 script = ExtResource("1_rtcbt")
 active = true
 max_running_logs = null
 visible_only_on_pause = null
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1803242381]
 custom_minimum_size = Vector2(450, 400)
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 470.0
 offset_bottom = 791.0
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=160677163]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="TabContainer" type="TabContainer" parent="PanelContainer/MarginContainer"]
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/MarginContainer" unique_id=1995162458]
 layout_mode = 2
 current_tab = 0
 
-[node name="Running Logs" type="MarginContainer" parent="PanelContainer/MarginContainer/TabContainer"]
+[node name="Running Logs" type="MarginContainer" parent="PanelContainer/MarginContainer/TabContainer" unique_id=1574973064]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
@@ -35,14 +35,14 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 metadata/_tab_index = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/TabContainer/Running Logs"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/TabContainer/Running Logs" unique_id=1775620464]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/TabContainer/Running Logs/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/TabContainer/Running Logs/VBoxContainer" unique_id=1452986021]
 custom_minimum_size = Vector2(400, 800)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/TabContainer/Running Logs/VBoxContainer/ScrollContainer"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/TabContainer/Running Logs/VBoxContainer/ScrollContainer" unique_id=1664205854]
 process_mode = 3
 custom_minimum_size = Vector2(400, 760)
 layout_mode = 2
@@ -50,7 +50,7 @@ size_flags_vertical = 0
 text = "awaiting logs..."
 autowrap_mode = 3
 
-[node name="Pause Logs" type="MarginContainer" parent="PanelContainer/MarginContainer/TabContainer"]
+[node name="Pause Logs" type="MarginContainer" parent="PanelContainer/MarginContainer/TabContainer" unique_id=1589010636]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 5
@@ -59,10 +59,10 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs" unique_id=849808481]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer" unique_id=616941492]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.93462, 0.762591, 0, 1)
@@ -71,11 +71,11 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "< DEBUG >"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer" unique_id=248249632]
 custom_minimum_size = Vector2(400, 800)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer/ScrollContainer"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/TabContainer/Pause Logs/VBoxContainer/ScrollContainer" unique_id=1511447676]
 process_mode = 3
 custom_minimum_size = Vector2(400, 760)
 layout_mode = 2
@@ -83,10 +83,10 @@ size_flags_vertical = 0
 text = "awaiting logs..."
 autowrap_mode = 3
 
-[node name="AdvanceTimer" type="Timer" parent="."]
+[node name="AdvanceTimer" type="Timer" parent="." unique_id=278274035]
 wait_time = 0.05
 
-[node name="AdvanceAllowedTimer" type="Timer" parent="."]
+[node name="AdvanceAllowedTimer" type="Timer" parent="." unique_id=902099639]
 wait_time = 0.3
 
 [connection signal="timeout" from="AdvanceTimer" to="." method="_on_advance_timer_timeout"]

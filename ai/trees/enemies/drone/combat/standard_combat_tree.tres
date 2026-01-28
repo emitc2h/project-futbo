@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=75 format=3 uid="uid://bqtyjssdjddho"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://bqtyjssdjddho"]
 
 [ext_resource type="BlackboardPlan" uid="uid://13kdtfbmqd6l" path="res://ai/trees/enemies/drone/drone_blackboard_plan.tres" id="1_8ur65"]
 [ext_resource type="Script" uid="uid://brqg8vvudgc7a" path="res://ai/tasks/drone/is_in_targeting_state_condition.gd" id="1_yycr0"]

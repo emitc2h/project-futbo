@@ -1,11 +1,11 @@
-[gd_scene load_steps=139 format=4 uid="uid://c7f1c26mhg1k8"]
+[gd_scene format=4 uid="uid://c7f1c26mhg1k8"]
 
-[ext_resource type="PackedScene" uid="uid://c6irjm83p35mw" path="res://assets/3D/Enemies/Drone/drone.glb" id="1_y6iu8"]
+[ext_resource type="PackedScene" uid="uid://c6irjm83p35mw" path="res://assets/deprecated/3D/Enemies/Drone/drone.glb" id="1_y6iu8"]
 [ext_resource type="Script" uid="uid://csqm55eeox22r" path="res://scripts/enemies/drone/drone_model.gd" id="2_3tr2a"]
 [ext_resource type="Script" uid="uid://r4dihe2vx3dk" path="res://scripts/utilities/animation_tree/animation_state_change_tracker.gd" id="6_7e3mk"]
 [ext_resource type="Script" uid="uid://dflhlxuhdu11p" path="res://scripts/enemies/drone/drone_bone.gd" id="6_llkgy"]
-[ext_resource type="Material" uid="uid://ms7f07u5wnvf" path="res://assets/3D/Enemies/Drone/materials/drone_lightning_material.tres" id="7_c0e6q"]
-[ext_resource type="Texture2D" uid="uid://nq4dlxtmbbtj" path="res://assets/3D/Particles/smoke/smoke_01_color.png" id="8_c0e6q"]
+[ext_resource type="Material" uid="uid://ms7f07u5wnvf" path="res://assets/deprecated/3D/Enemies/Drone/materials/drone_lightning_material.tres" id="7_c0e6q"]
+[ext_resource type="Texture2D" uid="uid://nq4dlxtmbbtj" path="res://assets/deprecated/3D/Particles/smoke/smoke_01_color.png" id="8_c0e6q"]
 [ext_resource type="Script" uid="uid://ddjnob7s0q1hb" path="res://scripts/enemies/drone/animation/drone_engines_animation.gd" id="15_fedws"]
 [ext_resource type="PackedScene" uid="uid://invfr68fmeed" path="res://scenes/enemies/drone/drone_plasma_bolt.tscn" id="16_jsqfj"]
 [ext_resource type="Script" uid="uid://cecdmsdg2l2tb" path="res://scripts/enemies/drone/animation/drone_engines_props.gd" id="16_jykis"]
@@ -532,7 +532,7 @@ load_path = "res://.godot/imported/exhaust_noise.png-d638d90c2b554bfa6bbb5fc676a
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8fjvm"]
 load_path = "res://.godot/imported/exhaust_flame.png-64e3667e87fe27dfb28b1779da0dff85.s3tc.ctex"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fedws"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j4664"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_fo02n")
@@ -609,7 +609,7 @@ load_path = "res://.godot/imported/firebeam.png-f1fe689012e17612b176f7cd67447c8d
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_e8q0d"]
 load_path = "res://.godot/imported/closed_shield_alpha_mask.png-7f4fbf4cf12bde179ea3d06a87ff99f6.s3tc.ctex"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cb2h8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fo02n"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_h16oq")
@@ -692,7 +692,7 @@ load_path = "res://.godot/imported/firebeam.png-f1fe689012e17612b176f7cd67447c8d
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3yi20"]
 load_path = "res://.godot/imported/closed_shield_alpha_mask.png-7f4fbf4cf12bde179ea3d06a87ff99f6.s3tc.ctex"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mx6bm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h16oq"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_8fjvm")
@@ -775,7 +775,7 @@ load_path = "res://.godot/imported/firebeam.png-f1fe689012e17612b176f7cd67447c8d
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5bbph"]
 load_path = "res://.godot/imported/closed_shield_alpha_mask.png-7f4fbf4cf12bde179ea3d06a87ff99f6.s3tc.ctex"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fo02n"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8fjvm"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_fedws")
@@ -972,20 +972,20 @@ points = PackedVector3Array(0.13333884, 0.021850068, -0.10936189, 0.09242819, 0.
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_v6hgt"]
 points = PackedVector3Array(0.13565925, -0.03237295, -0.10372228, 0.080211036, 0.0117778815, -0.080819204, 0.16065782, -0.049993362, -0.042911153, 0.027679317, -0.032397147, -0.05890516, -0.016693145, 0.011765782, -0.040622257, 0.11359455, -0.0117522925, 0.00042242557, 0.052677885, -0.05001151, 0.0019200966, 0.016690362, -0.011770438, 0.040619366)
 
-[node name="DroneModel" instance=ExtResource("1_y6iu8")]
+[node name="DroneModel" unique_id=1497263197 instance=ExtResource("1_y6iu8")]
 script = ExtResource("2_3tr2a")
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="0"]
+[node name="AnimationTree" type="AnimationTree" parent="." index="0" unique_id=183695372]
 tree_root = SubResource("AnimationNodeStateMachine_xd6o8")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 
-[node name="AnimationStateChangeTracker" type="Node" parent="AnimationTree" index="0"]
+[node name="AnimationStateChangeTracker" type="Node" parent="AnimationTree" index="0" unique_id=1839178353]
 script = ExtResource("6_7e3mk")
 state_machine_path = "parameters/playback"
 metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 
-[node name="Skeleton3D" parent="Armature" index="0"]
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1078766082) index="0" unique_id=765694235]
 bones/2/position = Vector3(1.8175978e-08, 2.1103753e-22, -2.134834e-08)
 bones/2/rotation = Quaternion(-0.50000006, 0.50000006, 0.49999994, -0.5)
 bones/2/scale = Vector3(0.99999994, 1, 1)
@@ -1072,17 +1072,17 @@ bones/34/scale = Vector3(1, 1.0000001, 0.99999994)
 bones/35/position = Vector3(0.04391488, -3.5205624e-06, 0.16390355)
 bones/35/rotation = Quaternion(-0.11873237, -0.079563715, 0.043616492, 0.98877186)
 
-[node name="drone" parent="Armature/Skeleton3D" index="0"]
+[node name="drone" parent="Armature/Skeleton3D" index="0" unique_id=1801691282]
 layers = 8
 mesh = SubResource("ArrayMesh_fo02n")
-surface_material_override/6 = SubResource("ShaderMaterial_fedws")
-surface_material_override/7 = SubResource("ShaderMaterial_cb2h8")
-surface_material_override/8 = SubResource("ShaderMaterial_mx6bm")
-surface_material_override/9 = SubResource("ShaderMaterial_fo02n")
+surface_material_override/6 = SubResource("ShaderMaterial_j4664")
+surface_material_override/7 = SubResource("ShaderMaterial_fo02n")
+surface_material_override/8 = SubResource("ShaderMaterial_h16oq")
+surface_material_override/9 = SubResource("ShaderMaterial_8fjvm")
 
-[node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Armature/Skeleton3D" index="1"]
+[node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Armature/Skeleton3D" index="1" unique_id=189030983]
 
-[node name="Physical Bone BODY" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="0" groups=["DroneGroup"]]
+[node name="Physical Bone BODY" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="0" unique_id=1737647129 groups=["DroneGroup"]]
 collision_layer = 512
 collision_mask = 2
 joint_type = 1
@@ -1094,10 +1094,10 @@ joint_constraints/damping = 1.0
 joint_constraints/impulse_clamp = 0.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY" index="0" unique_id=2071863781]
 shape = SubResource("SphereShape3D_fo02n")
 
-[node name="LightningParticles3D" type="GPUParticles3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY" index="1"]
+[node name="LightningParticles3D" type="GPUParticles3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY" index="1" unique_id=1871578294]
 emitting = false
 amount = 10
 preprocess = 2.0
@@ -1105,7 +1105,7 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_u5jqv")
 draw_pass_1 = SubResource("ArrayMesh_y1wh7")
 
-[node name="SmokeParticles3D" type="GPUParticles3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY" index="2"]
+[node name="SmokeParticles3D" type="GPUParticles3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone BODY" index="2" unique_id=1365529426]
 emitting = false
 amount = 35
 lifetime = 5.0
@@ -1114,7 +1114,7 @@ randomness = 0.14
 process_material = SubResource("ParticleProcessMaterial_1gcpp")
 draw_pass_1 = SubResource("QuadMesh_pftr7")
 
-[node name="Physical Bone DEF_FRONT_PLATE" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="1" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_FRONT_PLATE" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="1" unique_id=220968943 groups=["DroneGroup"]]
 transform = Transform3D(0, -1.7881393e-07, -1, -1, 5.9604645e-08, -1.0658141e-14, 5.9604645e-08, 1, -1.7881393e-07, 1.8175978e-08, 2.1103753e-22, -2.134834e-08)
 collision_layer = 512
 collision_mask = 2
@@ -1132,18 +1132,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_FRONT_PLATE" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_FRONT_PLATE" index="0" unique_id=1831626047]
 transform = Transform3D(-7.4328405e-08, -0.99999994, 2.9802326e-08, -1.6885299e-07, -7.1054274e-15, 0.99999994, -1, 7.432837e-08, -1.6885298e-07, -2.980232e-08, 2.1348345e-08, 1.817589e-08)
 shape = SubResource("ConvexPolygonShape3D_fedws")
 
-[node name="Physical Bone DEF_VERTEBRAE_01_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="2" groups=["DroneGroup"]]
-transform = Transform3D(-3.0758417e-07, 9.5674245e-08, 1, -0.20004714, 0.9797863, -1.5527165e-07, -0.97978634, -0.20004712, -2.8222738e-07, -7.337712e-08, -1.3282175e-08, 0.512002)
+[node name="Physical Bone DEF_VERTEBRAE_01_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="2" unique_id=1392200514 groups=["DroneGroup"]]
+transform = Transform3D(-3.0758392e-07, 9.5674054e-08, 1, -0.20004714, 0.9797863, -1.552714e-07, -0.97978634, -0.20004712, -2.8222715e-07, -7.337712e-08, -1.3282175e-08, 0.512002)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.22495073, 0.97436893, 0, -0.97436893, -0.22495073, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -1.7976891)
-body_offset = Transform3D(1.0000002, 1.0281801e-06, 3.6655365e-08, -1.2218952e-06, 1, -2.6591707e-09, 3.3668215e-08, -4.3817067e-08, 1, 0, 0, 0)
+body_offset = Transform3D(1.0000002, 1.0281801e-06, 3.665508e-08, -1.2218952e-06, 1, -2.658961e-09, 3.366847e-08, -4.381726e-08, 1, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_01.T"
@@ -1155,18 +1155,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_01_T" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_01_T" index="0" unique_id=1502872399]
 transform = Transform3D(-3.4106472e-07, -0.20004706, -0.9797863, 1.3904688e-07, 0.97978634, -0.20004708, 1, -2.0446521e-07, -3.0635465e-07, 0, 1.4901161e-08, 7.337712e-08)
 shape = SubResource("ConvexPolygonShape3D_8fjvm")
 
-[node name="Physical Bone DEF_VERTEBRAE_02_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="3" groups=["DroneGroup"]]
-transform = Transform3D(-2.6080744e-07, 2.0929576e-07, 1, -0.5600811, 0.82843786, -3.194618e-07, -0.82843786, -0.5600811, -9.884014e-08, -4.4802867e-08, 0.20070502, 0.47102338)
+[node name="Physical Bone DEF_VERTEBRAE_02_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="3" unique_id=1392414705 groups=["DroneGroup"]]
+transform = Transform3D(-2.6080744e-07, 2.0929576e-07, 1, -0.5600811, 0.82843786, -3.194618e-07, -0.82843786, -0.5600811, -9.884015e-08, -4.4802867e-08, 0.20070502, 0.47102338)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.99938977, -0.034899414, 0, 0.034899414, -0.99938977, 0, 0, 0, 0.9999995, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 3.106686)
-body_offset = Transform3D(1.0000002, 0.00038066506, 6.643214e-08, -0.00038078427, 1, -1.7335843e-08, 1.6323455e-08, 1.3151649e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1.0000002, 0.00038066506, 6.6432136e-08, -0.00038078427, 1, -1.7335847e-08, 1.6323455e-08, 1.3151649e-09, 1, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_02.T"
@@ -1178,11 +1178,11 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_02_T" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_02_T" index="0" unique_id=41090759]
 transform = Transform3D(-2.766168e-07, -0.55976754, -0.8286497, 2.0735423e-07, 0.8286497, -0.55976754, 1, -3.2666514e-07, -1.13148246e-07, -1.7881393e-07, 1.4901161e-08, 4.4802803e-08)
 shape = SubResource("ConvexPolygonShape3D_jsqfj")
 
-[node name="Physical Bone DEF_VERTEBRAE_03_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="4" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_VERTEBRAE_03_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="4" unique_id=1068998154 groups=["DroneGroup"]]
 transform = Transform3D(-9.292145e-08, 2.0781316e-07, 1, -0.8289554, 0.5593148, -1.9326069e-07, -0.5593147, -0.8289554, 1.202955e-07, -4.2894293e-09, 0.3620397, 0.36203945)
 collision_layer = 512
 collision_mask = 2
@@ -1201,18 +1201,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_03_T" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_03_T" index="0" unique_id=1835795560]
 transform = Transform3D(-7.992375e-08, -0.82865757, -0.55975574, 1.9013976e-07, 0.55975574, -0.82865757, 1, -1.7266127e-07, 1.1282299e-07, -2.9802322e-07, -1.6391277e-07, 4.289422e-09)
 shape = SubResource("ConvexPolygonShape3D_3yi20")
 
-[node name="Physical Bone DEF_PANEL_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="5" groups=["DroneGroup"]]
-transform = Transform3D(-9.559935e-08, 6.9664075e-08, 1, -0.9424352, -0.3343889, -6.680129e-08, 0.33438894, -0.94243515, 9.762123e-08, 3.2534835e-08, 0.47102332, 0.20070459)
+[node name="Physical Bone DEF_PANEL_T" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="5" unique_id=1587995231 groups=["DroneGroup"]]
+transform = Transform3D(-9.559928e-08, 6.966401e-08, 1, -0.9424352, -0.3343889, -6.6801256e-08, 0.33438894, -0.94243515, 9.7621154e-08, 3.2534835e-08, 0.47102332, 0.20070459)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.8290369, 0.55919236, 0, -0.55919236, -0.8290369, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -2.5481808)
-body_offset = Transform3D(1.0000002, -5.853176e-05, 2.6730959e-08, 5.8710575e-05, 1.0000004, 9.141068e-08, 9.506067e-09, -1.5304622e-08, 1, 0, 0, 0)
+body_offset = Transform3D(1.0000002, -5.853176e-05, 2.6730891e-08, 5.8710575e-05, 1.0000004, 9.1410755e-08, 9.506131e-09, -1.5304686e-08, 1, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_PANEL.T"
@@ -1224,16 +1224,16 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_T" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_T" index="0" unique_id=1301618901]
 transform = Transform3D(-8.8627225e-08, -0.9424154, 0.33444437, 7.649792e-08, -0.33444437, -0.9424154, 1, -5.793937e-08, 1.017337e-07, -5.9604645e-08, -3.874302e-07, -3.2534807e-08)
 shape = SubResource("ConvexPolygonShape3D_wabu4")
 
-[node name="Physical Bone DEF_VERTEBRAE_01_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="6" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_VERTEBRAE_01_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="6" unique_id=1862684462 groups=["DroneGroup"]]
 transform = Transform3D(-7.5505184e-08, -6.8907504e-08, -1, 0.20004627, -0.97978646, 5.2410105e-08, -0.97978646, -0.20004627, 8.7763645e-08, -7.337711e-08, 8.617755e-09, 0.512002)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
-joint_offset = Transform3D(-0.13917275, 0.9902657, 0, -0.9902657, -0.13917275, 0, 0, 0, 1, 0, 0, 0)
+joint_offset = Transform3D(-0.13917273, 0.9902656, 0, -0.9902656, -0.13917273, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -1.7104226)
 body_offset = Transform3D(1.0000001, 2.6673079e-06, -4.872428e-08, -2.6524067e-06, 1, -7.484781e-08, 2.2479654e-09, 4.524418e-09, 1, 0, 0, 0)
 bounce = 0.18
@@ -1247,18 +1247,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_01_B" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_01_B" index="0" unique_id=1247405747]
 transform = Transform3D(-4.371139e-08, -0.19936793, -0.9799247, 0, 0.9799247, -0.19936793, 1, -8.714649e-09, -4.2833868e-08, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_8fjvm")
 
-[node name="Physical Bone DEF_VERTEBRAE_02_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="7" groups=["DroneGroup"]]
-transform = Transform3D(-3.051482e-08, -9.018306e-08, -1, 0.5599095, -0.8285538, 5.763597e-08, -0.8285538, -0.5599096, 7.5777514e-08, -8.656565e-08, -0.20070505, 0.47102392)
+[node name="Physical Bone DEF_VERTEBRAE_02_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="7" unique_id=956890721 groups=["DroneGroup"]]
+transform = Transform3D(-3.0514787e-08, -9.018306e-08, -1, 0.5599095, -0.8285538, 5.763599e-08, -0.8285538, -0.5599096, 7.5777486e-08, -8.656565e-08, -0.20070505, 0.47102392)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.99862903, 0.052336022, 0, -0.052336022, -0.99862903, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -3.0892327)
-body_offset = Transform3D(1.0000001, 0.00017467141, 5.5485216e-09, -0.0001745522, 1, -8.5549146e-08, -2.1575875e-08, 2.7893243e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1.0000001, 0.00017467141, 5.548557e-09, -0.0001745522, 1, -8.5549146e-08, -2.1575907e-08, 2.7893243e-09, 1, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_02.B"
@@ -1270,11 +1270,11 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_02_B" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_02_B" index="0" unique_id=756142976]
 transform = Transform3D(2.9854816e-09, -0.5597684, -0.8286492, 1.5985074e-07, 0.82864916, -0.5597685, 1, -1.3078903e-07, 9.1953304e-08, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_jsqfj")
 
-[node name="Physical Bone DEF_VERTEBRAE_03_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="8" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_VERTEBRAE_03_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="8" unique_id=1892193445 groups=["DroneGroup"]]
 transform = Transform3D(4.257737e-08, 1.4315056e-07, -1, 0.82871014, -0.55967814, -4.4833932e-08, -0.55967814, -0.82871014, -1.4245992e-07, -1.0357906e-07, -0.36203974, 0.36204016)
 collision_layer = 512
 collision_mask = 2
@@ -1293,18 +1293,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_03_B" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_03_B" index="0" unique_id=1161347442]
 transform = Transform3D(3.7596028e-08, -0.8286516, -0.55976444, -1.9155688e-07, 0.5597643, -0.82865185, 1, 1.3838071e-07, -1.3768899e-07, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_3yi20")
 
-[node name="Physical Bone DEF_PANEL_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="9" groups=["DroneGroup"]]
-transform = Transform3D(1.8521353e-08, 1.5868798e-07, -1, 0.94249445, 0.33422193, 7.049327e-08, 0.33422193, -0.94249445, -1.4337229e-07, -7.581258e-08, -0.47102347, 0.20070544)
+[node name="Physical Bone DEF_PANEL_B" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="9" unique_id=822218739 groups=["DroneGroup"]]
+transform = Transform3D(1.8521353e-08, 1.5868811e-07, -1, 0.94249445, 0.33422193, 7.0493314e-08, 0.33422193, -0.94249445, -1.4337242e-07, -7.581258e-08, -0.47102347, 0.20070544)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.8290371, 0.5591925, 0, -0.5591925, -0.8290371, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -2.5481808)
-body_offset = Transform3D(1, -0.0002360344, 8.133356e-08, 0.00023600459, 1.0000001, -3.8777614e-08, -5.226209e-09, 2.5410145e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, -0.0002360344, 8.133356e-08, 0.00023600459, 1.0000001, -3.8777486e-08, -5.226209e-09, 2.5408866e-09, 1, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_PANEL.B"
@@ -1316,11 +1316,11 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_B" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_B" index="0" unique_id=1350540022]
 transform = Transform3D(-3.8696946e-08, -0.9426415, 0.3338069, -2.9182326e-08, -0.3338069, -0.9426415, 1, -4.621861e-08, -1.4591163e-08, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_jykis")
 
-[node name="Physical Bone DEF_BACK_PLATE" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="10" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_BACK_PLATE" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="10" unique_id=802781688 groups=["DroneGroup"]]
 transform = Transform3D(-4.541528e-11, 2.376505e-07, 1, -1, 9.23872e-07, -4.5634836e-11, -9.23872e-07, -1, 2.376505e-07, -5.562103e-23, -3.502501e-23, -2.1348344e-08)
 collision_layer = 512
 collision_mask = 2
@@ -1338,18 +1338,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_BACK_PLATE" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_BACK_PLATE" index="0" unique_id=1071670167]
 transform = Transform3D(-9.054979e-13, -1, -5.9604645e-08, 2.384163e-07, 5.9604645e-08, -1, 1, -9.197086e-13, 2.384163e-07, -1.2724604e-15, -2.1348344e-08, 5.089793e-15)
 shape = SubResource("ConvexPolygonShape3D_e8q0d")
 
-[node name="Physical Bone DEF_VERTEBRAE_01_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="11" groups=["DroneGroup"]]
-transform = Transform3D(-0.20003416, 0.97978896, -1.0096744e-05, -5.609198e-05, -1.1467444e-06, 1, 0.97978896, 0.20003416, 5.5187687e-05, 1.3631664e-07, -4.681248e-16, -0.512002)
+[node name="Physical Bone DEF_VERTEBRAE_01_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="11" unique_id=1215718862 groups=["DroneGroup"]]
+transform = Transform3D(-0.20003416, 0.97978896, -1.0096735e-05, -5.609198e-05, -1.1467515e-06, 1, 0.97978896, 0.20003416, 5.5187687e-05, 1.3631664e-07, -4.681248e-16, -0.512002)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
-joint_offset = Transform3D(-0.1391728, 0.9902661, 0, -0.9902661, -0.1391728, 0, 0, 0, 1, 0, 0, 0)
+joint_offset = Transform3D(-0.13917279, 0.99026597, 0, -0.99026597, -0.13917279, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -1.7104226)
-body_offset = Transform3D(0.99999994, -1.1071563e-05, 5.6009714e-05, 1.104176e-05, 0.9999999, 1.2522387e-06, -5.609198e-05, -1.1765459e-06, 1, 0, 0, 0)
+body_offset = Transform3D(0.99999994, -1.1071563e-05, 5.6009714e-05, 1.104176e-05, 0.9999999, 1.252246e-06, -5.609198e-05, -1.176553e-06, 1, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_01.L"
@@ -1361,18 +1361,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_01_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_01_L" index="0" unique_id=237785445]
 transform = Transform3D(-8.9959684e-07, -0.200043, -0.97978705, 9.1672185e-08, 0.97978705, -0.20004298, 1, -2.7571366e-07, -8.630753e-07, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_8fjvm")
 
-[node name="Physical Bone DEF_VERTEBRAE_02_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="12" groups=["DroneGroup"]]
-transform = Transform3D(-0.55976355, 0.82865244, 2.6497644e-06, 8.630259e-07, -2.6146959e-06, 1, 0.82865244, 0.55976355, 7.484628e-07, 0.20070527, 6.1048784e-09, -0.47102365)
+[node name="Physical Bone DEF_VERTEBRAE_02_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="12" unique_id=81519218 groups=["DroneGroup"]]
+transform = Transform3D(-0.55976355, 0.82865244, 2.6497642e-06, 8.630259e-07, -2.6146959e-06, 1, 0.82865244, 0.55976355, 7.484628e-07, 0.20070527, 6.1048784e-09, -0.47102365)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.9990474, 0.043619253, 0, -0.043619253, -0.9990474, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -3.0979595)
-body_offset = Transform3D(0.99999994, -1.4007092e-06, -9.477746e-07, 1.4007092e-06, 0.99999994, 2.6656512e-06, 8.430553e-07, -2.627768e-06, 1, 0, 0, 0)
+body_offset = Transform3D(0.99999994, -1.4007092e-06, -9.477747e-07, 1.4007092e-06, 0.99999994, 2.6656514e-06, 8.430553e-07, -2.627768e-06, 1, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_02.L"
@@ -1384,18 +1384,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_02_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_02_L" index="0" unique_id=393884334]
 transform = Transform3D(-1.1446063e-07, -0.55976427, -0.82865196, -2.0205633e-07, 0.8286519, -0.55976415, 1, 1.3578004e-07, -2.3775354e-07, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_jsqfj")
 
-[node name="Physical Bone DEF_VERTEBRAE_03_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="13" groups=["DroneGroup"]]
-transform = Transform3D(-0.8284407, 0.56007683, -8.8399465e-06, -1.0102875e-06, 1.4289081e-05, 1, 0.56007683, 0.8284407, -1.1271817e-05, 0.36204004, 8.6499705e-09, -0.36203995)
+[node name="Physical Bone DEF_VERTEBRAE_03_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="13" unique_id=392582005 groups=["DroneGroup"]]
+transform = Transform3D(-0.8284407, 0.5600768, -8.839944e-06, -1.0102875e-06, 1.4289076e-05, 1, 0.56007683, 0.82844067, -1.1271814e-05, 0.36204004, 8.6499705e-09, -0.36203995)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.9993904, 0.034899436, 0, -0.034899436, -0.9993904, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -3.106686)
-body_offset = Transform3D(0.9999999, -0.00037685037, 9.514174e-07, 0.00037690997, 0.99999964, -1.4198236e-05, -1.0573553e-06, 1.4194689e-05, 1, 0, 0, 0)
+body_offset = Transform3D(0.9999999, -0.00037685037, 9.514165e-07, 0.00037690997, 0.99999976, -1.419823e-05, -1.0573553e-06, 1.4194687e-05, 1, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_03.L"
@@ -1407,18 +1407,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_03_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_03_L" index="0" unique_id=1464679197]
 transform = Transform3D(-8.3192293e-07, -0.82865286, -0.5597634, 2.0791944e-07, 0.55976313, -0.828653, 1.0000002, -8.388378e-07, -2.933873e-07, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_3yi20")
 
-[node name="Physical Bone DEF_PANEL_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="14" groups=["DroneGroup"]]
-transform = Transform3D(-0.94249135, -0.3342306, 5.2722997e-05, 3.479651e-05, 5.9622274e-05, 1, -0.33423057, 0.94249135, -4.4563414e-05, 0.47102368, 2.7031003e-08, -0.20070517)
+[node name="Physical Bone DEF_PANEL_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="14" unique_id=2042318560 groups=["DroneGroup"]]
+transform = Transform3D(-0.9424914, -0.33423057, 5.2722968e-05, 3.4796496e-05, 5.962224e-05, 1, -0.33423057, 0.9424914, -4.456339e-05, 0.47102368, 2.7031003e-08, -0.20070517)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.83388555, 0.55193675, 0, -0.55193675, -0.83388555, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, -2.5569074)
-body_offset = Transform3D(0.9999999, -0.00022786856, -3.4787256e-05, 0.00022792816, 1, -5.9707185e-05, 3.4737946e-05, 5.9607377e-05, 1, 0, 0, 0)
+body_offset = Transform3D(0.9999998, -0.00022780895, -3.4787234e-05, 0.00022792816, 1, -5.970715e-05, 3.473793e-05, 5.9607344e-05, 1, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_PANEL.L"
@@ -1430,24 +1430,24 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_L" index="0" unique_id=1565623645]
 transform = Transform3D(-0.9424154, 5.961701e-07, -0.3344443, -0.3344443, 7.3696945e-08, 0.9424154, 5.864875e-07, 1, 1.2993259e-07, 8.940697e-08, 2.3841858e-07, -2.7031064e-08)
 shape = SubResource("ConvexPolygonShape3D_cb2h8")
 
-[node name="AuraLeft" type="MeshInstance3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_L" index="1"]
+[node name="AuraLeft" type="MeshInstance3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_L" index="1" unique_id=929917786]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.223599, 0.55876, -0.0587833)
 layers = 16
 mesh = SubResource("QuadMesh_acdll")
 surface_material_override/0 = SubResource("StandardMaterial3D_fo02n")
 
-[node name="Physical Bone DEF_VERTEBRAE_01_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="15" groups=["DroneGroup"]]
-transform = Transform3D(-0.20006076, -0.97978354, -3.8607553e-07, -5.974365e-07, -2.720519e-07, 1, -0.97978354, 0.20006076, -5.309315e-07, 1.097931e-07, 4.4321685e-16, -0.51200205)
+[node name="Physical Bone DEF_VERTEBRAE_01_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="15" unique_id=1331554137 groups=["DroneGroup"]]
+transform = Transform3D(-0.20006076, -0.97978354, -3.8607578e-07, -5.974365e-07, -2.7205215e-07, 1, -0.97978354, 0.20006076, -5.3093146e-07, 1.097931e-07, 4.4321685e-16, -0.51200205)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.14780936, -0.9890153, 0, 0.9890153, -0.14780936, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 1.7191494)
-body_offset = Transform3D(1.0000002, -1.5720725e-05, 7.964792e-07, 1.5750527e-05, 1.0000001, 3.5309003e-07, -8.3585564e-07, -3.018505e-07, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(1.0000002, -1.5720725e-05, 7.964792e-07, 1.5750527e-05, 1.0000001, 3.5309031e-07, -8.3585564e-07, -3.0185075e-07, 1.0000001, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_01.R"
@@ -1459,18 +1459,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_01_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_01_R" index="0" unique_id=1100795453]
 transform = Transform3D(-9.2064006e-08, 0.20004638, 0.97978634, 1.3868329e-07, 0.97978634, -0.20004636, -1, 1.2339932e-07, -1.1794593e-07, -5.9604645e-08, -2.2351742e-08, 1.4210855e-14)
 shape = SubResource("ConvexPolygonShape3D_8fjvm")
 
-[node name="Physical Bone DEF_VERTEBRAE_02_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="16" groups=["DroneGroup"]]
-transform = Transform3D(-0.5597762, -0.8286439, -4.6111845e-06, 4.7604367e-06, -8.780567e-06, 1, -0.8286439, 0.5597762, 8.859858e-06, -0.20070514, 6.10489e-09, -0.47102368)
+[node name="Physical Bone DEF_VERTEBRAE_02_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="16" unique_id=786647985 groups=["DroneGroup"]]
+transform = Transform3D(-0.5597762, -0.8286439, -4.611187e-06, 4.7604326e-06, -8.780567e-06, 1, -0.8286439, 0.5597762, 8.8598545e-06, -0.20070514, 6.10489e-09, -0.47102368)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.9990476, -0.04361926, 0, 0.04361926, -0.9990476, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 3.0979595)
-body_offset = Transform3D(1.0000005, -1.3381243e-05, -4.6507967e-06, 1.3291836e-05, 1.0000002, 8.799585e-06, 4.6339073e-06, -8.737252e-06, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(1.0000005, -1.3381243e-05, -4.650793e-06, 1.3291836e-05, 1.0000002, 8.799585e-06, 4.6339032e-06, -8.737252e-06, 1.0000001, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_02.R"
@@ -1482,18 +1482,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_02_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_02_R" index="0" unique_id=1363448844]
 transform = Transform3D(9.662372e-07, 0.55977196, 0.8286467, 7.471433e-08, 0.8286467, -0.5597719, -1, 5.7036766e-07, 7.88648e-07, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_jsqfj")
 
-[node name="Physical Bone DEF_VERTEBRAE_03_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="17" groups=["DroneGroup"]]
-transform = Transform3D(-0.82865727, -0.55975634, -8.857851e-05, -0.00010662655, -3.9598171e-07, 1, -0.55975634, 0.8286572, -5.935675e-05, -0.36203986, -2.3283686e-09, -0.36203992)
+[node name="Physical Bone DEF_VERTEBRAE_03_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="17" unique_id=1600171704 groups=["DroneGroup"]]
+transform = Transform3D(-0.82865727, -0.5597564, -8.8578556e-05, -0.00010662661, -3.9596597e-07, 1, -0.55975634, 0.82865727, -5.9356804e-05, -0.36203986, -2.3283686e-09, -0.36203992)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.99938947, -0.034899402, 0, 0.034899402, -0.99938947, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 3.106686)
-body_offset = Transform3D(1.0000004, -1.0073185e-05, 0.00010668349, 9.924173e-06, 1.0000004, 4.4389162e-07, -0.00010667573, -3.786929e-07, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(1.0000004, -1.0073185e-05, 0.000106683554, 9.924173e-06, 1.0000002, 4.438807e-07, -0.0001066758, -3.7868026e-07, 1.0000001, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_VERTEBRAE_03.R"
@@ -1505,18 +1505,18 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_03_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_VERTEBRAE_03_R" index="0" unique_id=271239067]
 transform = Transform3D(1.0747566e-06, 0.8286547, 0.5597607, -3.0392815e-07, 0.55976033, -0.82865477, -1.0000002, 7.5355234e-07, 8.534583e-07, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_3yi20")
 
-[node name="Physical Bone DEF_PANEL_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="18" groups=["DroneGroup"]]
-transform = Transform3D(-0.94301575, 0.3327481, 5.6655733e-07, 3.9421005e-07, -5.8546107e-07, 1, 0.33274806, 0.9430158, 4.2092637e-07, -0.4710235, -5.694343e-09, -0.20070525)
+[node name="Physical Bone DEF_PANEL_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="18" unique_id=1810618566 groups=["DroneGroup"]]
+transform = Transform3D(-0.9430158, 0.3327481, 5.665571e-07, 3.9420982e-07, -5.8546107e-07, 1, 0.3327481, 0.9430158, 4.2092645e-07, -0.4710235, -5.694343e-09, -0.20070525)
 collision_layer = 512
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(-0.83388567, -0.5519368, 0, 0.5519368, -0.83388567, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 2.5569074)
-body_offset = Transform3D(0.99999887, 0.0017997026, -4.5226767e-07, -0.001799643, 0.9999989, 4.6440064e-07, 5.092522e-07, -4.3162453e-07, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(0.9999988, 0.0017997026, -4.522675e-07, -0.001799643, 0.9999989, 4.6440064e-07, 5.092519e-07, -4.3162453e-07, 1.0000001, 0, 0, 0)
 bounce = 0.18
 angular_damp = 15.0
 bone_name = "DEF_PANEL.R"
@@ -1528,17 +1528,17 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_R" index="0" unique_id=2143989361]
 transform = Transform3D(0.9426414, -2.507221e-09, 0.33380687, -0.33380687, -1.4591163e-08, 0.9426414, 2.5072209e-09, -1, -1.4591161e-08, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_cb2h8")
 
-[node name="AuraRight" type="MeshInstance3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_R" index="1"]
+[node name="AuraRight" type="MeshInstance3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_PANEL_R" index="1" unique_id=1252013847]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.233028, 0.55466, -0.0361269)
 layers = 16
 mesh = SubResource("QuadMesh_lgmsp")
 surface_material_override/0 = SubResource("StandardMaterial3D_8fjvm")
 
-[node name="Physical Bone DEF_SPINNER_SOCKET_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="19" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_SPINNER_SOCKET_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="19" unique_id=654142880 groups=["DroneGroup"]]
 transform = Transform3D(0.9249124, 0.3801804, -6.33204e-05, 6.5628235e-05, 6.8915733e-06, 1, 0.38018042, -0.92491233, -1.8576466e-05, 0.33951586, -6.026551e-05, 0.33075154)
 collision_layer = 0
 collision_mask = 2
@@ -1556,67 +1556,67 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_SPINNER_SOCKET_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_SPINNER_SOCKET_L" index="0" unique_id=1855583664]
 transform = Transform3D(0.92493796, -5.7319284e-08, 0.38011783, 0.38011783, 1.1964694e-08, -0.92493796, 4.846879e-08, 1, 3.285469e-08, -0.05496943, 0.17581342, -4.101821e-08)
 shape = SubResource("ConvexPolygonShape3D_mx6bm")
 
-[node name="Physical Bone DEF_EM_FINGER_01_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="20" groups=["DroneGroup"]]
-transform = Transform3D(0.23300967, -0.9621667, -0.14121535, -0.14145543, -0.17720215, 0.9739557, -0.96213144, -0.20696543, -0.1773935, 0.4011091, 0.119926736, 0.036264963)
+[node name="Physical Bone DEF_EM_FINGER_01_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="20" unique_id=1289748183 groups=["DroneGroup"]]
+transform = Transform3D(0.23300967, -0.9621667, -0.14121537, -0.14145543, -0.17720215, 0.97395575, -0.96213144, -0.20696543, -0.17739353, 0.4011091, 0.119926736, 0.036264963)
 collision_layer = 0
 collision_mask = 2
-body_offset = Transform3D(0.99999964, 0.00022691488, 0.00033660233, -0.000227049, 0.99999934, 0.00013582408, -0.00033661723, -0.00013627857, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(0.99999964, 0.00022691488, 0.00033658743, -0.000227049, 0.99999934, 0.00013583526, -0.00033661723, -0.00013627857, 1, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_01.L"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_01_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_01_L" index="0" unique_id=819600897]
 transform = Transform3D(0.23274666, -0.14117795, -0.96223587, -0.96223736, -0.17704499, -0.20677124, -0.14116746, 0.9740246, -0.17705335, -1.1250377e-06, -5.9604645e-08, 3.837049e-07)
 shape = SubResource("ConvexPolygonShape3D_weqbu")
 
-[node name="Physical Bone DEF_EM_FINGER_02_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="21" groups=["DroneGroup"]]
-transform = Transform3D(0.15060176, -0.98701346, 0.055889916, 0.055920944, 0.064949535, 0.9963204, -0.9870117, -0.1469222, 0.06497623, 0.41780218, -0.04396924, -0.004353583)
+[node name="Physical Bone DEF_EM_FINGER_02_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="21" unique_id=1459748125 groups=["DroneGroup"]]
+transform = Transform3D(0.15060176, -0.9870134, 0.055889912, 0.055920944, 0.06494953, 0.9963204, -0.9870117, -0.14692219, 0.06497623, 0.41780218, -0.04396924, -0.004353583)
 collision_layer = 0
 collision_mask = 2
-body_offset = Transform3D(0.9999997, 0.00010859966, 2.5480986e-06, -0.00010882318, 0.9999993, 4.6893954e-05, -2.4065375e-06, -4.6844594e-05, 1, 0, 0, 0)
+body_offset = Transform3D(0.9999997, 0.000108614564, 2.5480986e-06, -0.00010882318, 0.99999934, 4.689023e-05, -2.4065375e-06, -4.68418e-05, 1, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_02.L"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_02_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_02_L" index="0" unique_id=1888376842]
 transform = Transform3D(0.15050073, 0.055929847, -0.98702645, -0.9870261, 0.0649915, -0.14681792, 0.05593684, 0.99631715, 0.06498549, -2.0861626e-07, 2.3841858e-07, 7.301569e-07)
 shape = SubResource("ConvexPolygonShape3D_5bbph")
 
-[node name="Physical Bone DEF_EM_FINGER_03_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="22" groups=["DroneGroup"]]
-transform = Transform3D(0.35532373, -0.91920143, 0.16974628, 0.1700154, 0.24212097, 0.95523417, -0.9191517, -0.31055787, 0.24230972, 0.37219554, -0.16394867, 0.1066211)
+[node name="Physical Bone DEF_EM_FINGER_03_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="22" unique_id=885258984 groups=["DroneGroup"]]
+transform = Transform3D(0.3553237, -0.91920143, 0.16974628, 0.17001538, 0.24212097, 0.95523417, -0.91915166, -0.31055787, 0.24230972, 0.37219554, -0.16394867, 0.1066211)
 collision_layer = 0
 collision_mask = 2
-body_offset = Transform3D(0.99999964, 1.9729137e-05, -0.00025205314, -1.9669533e-05, 0.9999995, -5.5760145e-05, 0.00025227666, 5.609542e-05, 1.0000002, 0, 0, 0)
+body_offset = Transform3D(0.99999976, 1.9729137e-05, -0.00025205314, -1.9669533e-05, 0.9999995, -5.5760145e-05, 0.00025227666, 5.609542e-05, 1.0000002, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_03.L"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_03_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_03_L" index="0" unique_id=94256887]
 transform = Transform3D(0.3552658, 0.16979124, -0.9192155, -0.9192184, 0.24205947, -0.31055534, 0.16977528, 0.95528954, 0.24207069, 3.054738e-07, 1.7881393e-07, 7.450581e-09)
 shape = SubResource("ConvexPolygonShape3D_k1lco")
 
-[node name="Physical Bone DEF_EM_FINGER_04_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="23" groups=["DroneGroup"]]
-transform = Transform3D(0.5547386, -0.8265357, 0.095414184, 0.09547005, 0.1771528, 0.97954196, -0.82652926, -0.53428054, 0.1771829, 0.3098959, -0.12003218, 0.2582145)
+[node name="Physical Bone DEF_EM_FINGER_04_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="23" unique_id=1221224093 groups=["DroneGroup"]]
+transform = Transform3D(0.5547386, -0.8265357, 0.09541418, 0.09547005, 0.17715278, 0.97954196, -0.82652926, -0.5342805, 0.17718291, 0.3098959, -0.12003218, 0.2582145)
 collision_layer = 0
 collision_mask = 2
-body_offset = Transform3D(0.99999964, 0.00035339594, -7.684529e-05, -0.00035324693, 0.9999995, 6.3180923e-06, 7.69943e-05, -6.0796738e-06, 1.0000002, 0, 0, 0)
+body_offset = Transform3D(0.99999964, 0.00035345554, -7.683039e-05, -0.00035324693, 0.9999995, 6.325543e-06, 7.69943e-05, -6.0871243e-06, 1.0000002, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_04.L"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_04_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_04_L" index="0" unique_id=310030479]
 transform = Transform3D(0.5544358, 0.09545666, -0.826734, -0.8267337, 0.17712124, -0.5339847, 0.09545976, 0.97954893, 0.17711957, 8.940697e-08, 5.9604645e-08, -6.482005e-07)
 shape = SubResource("ConvexPolygonShape3D_hbbl7")
 
-[node name="Physical Bone DEF_EM_FINGER_05_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="24" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_EM_FINGER_05_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="24" unique_id=2110585834 groups=["DroneGroup"]]
 transform = Transform3D(0.596682, -0.801823, -0.032411378, -0.032584943, -0.06456457, 0.9973814, -0.801816, -0.5940634, -0.06465187, 0.29320285, 0.043863777, 0.29883292)
 collision_layer = 0
 collision_mask = 2
@@ -1626,32 +1626,32 @@ angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_05.L"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_05_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_05_L" index="0" unique_id=223162736]
 transform = Transform3D(0.59638536, -0.032541614, -0.80203825, -0.8020389, -0.06464555, -0.59376293, -0.032526206, 0.9973775, -0.064653315, -5.5134296e-07, -2.9802322e-07, -8.381903e-07)
 shape = SubResource("ConvexPolygonShape3D_l7bqe")
 
-[node name="Physical Bone DEF_EM_FINGER_06_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="25" groups=["DroneGroup"]]
-transform = Transform3D(0.471347, -0.8695943, -0.14709793, -0.14719568, -0.24201338, 0.9590427, -0.86957777, -0.43038973, -0.24207282, 0.3388094, 0.16384326, 0.18785825)
+[node name="Physical Bone DEF_EM_FINGER_06_L" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="25" unique_id=324241277 groups=["DroneGroup"]]
+transform = Transform3D(0.471347, -0.8695943, -0.14709795, -0.14719568, -0.24201338, 0.9590427, -0.86957777, -0.43038973, -0.24207279, 0.3388094, 0.16384326, 0.18785825)
 collision_layer = 0
 collision_mask = 2
-body_offset = Transform3D(0.9999996, 0.00012168288, 0.0002515316, -0.00012174249, 0.99999934, 0.00027243793, -0.0002515018, -0.00027292967, 0.99999994, 0, 0, 0)
+body_offset = Transform3D(0.9999996, 0.00012168288, 0.0002515763, -0.00012174249, 0.99999934, 0.00027243793, -0.0002515018, -0.00027292967, 0.99999994, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_06.L"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_06_L" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_06_L" index="0" unique_id=438389746]
 transform = Transform3D(0.47121033, -0.14699249, -0.86968607, -0.86968875, -0.24173737, -0.43035382, -0.14697684, 0.95914346, -0.24174684, -1.1175871e-06, -3.5762787e-07, -5.438924e-07)
 shape = SubResource("ConvexPolygonShape3D_1mo5d")
 
-[node name="Physical Bone DEF_SPINNER_SOCKET_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="26" groups=["DroneGroup"]]
-transform = Transform3D(0.9249406, -0.38011193, -0.00012782271, 0.00013820635, 2.6106848e-08, 1, -0.38011196, -0.92494047, 5.2558025e-05, -0.3395161, -6.03907e-05, 0.33075124)
+[node name="Physical Bone DEF_SPINNER_SOCKET_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="26" unique_id=1152704528 groups=["DroneGroup"]]
+transform = Transform3D(0.9249406, -0.38011196, -0.00012782283, 0.00013820648, 2.6110856e-08, 1, -0.38011196, -0.9249405, 5.2558076e-05, -0.3395161, -6.03907e-05, 0.33075124)
 collision_layer = 0
 collision_mask = 2
 joint_type = 3
 joint_offset = Transform3D(0.80385673, -0.5948227, 0, 0.5948227, 0.80385673, 0, 0, 0, 1, 0, 0, 0)
 joint_rotation = Vector3(0, 0, 0.6370452)
-body_offset = Transform3D(0.99999976, 5.6028366e-06, -0.00013814228, -5.6028366e-06, 0.9999999, 1.253502e-07, 0.00013808467, -1.5365319e-07, 1.0000001, 0, 0, 0)
+body_offset = Transform3D(0.99999976, 5.5730343e-06, -0.0001381424, -5.6028366e-06, 0.9999998, 1.2535384e-07, 0.0001380848, -1.5365742e-07, 1.0000001, 0, 0, 0)
 angular_damp = 10.0
 bone_name = "DEF_SPINNER_SOCKET.R"
 joint_constraints/angular_limit_enabled = true
@@ -1662,11 +1662,11 @@ joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_SPINNER_SOCKET_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_SPINNER_SOCKET_R" index="0" unique_id=672719455]
 transform = Transform3D(0.9249384, 1.2170726e-07, -0.38011715, -0.38011715, 1.7976349e-07, -0.9249384, -4.424053e-08, 1, 2.1253317e-07, 0.0549694, 0.17581312, 5.1128154e-08)
 shape = SubResource("ConvexPolygonShape3D_47bi5")
 
-[node name="Physical Bone DEF_EM_FINGER_01_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="27" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_EM_FINGER_01_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="27" unique_id=2039717206 groups=["DroneGroup"]]
 transform = Transform3D(0.23256502, 0.96227294, 0.14122449, 0.1411737, -0.17706792, 0.9740211, 0.9622804, -0.20658602, -0.17702745, -0.40110904, 0.11992669, 0.036264792)
 collision_layer = 0
 collision_mask = 2
@@ -1676,11 +1676,11 @@ angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_01.R"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_01_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_01_R" index="0" unique_id=804839114]
 transform = Transform3D(0.23274413, 0.14116679, 0.96223795, 0.9622386, -0.17703755, -0.20677167, 0.14116296, 0.9740274, -0.17704059, 1.2889504e-06, -1.4901161e-07, 3.9488077e-07)
 shape = SubResource("ConvexPolygonShape3D_paqlu")
 
-[node name="Physical Bone DEF_EM_FINGER_02_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="28" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_EM_FINGER_02_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="28" unique_id=1511227252 groups=["DroneGroup"]]
 transform = Transform3D(0.15041147, 0.987043, -0.05587906, -0.055870764, 0.064918466, 0.9963253, 0.9870435, -0.14673674, 0.06491133, -0.41780207, -0.043969315, -0.004353866)
 collision_layer = 0
 collision_mask = 2
@@ -1690,39 +1690,39 @@ angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_02.R"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_02_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_02_R" index="0" unique_id=694329049]
 transform = Transform3D(0.15049845, -0.05592355, 0.9870273, 0.98702663, 0.0649884, -0.1468162, -0.055934835, 0.9963178, 0.0649787, 4.6938658e-07, 5.9604645e-08, 8.2701445e-07)
 shape = SubResource("ConvexPolygonShape3D_fmeub")
 
-[node name="Physical Bone DEF_EM_FINGER_03_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="29" groups=["DroneGroup"]]
-transform = Transform3D(0.35534608, 0.91924214, -0.1694789, -0.17010899, 0.24188088, 0.9552783, 0.91912574, -0.31062454, 0.24232277, -0.37219554, -0.16394877, 0.10662094)
+[node name="Physical Bone DEF_EM_FINGER_03_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="29" unique_id=1375006198 groups=["DroneGroup"]]
+transform = Transform3D(0.35534608, 0.9192421, -0.1694789, -0.17010899, 0.24188086, 0.9552783, 0.91912574, -0.31062454, 0.24232277, -0.37219554, -0.16394877, 0.10662094)
 collision_layer = 0
 collision_mask = 2
-body_offset = Transform3D(0.9999999, -2.6762486e-05, 0.00035183132, 2.6643276e-05, 0.9999999, 0.00019668788, -0.0003517866, -0.00019665807, 0.99999994, 0, 0, 0)
+body_offset = Transform3D(0.9999999, -2.6732683e-05, 0.00035183132, 2.6643276e-05, 0.99999994, 0.00019668788, -0.0003517866, -0.00019664317, 0.99999994, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_03.R"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_03_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_03_R" index="0" unique_id=702228692]
 transform = Transform3D(0.35525993, -0.16978367, 0.91921914, 0.91922283, 0.24204284, -0.31055507, -0.16976325, 0.9552951, 0.24205716, -1.7136335e-07, 1.4901161e-07, 1.5646219e-07)
 shape = SubResource("ConvexPolygonShape3D_37hhl")
 
-[node name="Physical Bone DEF_EM_FINGER_04_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="30" groups=["DroneGroup"]]
-transform = Transform3D(0.5545345, 0.82666934, -0.09544271, -0.09547971, 0.17714101, 0.97954315, 0.8266651, -0.5340776, 0.17716096, -0.3098961, -0.12003233, 0.25821424)
+[node name="Physical Bone DEF_EM_FINGER_04_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="30" unique_id=1397133295 groups=["DroneGroup"]]
+transform = Transform3D(0.5545345, 0.8266694, -0.09544273, -0.09547971, 0.17714103, 0.97954315, 0.8266651, -0.5340776, 0.17716096, -0.3098961, -0.12003233, 0.25821424)
 collision_layer = 0
 collision_mask = 2
-body_offset = Transform3D(1.0000001, -0.000111699104, 4.312396e-05, 0.000111579895, 1.0000001, -5.297363e-06, -4.3064356e-05, 5.2824616e-06, 1.0000004, 0, 0, 0)
+body_offset = Transform3D(1.0000001, -0.00011172891, 4.312396e-05, 0.000111579895, 1.0000001, -5.2824616e-06, -4.3064356e-05, 5.289912e-06, 1.0000004, 0, 0, 0)
 bounce = 0.2
 angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_04.R"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_04_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_04_R" index="0" unique_id=688190560]
 transform = Transform3D(0.554467, -0.095457844, 0.8267127, 0.8267124, 0.17713167, -0.5340139, -0.095461175, 0.97954684, 0.17712986, 2.0861626e-07, 1.1920929e-07, -4.7311187e-07)
 shape = SubResource("ConvexPolygonShape3D_a0coh")
 
-[node name="Physical Bone DEF_EM_FINGER_05_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="31" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_EM_FINGER_05_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="31" unique_id=1718946193 groups=["DroneGroup"]]
 transform = Transform3D(0.59673077, 0.8017835, 0.032488845, 0.032570634, -0.06465522, 0.99737597, 0.8017802, -0.5941068, -0.06469636, -0.2932031, 0.043863684, 0.2988329)
 collision_layer = 0
 collision_mask = 2
@@ -1732,11 +1732,11 @@ angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_05.R"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_05_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_05_R" index="0" unique_id=1884119061]
 transform = Transform3D(0.5964534, 0.03253399, 0.80198807, 0.8019885, -0.06464557, -0.5938312, 0.032525282, 0.9973778, -0.064649954, 7.4505806e-07, -1.4901161e-07, -7.469207e-07)
 shape = SubResource("ConvexPolygonShape3D_bt6x8")
 
-[node name="Physical Bone DEF_EM_FINGER_06_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="32" groups=["DroneGroup"]]
+[node name="Physical Bone DEF_EM_FINGER_06_R" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" index="32" unique_id=1215992624 groups=["DroneGroup"]]
 transform = Transform3D(0.47146553, 0.86959964, 0.14668591, 0.14715697, -0.24157614, 0.95915896, 0.86952007, -0.43062449, -0.24186248, -0.33880955, 0.16384318, 0.18785797)
 collision_layer = 0
 collision_mask = 2
@@ -1746,47 +1746,47 @@ angular_damp = 10.0
 bone_name = "DEF_EM_FINGER_06.R"
 script = ExtResource("6_llkgy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_06_R" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone DEF_EM_FINGER_06_R" index="0" unique_id=1842865166]
 transform = Transform3D(0.47120157, 0.14698628, 0.869692, 0.8696958, -0.24171734, -0.43035105, 0.14696395, 0.9591496, -0.24173091, 1.4305115e-06, -3.874302e-07, -4.8801303e-07)
 shape = SubResource("ConvexPolygonShape3D_v6hgt")
 
-[node name="LookAtModifierLeft" type="LookAtModifier3D" parent="Armature/Skeleton3D" index="2"]
+[node name="LookAtModifierLeft" type="LookAtModifier3D" parent="Armature/Skeleton3D" index="2" unique_id=1841121178]
 bone_name = "DEF_EM_SPINNER.L"
 bone = 17
 forward_axis = 2
 primary_rotation_axis = 2
 
-[node name="LookAtModifierRight" type="LookAtModifier3D" parent="Armature/Skeleton3D" index="3"]
+[node name="LookAtModifierRight" type="LookAtModifier3D" parent="Armature/Skeleton3D" index="3" unique_id=1774478722]
 bone_name = "DEF_EM_SPINNER.R"
 bone = 29
 forward_axis = 2
 primary_rotation_axis = 2
 
-[node name="DronePlasmaBoltLeft" parent="Armature/Skeleton3D" index="4" node_paths=PackedStringArray("skeletonModifier") instance=ExtResource("16_jsqfj")]
+[node name="DronePlasmaBoltLeft" parent="Armature/Skeleton3D" index="4" unique_id=1482995491 node_paths=PackedStringArray("skeletonModifier") instance=ExtResource("16_jsqfj")]
 skeletonModifier = NodePath("../LookAtModifierLeft")
 parent_bone_name = "DEF_EM_SPINNER.L"
 hit_enabled = true
 
-[node name="DronePlasmaBoltRight" parent="Armature/Skeleton3D" index="5" node_paths=PackedStringArray("skeletonModifier") instance=ExtResource("16_jsqfj")]
+[node name="DronePlasmaBoltRight" parent="Armature/Skeleton3D" index="5" unique_id=915734592 node_paths=PackedStringArray("skeletonModifier") instance=ExtResource("16_jsqfj")]
 skeletonModifier = NodePath("../LookAtModifierRight")
 parent_bone_name = "DEF_EM_SPINNER.R"
 
-[node name="EMSpinnersAnimation" type="Node" parent="." index="3" node_paths=PackedStringArray("model")]
+[node name="EMSpinnersAnimation" type="Node" parent="." index="3" unique_id=1488702632 node_paths=PackedStringArray("model")]
 script = ExtResource("18_cb2h8")
 model = NodePath("..")
 
-[node name="EMSpinnersOffProps" type="Node" parent="EMSpinnersAnimation" index="0"]
+[node name="EMSpinnersOffProps" type="Node" parent="EMSpinnersAnimation" index="0" unique_id=1544222027]
 script = ExtResource("17_e8q0d")
 streaks_alpha = 0.0
 
-[node name="EMSpinnersChargedProps" type="Node" parent="EMSpinnersAnimation" index="1"]
+[node name="EMSpinnersChargedProps" type="Node" parent="EMSpinnersAnimation" index="1" unique_id=1585813638]
 script = ExtResource("17_e8q0d")
 aura_color = Color(0.970939, 0, 0.439003, 0.25098)
 balls_dissolve_in = 1.0
 streaks_alpha = 0.4
 streaks_dissolve_in = 1.0
 
-[node name="EMSpinnersFireProps" type="Node" parent="EMSpinnersAnimation" index="2"]
+[node name="EMSpinnersFireProps" type="Node" parent="EMSpinnersAnimation" index="2" unique_id=306349507]
 script = ExtResource("17_e8q0d")
 aura_color = Color(0.989117, 0, 0.272975, 0.392157)
 balls_dissolve_in = 1.0
@@ -1794,7 +1794,7 @@ streaks_alpha = 0.6
 streaks_dissolve_in = 1.0
 beams_dissolve_in = 1.0
 
-[node name="EMSpinnersDishargedProps" type="Node" parent="EMSpinnersAnimation" index="3"]
+[node name="EMSpinnersDishargedProps" type="Node" parent="EMSpinnersAnimation" index="3" unique_id=206285262]
 script = ExtResource("17_e8q0d")
 streaks_alpha = 0.6
 streaks_dissolve_in = 1.0
@@ -1802,19 +1802,19 @@ streaks_dissolve_out = 0.0
 beams_dissolve_in = 1.0
 beams_dissolve_out = 0.0
 
-[node name="EnginesAnimation" type="Node" parent="." index="4" node_paths=PackedStringArray("model")]
+[node name="EnginesAnimation" type="Node" parent="." index="4" unique_id=1630400179 node_paths=PackedStringArray("model")]
 script = ExtResource("15_fedws")
 model = NodePath("..")
 
-[node name="EnginesOffProps" type="Node" parent="EnginesAnimation" index="0"]
+[node name="EnginesOffProps" type="Node" parent="EnginesAnimation" index="0" unique_id=1444630630]
 script = ExtResource("16_jykis")
 
-[node name="EnginesThrustProps" type="Node" parent="EnginesAnimation" index="1"]
+[node name="EnginesThrustProps" type="Node" parent="EnginesAnimation" index="1" unique_id=1443970237]
 script = ExtResource("16_jykis")
 exhaust_noise_speed = 2.0
 exhaust_noise_intensity = 30.0
 
-[node name="EnginesBurstProps" type="Node" parent="EnginesAnimation" index="2"]
+[node name="EnginesBurstProps" type="Node" parent="EnginesAnimation" index="2" unique_id=1086539325]
 script = ExtResource("16_jykis")
 exhaust_noise_speed = 3.0
 exhaust_noise_intensity = 100.0

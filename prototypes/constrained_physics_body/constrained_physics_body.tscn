@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://crfiqihnxfjit"]
+[gd_scene format=3 uid="uid://crfiqihnxfjit"]
 
 [ext_resource type="Script" uid="uid://ft26oxf5o4f2" path="res://prototypes/constrained_physics_body/character_body_3d.gd" id="1_lncf6"]
 
@@ -54,87 +54,87 @@ bounce = 0.14
 rough = true
 bounce = 0.29
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=546791853]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=552360202]
 environment = SubResource("Environment_bjmve")
 camera_attributes = SubResource("CameraAttributesPractical_yjg31")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=664374162]
 transform = Transform3D(-0.873772, -0.0760796, 0.480348, 0, 0.987688, 0.156434, -0.486335, 0.136688, -0.863015, 0, 0, 0)
 light_color = Color(1, 0.959167, 0.65, 1)
 shadow_enabled = true
 
-[node name="Path3D" type="Path3D" parent="."]
+[node name="Path3D" type="Path3D" parent="." unique_id=83928768]
 curve = SubResource("Curve3D_u3rwb")
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("path")]
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1157541391 node_paths=PackedStringArray("path")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("1_lncf6")
 path = NodePath("../Path3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1317334294]
 shape = SubResource("SphereShape3D_6bbjg")
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D" unique_id=366225626]
 transform = Transform3D(1, 0, 0, 0, 0.84152, 0.540226, 0, -0.540226, 0.84152, 0, 5.22801, 8.87076)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=1267805374]
 mesh = SubResource("SphereMesh_6c6d8")
 surface_material_override/0 = SubResource("StandardMaterial3D_5ajuo")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=177905281]
 physics_material_override = SubResource("PhysicsMaterial_6gtfl")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=671955007]
 shape = SubResource("WorldBoundaryShape3D_dvhbo")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=2144462896]
 mesh = SubResource("PlaneMesh_bond5")
 surface_material_override/0 = SubResource("StandardMaterial3D_a0mft")
 
-[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+[node name="StaticBody3D3" type="StaticBody3D" parent="." unique_id=690066895]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 10, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3" unique_id=1813460090]
 shape = SubResource("WorldBoundaryShape3D_dvhbo")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3" unique_id=403811937]
 mesh = SubResource("PlaneMesh_bond5")
 surface_material_override/0 = SubResource("StandardMaterial3D_a0mft")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=53583667]
 transform = Transform3D(-0.104945, 0.994478, 0, -0.994478, -0.104945, 0, 0, 0, 1, -10, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=738589427]
 shape = SubResource("WorldBoundaryShape3D_dvhbo")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=913894071]
 mesh = SubResource("PlaneMesh_bond5")
 surface_material_override/0 = SubResource("StandardMaterial3D_a0mft")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=2125908786]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.672, 0.5, 1.97019)
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 physics_material_override = SubResource("PhysicsMaterial_we6sf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=261920478]
 shape = SubResource("SphereShape3D_ulyg7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=1293540264]
 mesh = SubResource("SphereMesh_6c6d8")
 
-[node name="RigidBody3D2" type="RigidBody3D" parent="."]
+[node name="RigidBody3D2" type="RigidBody3D" parent="." unique_id=1500473308]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.21398, 0.5, 0)
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 physics_material_override = SubResource("PhysicsMaterial_xxs5f")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2" unique_id=1617455790]
 shape = SubResource("SphereShape3D_ulyg7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2" unique_id=1999909965]
 mesh = SubResource("SphereMesh_6c6d8")

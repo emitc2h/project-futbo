@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dnw8l88q5vgm3"]
+[gd_scene format=3 uid="uid://dnw8l88q5vgm3"]
 
 [ext_resource type="Script" uid="uid://ce2g72in81qs6" path="res://scripts/control_node_and_balls/ball.gd" id="1_yo1i0"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="2_nqqko"]
@@ -14,88 +14,88 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_8bm52"]
 radius = 0.152058
 
-[node name="BallBase" type="Node3D" node_paths=PackedStringArray("physics_states", "control_states")]
+[node name="BallBase" type="Node3D" unique_id=1691530347 node_paths=PackedStringArray("physics_states", "control_states")]
 script = ExtResource("1_yo1i0")
 physics_states = NodePath("State/Root/Physics/Physics States")
 control_states = NodePath("State/Root/Control/Control States")
 
-[node name="State" type="Node" parent="."]
+[node name="State" type="Node" parent="." unique_id=519012250]
 script = ExtResource("2_nqqko")
 
-[node name="Root" type="Node" parent="State"]
+[node name="Root" type="Node" parent="State" unique_id=1345308355]
 script = ExtResource("3_bytmq")
 metadata/_custom_type_script = "uid://duu2hhmogs378"
 
-[node name="Physics" type="Node" parent="State/Root"]
+[node name="Physics" type="Node" parent="State/Root" unique_id=1982961813]
 script = ExtResource("4_y807d")
 initial_state = NodePath("rigid")
 
-[node name="Physics States" type="Node" parent="State/Root/Physics" node_paths=PackedStringArray("ball", "sc")]
+[node name="Physics States" type="Node" parent="State/Root/Physics" unique_id=1891427015 node_paths=PackedStringArray("ball", "sc")]
 script = ExtResource("5_msp2j")
 ball = NodePath("../../../..")
 sc = NodePath("../../..")
 
-[node name="rigid" type="Node" parent="State/Root/Physics"]
+[node name="rigid" type="Node" parent="State/Root/Physics" unique_id=377283055]
 script = ExtResource("6_tr3yh")
 
-[node name="to char" type="Node" parent="State/Root/Physics/rigid"]
+[node name="to char" type="Node" parent="State/Root/Physics/rigid" unique_id=2099294846]
 script = ExtResource("7_4jgtx")
 to = NodePath("../../char")
 event = &"Physics: to char"
 delay_in_seconds = "0.0"
 
-[node name="char" type="Node" parent="State/Root/Physics"]
+[node name="char" type="Node" parent="State/Root/Physics" unique_id=611637788]
 script = ExtResource("6_tr3yh")
 
-[node name="to rigid" type="Node" parent="State/Root/Physics/char"]
+[node name="to rigid" type="Node" parent="State/Root/Physics/char" unique_id=2141894836]
 script = ExtResource("7_4jgtx")
 to = NodePath("../../rigid")
 event = &"Physics: to rigid"
 delay_in_seconds = "0.0"
 
-[node name="Control" type="Node" parent="State/Root"]
+[node name="Control" type="Node" parent="State/Root" unique_id=848782415]
 script = ExtResource("4_y807d")
 initial_state = NodePath("free")
 
-[node name="Control States" type="Node" parent="State/Root/Control" node_paths=PackedStringArray("ball", "sc")]
+[node name="Control States" type="Node" parent="State/Root/Control" unique_id=1436877134 node_paths=PackedStringArray("ball", "sc")]
 script = ExtResource("8_q404i")
 ball = NodePath("../../../..")
 sc = NodePath("../../..")
 
-[node name="free" type="Node" parent="State/Root/Control"]
+[node name="free" type="Node" parent="State/Root/Control" unique_id=1922926925]
 script = ExtResource("6_tr3yh")
 
-[node name="to dribbled" type="Node" parent="State/Root/Control/free"]
+[node name="to dribbled" type="Node" parent="State/Root/Control/free" unique_id=1765816242]
 script = ExtResource("7_4jgtx")
 to = NodePath("../../dribbled")
 event = &"Control: free to dribbled"
 delay_in_seconds = "0.0"
 
-[node name="to held" type="Node" parent="State/Root/Control/free"]
+[node name="to held" type="Node" parent="State/Root/Control/free" unique_id=1332198207]
 script = ExtResource("7_4jgtx")
 to = NodePath("../../held")
 event = &"Control: free to held"
 delay_in_seconds = "0.0"
 
-[node name="dribbled" type="Node" parent="State/Root/Control"]
+[node name="dribbled" type="Node" parent="State/Root/Control" unique_id=1267888375]
 script = ExtResource("6_tr3yh")
 
-[node name="to free" type="Node" parent="State/Root/Control/dribbled"]
+[node name="to free" type="Node" parent="State/Root/Control/dribbled" unique_id=1274910671]
 script = ExtResource("7_4jgtx")
 to = NodePath("../../free")
 event = &"Control: to free"
 delay_in_seconds = "0.0"
 
-[node name="held" type="Node" parent="State/Root/Control"]
+[node name="held" type="Node" parent="State/Root/Control" unique_id=937644554]
 script = ExtResource("6_tr3yh")
 
-[node name="to free" type="Node" parent="State/Root/Control/held"]
+[node name="to free" type="Node" parent="State/Root/Control/held" unique_id=2071368745]
 script = ExtResource("7_4jgtx")
 to = NodePath("../../free")
 event = &"Control: to free"
 delay_in_seconds = "0.0"
 
-[node name="RigidNode" type="RigidBody3D" parent="." groups=["BallGroup"]]
+[node name="RigidNode" type="RigidBody3D" parent="." unique_id=1496620994 groups=["BallGroup"]]
 collision_layer = 4
 collision_mask = 1802
 axis_lock_linear_z = true
@@ -108,22 +108,22 @@ max_contacts_reported = 1
 angular_damp = 3.0
 script = ExtResource("10_k38ye")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode" unique_id=138415289]
 shape = SubResource("SphereShape3D_8bm52")
 
-[node name="CharNode" type="CharacterBody3D" parent="." groups=["BallGroup"]]
+[node name="CharNode" type="CharacterBody3D" parent="." unique_id=1687242209 groups=["BallGroup"]]
 collision_layer = 4
 collision_mask = 1802
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode" unique_id=965214581]
 shape = SubResource("SphereShape3D_8bm52")
 
-[node name="TrackTransformContainer" type="Node3D" parent="."]
+[node name="TrackTransformContainer" type="Node3D" parent="." unique_id=214515894]
 
-[node name="TrackPositionContainer" type="Node3D" parent="."]
+[node name="TrackPositionContainer" type="Node3D" parent="." unique_id=1272077454]
 
 [connection signal="state_entered" from="State/Root/Physics/rigid" to="State/Root/Physics/Physics States" method="_on_rigid_state_entered"]
 [connection signal="state_exited" from="State/Root/Physics/rigid" to="State/Root/Physics/Physics States" method="_on_rigid_state_exited"]

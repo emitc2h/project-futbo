@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://cvtmcnvjfna06"]
+[gd_scene format=3 uid="uid://cvtmcnvjfna06"]
 
 [ext_resource type="Script" uid="uid://bxf0onv18bo2q" path="res://prototypes/control_node_test/control_node_test.gd" id="1_ygcf8"]
-[ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="2_rvd62"]
+[ext_resource type="Texture2D" uid="uid://bykwso7nisgpl" path="res://assets/deprecated/3D/Act1/Textures/Tiles/Turf1/turf_normal.png" id="2_rvd62"]
 [ext_resource type="PackedScene" uid="uid://cupvg7lj3rh2s" path="res://scenes/control_node_and_balls/control_node.tscn" id="3_ygcf8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lehrb"]
@@ -83,50 +83,109 @@ _data = {
 &"test_blow_animation": SubResource("Animation_rvd62")
 }
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0ou1q"]
+load_path = "res://.godot/imported/ControlNode_color.png-abe8d7b0bb84f178933c5eb7cbc42879.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ltrn5"]
+load_path = "res://.godot/imported/ControlNode_metallic.png-f025bf0d57e3e2d28602e5562a70b94f.s3tc.ctex"
+
+[sub_resource type="Shader" id="Shader_nium7"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.4.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_add, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform sampler2D texture_emission : source_color, hint_default_black, filter_linear_mipmap, repeat_enable;
+uniform float emission_energy : hint_range(0.0, 1000.0, 0.1);
+uniform vec3 emission_color : source_color;
+
+void fragment() {
+	// Emission: Enabled
+	vec3 emission_tex = texture(texture_emission, UV).rgb;
+	vec3 emission_tex_colored = emission_tex;
+
+	emission_tex_colored = emission_color * emission_tex.r;
+
+	// Emission Operator: Add
+	ALBEDO = emission_tex_colored;
+	EMISSION = emission_tex_colored * emission_energy * 1000.0;
+	ALPHA *= emission_tex.r;
+	ALPHA_SCISSOR_THRESHOLD = 0.001;
+}
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5oaah"]
+load_path = "res://.godot/imported/ControlNode_emission.png-e19c70f61902b0c35e77110cb79964c2.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ygcf8"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_nium7")
+shader_parameter/texture_emission = SubResource("CompressedTexture2D_5oaah")
+shader_parameter/emission_energy = 0.0
+shader_parameter/emission_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xoq3r"]
+load_path = "res://.godot/imported/ControlNode_normal.png-90501730fccdcb587e042240876efab3.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n4b62"]
+load_path = "res://.godot/imported/ControlNode_roughness.png-c655887426a8d6936445c7811cb28beb.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rvd62"]
+resource_local_to_scene = true
+next_pass = SubResource("ShaderMaterial_ygcf8")
+albedo_texture = SubResource("CompressedTexture2D_0ou1q")
+metallic = 1.0
+metallic_texture = SubResource("CompressedTexture2D_ltrn5")
+roughness_texture = SubResource("CompressedTexture2D_n4b62")
+normal_enabled = true
+normal_texture = SubResource("CompressedTexture2D_xoq3r")
+
+[node name="Node3D" type="Node3D" unique_id=2030674014]
 script = ExtResource("1_ygcf8")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1641420988]
 transform = Transform3D(0.741203, 0.581347, -0.33564, 9.23018e-09, 0.5, 0.866026, 0.671282, -0.641901, 0.3706, 0, 0, 0)
 light_intensity_lux = 121145.0
 light_energy = 3.666
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1142043363]
 environment = SubResource("Environment_7j4kd")
 camera_attributes = SubResource("CameraAttributesPractical_yk0qt")
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="Ground" type="StaticBody3D" parent="." unique_id=764512172]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707768, 0, 0)
 collision_layer = 2
 collision_mask = 269
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1909333690]
 transform = Transform3D(3.16524, 0, 0, 0, 1, 0, 0, 0, 4.63454, 0.803973, 0, 0)
 mesh = SubResource("PlaneMesh_7l1dn")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_r8se5")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1113066711]
 shape = SubResource("WorldBoundaryShape3D_6w21h")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=766270729]
 transform = Transform3D(1, 0, 0, 0, 0.96509, -0.26192, 0, 0.26192, 0.96509, 0, 0.103895, 1.63813)
 fov = 50.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ygcf8")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=551897248]
+libraries/ = SubResource("AnimationLibrary_ygcf8")
 
-[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+[node name="ReflectionProbe" type="ReflectionProbe" parent="." unique_id=509388645]
 
-[node name="ControlNode" parent="." instance=ExtResource("3_ygcf8")]
+[node name="ControlNode" parent="." unique_id=190084283 instance=ExtResource("3_ygcf8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1906761, 0)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="ControlNodeMesh" parent="ControlNode/TrackTransformContainer/ControlNodeAsset/ControlNodeModel" parent_id_path=PackedInt32Array(190084283, 455416543, 1881711276) index="0" unique_id=1387264145]
+surface_material_override/0 = SubResource("StandardMaterial3D_rvd62")
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=185624226]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1296319886]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -139,3 +198,5 @@ theme_override_font_sizes/font_size = 32
 text = "Text"
 
 [editable path="ControlNode"]
+[editable path="ControlNode/TrackTransformContainer/ControlNodeAsset"]
+[editable path="ControlNode/TrackTransformContainer/ControlNodeAsset/ControlNodeModel"]

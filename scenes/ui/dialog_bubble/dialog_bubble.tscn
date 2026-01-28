@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c86ywxv55on5f"]
+[gd_scene format=3 uid="uid://c86ywxv55on5f"]
 
 [ext_resource type="Script" uid="uid://ds8ypingmg1ab" path="res://scripts/ui/dialog_bubble/dialog_bubble.gd" id="1_ybv2r"]
 [ext_resource type="Texture2D" uid="uid://wjhv4gb21qmo" path="res://kenney_platformer-characters/PNG/Female/Limbs/head.png" id="2_hvh1x"]
@@ -229,7 +229,7 @@ _data = {
 _data = [Vector2(0, 0.505338), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.0160142), 0.487994, 0.487994, 0, 0, Vector2(1, 1), 1.57416, 0.0, 0, 0]
 point_count = 3
 
-[node name="DialogBubble" type="CanvasLayer"]
+[node name="DialogBubble" type="CanvasLayer" unique_id=522161118]
 layer = 3
 script = ExtResource("1_ybv2r")
 texture = ExtResource("2_hvh1x")
@@ -242,7 +242,7 @@ offset_y = -210.0
 line_fraction = 0.5
 line_point0_x_offset = -3.0
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1873345172]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -256,89 +256,87 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("3_d4jss")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=703337036]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer" unique_id=535378318]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer/MarginContainer" unique_id=721506980]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 expand_mode = 3
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="PanelContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/HBoxContainer" unique_id=1506350029]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 20
 vertical_alignment = 1
 
-[node name="Path2D" type="Path2D" parent="PanelContainer"]
+[node name="Path2D" type="Path2D" parent="PanelContainer" unique_id=1757375393]
 curve = SubResource("Curve2D_gim3f")
 
-[node name="StateChart" type="Node" parent="."]
+[node name="StateChart" type="Node" parent="." unique_id=757727974]
 script = ExtResource("4_vppnn")
 
-[node name="root" type="Node" parent="StateChart"]
+[node name="root" type="Node" parent="StateChart" unique_id=813298973]
 script = ExtResource("5_6cadr")
 initial_state = NodePath("inactive")
 
-[node name="pops up" type="Node" parent="StateChart/root"]
+[node name="pops up" type="Node" parent="StateChart/root" unique_id=738261911]
 script = ExtResource("6_687w4")
 
-[node name="to write" type="Node" parent="StateChart/root/pops up"]
+[node name="to write" type="Node" parent="StateChart/root/pops up" unique_id=1384331645]
 script = ExtResource("7_nsaq4")
 to = NodePath("../../write")
 event = &"pops up to write"
 delay_in_seconds = "0.0"
 
-[node name="write" type="Node" parent="StateChart/root"]
+[node name="write" type="Node" parent="StateChart/root" unique_id=1769382265]
 script = ExtResource("6_687w4")
 
-[node name="to lingers" type="Node" parent="StateChart/root/write"]
+[node name="to lingers" type="Node" parent="StateChart/root/write" unique_id=154044814]
 script = ExtResource("7_nsaq4")
 to = NodePath("../../lingers")
 event = &"write to lingers"
 delay_in_seconds = "0.0"
 
-[node name="lingers" type="Node" parent="StateChart/root"]
+[node name="lingers" type="Node" parent="StateChart/root" unique_id=283648193]
 script = ExtResource("6_687w4")
 
-[node name="to pops out" type="Node" parent="StateChart/root/lingers"]
+[node name="to pops out" type="Node" parent="StateChart/root/lingers" unique_id=2051689316]
 script = ExtResource("7_nsaq4")
 to = NodePath("../../pops out")
 event = &"lingers to pops out"
 delay_in_seconds = "0.0"
 
-[node name="pops out" type="Node" parent="StateChart/root"]
+[node name="pops out" type="Node" parent="StateChart/root" unique_id=124187798]
 script = ExtResource("6_687w4")
 
-[node name="to inactive" type="Node" parent="StateChart/root/pops out"]
+[node name="to inactive" type="Node" parent="StateChart/root/pops out" unique_id=1618994945]
 script = ExtResource("7_nsaq4")
 to = NodePath("../../inactive")
 event = &"pops out to inactive"
 delay_in_seconds = "0.0"
 
-[node name="inactive" type="Node" parent="StateChart/root"]
+[node name="inactive" type="Node" parent="StateChart/root" unique_id=1514566]
 script = ExtResource("6_687w4")
 
-[node name="to pops up" type="Node" parent="StateChart/root/inactive"]
+[node name="to pops up" type="Node" parent="StateChart/root/inactive" unique_id=2077317687]
 script = ExtResource("7_nsaq4")
 to = NodePath("../../pops up")
 event = &"inactive to pops up"
 delay_in_seconds = "0.0"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_4ypym")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1524614815]
+libraries/ = SubResource("AnimationLibrary_4ypym")
 
-[node name="Line2D" type="Line2D" parent="."]
+[node name="Line2D" type="Line2D" parent="." unique_id=1171346954]
 modulate = Color(1, 1, 1, 0)
 points = PackedVector2Array(0, 0, 0, 0)
 width = 5.0
@@ -349,7 +347,7 @@ end_cap_mode = 2
 round_precision = 6
 antialiased = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1790967086]
 
 [connection signal="state_entered" from="StateChart/root/pops up" to="." method="_on_pops_up_state_entered"]
 [connection signal="state_processing" from="StateChart/root/pops up" to="." method="_on_pops_up_state_processing"]

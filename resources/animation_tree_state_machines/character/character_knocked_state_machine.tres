@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=29 format=3 uid="uid://bvyt16qvrvl1h"]
+[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://bvyt16qvrvl1h"]
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_tglvg"]
 

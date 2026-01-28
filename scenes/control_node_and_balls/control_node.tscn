@@ -1,4 +1,4 @@
-[gd_scene load_steps=191 format=4 uid="uid://cupvg7lj3rh2s"]
+[gd_scene format=4 uid="uid://cupvg7lj3rh2s"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_fpwqj"]
 [ext_resource type="Script" uid="uid://8s2wdi5le4ti" path="res://scripts/control_node_and_balls/control_node.gd" id="2_r7e0p"]
@@ -15,16 +15,16 @@
 [ext_resource type="Script" uid="uid://1c4m2x6pib5p" path="res://scripts/control_node_and_balls/states/control_node_shield_states.gd" id="10_tehyq"]
 [ext_resource type="PackedScene" uid="uid://dvd5ic7fxna84" path="res://scenes/control_node_and_balls/models/control_node_streak.tscn" id="11_8s4nh"]
 [ext_resource type="Shader" uid="uid://c2lu8bfyo1f0b" path="res://shaders/ControlNode/control_node_wisps_shader.gdshader" id="11_r313a"]
-[ext_resource type="Texture2D" uid="uid://cmy0jxny0n8xx" path="res://assets/3D/Particles/dots/mega_dot_color.png" id="12_cnds4"]
+[ext_resource type="Texture2D" uid="uid://cmy0jxny0n8xx" path="res://assets/deprecated/3D/Particles/dots/mega_dot_color.png" id="12_cnds4"]
 [ext_resource type="Script" uid="uid://c4qlhalaf8h3u" path="res://scripts/control_node_and_balls/states/control_node_attractor_states.gd" id="12_ipcb2"]
-[ext_resource type="Material" uid="uid://bu2l1unbjhits" path="res://assets/3D/ControlNode/materials/control_node_lightning_material.tres" id="12_r313a"]
+[ext_resource type="Material" uid="uid://bu2l1unbjhits" path="res://assets/deprecated/3D/ControlNode/materials/control_node_lightning_material.tres" id="12_r313a"]
 [ext_resource type="PackedScene" uid="uid://dr3wkl0fgpbyw" path="res://scenes/control_node_and_balls/models/control_node_ready_sphere.tscn" id="13_nbe53"]
 [ext_resource type="Shader" uid="uid://bxeenh847ea3o" path="res://shaders/ControlNode/control_node_warp_vfx_shader.gdshader" id="17_1t0mc"]
 [ext_resource type="Shader" uid="uid://cmpxotk6ohnpq" path="res://shaders/ControlNode/control_node_warp_shader.gdshader" id="17_l8rvj"]
-[ext_resource type="Texture2D" uid="uid://bi6w6d2jroaxn" path="res://assets/3D/Textures/ControlNode/warp_lens_mask.png" id="18_1t0mc"]
-[ext_resource type="Texture2D" uid="uid://c17fg5mms40sa" path="res://assets/3D/Textures/ControlNode/warp_center_mask.png" id="20_yiu5s"]
-[ext_resource type="Texture2D" uid="uid://xhr4admvqewe" path="res://assets/3D/Textures/ControlNode/warp_rays_mask.png" id="21_7vd1p"]
-[ext_resource type="Texture2D" uid="uid://dvs4iuhc0rkpk" path="res://assets/3D/Textures/ControlNode/warp_ring_mask.png" id="22_hlhvm"]
+[ext_resource type="Texture2D" uid="uid://bi6w6d2jroaxn" path="res://assets/krita/assets/control_node/warp_lens_mask.png" id="18_1t0mc"]
+[ext_resource type="Texture2D" uid="uid://c17fg5mms40sa" path="res://assets/krita/assets/control_node/warp_center_mask.png" id="20_yiu5s"]
+[ext_resource type="Texture2D" uid="uid://xhr4admvqewe" path="res://assets/krita/assets/control_node/warp_rays_mask.png" id="21_7vd1p"]
+[ext_resource type="Texture2D" uid="uid://dvs4iuhc0rkpk" path="res://assets/krita/assets/control_node/warp_ring_mask.png" id="22_hlhvm"]
 [ext_resource type="Script" uid="uid://r4dihe2vx3dk" path="res://scripts/utilities/animation_tree/animation_state_change_tracker.gd" id="26_ipcb2"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0ou1q"]
@@ -61,7 +61,7 @@ void fragment() {
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5oaah"]
 load_path = "res://.godot/imported/ControlNode_emission.png-e19c70f61902b0c35e77110cb79964c2.s3tc.ctex"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hlhvm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ipcb2"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_nium7")
@@ -75,9 +75,9 @@ load_path = "res://.godot/imported/ControlNode_normal.png-90501730fccdcb587e0422
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n4b62"]
 load_path = "res://.godot/imported/ControlNode_roughness.png-c655887426a8d6936445c7811cb28beb.s3tc.ctex"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipcb2"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ei8v"]
 resource_local_to_scene = true
-next_pass = SubResource("ShaderMaterial_hlhvm")
+next_pass = SubResource("ShaderMaterial_ipcb2")
 albedo_texture = SubResource("CompressedTexture2D_0ou1q")
 metallic = 1.0
 metallic_texture = SubResource("CompressedTexture2D_ltrn5")
@@ -15522,7 +15522,7 @@ states/Start/position = Vector2(122, -27.75)
 transitions = ["Start", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_1ei8v"), "state - power on - charge level 0", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_kgwo6"), "state - power on - charge level 1", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_e3mf1"), "state - power on - charge level 2", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_hlhvm"), "state - power on - charge level 1", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_ipcb2"), "state - power on - charge level 3", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_8risc"), "state - power on - charge level 2", "state - power on - charge level 3", SubResource("AnimationNodeStateMachineTransition_h18mq"), "state - power on - charge level 0", "transition - power on - charge level 0 - expanding", SubResource("AnimationNodeStateMachineTransition_u6nro"), "transition - power on - charge level 0 - expanding", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_xvhia"), "state - power on - charge level 1", "transition - power on - charge level 1 - expanding", SubResource("AnimationNodeStateMachineTransition_3sl37"), "transition - power on - charge level 1 - expanding", "state - power on - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_j0og2"), "state - power on - charge level 2", "transition - power on - charge level 2 - expanding", SubResource("AnimationNodeStateMachineTransition_wfwi8"), "transition - power on - charge level 2 - expanding", "state - power on - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_k0wgs"), "state - power on - charge level 3", "transition - power on - charge level 3 - expanding", SubResource("AnimationNodeStateMachineTransition_jyysd"), "transition - power on - charge level 3 - expanding", "state - power on - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_tt2je"), "state - power on - charge level 0 - expanded", "transition - blow - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_d6luo"), "state - power on - charge level 1 - expanded", "transition - blow - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_hfc78"), "state - power on - charge level 2 - expanded", "transition - blow - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_0eo5d"), "state - power on - charge level 3 - expanded", "transition - blow - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_beqih"), "state - power on - charge level 0 - expanded", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_17kaf"), "transition - power on - charge level 0 - dissipating", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_mxocs"), "state - power on - charge level 1 - expanded", "transition - power on - charge level 1 - dissipating", SubResource("AnimationNodeStateMachineTransition_2bqhb"), "transition - power on - charge level 1 - dissipating", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_0p7cc"), "state - power on - charge level 2 - expanded", "transition - power on - charge level 2 - dissipating", SubResource("AnimationNodeStateMachineTransition_kyrtq"), "transition - power on - charge level 2 - dissipating", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_3qg61"), "state - power on - charge level 3 - expanded", "transition - power on - charge level 3 - dissipating", SubResource("AnimationNodeStateMachineTransition_xaxpm"), "transition - power on - charge level 3 - dissipating", "state - power on - charge level 3", SubResource("AnimationNodeStateMachineTransition_o1u0d"), "transition - blow - charge level 0 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_16ki6"), "transition - blow - charge level 1 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_ftdrl"), "transition - blow - charge level 2 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_a7vlu"), "transition - blow - charge level 3 - expanded", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_tu2td"), "state - power off - emitters off", "transition - power off to on", SubResource("AnimationNodeStateMachineTransition_61eqg"), "transition - power off to on", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_84heo"), "state - power on - charge level 0", "transition - blow - charge level 0", SubResource("AnimationNodeStateMachineTransition_3lo66"), "transition - blow - charge level 0", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_0e3ba"), "state - power on - charge level 1", "transition - blow - charge level 1", SubResource("AnimationNodeStateMachineTransition_asug8"), "transition - blow - charge level 1", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_17cf2"), "state - power on - charge level 3", "transition - blow - charge level 3", SubResource("AnimationNodeStateMachineTransition_3eorx"), "state - power on - charge level 2", "transition - blow - charge level 2", SubResource("AnimationNodeStateMachineTransition_xgwy3"), "transition - blow - charge level 2", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_t2xr1"), "transition - blow - charge level 3", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_234th"), "state - power off - emitters off", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_7ut47"), "transition - warp out", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_6e0ag"), "transition - warp in", "transition - warp out", SubResource("AnimationNodeStateMachineTransition_0ymq0"), "state - power on - charge level 0", "transition - power on to off", SubResource("AnimationNodeStateMachineTransition_wiijf"), "transition - power on to off", "state - power off - emitters off", SubResource("AnimationNodeStateMachineTransition_j72sy"), "transition - hit - charge level 1 - expanded", "state - power on - charge level 0 - expanded", SubResource("AnimationNodeStateMachineTransition_w283j"), "state - power on - charge level 3 - expanded", "transition - hit - charge level 3 - expanded", SubResource("AnimationNodeStateMachineTransition_ys8cf"), "state - power on - charge level 2 - expanded", "transition - hit - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_ipjfl"), "state - power on - charge level 1 - expanded", "transition - hit - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_pnv4w"), "state - power on - charge level 0", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_8lfx5"), "state - power on - charge level 1", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_uo6d3"), "state - power on - charge level 2", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_h3xn4"), "state - power on - charge level 3", "transition - warp in", SubResource("AnimationNodeStateMachineTransition_ogwdh"), "transition - hit - charge level 1 - expanded", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_1x2n7"), "transition - power on - charge level 0 - expanding", "transition - power on - charge level 0 - dissipating", SubResource("AnimationNodeStateMachineTransition_k4xti"), "transition - power on - charge level 1 - expanding", "transition - power on - charge level 1 - dissipating", SubResource("AnimationNodeStateMachineTransition_o6uow"), "transition - power on - charge level 2 - expanding", "transition - power on - charge level 2 - dissipating", SubResource("AnimationNodeStateMachineTransition_mkuq5"), "transition - power on - charge level 3 - expanding", "transition - power on - charge level 3 - dissipating", SubResource("AnimationNodeStateMachineTransition_d0teu"), "transition - hit - charge level 2 - expanded", "transition - power on - charge level 1 - dissipating", SubResource("AnimationNodeStateMachineTransition_u3o36"), "transition - hit - charge level 3 - expanded", "transition - power on - charge level 2 - dissipating", SubResource("AnimationNodeStateMachineTransition_dlasw"), "transition - hit - charge level 2 - expanded", "state - power on - charge level 1 - expanded", SubResource("AnimationNodeStateMachineTransition_xdi6h"), "transition - hit - charge level 3 - expanded", "state - power on - charge level 2 - expanded", SubResource("AnimationNodeStateMachineTransition_4fss2"), "transition - hit - charge level 1", "state - power on - charge level 0", SubResource("AnimationNodeStateMachineTransition_apjb8"), "state - power on - charge level 1", "transition - hit - charge level 1", SubResource("AnimationNodeStateMachineTransition_bdxhu"), "state - power on - charge level 2", "transition - hit - charge level 2", SubResource("AnimationNodeStateMachineTransition_cguct"), "transition - hit - charge level 2", "state - power on - charge level 1", SubResource("AnimationNodeStateMachineTransition_wqco7"), "state - power on - charge level 3", "transition - hit - charge level 3", SubResource("AnimationNodeStateMachineTransition_onlti"), "transition - hit - charge level 3", "state - power on - charge level 2", SubResource("AnimationNodeStateMachineTransition_cc0gj")]
 graph_offset = Vector2(274.02966, -19.84024)
 
-[node name="ControlNode" node_paths=PackedStringArray("power_states", "charge_states", "shield_states", "attractor_states", "asset") groups=["ControlNodeGroup"] instance=ExtResource("1_fpwqj")]
+[node name="ControlNode" unique_id=1757075835 node_paths=PackedStringArray("power_states", "charge_states", "shield_states", "attractor_states", "asset") groups=["ControlNodeGroup"] instance=ExtResource("1_fpwqj")]
 script = ExtResource("2_r7e0p")
 power_states = NodePath("State/Root/Power/Power States")
 charge_states = NodePath("State/Root/Power/On/Charge/Charge States")
@@ -15530,50 +15530,50 @@ shield_states = NodePath("State/Root/Power/On/Shield/Shield States")
 attractor_states = NodePath("State/Root/Power/On/Attractor/Attractor States")
 asset = NodePath("TrackTransformContainer/ControlNodeAsset")
 
-[node name="Physics States" parent="State/Root/Physics" index="0"]
+[node name="Physics States" parent="State/Root/Physics" parent_id_path=PackedInt32Array(1982961813) index="0" unique_id=1891427015]
 script = ExtResource("3_hlhvm")
 
-[node name="to warping" type="Node" parent="State/Root/Physics/rigid" index="1"]
+[node name="to warping" type="Node" parent="State/Root/Physics/rigid" parent_id_path=PackedInt32Array(377283055) index="1" unique_id=2008611418]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../warping")
 event = &"Physics: to warping"
 delay_in_seconds = "0.0"
 
-[node name="warping" type="Node" parent="State/Root/Physics" index="3"]
+[node name="warping" type="Node" parent="State/Root/Physics" parent_id_path=PackedInt32Array(1982961813) index="3" unique_id=1891087493]
 script = ExtResource("4_0jkta")
 
-[node name="to rigid" type="Node" parent="State/Root/Physics/warping" index="0"]
+[node name="to rigid" type="Node" parent="State/Root/Physics/warping" index="0" unique_id=893190128]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../rigid")
 event = &"Physics: to rigid"
 delay_in_seconds = "0.0"
 
-[node name="Control States" parent="State/Root/Control" index="0" node_paths=PackedStringArray("streak")]
+[node name="Control States" parent="State/Root/Control" parent_id_path=PackedInt32Array(848782415) index="0" unique_id=1436877134 node_paths=PackedStringArray("streak")]
 script = ExtResource("3_qi4cr")
 shot_speed = 50.0
 shot_range = 10.0
 streak = NodePath("../../../../ControlNodeStreak")
 
-[node name="to shot" type="Node" parent="State/Root/Control/free" index="2"]
+[node name="to shot" type="Node" parent="State/Root/Control/free" parent_id_path=PackedInt32Array(1922926925) index="2" unique_id=2056589612]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../shot")
 event = &"Control: free to shot"
 delay_in_seconds = "0.0"
 
-[node name="shot" type="Node" parent="State/Root/Control" index="4"]
+[node name="shot" type="Node" parent="State/Root/Control" parent_id_path=PackedInt32Array(848782415) index="4" unique_id=356420402]
 script = ExtResource("4_0jkta")
 
-[node name="to free" type="Node" parent="State/Root/Control/shot" index="0"]
+[node name="to free" type="Node" parent="State/Root/Control/shot" index="0" unique_id=1630017085]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../free")
 event = &"Control: shot to free"
 delay_in_seconds = "0.0"
 
-[node name="Power" type="Node" parent="State/Root" index="2"]
+[node name="Power" type="Node" parent="State/Root" parent_id_path=PackedInt32Array(1345308355) index="2" unique_id=402287998]
 script = ExtResource("3_02qb1")
 initial_state = NodePath("off")
 
-[node name="Power States" type="Node" parent="State/Root/Power" index="0" node_paths=PackedStringArray("control_node", "asset", "sc", "direction_ray", "rigid_node")]
+[node name="Power States" type="Node" parent="State/Root/Power" index="0" unique_id=1909465305 node_paths=PackedStringArray("control_node", "asset", "sc", "direction_ray", "rigid_node")]
 script = ExtResource("4_qi4cr")
 control_node = NodePath("../../../..")
 asset = NodePath("../../../../TrackTransformContainer/ControlNodeAsset")
@@ -15581,256 +15581,256 @@ sc = NodePath("../../..")
 direction_ray = NodePath("../../../../TrackPositionContainer/DirectionRay")
 rigid_node = NodePath("../../../../RigidNode")
 
-[node name="off" type="Node" parent="State/Root/Power" index="1"]
+[node name="off" type="Node" parent="State/Root/Power" index="1" unique_id=734226170]
 script = ExtResource("4_0jkta")
 
-[node name="to charging" type="Node" parent="State/Root/Power/off" index="0"]
+[node name="to charging" type="Node" parent="State/Root/Power/off" index="0" unique_id=462431128]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../charging")
 event = &"Power: to charging"
 delay_in_seconds = "0.0"
 
-[node name="charging" type="Node" parent="State/Root/Power" index="2"]
+[node name="charging" type="Node" parent="State/Root/Power" index="2" unique_id=1183404176]
 script = ExtResource("4_0jkta")
 
-[node name="to on" type="Node" parent="State/Root/Power/charging" index="0"]
+[node name="to on" type="Node" parent="State/Root/Power/charging" index="0" unique_id=1807109596]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../On")
 event = &"Power: to on"
 delay_in_seconds = "0.0"
 
-[node name="to off" type="Node" parent="State/Root/Power/charging" index="1"]
+[node name="to off" type="Node" parent="State/Root/Power/charging" index="1" unique_id=1483316423]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../off")
 event = &"Power: to off"
 delay_in_seconds = "0.0"
 
-[node name="On" type="Node" parent="State/Root/Power" index="3"]
+[node name="On" type="Node" parent="State/Root/Power" index="3" unique_id=169924042]
 script = ExtResource("8_nbe53")
 metadata/_custom_type_script = "uid://duu2hhmogs378"
 
-[node name="Charge" type="Node" parent="State/Root/Power/On" index="0"]
+[node name="Charge" type="Node" parent="State/Root/Power/On" index="0" unique_id=1135890479]
 script = ExtResource("3_02qb1")
 initial_state = NodePath("none")
 
-[node name="Charge States" type="Node" parent="State/Root/Power/On/Charge" index="0" node_paths=PackedStringArray("control_node", "rigid_node", "asset", "sc")]
+[node name="Charge States" type="Node" parent="State/Root/Power/On/Charge" index="0" unique_id=877844931 node_paths=PackedStringArray("control_node", "rigid_node", "asset", "sc")]
 script = ExtResource("6_8s4nh")
 control_node = NodePath("../../../../../..")
 rigid_node = NodePath("../../../../../../RigidNode")
 asset = NodePath("../../../../../../TrackTransformContainer/ControlNodeAsset")
 sc = NodePath("../../../../..")
 
-[node name="LoseChargeTimer" type="Timer" parent="State/Root/Power/On/Charge/Charge States" index="0"]
+[node name="LoseChargeTimer" type="Timer" parent="State/Root/Power/On/Charge/Charge States" index="0" unique_id=461782897]
 wait_time = 600.0
 
-[node name="none" type="Node" parent="State/Root/Power/On/Charge" index="1"]
+[node name="none" type="Node" parent="State/Root/Power/On/Charge" index="1" unique_id=1339752116]
 script = ExtResource("4_0jkta")
 
-[node name="to level1" type="Node" parent="State/Root/Power/On/Charge/none" index="0"]
+[node name="to level1" type="Node" parent="State/Root/Power/On/Charge/none" index="0" unique_id=1977794649]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level1")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
-[node name="level1" type="Node" parent="State/Root/Power/On/Charge" index="2"]
+[node name="level1" type="Node" parent="State/Root/Power/On/Charge" index="2" unique_id=1590758744]
 script = ExtResource("4_0jkta")
 
-[node name="to none" type="Node" parent="State/Root/Power/On/Charge/level1" index="0"]
+[node name="to none" type="Node" parent="State/Root/Power/On/Charge/level1" index="0" unique_id=1427990773]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="to level2" type="Node" parent="State/Root/Power/On/Charge/level1" index="1"]
+[node name="to level2" type="Node" parent="State/Root/Power/On/Charge/level1" index="1" unique_id=1334623705]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level2")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
-[node name="to none via charge down" type="Node" parent="State/Root/Power/On/Charge/level1" index="2"]
+[node name="to none via charge down" type="Node" parent="State/Root/Power/On/Charge/level1" index="2" unique_id=463213491]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"charge down"
 delay_in_seconds = "0.0"
 
-[node name="level2" type="Node" parent="State/Root/Power/On/Charge" index="3"]
+[node name="level2" type="Node" parent="State/Root/Power/On/Charge" index="3" unique_id=2054873122]
 script = ExtResource("4_0jkta")
 
-[node name="to none" type="Node" parent="State/Root/Power/On/Charge/level2" index="0"]
+[node name="to none" type="Node" parent="State/Root/Power/On/Charge/level2" index="0" unique_id=1318234933]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="to level3" type="Node" parent="State/Root/Power/On/Charge/level2" index="1"]
+[node name="to level3" type="Node" parent="State/Root/Power/On/Charge/level2" index="1" unique_id=1054266870]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level3")
 event = &"charge up"
 delay_in_seconds = "0.0"
 
-[node name="to level 1" type="Node" parent="State/Root/Power/On/Charge/level2" index="2"]
+[node name="to level 1" type="Node" parent="State/Root/Power/On/Charge/level2" index="2" unique_id=615505713]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level1")
 event = &"charge down"
 delay_in_seconds = "0.0"
 
-[node name="level3" type="Node" parent="State/Root/Power/On/Charge" index="4"]
+[node name="level3" type="Node" parent="State/Root/Power/On/Charge" index="4" unique_id=1555818902]
 script = ExtResource("4_0jkta")
 
-[node name="to none" type="Node" parent="State/Root/Power/On/Charge/level3" index="0"]
+[node name="to none" type="Node" parent="State/Root/Power/On/Charge/level3" index="0" unique_id=1748744300]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../none")
 event = &"discharge"
 delay_in_seconds = "0.0"
 
-[node name="to level 2" type="Node" parent="State/Root/Power/On/Charge/level3" index="1"]
+[node name="to level 2" type="Node" parent="State/Root/Power/On/Charge/level3" index="1" unique_id=1915869708]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../level2")
 event = &"charge down"
 delay_in_seconds = "0.0"
 
-[node name="Shield" type="Node" parent="State/Root/Power/On" index="1"]
+[node name="Shield" type="Node" parent="State/Root/Power/On" index="1" unique_id=1785904233]
 script = ExtResource("3_02qb1")
 initial_state = NodePath("off")
 metadata/_custom_type_script = "uid://bhy7it06w5oxr"
 
-[node name="Shield States" type="Node" parent="State/Root/Power/On/Shield" index="0" node_paths=PackedStringArray("control_node", "asset", "sc", "shield_collision")]
+[node name="Shield States" type="Node" parent="State/Root/Power/On/Shield" index="0" unique_id=1718732260 node_paths=PackedStringArray("control_node", "asset", "sc", "shield_collision")]
 script = ExtResource("10_tehyq")
 control_node = NodePath("../../../../../..")
 asset = NodePath("../../../../../../TrackTransformContainer/ControlNodeAsset")
 sc = NodePath("../../../../..")
 shield_collision = NodePath("../../../../../../TrackPositionContainer/Shield")
 
-[node name="off" type="Node" parent="State/Root/Power/On/Shield" index="1"]
+[node name="off" type="Node" parent="State/Root/Power/On/Shield" index="1" unique_id=206097436]
 script = ExtResource("4_0jkta")
 
-[node name="to expanding" type="Node" parent="State/Root/Power/On/Shield/off" index="0"]
+[node name="to expanding" type="Node" parent="State/Root/Power/On/Shield/off" index="0" unique_id=190163086]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../expanding")
 event = &"Shield: to expanding"
 delay_in_seconds = "0.0"
 
-[node name="expanding" type="Node" parent="State/Root/Power/On/Shield" index="2"]
+[node name="expanding" type="Node" parent="State/Root/Power/On/Shield" index="2" unique_id=199871386]
 script = ExtResource("4_0jkta")
 
-[node name="to dissipating" type="Node" parent="State/Root/Power/On/Shield/expanding" index="0"]
+[node name="to dissipating" type="Node" parent="State/Root/Power/On/Shield/expanding" index="0" unique_id=325743871]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../dissipating")
 event = &"Shield: to dissipating"
 delay_in_seconds = "0.0"
 
-[node name="to on" type="Node" parent="State/Root/Power/On/Shield/expanding" index="1"]
+[node name="to on" type="Node" parent="State/Root/Power/On/Shield/expanding" index="1" unique_id=694312005]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../on")
 event = &"Shield: to on"
 delay_in_seconds = "0.0"
 
-[node name="on" type="Node" parent="State/Root/Power/On/Shield" index="3"]
+[node name="on" type="Node" parent="State/Root/Power/On/Shield" index="3" unique_id=613441357]
 script = ExtResource("4_0jkta")
 
-[node name="to dissipating" type="Node" parent="State/Root/Power/On/Shield/on" index="0"]
+[node name="to dissipating" type="Node" parent="State/Root/Power/On/Shield/on" index="0" unique_id=1505645781]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../dissipating")
 event = &"Shield: to dissipating"
 delay_in_seconds = "0.0"
 
-[node name="to off" type="Node" parent="State/Root/Power/On/Shield/on" index="1"]
+[node name="to off" type="Node" parent="State/Root/Power/On/Shield/on" index="1" unique_id=1817726400]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../off")
 event = &"Shield: to off"
 delay_in_seconds = "0.0"
 
-[node name="dissipating" type="Node" parent="State/Root/Power/On/Shield" index="4"]
+[node name="dissipating" type="Node" parent="State/Root/Power/On/Shield" index="4" unique_id=1999875938]
 script = ExtResource("4_0jkta")
 
-[node name="to off" type="Node" parent="State/Root/Power/On/Shield/dissipating" index="0"]
+[node name="to off" type="Node" parent="State/Root/Power/On/Shield/dissipating" index="0" unique_id=657517789]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../off")
 event = &"Shield: to off"
 delay_in_seconds = "0.0"
 
-[node name="to discharging" type="Node" parent="State/Root/Power/On" index="2"]
+[node name="to discharging" type="Node" parent="State/Root/Power/On" index="2" unique_id=186851290]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../discharging")
 event = &"Power: to discharging"
 delay_in_seconds = "0.0"
 
-[node name="to blow" type="Node" parent="State/Root/Power/On" index="3"]
+[node name="to blow" type="Node" parent="State/Root/Power/On" index="3" unique_id=152496976]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../blow")
 event = &"Power: to blow"
 delay_in_seconds = "0.0"
 
-[node name="Attractor" type="Node" parent="State/Root/Power/On" index="4"]
+[node name="Attractor" type="Node" parent="State/Root/Power/On" index="4" unique_id=565757448]
 script = ExtResource("3_02qb1")
 initial_state = NodePath("enabled")
 
-[node name="Attractor States" type="Node" parent="State/Root/Power/On/Attractor" index="0" node_paths=PackedStringArray("control_node", "sc")]
+[node name="Attractor States" type="Node" parent="State/Root/Power/On/Attractor" index="0" unique_id=1947772246 node_paths=PackedStringArray("control_node", "sc")]
 script = ExtResource("12_ipcb2")
 control_node = NodePath("../../../../../..")
 sc = NodePath("../../../../..")
 
-[node name="Timer" type="Timer" parent="State/Root/Power/On/Attractor/Attractor States" index="0"]
+[node name="Timer" type="Timer" parent="State/Root/Power/On/Attractor/Attractor States" index="0" unique_id=82600497]
 wait_time = 3.0
 
-[node name="disabled" type="Node" parent="State/Root/Power/On/Attractor" index="1"]
+[node name="disabled" type="Node" parent="State/Root/Power/On/Attractor" index="1" unique_id=1367755825]
 script = ExtResource("4_0jkta")
 
-[node name="to enabled" type="Node" parent="State/Root/Power/On/Attractor/disabled" index="0"]
+[node name="to enabled" type="Node" parent="State/Root/Power/On/Attractor/disabled" index="0" unique_id=1434996552]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../enabled")
 event = &"Attractor: to enabled"
 delay_in_seconds = "0.0"
 
-[node name="enabled" type="Node" parent="State/Root/Power/On/Attractor" index="2"]
+[node name="enabled" type="Node" parent="State/Root/Power/On/Attractor" index="2" unique_id=50783792]
 script = ExtResource("4_0jkta")
 
-[node name="to disabled" type="Node" parent="State/Root/Power/On/Attractor/enabled" index="0"]
+[node name="to disabled" type="Node" parent="State/Root/Power/On/Attractor/enabled" index="0" unique_id=98065655]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../disabled")
 event = &"Attractor: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="discharging" type="Node" parent="State/Root/Power" index="4"]
+[node name="discharging" type="Node" parent="State/Root/Power" index="4" unique_id=681615722]
 script = ExtResource("4_0jkta")
 
-[node name="to off" type="Node" parent="State/Root/Power/discharging" index="0"]
+[node name="to off" type="Node" parent="State/Root/Power/discharging" index="0" unique_id=526913707]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../off")
 event = &"Power: to off"
 delay_in_seconds = "0.0"
 
-[node name="blow" type="Node" parent="State/Root/Power" index="5"]
+[node name="blow" type="Node" parent="State/Root/Power" index="5" unique_id=779656340]
 script = ExtResource("4_0jkta")
 
-[node name="to off" type="Node" parent="State/Root/Power/blow" index="0"]
+[node name="to off" type="Node" parent="State/Root/Power/blow" index="0" unique_id=337666905]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../off")
 event = &"Power: to off"
 delay_in_seconds = "0.0"
 
-[node name="RigidNode" parent="." index="1" groups=["ControlNodeGroup"]]
+[node name="RigidNode" parent="." index="1" unique_id=1496620994 groups=["ControlNodeGroup"]]
 
-[node name="CharNode" parent="." index="2" groups=["ControlNodeGroup"]]
+[node name="CharNode" parent="." index="2" unique_id=1687242209 groups=["ControlNodeGroup"]]
 
-[node name="ControlNodeAsset" parent="TrackTransformContainer" index="0" node_paths=PackedStringArray("wisps_particles", "ready_sphere") instance=ExtResource("7_2p3vg")]
+[node name="ControlNodeAsset" parent="TrackTransformContainer" parent_id_path=PackedInt32Array(214515894) index="0" unique_id=455416543 node_paths=PackedStringArray("wisps_particles", "ready_sphere") instance=ExtResource("7_2p3vg")]
 wisps_particles = NodePath("../../TrackPositionContainer/WispParticles3D")
 ready_sphere = NodePath("../../TrackPositionContainer/ControlNodeReadySphere")
 
-[node name="ControlNodeMesh" parent="TrackTransformContainer/ControlNodeAsset/ControlNodeModel" index="0"]
-surface_material_override/0 = SubResource("StandardMaterial3D_ipcb2")
+[node name="ControlNodeMesh" parent="TrackTransformContainer/ControlNodeAsset/ControlNodeModel" parent_id_path=PackedInt32Array(455416543, 1881711276) index="0" unique_id=1387264145]
+surface_material_override/0 = SubResource("StandardMaterial3D_1ei8v")
 
-[node name="DirectionRay" parent="TrackPositionContainer" index="0" instance=ExtResource("4_bt07l")]
+[node name="DirectionRay" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="0" unique_id=474420284 instance=ExtResource("4_bt07l")]
 
-[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="TrackPositionContainer" index="1"]
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="1" unique_id=1357196390]
 strength = 65.0
 attenuation = 2.0
 cull_mask = 4293918721
 radius = 10.0
 
-[node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="TrackPositionContainer" index="2"]
+[node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="2" unique_id=839800057]
 
-[node name="WispParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" index="3"]
+[node name="WispParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="3" unique_id=1297073081]
 emitting = false
 amount = 200
 lifetime = 1.2
@@ -15843,57 +15843,55 @@ trail_lifetime = 1.0
 process_material = SubResource("ParticleProcessMaterial_1t0mc")
 draw_pass_1 = SubResource("QuadMesh_ygoor")
 
-[node name="LightningParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" index="4"]
+[node name="LightningParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="4" unique_id=542149814]
 amount = 10
 amount_ratio = 0.1
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_hlhvm")
 draw_pass_1 = SubResource("ArrayMesh_r313a")
 
-[node name="ControlNodeReadySphere" parent="TrackPositionContainer" index="5" instance=ExtResource("13_nbe53")]
+[node name="ControlNodeReadySphere" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="5" unique_id=1625921520 instance=ExtResource("13_nbe53")]
 
-[node name="Shield" type="StaticBody3D" parent="TrackPositionContainer" index="6" groups=["ControlNodeShieldGroup"]]
+[node name="Shield" type="StaticBody3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="6" unique_id=926592741 groups=["ControlNodeShieldGroup"]]
 collision_layer = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrackPositionContainer/Shield" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrackPositionContainer/Shield" index="0" unique_id=680185923]
 visible = false
 shape = SubResource("SphereShape3D_tehyq")
 debug_color = Color(0.031590424, 0.4735664, 0.4680773, 1)
 
-[node name="WarpEffect" type="Node3D" parent="TrackPositionContainer" index="7"]
+[node name="WarpEffect" type="Node3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="7" unique_id=2013159024]
 
-[node name="WarpMesh" type="MeshInstance3D" parent="TrackPositionContainer/WarpEffect" index="0"]
+[node name="WarpMesh" type="MeshInstance3D" parent="TrackPositionContainer/WarpEffect" index="0" unique_id=1789322013]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0036141872, 0.011746705, 0)
 mesh = SubResource("QuadMesh_1t0mc")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("ShaderMaterial_xdpkx")
 
-[node name="VFXMesh" type="MeshInstance3D" parent="TrackPositionContainer/WarpEffect" index="1"]
+[node name="VFXMesh" type="MeshInstance3D" parent="TrackPositionContainer/WarpEffect" index="1" unique_id=1394567926]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0036141872, 0.011746705, 0)
 mesh = SubResource("QuadMesh_1t0mc")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("ShaderMaterial_ygoor")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="TrackPositionContainer/WarpEffect" index="2"]
+[node name="OmniLight3D" type="OmniLight3D" parent="TrackPositionContainer/WarpEffect" index="2" unique_id=10149434]
 light_intensity_lumens = 1000000.0
 light_color = Color(0.50980395, 0.7019608, 1, 1)
 light_cull_mask = 4294967291
 
-[node name="TargetMarker" type="Marker3D" parent="TrackPositionContainer" index="8" groups=["ControlNodeGroup"]]
+[node name="TargetMarker" type="Marker3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="8" unique_id=573054401 groups=["ControlNodeGroup"]]
 
-[node name="ControlNodeStreak" parent="." index="5" instance=ExtResource("11_8s4nh")]
+[node name="ControlNodeStreak" parent="." index="5" unique_id=1959674618 instance=ExtResource("11_8s4nh")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
-libraries = {
-&"": SubResource("AnimationLibrary_1ei8v")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6" unique_id=1304325493]
+libraries/ = SubResource("AnimationLibrary_1ei8v")
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="7"]
+[node name="AnimationTree" type="AnimationTree" parent="." index="7" unique_id=1514919864]
 tree_root = SubResource("AnimationNodeStateMachine_8lfx5")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 
-[node name="AnimationStateChangeTracker" type="Node" parent="AnimationTree" index="0"]
+[node name="AnimationStateChangeTracker" type="Node" parent="AnimationTree" index="0" unique_id=1800293552]
 script = ExtResource("26_ipcb2")
 state_machine_path = "parameters/playback"
 metadata/_custom_type_script = "uid://r4dihe2vx3dk"

@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5o2dx8h5cbo1"]
+[gd_scene format=3 uid="uid://b5o2dx8h5cbo1"]
 
-[ext_resource type="ArrayMesh" uid="uid://b3lvlj7kfxj60" path="res://assets/3D/Particles/lightning-sparks/lightning_on_sphere_mesh.tres" id="2_hrpir"]
-[ext_resource type="Material" uid="uid://c200ia63f5opo" path="res://assets/3D/Particles/lightning-sparks/red_lightning_shader_material.tres" id="2_ptntm"]
+[ext_resource type="ArrayMesh" uid="uid://b3lvlj7kfxj60" path="res://assets/deprecated/3D/Particles/lightning-sparks/lightning_on_sphere_mesh.tres" id="2_hrpir"]
+[ext_resource type="Material" uid="uid://c200ia63f5opo" path="res://assets/deprecated/3D/Particles/lightning-sparks/red_lightning_shader_material.tres" id="2_ptntm"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v87tk"]
 particle_flag_align_y = true
@@ -14,22 +14,21 @@ scale_max = 1.2
 
 [sub_resource type="QuadMesh" id="QuadMesh_1c1bg"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=1936005457]
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=2046743463]
 visible = false
 amount = 1
 process_material = SubResource("ParticleProcessMaterial_v87tk")
 draw_pass_1 = ExtResource("2_hrpir")
 
-[node name="Collection" type="Node3D" parent="."]
+[node name="Collection" type="Node3D" parent="." unique_id=1261412859]
 visible = false
 
-[node name="LightningMesh" type="MeshInstance3D" parent="Collection"]
+[node name="LightningMesh" type="MeshInstance3D" parent="Collection" unique_id=78987433]
 mesh = ExtResource("2_hrpir")
-skeleton = NodePath("")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1956584356]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.121567, 1.25094)
 mesh = SubResource("QuadMesh_1c1bg")
 surface_material_override/0 = ExtResource("2_ptntm")

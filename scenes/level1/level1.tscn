@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dnqdsgkyde5ys"]
+[gd_scene format=3 uid="uid://dnqdsgkyde5ys"]
 
 [ext_resource type="Script" uid="uid://dpw23mx2rrnj" path="res://scripts/level1/act_1.gd" id="1_75wj8"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="1_j6tjs"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="16_4ihqv"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="17_abldk"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="18_mp8jo"]
-[ext_resource type="VideoStream" uid="uid://boayy2715qxi1" path="res://assets/logo/pine_signal_interactive-1280x800.ogv" id="19_a2ie3"]
+[ext_resource type="VideoStream" uid="uid://boayy2715qxi1" path="res://assets/deprecated/logo/pine_signal_interactive-1280x800.ogv" id="19_a2ie3"]
 [ext_resource type="Texture2D" uid="uid://cq6d1nvt8t2s7" path="res://kenney_input-prompts/Xbox Series/Default/xbox_button_b.png" id="19_kmghq"]
 [ext_resource type="Script" uid="uid://cn22ovelgqca7" path="res://scripts/ui/controller_ui/dynamic_button_display.gd" id="20_ewap6"]
 [ext_resource type="PackedScene" uid="uid://dd7rk2je4r01m" path="res://scenes/character_path/character_path.tscn" id="21_52762"]
@@ -519,111 +519,106 @@ _data = {
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_m5c52"]
 
-[node name="Level1" type="Node3D"]
+[node name="Level1" type="Node3D" unique_id=1891155307]
 process_mode = 1
 script = ExtResource("1_75wj8")
 starts_with_cut_scene = true
 
-[node name="WorldEnvironment" parent="." instance=ExtResource("1_j6tjs")]
+[node name="WorldEnvironment" parent="." unique_id=1578393597 instance=ExtResource("1_j6tjs")]
 
-[node name="Act1SkyBox" parent="WorldEnvironment" index="1" node_paths=PackedStringArray("camera_controller")]
+[node name="Act1SkyBox" parent="WorldEnvironment" index="2" unique_id=533682141 node_paths=PackedStringArray("camera_controller")]
 camera_controller = NodePath("../../CameraController")
 
-[node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("2_vcigm")]
+[node name="CameraController" parent="." unique_id=303877323 instance=ExtResource("2_vcigm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.087, 3, 8)
-subject = NodePath("")
 
-[node name="World" parent="." instance=ExtResource("3_wf22a")]
+[node name="World" parent="." unique_id=2035284626 instance=ExtResource("3_wf22a")]
 
-[node name="GoalLeft" parent="." instance=ExtResource("8_2nmo7")]
+[node name="GoalLeft" parent="." unique_id=1958889101 instance=ExtResource("8_2nmo7")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.4087, 0, 0)
 
-[node name="GoalRight" parent="." instance=ExtResource("8_2nmo7")]
+[node name="GoalRight" parent="." unique_id=1195980072 instance=ExtResource("8_2nmo7")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 22.4937, 0, 0)
 
-[node name="UI" parent="." node_paths=PackedStringArray("camera_controller", "player") instance=ExtResource("11_ffwmr")]
+[node name="UI" parent="." unique_id=444683373 node_paths=PackedStringArray("camera_controller") instance=ExtResource("11_ffwmr")]
 camera_controller = NodePath("../CameraController")
-player = NodePath("")
 
-[node name="ControlSuppressor" parent="." node_paths=PackedStringArray("controlled_nodes") instance=ExtResource("13_hpf6u")]
+[node name="ControlSuppressor" parent="." unique_id=1161254653 node_paths=PackedStringArray("controlled_nodes") instance=ExtResource("13_hpf6u")]
 controlled_nodes = [NodePath("../CameraController"), null, null]
 
-[node name="Level1Script" type="Node3D" parent="." node_paths=PackedStringArray("control_suppressor", "cut_scene_player", "cut_scene_context_player", "camera_controller", "player")]
+[node name="Level1Script" type="Node3D" parent="." unique_id=1770373518 node_paths=PackedStringArray("control_suppressor", "cut_scene_player", "cut_scene_context_player", "camera_controller")]
 script = ExtResource("14_eau2p")
 control_suppressor = NodePath("../ControlSuppressor")
 cut_scene_player = NodePath("CutScenePlayer")
 cut_scene_context_player = NodePath("CutSceneContextPlayer")
 camera_controller = NodePath("../CameraController")
-player = NodePath("")
 
-[node name="StateChart" type="Node" parent="Level1Script"]
+[node name="StateChart" type="Node" parent="Level1Script" unique_id=919459205]
 script = ExtResource("14_ok3f3")
 
-[node name="root" type="Node" parent="Level1Script/StateChart"]
+[node name="root" type="Node" parent="Level1Script/StateChart" unique_id=114159828]
 script = ExtResource("16_4ihqv")
 initial_state = NodePath("intro cutscene")
 
-[node name="intro cutscene" type="Node" parent="Level1Script/StateChart/root"]
+[node name="intro cutscene" type="Node" parent="Level1Script/StateChart/root" unique_id=1316464121]
 script = ExtResource("17_abldk")
 
-[node name="to walk to field" type="Node" parent="Level1Script/StateChart/root/intro cutscene"]
+[node name="to walk to field" type="Node" parent="Level1Script/StateChart/root/intro cutscene" unique_id=719014440]
 script = ExtResource("18_mp8jo")
 to = NodePath("../../walk to field")
 event = &"intro cutscene to walk to field"
 delay_in_seconds = "0.0"
 
-[node name="walk to field" type="Node" parent="Level1Script/StateChart/root"]
+[node name="walk to field" type="Node" parent="Level1Script/StateChart/root" unique_id=1414823055]
 script = ExtResource("17_abldk")
 
-[node name="to game over" type="Node" parent="Level1Script/StateChart/root/walk to field"]
+[node name="to game over" type="Node" parent="Level1Script/StateChart/root/walk to field" unique_id=1872754253]
 script = ExtResource("18_mp8jo")
 to = NodePath("../../game over")
 event = &"walk to field to game over"
 delay_in_seconds = "0.0"
 
-[node name="Transition" type="Node" parent="Level1Script/StateChart/root/walk to field"]
+[node name="Transition" type="Node" parent="Level1Script/StateChart/root/walk to field" unique_id=1705316001]
 script = ExtResource("18_mp8jo")
 to = NodePath("../../go around goal")
 event = &"walk to field to go around goal"
 delay_in_seconds = "0.0"
 
-[node name="go around goal" type="Node" parent="Level1Script/StateChart/root"]
+[node name="go around goal" type="Node" parent="Level1Script/StateChart/root" unique_id=802136895]
 script = ExtResource("17_abldk")
 
-[node name="to game over" type="Node" parent="Level1Script/StateChart/root/go around goal"]
+[node name="to game over" type="Node" parent="Level1Script/StateChart/root/go around goal" unique_id=523592124]
 script = ExtResource("18_mp8jo")
 to = NodePath("../../game over")
 event = &"go around goal to game over"
 delay_in_seconds = "0.0"
 
-[node name="to game play" type="Node" parent="Level1Script/StateChart/root/go around goal"]
+[node name="to game play" type="Node" parent="Level1Script/StateChart/root/go around goal" unique_id=183502727]
 script = ExtResource("18_mp8jo")
 to = NodePath("../../gameplay")
 event = &"go around goal to gameplay"
 delay_in_seconds = "0.0"
 
-[node name="gameplay" type="Node" parent="Level1Script/StateChart/root"]
+[node name="gameplay" type="Node" parent="Level1Script/StateChart/root" unique_id=1852460602]
 script = ExtResource("17_abldk")
 
-[node name="to game over" type="Node" parent="Level1Script/StateChart/root/gameplay"]
+[node name="to game over" type="Node" parent="Level1Script/StateChart/root/gameplay" unique_id=1282053838]
 script = ExtResource("18_mp8jo")
 to = NodePath("../../game over")
 event = &"gameplay to game over"
 delay_in_seconds = "0.0"
 
-[node name="game over" type="Node" parent="Level1Script/StateChart/root"]
+[node name="game over" type="Node" parent="Level1Script/StateChart/root" unique_id=139719594]
 script = ExtResource("17_abldk")
 
-[node name="CutSceneContextPlayer" type="AnimationPlayer" parent="Level1Script"]
-libraries = {
-&"": SubResource("AnimationLibrary_5cewn")
-}
+[node name="CutSceneContextPlayer" type="AnimationPlayer" parent="Level1Script" unique_id=1483109643]
+libraries/ = SubResource("AnimationLibrary_5cewn")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Level1Script/CutSceneContextPlayer"]
+[node name="CanvasLayer" type="CanvasLayer" parent="Level1Script/CutSceneContextPlayer" unique_id=1519041602]
 layer = 12
 visible = false
 
-[node name="BlackCutSceneBandTop" type="ColorRect" parent="Level1Script/CutSceneContextPlayer/CanvasLayer"]
+[node name="BlackCutSceneBandTop" type="ColorRect" parent="Level1Script/CutSceneContextPlayer/CanvasLayer" unique_id=1763366666]
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
@@ -632,7 +627,7 @@ grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="BlackCutSceneBandBottom" type="ColorRect" parent="Level1Script/CutSceneContextPlayer/CanvasLayer"]
+[node name="BlackCutSceneBandBottom" type="ColorRect" parent="Level1Script/CutSceneContextPlayer/CanvasLayer" unique_id=1673334696]
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 12
 anchor_top = 1.0
@@ -645,7 +640,7 @@ grow_vertical = 0
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Level1Script/CutSceneContextPlayer/CanvasLayer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Level1Script/CutSceneContextPlayer/CanvasLayer" unique_id=1541035669]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -657,13 +652,13 @@ grow_horizontal = 0
 grow_vertical = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="Press" type="Label" parent="Level1Script/CutSceneContextPlayer/CanvasLayer/HBoxContainer"]
+[node name="Press" type="Label" parent="Level1Script/CutSceneContextPlayer/CanvasLayer/HBoxContainer" unique_id=252836737]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Press"
 vertical_alignment = 1
 
-[node name="DynamicButtonDisplay" type="TextureRect" parent="Level1Script/CutSceneContextPlayer/CanvasLayer/HBoxContainer"]
+[node name="DynamicButtonDisplay" type="TextureRect" parent="Level1Script/CutSceneContextPlayer/CanvasLayer/HBoxContainer" unique_id=515265496]
 layout_mode = 2
 texture = ExtResource("19_kmghq")
 expand_mode = 2
@@ -675,21 +670,19 @@ steam_deck_texture = ExtResource("22_hfmre")
 keyboard_texture = ExtResource("23_8re7r")
 playstation_texture = ExtResource("24_elchd")
 
-[node name="to skip" type="Label" parent="Level1Script/CutSceneContextPlayer/CanvasLayer/HBoxContainer"]
+[node name="to skip" type="Label" parent="Level1Script/CutSceneContextPlayer/CanvasLayer/HBoxContainer" unique_id=1775548584]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "to skip"
 vertical_alignment = 1
 
-[node name="CutScenePlayer" type="AnimationPlayer" parent="Level1Script"]
-libraries = {
-&"": SubResource("AnimationLibrary_oomc5")
-}
+[node name="CutScenePlayer" type="AnimationPlayer" parent="Level1Script" unique_id=1591288991]
+libraries/ = SubResource("AnimationLibrary_oomc5")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Level1Script/CutScenePlayer"]
+[node name="CanvasLayer" type="CanvasLayer" parent="Level1Script/CutScenePlayer" unique_id=1672302203]
 layer = 11
 
-[node name="BlackColorRect" type="ColorRect" parent="Level1Script/CutScenePlayer/CanvasLayer"]
+[node name="BlackColorRect" type="ColorRect" parent="Level1Script/CutScenePlayer/CanvasLayer" unique_id=1384789259]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -697,7 +690,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Level1Script/CutScenePlayer/CanvasLayer"]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Level1Script/CutScenePlayer/CanvasLayer" unique_id=1360934720]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -706,7 +699,7 @@ grow_vertical = 2
 stream = ExtResource("19_a2ie3")
 expand = true
 
-[node name="presents" type="Label" parent="Level1Script/CutScenePlayer/CanvasLayer"]
+[node name="presents" type="Label" parent="Level1Script/CutScenePlayer/CanvasLayer" unique_id=925008288]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
@@ -725,13 +718,13 @@ text = "presents"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TriggerGameOverArea3D" type="Area3D" parent="Level1Script"]
+[node name="TriggerGameOverArea3D" type="Area3D" parent="Level1Script" unique_id=941174759]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/TriggerGameOverArea3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level1Script/TriggerGameOverArea3D" unique_id=740869291]
 shape = SubResource("WorldBoundaryShape3D_m5c52")
 
-[node name="WalkToFieldPath3D" parent="Level1Script" instance=ExtResource("21_52762")]
+[node name="WalkToFieldPath3D" parent="Level1Script" unique_id=1562219179 instance=ExtResource("21_52762")]
 
 [connection signal="scored" from="GoalLeft" to="." method="_on_goal_left_scored"]
 [connection signal="scored" from="GoalRight" to="." method="_on_goal_right_scored"]

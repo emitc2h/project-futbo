@@ -1,11 +1,68 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkp8fbjsyyhyx"]
+[gd_scene format=3 uid="uid://bkp8fbjsyyhyx"]
 
 [ext_resource type="PackedScene" uid="uid://dgpqcnsegq4rs" path="res://scenes/control_node_and_balls/models/control_node_model.tscn" id="1_k14dj"]
 [ext_resource type="Script" uid="uid://crab58bvajfs3" path="res://scripts/control_node_and_balls/asset/control_node_asset.gd" id="2_fgtxj"]
-[ext_resource type="Material" uid="uid://c88eekmr4325k" path="res://assets/3D/Materials/shield_shader_material.tres" id="3_bbe66"]
-[ext_resource type="Material" uid="uid://b5jl7ewpjx3b7" path="res://assets/3D/Materials/shield_distortion_shader_material.tres" id="3_ndvbx"]
-[ext_resource type="Material" uid="uid://dsr5mgwuaawhd" path="res://assets/3D/Materials/control_node_material.tres" id="3_uxj54"]
-[ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="6_uxj54"]
+[ext_resource type="Material" uid="uid://c88eekmr4325k" path="res://assets/deprecated/3D/Materials/shield_shader_material.tres" id="3_bbe66"]
+[ext_resource type="Material" uid="uid://b5jl7ewpjx3b7" path="res://assets/deprecated/3D/Materials/shield_distortion_shader_material.tres" id="3_ndvbx"]
+[ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/deprecated/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="6_uxj54"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0ou1q"]
+load_path = "res://.godot/imported/ControlNode_color.png-abe8d7b0bb84f178933c5eb7cbc42879.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ltrn5"]
+load_path = "res://.godot/imported/ControlNode_metallic.png-f025bf0d57e3e2d28602e5562a70b94f.s3tc.ctex"
+
+[sub_resource type="Shader" id="Shader_07gwp"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.4.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_add, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform sampler2D texture_emission : source_color, hint_default_black, filter_linear_mipmap, repeat_enable;
+uniform float emission_energy : hint_range(0.0, 1000.0, 0.1);
+uniform vec3 emission_color : source_color;
+
+void fragment() {
+	// Emission: Enabled
+	vec3 emission_tex = texture(texture_emission, UV).rgb;
+	vec3 emission_tex_colored = emission_tex;
+
+	emission_tex_colored = emission_color * emission_tex.r;
+
+	// Emission Operator: Add
+	ALBEDO = emission_tex_colored;
+	EMISSION = emission_tex_colored * emission_energy * 1000.0;
+	ALPHA *= emission_tex.r;
+	ALPHA_SCISSOR_THRESHOLD = 0.001;
+}
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r8xgb"]
+load_path = "res://.godot/imported/ControlNode_emission.png-e19c70f61902b0c35e77110cb79964c2.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bbe66"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_07gwp")
+shader_parameter/texture_emission = SubResource("CompressedTexture2D_r8xgb")
+shader_parameter/emission_energy = 727.8000108450933
+shader_parameter/emission_color = Color(0.27237135, 0.6814646, 0.922746, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xoq3r"]
+load_path = "res://.godot/imported/ControlNode_normal.png-90501730fccdcb587e042240876efab3.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n4b62"]
+load_path = "res://.godot/imported/ControlNode_roughness.png-c655887426a8d6936445c7811cb28beb.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uxj54"]
+resource_local_to_scene = true
+next_pass = SubResource("ShaderMaterial_bbe66")
+albedo_texture = SubResource("CompressedTexture2D_0ou1q")
+metallic = 1.0
+metallic_texture = SubResource("CompressedTexture2D_ltrn5")
+roughness_texture = SubResource("CompressedTexture2D_n4b62")
+normal_enabled = true
+normal_texture = SubResource("CompressedTexture2D_xoq3r")
 
 [sub_resource type="QuadMesh" id="QuadMesh_bbe66"]
 
@@ -20,24 +77,24 @@ albedo_texture = ExtResource("6_uxj54")
 billboard_mode = 1
 billboard_keep_scale = true
 
-[node name="ControlNodeAsset" type="Node3D"]
+[node name="ControlNodeAsset" type="Node3D" unique_id=1642552178]
 script = ExtResource("2_fgtxj")
 
-[node name="ControlNodeModel" parent="." instance=ExtResource("1_k14dj")]
+[node name="ControlNodeModel" parent="." unique_id=1881711276 instance=ExtResource("1_k14dj")]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="ControlNodeMesh" parent="ControlNodeModel" index="0"]
-surface_material_override/0 = ExtResource("3_uxj54")
+[node name="ControlNodeMesh" parent="ControlNodeModel" index="0" unique_id=1387264145]
+surface_material_override/0 = SubResource("StandardMaterial3D_uxj54")
 
-[node name="ShieldMesh" parent="ControlNodeModel" index="1"]
+[node name="ShieldMesh" parent="ControlNodeModel" index="1" unique_id=973879143]
 layers = 4
 surface_material_override/0 = ExtResource("3_bbe66")
 
-[node name="DistortionShieldMesh" parent="ControlNodeModel" index="2"]
+[node name="DistortionShieldMesh" parent="ControlNodeModel" index="2" unique_id=1523505457]
 layers = 4
 surface_material_override/0 = ExtResource("3_ndvbx")
 
-[node name="Light" type="OmniLight3D" parent="."]
+[node name="Light" type="OmniLight3D" parent="." unique_id=85927097]
 light_intensity_lumens = 10000.0
 light_color = Color(0.5, 0.733333, 1, 1)
 light_energy = 0.0
@@ -46,7 +103,7 @@ light_size = 0.2
 light_cull_mask = 4294967291
 omni_range = 2.0
 
-[node name="Aura" type="MeshInstance3D" parent="."]
+[node name="Aura" type="MeshInstance3D" parent="." unique_id=1956670663]
 mesh = SubResource("QuadMesh_bbe66")
 surface_material_override/0 = SubResource("StandardMaterial3D_3mwn8")
 

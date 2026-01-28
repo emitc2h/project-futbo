@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://3y4snk0eo4mp"]
+[gd_scene format=3 uid="uid://3y4snk0eo4mp"]
 
 [ext_resource type="Script" uid="uid://dx3evyanqv4lx" path="res://scripts/ui/ui.gd" id="1_mrayf"]
-[ext_resource type="Texture2D" uid="uid://bfox2h7pvj5mc" path="res://assets/3D/Textures/stamina_wheel_under.png" id="2_8lnaa"]
-[ext_resource type="Texture2D" uid="uid://ctlmd4laggb3m" path="res://assets/3D/Textures/stamina_wheel_progress.png" id="3_mi4vw"]
+[ext_resource type="Texture2D" uid="uid://bfox2h7pvj5mc" path="res://assets/deprecated/3D/Textures/stamina_wheel_under.png" id="2_8lnaa"]
+[ext_resource type="Texture2D" uid="uid://ctlmd4laggb3m" path="res://assets/deprecated/3D/Textures/stamina_wheel_progress.png" id="3_mi4vw"]
 [ext_resource type="Script" uid="uid://xtow31wvuq8" path="res://scripts/debug/fps_ticker.gd" id="4_gior5"]
 
-[node name="UI" type="CanvasLayer"]
+[node name="UI" type="CanvasLayer" unique_id=1161236098]
 script = ExtResource("1_mrayf")
 
-[node name="ScoreLeft" type="Label" parent="."]
+[node name="ScoreLeft" type="Label" parent="." unique_id=198619020]
 visible = false
 offset_left = 43.0
 offset_top = 20.0
@@ -21,7 +21,7 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 64
 text = "0"
 
-[node name="ScoreRight" type="Label" parent="."]
+[node name="ScoreRight" type="Label" parent="." unique_id=1642774718]
 visible = false
 anchors_preset = 1
 anchor_left = 1.0
@@ -41,7 +41,7 @@ theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 2
 
-[node name="StaminaProgressBar" type="TextureProgressBar" parent="."]
+[node name="StaminaProgressBar" type="TextureProgressBar" parent="." unique_id=671649332]
 offset_right = 256.0
 offset_bottom = 256.0
 scale = Vector2(0.2, 0.2)
@@ -49,7 +49,7 @@ fill_mode = 4
 texture_under = ExtResource("2_8lnaa")
 texture_progress = ExtResource("3_mi4vw")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1245527469]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0

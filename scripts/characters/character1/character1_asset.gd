@@ -18,7 +18,7 @@ extends CharacterAssetBase
 @export var lightning_material: ShaderMaterial
 
 ## Handle on AnimationPlayer
-@onready var jump_anim_player: AnimationPlayer = $AnimationPlayer
+@onready var jump_anim_player: AnimationPlayer = $JumpAnimationPlayer
 @onready var shield_anim_player: AnimationPlayer = $ShieldAnimationPlayer
 
 ## Consolidate animated parameters

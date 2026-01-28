@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://xuvnhtg7ox3i"]
+[gd_scene format=3 uid="uid://xuvnhtg7ox3i"]
 
 [ext_resource type="Script" uid="uid://drh5o3ouklefg" path="res://scripts/game_management/main_menu/main_menu.gd" id="1_f6d7l"]
 [ext_resource type="PackedScene" uid="uid://deidkuj34u7yu" path="res://scenes/game_management/main_menu/level_1_main_menu_scene.tscn" id="4_c83o0"]
@@ -42,14 +42,14 @@ _data = {
 &"StartUp": SubResource("Animation_ob46e")
 }
 
-[node name="MainMenu" type="Node3D"]
+[node name="MainMenu" type="Node3D" unique_id=2018397313]
 script = ExtResource("1_f6d7l")
 
-[node name="Level1MainMenuScene" parent="." instance=ExtResource("4_c83o0")]
+[node name="Level1MainMenuScene" parent="." unique_id=111363308 instance=ExtResource("4_c83o0")]
 
-[node name="MainMenuUI" type="CanvasLayer" parent="."]
+[node name="MainMenuUI" type="CanvasLayer" parent="." unique_id=951287789]
 
-[node name="GridContainer" type="GridContainer" parent="MainMenuUI"]
+[node name="GridContainer" type="GridContainer" parent="MainMenuUI" unique_id=1390329093]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.285
@@ -64,7 +64,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="GameName" type="Label" parent="MainMenuUI/GridContainer"]
+[node name="GameName" type="Label" parent="MainMenuUI/GridContainer" unique_id=771380989]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -75,7 +75,7 @@ theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 128
 text = "Project Futbo"
 
-[node name="NewGame" type="Button" parent="MainMenuUI/GridContainer"]
+[node name="NewGame" type="Button" parent="MainMenuUI/GridContainer" unique_id=1873088445]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 8
@@ -83,29 +83,27 @@ theme_override_font_sizes/font_size = 36
 text = "  New Game  "
 script = ExtResource("11_jf6cj")
 
-[node name="Prototype" type="Button" parent="MainMenuUI/GridContainer"]
+[node name="Prototype" type="Button" parent="MainMenuUI/GridContainer" unique_id=1339842619]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 36
 text = " Game Loop Prototype "
 script = ExtResource("4_h517x")
 
-[node name="DroneControls" type="Button" parent="MainMenuUI/GridContainer"]
+[node name="DroneControls" type="Button" parent="MainMenuUI/GridContainer" unique_id=1666385655]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 36
 text = " Drone Controls "
 
-[node name="Quit" type="Button" parent="MainMenuUI/GridContainer"]
+[node name="Quit" type="Button" parent="MainMenuUI/GridContainer" unique_id=956315568]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 36
 text = "  Quit  "
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_wem23")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2072117912]
+libraries/ = SubResource("AnimationLibrary_wem23")
 
 [connection signal="pressed" from="MainMenuUI/GridContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Prototype" to="." method="_on_prototype_pressed"]

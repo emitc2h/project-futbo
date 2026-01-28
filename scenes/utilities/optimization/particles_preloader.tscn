@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4joyty534fc"]
+[gd_scene format=3 uid="uid://d4joyty534fc"]
 
 [ext_resource type="Script" uid="uid://dhhk03rscmxp4" path="res://scripts/utilities/optimization/particles_preloader.gd" id="1_vmmxc"]
 [ext_resource type="PackedScene" uid="uid://bb06yvpaxg85c" path="res://scenes/enemies/drone/drone_dive_impact.tscn" id="2_6854v"]
 
-[node name="ParticlesPreloader" type="Node3D"]
+[node name="ParticlesPreloader" type="Node3D" unique_id=2121031651]
 script = ExtResource("1_vmmxc")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=947490234]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=152335126]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -18,4 +18,4 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 color = Color(0, 0, 0, 1)
 
-[node name="DroneDiveImpact" parent="." instance=ExtResource("2_6854v")]
+[node name="DroneDiveImpact" parent="." unique_id=390041505 instance=ExtResource("2_6854v")]

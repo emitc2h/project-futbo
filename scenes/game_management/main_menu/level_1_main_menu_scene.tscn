@@ -1,19 +1,19 @@
-[gd_scene load_steps=27 format=4 uid="uid://deidkuj34u7yu"]
+[gd_scene format=4 uid="uid://deidkuj34u7yu"]
 
 [ext_resource type="Script" uid="uid://cua4a6wcsrmb2" path="res://scripts/game_management/main_menu/level_1_main_menu_scene.gd" id="1_glui6"]
-[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_jugbg"]
+[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_jugbg"]
 [ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="2_w6ciu"]
-[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_fq483"]
+[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_fq483"]
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera/camera_controller.tscn" id="3_kwi3e"]
-[ext_resource type="Material" uid="uid://be2gka6jbfd6a" path="res://assets/3D/Act1/materials/vegetation/grass/grass_material_swaying.tres" id="4_snxm5"]
-[ext_resource type="PackedScene" uid="uid://cu4ax72l3v1ah" path="res://assets/3D/Act1/blend/Grass2.blend" id="5_plcrp"]
+[ext_resource type="Material" uid="uid://be2gka6jbfd6a" path="res://assets/deprecated/3D/Act1/materials/vegetation/grass/grass_material_swaying.tres" id="4_snxm5"]
+[ext_resource type="PackedScene" uid="uid://cu4ax72l3v1ah" path="res://assets/deprecated/3D/Act1/blend/Grass2.blend" id="5_plcrp"]
 [ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="6_rf2fx"]
-[ext_resource type="Material" uid="uid://602a6yse0f72" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_red_leaves_swaying.tres" id="8_jv7bb"]
+[ext_resource type="Material" uid="uid://602a6yse0f72" path="res://assets/deprecated/3D/Act1/materials/vegetation/tree1/tree1_red_leaves_swaying.tres" id="8_jv7bb"]
 [ext_resource type="Shader" uid="uid://cpb5j5g4ss8rb" path="res://shaders/SwayingLeaves.tres" id="9_2buna"]
-[ext_resource type="PackedScene" uid="uid://b28taugqi7ixx" path="res://assets/3D/Act1/blend/SoccerBall.blend" id="9_iudwe"]
-[ext_resource type="Texture2D" uid="uid://dumcqi0isdutb" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color2.png" id="10_brnpp"]
-[ext_resource type="Texture2D" uid="uid://bp5q5nu3lf3ry" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_transmission.png" id="11_e5ha4"]
-[ext_resource type="Texture2D" uid="uid://deem7pbadipj0" path="res://assets/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_normal.png" id="12_2yug2"]
+[ext_resource type="PackedScene" uid="uid://b28taugqi7ixx" path="res://assets/deprecated/3D/Act1/blend/SoccerBall.blend" id="9_iudwe"]
+[ext_resource type="Texture2D" uid="uid://dumcqi0isdutb" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color2.png" id="10_brnpp"]
+[ext_resource type="Texture2D" uid="uid://bp5q5nu3lf3ry" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_transmission.png" id="11_e5ha4"]
+[ext_resource type="Texture2D" uid="uid://deem7pbadipj0" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_normal.png" id="12_2yug2"]
 [ext_resource type="PackedScene" uid="uid://bc323ftwy8i7t" path="res://scenes/enemies/drone/drone.tscn" id="12_vy76b"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4vvqs"]
@@ -276,78 +276,76 @@ _data = {
 &"enter_scene": SubResource("Animation_4vb0h")
 }
 
-[node name="Level1MainMenuScene" type="Node3D" node_paths=PackedStringArray("animation_player")]
+[node name="Level1MainMenuScene" type="Node3D" unique_id=846160302 node_paths=PackedStringArray("animation_player")]
 script = ExtResource("1_glui6")
 animation_player = NodePath("AnimationPlayer")
 
-[node name="WorldEnvironment" parent="." instance=ExtResource("2_w6ciu")]
+[node name="WorldEnvironment" parent="." unique_id=403864756 instance=ExtResource("2_w6ciu")]
 
-[node name="Act1SkyBox" parent="WorldEnvironment" index="2" node_paths=PackedStringArray("camera_controller")]
+[node name="Act1SkyBox" parent="WorldEnvironment" index="2" unique_id=533682141 node_paths=PackedStringArray("camera_controller")]
 camera_controller = NodePath("../../CameraController")
 
-[node name="CameraController" parent="." node_paths=PackedStringArray("subject") instance=ExtResource("3_kwi3e")]
+[node name="CameraController" parent="." unique_id=1111824401 node_paths=PackedStringArray("subject") instance=ExtResource("3_kwi3e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784547, -0.959528)
 subject = NodePath("../Subject")
 sync_to_subject_on_ready = false
 lerp_y = 1.0
 lerp_z = 1.0
 
-[node name="Subject" type="Node3D" parent="."]
+[node name="Subject" type="Node3D" parent="." unique_id=190816965]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.643215, -3.31238)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1559210308]
 collision_layer = 2
 collision_mask = 1797
 
-[node name="Plain" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="Plain" type="MeshInstance3D" parent="StaticBody3D" unique_id=1783406634]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0.115413, 0)
 mesh = SubResource("PlaneMesh_4vvqs")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_6xuex")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=664947579]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.115413, 0)
 shape = SubResource("WorldBoundaryShape3D_vy76b")
 
-[node name="MultiMeshGrass" type="MultiMeshInstance3D" parent="."]
+[node name="MultiMeshGrass" type="MultiMeshInstance3D" parent="." unique_id=693329443]
 material_override = ExtResource("4_snxm5")
 multimesh = SubResource("MultiMesh_8kyv7")
 
-[node name="Grass2" parent="." instance=ExtResource("5_plcrp")]
+[node name="Grass2" parent="." unique_id=1354837322 instance=ExtResource("5_plcrp")]
 
-[node name="GrassSpot" parent="Grass2" index="0"]
+[node name="GrassSpot" parent="Grass2" index="0" unique_id=283072481]
 visible = false
 
-[node name="GrassSpotBackup" parent="Grass2" index="1"]
+[node name="GrassSpotBackup" parent="Grass2" index="1" unique_id=1408443040]
 visible = false
 
-[node name="TreeBradfordPear" parent="." instance=ExtResource("6_rf2fx")]
+[node name="TreeBradfordPear" parent="." unique_id=1302347277 instance=ExtResource("6_rf2fx")]
 transform = Transform3D(0.580973, 0, -0.813922, 0, 1, 0, 0.813922, 0, 0.580973, 4.45657, 0, 1.33904)
 material_override = SubResource("ShaderMaterial_kgnl1")
 
-[node name="TreeBradfordPear3" parent="." instance=ExtResource("6_rf2fx")]
+[node name="TreeBradfordPear3" parent="." unique_id=1670931605 instance=ExtResource("6_rf2fx")]
 transform = Transform3D(0.767993, 0, 0.640458, 0, 1, 0, -0.640458, 0, 0.767993, -2.74828, 0, -4.16227)
 material_override = ExtResource("8_jv7bb")
 
-[node name="TreeBradfordPear2" parent="." instance=ExtResource("6_rf2fx")]
+[node name="TreeBradfordPear2" parent="." unique_id=9698656 instance=ExtResource("6_rf2fx")]
 transform = Transform3D(-0.896893, 0, -0.0747153, 0, 0.9, 0, 0.0747153, 0, -0.896893, -0.937597, 0, 8.91222)
 
-[node name="SoccerBall" parent="." instance=ExtResource("9_iudwe")]
+[node name="SoccerBall" parent="." unique_id=1876266060 instance=ExtResource("9_iudwe")]
 transform = Transform3D(0.963839, -0.17278743, -0.20287447, -0.10035795, -0.940608, 0.3243207, -0.24686395, -0.29223293, -0.92393595, -1.3906, 0.264268, 9.42529)
 
-[node name="Drone" parent="." instance=ExtResource("12_vy76b")]
+[node name="Drone" parent="." unique_id=2041706649 instance=ExtResource("12_vy76b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56387, 3.18267)
 idle_behavior_tree = null
 combat_behavior_tree = null
 initial_behavior_state = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=322723646]
 root_node = NodePath("../SoccerBall")
-libraries = {
-&"": SubResource("AnimationLibrary_watdk")
-}
+libraries/ = SubResource("AnimationLibrary_watdk")
 
-[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+[node name="ReflectionProbe" type="ReflectionProbe" parent="." unique_id=448784123]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.94458, 0, 5.56287)
 blend_distance = 0.98
 size = Vector3(20.1323, 12.7387, 14.7864)

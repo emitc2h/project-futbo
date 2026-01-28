@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dd7rk2je4r01m"]
+[gd_scene format=3 uid="uid://dd7rk2je4r01m"]
 
 [ext_resource type="Script" uid="uid://deffsqrqu5y1b" path="res://scripts/character_path/character_path.gd" id="1_dsh78"]
 
@@ -25,36 +25,36 @@ height = 8.0
 radius = 0.15
 height = 8.0
 
-[node name="WalkToFieldPath3D" type="Path3D"]
+[node name="WalkToFieldPath3D" type="Path3D" unique_id=200946696]
 curve = SubResource("Curve3D_kmy4g")
 script = ExtResource("1_dsh78")
 
-[node name="EnterOutArea3D" type="Area3D" parent="."]
+[node name="EnterOutArea3D" type="Area3D" parent="." unique_id=2104483837]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.345179, 0, 0)
 collision_layer = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterOutArea3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterOutArea3D" unique_id=1759879745]
 shape = SubResource("CapsuleShape3D_kj3cc")
 
-[node name="EnterInArea3D" type="Area3D" parent="."]
+[node name="EnterInArea3D" type="Area3D" parent="." unique_id=877178282]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.659979, 0, 0)
 collision_layer = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterInArea3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterInArea3D" unique_id=807400520]
 shape = SubResource("CapsuleShape3D_b3ogj")
 
-[node name="ExitInArea3D" type="Area3D" parent="."]
+[node name="ExitInArea3D" type="Area3D" parent="." unique_id=599679970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.431778, 0, 0)
 collision_layer = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitInArea3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitInArea3D" unique_id=634679812]
 shape = SubResource("CapsuleShape3D_uic3q")
 
-[node name="ExitOutArea3D" type="Area3D" parent="."]
+[node name="ExitOutArea3D" type="Area3D" parent="." unique_id=891241219]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75507927, 0, 0)
 collision_layer = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitOutArea3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitOutArea3D" unique_id=1315127921]
 shape = SubResource("CapsuleShape3D_0i2nd")
 
 [connection signal="body_entered" from="EnterOutArea3D" to="." method="_on_enter_out_area_3d_body_entered"]

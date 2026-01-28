@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=4 uid="uid://jdyxgjn13fhr"]
+[gd_scene format=4 uid="uid://jdyxgjn13fhr"]
 
-[ext_resource type="Material" uid="uid://c0vmx5v56y8m7" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_yellow_leaves_swaying.tres" id="1_gn087"]
-[ext_resource type="Texture2D" uid="uid://bmbumamufh20l" path="res://assets/3D/Act1/Textures/Vegetation/TreeBark3/TreeBark3_color.png" id="2_dsw4s"]
-[ext_resource type="Texture2D" uid="uid://b6u011b040rdj" path="res://assets/3D/Act1/Textures/Vegetation/TreeBark3/TreeBark3_normal.png" id="3_6p6bb"]
+[ext_resource type="Material" uid="uid://c0vmx5v56y8m7" path="res://assets/deprecated/3D/Act1/materials/vegetation/tree1/tree1_yellow_leaves_swaying.tres" id="1_gn087"]
+[ext_resource type="Texture2D" uid="uid://bmbumamufh20l" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/TreeBark3/TreeBark3_color.png" id="2_dsw4s"]
+[ext_resource type="Texture2D" uid="uid://b6u011b040rdj" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/TreeBark3/TreeBark3_normal.png" id="3_6p6bb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wcc31"]
 vertex_color_use_as_albedo = true
@@ -119,14 +119,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_khm54")
 
-[node name="TreeBradfordPear" type="MultiMeshInstance3D"]
+[node name="TreeBradfordPear" type="MultiMeshInstance3D" unique_id=1459878383]
 material_override = ExtResource("1_gn087")
 multimesh = SubResource("MultiMesh_mnb1t")
 
-[node name="TreeBase" type="MeshInstance3D" parent="."]
+[node name="TreeBase" type="MeshInstance3D" parent="." unique_id=607737423]
 mesh = SubResource("ArrayMesh_jb55g")
-skeleton = NodePath("")
 
-[node name="TreeBranches" type="MeshInstance3D" parent="."]
+[node name="TreeBranches" type="MeshInstance3D" parent="." unique_id=1149956661]
 mesh = SubResource("ArrayMesh_ekcvg")
-skeleton = NodePath("")

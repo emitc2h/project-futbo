@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfvjtio5mdjgl"]
+[gd_scene format=3 uid="uid://cfvjtio5mdjgl"]
 
 [ext_resource type="PackedScene" uid="uid://dnw8l88q5vgm3" path="res://scenes/control_node_and_balls/ball_base.tscn" id="1_jjhmm"]
 [ext_resource type="PackedScene" uid="uid://17s47cjsajsp" path="res://scenes/control_node_and_balls/models/soccer_ball_model.tscn" id="2_g2nsc"]
 
-[node name="Ball" instance=ExtResource("1_jjhmm")]
+[node name="Ball" unique_id=440021476 instance=ExtResource("1_jjhmm")]
 
-[node name="SoccerBall" parent="TrackTransformContainer" index="0" instance=ExtResource("2_g2nsc")]
+[node name="SoccerBall" parent="TrackTransformContainer" parent_id_path=PackedInt32Array(214515894) index="0" unique_id=2110517527 instance=ExtResource("2_g2nsc")]

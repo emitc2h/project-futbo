@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://vgadiixuuiba"]
+[gd_scene format=3 uid="uid://vgadiixuuiba"]
 
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_jd1ip"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_mbr1y"]
@@ -283,180 +283,180 @@ func celebration_jump() -> void:
 	basic_movement.jump_with_custom_animation(\"celebrate\")
 "
 
-[node name="AI" type="Node3D"]
+[node name="AI" type="Node3D" unique_id=158064399]
 script = SubResource("GDScript_qdh3h")
 
-[node name="Behaviors" type="Node3D" parent="." node_paths=PackedStringArray("seek_skill", "dribble_skill", "kick_skill", "jump_skill")]
+[node name="Behaviors" type="Node3D" parent="." unique_id=194106448 node_paths=PackedStringArray("seek_skill", "dribble_skill", "kick_skill", "jump_skill")]
 script = SubResource("GDScript_dko2i")
 seek_skill = NodePath("SeekSkill")
 dribble_skill = NodePath("DribbleSkill")
 kick_skill = NodePath("KickSkill")
 jump_skill = NodePath("JumpSkill")
 
-[node name="State" type="Node" parent="Behaviors"]
+[node name="State" type="Node" parent="Behaviors" unique_id=1877457616]
 script = ExtResource("3_jd1ip")
 
-[node name="root" type="Node" parent="Behaviors/State"]
+[node name="root" type="Node" parent="Behaviors/State" unique_id=20487020]
 script = ExtResource("4_mbr1y")
 initial_state = NodePath("disabled")
 
-[node name="seek" type="Node" parent="Behaviors/State/root"]
+[node name="seek" type="Node" parent="Behaviors/State/root" unique_id=203907476]
 script = ExtResource("5_212yo")
 
-[node name="to attack" type="Node" parent="Behaviors/State/root/seek"]
+[node name="to attack" type="Node" parent="Behaviors/State/root/seek" unique_id=1823270955]
 script = ExtResource("6_47fwt")
 to = NodePath("../../attack")
 event = &"seek to attack"
 delay_in_seconds = "0.0"
 
-[node name="to reset" type="Node" parent="Behaviors/State/root/seek"]
+[node name="to reset" type="Node" parent="Behaviors/State/root/seek" unique_id=1096464992]
 script = ExtResource("6_47fwt")
 to = NodePath("../../reset")
 event = &"seek to reset"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="Behaviors/State/root/seek"]
+[node name="to disabled" type="Node" parent="Behaviors/State/root/seek" unique_id=1924668522]
 script = ExtResource("6_47fwt")
 to = NodePath("../../disabled")
 event = &"seek to disabled"
 delay_in_seconds = "0.0"
 
-[node name="attack" type="Node" parent="Behaviors/State/root"]
+[node name="attack" type="Node" parent="Behaviors/State/root" unique_id=1772714789]
 script = ExtResource("5_212yo")
 
-[node name="to reset" type="Node" parent="Behaviors/State/root/attack"]
+[node name="to reset" type="Node" parent="Behaviors/State/root/attack" unique_id=1381104715]
 script = ExtResource("6_47fwt")
 to = NodePath("../../reset")
 event = &"attack to reset"
 delay_in_seconds = "0.0"
 
-[node name="to idle" type="Node" parent="Behaviors/State/root/attack"]
+[node name="to idle" type="Node" parent="Behaviors/State/root/attack" unique_id=671721926]
 script = ExtResource("6_47fwt")
 to = NodePath("../../idle")
 event = &"attack to idle"
 delay_in_seconds = "0.0"
 
-[node name="to seek" type="Node" parent="Behaviors/State/root/attack"]
+[node name="to seek" type="Node" parent="Behaviors/State/root/attack" unique_id=930216011]
 script = ExtResource("6_47fwt")
 to = NodePath("../../seek")
 event = &"attack to seek"
 delay_in_seconds = "0.0"
 
-[node name="to confused" type="Node" parent="Behaviors/State/root/attack"]
+[node name="to confused" type="Node" parent="Behaviors/State/root/attack" unique_id=1927483832]
 script = ExtResource("6_47fwt")
 to = NodePath("../../confused")
 event = &"attack to confused"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="Behaviors/State/root/attack"]
+[node name="to disabled" type="Node" parent="Behaviors/State/root/attack" unique_id=1096240029]
 script = ExtResource("6_47fwt")
 to = NodePath("../../disabled")
 event = &"attack to disabled"
 delay_in_seconds = "0.0"
 
-[node name="celebrate" type="Node" parent="Behaviors/State/root"]
+[node name="celebrate" type="Node" parent="Behaviors/State/root" unique_id=618186032]
 script = ExtResource("5_212yo")
 
-[node name="to reset" type="Node" parent="Behaviors/State/root/celebrate"]
+[node name="to reset" type="Node" parent="Behaviors/State/root/celebrate" unique_id=899920762]
 script = ExtResource("6_47fwt")
 to = NodePath("../../reset")
 event = &"celebrate to reset"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="Behaviors/State/root/celebrate"]
+[node name="to disabled" type="Node" parent="Behaviors/State/root/celebrate" unique_id=1126529657]
 script = ExtResource("6_47fwt")
 to = NodePath("../../disabled")
 event = &"celebrate to disabled"
 delay_in_seconds = "0.0"
 
-[node name="reset" type="Node" parent="Behaviors/State/root"]
+[node name="reset" type="Node" parent="Behaviors/State/root" unique_id=1977444864]
 script = ExtResource("5_212yo")
 
-[node name="to seek" type="Node" parent="Behaviors/State/root/reset"]
+[node name="to seek" type="Node" parent="Behaviors/State/root/reset" unique_id=1568036026]
 script = ExtResource("6_47fwt")
 to = NodePath("../../seek")
 event = &"reset to seek"
 delay_in_seconds = "0.0"
 
-[node name="Transition" type="Node" parent="Behaviors/State/root/reset"]
+[node name="Transition" type="Node" parent="Behaviors/State/root/reset" unique_id=594080262]
 script = ExtResource("6_47fwt")
 to = NodePath("../../disabled")
 event = &"reset to disabled"
 delay_in_seconds = "0.0"
 
-[node name="idle" type="Node" parent="Behaviors/State/root"]
+[node name="idle" type="Node" parent="Behaviors/State/root" unique_id=2141378376]
 script = ExtResource("5_212yo")
 
-[node name="to celebrate" type="Node" parent="Behaviors/State/root/idle"]
+[node name="to celebrate" type="Node" parent="Behaviors/State/root/idle" unique_id=1795013286]
 script = ExtResource("6_47fwt")
 to = NodePath("../../celebrate")
 event = &"idle to celebrate"
 delay_in_seconds = "0.2"
 
-[node name="to reset" type="Node" parent="Behaviors/State/root/idle"]
+[node name="to reset" type="Node" parent="Behaviors/State/root/idle" unique_id=157143485]
 script = ExtResource("6_47fwt")
 to = NodePath("../../reset")
 event = &"idle to reset"
 delay_in_seconds = "0.0"
 
-[node name="to seek" type="Node" parent="Behaviors/State/root/idle"]
+[node name="to seek" type="Node" parent="Behaviors/State/root/idle" unique_id=1114291478]
 script = ExtResource("6_47fwt")
 to = NodePath("../../seek")
 event = &"idle to seek"
 delay_in_seconds = "0.0"
 
-[node name="to disabled" type="Node" parent="Behaviors/State/root/idle"]
+[node name="to disabled" type="Node" parent="Behaviors/State/root/idle" unique_id=1984693723]
 script = ExtResource("6_47fwt")
 to = NodePath("../../disabled")
 event = &"idle to disabled"
 delay_in_seconds = "0.0"
 
-[node name="confused" type="Node" parent="Behaviors/State/root"]
+[node name="confused" type="Node" parent="Behaviors/State/root" unique_id=1505269847]
 script = ExtResource("5_212yo")
 
-[node name="to seek" type="Node" parent="Behaviors/State/root/confused"]
+[node name="to seek" type="Node" parent="Behaviors/State/root/confused" unique_id=1214446971]
 script = ExtResource("6_47fwt")
 to = NodePath("../../seek")
 event = &"confused to seek"
 delay_in_seconds = "0.8"
 
-[node name="Transition" type="Node" parent="Behaviors/State/root/confused"]
+[node name="Transition" type="Node" parent="Behaviors/State/root/confused" unique_id=251698548]
 script = ExtResource("6_47fwt")
 to = NodePath("../../disabled")
 event = &"confused to disabled"
 delay_in_seconds = "0.0"
 
-[node name="disabled" type="Node" parent="Behaviors/State/root"]
+[node name="disabled" type="Node" parent="Behaviors/State/root" unique_id=1124172751]
 script = ExtResource("5_212yo")
 
-[node name="to idle" type="Node" parent="Behaviors/State/root/disabled"]
+[node name="to idle" type="Node" parent="Behaviors/State/root/disabled" unique_id=1354833264]
 script = ExtResource("6_47fwt")
 to = NodePath("../../idle")
 event = &"disabled to idle"
 delay_in_seconds = "0.0"
 
-[node name="to seek" type="Node" parent="Behaviors/State/root/disabled"]
+[node name="to seek" type="Node" parent="Behaviors/State/root/disabled" unique_id=1349049973]
 script = ExtResource("6_47fwt")
 to = NodePath("../../seek")
 event = &"disabled to seek"
 delay_in_seconds = "0.0"
 
-[node name="SeekSkill" type="Node" parent="Behaviors"]
+[node name="SeekSkill" type="Node" parent="Behaviors" unique_id=1392002303]
 script = SubResource("GDScript_adtt1")
 
-[node name="DribbleSkill" type="Node" parent="Behaviors"]
+[node name="DribbleSkill" type="Node" parent="Behaviors" unique_id=500058150]
 script = SubResource("GDScript_igwfk")
 
-[node name="KickSkill" type="Node" parent="Behaviors"]
+[node name="KickSkill" type="Node" parent="Behaviors" unique_id=73086406]
 script = SubResource("GDScript_hma35")
 
-[node name="JumpSkill" type="Node" parent="Behaviors"]
+[node name="JumpSkill" type="Node" parent="Behaviors" unique_id=1336818836]
 script = SubResource("GDScript_thgv4")
 
-[node name="CelebrationTimer" type="Timer" parent="Behaviors"]
+[node name="CelebrationTimer" type="Timer" parent="Behaviors" unique_id=832869347]
 wait_time = 4.0
 
-[node name="IdleTimer" type="Timer" parent="Behaviors"]
+[node name="IdleTimer" type="Timer" parent="Behaviors" unique_id=1411800639]
 
 [connection signal="state_physics_processing" from="Behaviors/State/root/seek" to="Behaviors" method="_on_seek_state_physics_processing"]
 [connection signal="state_entered" from="Behaviors/State/root/attack" to="Behaviors" method="_on_attack_state_entered"]

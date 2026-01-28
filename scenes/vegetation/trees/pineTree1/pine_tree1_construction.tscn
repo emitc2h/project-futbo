@@ -1,42 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://ggo1xn5guhjd"]
+[gd_scene format=3 uid="uid://ggo1xn5guhjd"]
 
-[ext_resource type="PackedScene" uid="uid://b51cmoi01d42w" path="res://assets/3D/Act1/blend/PineTree1.blend" id="1_6oq7i"]
+[ext_resource type="PackedScene" uid="uid://b51cmoi01d42w" path="res://assets/deprecated/3D/Act1/blend/PineTree1.blend" id="1_6oq7i"]
 [ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="2_lidnu"]
-[ext_resource type="Material" uid="uid://1vs06wfy2qlv" path="res://assets/3D/Act1/materials/vegetation/pine_tree1/pine_tree1_swaying.tres" id="2_sid0i"]
+[ext_resource type="Material" uid="uid://1vs06wfy2qlv" path="res://assets/deprecated/3D/Act1/materials/vegetation/pine_tree1/pine_tree1_swaying.tres" id="2_sid0i"]
 
-[node name="PineTree1Construction" type="Node3D"]
+[node name="PineTree1Construction" type="Node3D" unique_id=2017933473]
 
-[node name="PineTree1" parent="." instance=ExtResource("1_6oq7i")]
+[node name="PineTree1" parent="." unique_id=303796081 instance=ExtResource("1_6oq7i")]
 
-[node name="Large Branch" parent="PineTree1" index="0"]
+[node name="Large Branch" parent="PineTree1" index="0" unique_id=168196291]
 visible = false
 
-[node name="Medium Branch" parent="PineTree1" index="1"]
+[node name="Medium Branch" parent="PineTree1" index="1" unique_id=472979716]
 visible = false
 
-[node name="Small Branch" parent="PineTree1" index="2"]
+[node name="Small Branch" parent="PineTree1" index="2" unique_id=554529860]
 visible = false
 
-[node name="Large Composite Branch" parent="PineTree1" index="3"]
-visible = false
-surface_material_override/0 = ExtResource("2_sid0i")
-
-[node name="Tree Lower Body Frame" parent="PineTree1" index="4"]
-visible = false
-
-[node name="Tree Top Frame" parent="PineTree1" index="5"]
-visible = false
-
-[node name="Tree Upper Body Frame" parent="PineTree1" index="6"]
-visible = false
-
-[node name="Medium Composite Branch" parent="PineTree1" index="7"]
+[node name="Large Composite Branch" parent="PineTree1" index="3" unique_id=564350102]
 visible = false
 surface_material_override/0 = ExtResource("2_sid0i")
 
-[node name="Tree Trunk" parent="PineTree1" index="8"]
+[node name="Tree Lower Body Frame" parent="PineTree1" index="4" unique_id=1125248329]
 visible = false
 
-[node name="PineTree" parent="." instance=ExtResource("2_lidnu")]
+[node name="Tree Top Frame" parent="PineTree1" index="5" unique_id=662306642]
+visible = false
+
+[node name="Tree Upper Body Frame" parent="PineTree1" index="6" unique_id=268066291]
+visible = false
+
+[node name="Medium Composite Branch" parent="PineTree1" index="7" unique_id=685375450]
+visible = false
+surface_material_override/0 = ExtResource("2_sid0i")
+
+[node name="Tree Trunk" parent="PineTree1" index="8" unique_id=465796938]
+visible = false
+
+[node name="PineTree" parent="." unique_id=461269985 instance=ExtResource("2_lidnu")]
 
 [editable path="PineTree1"]

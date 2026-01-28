@@ -1,19 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7kc4mj4vxacb"]
+[gd_scene format=3 uid="uid://b7kc4mj4vxacb"]
 
-[ext_resource type="PackedScene" uid="uid://gwjw7a1mxim4" path="res://assets/3D/Act1/blend/Tree1.blend" id="1_8a0tf"]
+[ext_resource type="PackedScene" uid="uid://gwjw7a1mxim4" path="res://assets/deprecated/3D/Act1/blend/Tree1.blend" id="1_8a0tf"]
 [ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="2_8dmoj"]
-[ext_resource type="Material" uid="uid://c0vmx5v56y8m7" path="res://assets/3D/Act1/materials/vegetation/tree1/tree1_yellow_leaves_swaying.tres" id="2_uqjss"]
+[ext_resource type="Material" uid="uid://c0vmx5v56y8m7" path="res://assets/deprecated/3D/Act1/materials/vegetation/tree1/tree1_yellow_leaves_swaying.tres" id="2_uqjss"]
 
-[node name="Tree1Construction" type="Node3D"]
+[node name="Tree1Construction" type="Node3D" unique_id=20311785]
 
-[node name="Tree1" parent="." instance=ExtResource("1_8a0tf")]
+[node name="Tree1" parent="." unique_id=343381777 instance=ExtResource("1_8a0tf")]
 
-[node name="TreeBase" parent="Tree1" index="0"]
+[node name="TreeBase" parent="Tree1" index="0" unique_id=835578481]
 visible = false
 
-[node name="Branch2" parent="Tree1" index="2"]
+[node name="Branch2" parent="Tree1" index="2" unique_id=608097740]
 surface_material_override/0 = ExtResource("2_uqjss")
 
-[node name="TreeBradfordPear" parent="." instance=ExtResource("2_8dmoj")]
+[node name="TreeBradfordPear" parent="." unique_id=1939971239 instance=ExtResource("2_8dmoj")]
 
 [editable path="Tree1"]

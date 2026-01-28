@@ -1,14 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://dvd5ic7fxna84"]
+[gd_scene format=3 uid="uid://dvd5ic7fxna84"]
 
-[ext_resource type="PackedScene" uid="uid://d2mbpbgsr3nkl" path="res://assets/3D/ControlNode/streak.glb" id="1_f3c4y"]
+[ext_resource type="PackedScene" uid="uid://d2mbpbgsr3nkl" path="res://assets/deprecated/3D/ControlNode/streak.glb" id="1_f3c4y"]
 [ext_resource type="Script" uid="uid://c302y7c5q4eoa" path="res://scripts/control_node_and_balls/asset/control_node_streak.gd" id="2_vo1ib"]
 [ext_resource type="Shader" uid="uid://duoq662dp7lb5" path="res://shaders/Drone/closed_shield.gdshader" id="3_d7avl"]
-[ext_resource type="Material" uid="uid://bv58qw6wja2qm" path="res://assets/3D/ControlNode/streak/control_node_streak_material.tres" id="3_ekexi"]
-[ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/3D/Textures/Drone/closed_shield_dissolve.png" id="4_uw5tb"]
-[ext_resource type="Texture2D" uid="uid://brweuwinhq7aa" path="res://assets/3D/ControlNode/streak/streak.png" id="5_d7avl"]
-[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/3D/Characters/Character1.1/closed_shield_alpha_mask.png" id="6_ekexi"]
-[ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="7_uw5tb"]
-[ext_resource type="Texture2D" uid="uid://ufu6wds3282p" path="res://assets/3D/Particles/dart/dart_map.png" id="8_lustn"]
+[ext_resource type="Material" uid="uid://bv58qw6wja2qm" path="res://assets/deprecated/3D/ControlNode/streak/control_node_streak_material.tres" id="3_ekexi"]
+[ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/deprecated/3D/Textures/Drone/closed_shield_dissolve.png" id="4_uw5tb"]
+[ext_resource type="Texture2D" uid="uid://brweuwinhq7aa" path="res://assets/deprecated/3D/ControlNode/streak/streak.png" id="5_d7avl"]
+[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/krita/assets/enemies/shared/closed_shield_alpha_mask.png" id="6_ekexi"]
+[ext_resource type="Texture2D" uid="uid://dibtt36j8e1m1" path="res://assets/deprecated/3D/Particles/lightning-sparks/lightning-spark-01-auramap.png" id="7_uw5tb"]
+[ext_resource type="Texture2D" uid="uid://ufu6wds3282p" path="res://assets/deprecated/3D/Particles/dart/dart_map.png" id="8_lustn"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_lustn"]
 
@@ -70,20 +70,20 @@ emission_intensity = 60000.0
 material = SubResource("StandardMaterial3D_43trr")
 size = Vector2(0.15, 0.15)
 
-[node name="ControlNodeStreak" instance=ExtResource("1_f3c4y")]
+[node name="ControlNodeStreak" unique_id=1219216640 instance=ExtResource("1_f3c4y")]
 script = ExtResource("2_vo1ib")
 
-[node name="streak" parent="Armature/Skeleton3D" index="0"]
+[node name="streak" parent="Armature/Skeleton3D" parent_id_path=PackedInt32Array(892714122) index="0" unique_id=933073685]
 surface_material_override/0 = ExtResource("3_ekexi")
 
-[node name="Aura" type="MeshInstance3D" parent="." index="1"]
+[node name="Aura" type="MeshInstance3D" parent="." index="1" unique_id=1642172296]
 mesh = SubResource("QuadMesh_lustn")
 surface_material_override/0 = SubResource("StandardMaterial3D_ekexi")
 
-[node name="ring" parent="." index="2"]
+[node name="ring" parent="." index="2" unique_id=608815645]
 surface_material_override/0 = SubResource("ShaderMaterial_uw5tb")
 
-[node name="ShrapnelParticles3D" type="GPUParticles3D" parent="." index="3"]
+[node name="ShrapnelParticles3D" type="GPUParticles3D" parent="." index="3" unique_id=1251878866]
 emitting = false
 amount = 100
 one_shot = true

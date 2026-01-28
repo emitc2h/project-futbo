@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=4 uid="uid://cjmtqo5slxoa0"]
+[gd_scene format=4 uid="uid://cjmtqo5slxoa0"]
 
-[ext_resource type="PackedScene" uid="uid://b677i5g1p1prv" path="res://assets/3D/Enemies/Drone/drone_closed_shield.glb" id="1_o685o"]
+[ext_resource type="PackedScene" uid="uid://b677i5g1p1prv" path="res://assets/deprecated/3D/Enemies/Drone/drone_closed_shield.glb" id="1_o685o"]
 [ext_resource type="Script" uid="uid://o8glpmt2i8tw" path="res://scripts/enemies/drone/drone_closed_shield_model.gd" id="2_pyfqk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nix8r"]
@@ -103,7 +103,7 @@ load_path = "res://.godot/imported/closed_shield_color.png-1ec8c88366b4e24f52b37
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kj7fo"]
 load_path = "res://.godot/imported/closed_shield_alpha_mask.png-7f4fbf4cf12bde179ea3d06a87ff99f6.s3tc.ctex"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t66pr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hlmyb"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_hlmyb")
@@ -120,10 +120,10 @@ shader_parameter/burn_size = 0.08
 shader_parameter/burn_color = Color(0.87386, 0.546692, 0.986915, 1)
 shader_parameter/burn_boost = 0.0
 
-[node name="DroneClosedShieldModel" instance=ExtResource("1_o685o")]
+[node name="DroneClosedShieldModel" unique_id=655805758 instance=ExtResource("1_o685o")]
 script = ExtResource("2_pyfqk")
 
-[node name="ClosedShield" parent="." index="0"]
+[node name="ClosedShield" parent="." index="0" unique_id=1926649005]
 layers = 16
 mesh = SubResource("ArrayMesh_7di8h")
-surface_material_override/0 = SubResource("ShaderMaterial_t66pr")
+surface_material_override/0 = SubResource("ShaderMaterial_hlmyb")

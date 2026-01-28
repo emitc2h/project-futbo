@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=4 uid="uid://cc35nexxgpc4d"]
+[gd_scene format=4 uid="uid://cc35nexxgpc4d"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lm3g"]
 resource_name = "Grass"
@@ -8,7 +8,7 @@ roughness = 0.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_o76h1"]
 _surfaces = [{
-"aabb": AABB(-0.05, -0.000234067, -0.05, 0.1, 0.1, 0.1),
+"aabb": AABB(-0.05000002, -0.00023406744, -0.05000002, 0.10000004, 0.10000008, 0.10000004),
 "format": 34896613377,
 "index_count": 12,
 "index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUA"),
@@ -23,7 +23,7 @@ blend_shape_mode = 0
 [sub_resource type="ArrayMesh" id="ArrayMesh_u1vn5"]
 resource_name = "grass_Plane_002"
 _surfaces = [{
-"aabb": AABB(-0.05, -0.000234067, -0.05, 0.1, 0.1, 0.1),
+"aabb": AABB(-0.05000002, -0.00023406744, -0.05000002, 0.10000004, 0.10000008, 0.10000004),
 "attribute_data": PackedByteArray("AAD//////xP/////AAD/EwAA//////8T/////wAA/xM="),
 "format": 34896613399,
 "index_count": 12,
@@ -38,10 +38,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_o76h1")
 
-[node name="grass" type="Node3D"]
+[node name="grass" type="Node3D" unique_id=446559007]
 
-[node name="Plane_001" type="MeshInstance3D" parent="."]
+[node name="Plane_001" type="MeshInstance3D" parent="." unique_id=1209059747]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
 gi_mode = 0
 mesh = SubResource("ArrayMesh_u1vn5")
-skeleton = NodePath("")

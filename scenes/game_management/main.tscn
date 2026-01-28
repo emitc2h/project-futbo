@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ci6nhkx4w6kqs"]
+[gd_scene format=3 uid="uid://ci6nhkx4w6kqs"]
 
 [ext_resource type="Script" uid="uid://dt0iyahs86i76" path="res://scripts/game_management/game_state_manager.gd" id="1_vdkql"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="5_bf3xv"]
@@ -143,135 +143,135 @@ _data = {
 &"fade out": SubResource("Animation_o1hwq")
 }
 
-[node name="GameStateManager" type="Node3D"]
+[node name="GameStateManager" type="Node3D" unique_id=2044945271]
 process_mode = 3
 script = ExtResource("1_vdkql")
 
-[node name="GameState" type="Node" parent="."]
+[node name="GameState" type="Node" parent="." unique_id=1355890288]
 script = ExtResource("13_ex211")
 
-[node name="Root" type="Node" parent="GameState"]
+[node name="Root" type="Node" parent="GameState" unique_id=673139393]
 script = ExtResource("14_lx3lp")
 initial_state = NodePath("main menu")
 
-[node name="main menu" type="Node" parent="GameState/Root"]
+[node name="main menu" type="Node" parent="GameState/Root" unique_id=107167567]
 script = ExtResource("15_mqd0o")
 
-[node name="to new game" type="Node" parent="GameState/Root/main menu"]
+[node name="to new game" type="Node" parent="GameState/Root/main menu" unique_id=727639988]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game")
 event = &"main menu to game"
 delay_in_seconds = "0.0"
 
-[node name="to loading screen" type="Node" parent="GameState/Root/main menu"]
+[node name="to loading screen" type="Node" parent="GameState/Root/main menu" unique_id=1485281111]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../loading screen")
 event = &"main menu to loading screen"
 delay_in_seconds = "0.0"
 
-[node name="game" type="Node" parent="GameState/Root"]
+[node name="game" type="Node" parent="GameState/Root" unique_id=799348870]
 script = ExtResource("15_mqd0o")
 
-[node name="to main menu" type="Node" parent="GameState/Root/game"]
+[node name="to main menu" type="Node" parent="GameState/Root/game" unique_id=595453139]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../main menu")
 event = &"game to main menu"
 delay_in_seconds = "0.0"
 
-[node name="loading screen" type="Node" parent="GameState/Root"]
+[node name="loading screen" type="Node" parent="GameState/Root" unique_id=1932794287]
 script = ExtResource("15_mqd0o")
 
-[node name="to game loaded" type="Node" parent="GameState/Root/loading screen"]
+[node name="to game loaded" type="Node" parent="GameState/Root/loading screen" unique_id=1922051310]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game loaded")
 event = &"loading screen to game loaded"
 delay_in_seconds = "0.0"
 
-[node name="game loaded" type="Node" parent="GameState/Root"]
+[node name="game loaded" type="Node" parent="GameState/Root" unique_id=1764660332]
 script = ExtResource("15_mqd0o")
 
-[node name="to game" type="Node" parent="GameState/Root/game loaded"]
+[node name="to game" type="Node" parent="GameState/Root/game loaded" unique_id=880908649]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game")
 event = &"game loaded to game"
 delay_in_seconds = "0.0"
 
-[node name="LevelStateManager" type="Node3D" parent="."]
+[node name="LevelStateManager" type="Node3D" parent="." unique_id=1594274197]
 script = ExtResource("6_e4ydo")
 
-[node name="StateChart" type="Node" parent="LevelStateManager"]
+[node name="StateChart" type="Node" parent="LevelStateManager" unique_id=283753793]
 script = ExtResource("13_ex211")
 
-[node name="Root" type="Node" parent="LevelStateManager/StateChart"]
+[node name="Root" type="Node" parent="LevelStateManager/StateChart" unique_id=1748635168]
 script = ExtResource("14_lx3lp")
 initial_state = NodePath("empty")
 
-[node name="empty" type="Node" parent="LevelStateManager/StateChart/Root"]
+[node name="empty" type="Node" parent="LevelStateManager/StateChart/Root" unique_id=1120881916]
 script = ExtResource("15_mqd0o")
 
-[node name="to game play" type="Node" parent="LevelStateManager/StateChart/Root/empty"]
+[node name="to game play" type="Node" parent="LevelStateManager/StateChart/Root/empty" unique_id=1970549353]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game play")
 event = &"to game play"
 delay_in_seconds = "0.0"
 
-[node name="game play" type="Node" parent="LevelStateManager/StateChart/Root"]
+[node name="game play" type="Node" parent="LevelStateManager/StateChart/Root" unique_id=371026939]
 script = ExtResource("15_mqd0o")
 
-[node name="to empty" type="Node" parent="LevelStateManager/StateChart/Root/game play"]
+[node name="to empty" type="Node" parent="LevelStateManager/StateChart/Root/game play" unique_id=1764210909]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../empty")
 event = &"game play to empty"
 delay_in_seconds = "0.0"
 
-[node name="to paused" type="Node" parent="LevelStateManager/StateChart/Root/game play"]
+[node name="to paused" type="Node" parent="LevelStateManager/StateChart/Root/game play" unique_id=483079031]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../paused")
 event = &"game play to paused"
 delay_in_seconds = "0.0"
 
-[node name="to game over" type="Node" parent="LevelStateManager/StateChart/Root/game play"]
+[node name="to game over" type="Node" parent="LevelStateManager/StateChart/Root/game play" unique_id=1227474771]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game over")
 event = &"game play to game over"
 delay_in_seconds = "0.0"
 
-[node name="paused" type="Node" parent="LevelStateManager/StateChart/Root"]
+[node name="paused" type="Node" parent="LevelStateManager/StateChart/Root" unique_id=1478575057]
 script = ExtResource("15_mqd0o")
 
-[node name="to game play" type="Node" parent="LevelStateManager/StateChart/Root/paused"]
+[node name="to game play" type="Node" parent="LevelStateManager/StateChart/Root/paused" unique_id=72792722]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game play")
 event = &"to game play"
 delay_in_seconds = "0.0"
 
-[node name="to empty" type="Node" parent="LevelStateManager/StateChart/Root/paused"]
+[node name="to empty" type="Node" parent="LevelStateManager/StateChart/Root/paused" unique_id=1519271427]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../empty")
 event = &"paused to empty"
 delay_in_seconds = "0.0"
 
-[node name="game over" type="Node" parent="LevelStateManager/StateChart/Root"]
+[node name="game over" type="Node" parent="LevelStateManager/StateChart/Root" unique_id=518629460]
 script = ExtResource("15_mqd0o")
 
-[node name="to empty" type="Node" parent="LevelStateManager/StateChart/Root/game over"]
+[node name="to empty" type="Node" parent="LevelStateManager/StateChart/Root/game over" unique_id=228552276]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../empty")
 event = &"game over to empty"
 delay_in_seconds = "0.0"
 
-[node name="to game play" type="Node" parent="LevelStateManager/StateChart/Root/game over"]
+[node name="to game play" type="Node" parent="LevelStateManager/StateChart/Root/game over" unique_id=1440789647]
 script = ExtResource("5_bf3xv")
 to = NodePath("../../game play")
 event = &"to game play"
 delay_in_seconds = "0.0"
 
-[node name="PauseMenu" type="CanvasLayer" parent="LevelStateManager"]
+[node name="PauseMenu" type="CanvasLayer" parent="LevelStateManager" unique_id=1705369933]
 layer = 5
 visible = false
 script = ExtResource("7_7hc34")
 
-[node name="GridContainer" type="GridContainer" parent="LevelStateManager/PauseMenu"]
+[node name="GridContainer" type="GridContainer" parent="LevelStateManager/PauseMenu" unique_id=1587706438]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -286,33 +286,33 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="PausedTitle" type="Label" parent="LevelStateManager/PauseMenu/GridContainer"]
+[node name="PausedTitle" type="Label" parent="LevelStateManager/PauseMenu/GridContainer" unique_id=1847159686]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 64
 text = "Paused"
 
-[node name="ContinueButton" type="Button" parent="LevelStateManager/PauseMenu/GridContainer"]
+[node name="ContinueButton" type="Button" parent="LevelStateManager/PauseMenu/GridContainer" unique_id=886136259]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Continue
 "
 
-[node name="ExitToMainButton" type="Button" parent="LevelStateManager/PauseMenu/GridContainer"]
+[node name="ExitToMainButton" type="Button" parent="LevelStateManager/PauseMenu/GridContainer" unique_id=158404674]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Exit to main menu"
 
-[node name="QuitButton" type="Button" parent="LevelStateManager/PauseMenu/GridContainer"]
+[node name="QuitButton" type="Button" parent="LevelStateManager/PauseMenu/GridContainer" unique_id=94473622]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Quit game"
 
-[node name="GameOverScreen" type="CanvasLayer" parent="LevelStateManager"]
+[node name="GameOverScreen" type="CanvasLayer" parent="LevelStateManager" unique_id=1292033451]
 layer = 4
 script = ExtResource("8_1x18l")
 
-[node name="ColorRect" type="ColorRect" parent="LevelStateManager/GameOverScreen"]
+[node name="ColorRect" type="ColorRect" parent="LevelStateManager/GameOverScreen" unique_id=1734909786]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -321,7 +321,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
-[node name="Label" type="Label" parent="LevelStateManager/GameOverScreen"]
+[node name="Label" type="Label" parent="LevelStateManager/GameOverScreen" unique_id=1339255858]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -337,17 +337,15 @@ theme_override_colors/font_color = Color(0.6162, 0.714687, 0.79, 0)
 theme_override_font_sizes/font_size = 64
 text = "Game Over"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelStateManager/GameOverScreen"]
-libraries = {
-&"": SubResource("AnimationLibrary_samqm")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelStateManager/GameOverScreen" unique_id=301725293]
+libraries/ = SubResource("AnimationLibrary_samqm")
 
-[node name="FadeScreen" type="CanvasLayer" parent="."]
+[node name="FadeScreen" type="CanvasLayer" parent="." unique_id=937490014]
 layer = 10
 visible = false
 script = ExtResource("8_k6y2d")
 
-[node name="ColorRect" type="ColorRect" parent="FadeScreen"]
+[node name="ColorRect" type="ColorRect" parent="FadeScreen" unique_id=671261904]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -356,10 +354,8 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="FadeScreen"]
-libraries = {
-&"": SubResource("AnimationLibrary_c2k5l")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FadeScreen" unique_id=1558588747]
+libraries/ = SubResource("AnimationLibrary_c2k5l")
 
 [connection signal="state_entered" from="GameState/Root/main menu" to="." method="_on_main_menu_state_entered"]
 [connection signal="state_exited" from="GameState/Root/main menu" to="." method="_on_main_menu_state_exited"]

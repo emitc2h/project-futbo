@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=21 format=3 uid="uid://bvw8ltt488cc8"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://bvw8ltt488cc8"]
 
 [ext_resource type="Script" uid="uid://bsi37utyrao2r" path="res://ai/tasks/drone/update_success_buffer_condition.gd" id="1_ils3d"]
 [ext_resource type="Script" uid="uid://b2j2u7t3dp4en" path="res://ai/tasks/drone/drone_ram_attack_action.gd" id="2_oj280"]
