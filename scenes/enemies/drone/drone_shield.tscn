@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://qcbmkep1csam"]
 
-[ext_resource type="Script" uid="uid://difl4gfbctex2" path="res://scenes/enemies/drone/drone_shield.gd" id="1_4ir5k"]
-[ext_resource type="PackedScene" uid="uid://cjmtqo5slxoa0" path="res://scenes/enemies/drone/models/drone_closed_shield_model.tscn" id="1_6kxxw"]
-[ext_resource type="Material" uid="uid://c8gqdee3l4wgm" path="res://assets/deprecated/3D/Particles/dart/dart_material.tres" id="3_quikv"]
+[ext_resource type="Script" uid="uid://difl4gfbctex2" path="res://scripts/enemies/drone/drone_shield.gd" id="1_4ir5k"]
+[ext_resource type="PackedScene" uid="uid://dkplp86pkjl0b" path="res://scenes/enemies/drone/assets/drone_shield_asset.tscn" id="2_quikv"]
+[ext_resource type="Material" uid="uid://c8gqdee3l4wgm" path="res://assets/materials/assets/enemies/drone/drone_shield_dart_material.tres" id="3_quikv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nbgyc"]
 bounce = 0.18
@@ -63,8 +63,7 @@ physics_material_override = SubResource("PhysicsMaterial_nbgyc")
 sync_to_physics = false
 script = ExtResource("1_4ir5k")
 
-[node name="DroneClosedShieldModel" parent="." unique_id=259202009 instance=ExtResource("1_6kxxw")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+[node name="DroneShieldAsset" parent="." unique_id=2105497989 instance=ExtResource("2_quikv")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=368903245]
 shape = SubResource("SphereShape3D_6kxxw")

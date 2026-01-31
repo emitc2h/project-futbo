@@ -2,7 +2,7 @@ class_name DroneEMSpinnersAnimation
 extends Node
 
 ## Inject drone dependency to pass it to the physical bones
-@export var model: DroneModel
+@export var model: DroneAsset
 
 ## EM Spinner Animation Properties
 @onready var spinners_off_props: DroneEMSpinnersProps = $EMSpinnersOffProps

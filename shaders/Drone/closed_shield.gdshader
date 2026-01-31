@@ -50,5 +50,5 @@ void fragment() {
 	float burn_boost_out = dissolve_value_out * burn_boost;
 
 	EMISSION = 1000.0 * emission_energy * mix(burn_color.rgb * burn_boost_out, mix(burn_color.rgb * burn_boost_in, main_albedo, border_in), border_out);
-	ALPHA *= alpha * (albedo_tex_1.a + albedo_tex_2.a) * alpha_tex.r * threshold_in * threshold_out;
+	ALPHA *= alpha * (alpha_tex.r * (albedo_tex_1.a + albedo_tex_2.a) * threshold_in * threshold_out) + (burn_boost/100.0) * ((threshold_in - border_in) + (threshold_out - border_out));
 }

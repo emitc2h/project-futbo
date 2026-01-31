@@ -21,7 +21,7 @@ var dissolve_in_tween: Tween
 var dissolve_out_tween: Tween
 
 func _ready() -> void:
-	impact_mesh = bolt.get_node("DronePlasmaBoltModel/impact")
+	impact_mesh = bolt.get_node("DronePlasmaBoltAsset/impact")
 	impact_material = impact_mesh.get_surface_override_material(0)
 	
 	_apply_props(off_props)

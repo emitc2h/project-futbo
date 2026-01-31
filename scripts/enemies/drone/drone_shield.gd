@@ -3,7 +3,7 @@ extends AnimatableBody3D
 
 @export var drone: Drone
 
-@onready var drone_shield_closed_model: DroneClosedShieldModel = $DroneClosedShieldModel
+@onready var drone_shield_asset: DroneShieldAsset = $DroneShieldAsset
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 @onready var particles: GPUParticles3D = $GPUParticles3D
 
@@ -12,7 +12,7 @@ var enabled: bool = true
 
 func hit() -> void:
 	if enabled:
-		drone_shield_closed_model.hit()
+		drone_shield_asset.hit()
 		particles.restart()
 		particles.emitting = true
 

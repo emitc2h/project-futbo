@@ -9,9 +9,9 @@ extends Node3D
 @export var hit_enabled: bool = false
 @export var hit_force: float = 17.0
 
-@onready var bolt_model: Node3D = $DronePlasmaBoltModel
-@onready var bolt_mesh: MeshInstance3D = $DronePlasmaBoltModel/bolt
-@onready var impact_mesh: MeshInstance3D = $DronePlasmaBoltModel/impact
+@onready var bolt_model: Node3D = $DronePlasmaBoltAsset
+@onready var bolt_mesh: MeshInstance3D = $DronePlasmaBoltAsset/bolt
+@onready var impact_mesh: MeshInstance3D = $DronePlasmaBoltAsset/impact
 @onready var sc: StateChart = $StateChart
 @onready var raycast: RayCast3D = $RayCast3D
 @onready var impact_animation: DronePlasmaBoltImpactAnimation = $ImpactAnimation

@@ -5,7 +5,7 @@ extends Node
 @export_group("Dependencies")
 @export var drone: Drone
 @export var sc: StateChart
-@export var model: DroneModel
+@export var asset: DroneAsset
 
 ## Parameters
 @export_group("Exhaust Parameters")
@@ -45,11 +45,11 @@ func _on_off_state_entered() -> void:
 
 
 func _on_off_to_thrust_taken() -> void:
-	model.engines_animation.off_to_thrust(0.6)
+	asset.engines_animation.off_to_thrust(0.6)
 
 
 func _on_off_to_burst_taken() -> void:
-	model.engines_animation.off_to_burst(0.4)
+	asset.engines_animation.off_to_burst(0.4)
 
 
 # thrust state
@@ -59,16 +59,16 @@ func _on_thrust_state_entered() -> void:
 
 
 func _on_thrust_to_stopping_taken() -> void:
-	await model.engines_animation.thrust_to_off(0.8)
+	await asset.engines_animation.thrust_to_off(0.8)
 	sc.send_event(TRANS_TO_OFF)
 
 
 func _on_thrust_to_quick_off_taken() -> void:
-	model.engines_animation.thrust_to_off(0.15)
+	asset.engines_animation.thrust_to_off(0.15)
 
 
 func _on_thrust_to_burst_taken() -> void:
-	model.engines_animation.thrust_to_burst(0.4)
+	asset.engines_animation.thrust_to_burst(0.4)
 
 
 # burst state
@@ -78,16 +78,16 @@ func _on_burst_state_entered() -> void:
 
 
 func _on_burst_to_stopping_taken() -> void:
-	await model.engines_animation.burst_to_off(0.8)
+	await asset.engines_animation.burst_to_off(0.8)
 	sc.send_event(TRANS_TO_OFF)
 
 
 func _on_burst_to_quick_off_taken() -> void:
-	model.engines_animation.burst_to_off(0.15)
+	asset.engines_animation.burst_to_off(0.15)
 
 
 func _on_burst_to_thrust_taken() -> void:
-	model.engines_animation.burst_to_thrust(0.6)
+	asset.engines_animation.burst_to_thrust(0.6)
 
 
 # stopping state

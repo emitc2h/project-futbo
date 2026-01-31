@@ -2,7 +2,7 @@ class_name DroneEnginesAnimation
 extends Node
 
 ## Inject dependencies
-@export var model: DroneModel
+@export var model: DroneAsset
 
 ## Animation Properties
 @onready var engines_off_props: DroneEnginesProps = $EnginesOffProps

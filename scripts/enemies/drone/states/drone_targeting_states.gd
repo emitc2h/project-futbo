@@ -31,7 +31,7 @@ const TRANS_TO_ACQUIRED: String = "Targeting: to acquired"
 ## Drone nodes controlled by this state
 @onready var field_of_view: DroneFieldOfView = drone.get_node("TrackTransformContainer/FieldOfView")
 @onready var char_node: CharacterBody3D = drone.get_node("CharNode")
-@onready var drone_model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
+@onready var drone_model: DroneAsset = drone.get_node("TrackTransformContainer/DroneAsset")
 
 ## Target Type
 enum TargetType {PLAYER = 0, CONTROL_NODE = 1, OTHER = 2}
@@ -63,7 +63,7 @@ func scan_for_target() -> bool:
 					return true
 			TargetType.CONTROL_NODE:
 				if field_of_view.target.is_in_group("ControlNodeGroup"):
-					target = field_of_view.target.target_marker
+					target = field_of_view.target.get_parent().target_marker
 					return true
 			TargetType.OTHER:
 				target = field_of_view.target

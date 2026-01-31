@@ -13,7 +13,6 @@
 [ext_resource type="Script" uid="uid://c2rujfre7ei0g" path="res://scripts/enemies/drone/states/drone_direction_faced_states.gd" id="6_nn3ap"]
 [ext_resource type="Script" uid="uid://c6uypq5yp7yv4" path="res://scripts/enemies/drone/states/drone_engagement_mode_states.gd" id="9_3x3q1"]
 [ext_resource type="Script" uid="uid://b3ltvqg05gn6g" path="res://scripts/enemies/drone/states/drone_engines_states.gd" id="10_g2as1"]
-[ext_resource type="PackedScene" uid="uid://c7f1c26mhg1k8" path="res://scenes/enemies/drone/drone_model.tscn" id="11_glddf"]
 [ext_resource type="Script" uid="uid://cn8skwd81rq27" path="res://scripts/enemies/drone/states/drone_targeting_states.gd" id="11_wmq8b"]
 [ext_resource type="Script" uid="uid://dqr71asyjiu46" path="res://scripts/enemies/drone/drone_field_of_view.gd" id="12_0sc46"]
 [ext_resource type="Script" uid="uid://c2e3ru6va1vkg" path="res://scripts/enemies/drone/states/drone_vulnerability_states.gd" id="12_43bu3"]
@@ -23,8 +22,9 @@
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/utilities/inert_node.gd" id="14_efc27"]
 [ext_resource type="Script" uid="uid://duil801h283hr" path="res://scripts/enemies/drone/states/drone_behavior_states.gd" id="18_j5bu2"]
 [ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/utilities/behavior_tree/behavior_manager.gd" id="19_4dmr7"]
+[ext_resource type="PackedScene" uid="uid://d2g1embc6qilv" path="res://scenes/enemies/drone/assets/drone_asset.tscn" id="24_6ft1p"]
 [ext_resource type="PackedScene" uid="uid://qcbmkep1csam" path="res://scenes/enemies/drone/drone_shield.tscn" id="27_fv7v3"]
-[ext_resource type="Material" uid="uid://h1qmrtj6hri8" path="res://assets/deprecated/3D/Materials/character_jump_distortion_shader_material.tres" id="34_6t6rp"]
+[ext_resource type="Material" uid="uid://h1qmrtj6hri8" path="res://assets/materials/assets/enemies/drone/drone_float_distortion_shader_material.tres" id="34_6t6rp"]
 [ext_resource type="Script" uid="uid://darufwryr50n1" path="res://scripts/enemies/drone/animation/float_distortion_animation.gd" id="38_6t6rp"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_6ft1p"]
@@ -281,11 +281,11 @@ delay_in_seconds = "0.0"
 script = ExtResource("4_kl701")
 initial_state = NodePath("off")
 
-[node name="Engines States" type="Node" parent="State/Root/Engines" unique_id=341288964 node_paths=PackedStringArray("drone", "sc", "model")]
+[node name="Engines States" type="Node" parent="State/Root/Engines" unique_id=341288964 node_paths=PackedStringArray("drone", "sc", "asset")]
 script = ExtResource("10_g2as1")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
-model = NodePath("../../../../TrackTransformContainer/DroneModel")
+asset = NodePath("../../../../TrackTransformContainer/DroneAsset")
 
 [node name="off" type="Node" parent="State/Root/Engines" unique_id=1379965316]
 script = ExtResource("5_voq0c")
@@ -357,11 +357,11 @@ delay_in_seconds = "0.0"
 script = ExtResource("4_kl701")
 initial_state = NodePath("off")
 
-[node name="Spinners States" type="Node" parent="State/Root/Spinners" unique_id=849007284 node_paths=PackedStringArray("drone", "sc", "model")]
+[node name="Spinners States" type="Node" parent="State/Root/Spinners" unique_id=849007284 node_paths=PackedStringArray("drone", "sc", "asset")]
 script = ExtResource("12_adu0m")
 drone = NodePath("../../../..")
 sc = NodePath("../../..")
-model = NodePath("../../../../TrackTransformContainer/DroneModel")
+asset = NodePath("../../../../TrackTransformContainer/DroneAsset")
 
 [node name="off" type="Node" parent="State/Root/Spinners" unique_id=1385886924]
 script = ExtResource("5_voq0c")
@@ -749,7 +749,7 @@ drone = NodePath("../..")
 
 [node name="TrackTransformContainer" type="Node3D" parent="." unique_id=1700008572]
 
-[node name="DroneModel" parent="TrackTransformContainer" unique_id=1939868571 node_paths=PackedStringArray("drone") instance=ExtResource("11_glddf")]
+[node name="DroneAsset" parent="TrackTransformContainer" unique_id=978165037 node_paths=PackedStringArray("drone") instance=ExtResource("24_6ft1p")]
 drone = NodePath("../..")
 
 [node name="FieldOfView" type="Node3D" parent="TrackTransformContainer" unique_id=878217825]

@@ -41,8 +41,8 @@ const TRANS_TO_DEAD: String = "Physics Mode: to dead"
 
 @onready var float_distortion_animation: DroneFloatDistortionAnimation = drone.get_node("FloatDistortionAnimation")
 
-@onready var model_anim_tree: AnimationTree = track_transform_container.get_node("DroneModel/AnimationTree")
-@onready var bone_simulation: PhysicalBoneSimulator3D = track_transform_container.get_node("DroneModel/Armature/Skeleton3D/PhysicalBoneSimulator3D")
+@onready var model_anim_tree: AnimationTree = track_transform_container.get_node("DroneAsset/AnimationTree")
+@onready var bone_simulation: PhysicalBoneSimulator3D = track_transform_container.get_node("DroneAsset/Armature/Skeleton3D/PhysicalBoneSimulator3D")
 
 ## Timers
 @onready var dead_timer: Timer = $DeadTimer

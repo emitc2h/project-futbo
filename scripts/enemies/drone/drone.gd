@@ -36,8 +36,8 @@ extends Node3D
 @onready var float_distortion_animation: DroneFloatDistortionAnimation = $FloatDistortionAnimation
 
 ## Animation nodes
-@onready var model: DroneModel = $TrackTransformContainer/DroneModel
-@onready var model_anim_tree: AnimationTree = $"TrackTransformContainer/DroneModel/AnimationTree"
+@onready var asset: DroneAsset = $TrackTransformContainer/DroneAsset
+@onready var asset_anim_tree: AnimationTree = $"TrackTransformContainer/DroneAsset/AnimationTree"
 @onready var anim_state: AnimationNodeStateMachinePlayback
 
 ## Impact
@@ -51,7 +51,7 @@ signal hit_player_in_char_mode
 
 func _ready() -> void:
 	## initialize the internal representation
-	anim_state = model_anim_tree.get("parameters/playback")
+	anim_state = asset_anim_tree.get("parameters/playback")
 	Signals.debug_advance.connect(_on_debug_advance)
 	physics_mode_states.target_velocity_reached.connect(_on_target_velocity_reached)
 	
@@ -287,7 +287,7 @@ func set_target(target: Node3D, lock_target: bool = false) -> void:
 		targeting_states.target_type = targeting_states.TargetType.OTHER
 	targeting_states.target_locked = lock_target
 	targeting_states.target = target
-	model.spinners_acquire_target(target)
+	asset.spinners_acquire_target(target)
 
 
 func get_target() -> Node3D:
@@ -353,15 +353,15 @@ func set_initial_behavior_state(initial_state: DroneBehaviorStates.State) -> voi
 ## ---------------------------------------
 func die(force: Vector3) -> void:
 	if vulnerability_states.state == vulnerability_states.State.VULNERABLE:
-		model.die()
+		asset.die()
 		behavior_states.disable()
 		sc.send_event(physics_mode_states.TRANS_TO_RAGDOLL)
-		model.body_bone.apply_central_impulse(force * 5.0)
+		asset.body_bone.apply_central_impulse(force * 5.0)
 
 
 func get_hit(strength: float) -> bool:
 	if vulnerability_states.state != DroneVulnerabilityStates.State.INVULNERABLE:
-		model.damage_hit(strength)
+		asset.damage_hit(strength)
 		engines_states.damage_hit(strength)
 		direction_faced_states.damage_hit(strength)
 		return true

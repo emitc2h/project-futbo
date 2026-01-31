@@ -1,8 +1,8 @@
-class_name DroneClosedShieldModel
+class_name DroneShieldAsset
 extends Node3D
 
 ## Get a handle on the shader material
-@onready var material: ShaderMaterial = $ClosedShield.get_surface_override_material(0)
+@onready var material: ShaderMaterial = $Shield.get_surface_override_material(0)
 
 
 func _ready() -> void:

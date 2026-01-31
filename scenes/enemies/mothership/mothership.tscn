@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://ihd2x5kuenjv"]
 
-[ext_resource type="PackedScene" uid="uid://bw54iaufp836l" path="res://assets/deprecated/3D/Enemies/Mothership/mothership.glb" id="1_i4472"]
+[ext_resource type="PackedScene" uid="uid://bw54iaufp836l" path="res://assets/blender/assets/enemies/mothership/mothership.glb" id="1_i4472"]
 [ext_resource type="Script" uid="uid://c3daqn5e8nq24" path="res://scripts/enemies/mothership/mothership.gd" id="2_nmvf0"]
-[ext_resource type="Material" uid="uid://bplqsdsx0ks3q" path="res://assets/deprecated/3D/Enemies/Drone/materials/drone_engines_material.tres" id="3_iasb2"]
+[ext_resource type="Material" uid="uid://bplqsdsx0ks3q" path="res://assets/materials/assets/enemies/mothership/mothership_exhaust_shader_material.tres" id="3_iasb2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iasb2"]
 vertex_color_use_as_albedo = true
