@@ -187,4 +187,5 @@ func _ready() -> void:
 #=======================================================
 func jump() -> void:
 	super.jump()
+	jump_anim_player.stop()
 	jump_anim_player.play("jump")

@@ -2,11 +2,31 @@
 
 [ext_resource type="PackedScene" uid="uid://b5a0506h6xond" path="res://assets/blender/assets/enemies/drone/drone_dive_impact_shockwave.glb" id="1_b5c7e"]
 [ext_resource type="Script" uid="uid://c58hhi4lia3w" path="res://scripts/enemies/drone/drone_dive_impact.gd" id="2_8dg1a"]
-[ext_resource type="Material" uid="uid://d1ba32c7ws7l1" path="res://assets/materials/assets/enemies/drone/drone_impact_shockwave_shader_material.tres" id="3_3eevv"]
 [ext_resource type="Material" uid="uid://b6lvkykklhtjv" path="res://assets/materials/assets/enemies/drone/drone_impact_dust_material.tres" id="3_g37d0"]
+[ext_resource type="Shader" uid="uid://duoq662dp7lb5" path="res://shaders/Drone/closed_shield.gdshader" id="3_jsym6"]
 [ext_resource type="Material" uid="uid://cuijuoef7mf6r" path="res://assets/materials/assets/enemies/drone/drone_impact_fuzzy_material.tres" id="4_8dg1a"]
+[ext_resource type="Texture2D" uid="uid://fdcxot58i757" path="res://assets/krita/assets/enemies/drone/closed_shield_dissolve.png" id="4_ef0gb"]
 [ext_resource type="Texture2D" uid="uid://k7jwo1rrexr6" path="res://assets/krita/assets/enemies/drone/impact_color.png" id="4_g37d0"]
 [ext_resource type="Texture2D" uid="uid://1rqi1ej4l713" path="res://assets/krita/assets/enemies/drone/impact_normal.png" id="5_3eevv"]
+[ext_resource type="Texture2D" uid="uid://b64qyuxss5jvu" path="res://assets/krita/assets/enemies/drone/closed_shield_color.png" id="5_32ba7"]
+[ext_resource type="Texture2D" uid="uid://d2ionu45rosrt" path="res://assets/krita/assets/enemies/shared/closed_shield_alpha_mask.png" id="6_rdkdd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jsym6"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("3_jsym6")
+shader_parameter/texture_albedo = ExtResource("5_32ba7")
+shader_parameter/albedo_uv_drift = 0.2
+shader_parameter/texture_alpha_mask = ExtResource("6_rdkdd")
+shader_parameter/alpha = 1.0
+shader_parameter/emission_energy = 2.0
+shader_parameter/dissolve_texture = ExtResource("4_ef0gb")
+shader_parameter/dissolve_value_in = 1.0
+shader_parameter/dissolve_value_out = 1.0
+shader_parameter/dissolve_uv_drift = 1.0
+shader_parameter/burn_size = 0.0999999977648
+shader_parameter/burn_color = Color(0.9882353, 0.6627451, 0.827451, 1)
+shader_parameter/burn_boost = 5.00000019
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ya6qm"]
 direction = Vector3(0, 1.4, 0)
@@ -60,7 +80,7 @@ height = 0.7
 script = ExtResource("2_8dg1a")
 
 [node name="Shockwave" parent="." index="0" unique_id=177144929]
-surface_material_override/0 = ExtResource("3_3eevv")
+surface_material_override/0 = SubResource("ShaderMaterial_jsym6")
 
 [node name="DustParticles" type="GPUParticles3D" parent="." index="1" unique_id=309208556]
 layers = 2
@@ -103,3 +123,6 @@ collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBoxRight" index="0" unique_id=479606354]
 shape = SubResource("CapsuleShape3D_v14h0")
+
+[connection signal="body_entered" from="HitBoxLeft" to="." method="_on_hit_box_left_body_entered"]
+[connection signal="body_entered" from="HitBoxRight" to="." method="_on_hit_box_right_body_entered"]

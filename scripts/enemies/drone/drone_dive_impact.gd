@@ -19,11 +19,11 @@ func _ready() -> void:
 	dust_fuzzy_particles.emitting = true
 	
 	await _animate_shockwave(0.5)
-	shockwave_mesh.queue_free()
-	hitbox_left.queue_free()
-	hitbox_right.queue_free()
-	dust_particles.queue_free()
-	dust_fuzzy_particles.queue_free()
+	shockwave_mesh.free()
+	hitbox_left.free()
+	hitbox_right.free()
+	dust_particles.free()
+	dust_fuzzy_particles.free()
 
 
 func _on_dust_particles_finished() -> void:
@@ -37,14 +37,14 @@ func _on_fuzzy_particles_finished() -> void:
 
 
 func _animate_shockwave(duration: float) -> void:
-	hitbox_left_col.disabled = false
-	hitbox_right_col.disabled = false
+	hitbox_left_col.set_disabled(false)
+	hitbox_right_col.set_disabled(false)
 	shockwave_material.set_shader_parameter("alpha", 1.0)
-	shockwave_material.set_shader_parameter("emission_energy", 25.0)
+	shockwave_material.set_shader_parameter("emission_energy", 3.0)
 	shockwave_material.set_shader_parameter("dissolve_value_in", 0.0)
 	shockwave_material.set_shader_parameter("dissolve_value_out", 1.0)
-	shockwave_material.set_shader_parameter("burn_size", 0.05)
-	shockwave_material.set_shader_parameter("burn_boost", 25.0)
+	shockwave_material.set_shader_parameter("burn_size", 0.1)
+	shockwave_material.set_shader_parameter("burn_boost", 5.0)
 	
 	var tw_scale: Tween = create_tween()
 	tw_scale.tween_property(shockwave_mesh, "scale", Vector3(final_shockwave_scale, 2.0, final_shockwave_scale), duration)\
@@ -64,6 +64,12 @@ func _animate_shockwave(duration: float) -> void:
 		.set_trans(Tween.TRANS_LINEAR)\
 		.from(1.0)
 	
+	var tw_burn_boost: Tween = create_tween()
+	tw_burn_boost.tween_property(shockwave_material, "shader_parameter/burn_boost", 0.0, duration)\
+		.set_ease(Tween.EASE_IN)\
+		.set_trans(Tween.TRANS_EXPO)\
+		.from(5.0)
+	
 	var tw_hb_left: Tween = create_tween()
 	tw_hb_left.tween_property(hitbox_left, "position", Vector3(-(final_shockwave_scale + 0.05), 0.5, 0.0), duration)\
 		.set_ease(Tween.EASE_OUT)\
@@ -77,8 +83,8 @@ func _animate_shockwave(duration: float) -> void:
 		.from(Vector3(0.3, 0.5, 0.0))
 	
 	await get_tree().create_timer(0.8 * duration).timeout
-	hitbox_left_col.disabled = true
-	hitbox_right_col.disabled = true
+	hitbox_left_col.set_disabled(true)
+	hitbox_right_col.set_disabled(true)
 	
 	await tw_scale.finished
 

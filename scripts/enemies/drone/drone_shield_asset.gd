@@ -24,7 +24,7 @@ func hit() -> void:
 		.set_trans(Tween.TRANS_LINEAR)\
 		.set_ease(Tween.EASE_IN)\
 		.from(1.0)
-	tween3.tween_property(material, "shader_parameter/emission_energy", 10.0, 1.2)\
+	tween3.tween_property(material, "shader_parameter/emission_energy", 1.0, 1.2)\
 		.set_trans(Tween.TRANS_EXPO)\
 		.set_ease(Tween.EASE_OUT)\
-		.from(60.0)
+		.from(5.0)

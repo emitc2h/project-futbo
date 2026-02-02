@@ -109,5 +109,5 @@ func _on_control_node_proximity_exited() -> void:
 	control_node_has_exited = true
 
 
-func _on_control_node_proximity_entered() -> void:
+func _on_control_node_proximity_entered(_control_node: ControlNode) -> void:
 	time_elapsed_in_buffer = 0.0

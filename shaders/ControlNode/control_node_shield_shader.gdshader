@@ -1,7 +1,5 @@
-// NOTE: Shader automatically converted from Godot Engine 4.4.stable's StandardMaterial3D.
-
 shader_type spatial;
-render_mode blend_add, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;
+render_mode unshaded, blend_add, depth_draw_opaque, cull_disabled, specular_disabled, shadows_disabled, ambient_light_disabled, fog_disabled;
 
 group_uniforms Albedo;
 uniform float alpha : hint_range(0.0, 1.0, 0.01);
@@ -50,14 +48,13 @@ void fragment() {
 	vec3 modulated_albedo = mix(albedo_tex.rgb, modulate.rgb, modulate_factor);
 	vec3 modulated_burn_color = mix(burn_color.rgb, modulate.rgb, modulate_factor);
 
-	ALBEDO = mix(modulated_burn_color, modulated_albedo, border);
+	ALBEDO = emission_energy * mix(modulated_burn_color, modulated_albedo, border);
 
 	float burn_boost = dissolve_value * 200.0;
 	if (dissolve_value > 0.1) {
 		burn_boost = 20.0;
 	}
 
-	EMISSION = mix(modulated_burn_color * burn_boost, modulated_albedo, border) * emission_energy * 1000.0;
 	ALPHA *= alpha * albedo_tex.a * threshold;
 }
 

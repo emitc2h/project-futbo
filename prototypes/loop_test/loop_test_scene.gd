@@ -22,4 +22,3 @@ func _spawn_new_drone() -> void:
 	new_drone.set_initial_behavior_state(DroneBehaviorStates.State.IDLE)
 	add_child(new_drone)
 	drone = new_drone
-	

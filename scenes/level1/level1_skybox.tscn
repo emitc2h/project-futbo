@@ -873,7 +873,7 @@ mesh = SubResource("ArrayMesh_vrjuy")
 surface_material_override/0 = ExtResource("13_xnj6s")
 
 [node name="Mothership" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" unique_id=92449607 instance=ExtResource("18_mkg81")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.30202, 3.1329803, -52.450806)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.30202, 2.816513, -52.450806)
 wait_till_open = 5.0
 time_scale = 0.2
 

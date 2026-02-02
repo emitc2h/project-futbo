@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode blend_add, depth_draw_opaque, cull_disabled;
+render_mode unshaded, blend_add, depth_draw_opaque, cull_disabled, specular_disabled, shadows_disabled, ambient_light_disabled, fog_disabled;
 
 group_uniforms Albedo;
 uniform sampler2D texture_albedo : source_color;
@@ -44,11 +44,10 @@ void fragment() {
 
 	vec3 main_albedo = (albedo_tex_1.rgb + albedo_tex_2.rgb);
 
-	ALBEDO = mix(burn_color.rgb, mix(burn_color.rgb, main_albedo, border_in), border_out);
+	ALBEDO = emission_energy * mix(burn_color.rgb, mix(burn_color.rgb, main_albedo, border_in), border_out);
 
 	float burn_boost_in = (1.0 - dissolve_value_in) * burn_boost;
 	float burn_boost_out = dissolve_value_out * burn_boost;
 
-	EMISSION = 1000.0 * emission_energy * mix(burn_color.rgb * burn_boost_out, mix(burn_color.rgb * burn_boost_in, main_albedo, border_in), border_out);
 	ALPHA *= alpha * (alpha_tex.r * (albedo_tex_1.a + albedo_tex_2.a) * threshold_in * threshold_out) + (burn_boost/100.0) * ((threshold_in - border_in) + (threshold_out - border_out));
 }

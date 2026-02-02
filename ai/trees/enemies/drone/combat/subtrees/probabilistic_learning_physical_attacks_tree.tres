@@ -30,8 +30,10 @@ record_name = "ram"
 script = ExtResource("4_oj280")
 record_name = "ram"
 
+[sub_resource type="BTSelector" id="BTSelector_oj280"]
+
 [sub_resource type="BTSequence" id="BTSequence_rujgx"]
-children = [SubResource("BTCondition_yk1pm"), SubResource("BTAction_ms85p"), SubResource("BTCondition_8xsg4"), SubResource("BTCondition_iteib"), SubResource("BTCondition_4bok1")]
+children = [SubResource("BTCondition_yk1pm"), SubResource("BTAction_ms85p"), SubResource("BTCondition_8xsg4"), SubResource("BTCondition_iteib"), SubResource("BTCondition_4bok1"), SubResource("BTSelector_oj280")]
 
 [sub_resource type="BTCondition" id="BTCondition_8bimv"]
 script = ExtResource("1_ils3d")
