@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://invfr68fmeed"]
 
 [ext_resource type="Script" uid="uid://cwk5rr6qkn52l" path="res://scripts/enemies/drone/drone_plasma_bolt.gd" id="1_8q3t1"]
-[ext_resource type="PackedScene" uid="uid://dd3qiywytn0rt" path="res://scenes/enemies/drone/models/drone_plasma_bolt_model.tscn" id="1_357h2"]
+[ext_resource type="PackedScene" uid="uid://cqe30kkd56qyt" path="res://scenes/enemies/drone/assets/drone_plasma_bolt_asset.tscn" id="2_kyqan"]
 [ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="3_mjux0"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="4_xtwlp"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="5_fjnq5"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="6_kyqan"]
 [ext_resource type="Script" uid="uid://cqha6oa4b32v7" path="res://scripts/enemies/drone/animation/drone_plasma_bolt_impact_animation.gd" id="7_xtwlp"]
 [ext_resource type="Script" uid="uid://bfiuobm6wij26" path="res://scripts/enemies/drone/animation/drone_plasma_bolt_impact_props.gd" id="8_fjnq5"]
-[ext_resource type="Texture2D" uid="uid://ufu6wds3282p" path="res://assets/deprecated/3D/Particles/dart/dart_map.png" id="9_kyqan"]
+[ext_resource type="Material" uid="uid://cis3p3ikup2xy" path="res://assets/materials/assets/enemies/drone/drone_plasma_bolt_shrapnel_material.tres" id="9_kyqan"]
 
 [sub_resource type="Gradient" id="Gradient_vaw05"]
 offsets = PackedFloat32Array(0, 0.792793, 1)
@@ -27,30 +27,19 @@ gravity = Vector3(0, 0, 0)
 attractor_interaction_enabled = false
 color_ramp = SubResource("GradientTexture1D_ekexi")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kyqan"]
-transparency = 1
-blend_mode = 1
-cull_mode = 2
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("9_kyqan")
-emission_enabled = true
-emission = Color(1, 0.39, 0.562833, 1)
-emission_energy_multiplier = 20.0
-emission_intensity = 50000.0
-
 [sub_resource type="QuadMesh" id="QuadMesh_kyqan"]
-material = SubResource("StandardMaterial3D_kyqan")
+material = ExtResource("9_kyqan")
 size = Vector2(0.3, 0.1)
 
 [node name="DronePlasmaBolt" type="Node3D" unique_id=150487764]
 script = ExtResource("1_8q3t1")
 
-[node name="DronePlasmaBoltModel" parent="." unique_id=487097792 instance=ExtResource("1_357h2")]
-
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1534683786]
 target_position = Vector3(0, 12, 0)
 collision_mask = 55
 hit_from_inside = true
+
+[node name="DronePlasmaBoltAsset" parent="." unique_id=993293444 instance=ExtResource("2_kyqan")]
 
 [node name="StateChart" type="Node" parent="." unique_id=1141666928]
 script = ExtResource("3_mjux0")

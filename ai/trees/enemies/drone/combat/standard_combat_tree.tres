@@ -101,6 +101,7 @@ value = SubResource("BBVariant_8p1br")
 [sub_resource type="BTSubtree" id="BTSubtree_kvfr7"]
 subtree = ExtResource("6_qvy7k")
 blackboard_plan = ExtResource("1_8ur65")
+custom_name = "PHYSICAL ATTACK"
 
 [sub_resource type="BTSequence" id="BTSequence_0nrrv"]
 children = [SubResource("BTCheckVar_qvy7k"), SubResource("BTSubtree_kvfr7")]
@@ -117,11 +118,13 @@ value = SubResource("BBVariant_dnqgn")
 [sub_resource type="BTSubtree" id="BTSubtree_4dpw4"]
 subtree = ExtResource("6_qvy7k")
 blackboard_plan = ExtResource("1_8ur65")
+custom_name = "ANY ATTACK"
 
 [sub_resource type="BTSequence" id="BTSequence_7pnm5"]
 children = [SubResource("BTCheckVar_0nrrv"), SubResource("BTSubtree_4dpw4")]
 
 [sub_resource type="BTAction" id="BTAction_mdyyd"]
+custom_name = "BEAM ATTACK"
 script = ExtResource("10_kvfr7")
 target_control_node_while_dribbling = true
 switch_back_to_player_delay = 0.1
@@ -132,6 +135,7 @@ jump_strength = 40.0
 children = [SubResource("BTSequence_4dpw4"), SubResource("BTSequence_0nrrv"), SubResource("BTSequence_7pnm5"), SubResource("BTAction_mdyyd")]
 
 [sub_resource type="BTSequence" id="BTSequence_kvfr7"]
+custom_name = "CONTROL NODE FULLY CHARGED"
 children = [SubResource("BTCheckVar_6opho"), SubResource("BTSelector_6opho")]
 
 [sub_resource type="BBVariant" id="BBVariant_8ur65"]
@@ -152,8 +156,10 @@ evasive_maneuvers = true
 [sub_resource type="BTSubtree" id="BTSubtree_mdyyd"]
 subtree = ExtResource("9_6opho")
 blackboard_plan = ExtResource("1_8ur65")
+custom_name = "ANY ATTACK"
 
 [sub_resource type="BTSequence" id="BTSequence_pg7f4"]
+custom_name = "CONTROL NODE CHARGE LVL 2"
 children = [SubResource("BTCheckVar_5ocyq"), SubResource("BTAction_5ocyq"), SubResource("BTSubtree_mdyyd")]
 
 [sub_resource type="BBVariant" id="BBVariant_8fako"]
@@ -183,8 +189,10 @@ children = [SubResource("BTAction_8fako"), SubResource("BTAction_kvfr7")]
 [sub_resource type="BTSubtree" id="BTSubtree_ybes4"]
 subtree = ExtResource("9_6opho")
 blackboard_plan = ExtResource("1_8ur65")
+custom_name = "ANY ATTACK"
 
 [sub_resource type="BTSequence" id="BTSequence_qvy7k"]
+custom_name = "CONTROL NODE CHARGE LVL 1"
 children = [SubResource("BTCheckVar_8p1br"), SubResource("BTProbabilitySelector_dnqgn"), SubResource("BTSubtree_ybes4")]
 
 [sub_resource type="BBVariant" id="BBVariant_6opho"]
@@ -218,8 +226,10 @@ children = [SubResource("BTAction_8p1br"), SubResource("BTAction_0nrrv")]
 [sub_resource type="BTSubtree" id="BTSubtree_2juyw"]
 subtree = ExtResource("9_6opho")
 blackboard_plan = ExtResource("1_8ur65")
+custom_name = "ANY ATTACK"
 
 [sub_resource type="BTSequence" id="BTSequence_dnqgn"]
+custom_name = "CONTROL NODE CHARGE LVL 0"
 children = [SubResource("BTCheckVar_kvfr7"), SubResource("BTProbabilitySelector_mdyyd"), SubResource("BTSubtree_2juyw")]
 
 [sub_resource type="BBVariant" id="BBVariant_5ocyq"]
@@ -262,6 +272,7 @@ value = SubResource("BBVariant_kvfr7")
 [sub_resource type="BTSubtree" id="BTSubtree_dnqgn"]
 subtree = ExtResource("6_qvy7k")
 blackboard_plan = ExtResource("1_8ur65")
+custom_name = "PHYSICAL ATTACK"
 
 [sub_resource type="BTSequence" id="BTSequence_mdyyd"]
 children = [SubResource("BTCheckVar_dnqgn"), SubResource("BTSubtree_dnqgn")]
@@ -269,11 +280,13 @@ children = [SubResource("BTCheckVar_dnqgn"), SubResource("BTSubtree_dnqgn")]
 [sub_resource type="BTSubtree" id="BTSubtree_q6tji"]
 subtree = ExtResource("9_6opho")
 blackboard_plan = ExtResource("1_8ur65")
+custom_name = "ANY ATTACK"
 
 [sub_resource type="BTSelector" id="BTSelector_4dpw4"]
 children = [SubResource("BTSequence_mdyyd"), SubResource("BTSubtree_q6tji")]
 
 [sub_resource type="BTSequence" id="BTSequence_8fako"]
+custom_name = "CONTROL NODE POWERED OFF"
 children = [SubResource("BTCheckVar_pg7f4"), SubResource("BTProbabilitySelector_kvfr7"), SubResource("BTSelector_4dpw4")]
 
 [sub_resource type="BTDynamicSelector" id="BTDynamicSelector_0nrrv"]

@@ -1,7 +1,7 @@
 // NOTE: Shader automatically converted from Godot Engine 4.4.1.stable's StandardMaterial3D.
 
 shader_type spatial;
-render_mode blend_add, depth_draw_opaque, cull_disabled, unshaded;
+render_mode unshaded, blend_add, depth_draw_opaque, cull_disabled, specular_disabled, shadows_disabled, ambient_light_disabled, fog_disabled;
 
 uniform sampler2D texture_albedo : source_color;
 uniform sampler2D noise_alpha: source_color;
@@ -21,7 +21,6 @@ void fragment() {
 
 	vec4 noise_tex = texture(noise_alpha, UV2);
 
-	ALBEDO = colored_tex.rgb;
-	//EMISSION = colored_tex.rgb * 1000000.0;
-	ALPHA = noise_intensity * noise_tex.r * albedo_tex.a;
+	ALBEDO = noise_intensity * colored_tex.rgb;
+	ALPHA = noise_tex.r * albedo_tex.a;
 }

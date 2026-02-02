@@ -1,4 +1,4 @@
-class_name DroneModel
+class_name DroneAsset
 extends Node3D
 
 ## Inject drone dependency to pass it to the physical bones

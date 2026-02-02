@@ -11,24 +11,39 @@ camera_attributes = SubResource("CameraAttributesPractical_rw2vd")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=543149165]
 transform = Transform3D(-0.744312, -0.281181, 0.605754, 0, 0.907044, 0.421036, -0.667833, 0.313382, -0.675123, 0, 0, 0)
+layers = 33
 light_intensity_lux = 50000.0
 light_temperature = 4200.0
-light_energy = 7.0
+light_energy = 6.0
 shadow_enabled = true
+shadow_caster_mask = 4293950495
 directional_shadow_mode = 1
 directional_shadow_split_2 = 0.11
 directional_shadow_split_3 = 0.33
 directional_shadow_blend_splits = true
+sky_mode = 1
+
+[node name="Sun3" type="DirectionalLight3D" parent="." unique_id=73021289]
+transform = Transform3D(-0.744312, -0.281181, 0.605754, 0, 0.907044, 0.421036, -0.667833, 0.313382, -0.675123, 0, 0, 0)
+layers = 33
+light_intensity_lux = 50000.0
+light_temperature = 5070.0
+shadow_enabled = true
+shadow_caster_mask = 4293950495
+directional_shadow_mode = 1
+directional_shadow_split_2 = 0.11
+directional_shadow_split_3 = 0.33
+directional_shadow_blend_splits = true
+sky_mode = 2
 
 [node name="Sun2" type="DirectionalLight3D" parent="." unique_id=1485500411]
 transform = Transform3D(0.7443119, 0.2811814, -0.6057536, 0, 0.90704393, 0.42103586, 0.66783303, -0.31338176, 0.67512333, 0, 0, 0)
-layers = 64
-light_intensity_lux = 50000.0
+layers = 1048575
+light_intensity_lux = 10000.0
 light_temperature = 4200.0
 light_color = Color(0.66251564, 0.77631456, 0.879929, 1)
 light_energy = 5.0
 light_specular = 0.05
-light_cull_mask = 4293918784
 directional_shadow_mode = 1
 directional_shadow_split_2 = 0.11
 directional_shadow_split_3 = 0.33

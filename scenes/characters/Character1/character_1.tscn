@@ -3,13 +3,24 @@
 [ext_resource type="PackedScene" uid="uid://b23ql0f3pehor" path="res://scenes/characters/character_base.tscn" id="1_2mp1t"]
 [ext_resource type="PackedScene" uid="uid://cwli5wxfgcnfu" path="res://scenes/characters/Character1/character_1_asset.tscn" id="2_gnx71"]
 [ext_resource type="Script" uid="uid://bfocdh3qmal3u" path="res://scripts/characters/character1/states/character1_grounded_states.gd" id="3_adl1a"]
+[ext_resource type="Shader" uid="uid://bjskv0mgvfryi" path="res://shaders/ControlNode/control_node_emission_shader.gdshader" id="3_r1ga7"]
+[ext_resource type="Texture2D" uid="uid://dhjmwpcfeiw67" path="res://assets/krita/assets/control_node/ControlNode_emission.png" id="4_lwllx"]
 [ext_resource type="Script" uid="uid://cvww34q43hede" path="res://scripts/characters/character1/character1_shield.gd" id="7_lwllx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qqrog"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("3_r1ga7")
+shader_parameter/texture_emission = ExtResource("4_lwllx")
+shader_parameter/emission_energy = 0.0
+shader_parameter/emission_color = Color(0, 0, 0, 1)
 
 [node name="Character1" unique_id=952580078 node_paths=PackedStringArray("asset", "shield") instance=ExtResource("1_2mp1t")]
 asset = NodePath("Character1Asset")
 shield = NodePath("Shield")
 
 [node name="Character1Asset" parent="." index="0" unique_id=1179000165 instance=ExtResource("2_gnx71")]
+emitters_material = SubResource("ShaderMaterial_qqrog")
 
 [node name="Movement States" parent="State/Root/Damage/Able/Movement" parent_id_path=PackedInt32Array(1040835142) index="0" unique_id=1115440960 node_paths=PackedStringArray("state_map")]
 state_map = {

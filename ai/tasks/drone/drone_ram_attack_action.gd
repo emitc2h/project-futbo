@@ -45,7 +45,6 @@ var is_done_facing_target_at_end: bool
 func _setup() -> void:
 	super._setup()
 	drone.hit_player_in_char_mode.connect(_on_hit_player_in_char_mode)
-	drone.open_finished.connect(_on_open_finished)
 	drone.face_toward_finished.connect(_on_face_finished)
 	drone.face_away_finished.connect(_on_face_finished)
 	drone.quick_close_finished.connect(_on_quick_close_finished)

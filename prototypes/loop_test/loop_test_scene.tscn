@@ -29,7 +29,7 @@ normal_enabled = true
 normal_texture = ExtResource("3_i1kmq")
 anisotropy_enabled = true
 anisotropy = 0.2
-uv1_scale = Vector3(30, 30, 30)
+uv1_scale = Vector3(300, 300, 300)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_y4atg"]
 
@@ -107,18 +107,10 @@ shader_parameter/sway_phase_len = 16.0
 process_mode = 1
 script = ExtResource("1_vum0r")
 
-[node name="WorldEnvironment" parent="." unique_id=2023548219 instance=ExtResource("12_3tfwp")]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=836686878]
-transform = Transform3D(0.915047, -0.100396, -0.390652, 0.261921, 0.88444, 0.386216, 0.306735, -0.455726, 0.835601, 0.0118855, -0.0196906, -0.0371979)
-layers = 33
-light_intensity_lux = 50000.0
-light_volumetric_fog_energy = 0.0
-shadow_enabled = true
-directional_shadow_mode = 0
+[node name="WorldEnvironment" parent="." unique_id=1212080283 instance=ExtResource("12_3tfwp")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=357249718]
-transform = Transform3D(70.6045, 0, -70.8167, 0, 1, 0, 70.8167, 0, 70.6045, 0, 0, 0)
+transform = Transform3D(1000, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_hi8lg")
 mesh = SubResource("PlaneMesh_y4atg")
 
@@ -405,7 +397,7 @@ transform = Transform3D(0.108607, 0, 0.994085, 0, 1, 0, -0.994085, 0, 0.108607, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2464328, 0.250523, 0)
 
 [node name="Drone" parent="." unique_id=1794972885 instance=ExtResource("20_6uf0e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.086935, 1.79018, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.828672, 1.79018, 0)
 initial_behavior_state = 1
 
 [node name="DebugTool" parent="." unique_id=988042807 instance=ExtResource("21_6uf0e")]

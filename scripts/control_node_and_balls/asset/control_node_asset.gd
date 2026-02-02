@@ -9,7 +9,7 @@ class_name ControlNodeAsset
 var aura_material: StandardMaterial3D
 
 ## Shield Mesh and Material
-@onready var shield_mesh: MeshInstance3D = $ControlNodeModel/ShieldMesh
+@onready var shield_mesh: MeshInstance3D = $ShieldMesh
 var shield_material: ShaderMaterial
 
 ## Light
@@ -29,7 +29,7 @@ var tw_light_energy: Tween
 
 
 func _ready() -> void:
-	shield_material = shield_mesh.get_surface_override_material(0)
+	shield_material = shield_mesh.get_surface_override_material(0).next_pass
 	ready_sphere.visible = false
 	turn_off_ready_sphere()
 

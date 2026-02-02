@@ -5,7 +5,7 @@ extends Node
 @export_group("Dependencies")
 @export var drone: Drone
 @export var sc: StateChart
-@export var model: DroneModel
+@export var asset: DroneAsset
 
 ## States Enum
 enum State {OFF = 0, CHARGING = 1, FIRE = 2}
@@ -27,9 +27,9 @@ var num_bolts: int = 1
 
 
 func _ready() -> void:
-	model.anim_state_started.connect(_on_anim_state_started)
-	model.anim_state_finished.connect(_on_anim_state_finished)
-	var anim_tree: AnimationTree = model.get_node("AnimationTree")
+	asset.anim_state_started.connect(_on_anim_state_started)
+	asset.anim_state_finished.connect(_on_anim_state_finished)
+	var anim_tree: AnimationTree = asset.get_node("AnimationTree")
 	anim_state = anim_tree.get("parameters/playback")
 
 
@@ -45,9 +45,9 @@ func _on_off_state_entered() -> void:
 func _on_charging_state_entered() -> void:
 	Signals.debug_running_log.emit("CHARGING state entered")
 	state = State.CHARGING
-	model.spinners_disengage_target()
+	asset.spinners_disengage_target()
 	anim_state.travel("charge up")
-	model.charge_spinners(2.7083)
+	asset.charge_spinners(2.7083)
 
 
 # fire state
@@ -55,8 +55,8 @@ func _on_charging_state_entered() -> void:
 func _on_fire_state_entered() -> void:
 	Signals.debug_running_log.emit("FIRE state entered")
 	state = State.FIRE
-	model.spinners_engage_target()
-	model.fire_spinners(0.7)
+	asset.spinners_engage_target()
+	asset.fire_spinners(0.7)
 
 
 func _on_fire_state_exited() -> void:
@@ -85,4 +85,4 @@ func _on_anim_state_finished(anim_name: String) -> void:
 			num_bolts = 1
 			fire_finished.emit()
 			sc.send_event(TRANS_TO_OFF)
-			model.spinners_disengage_target()
+			asset.spinners_disengage_target()

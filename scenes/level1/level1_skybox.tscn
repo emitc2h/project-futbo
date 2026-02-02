@@ -716,7 +716,7 @@ mesh = SubResource("ArrayMesh_746i8")
 surface_material_override/0 = ExtResource("13_xnj6s")
 
 [node name="MountainLine1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/StaticBackdrop" unique_id=1726314801 instance=ExtResource("3_7sj78")]
-transform = Transform3D(36, 0, 0, 0, 36, 0, 0, 0, 36, 0, -3.6984138, -39.429024)
+transform = Transform3D(24, 0, 0, 0, 24, 0, 0, 0, 24, 0, -2.0606728, -40.15445)
 
 [node name="Layer1" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer/StaticBackdrop/MountainLine1" index="0" unique_id=969675012]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -0.04, 0.188)
@@ -873,7 +873,7 @@ mesh = SubResource("ArrayMesh_vrjuy")
 surface_material_override/0 = ExtResource("13_xnj6s")
 
 [node name="Mothership" parent="BackgroundCanvas/SubViewportContainer/SubViewport/SkyBoxContainer" unique_id=92449607 instance=ExtResource("18_mkg81")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.30202, 4.270756, -52.450806)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.30202, 2.816513, -52.450806)
 wait_till_open = 5.0
 time_scale = 0.2
 

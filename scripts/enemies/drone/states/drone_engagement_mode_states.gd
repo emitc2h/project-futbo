@@ -20,7 +20,7 @@ const TRANS_TO_CLOSING: String = "Engagement Mode: to closing"
 const TRANS_TO_CLOSED: String = "Engagement Mode: to closed"
 
 ## Drone nodes controlled by this state
-@onready var model: DroneModel = drone.get_node("TrackTransformContainer/DroneModel")
+@onready var model: DroneAsset = drone.get_node("TrackTransformContainer/DroneAsset")
 @onready var float_distortion_animation: DroneFloatDistortionAnimation = drone.get_node("FloatDistortionAnimation")
 @onready var collision_shape_char: CollisionShape3D = drone.get_node("CharNode/CollisionShape3D")
 @onready var collision_shape_capsule: CapsuleShape3D = collision_shape_char.shape as CapsuleShape3D
