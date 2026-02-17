@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://hyrj2e7rg7hb"]
+
+[ext_resource type="PackedScene" uid="uid://byy3lpiojy057" path="res://assets/blender/logo/tendex_line_1.glb" id="1_8i1pk"]
+[ext_resource type="Material" uid="uid://bl72slfb68oan" path="res://assets/materials/logo/logo_planet_material.tres" id="2_eyhub"]
+[ext_resource type="Script" uid="uid://h5m22pvjucxj" path="res://scripts/logo/tendex_line_logo.gd" id="2_iqwur"]
+[ext_resource type="Material" uid="uid://cie2raaoh8ilx" path="res://assets/materials/logo/logo_symbol_material.tres" id="2_wubnx"]
+[ext_resource type="Material" uid="uid://dwy8phwu1yi3n" path="res://assets/materials/logo/logo_inner_ring_left_front_material.tres" id="5_qf37l"]
+[ext_resource type="Material" uid="uid://b0gkyh2ql1mfl" path="res://assets/materials/logo/logo_inner_ring_right_front_material.tres" id="7_570iq"]
+[ext_resource type="Material" uid="uid://bu8nmhbgqj2py" path="res://assets/materials/logo/logo_outer_ring_left_front_material.tres" id="9_j0p3b"]
+[ext_resource type="Material" uid="uid://b0ts5c1p7b7j0" path="res://assets/materials/logo/logo_outer_ring_right_front_material.tres" id="11_5c4l6"]
+[ext_resource type="Material" uid="uid://dwx3e0cc6fua5" path="res://assets/materials/logo/logo_tendex_left_material.tres" id="12_fhgot"]
+[ext_resource type="Material" uid="uid://dqx066cu5hqgc" path="res://assets/materials/logo/logo_tendex_right_material.tres" id="13_1g8b5"]
+[ext_resource type="Material" uid="uid://r8p6i2upusrh" path="res://assets/materials/logo/logo_center_material.tres" id="14_j0p3b"]
+[ext_resource type="Material" uid="uid://dcu38tgtnww06" path="res://assets/materials/logo/logo_middle_ring_left_front_material.tres" id="15_brwec"]
+[ext_resource type="Material" uid="uid://cgr752oie0qdu" path="res://assets/materials/logo/logo_middle_ring_left_back_material.tres" id="16_5c4l6"]
+[ext_resource type="Material" uid="uid://byyswum03hatr" path="res://assets/materials/logo/logo_middle_ring_right_front_material.tres" id="17_fhgot"]
+[ext_resource type="Material" uid="uid://brtbhlh8v3d1p" path="res://assets/materials/logo/logo_background_material.tres" id="17_j0p3b"]
+[ext_resource type="Material" uid="uid://pl8g8pluuaw5" path="res://assets/materials/logo/logo_middle_ring_right_back_material.tres" id="18_1g8b5"]
+[ext_resource type="Material" uid="uid://chuka1rvdkj2s" path="res://assets/materials/logo/logo_tendex_mask_material.tres" id="19_1g8b5"]
+[ext_resource type="Material" uid="uid://8b8xfk2p1ppi" path="res://assets/materials/logo/logo_text_material.tres" id="19_5c4l6"]
+[ext_resource type="Material" uid="uid://d2lq2t16thcub" path="res://assets/materials/logo/logo_mask_material.tres" id="19_brwec"]
+[ext_resource type="Material" uid="uid://co05m8u5pgb4b" path="res://assets/materials/logo/logo_foreground_material.tres" id="19_fhgot"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_j0p3b"]
+size = Vector2(20, 10)
+
+[sub_resource type="QuadMesh" id="QuadMesh_fhgot"]
+size = Vector2(4, 4)
+center_offset = Vector3(1.9, 0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_kain5"]
+size = Vector2(4, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fhgot"]
+render_priority = 12
+transparency = 1
+cull_mode = 2
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="TendexLineLogo" unique_id=1117429994 node_paths=PackedStringArray("anim_player") instance=ExtResource("1_8i1pk")]
+script = ExtResource("2_iqwur")
+anim_player = NodePath("AnimationPlayer")
+
+[node name="LogoMesh" parent="Armature/Skeleton3D" parent_id_path=PackedInt32Array(1398760117) index="0" unique_id=329229619]
+surface_material_override/0 = ExtResource("2_eyhub")
+surface_material_override/1 = ExtResource("2_wubnx")
+surface_material_override/2 = ExtResource("5_qf37l")
+surface_material_override/3 = ExtResource("5_qf37l")
+surface_material_override/4 = ExtResource("7_570iq")
+surface_material_override/5 = ExtResource("7_570iq")
+surface_material_override/6 = ExtResource("9_j0p3b")
+surface_material_override/7 = ExtResource("9_j0p3b")
+surface_material_override/8 = ExtResource("11_5c4l6")
+surface_material_override/9 = ExtResource("11_5c4l6")
+surface_material_override/10 = ExtResource("12_fhgot")
+surface_material_override/11 = ExtResource("13_1g8b5")
+surface_material_override/12 = ExtResource("14_j0p3b")
+surface_material_override/13 = ExtResource("15_brwec")
+surface_material_override/14 = ExtResource("16_5c4l6")
+surface_material_override/15 = ExtResource("17_fhgot")
+surface_material_override/16 = ExtResource("18_1g8b5")
+
+[node name="TendexLineText" parent="." index="1" unique_id=1573843119]
+surface_material_override/0 = ExtResource("19_5c4l6")
+
+[node name="Background" type="MeshInstance3D" parent="." index="2" unique_id=103737260]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+mesh = SubResource("QuadMesh_j0p3b")
+surface_material_override/0 = ExtResource("17_j0p3b")
+
+[node name="MaskBelowText" type="MeshInstance3D" parent="." index="3" unique_id=1135532019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.6)
+mesh = SubResource("QuadMesh_fhgot")
+surface_material_override/0 = ExtResource("19_brwec")
+
+[node name="TendexMaskRight" type="MeshInstance3D" parent="." index="4" unique_id=1848665971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, 3.6)
+mesh = SubResource("QuadMesh_kain5")
+surface_material_override/0 = ExtResource("19_1g8b5")
+
+[node name="TendexMaskLeft" type="MeshInstance3D" parent="." index="5" unique_id=2056212578]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1.5, 3.6)
+mesh = SubResource("QuadMesh_kain5")
+surface_material_override/0 = ExtResource("19_1g8b5")
+
+[node name="MaskAboveText" type="MeshInstance3D" parent="." index="6" unique_id=1175074592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3941882, 0, 3.6)
+mesh = SubResource("QuadMesh_fhgot")
+surface_material_override/0 = SubResource("StandardMaterial3D_fhgot")
+
+[node name="Foreground" type="MeshInstance3D" parent="." index="7" unique_id=1477890981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+mesh = SubResource("QuadMesh_j0p3b")
+surface_material_override/0 = ExtResource("19_fhgot")
+
+[node name="Camera3D" type="Camera3D" parent="." index="9" unique_id=2015884269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.539017)
+projection = 1
+size = 7.774
