@@ -205,7 +205,6 @@ func close(id: int = 0) -> void:
 
 
 signal quick_close_finished(id: int)
-
 func quick_close(id: int = 0) -> void:
 	if not anim_state.get_current_node() in ["quick close", "thrust close"]:
 		if anim_state.get_current_node() in ["start thrust", "idle thrust", "stop_thrust"]:
@@ -240,7 +239,6 @@ func burst() -> void:
 
 
 signal stop_engines_finished(id: int)
-
 func stop_engines(id: int = 0) -> void:
 	if engines_states.state == DroneEnginesStates.State.OFF:
 		stop_engines_finished.emit(id)
@@ -267,7 +265,6 @@ func reset_engines() -> void:
 ## Spinner Controls
 ## ---------------------------------------
 signal fire_finished(id: int)
-
 func fire(num_bolts: int = 1, id: int = 0) -> void:
 	if anim_state.get_current_node() in ["idle", "targeting"]:
 		spinners_states.num_bolts = num_bolts

@@ -1,0 +1,341 @@
+[gd_scene format=3 uid="uid://ldp2c0bbslqn"]
+
+[ext_resource type="Script" uid="uid://die7s1nswq3ro" path="res://scripts/enemies/scout/scout.gd" id="1_7pd5h"]
+[ext_resource type="Script" uid="uid://cmlfnal2o37ys" path="res://addons/godot_state_charts/state_chart.gd" id="1_kyxrd"]
+[ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="2_7pd5h"]
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_we078"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_aew6m"]
+[ext_resource type="Script" uid="uid://c6rnmoirc3trm" path="res://scripts/enemies/scout/states/scout_physics_states.gd" id="5_we078"]
+[ext_resource type="Script" uid="uid://nm4ijevq17tw" path="res://scripts/enemies/scout/states/scout_char_states.gd" id="6_yybpx"]
+[ext_resource type="PackedScene" uid="uid://1vdd33pxf4m2" path="res://scenes/enemies/scout/assets/scout_asset.tscn" id="7_aew6m"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="7_df6tb"]
+[ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/utilities/inert_node.gd" id="8_fwegx"]
+[ext_resource type="Script" uid="uid://drps3kc74hyuh" path="res://scripts/enemies/scout/states/scout_engagement_states.gd" id="9_p508j"]
+[ext_resource type="Script" uid="uid://c5odptar8rapj" path="res://scripts/enemies/scout/states/scout_targeting_states.gd" id="10_gt8hr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_df6tb"]
+radius = 0.18169057
+
+[sub_resource type="SphereMesh" id="SphereMesh_fwegx"]
+radius = 0.03
+height = 0.06
+radial_segments = 8
+rings = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yybpx"]
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0.83333325, 1, 1)
+
+[node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "physics_states", "char_states", "engagement_states", "targeting_states")]
+script = ExtResource("1_7pd5h")
+asset = NodePath("TrackTransformContainer/ScoutAsset")
+physics_states = NodePath("State/Root/Physics/Physics States")
+char_states = NodePath("State/Root/Physics/char/Char States")
+engagement_states = NodePath("State/Root/Engagement/Engagement States")
+targeting_states = NodePath("State/Root/Monitoring/Targeting/Targeting States")
+
+[node name="State" type="Node" parent="." unique_id=922787194]
+script = ExtResource("1_kyxrd")
+metadata/_custom_type_script = "uid://cmlfnal2o37ys"
+
+[node name="Root" type="Node" parent="State" unique_id=1778840955]
+script = ExtResource("2_7pd5h")
+
+[node name="Physics" type="Node" parent="State/Root" unique_id=1876206439]
+script = ExtResource("3_we078")
+initial_state = NodePath("char")
+
+[node name="Physics States" type="Node" parent="State/Root/Physics" unique_id=763292476 node_paths=PackedStringArray("scout", "sc")]
+script = ExtResource("5_we078")
+scout = NodePath("../../../..")
+sc = NodePath("../../..")
+
+[node name="char" type="Node" parent="State/Root/Physics" unique_id=1886482961]
+script = ExtResource("3_we078")
+initial_state = NodePath("move")
+
+[node name="Char States" type="Node" parent="State/Root/Physics/char" unique_id=1924516893 node_paths=PackedStringArray("scout", "sc", "look_at_target")]
+script = ExtResource("6_yybpx")
+scout = NodePath("../../../../..")
+sc = NodePath("../../../..")
+look_at_target = NodePath("../../../../../TrackPositionContainer/LookAtTarget")
+
+[node name="move" type="Node" parent="State/Root/Physics/char" unique_id=1194203162]
+script = ExtResource("4_aew6m")
+
+[node name="to target" type="Node" parent="State/Root/Physics/char/move" unique_id=1237158919]
+script = ExtResource("7_df6tb")
+to = NodePath("../../target")
+event = &"Char: to target"
+delay_in_seconds = "0.0"
+
+[node name="target" type="Node" parent="State/Root/Physics/char" unique_id=1115788996]
+script = ExtResource("4_aew6m")
+
+[node name="to move" type="Node" parent="State/Root/Physics/char/target" unique_id=1438663474]
+script = ExtResource("7_df6tb")
+to = NodePath("../../move")
+event = &"Char: to move"
+delay_in_seconds = "0.0"
+
+[node name="to rigid" type="Node" parent="State/Root/Physics/char" unique_id=1752513445]
+script = ExtResource("7_df6tb")
+to = NodePath("../../rigid")
+event = &"Physics: to rigid"
+delay_in_seconds = "0.0"
+
+[node name="to ragdoll" type="Node" parent="State/Root/Physics/char" unique_id=53738608]
+script = ExtResource("7_df6tb")
+to = NodePath("../../ragdoll")
+event = &"Physics: to ragdoll"
+delay_in_seconds = "0.0"
+
+[node name="rigid" type="Node" parent="State/Root/Physics" unique_id=704186552]
+script = ExtResource("4_aew6m")
+
+[node name="to dead" type="Node" parent="State/Root/Physics/rigid" unique_id=400834640]
+script = ExtResource("7_df6tb")
+to = NodePath("../../dead")
+event = &"Physics: to dead"
+delay_in_seconds = "0.0"
+
+[node name="ragdoll" type="Node" parent="State/Root/Physics" unique_id=1040797694]
+script = ExtResource("4_aew6m")
+
+[node name="to dead" type="Node" parent="State/Root/Physics/ragdoll" unique_id=2097237243]
+script = ExtResource("7_df6tb")
+to = NodePath("../../dead")
+event = &"Physics: to dead"
+delay_in_seconds = "0.0"
+
+[node name="dead" type="Node" parent="State/Root/Physics" unique_id=1137943943]
+script = ExtResource("4_aew6m")
+
+[node name="Engagement" type="Node" parent="State/Root" unique_id=1895776980]
+script = ExtResource("3_we078")
+initial_state = NodePath("closed")
+
+[node name="Engagement States" type="Node" parent="State/Root/Engagement" unique_id=1837613712 node_paths=PackedStringArray("scout", "sc", "asset")]
+script = ExtResource("9_p508j")
+scout = NodePath("../../../..")
+sc = NodePath("../../..")
+asset = NodePath("../../../../TrackTransformContainer/ScoutAsset")
+
+[node name="closed" type="Node" parent="State/Root/Engagement" unique_id=202514013]
+script = ExtResource("4_aew6m")
+
+[node name="to opening" type="Node" parent="State/Root/Engagement/closed" unique_id=1604979723]
+script = ExtResource("7_df6tb")
+to = NodePath("../../opening")
+event = &"Engagement: to opening"
+delay_in_seconds = "0.0"
+
+[node name="to quick open" type="Node" parent="State/Root/Engagement/closed" unique_id=629300364]
+script = ExtResource("7_df6tb")
+to = NodePath("../../quick open")
+event = &"Engagement: to quick open"
+delay_in_seconds = "0.0"
+
+[node name="opening" type="Node" parent="State/Root/Engagement" unique_id=1204763417]
+script = ExtResource("4_aew6m")
+
+[node name="to open" type="Node" parent="State/Root/Engagement/opening" unique_id=1570163241]
+script = ExtResource("7_df6tb")
+to = NodePath("../../open")
+event = &"Engagement: to open"
+delay_in_seconds = "0.0"
+
+[node name="to closing" type="Node" parent="State/Root/Engagement/opening" unique_id=1258298792]
+script = ExtResource("7_df6tb")
+to = NodePath("../../closing")
+event = &"Engagement: to closing"
+delay_in_seconds = "0.0"
+
+[node name="to quick close" type="Node" parent="State/Root/Engagement/opening" unique_id=959737979]
+script = ExtResource("7_df6tb")
+to = NodePath("../../quick close")
+event = &"Engagement: to quick close"
+delay_in_seconds = "0.0"
+
+[node name="to quick open" type="Node" parent="State/Root/Engagement/opening" unique_id=1560238526]
+script = ExtResource("7_df6tb")
+to = NodePath("../../quick open")
+event = &"Engagement: to quick open"
+delay_in_seconds = "0.0"
+
+[node name="quick open" type="Node" parent="State/Root/Engagement" unique_id=266093859]
+script = ExtResource("4_aew6m")
+
+[node name="to open" type="Node" parent="State/Root/Engagement/quick open" unique_id=241859411]
+script = ExtResource("7_df6tb")
+to = NodePath("../../open")
+event = &"Engagement: to open"
+delay_in_seconds = "0.0"
+
+[node name="open" type="Node" parent="State/Root/Engagement" unique_id=1037957040]
+script = ExtResource("4_aew6m")
+
+[node name="to closing" type="Node" parent="State/Root/Engagement/open" unique_id=1045339428]
+script = ExtResource("7_df6tb")
+to = NodePath("../../closing")
+event = &"Engagement: to closing"
+delay_in_seconds = "0.0"
+
+[node name="to quick close" type="Node" parent="State/Root/Engagement/open" unique_id=867039051]
+script = ExtResource("7_df6tb")
+to = NodePath("../../quick close")
+event = &"Engagement: to quick close"
+delay_in_seconds = "0.0"
+
+[node name="closing" type="Node" parent="State/Root/Engagement" unique_id=965877902]
+script = ExtResource("4_aew6m")
+
+[node name="to closed" type="Node" parent="State/Root/Engagement/closing" unique_id=901259539]
+script = ExtResource("7_df6tb")
+to = NodePath("../../closed")
+event = &"Engagement: to closed"
+delay_in_seconds = "0.0"
+
+[node name="to opening" type="Node" parent="State/Root/Engagement/closing" unique_id=1745107302]
+script = ExtResource("7_df6tb")
+to = NodePath("../../opening")
+event = &"Engagement: to opening"
+delay_in_seconds = "0.0"
+
+[node name="to quick open" type="Node" parent="State/Root/Engagement/closing" unique_id=1676573476]
+script = ExtResource("7_df6tb")
+to = NodePath("../../quick open")
+event = &"Engagement: to quick open"
+delay_in_seconds = "0.0"
+
+[node name="to quick close" type="Node" parent="State/Root/Engagement/closing" unique_id=1717426679]
+script = ExtResource("7_df6tb")
+to = NodePath("../../quick close")
+event = &"Engagement: to quick close"
+delay_in_seconds = "0.0"
+
+[node name="quick close" type="Node" parent="State/Root/Engagement" unique_id=720726429]
+script = ExtResource("4_aew6m")
+
+[node name="to closed" type="Node" parent="State/Root/Engagement/quick close" unique_id=1846436705]
+script = ExtResource("7_df6tb")
+to = NodePath("../../closed")
+event = &"Engagement: to closed"
+delay_in_seconds = "0.0"
+
+[node name="Monitoring" type="Node" parent="State/Root" unique_id=757011156]
+script = ExtResource("2_7pd5h")
+
+[node name="Targeting" type="Node" parent="State/Root/Monitoring" unique_id=1123402672]
+script = ExtResource("3_we078")
+initial_state = NodePath("none")
+
+[node name="Targeting States" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=2102488756 node_paths=PackedStringArray("scout", "sc")]
+script = ExtResource("10_gt8hr")
+scout = NodePath("../../../../..")
+sc = NodePath("../../../..")
+targeting_max_range = null
+
+[node name="disabled" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=344566293]
+script = ExtResource("4_aew6m")
+
+[node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/disabled" unique_id=1846888494]
+script = ExtResource("7_df6tb")
+to = NodePath("../../none")
+event = &"Targeting: to none"
+delay_in_seconds = "0.0"
+
+[node name="none" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=84222177]
+script = ExtResource("4_aew6m")
+
+[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/none" unique_id=293812446]
+script = ExtResource("7_df6tb")
+to = NodePath("../../disabled")
+event = &"Targeting: to disabled"
+delay_in_seconds = "0.0"
+
+[node name="to acquired" type="Node" parent="State/Root/Monitoring/Targeting/none" unique_id=1381435462]
+script = ExtResource("7_df6tb")
+to = NodePath("../../acquired")
+event = &"Targeting: to acquired"
+delay_in_seconds = "0.0"
+
+[node name="acquired" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=1271605246]
+script = ExtResource("4_aew6m")
+
+[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/acquired" unique_id=218445954]
+script = ExtResource("7_df6tb")
+to = NodePath("../../disabled")
+event = &"Targeting: to disabled"
+delay_in_seconds = "0.0"
+
+[node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/acquired" unique_id=725771554]
+script = ExtResource("7_df6tb")
+to = NodePath("../../none")
+event = &"Targeting: to none"
+delay_in_seconds = "0.0"
+
+[node name="Proximity" type="Node" parent="State/Root/Monitoring" unique_id=1273019075]
+script = ExtResource("3_we078")
+initial_state = NodePath("disabled")
+
+[node name="disabled" type="Node" parent="State/Root/Monitoring/Proximity" unique_id=1690808727]
+script = ExtResource("4_aew6m")
+
+[node name="enabled" type="Node" parent="State/Root/Monitoring/Proximity" unique_id=1811901375]
+script = ExtResource("4_aew6m")
+
+[node name="CharNode" type="CharacterBody3D" parent="." unique_id=621400243]
+collision_layer = 256
+collision_mask = 567
+motion_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode" unique_id=1017328439]
+shape = SubResource("SphereShape3D_df6tb")
+
+[node name="RigidNode" type="RigidBody3D" parent="." unique_id=802826361]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("8_fwegx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode" unique_id=2057423356]
+shape = SubResource("SphereShape3D_df6tb")
+
+[node name="TrackPositionContainer" type="Node3D" parent="." unique_id=1495225801]
+
+[node name="LookAtTarget" type="Marker3D" parent="TrackPositionContainer" unique_id=1832714374]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TrackPositionContainer/LookAtTarget" unique_id=2047399518]
+mesh = SubResource("SphereMesh_fwegx")
+surface_material_override/0 = SubResource("StandardMaterial3D_yybpx")
+
+[node name="TrackTransformContainer" type="Node3D" parent="." unique_id=233143578]
+
+[node name="ScoutAsset" parent="TrackTransformContainer" unique_id=1610528562 instance=ExtResource("7_aew6m")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[connection signal="state_entered" from="State/Root/Physics/char" to="State/Root/Physics/Physics States" method="_on_char_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Physics/char" to="State/Root/Physics/Physics States" method="_on_char_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics/char/move" to="State/Root/Physics/char/Char States" method="_on_move_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Physics/char/move" to="State/Root/Physics/char/Char States" method="_on_move_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics/char/target" to="State/Root/Physics/char/Char States" method="_on_target_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Physics/char/target" to="State/Root/Physics/char/Char States" method="_on_target_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Physics/rigid" to="State/Root/Physics/Physics States" method="_on_rigid_state_entered"]
+[connection signal="state_entered" from="State/Root/Physics/ragdoll" to="State/Root/Physics/Physics States" method="_on_ragdoll_state_entered"]
+[connection signal="state_entered" from="State/Root/Physics/dead" to="State/Root/Physics/Physics States" method="_on_dead_state_entered"]
+[connection signal="state_entered" from="State/Root/Engagement/closed" to="State/Root/Engagement/Engagement States" method="_on_closed_state_entered"]
+[connection signal="state_entered" from="State/Root/Engagement/opening" to="State/Root/Engagement/Engagement States" method="_on_opening_state_entered"]
+[connection signal="state_exited" from="State/Root/Engagement/opening" to="State/Root/Engagement/Engagement States" method="_on_opening_state_exited"]
+[connection signal="state_entered" from="State/Root/Engagement/quick open" to="State/Root/Engagement/Engagement States" method="_on_quick_open_state_entered"]
+[connection signal="state_exited" from="State/Root/Engagement/quick open" to="State/Root/Engagement/Engagement States" method="_on_quick_open_state_exited"]
+[connection signal="state_entered" from="State/Root/Engagement/open" to="State/Root/Engagement/Engagement States" method="_on_open_state_entered"]
+[connection signal="state_entered" from="State/Root/Engagement/closing" to="State/Root/Engagement/Engagement States" method="_on_closing_state_entered"]
+[connection signal="state_exited" from="State/Root/Engagement/closing" to="State/Root/Engagement/Engagement States" method="_on_closing_state_exited"]
+[connection signal="state_entered" from="State/Root/Engagement/quick close" to="State/Root/Engagement/Engagement States" method="_on_quick_close_state_entered"]
+[connection signal="state_exited" from="State/Root/Engagement/quick close" to="State/Root/Engagement/Engagement States" method="_on_quick_close_state_exited"]
+[connection signal="state_entered" from="State/Root/Monitoring/Targeting/disabled" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_disabled_state_entered"]
+[connection signal="state_entered" from="State/Root/Monitoring/Targeting/none" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_none_state_entered"]
+[connection signal="state_physics_processing" from="State/Root/Monitoring/Targeting/none" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_none_state_physics_processing"]
+[connection signal="state_entered" from="State/Root/Monitoring/Targeting/acquired" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_acquired_state_entered"]
+[connection signal="state_exited" from="State/Root/Monitoring/Targeting/acquired" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_acquired_state_exited"]

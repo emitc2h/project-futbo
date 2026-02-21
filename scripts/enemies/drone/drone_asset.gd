@@ -5,8 +5,8 @@ extends Node3D
 @export var drone: Drone
 
 ## Animation Managers
-@onready var em_spinners_animation: DroneEMSpinnersAnimation = $EMSpinnersAnimation
-@onready var engines_animation: DroneEnginesAnimation = $EnginesAnimation
+@onready var spinners_animation: SpinnersAnimation = $SpinnersAnimation
+@onready var engines_animation: EnginesAnimation = $EnginesAnimation
 
 ## Main Drone Model Mesh
 @onready var drone_mesh: MeshInstance3D = $Armature/Skeleton3D/drone
@@ -125,7 +125,7 @@ func _on_did_hit() -> void:
 ## Animations
 ## ---------------------------------------
 func die() -> void:
-	em_spinners_animation.turn_off()
+	spinners_animation.turn_off()
 	
 	lightning_particles.visible = true
 	lightning_particles.explosiveness = 0.0
@@ -196,11 +196,11 @@ func permanent_damage() -> void:
 
 
 func charge_spinners(duration: float) -> void:
-	em_spinners_animation.charge(duration)
+	spinners_animation.charge(duration)
 
 
 func fire_spinners(duration: float) -> void:
-	em_spinners_animation.fire(duration)
+	spinners_animation.fire(duration)
 	plasma_bolt_left.fire()
 	plasma_bolt_right.fire()
 

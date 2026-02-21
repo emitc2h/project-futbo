@@ -1,12 +1,11 @@
-[gd_scene format=3 uid="uid://bhpakjvwrso0o"]
+[gd_scene format=3 uid="uid://dkjtqkvok2pyh"]
 
-[ext_resource type="Script" uid="uid://bdp0724vtej6g" path="res://prototypes/drone_controls/drone_controls.gd" id="1_nhjp0"]
-[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="2_nhjp0"]
-[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="3_dyyi7"]
-[ext_resource type="PackedScene" uid="uid://bc323ftwy8i7t" path="res://scenes/enemies/drone/drone.tscn" id="4_5guql"]
-[ext_resource type="Script" uid="uid://bn1l2muisrfkd" path="res://prototypes/drone_controls/target_mesh.gd" id="6_nhjp0"]
-[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/deprecated/3D/Act1/materials/buildings/bricks.tres" id="7_dyyi7"]
-[ext_resource type="PackedScene" uid="uid://d4joyty534fc" path="res://scenes/utilities/optimization/particles_preloader.tscn" id="8_5guql"]
+[ext_resource type="Script" uid="uid://opvfoqdlsiwx" path="res://prototypes/scout_controls/scout_controls.gd" id="1_kbp5k"]
+[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="3_uhdj1"]
+[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="4_fsfha"]
+[ext_resource type="Script" uid="uid://bn1l2muisrfkd" path="res://prototypes/drone_controls/target_mesh.gd" id="6_sv50u"]
+[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/deprecated/3D/Act1/materials/buildings/bricks.tres" id="7_3v471"]
+[ext_resource type="PackedScene" uid="uid://ldp2c0bbslqn" path="res://scenes/enemies/scout/scout.tscn" id="7_kbp5k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rte1f"]
 
@@ -14,7 +13,7 @@
 sky_material = SubResource("ProceduralSkyMaterial_rte1f")
 radiance_size = 1
 
-[sub_resource type="Environment" id="Environment_dyyi7"]
+[sub_resource type="Environment" id="Environment_bhsod"]
 background_mode = 2
 background_intensity = 17500.0
 background_canvas_max_layer = -5
@@ -48,10 +47,10 @@ adjustment_saturation = 1.1
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rw2vd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ljxl"]
-albedo_texture = ExtResource("2_nhjp0")
+albedo_texture = ExtResource("3_uhdj1")
 roughness = 0.96
 normal_enabled = true
-normal_texture = ExtResource("3_dyyi7")
+normal_texture = ExtResource("4_fsfha")
 anisotropy_enabled = true
 anisotropy = 0.2
 uv1_scale = Vector3(30, 30, 30)
@@ -76,11 +75,11 @@ radius = 0.3
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tir8y"]
 points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
 
-[node name="DroneControls" type="Node3D" unique_id=537804557]
-script = ExtResource("1_nhjp0")
+[node name="ScoutControls" type="Node3D" unique_id=537804557]
+script = ExtResource("1_kbp5k")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=401475819]
-environment = SubResource("Environment_dyyi7")
+environment = SubResource("Environment_bhsod")
 camera_attributes = SubResource("CameraAttributesPractical_rw2vd")
 
 [node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=543149165]
@@ -142,16 +141,13 @@ collision_mask = 261
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D" unique_id=1880159439]
 shape = SubResource("WorldBoundaryShape3D_nc4hi")
 
-[node name="Drone" parent="." unique_id=1736014194 instance=ExtResource("4_5guql")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-initial_behavior_state = 3
-
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1846389354]
 transform = Transform3D(0.9999998, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000001, -2, 1.2, 8)
-fov = 50.3
+fov = 52.3
 size = 8.491
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1415171142]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="Interface" unique_id=1904798567]
 offset_right = 579.0
@@ -357,10 +353,10 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Target Bob"
 
-[node name="TargetMeshLeft" type="StaticBody3D" parent="." unique_id=1524607193]
+[node name="TargetMeshLeft" type="StaticBody3D" parent="." unique_id=1524607193 groups=["ScoutTargetGroup"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89456, 1.24847, 0)
 collision_mask = 0
-script = ExtResource("6_nhjp0")
+script = ExtResource("6_sv50u")
 
 [node name="Mesh" type="MeshInstance3D" parent="TargetMeshLeft" unique_id=58145972]
 mesh = SubResource("SphereMesh_8gdpk")
@@ -370,10 +366,10 @@ surface_material_override/0 = SubResource("StandardMaterial3D_nhjp0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMeshLeft" unique_id=804630610]
 shape = SubResource("SphereShape3D_8gdpk")
 
-[node name="TargetMeshRight" type="StaticBody3D" parent="." unique_id=800388590]
+[node name="TargetMeshRight" type="StaticBody3D" parent="." unique_id=800388590 groups=["ScoutTargetGroup"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.63781, 1.24847, 0)
 collision_mask = 0
-script = ExtResource("6_nhjp0")
+script = ExtResource("6_sv50u")
 
 [node name="Mesh" type="MeshInstance3D" parent="TargetMeshRight" unique_id=758339564]
 mesh = SubResource("SphereMesh_8gdpk")
@@ -392,15 +388,14 @@ collision_mask = 261
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Block" unique_id=642232696]
 mesh = SubResource("BoxMesh_5guql")
 skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("7_dyyi7")
+surface_material_override/0 = ExtResource("7_3v471")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Block" unique_id=827506001]
 shape = SubResource("ConvexPolygonShape3D_tir8y")
 disabled = true
 
-[node name="ParticlesPreloader" parent="." unique_id=803563290 instance=ExtResource("8_5guql")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.820052, 0)
-visible = false
+[node name="Scout" parent="." unique_id=1167301137 instance=ExtResource("7_kbp5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1840934, 0)
 
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/CharacterModeButton" to="." method="_on_character_mode_button_pressed"]
 [connection signal="pressed" from="Interface/ColorRect/Rows/Row1/PhysicsVContainer/RigidModeButton" to="." method="_on_rigid_mode_button_pressed"]

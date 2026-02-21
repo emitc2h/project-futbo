@@ -174,7 +174,7 @@ func _on_char_state_physics_processing(delta: float) -> void:
 	rigid_node.transform = char_node.transform
 
 
-func _on_char_state_exited() -> void:	
+func _on_char_state_exited() -> void:
 	## turn off the float distortion
 	float_distortion_animation.turn_off(0.5)
 	
