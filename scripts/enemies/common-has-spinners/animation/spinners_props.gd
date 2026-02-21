@@ -1,4 +1,4 @@
-class_name DroneEMSpinnersProps
+class_name SpinnersProps
 extends Node
 
 const red: Color = Color.LIGHT_CORAL

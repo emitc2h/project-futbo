@@ -1,4 +1,4 @@
-class_name DroneEnginesProps
+class_name EnginesProps
 extends Node
 
 @export_group("Exhaust")

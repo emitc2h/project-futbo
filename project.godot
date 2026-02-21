@@ -61,6 +61,7 @@ DroneGroup=""
 Enemies=""
 ControlNodeGroup=""
 DroneShieldGroup=""
+ScoutTargetGroup=""
 
 [input]
 
