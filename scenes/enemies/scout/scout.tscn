@@ -12,27 +12,18 @@
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/utilities/inert_node.gd" id="8_fwegx"]
 [ext_resource type="Script" uid="uid://drps3kc74hyuh" path="res://scripts/enemies/scout/states/scout_engagement_states.gd" id="9_p508j"]
 [ext_resource type="Script" uid="uid://c5odptar8rapj" path="res://scripts/enemies/scout/states/scout_targeting_states.gd" id="10_gt8hr"]
+[ext_resource type="Script" uid="uid://brf0q8s1o47pd" path="res://scripts/enemies/scout/states/scout_spinner_states.gd" id="11_kfrjq"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_df6tb"]
 radius = 0.18169057
 
-[sub_resource type="SphereMesh" id="SphereMesh_fwegx"]
-radius = 0.03
-height = 0.06
-radial_segments = 8
-rings = 4
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yybpx"]
-blend_mode = 1
-shading_mode = 0
-albedo_color = Color(0, 0.83333325, 1, 1)
-
-[node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "physics_states", "char_states", "engagement_states", "targeting_states")]
+[node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "physics_states", "char_states", "engagement_states", "spinner_states", "targeting_states")]
 script = ExtResource("1_7pd5h")
 asset = NodePath("TrackTransformContainer/ScoutAsset")
 physics_states = NodePath("State/Root/Physics/Physics States")
 char_states = NodePath("State/Root/Physics/char/Char States")
 engagement_states = NodePath("State/Root/Engagement/Engagement States")
+spinner_states = NodePath("State/Root/Spinner/Spinner States")
 targeting_states = NodePath("State/Root/Monitoring/Targeting/Targeting States")
 
 [node name="State" type="Node" parent="." unique_id=922787194]
@@ -286,6 +277,42 @@ script = ExtResource("4_aew6m")
 [node name="enabled" type="Node" parent="State/Root/Monitoring/Proximity" unique_id=1811901375]
 script = ExtResource("4_aew6m")
 
+[node name="Spinner" type="Node" parent="State/Root" unique_id=160283061]
+script = ExtResource("3_we078")
+initial_state = NodePath("off")
+
+[node name="Spinner States" type="Node" parent="State/Root/Spinner" unique_id=1013522923 node_paths=PackedStringArray("scout", "sc")]
+script = ExtResource("11_kfrjq")
+scout = NodePath("../../../..")
+sc = NodePath("../../..")
+
+[node name="off" type="Node" parent="State/Root/Spinner" unique_id=926972404]
+script = ExtResource("4_aew6m")
+
+[node name="to charging" type="Node" parent="State/Root/Spinner/off" unique_id=993256337]
+script = ExtResource("7_df6tb")
+to = NodePath("../../charging")
+event = &"Spinner: to charging"
+delay_in_seconds = "0.0"
+
+[node name="charging" type="Node" parent="State/Root/Spinner" unique_id=1362408382]
+script = ExtResource("4_aew6m")
+
+[node name="to fire" type="Node" parent="State/Root/Spinner/charging" unique_id=692926346]
+script = ExtResource("7_df6tb")
+to = NodePath("../../fire")
+event = &"Spinner: to fire"
+delay_in_seconds = "0.0"
+
+[node name="fire" type="Node" parent="State/Root/Spinner" unique_id=795045606]
+script = ExtResource("4_aew6m")
+
+[node name="to off" type="Node" parent="State/Root/Spinner/fire" unique_id=1961083857]
+script = ExtResource("7_df6tb")
+to = NodePath("../../off")
+event = &"Spinner: to off"
+delay_in_seconds = "0.0"
+
 [node name="CharNode" type="CharacterBody3D" parent="." unique_id=621400243]
 collision_layer = 256
 collision_mask = 567
@@ -306,13 +333,9 @@ shape = SubResource("SphereShape3D_df6tb")
 
 [node name="LookAtTarget" type="Marker3D" parent="TrackPositionContainer" unique_id=1832714374]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="TrackPositionContainer/LookAtTarget" unique_id=2047399518]
-mesh = SubResource("SphereMesh_fwegx")
-surface_material_override/0 = SubResource("StandardMaterial3D_yybpx")
-
 [node name="TrackTransformContainer" type="Node3D" parent="." unique_id=233143578]
 
-[node name="ScoutAsset" parent="TrackTransformContainer" unique_id=1610528562 instance=ExtResource("7_aew6m")]
+[node name="ScoutAsset" parent="TrackTransformContainer" unique_id=947460992 instance=ExtResource("7_aew6m")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [connection signal="state_entered" from="State/Root/Physics/char" to="State/Root/Physics/Physics States" method="_on_char_state_entered"]
@@ -339,3 +362,6 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 [connection signal="state_physics_processing" from="State/Root/Monitoring/Targeting/none" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_none_state_physics_processing"]
 [connection signal="state_entered" from="State/Root/Monitoring/Targeting/acquired" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_acquired_state_entered"]
 [connection signal="state_exited" from="State/Root/Monitoring/Targeting/acquired" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_acquired_state_exited"]
+[connection signal="state_entered" from="State/Root/Spinner/off" to="State/Root/Spinner/Spinner States" method="_on_off_state_entered"]
+[connection signal="state_entered" from="State/Root/Spinner/charging" to="State/Root/Spinner/Spinner States" method="_on_charging_state_entered"]
+[connection signal="state_entered" from="State/Root/Spinner/fire" to="State/Root/Spinner/Spinner States" method="_on_fire_state_entered"]

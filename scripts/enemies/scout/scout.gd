@@ -13,6 +13,7 @@ extends Node3D
 @export var physics_states: ScoutPhysicsStates
 @export var char_states: ScoutCharStates
 @export var engagement_states: ScoutEngagementStates
+@export var spinner_states: ScoutSpinnerStates
 
 @export_subgroup("Monitoring State Machines")
 @export var targeting_states: ScoutTargetingStates
@@ -66,3 +67,15 @@ func lock_target() -> bool:
 func release_target() -> void:
 	targeting_states.release_target()
 	sc.send_event(char_states.TRANS_TO_MOVE)
+
+
+## Spinner Controls
+## ---------------------------------------
+signal fire_finished(id: int)
+func fire(id: int = 0) -> void:
+	if anim_state.get_current_node() == "idle":
+		sc.send_event(spinner_states.TRANS_TO_CHARGING)
+		await spinner_states.fire_finished
+		fire_finished.emit(id)
+	else:
+		fire_finished.emit(id)

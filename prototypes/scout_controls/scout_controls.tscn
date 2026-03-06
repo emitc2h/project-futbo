@@ -142,8 +142,8 @@ collision_mask = 261
 shape = SubResource("WorldBoundaryShape3D_nc4hi")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1846389354]
-transform = Transform3D(0.9999998, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000001, -2, 1.2, 8)
-fov = 52.3
+transform = Transform3D(0.9999998, 0, 0, 0, 0.99452215, -0.10452848, 0, 0.10452849, 0.99452204, 0, 1.2, 8)
+fov = 42.4
 size = 8.491
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=1415171142]
@@ -379,9 +379,21 @@ surface_material_override/0 = SubResource("StandardMaterial3D_nhjp0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMeshRight" unique_id=488410172]
 shape = SubResource("SphereShape3D_8gdpk")
 
+[node name="TargetMeshUp" type="StaticBody3D" parent="." unique_id=1591926937 groups=["ScoutTargetGroup"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0479646, 0)
+collision_mask = 0
+script = ExtResource("6_sv50u")
+
+[node name="Mesh" type="MeshInstance3D" parent="TargetMeshUp" unique_id=1648361613]
+mesh = SubResource("SphereMesh_8gdpk")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nhjp0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMeshUp" unique_id=26828579]
+shape = SubResource("SphereShape3D_8gdpk")
+
 [node name="Block" type="StaticBody3D" parent="." unique_id=80539040]
 transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.282282, -0.142416, -0.0020504)
-visible = false
 collision_layer = 514
 collision_mask = 261
 

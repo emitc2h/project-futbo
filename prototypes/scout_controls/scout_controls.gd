@@ -21,6 +21,10 @@ func _physics_process(_delta: float) -> void:
 			if scout.lock_target():
 				scout.quick_open()
 		
+		if scout.char_states.state == ScoutCharStates.State.TARGET:
+			if Input.is_action_just_pressed("kick"):
+				scout.fire()
+		
 		if Input.is_action_just_released("dribble"):
 			if scout.asset.anim_state.get_current_node() == "quick open":
 				await scout.quick_open_finished

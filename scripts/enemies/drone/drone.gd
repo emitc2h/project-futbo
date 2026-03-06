@@ -1,6 +1,7 @@
 class_name Drone
 extends Node3D
 
+#region Imports, Signals and Variables, Ready, etc.
 @onready var sc: StateChart = $State
 
 ## state machines
@@ -49,6 +50,7 @@ var dive_impact_scene: PackedScene = preload("res://scenes/enemies/drone/drone_d
 @warning_ignore("unused_signal")
 signal hit_player_in_char_mode
 
+
 func _ready() -> void:
 	## initialize the internal representation
 	anim_state = asset_anim_tree.get("parameters/playback")
@@ -73,10 +75,11 @@ func _ready() -> void:
 		combat_behavior_tree.reset_state()
 		combat_behavior_tree.blackboard_plan.reset_state()
 		behavior_states.combat_bt_player.behavior_tree = combat_behavior_tree
+#endregion
 
 
-## Physics Controls
-## ---------------------------------------
+# ---------------------------------------
+#region Physics Controls
 func become_rigid() -> void:
 	sc.send_event(physics_mode_states.TRANS_TO_RIGID)
 
@@ -91,10 +94,11 @@ func become_ragdoll() -> void:
 
 func get_global_pos_x() -> float:
 	return track_position_container.global_position.x
+#endregion
 
 
-## Direction Controls
-## ---------------------------------------
+# ---------------------------------------
+#region Direction Controls
 signal face_right_finished(id: int)
 func face_right(id: int = 0) -> void:
 	if not direction_faced_states.state == direction_faced_states.State.FACE_RIGHT:
@@ -144,10 +148,11 @@ func face_away(x: float, id: int = 0) -> void:
 			face_right(id)
 			await face_right_finished
 	face_away_finished.emit(id)
+#endregion
 
 
-## Movement Controls
-## ---------------------------------------
+# ---------------------------------------
+#region Movement Controls
 func move_toward_x_pos(target_x: float, delta: float, away: bool = false) -> void:
 	var direction: float = 1.0
 	if away:
@@ -167,9 +172,8 @@ func track_target(offset: float, delta: float, id: int = 0) -> void:
 	move_toward_x_pos(target_x + offset_sign * offset, delta)
 
 
-signal accelerate_finished(id: int)
-
-func accelerate(angle: float, acceleration: float, target_velocity: float, id: int = 0) -> void:
+signal jump_finished(id: int)
+func jump(angle: float, acceleration: float, target_velocity: float, id: int = 0) -> void:
 	float_distortion_animation.drone_jump(0.5)
 	physics_mode_states.target_velocity = target_velocity
 	physics_mode_states.additional_x_acc = cos(angle) * acceleration
@@ -181,11 +185,12 @@ func _on_target_velocity_reached() -> void:
 	physics_mode_states.target_velocity = 0.0
 	physics_mode_states.additional_x_acc = 0.0
 	physics_mode_states.additional_y_acc = 0.0
-	accelerate_finished.emit(signal_id)
+	jump_finished.emit(signal_id)
+#endregion
 
 
-## Engagement Controls
-## ---------------------------------------
+# ---------------------------------------
+#region Engagement Controls
 signal open_finished(id: int)
 func open(id: int = 0) -> void:
 	if not anim_state.get_current_node() in ["open up", "open", "targeting"]:
@@ -220,10 +225,11 @@ func quick_close(id: int = 0) -> void:
 		sc.send_event(engagement_mode_states.TRANS_TO_QUICK_CLOSE)
 		await engagement_mode_states.quick_close_finished
 	quick_close_finished.emit(id)
+#endregion
 
 
-## Engine Controls
-## ---------------------------------------
+# ---------------------------------------
+#region Engine Controls
 func thrust() -> void:
 	if not anim_state.get_current_node() in ["start thrust", "idle thrust"]:
 		anim_state.travel("start thrust")
@@ -260,10 +266,11 @@ func quick_stop_engines(keep_speed: bool = false) -> void:
 
 func reset_engines() -> void:
 	sc.send_event(engines_states.TRANS_TO_OFF)
+#endregion
 
 
-## Spinner Controls
-## ---------------------------------------
+# ---------------------------------------
+#region Spinner Controls
 signal fire_finished(id: int)
 func fire(num_bolts: int = 1, id: int = 0) -> void:
 	if anim_state.get_current_node() in ["idle", "targeting"]:
@@ -273,6 +280,37 @@ func fire(num_bolts: int = 1, id: int = 0) -> void:
 		fire_finished.emit(id)
 	else:
 		fire_finished.emit(id)
+#endregion
+
+
+# ---------------------------------------
+#region Vulnerability Controls
+func become_vulnerable() -> void:
+	sc.send_event(vulnerability_states.TRANS_TO_VULNERABLE)
+
+
+
+func become_defendable() -> void:
+	sc.send_event(vulnerability_states.TRANS_TO_DEFENDABLE)
+
+
+
+func become_invulnerable() -> void:
+	sc.send_event(vulnerability_states.TRANS_TO_INVULNERABLE)
+#endregion
+
+
+# ---------------------------------------
+#region Targeting Controls
+func enable_targeting(to_acquiring: bool = false) -> void:
+	if to_acquiring:
+		sc.send_event(targeting_states.TRANS_TO_ACQUIRING)
+	else:
+		sc.send_event(targeting_states.TRANS_TO_NONE)
+
+
+func disable_targeting() -> void:
+	sc.send_event(targeting_states.TRANS_TO_DISABLED)
 
 
 func set_target(target: Node3D, lock_target: bool = false) -> void:
@@ -289,65 +327,41 @@ func set_target(target: Node3D, lock_target: bool = false) -> void:
 
 func get_target() -> Node3D:
 	return targeting_states.target
+#endregion
 
 
-## Vulnerability Controls
-## ---------------------------------------
-func become_vulnerable() -> void:
-	sc.send_event(vulnerability_states.TRANS_TO_VULNERABLE)
-
-
-
-func become_defendable() -> void:
-	sc.send_event(vulnerability_states.TRANS_TO_DEFENDABLE)
-
-
-
-func become_invulnerable() -> void:
-	sc.send_event(vulnerability_states.TRANS_TO_INVULNERABLE)
-
-
-
-## Targeting Controls
-## ---------------------------------------
-func enable_targeting(to_acquiring: bool = false) -> void:
-	if to_acquiring:
-		sc.send_event(targeting_states.TRANS_TO_ACQUIRING)
-	else:
-		sc.send_event(targeting_states.TRANS_TO_NONE)
-
-
-func disable_targeting() -> void:
-	sc.send_event(targeting_states.TRANS_TO_DISABLED)
-
-
-## Proximity Controls
-## ---------------------------------------
+# ---------------------------------------
+#region Proximity Controls
 func enable_proximity_detector() -> void:
 	sc.send_event(proximity_states.TRANS_TO_ENABLED)
 
 
 func disable_proximity_detector() -> void:
 	sc.send_event(proximity_states.TRANS_TO_DISABLED)
+#endregion
 
 
-## Other Controls
-## ---------------------------------------
-func prepare_dive_impact() -> void:
+# ---------------------------------------
+#region Shockwave Controls
+func prepare_shockwave() -> void:
 	dive_impact_ready = true
 
 
-func negate_dive_impact() -> void:
+func negate_shockwave() -> void:
 	dive_impact_ready = false
+#endregion
 
 
+# ---------------------------------------
+#region Behavior Controls
 func set_initial_behavior_state(initial_state: DroneBehaviorStates.State) -> void:
 	initial_behavior_state = initial_state
 	behavior_states.set_initial_state(initial_state)
+#endregion
 
 
-## Hitbox
-## ---------------------------------------
+# ---------------------------------------
+#region Damage Controls
 func die(force: Vector3) -> void:
 	if vulnerability_states.state == vulnerability_states.State.VULNERABLE:
 		asset.die()
@@ -363,10 +377,11 @@ func get_hit(strength: float) -> bool:
 		direction_faced_states.damage_hit(strength)
 		return true
 	return false
+#endregion
 
 
-## Collisions
-## ---------------------------------------
+# ---------------------------------------
+#region Collisions
 func _on_rigid_node_body_entered(body: Node) -> void:
 	if body.is_in_group("PlayerGroup"):
 		Signals.player_takes_damage.emit(rigid_node.velocity_from_previous_frame, rigid_node.global_position, true)
@@ -375,7 +390,7 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 	if body.is_in_group("ControlNodeShieldGroup") or body.is_in_group("ControlNodeGroup"):
 		Signals.control_node_shield_hit.emit(true)
 		## If the drone hits the control node first, then it doesn't have enough momentum to create an impact
-		negate_dive_impact()
+		negate_shockwave()
 		return
 	
 	if body is StaticBody3D:
@@ -385,11 +400,12 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 				var diveImpactNode: Node3D = dive_impact_scene.instantiate()
 				diveImpactNode.global_position = rigid_node.global_position - Vector3.UP * 0.5
 				get_tree().current_scene.add_child(diveImpactNode)
-				negate_dive_impact()
+				negate_shockwave()
+#endregion
 
 
-## Debugging
-## ---------------------------------------
+# ---------------------------------------
+#region Debugging
 func generate_state_report() -> String:
 	var output: String = ""
 	output += "Physics Mode : " + physics_mode_states.State.keys()[physics_mode_states.state] + "\n"
@@ -410,3 +426,4 @@ func generate_state_report() -> String:
 
 func _on_debug_advance() -> void:
 	Signals.debug_log.emit(generate_state_report())
+#endregion

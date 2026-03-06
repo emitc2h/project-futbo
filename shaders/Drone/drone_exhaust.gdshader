@@ -8,7 +8,7 @@ uniform sampler2D noise_alpha: source_color;
 
 uniform vec4 color_begin: source_color;
 uniform vec4 color_end: source_color;
-uniform float noise_speed: hint_range(-3.0, 3.0);
+uniform float noise_speed: hint_range(-10.0, 10.0);
 uniform float noise_intensity: hint_range(0.0, 100.0);
 
 void vertex() {
