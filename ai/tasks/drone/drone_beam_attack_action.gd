@@ -47,7 +47,7 @@ var is_done_jumping: bool
 func _setup() -> void:
 	super._setup()
 	drone.fire_finished.connect(_on_fire_finished)
-	drone.accelerate_finished.connect(_on_accelerate_finished)
+	drone.jump_finished.connect(_on_jump_finished)
 
 
 func _enter() -> void:
@@ -131,7 +131,7 @@ func custom_tick(delta: float) -> Status:
 		if evasive_maneuvers:
 			if not is_done_jumping:
 				if not is_accelerating:
-					drone.accelerate(PI/2, jump_strength, 1.0 + jump_strength / 10.0, signal_id)
+					drone.jump(PI/2, jump_strength, 1.0 + jump_strength / 10.0, signal_id)
 					time_until_next_jump = 0.0
 					is_accelerating = true
 			else:
@@ -158,6 +158,6 @@ func _on_fire_finished(id: int) -> void:
 		has_fired = true
 
 
-func _on_accelerate_finished(id: int) -> void:
+func _on_jump_finished(id: int) -> void:
 	if signal_id == id:
 		is_done_jumping = true

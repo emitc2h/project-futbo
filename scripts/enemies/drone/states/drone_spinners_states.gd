@@ -27,7 +27,6 @@ var num_bolts: int = 1
 
 
 func _ready() -> void:
-	asset.anim_state_started.connect(_on_anim_state_started)
 	asset.anim_state_finished.connect(_on_anim_state_finished)
 	var anim_tree: AnimationTree = asset.get_node("AnimationTree")
 	anim_state = anim_tree.get("parameters/playback")
@@ -36,14 +35,12 @@ func _ready() -> void:
 # off state
 #----------------------------------------
 func _on_off_state_entered() -> void:
-	Signals.debug_running_log.emit("OFF state entered")
 	state = State.OFF
 
 
 # charging state
 #----------------------------------------
 func _on_charging_state_entered() -> void:
-	Signals.debug_running_log.emit("CHARGING state entered")
 	state = State.CHARGING
 	asset.spinners_disengage_target()
 	anim_state.travel("charge up")
@@ -53,7 +50,6 @@ func _on_charging_state_entered() -> void:
 # fire state
 #----------------------------------------
 func _on_fire_state_entered() -> void:
-	Signals.debug_running_log.emit("FIRE state entered")
 	state = State.FIRE
 	asset.spinners_engage_target()
 	asset.fire_spinners(0.7)
@@ -64,14 +60,9 @@ func _on_fire_state_exited() -> void:
 
 
 ##########################################
-## SIGNALS                             ##
+## SIGNALS                              ##
 ##########################################
-func _on_anim_state_started(anim_name: String) -> void:
-	Signals.debug_running_log.emit("anim state started: " + anim_name)
-
-
 func _on_anim_state_finished(anim_name: String) -> void:
-	Signals.debug_running_log.emit("anim state finished: " + anim_name)
 	if anim_name == "charge up":
 		sc.send_event(TRANS_TO_FIRE)
 	if anim_name == "fire":

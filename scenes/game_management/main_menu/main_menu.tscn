@@ -96,6 +96,12 @@ size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 36
 text = " Drone Controls "
 
+[node name="ScoutControls" type="Button" parent="MainMenuUI/GridContainer" unique_id=785868517]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 36
+text = "Scout Controls "
+
 [node name="Quit" type="Button" parent="MainMenuUI/GridContainer" unique_id=956315568]
 layout_mode = 2
 size_flags_horizontal = 8
@@ -108,4 +114,5 @@ libraries/ = SubResource("AnimationLibrary_wem23")
 [connection signal="pressed" from="MainMenuUI/GridContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Prototype" to="." method="_on_prototype_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/DroneControls" to="." method="_on_drone_controls_pressed"]
+[connection signal="pressed" from="MainMenuUI/GridContainer/ScoutControls" to="." method="_on_scout_controls_pressed"]
 [connection signal="pressed" from="MainMenuUI/GridContainer/Quit" to="." method="_on_exit_pressed"]

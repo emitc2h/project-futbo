@@ -32,7 +32,7 @@ var is_open_at_end: bool
 func _setup() -> void:
 	super._setup()
 	drone.hit_player_in_char_mode.connect(_on_hit_player_in_char_mode)
-	drone.accelerate_finished.connect(_on_accelerate_finished)
+	drone.jump_finished.connect(_on_jump_finished)
 	drone.quick_close_finished.connect(_on_quick_close_finished)
 	drone.face_toward_finished.connect(_on_face_finished)
 
@@ -88,7 +88,7 @@ func custom_tick(delta: float) -> Status:
 		if not is_accelerating_up:
 			var d: float = drone.targeting_states.target.global_position.x - drone.char_node.global_position.x
 			var angle_of_reach: float = PI/4 + 0.5 * acos((12.0 * d)/(target_velocity * target_velocity))
-			drone.accelerate(angle_of_reach, acceleration, target_velocity, signal_id)
+			drone.jump(angle_of_reach, acceleration, target_velocity, signal_id)
 			is_accelerating_up = true
 		return RUNNING
 	
@@ -139,9 +139,9 @@ func _on_hit_player_in_char_mode() -> void:
 	premature_hit = true
 
 
-func _on_accelerate_finished(id: int) -> void:
+func _on_jump_finished(id: int) -> void:
 	if signal_id == id:
-		drone.prepare_dive_impact()
+		drone.prepare_shockwave()
 		is_done_accelerating_up = true
 
 
