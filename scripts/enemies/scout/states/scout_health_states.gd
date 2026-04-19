@@ -1,4 +1,4 @@
-class_name ScoutPhysicsStates
+class_name ScoutHealthStates
 extends Node
 
 ## Dependency Injection
@@ -7,12 +7,13 @@ extends Node
 @export var sc: StateChart
 
 ## States Enum
-enum State {CHAR = 0, RIGID = 1}
-var state: State = State.CHAR
+enum State {ACTIVE = 0, INCAPACITATED = 1, DEAD = 2}
+var state: State = State.ACTIVE
 
 ## State transition constants
-const TRANS_TO_RIGID: String = "Physics: to rigid"
-const TRANS_TO_CHAR: String = "Physics: to char"
+const TRANS_TO_ACTIVE: String = "Health: to active"
+const TRANS_TO_INCAPACITATED: String = "Health: to incapacitated"
+const TRANS_TO_DEAD: String = "Health: to dead"
 
 ## Scout nodes controlled by this state
 @onready var char_node: CharacterBody3D = scout.get_node("CharNode")
@@ -30,19 +31,18 @@ func _ready() -> void:
 	collision_shape_char.disabled = false
 
 
-# char state
+# active state
 #----------------------------------------
-func _on_char_state_entered() -> void:
-	state = State.CHAR
-	
-	## char node takes ownership of transform
+func _on_active_state_entered() -> void:
+	state = State.ACTIVE
+
+	## active state is always char
 	char_node.transform = rigid_node.transform
-	
-	## Turn on collision shape
+	collision_shape_rigid.disabled = true
 	collision_shape_char.disabled = false
 
 
-func _on_char_state_physics_processing(_delta: float) -> void:
+func _on_active_state_physics_processing(_delta: float) -> void:
 	char_node.move_and_slide()
 	
 	## nodes that must follow the char node
@@ -51,20 +51,19 @@ func _on_char_state_physics_processing(_delta: float) -> void:
 	
 	## rigid node follows char node
 	rigid_node.transform = char_node.transform
-
-
-# rigid state
-#----------------------------------------
-func _on_rigid_state_entered() -> void:
-	state = State.RIGID
-
-
-# utilities
-#========================================
-func get_global_position() -> Vector3:
-	match(state):
-		State.CHAR:
-			return char_node.global_position
-		_:
-			return rigid_node.global_position
 	
+	## Active state delegates the movement definition to the Movement States
+
+
+# incapacitated state
+#----------------------------------------
+func _on_incapacitated_state_entered() -> void:
+	state = State.INCAPACITATED
+	
+	## Incapacitated state delegates the physics mode to the Physics states
+
+
+# dead state
+#----------------------------------------
+func _on_dead_state_entered() -> void:
+	state = State.DEAD

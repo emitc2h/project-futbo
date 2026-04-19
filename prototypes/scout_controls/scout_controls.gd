@@ -15,13 +15,13 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if scout:
-		scout.char_states.control_axis = Input.get_vector("move_left", "move_right", "move_down", "move_up")
+		scout.in_plane_movement_states.control_axis = Input.get_vector("move_left", "move_right", "move_down", "move_up")
 		
 		if Input.is_action_just_pressed("dribble"):
 			if scout.lock_target():
 				scout.quick_open()
 		
-		if scout.char_states.state == ScoutCharStates.State.TARGET:
+		if scout.in_plane_movement_states.state == ScoutInPlaneMovementStates.State.TARGET:
 			if Input.is_action_just_pressed("kick"):
 				scout.fire()
 		
