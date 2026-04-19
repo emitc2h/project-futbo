@@ -48,7 +48,7 @@ func _on_none_state_physics_processing(_delta: float) -> void:
 				continue
 			
 			## If the drone is NOT facing toward the potential target, rule it out
-			if (potential_target.global_position.x - scout.physics_states.get_global_position().x) * scout.char_states.lerped_control_axis.x < 0.0:
+			if (potential_target.global_position.x - scout.physics_states.get_global_position().x) * scout.in_plane_movement_states.lerped_control_axis.x < 0.0:
 				continue
 			
 			if distance < min_distance:

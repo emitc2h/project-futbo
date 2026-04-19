@@ -5,11 +5,13 @@
 [ext_resource type="Script" uid="uid://duu2hhmogs378" path="res://addons/godot_state_charts/parallel_state.gd" id="2_7pd5h"]
 [ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="3_we078"]
 [ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="4_aew6m"]
+[ext_resource type="Script" uid="uid://xwcrlgsek8eg" path="res://scripts/enemies/scout/states/scout_health_states.gd" id="5_l8itl"]
 [ext_resource type="Script" uid="uid://c6rnmoirc3trm" path="res://scripts/enemies/scout/states/scout_physics_states.gd" id="5_we078"]
-[ext_resource type="Script" uid="uid://nm4ijevq17tw" path="res://scripts/enemies/scout/states/scout_char_states.gd" id="6_yybpx"]
+[ext_resource type="Script" uid="uid://cbakkmuejb1ch" path="res://scripts/enemies/scout/states/scout_movement_states.gd" id="6_c0mby"]
 [ext_resource type="PackedScene" uid="uid://1vdd33pxf4m2" path="res://scenes/enemies/scout/assets/scout_asset.tscn" id="7_aew6m"]
 [ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="7_df6tb"]
 [ext_resource type="Script" uid="uid://cic2t11pr7yp1" path="res://scripts/utilities/inert_node.gd" id="8_fwegx"]
+[ext_resource type="Script" uid="uid://dsyr2rdig1y5c" path="res://scripts/enemies/scout/states/scout_in_plane_movement_states.gd" id="9_c0mby"]
 [ext_resource type="Script" uid="uid://drps3kc74hyuh" path="res://scripts/enemies/scout/states/scout_engagement_states.gd" id="9_p508j"]
 [ext_resource type="Script" uid="uid://c5odptar8rapj" path="res://scripts/enemies/scout/states/scout_targeting_states.gd" id="10_gt8hr"]
 [ext_resource type="Script" uid="uid://brf0q8s1o47pd" path="res://scripts/enemies/scout/states/scout_spinner_states.gd" id="11_kfrjq"]
@@ -17,301 +19,386 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_df6tb"]
 radius = 0.18169057
 
-[node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "physics_states", "char_states", "engagement_states", "spinner_states", "targeting_states")]
+[node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "health_states", "movement_states", "in_plane_movement_states", "engagement_states", "spinner_states", "physics_states", "targeting_states")]
 script = ExtResource("1_7pd5h")
 asset = NodePath("TrackTransformContainer/ScoutAsset")
-physics_states = NodePath("State/Root/Physics/Physics States")
-char_states = NodePath("State/Root/Physics/char/Char States")
-engagement_states = NodePath("State/Root/Engagement/Engagement States")
-spinner_states = NodePath("State/Root/Spinner/Spinner States")
-targeting_states = NodePath("State/Root/Monitoring/Targeting/Targeting States")
+health_states = NodePath("State/Health/Health States")
+movement_states = NodePath("State/Health/Active/Movement/Movement States")
+in_plane_movement_states = NodePath("State/Health/Active/Movement/in plane movement/In Plane Movement States")
+engagement_states = NodePath("State/Health/Active/Engagement/Engagement States")
+spinner_states = NodePath("State/Health/Active/Spinner/Spinner States")
+physics_states = NodePath("State/Health/Incapacitated/Physics/Physics States")
+targeting_states = NodePath("State/Health/Active/Monitoring/Targeting/Targeting States")
 
 [node name="State" type="Node" parent="." unique_id=922787194]
 script = ExtResource("1_kyxrd")
 metadata/_custom_type_script = "uid://cmlfnal2o37ys"
 
-[node name="Root" type="Node" parent="State" unique_id=1778840955]
+[node name="Health" type="Node" parent="State" unique_id=1682234424]
+script = ExtResource("3_we078")
+initial_state = NodePath("Active")
+
+[node name="Health States" type="Node" parent="State/Health" unique_id=794194726 node_paths=PackedStringArray("scout", "sc")]
+script = ExtResource("5_l8itl")
+scout = NodePath("../../..")
+sc = NodePath("../..")
+
+[node name="Active" type="Node" parent="State/Health" unique_id=1414050109]
 script = ExtResource("2_7pd5h")
 
-[node name="Physics" type="Node" parent="State/Root" unique_id=1876206439]
+[node name="Movement" type="Node" parent="State/Health/Active" unique_id=906985805]
 script = ExtResource("3_we078")
-initial_state = NodePath("char")
+initial_state = NodePath("in plane movement")
 
-[node name="Physics States" type="Node" parent="State/Root/Physics" unique_id=763292476 node_paths=PackedStringArray("scout", "sc")]
-script = ExtResource("5_we078")
-scout = NodePath("../../../..")
-sc = NodePath("../../..")
+[node name="Movement States" type="Node" parent="State/Health/Active/Movement" unique_id=816416665 node_paths=PackedStringArray("scout", "sc")]
+script = ExtResource("6_c0mby")
+scout = NodePath("../../../../..")
+sc = NodePath("../../../..")
 
-[node name="char" type="Node" parent="State/Root/Physics" unique_id=1886482961]
+[node name="in plane movement" type="Node" parent="State/Health/Active/Movement" unique_id=1135090203]
 script = ExtResource("3_we078")
 initial_state = NodePath("move")
 
-[node name="Char States" type="Node" parent="State/Root/Physics/char" unique_id=1924516893 node_paths=PackedStringArray("scout", "sc", "look_at_target")]
-script = ExtResource("6_yybpx")
-scout = NodePath("../../../../..")
-sc = NodePath("../../../..")
-look_at_target = NodePath("../../../../../TrackPositionContainer/LookAtTarget")
+[node name="In Plane Movement States" type="Node" parent="State/Health/Active/Movement/in plane movement" unique_id=80772804 node_paths=PackedStringArray("scout", "sc", "look_at_target")]
+script = ExtResource("9_c0mby")
+scout = NodePath("../../../../../..")
+sc = NodePath("../../../../..")
+look_at_target = NodePath("../../../../../../TrackPositionContainer/LookAtTarget")
 
-[node name="move" type="Node" parent="State/Root/Physics/char" unique_id=1194203162]
+[node name="move" type="Node" parent="State/Health/Active/Movement/in plane movement" unique_id=1194203162]
 script = ExtResource("4_aew6m")
 
-[node name="to target" type="Node" parent="State/Root/Physics/char/move" unique_id=1237158919]
+[node name="to target" type="Node" parent="State/Health/Active/Movement/in plane movement/move" unique_id=1237158919]
 script = ExtResource("7_df6tb")
 to = NodePath("../../target")
-event = &"Char: to target"
+event = &"In Plane Movement: to target"
 delay_in_seconds = "0.0"
 
-[node name="target" type="Node" parent="State/Root/Physics/char" unique_id=1115788996]
+[node name="target" type="Node" parent="State/Health/Active/Movement/in plane movement" unique_id=1115788996]
 script = ExtResource("4_aew6m")
 
-[node name="to move" type="Node" parent="State/Root/Physics/char/target" unique_id=1438663474]
+[node name="to move" type="Node" parent="State/Health/Active/Movement/in plane movement/target" unique_id=1438663474]
 script = ExtResource("7_df6tb")
 to = NodePath("../../move")
-event = &"Char: to move"
+event = &"In Plane Movement: to move"
 delay_in_seconds = "0.0"
 
-[node name="to rigid" type="Node" parent="State/Root/Physics/char" unique_id=1752513445]
+[node name="to entering orbit" type="Node" parent="State/Health/Active/Movement/in plane movement" unique_id=320514470]
 script = ExtResource("7_df6tb")
-to = NodePath("../../rigid")
-event = &"Physics: to rigid"
+to = NodePath("../../entering orbit")
+event = &"Movement: to entering orbit"
 delay_in_seconds = "0.0"
 
-[node name="to ragdoll" type="Node" parent="State/Root/Physics/char" unique_id=53738608]
-script = ExtResource("7_df6tb")
-to = NodePath("../../ragdoll")
-event = &"Physics: to ragdoll"
-delay_in_seconds = "0.0"
-
-[node name="rigid" type="Node" parent="State/Root/Physics" unique_id=704186552]
+[node name="entering orbit" type="Node" parent="State/Health/Active/Movement" unique_id=1490667206]
 script = ExtResource("4_aew6m")
 
-[node name="to dead" type="Node" parent="State/Root/Physics/rigid" unique_id=400834640]
+[node name="to orbiting" type="Node" parent="State/Health/Active/Movement/entering orbit" unique_id=491655892]
 script = ExtResource("7_df6tb")
-to = NodePath("../../dead")
-event = &"Physics: to dead"
+to = NodePath("../../orbiting")
+event = &"Movement: to orbiting"
 delay_in_seconds = "0.0"
 
-[node name="ragdoll" type="Node" parent="State/Root/Physics" unique_id=1040797694]
+[node name="orbiting" type="Node" parent="State/Health/Active/Movement" unique_id=1706577083]
 script = ExtResource("4_aew6m")
 
-[node name="to dead" type="Node" parent="State/Root/Physics/ragdoll" unique_id=2097237243]
+[node name="to leaving orbit" type="Node" parent="State/Health/Active/Movement/orbiting" unique_id=1327303982]
 script = ExtResource("7_df6tb")
-to = NodePath("../../dead")
-event = &"Physics: to dead"
+to = NodePath("../../leaving orbit")
+event = &"Movement: to leaving orbit"
 delay_in_seconds = "0.0"
 
-[node name="dead" type="Node" parent="State/Root/Physics" unique_id=1137943943]
+[node name="leaving orbit" type="Node" parent="State/Health/Active/Movement" unique_id=340676705]
 script = ExtResource("4_aew6m")
 
-[node name="Engagement" type="Node" parent="State/Root" unique_id=1895776980]
+[node name="to in plane movement" type="Node" parent="State/Health/Active/Movement/leaving orbit" unique_id=846570273]
+script = ExtResource("7_df6tb")
+to = NodePath("../../in plane movement")
+event = &"Movement: to in plane movement"
+delay_in_seconds = "0.0"
+
+[node name="Engagement" type="Node" parent="State/Health/Active" unique_id=1895776980]
 script = ExtResource("3_we078")
 initial_state = NodePath("closed")
 
-[node name="Engagement States" type="Node" parent="State/Root/Engagement" unique_id=1837613712 node_paths=PackedStringArray("scout", "sc", "asset")]
+[node name="Engagement States" type="Node" parent="State/Health/Active/Engagement" unique_id=1837613712 node_paths=PackedStringArray("scout", "sc", "asset")]
 script = ExtResource("9_p508j")
-scout = NodePath("../../../..")
-sc = NodePath("../../..")
-asset = NodePath("../../../../TrackTransformContainer/ScoutAsset")
+scout = NodePath("../../../../..")
+sc = NodePath("../../../..")
+asset = NodePath("../../../../../TrackTransformContainer/ScoutAsset")
 
-[node name="closed" type="Node" parent="State/Root/Engagement" unique_id=202514013]
+[node name="closed" type="Node" parent="State/Health/Active/Engagement" unique_id=202514013]
 script = ExtResource("4_aew6m")
 
-[node name="to opening" type="Node" parent="State/Root/Engagement/closed" unique_id=1604979723]
+[node name="to opening" type="Node" parent="State/Health/Active/Engagement/closed" unique_id=1604979723]
 script = ExtResource("7_df6tb")
 to = NodePath("../../opening")
 event = &"Engagement: to opening"
 delay_in_seconds = "0.0"
 
-[node name="to quick open" type="Node" parent="State/Root/Engagement/closed" unique_id=629300364]
+[node name="to quick open" type="Node" parent="State/Health/Active/Engagement/closed" unique_id=629300364]
 script = ExtResource("7_df6tb")
 to = NodePath("../../quick open")
 event = &"Engagement: to quick open"
 delay_in_seconds = "0.0"
 
-[node name="opening" type="Node" parent="State/Root/Engagement" unique_id=1204763417]
+[node name="opening" type="Node" parent="State/Health/Active/Engagement" unique_id=1204763417]
 script = ExtResource("4_aew6m")
 
-[node name="to open" type="Node" parent="State/Root/Engagement/opening" unique_id=1570163241]
+[node name="to open" type="Node" parent="State/Health/Active/Engagement/opening" unique_id=1570163241]
 script = ExtResource("7_df6tb")
 to = NodePath("../../open")
 event = &"Engagement: to open"
 delay_in_seconds = "0.0"
 
-[node name="to closing" type="Node" parent="State/Root/Engagement/opening" unique_id=1258298792]
+[node name="to closing" type="Node" parent="State/Health/Active/Engagement/opening" unique_id=1258298792]
 script = ExtResource("7_df6tb")
 to = NodePath("../../closing")
 event = &"Engagement: to closing"
 delay_in_seconds = "0.0"
 
-[node name="to quick close" type="Node" parent="State/Root/Engagement/opening" unique_id=959737979]
+[node name="to quick close" type="Node" parent="State/Health/Active/Engagement/opening" unique_id=959737979]
 script = ExtResource("7_df6tb")
 to = NodePath("../../quick close")
 event = &"Engagement: to quick close"
 delay_in_seconds = "0.0"
 
-[node name="to quick open" type="Node" parent="State/Root/Engagement/opening" unique_id=1560238526]
+[node name="to quick open" type="Node" parent="State/Health/Active/Engagement/opening" unique_id=1560238526]
 script = ExtResource("7_df6tb")
 to = NodePath("../../quick open")
 event = &"Engagement: to quick open"
 delay_in_seconds = "0.0"
 
-[node name="quick open" type="Node" parent="State/Root/Engagement" unique_id=266093859]
+[node name="quick open" type="Node" parent="State/Health/Active/Engagement" unique_id=266093859]
 script = ExtResource("4_aew6m")
 
-[node name="to open" type="Node" parent="State/Root/Engagement/quick open" unique_id=241859411]
+[node name="to open" type="Node" parent="State/Health/Active/Engagement/quick open" unique_id=241859411]
 script = ExtResource("7_df6tb")
 to = NodePath("../../open")
 event = &"Engagement: to open"
 delay_in_seconds = "0.0"
 
-[node name="open" type="Node" parent="State/Root/Engagement" unique_id=1037957040]
+[node name="open" type="Node" parent="State/Health/Active/Engagement" unique_id=1037957040]
 script = ExtResource("4_aew6m")
 
-[node name="to closing" type="Node" parent="State/Root/Engagement/open" unique_id=1045339428]
+[node name="to closing" type="Node" parent="State/Health/Active/Engagement/open" unique_id=1045339428]
 script = ExtResource("7_df6tb")
 to = NodePath("../../closing")
 event = &"Engagement: to closing"
 delay_in_seconds = "0.0"
 
-[node name="to quick close" type="Node" parent="State/Root/Engagement/open" unique_id=867039051]
+[node name="to quick close" type="Node" parent="State/Health/Active/Engagement/open" unique_id=867039051]
 script = ExtResource("7_df6tb")
 to = NodePath("../../quick close")
 event = &"Engagement: to quick close"
 delay_in_seconds = "0.0"
 
-[node name="closing" type="Node" parent="State/Root/Engagement" unique_id=965877902]
+[node name="closing" type="Node" parent="State/Health/Active/Engagement" unique_id=965877902]
 script = ExtResource("4_aew6m")
 
-[node name="to closed" type="Node" parent="State/Root/Engagement/closing" unique_id=901259539]
+[node name="to closed" type="Node" parent="State/Health/Active/Engagement/closing" unique_id=901259539]
 script = ExtResource("7_df6tb")
 to = NodePath("../../closed")
 event = &"Engagement: to closed"
 delay_in_seconds = "0.0"
 
-[node name="to opening" type="Node" parent="State/Root/Engagement/closing" unique_id=1745107302]
+[node name="to opening" type="Node" parent="State/Health/Active/Engagement/closing" unique_id=1745107302]
 script = ExtResource("7_df6tb")
 to = NodePath("../../opening")
 event = &"Engagement: to opening"
 delay_in_seconds = "0.0"
 
-[node name="to quick open" type="Node" parent="State/Root/Engagement/closing" unique_id=1676573476]
+[node name="to quick open" type="Node" parent="State/Health/Active/Engagement/closing" unique_id=1676573476]
 script = ExtResource("7_df6tb")
 to = NodePath("../../quick open")
 event = &"Engagement: to quick open"
 delay_in_seconds = "0.0"
 
-[node name="to quick close" type="Node" parent="State/Root/Engagement/closing" unique_id=1717426679]
+[node name="to quick close" type="Node" parent="State/Health/Active/Engagement/closing" unique_id=1717426679]
 script = ExtResource("7_df6tb")
 to = NodePath("../../quick close")
 event = &"Engagement: to quick close"
 delay_in_seconds = "0.0"
 
-[node name="quick close" type="Node" parent="State/Root/Engagement" unique_id=720726429]
+[node name="quick close" type="Node" parent="State/Health/Active/Engagement" unique_id=720726429]
 script = ExtResource("4_aew6m")
 
-[node name="to closed" type="Node" parent="State/Root/Engagement/quick close" unique_id=1846436705]
+[node name="to closed" type="Node" parent="State/Health/Active/Engagement/quick close" unique_id=1846436705]
 script = ExtResource("7_df6tb")
 to = NodePath("../../closed")
 event = &"Engagement: to closed"
 delay_in_seconds = "0.0"
 
-[node name="Monitoring" type="Node" parent="State/Root" unique_id=757011156]
+[node name="Monitoring" type="Node" parent="State/Health/Active" unique_id=757011156]
 script = ExtResource("2_7pd5h")
 
-[node name="Targeting" type="Node" parent="State/Root/Monitoring" unique_id=1123402672]
+[node name="Targeting" type="Node" parent="State/Health/Active/Monitoring" unique_id=1123402672]
 script = ExtResource("3_we078")
 initial_state = NodePath("none")
 
-[node name="Targeting States" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=2102488756 node_paths=PackedStringArray("scout", "sc")]
+[node name="Targeting States" type="Node" parent="State/Health/Active/Monitoring/Targeting" unique_id=2102488756 node_paths=PackedStringArray("scout", "sc")]
 script = ExtResource("10_gt8hr")
-scout = NodePath("../../../../..")
-sc = NodePath("../../../..")
+scout = NodePath("../../../../../..")
+sc = NodePath("../../../../..")
 targeting_max_range = null
 
-[node name="disabled" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=344566293]
+[node name="disabled" type="Node" parent="State/Health/Active/Monitoring/Targeting" unique_id=344566293]
 script = ExtResource("4_aew6m")
 
-[node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/disabled" unique_id=1846888494]
+[node name="to none" type="Node" parent="State/Health/Active/Monitoring/Targeting/disabled" unique_id=1846888494]
 script = ExtResource("7_df6tb")
 to = NodePath("../../none")
 event = &"Targeting: to none"
 delay_in_seconds = "0.0"
 
-[node name="none" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=84222177]
+[node name="none" type="Node" parent="State/Health/Active/Monitoring/Targeting" unique_id=84222177]
 script = ExtResource("4_aew6m")
 
-[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/none" unique_id=293812446]
+[node name="to disabled" type="Node" parent="State/Health/Active/Monitoring/Targeting/none" unique_id=293812446]
 script = ExtResource("7_df6tb")
 to = NodePath("../../disabled")
 event = &"Targeting: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="to acquired" type="Node" parent="State/Root/Monitoring/Targeting/none" unique_id=1381435462]
+[node name="to acquired" type="Node" parent="State/Health/Active/Monitoring/Targeting/none" unique_id=1381435462]
 script = ExtResource("7_df6tb")
 to = NodePath("../../acquired")
 event = &"Targeting: to acquired"
 delay_in_seconds = "0.0"
 
-[node name="acquired" type="Node" parent="State/Root/Monitoring/Targeting" unique_id=1271605246]
+[node name="acquired" type="Node" parent="State/Health/Active/Monitoring/Targeting" unique_id=1271605246]
 script = ExtResource("4_aew6m")
 
-[node name="to disabled" type="Node" parent="State/Root/Monitoring/Targeting/acquired" unique_id=218445954]
+[node name="to disabled" type="Node" parent="State/Health/Active/Monitoring/Targeting/acquired" unique_id=218445954]
 script = ExtResource("7_df6tb")
 to = NodePath("../../disabled")
 event = &"Targeting: to disabled"
 delay_in_seconds = "0.0"
 
-[node name="to none" type="Node" parent="State/Root/Monitoring/Targeting/acquired" unique_id=725771554]
+[node name="to none" type="Node" parent="State/Health/Active/Monitoring/Targeting/acquired" unique_id=725771554]
 script = ExtResource("7_df6tb")
 to = NodePath("../../none")
 event = &"Targeting: to none"
 delay_in_seconds = "0.0"
 
-[node name="Proximity" type="Node" parent="State/Root/Monitoring" unique_id=1273019075]
+[node name="Proximity" type="Node" parent="State/Health/Active/Monitoring" unique_id=1273019075]
 script = ExtResource("3_we078")
 initial_state = NodePath("disabled")
 
-[node name="disabled" type="Node" parent="State/Root/Monitoring/Proximity" unique_id=1690808727]
+[node name="disabled" type="Node" parent="State/Health/Active/Monitoring/Proximity" unique_id=1690808727]
 script = ExtResource("4_aew6m")
 
-[node name="enabled" type="Node" parent="State/Root/Monitoring/Proximity" unique_id=1811901375]
+[node name="enabled" type="Node" parent="State/Health/Active/Monitoring/Proximity" unique_id=1811901375]
 script = ExtResource("4_aew6m")
 
-[node name="Spinner" type="Node" parent="State/Root" unique_id=160283061]
+[node name="Spinner" type="Node" parent="State/Health/Active" unique_id=160283061]
 script = ExtResource("3_we078")
 initial_state = NodePath("off")
 
-[node name="Spinner States" type="Node" parent="State/Root/Spinner" unique_id=1013522923 node_paths=PackedStringArray("scout", "sc")]
+[node name="Spinner States" type="Node" parent="State/Health/Active/Spinner" unique_id=1013522923 node_paths=PackedStringArray("scout", "sc")]
 script = ExtResource("11_kfrjq")
-scout = NodePath("../../../..")
-sc = NodePath("../../..")
+scout = NodePath("../../../../..")
+sc = NodePath("../../../..")
 
-[node name="off" type="Node" parent="State/Root/Spinner" unique_id=926972404]
+[node name="off" type="Node" parent="State/Health/Active/Spinner" unique_id=926972404]
 script = ExtResource("4_aew6m")
 
-[node name="to charging" type="Node" parent="State/Root/Spinner/off" unique_id=993256337]
+[node name="to charging" type="Node" parent="State/Health/Active/Spinner/off" unique_id=993256337]
 script = ExtResource("7_df6tb")
 to = NodePath("../../charging")
 event = &"Spinner: to charging"
 delay_in_seconds = "0.0"
 
-[node name="charging" type="Node" parent="State/Root/Spinner" unique_id=1362408382]
+[node name="charging" type="Node" parent="State/Health/Active/Spinner" unique_id=1362408382]
 script = ExtResource("4_aew6m")
 
-[node name="to fire" type="Node" parent="State/Root/Spinner/charging" unique_id=692926346]
+[node name="to fire" type="Node" parent="State/Health/Active/Spinner/charging" unique_id=692926346]
 script = ExtResource("7_df6tb")
 to = NodePath("../../fire")
 event = &"Spinner: to fire"
 delay_in_seconds = "0.0"
 
-[node name="fire" type="Node" parent="State/Root/Spinner" unique_id=795045606]
+[node name="fire" type="Node" parent="State/Health/Active/Spinner" unique_id=795045606]
 script = ExtResource("4_aew6m")
 
-[node name="to off" type="Node" parent="State/Root/Spinner/fire" unique_id=1961083857]
+[node name="to off" type="Node" parent="State/Health/Active/Spinner/fire" unique_id=1961083857]
 script = ExtResource("7_df6tb")
 to = NodePath("../../off")
 event = &"Spinner: to off"
 delay_in_seconds = "0.0"
+
+[node name="to incapacitated" type="Node" parent="State/Health/Active" unique_id=550349264]
+script = ExtResource("7_df6tb")
+to = NodePath("../../Incapacitated")
+event = &"Health: to incapacitated"
+delay_in_seconds = "0.0"
+
+[node name="to dead" type="Node" parent="State/Health/Active" unique_id=540235090]
+script = ExtResource("7_df6tb")
+to = NodePath("../../Dead")
+event = &"Health: to dead"
+delay_in_seconds = "0.0"
+
+[node name="Incapacitated" type="Node" parent="State/Health" unique_id=1564326338]
+script = ExtResource("2_7pd5h")
+
+[node name="Physics" type="Node" parent="State/Health/Incapacitated" unique_id=1876206439]
+script = ExtResource("3_we078")
+initial_state = NodePath("rigid")
+
+[node name="Physics States" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=763292476 node_paths=PackedStringArray("scout", "sc")]
+script = ExtResource("5_we078")
+scout = NodePath("../../../../..")
+sc = NodePath("../../../..")
+
+[node name="rigid" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=626551392]
+script = ExtResource("4_aew6m")
+
+[node name="to char" type="Node" parent="State/Health/Incapacitated/Physics/rigid" unique_id=1196579030]
+script = ExtResource("7_df6tb")
+to = NodePath("../../char")
+event = &"Physics: to char"
+delay_in_seconds = "0.0"
+
+[node name="char" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=2114126000]
+script = ExtResource("4_aew6m")
+metadata/_custom_type_script = "uid://b2onxl0bnlyi7"
+
+[node name="to rigid" type="Node" parent="State/Health/Incapacitated/Physics/char" unique_id=723078513]
+script = ExtResource("7_df6tb")
+to = NodePath("../../rigid")
+event = &"Physics: to rigid"
+delay_in_seconds = "0.0"
+
+[node name="Charge" type="Node" parent="State/Health/Incapacitated" unique_id=1496430415]
+script = ExtResource("3_we078")
+initial_state = NodePath("none")
+
+[node name="none" type="Node" parent="State/Health/Incapacitated/Charge" unique_id=1592084290]
+script = ExtResource("4_aew6m")
+
+[node name="level1" type="Node" parent="State/Health/Incapacitated/Charge" unique_id=1194397756]
+script = ExtResource("4_aew6m")
+
+[node name="level2" type="Node" parent="State/Health/Incapacitated/Charge" unique_id=209935207]
+script = ExtResource("4_aew6m")
+
+[node name="level3" type="Node" parent="State/Health/Incapacitated/Charge" unique_id=1195909614]
+script = ExtResource("4_aew6m")
+
+[node name="to active" type="Node" parent="State/Health/Incapacitated" unique_id=1764797633]
+script = ExtResource("7_df6tb")
+to = NodePath("../../Active")
+event = &"Health: to active"
+delay_in_seconds = "0.0"
+
+[node name="to dead" type="Node" parent="State/Health/Incapacitated" unique_id=2056888254]
+script = ExtResource("7_df6tb")
+to = NodePath("../../Dead")
+event = &"Health: to dead"
+delay_in_seconds = "0.0"
+
+[node name="Dead" type="Node" parent="State/Health" unique_id=952136227]
+script = ExtResource("4_aew6m")
 
 [node name="CharNode" type="CharacterBody3D" parent="." unique_id=621400243]
 collision_layer = 256
@@ -338,30 +425,33 @@ shape = SubResource("SphereShape3D_df6tb")
 [node name="ScoutAsset" parent="TrackTransformContainer" unique_id=947460992 instance=ExtResource("7_aew6m")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
-[connection signal="state_entered" from="State/Root/Physics/char" to="State/Root/Physics/Physics States" method="_on_char_state_entered"]
-[connection signal="state_physics_processing" from="State/Root/Physics/char" to="State/Root/Physics/Physics States" method="_on_char_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Physics/char/move" to="State/Root/Physics/char/Char States" method="_on_move_state_entered"]
-[connection signal="state_physics_processing" from="State/Root/Physics/char/move" to="State/Root/Physics/char/Char States" method="_on_move_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Physics/char/target" to="State/Root/Physics/char/Char States" method="_on_target_state_entered"]
-[connection signal="state_physics_processing" from="State/Root/Physics/char/target" to="State/Root/Physics/char/Char States" method="_on_target_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Physics/rigid" to="State/Root/Physics/Physics States" method="_on_rigid_state_entered"]
-[connection signal="state_entered" from="State/Root/Physics/ragdoll" to="State/Root/Physics/Physics States" method="_on_ragdoll_state_entered"]
-[connection signal="state_entered" from="State/Root/Physics/dead" to="State/Root/Physics/Physics States" method="_on_dead_state_entered"]
-[connection signal="state_entered" from="State/Root/Engagement/closed" to="State/Root/Engagement/Engagement States" method="_on_closed_state_entered"]
-[connection signal="state_entered" from="State/Root/Engagement/opening" to="State/Root/Engagement/Engagement States" method="_on_opening_state_entered"]
-[connection signal="state_exited" from="State/Root/Engagement/opening" to="State/Root/Engagement/Engagement States" method="_on_opening_state_exited"]
-[connection signal="state_entered" from="State/Root/Engagement/quick open" to="State/Root/Engagement/Engagement States" method="_on_quick_open_state_entered"]
-[connection signal="state_exited" from="State/Root/Engagement/quick open" to="State/Root/Engagement/Engagement States" method="_on_quick_open_state_exited"]
-[connection signal="state_entered" from="State/Root/Engagement/open" to="State/Root/Engagement/Engagement States" method="_on_open_state_entered"]
-[connection signal="state_entered" from="State/Root/Engagement/closing" to="State/Root/Engagement/Engagement States" method="_on_closing_state_entered"]
-[connection signal="state_exited" from="State/Root/Engagement/closing" to="State/Root/Engagement/Engagement States" method="_on_closing_state_exited"]
-[connection signal="state_entered" from="State/Root/Engagement/quick close" to="State/Root/Engagement/Engagement States" method="_on_quick_close_state_entered"]
-[connection signal="state_exited" from="State/Root/Engagement/quick close" to="State/Root/Engagement/Engagement States" method="_on_quick_close_state_exited"]
-[connection signal="state_entered" from="State/Root/Monitoring/Targeting/disabled" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_disabled_state_entered"]
-[connection signal="state_entered" from="State/Root/Monitoring/Targeting/none" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_none_state_entered"]
-[connection signal="state_physics_processing" from="State/Root/Monitoring/Targeting/none" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_none_state_physics_processing"]
-[connection signal="state_entered" from="State/Root/Monitoring/Targeting/acquired" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_acquired_state_entered"]
-[connection signal="state_exited" from="State/Root/Monitoring/Targeting/acquired" to="State/Root/Monitoring/Targeting/Targeting States" method="_on_acquired_state_exited"]
-[connection signal="state_entered" from="State/Root/Spinner/off" to="State/Root/Spinner/Spinner States" method="_on_off_state_entered"]
-[connection signal="state_entered" from="State/Root/Spinner/charging" to="State/Root/Spinner/Spinner States" method="_on_charging_state_entered"]
-[connection signal="state_entered" from="State/Root/Spinner/fire" to="State/Root/Spinner/Spinner States" method="_on_fire_state_entered"]
+[connection signal="state_entered" from="State/Health/Active" to="State/Health/Health States" method="_on_active_state_entered"]
+[connection signal="state_physics_processing" from="State/Health/Active" to="State/Health/Health States" method="_on_active_state_physics_processing"]
+[connection signal="state_entered" from="State/Health/Active/Movement/in plane movement" to="State/Health/Active/Movement/Movement States" method="_on_in_plane_movement_state_entered"]
+[connection signal="state_entered" from="State/Health/Active/Movement/in plane movement/move" to="State/Health/Active/Movement/in plane movement/In Plane Movement States" method="_on_move_state_entered"]
+[connection signal="state_physics_processing" from="State/Health/Active/Movement/in plane movement/move" to="State/Health/Active/Movement/in plane movement/In Plane Movement States" method="_on_move_state_physics_processing"]
+[connection signal="state_entered" from="State/Health/Active/Movement/in plane movement/target" to="State/Health/Active/Movement/in plane movement/In Plane Movement States" method="_on_target_state_entered"]
+[connection signal="state_physics_processing" from="State/Health/Active/Movement/in plane movement/target" to="State/Health/Active/Movement/in plane movement/In Plane Movement States" method="_on_target_state_physics_processing"]
+[connection signal="state_entered" from="State/Health/Active/Movement/entering orbit" to="State/Health/Active/Movement/Movement States" method="_on_entering_orbit_state_entered"]
+[connection signal="state_entered" from="State/Health/Active/Movement/orbiting" to="State/Health/Active/Movement/Movement States" method="_on_orbiting_state_entered"]
+[connection signal="state_entered" from="State/Health/Active/Movement/leaving orbit" to="State/Health/Active/Movement/Movement States" method="_on_leaving_orbit_state_entered"]
+[connection signal="state_entered" from="State/Health/Active/Engagement/closed" to="State/Health/Active/Engagement/Engagement States" method="_on_closed_state_entered"]
+[connection signal="state_entered" from="State/Health/Active/Engagement/opening" to="State/Health/Active/Engagement/Engagement States" method="_on_opening_state_entered"]
+[connection signal="state_exited" from="State/Health/Active/Engagement/opening" to="State/Health/Active/Engagement/Engagement States" method="_on_opening_state_exited"]
+[connection signal="state_entered" from="State/Health/Active/Engagement/quick open" to="State/Health/Active/Engagement/Engagement States" method="_on_quick_open_state_entered"]
+[connection signal="state_exited" from="State/Health/Active/Engagement/quick open" to="State/Health/Active/Engagement/Engagement States" method="_on_quick_open_state_exited"]
+[connection signal="state_entered" from="State/Health/Active/Engagement/open" to="State/Health/Active/Engagement/Engagement States" method="_on_open_state_entered"]
+[connection signal="state_entered" from="State/Health/Active/Engagement/closing" to="State/Health/Active/Engagement/Engagement States" method="_on_closing_state_entered"]
+[connection signal="state_exited" from="State/Health/Active/Engagement/closing" to="State/Health/Active/Engagement/Engagement States" method="_on_closing_state_exited"]
+[connection signal="state_entered" from="State/Health/Active/Engagement/quick close" to="State/Health/Active/Engagement/Engagement States" method="_on_quick_close_state_entered"]
+[connection signal="state_exited" from="State/Health/Active/Engagement/quick close" to="State/Health/Active/Engagement/Engagement States" method="_on_quick_close_state_exited"]
+[connection signal="state_entered" from="State/Health/Active/Monitoring/Targeting/disabled" to="State/Health/Active/Monitoring/Targeting/Targeting States" method="_on_disabled_state_entered"]
+[connection signal="state_entered" from="State/Health/Active/Monitoring/Targeting/none" to="State/Health/Active/Monitoring/Targeting/Targeting States" method="_on_none_state_entered"]
+[connection signal="state_physics_processing" from="State/Health/Active/Monitoring/Targeting/none" to="State/Health/Active/Monitoring/Targeting/Targeting States" method="_on_none_state_physics_processing"]
+[connection signal="state_entered" from="State/Health/Active/Monitoring/Targeting/acquired" to="State/Health/Active/Monitoring/Targeting/Targeting States" method="_on_acquired_state_entered"]
+[connection signal="state_exited" from="State/Health/Active/Monitoring/Targeting/acquired" to="State/Health/Active/Monitoring/Targeting/Targeting States" method="_on_acquired_state_exited"]
+[connection signal="state_entered" from="State/Health/Active/Spinner/off" to="State/Health/Active/Spinner/Spinner States" method="_on_off_state_entered"]
+[connection signal="state_entered" from="State/Health/Active/Spinner/charging" to="State/Health/Active/Spinner/Spinner States" method="_on_charging_state_entered"]
+[connection signal="state_entered" from="State/Health/Active/Spinner/fire" to="State/Health/Active/Spinner/Spinner States" method="_on_fire_state_entered"]
+[connection signal="state_entered" from="State/Health/Incapacitated" to="State/Health/Health States" method="_on_incapacitated_state_entered"]
+[connection signal="state_entered" from="State/Health/Dead" to="State/Health/Health States" method="_on_dead_state_entered"]

@@ -10,10 +10,12 @@ extends Node3D
 ## state machines
 @export_group("State Machines")
 @export_subgroup("Function State Machines")
-@export var physics_states: ScoutPhysicsStates
-@export var char_states: ScoutCharStates
+@export var health_states: ScoutHealthStates
+@export var movement_states: ScoutMovementStates
+@export var in_plane_movement_states: ScoutInPlaneMovementStates
 @export var engagement_states: ScoutEngagementStates
 @export var spinner_states: ScoutSpinnerStates
+@export var physics_states: ScoutPhysicsStates
 
 @export_subgroup("Monitoring State Machines")
 @export var targeting_states: ScoutTargetingStates
@@ -60,13 +62,13 @@ func quick_close(id: int = 0) -> void:
 func lock_target() -> bool:
 	var locked: bool = targeting_states.lock_target()
 	if locked:
-		sc.send_event(char_states.TRANS_TO_TARGET)
+		sc.send_event(in_plane_movement_states.TRANS_TO_TARGET)
 	return locked
 
 
 func release_target() -> void:
 	targeting_states.release_target()
-	sc.send_event(char_states.TRANS_TO_MOVE)
+	sc.send_event(in_plane_movement_states.TRANS_TO_MOVE)
 
 
 ## Spinner Controls
