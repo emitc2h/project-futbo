@@ -6,6 +6,7 @@ extends Node
 @export var control_node: ControlNode
 @export var asset: ControlNodeAsset
 @export var sc: StateChart
+@export var cs: CompoundState
 @export var direction_ray: DirectionRay
 @export var rigid_node: InertNode
 var physics_material: PhysicsMaterial
@@ -13,6 +14,9 @@ var physics_material: PhysicsMaterial
 ## States Enum
 enum State {OFF = 0, CHARGING = 1, ON = 2, DISCHARGING = 3, BLOW = 4}
 var state: State = State.OFF
+
+@export_group("State Mapping")
+@export var state_map: Dictionary[State, StateChartState]
 
 ## State transition constants
 const TRANS_TO_CHARGING: String = "Power: to charging"
@@ -52,8 +56,12 @@ func _ready() -> void:
 # off state
 #----------------------------------------
 func _on_off_state_entered() -> void:
+	dbg.log('control node entering OFF state')
 	state = State.OFF
 	control_node.anim_state.travel(OFF_STATE_ANIM)
+	
+	physics_material.bounce = 0.2
+	physics_material.friction = 0.5
 	
 	control_node.control_node_control_states.spins_during_dribble = true
 	
@@ -89,7 +97,8 @@ func _on_charging_state_physics_processing(_delta: float) -> void:
 			return
 		## Cancel the transition animation otherwise
 		_:
-			sc.send_event(TRANS_TO_OFF)
+			pass
+			#sc.send_event(TRANS_TO_OFF)
 
 
 # on state
@@ -196,3 +205,14 @@ func _on_animation_state_finished(anim_name: String) -> void:
 			sc.send_event(TRANS_TO_OFF)
 		WARP_IN_TRANS_ANIM:
 			sc.send_event(TRANS_TO_OFF)
+
+
+#=======================================================
+# CONTROLS
+#=======================================================
+func turn_on() -> void:
+	sc.send_event(TRANS_TO_CHARGING)
+
+
+func set_initial_state(new_initial_state: State) -> void:
+	cs._initial_state = state_map[new_initial_state]

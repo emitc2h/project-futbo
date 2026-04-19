@@ -402,6 +402,7 @@ initial_behavior_state = 1
 
 [node name="DebugTool" parent="." unique_id=988042807 instance=ExtResource("21_6uf0e")]
 max_running_logs = 100
+is_visible = false
 visible_only_on_pause = true
 
 [node name="DroneSpawnPoint" type="Marker3D" parent="." unique_id=1157455945]

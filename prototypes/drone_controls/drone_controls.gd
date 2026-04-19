@@ -2,7 +2,10 @@ extends Level
 
 @onready var drone: Drone = $Drone
 @export var drone_scene_path: String = "res://scenes/enemies/drone/drone.tscn"
+@export var control_node_scene_path: String = "res://scenes/control_node_and_balls/control_node.tscn"
 var drone_scene: Resource
+var control_node_scene: Resource
+var control_node: ControlNode
 
 @onready var target_left: TargetMesh = $TargetMeshLeft
 @onready var target_right: TargetMesh = $TargetMeshRight
@@ -16,6 +19,7 @@ func _ready() -> void:
 	drone.set_initial_behavior_state(DroneBehaviorStates.State.DISABLED)
 	initial_drone_transform = drone.transform
 	drone_scene = load(drone_scene_path)
+	control_node_scene = load(control_node_scene_path)
 
 
 func _physics_process(_delta: float) -> void:
@@ -136,6 +140,27 @@ func _on_check_button_toggled(_toggled_on: bool) -> void:
 func _on_target_bob_button_toggled(_toggled_on: bool) -> void:
 	target_left.bob = !target_left.bob
 	target_right.bob = !target_right.bob
+
+
+## CONTROL NODE
+## ==================================
+func _on_control_node_off_button_pressed() -> void:
+	if control_node:
+		control_node.free()
+	control_node = control_node_scene.instantiate() as ControlNode
+	control_node.global_position = drone.global_position + Vector3.UP * 3.0
+	add_child(control_node)
+	control_node.power_states.set_initial_state(ControlNodePowerStates.State.OFF)
+
+
+func _on_control_node_on_button_pressed() -> void:
+	if control_node:
+		control_node.free()
+	control_node = control_node_scene.instantiate() as ControlNode
+	control_node.global_position = drone.global_position + Vector3.UP * 3.0
+	add_child(control_node)
+	control_node.anim_state.start(control_node.power_states.ON_STATE_ANIM)
+	control_node.power_states.set_initial_state(ControlNodePowerStates.State.ON)
 
 
 ## ACTIONS

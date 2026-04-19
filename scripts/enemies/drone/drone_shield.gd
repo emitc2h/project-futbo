@@ -10,11 +10,12 @@ extends AnimatableBody3D
 var enabled: bool = true
 
 
-func hit() -> void:
+func hit(emit_particles: bool = true) -> void:
 	if enabled:
 		drone_shield_asset.hit()
-		particles.restart()
-		particles.emitting = true
+		if emit_particles:
+			particles.restart()
+			particles.emitting = true
 
 
 func enable() -> void:

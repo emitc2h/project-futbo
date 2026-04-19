@@ -29,6 +29,7 @@ func _ready() -> void:
 	Signals.control_node_shield_hit.connect(_on_control_node_shield_hit)
 	Signals.control_node_impulse.connect(_on_control_node_impulse)
 	Representations.control_node_target_marker = target_marker
+	dbg.log("control node ready")
 
 
 func _physics_process(_delta: float) -> void:
@@ -123,3 +124,9 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 				asset.bounce(bounce_strength)
 		else:
 			asset.bounce(bounce_strength)
+	else:
+		if body.is_in_group("DroneShieldGroup"):
+			var drone_shield: DroneShield = body as DroneShield
+			drone_shield.look_at(get_ball_position(), Vector3.UP)
+			drone_shield.hit(false)
+			return

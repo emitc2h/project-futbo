@@ -85,10 +85,12 @@ func become_rigid() -> void:
 
 
 func become_char() -> void:
+	negate_shockwave()
 	sc.send_event(physics_mode_states.TRANS_TO_CHAR)
 
 
 func become_ragdoll() -> void:
+	negate_shockwave()
 	sc.send_event(physics_mode_states.TRANS_TO_RAGDOLL)
 
 
@@ -186,6 +188,7 @@ func _on_target_velocity_reached() -> void:
 	physics_mode_states.additional_x_acc = 0.0
 	physics_mode_states.additional_y_acc = 0.0
 	jump_finished.emit(signal_id)
+	prepare_shockwave()
 #endregion
 
 

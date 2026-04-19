@@ -29,12 +29,13 @@ var pause_log_array_idx: int = 0
 @export var max_running_logs: int = 100
 var running_log_array: PackedStringArray = []
 
+@export var is_visible: bool = true
 @export var visible_only_on_pause: bool = false
 
 
 func _ready() -> void:
-	self.visible = active
-	main_container.visible = !visible_only_on_pause
+	self.visible = is_visible and active
+	main_container.visible = is_visible and !visible_only_on_pause
 	Signals.debug_pause.connect(_pause)
 	Signals.debug_log.connect(_on_debug_log)
 	Signals.debug_advance.connect(_on_debug_advance)
@@ -120,7 +121,7 @@ func _pause() -> void:
 	## If paused already don't do anything
 	if paused:
 		return
-	main_container.visible = true
+	main_container.visible = is_visible
 	paused = true
 	get_tree().paused =  true
 	Signals.debug_on.emit()
