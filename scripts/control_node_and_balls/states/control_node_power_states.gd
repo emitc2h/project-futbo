@@ -56,7 +56,6 @@ func _ready() -> void:
 # off state
 #----------------------------------------
 func _on_off_state_entered() -> void:
-	dbg.log('control node entering OFF state')
 	state = State.OFF
 	control_node.anim_state.travel(OFF_STATE_ANIM)
 	

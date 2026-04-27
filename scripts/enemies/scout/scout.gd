@@ -12,6 +12,7 @@ extends Node3D
 @export_subgroup("Function State Machines")
 @export var health_states: ScoutHealthStates
 @export var movement_states: ScoutMovementStates
+@export var orbiting_states: ScoutOrbitingStates
 @export var in_plane_movement_states: ScoutInPlaneMovementStates
 @export var engagement_states: ScoutEngagementStates
 @export var spinner_states: ScoutSpinnerStates
@@ -19,6 +20,14 @@ extends Node3D
 
 @export_subgroup("Monitoring State Machines")
 @export var targeting_states: ScoutTargetingStates
+
+@export_subgroup("Behavior State Machines")
+@export var behavior_states: ScoutBehaviorStates
+
+@export_group("Movement Parameters")
+@export var speed: float = 6.0
+@export var targeting_speed: float = 3.0
+@export var lerp_factor: float = 5.0
 
 @onready var anim_state: AnimationNodeStateMachinePlayback = asset.anim_state
 

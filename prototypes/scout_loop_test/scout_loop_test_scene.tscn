@@ -1,0 +1,395 @@
+[gd_scene format=3 uid="uid://dw3nwb551qoby"]
+
+[ext_resource type="Script" uid="uid://cfr5n2w61kjhk" path="res://prototypes/scout_loop_test/scout_loop_test_scene.gd" id="1_rkvpr"]
+[ext_resource type="PackedScene" uid="uid://b8oisyfhyx2yr" path="res://scenes/level1/level1_world_environment.tscn" id="2_0tnlj"]
+[ext_resource type="Texture2D" uid="uid://bryucxvj1igr8" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_color.png" id="3_ke4pw"]
+[ext_resource type="Texture2D" uid="uid://dbneqjtiho26b" path="res://assets/deprecated/3D/Act1/Textures/Tiles/PatchyGrass1/PatchyGrass1_normal.png" id="4_ob1wl"]
+[ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera/camera_controller.tscn" id="5_ll16v"]
+[ext_resource type="PackedScene" uid="uid://br5xii21hsbeo" path="res://scenes/characters/Character1/character_1.tscn" id="6_c7aqb"]
+[ext_resource type="Script" uid="uid://c5ypw4nstaeac" path="res://scripts/player_controller.gd" id="7_404y3"]
+[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/deprecated/3D/Act1/materials/buildings/bricks.tres" id="8_gp53o"]
+[ext_resource type="Script" uid="uid://b4skhtstjhduw" path="res://prototypes/scout_loop_test/blocks.gd" id="8_hya5b"]
+[ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="9_pa7r3"]
+[ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="10_pabad"]
+[ext_resource type="Shader" uid="uid://cpb5j5g4ss8rb" path="res://shaders/SwayingLeaves.tres" id="11_61ckh"]
+[ext_resource type="Texture2D" uid="uid://cqhgxcbm0nrae" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color3.png" id="12_5u5v3"]
+[ext_resource type="Texture2D" uid="uid://bp5q5nu3lf3ry" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_transmission.png" id="13_a5iiu"]
+[ext_resource type="Texture2D" uid="uid://deem7pbadipj0" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_normal.png" id="14_io7g8"]
+[ext_resource type="Texture2D" uid="uid://dumcqi0isdutb" path="res://assets/deprecated/3D/Act1/Textures/Vegetation/TreeBranch2/TreeBranch2_color2.png" id="15_lipj8"]
+[ext_resource type="PackedScene" uid="uid://r42whxkucyjl" path="res://scenes/vegetation/bush.tscn" id="16_1yu3h"]
+[ext_resource type="PackedScene" uid="uid://1qyvwbunehqq" path="res://scenes/vegetation/grass/multimesh_patches/light_grass_random_patch_6m_mixed_2.tscn" id="17_g6pbv"]
+[ext_resource type="PackedScene" uid="uid://cupvg7lj3rh2s" path="res://scenes/control_node_and_balls/control_node.tscn" id="18_md2nj"]
+[ext_resource type="PackedScene" uid="uid://dl2glyig12kut" path="res://scenes/debug/debug_tool.tscn" id="20_4ywmp"]
+[ext_resource type="PackedScene" uid="uid://d4joyty534fc" path="res://scenes/utilities/optimization/particles_preloader.tscn" id="21_lxalg"]
+[ext_resource type="PackedScene" uid="uid://ldp2c0bbslqn" path="res://scenes/enemies/scout/scout.tscn" id="21_rkvpr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_utcmx"]
+render_priority = 0
+shader = ExtResource("11_61ckh")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("12_5u5v3")
+shader_parameter/alpha_scissor_threshold = 0.5
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.05
+shader_parameter/texture_normal = ExtResource("14_io7g8")
+shader_parameter/normal_scale = 1.0
+shader_parameter/backlight = Color(0, 0, 0, 1)
+shader_parameter/texture_backlight = ExtResource("13_a5iiu")
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/sway_speed = 2.5
+shader_parameter/sway_strength_x = 0.0
+shader_parameter/sway_strength_y = 0.0
+shader_parameter/sway_strength_z = 0.015
+shader_parameter/sway_phase_len = 16.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ar4im"]
+render_priority = 0
+shader = ExtResource("11_61ckh")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("15_lipj8")
+shader_parameter/alpha_scissor_threshold = 0.5
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.05
+shader_parameter/texture_normal = ExtResource("14_io7g8")
+shader_parameter/normal_scale = 1.0
+shader_parameter/backlight = Color(0, 0, 0, 1)
+shader_parameter/texture_backlight = ExtResource("13_a5iiu")
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/sway_speed = 2.5
+shader_parameter/sway_strength_x = 0.0
+shader_parameter/sway_strength_y = 0.0
+shader_parameter/sway_strength_z = 0.015
+shader_parameter/sway_phase_len = 16.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hi8lg"]
+albedo_texture = ExtResource("3_ke4pw")
+roughness = 0.96
+normal_enabled = true
+normal_texture = ExtResource("4_ob1wl")
+anisotropy_enabled = true
+anisotropy = 0.2
+uv1_scale = Vector3(300, 300, 300)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y4atg"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_5yoqd"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4630x"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_eqkmv"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
+[node name="ScoutLoopTestScene" type="Node3D" unique_id=62581022]
+process_mode = 1
+script = ExtResource("1_rkvpr")
+
+[node name="WorldEnvironment" parent="." unique_id=1212080283 instance=ExtResource("2_0tnlj")]
+
+[node name="CameraController" parent="." unique_id=416821967 node_paths=PackedStringArray("subject") instance=ExtResource("5_ll16v")]
+subject = NodePath("../Character1")
+
+[node name="Character1" parent="." unique_id=952580078 groups=["PlayerGroup", "ScoutTargetGroup"] instance=ExtResource("6_c7aqb")]
+
+[node name="PlayerController" type="Node" parent="Character1" unique_id=1566425451 node_paths=PackedStringArray("character")]
+script = ExtResource("7_404y3")
+character = NodePath("..")
+metadata/_custom_type_script = "uid://c5ypw4nstaeac"
+
+[node name="Props" type="Node3D" parent="." unique_id=1913323305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00811756, 0)
+
+[node name="PineTree" parent="Props" unique_id=1581090718 instance=ExtResource("9_pa7r3")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 1.59193, 0.00758123, -22.296314)
+
+[node name="PineTree4" parent="Props" unique_id=789699688 instance=ExtResource("9_pa7r3")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 27.9113, 0.00758123, -29.238474)
+
+[node name="PineTree2" parent="Props" unique_id=1816775458 instance=ExtResource("9_pa7r3")]
+transform = Transform3D(-0.469279, 0, -0.647902, 0, 0.8, 0, 0.647902, 0, -0.469279, 12.6306, 0.00758123, -18.4601)
+
+[node name="PineTree3" parent="Props" unique_id=989694291 instance=ExtResource("9_pa7r3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.54803, 0.00758123, -36.36777)
+
+[node name="PineTree5" parent="Props" unique_id=736373406 instance=ExtResource("9_pa7r3")]
+transform = Transform3D(0.42782408, 0, -0.675993, 0, 0.8, 0, 0.675993, 0, 0.42782408, -13.710279, 0.00758123, -20.096375)
+
+[node name="TreeBradfordPear" parent="Props" unique_id=613537756 instance=ExtResource("10_pabad")]
+transform = Transform3D(1.76107, 0, -0.372336, 0, 1.8, 0, 0.372336, 0, 1.76107, 14.2508, 0, -37.60327)
+material_override = SubResource("ShaderMaterial_utcmx")
+
+[node name="TreeBradfordPear6" parent="Props" unique_id=1300078623 instance=ExtResource("10_pabad")]
+transform = Transform3D(-2.1887906, 0, -0.70653784, 0, 2.3, 0, 0.70653784, 0, -2.1887906, -15.619596, 0, -10.076015)
+material_override = SubResource("ShaderMaterial_utcmx")
+
+[node name="TreeBradfordPear2" parent="Props" unique_id=205698365 instance=ExtResource("10_pabad")]
+transform = Transform3D(-0.995694, 0, 1.12187, 0, 1.5, 0, -1.12187, 0, -0.995694, -9.649465, 0, -7.06437)
+
+[node name="TreeBradfordPear4" parent="Props" unique_id=36668333 instance=ExtResource("10_pabad")]
+transform = Transform3D(-1.19751, 0, 0.903308, 0, 1.5, 0, -0.903308, 0, -1.19751, 19.8512, 0, -6.2558126)
+
+[node name="TreeBradfordPear5" parent="Props" unique_id=272244571 instance=ExtResource("10_pabad")]
+transform = Transform3D(-0.35992992, 0, 2.068925, 0, 2.1, 0, -2.068925, 0, -0.35992992, 7.3480997, 0, -27.95611)
+
+[node name="TreeBradfordPear3" parent="Props" unique_id=1610834829 instance=ExtResource("10_pabad")]
+transform = Transform3D(2.18221, 0, 0.279199, 0, 2.2, 0, -0.279199, 0, 2.18221, -11.6179, 0, -28.413002)
+material_override = SubResource("ShaderMaterial_ar4im")
+
+[node name="TreeBradfordPear7" parent="Props" unique_id=584743141 instance=ExtResource("10_pabad")]
+transform = Transform3D(1.1003369, 0, -1.5489541, 0, 1.9, 0, 1.5489541, 0, 1.1003369, 29.234236, 0, -15.066168)
+material_override = SubResource("ShaderMaterial_ar4im")
+
+[node name="Bush" parent="Props" unique_id=2112318758 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+
+[node name="Bush6" parent="Props" unique_id=2084273733 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3667, 0, -20.447172)
+
+[node name="Bush2" parent="Props" unique_id=393298734 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6990271, -0.43317056, 3.1058683)
+
+[node name="Bush3" parent="Props" unique_id=1298786140 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.85722, 0, -19.535107)
+
+[node name="Bush7" parent="Props" unique_id=1824097038 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.297567, -0.21632218, 1.9668579)
+
+[node name="Bush8" parent="Props" unique_id=374846612 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.190348, -0.14866638, 2.45676)
+
+[node name="Bush9" parent="Props" unique_id=138193160 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.699471, 0, -5.7858443)
+
+[node name="Bush10" parent="Props" unique_id=371749909 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.152819, 0, -7.674852)
+
+[node name="Bush4" parent="Props" unique_id=1266829715 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8656, 0, -12.6798)
+
+[node name="Bush5" parent="Props" unique_id=1392363676 instance=ExtResource("16_1yu3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1447, 0, -1.92601)
+
+[node name="Grass" type="Node3D" parent="Props" unique_id=1455223414]
+transform = Transform3D(1.77773, 0, 0, 0, 1, 0, 0, 0, 2.29965, 0, -0.005638998, -5.638559)
+visible = false
+
+[node name="LightGrassRandomPatch6MMixed1" parent="Props/Grass" unique_id=196904972 instance=ExtResource("17_g6pbv")]
+transform = Transform3D(0.0109604, 0, 0.99994, 0, 1, 0, -0.99994, 0, 0.0109604, -8.50588, -0.0734396, 7.14017)
+
+[node name="LightGrassRandomPatch6MMixed7" parent="Props/Grass" unique_id=1195090591 instance=ExtResource("17_g6pbv")]
+transform = Transform3D(0.289032, 0, 0.95732, 0, 1, 0, -0.95732, 0, 0.289032, -15.5304, -0.0734396, 7.14017)
+
+[node name="LightGrassRandomPatch6MMixed2" parent="Props/Grass" unique_id=2084318217 instance=ExtResource("17_g6pbv")]
+transform = Transform3D(0.308287, 0, 0.951294, 0, 1, 0, -0.951294, 0, 0.308287, -1.6251, -0.0734396, 7.14017)
+
+[node name="LightGrassRandomPatch6MMixed3" parent="Props/Grass" unique_id=594191766 instance=ExtResource("17_g6pbv")]
+transform = Transform3D(-0.289216, 0, 0.957264, 0, 1, 0, -0.957264, 0, -0.289216, 4.80171, -0.0734396, 6.20552)
+
+[node name="LightGrassRandomPatch6MMixed4" parent="Props/Grass" unique_id=2049176610 instance=ExtResource("17_g6pbv")]
+transform = Transform3D(0.169091, 0, 0.9856, 0, 1, 0, -0.9856, 0, 0.169091, 12.0118, -0.0734396, 6.20552)
+
+[node name="LightGrassRandomPatch6MMixed5" parent="Props/Grass" unique_id=313681871 instance=ExtResource("17_g6pbv")]
+transform = Transform3D(0.433596, 0, 0.901107, 0, 1, 0, -0.901107, 0, 0.433596, 18.5658, -0.0734396, 6.20552)
+
+[node name="LightGrassRandomPatch6MMixed6" parent="Props/Grass" unique_id=593599637 instance=ExtResource("17_g6pbv")]
+transform = Transform3D(0.108607, 0, 0.994085, 0, 1, 0, -0.994085, 0, 0.108607, 25.7914, -0.0734396, 6.20552)
+
+[node name="ControlNode" parent="." unique_id=1503055471 instance=ExtResource("18_md2nj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2464328, 0.250523, 0)
+
+[node name="DebugTool" parent="." unique_id=988042807 instance=ExtResource("20_4ywmp")]
+max_running_logs = 100
+is_visible = false
+visible_only_on_pause = true
+
+[node name="DroneSpawnPoint" type="Marker3D" parent="." unique_id=1157455945]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.733, 10, 0)
+
+[node name="ParticlesPreloader" parent="." unique_id=1312114520 instance=ExtResource("21_lxalg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.766129, 0)
+
+[node name="Scout" parent="." unique_id=1167301137 instance=ExtResource("21_rkvpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.040514, 9.364317, -14.396991)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=357249718]
+transform = Transform3D(1000, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_hi8lg")
+mesh = SubResource("PlaneMesh_y4atg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1860814306]
+collision_layer = 2
+collision_mask = 261
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1315804199]
+shape = SubResource("WorldBoundaryShape3D_5yoqd")
+
+[node name="Blocks" type="Node3D" parent="." unique_id=528383762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.448973, -0.021655083, 0)
+script = ExtResource("8_hya5b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Blocks" unique_id=797167399]
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.539924, 1.56718, -0.0020504)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D" unique_id=2135062205]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D" unique_id=300083993]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Blocks" unique_id=569081846]
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -0.257867, 1.00949, -0.0020504)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D2" unique_id=916427759]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D2" unique_id=718888245]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="Blocks" unique_id=208850563]
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.07867, 0.43629, -0.0020504)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D6" unique_id=1295426205]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D6" unique_id=593282955]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D7" type="StaticBody3D" parent="Blocks" unique_id=1904440482]
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.89916, -0.136931, -0.0020504)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D7" unique_id=1464931824]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D7" unique_id=1773648160]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Blocks" unique_id=593157262]
+transform = Transform3D(0.56816, 0.822918, 0, -0.822918, 0.56816, 0, 0, 0, 1, 1.52786, 0.115338, 0)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D3" unique_id=1527039089]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D3" unique_id=323902699]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D8" type="StaticBody3D" parent="Blocks" unique_id=1442980432]
+transform = Transform3D(0.56816, 0.822918, 0, -0.822918, 0.56816, 0, 0, 0, 1, 1.02304, 0.862669, 0)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D8" unique_id=334896584]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D8" unique_id=505395608]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="Blocks2" type="Node3D" parent="." unique_id=460270086]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 6.386567, 3.5477352, 0)
+script = ExtResource("8_hya5b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Blocks2" unique_id=1605925071]
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.539924, 1.56718, -0.0020504)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D" unique_id=308071884]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D" unique_id=890445467]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Blocks2" unique_id=1275271829]
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -0.257867, 1.00949, -0.0020504)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D2" unique_id=1286086551]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D2" unique_id=1501623204]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="Blocks2" unique_id=2067671539]
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.07867, 0.43629, -0.0020504)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D6" unique_id=156823431]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D6" unique_id=1810952138]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D7" type="StaticBody3D" parent="Blocks2" unique_id=133802803]
+transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.89916, -0.136931, -0.0020504)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D7" unique_id=1682956058]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D7" unique_id=649697427]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Blocks2" unique_id=123644603]
+transform = Transform3D(0.56816, 0.822918, 0, -0.822918, 0.56816, 0, 0, 0, 1, 1.52786, 0.115338, 0)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D3" unique_id=2078978273]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D3" unique_id=1715612901]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")
+
+[node name="StaticBody3D8" type="StaticBody3D" parent="Blocks2" unique_id=1172724837]
+transform = Transform3D(0.56816, 0.822918, 0, -0.822918, 0.56816, 0, 0, 0, 1, 1.02304, 0.862669, 0)
+collision_layer = 514
+collision_mask = 261
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D8" unique_id=415836149]
+mesh = SubResource("BoxMesh_4630x")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("8_gp53o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D8" unique_id=58486505]
+shape = SubResource("ConvexPolygonShape3D_eqkmv")

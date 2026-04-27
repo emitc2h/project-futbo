@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dlhol3ht3l4ji"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3a4lj"]
+top_radius = 0.02
+bottom_radius = 0.02
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wrppk"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l78dr"]
+top_radius = 0.0
+bottom_radius = 0.05
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3a4lj"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l78dr"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6k402"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yoh8s"]
+albedo_color = Color(0, 0, 1, 1)
+
+[node name="Axes" type="Node3D" unique_id=421101617]
+
+[node name="YAxis" type="Node3D" parent="." unique_id=159053315]
+
+[node name="YCylinder" type="MeshInstance3D" parent="YAxis" unique_id=357891622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CylinderMesh_3a4lj")
+surface_material_override/0 = SubResource("StandardMaterial3D_wrppk")
+
+[node name="YCone" type="MeshInstance3D" parent="YAxis" unique_id=2005647177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("CylinderMesh_l78dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_wrppk")
+
+[node name="XAxis" type="Node3D" parent="." unique_id=1209518602]
+
+[node name="XCylinder" type="MeshInstance3D" parent="XAxis" unique_id=2128458191]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("CylinderMesh_3a4lj")
+surface_material_override/0 = SubResource("StandardMaterial3D_3a4lj")
+
+[node name="XCone" type="MeshInstance3D" parent="XAxis" unique_id=363386748]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 1.1, 0, 0)
+mesh = SubResource("CylinderMesh_l78dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_l78dr")
+
+[node name="ZAxis" type="Node3D" parent="." unique_id=2106604107]
+
+[node name="ZCylinder" type="MeshInstance3D" parent="ZAxis" unique_id=1047627722]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.5)
+mesh = SubResource("CylinderMesh_3a4lj")
+surface_material_override/0 = SubResource("StandardMaterial3D_6k402")
+
+[node name="ZCone" type="MeshInstance3D" parent="ZAxis" unique_id=342909811]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 1.1)
+mesh = SubResource("CylinderMesh_l78dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_yoh8s")
