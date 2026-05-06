@@ -62,6 +62,7 @@ Enemies=""
 ControlNodeGroup=""
 DroneShieldGroup=""
 ScoutTargetGroup=""
+navigation_mesh_source_group=""
 
 [input]
 

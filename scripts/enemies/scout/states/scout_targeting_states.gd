@@ -60,7 +60,10 @@ func _on_none_state_physics_processing(_delta: float) -> void:
 #----------------------------------------
 func _on_acquired_state_entered() -> void:
 	state = State.ACQUIRED
-	target = target_candidate
+	if target_candidate is CharacterBase:
+		target = target_candidate.target_marker
+	else:
+		target = target_candidate
 
 
 func _on_acquired_state_exited() -> void:

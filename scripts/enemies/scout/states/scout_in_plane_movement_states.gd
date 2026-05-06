@@ -7,10 +7,6 @@ extends Node
 @export var sc: StateChart
 @export var look_at_target: Marker3D
 
-## Parameters
-@export_group("Parameters")
-@export var lerp_factor: float = 5.0
-
 ## States Enum
 enum State {MOVE = 0, TARGET = 1}
 var state: State = State.MOVE
@@ -26,8 +22,6 @@ const TRANS_TO_TARGET: String = "In Plane Movement: to target"
 var previous_frame_control_axis: Vector2 = Vector2.ZERO
 var control_axis: Vector2 = Vector2.ZERO
 var lerped_control_axis: Vector2 = Vector2.ZERO
-var speed: float = 6.0
-var targeting_speed: float = 3.0
 var z_axis_look_at_component: float
 var control_axis_3D_look_at: Vector3 = Vector3.ZERO
 var exhaust_intensity: float = 0.0
@@ -50,20 +44,19 @@ func _on_move_state_physics_processing(delta: float) -> void:
 		control_axis_3D_look_at = control_axis_3D
 		z_axis_look_at_component = (1.0 - control_axis_length * control_axis_length)
 	else:
-		z_axis_look_at_component = lerp(z_axis_look_at_component, 0.0, lerp_factor * 2.0 * delta)
+		z_axis_look_at_component = lerp(z_axis_look_at_component, 0.0, scout.lerp_factor * 2.0 * delta)
 
-	look_at_target.position = look_at_target.position.lerp(control_axis_3D_look_at + z_axis_look_at_component * Vector3.BACK, lerp_factor * delta)
+	look_at_target.position = look_at_target.position.lerp(control_axis_3D_look_at + z_axis_look_at_component * Vector3.BACK, scout.lerp_factor * delta)
 	lerped_control_axis = Vector2(look_at_target.position.x, look_at_target.position.y)
 	
 	## Look at the marker
 	char_node.look_at(look_at_target.global_position, Vector3.FORWARD)
 	
 	## move according to the movement vector too
-	char_node.velocity = char_node.velocity.lerp(control_axis_3D * speed, lerp_factor * delta)
-	
+	char_node.velocity = char_node.velocity.lerp(control_axis_3D * scout.speed, scout.lerp_factor * delta)
 	
 	## Exhaust matches velocity
-	exhaust_intensity = lerp(exhaust_intensity, control_axis_length, lerp_factor * delta)
+	exhaust_intensity = lerp(exhaust_intensity, control_axis_length, scout.lerp_factor * delta)
 	scout.asset.set_exhaust_intensity(exhaust_intensity)
 	
 	## save previous frame control axis vector
@@ -78,19 +71,19 @@ func _on_target_state_entered() -> void:
 
 func _on_target_state_physics_processing(delta: float) -> void:
 	## Compute the movement vector
-	lerped_control_axis = lerped_control_axis.lerp(control_axis, lerp_factor * delta)
+	lerped_control_axis = lerped_control_axis.lerp(control_axis, scout.lerp_factor * delta)
 	var lerped_control_axis_3D: Vector3 = Vector3(lerped_control_axis.x, lerped_control_axis.y, 0.0)
 	
 	## Update the look_at_target with the actual target
-	look_at_target.global_position = look_at_target.global_position.lerp(scout.targeting_states.target.global_position, lerp_factor * delta)
+	look_at_target.global_position = look_at_target.global_position.lerp(scout.targeting_states.target.global_position, scout.lerp_factor * delta)
 	
 	char_node.look_at(look_at_target.global_position, Vector3.FORWARD)
 	
 	## move according to the movement vector too
-	char_node.velocity = lerped_control_axis_3D * targeting_speed
+	char_node.velocity = lerped_control_axis_3D * scout.targeting_speed
 	
 	## exhaust goes to 0
-	exhaust_intensity = lerp(exhaust_intensity, 0.0, lerp_factor * delta)
+	exhaust_intensity = lerp(exhaust_intensity, 0.0, scout.lerp_factor * delta)
 	scout.asset.set_exhaust_intensity(exhaust_intensity)
 	
 	## save previous frame control axis vector

@@ -29,7 +29,6 @@ func _ready() -> void:
 	Signals.control_node_shield_hit.connect(_on_control_node_shield_hit)
 	Signals.control_node_impulse.connect(_on_control_node_impulse)
 	Representations.control_node_target_marker = target_marker
-	dbg.log("control node ready")
 
 
 func _physics_process(_delta: float) -> void:
@@ -116,7 +115,6 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 					asset.bounce(bounce_strength)
 	
 		if body.get_parent() is Drone:
-			print_debug("Does this ever happen? -> " + body.name)
 			var drone: Drone = body.get_parent()
 			if drone.get_hit(hit_strength):
 				sc.send_event(power_states.TRANS_TO_BLOW)

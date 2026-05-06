@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cl1duovepge1t"]
+
+[ext_resource type="PackedScene" uid="uid://ddtyt4b32wcuu" path="res://assets/blender/assets/visuals/CurvedArrow1.glb" id="1_bff2m"]
+[ext_resource type="Script" uid="uid://fn13m0k1p3po" path="res://scripts/visuals/straight_arrow.gd" id="2_y75bx"]
+[ext_resource type="Material" uid="uid://bv58qw6wja2qm" path="res://assets/materials/assets/control_node/streak_material.tres" id="3_lnyeu"]
+
+[node name="CurvedArrow1" unique_id=264141313 node_paths=PackedStringArray("arrow_mesh") instance=ExtResource("1_bff2m")]
+script = ExtResource("2_y75bx")
+arrow_mesh = NodePath("CurvedArrow1")
+offset_duration = null
+
+[node name="CurvedArrow1" parent="." index="0" unique_id=1986962343]
+surface_material_override/0 = ExtResource("3_lnyeu")

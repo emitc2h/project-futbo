@@ -5,6 +5,7 @@ extends Node
 @export_group("Dependencies")
 @export var scout: Scout
 @export var sc: StateChart
+@export var repulsor_field: ScoutRepulsorField
 
 ## States Enum
 enum State {ACTIVE = 0, INCAPACITATED = 1, DEAD = 2}
@@ -42,7 +43,11 @@ func _on_active_state_entered() -> void:
 	collision_shape_char.disabled = false
 
 
-func _on_active_state_physics_processing(_delta: float) -> void:
+func _on_active_state_physics_processing(delta: float) -> void:
+	## Factor in the repulsor field
+	var repulsor_field_force: Vector3 = repulsor_field.get_repulsion_force()
+	char_node.velocity += repulsor_field_force * delta
+	
 	char_node.move_and_slide()
 	
 	## nodes that must follow the char node
