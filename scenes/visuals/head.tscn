@@ -1,0 +1,157 @@
+[gd_scene format=3 uid="uid://bbxmwmojaemwb"]
+
+[ext_resource type="PackedScene" uid="uid://dtmdu55h6palo" path="res://assets/blender/assets/visuals/Head.glb" id="1_k0cjd"]
+[ext_resource type="PackedScene" uid="uid://cl1duovepge1t" path="res://scenes/visuals/curved_arrow_1.tscn" id="3_1qaum"]
+[ext_resource type="PackedScene" uid="uid://cnlmt3c3vm5h8" path="res://scenes/visuals/straight_arrow.tscn" id="4_kmx03"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3a4lj"]
+top_radius = 0.02
+bottom_radius = 0.02
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wrppk"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l78dr"]
+top_radius = 0.0
+bottom_radius = 0.05
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3a4lj"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l78dr"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6k402"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yoh8s"]
+albedo_color = Color(0, 0, 1, 1)
+
+[node name="Head" unique_id=231298523 instance=ExtResource("1_k0cjd")]
+
+[node name="Head" parent="." index="0" unique_id=987284051]
+transform = Transform3D(-8.118441e-09, -0.07419578, 0.18572827, -3.2432006e-09, 0.18572827, 0.07419578, -0.2, 0, -8.742278e-09, 0, 0, 0)
+
+[node name="Axes" type="Node3D" parent="Head" index="0" unique_id=421101617]
+transform = Transform3D(-2.1855693e-07, 0, -5, 0, 5, 0, 5, 0, -2.1855693e-07, 0, 0, 0)
+
+[node name="YAxis" type="Node3D" parent="Head/Axes" index="0" unique_id=159053315]
+
+[node name="YCylinder" type="MeshInstance3D" parent="Head/Axes/YAxis" index="0" unique_id=357891622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CylinderMesh_3a4lj")
+surface_material_override/0 = SubResource("StandardMaterial3D_wrppk")
+
+[node name="YCone" type="MeshInstance3D" parent="Head/Axes/YAxis" index="1" unique_id=2005647177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("CylinderMesh_l78dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_wrppk")
+
+[node name="XAxis" type="Node3D" parent="Head/Axes" index="1" unique_id=1209518602]
+
+[node name="XCylinder" type="MeshInstance3D" parent="Head/Axes/XAxis" index="0" unique_id=2128458191]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("CylinderMesh_3a4lj")
+surface_material_override/0 = SubResource("StandardMaterial3D_3a4lj")
+
+[node name="XCone" type="MeshInstance3D" parent="Head/Axes/XAxis" index="1" unique_id=363386748]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 1.1, 0, 0)
+mesh = SubResource("CylinderMesh_l78dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_l78dr")
+
+[node name="ZAxis" type="Node3D" parent="Head/Axes" index="2" unique_id=2106604107]
+
+[node name="ZCylinder" type="MeshInstance3D" parent="Head/Axes/ZAxis" index="0" unique_id=1047627722]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.5)
+mesh = SubResource("CylinderMesh_3a4lj")
+surface_material_override/0 = SubResource("StandardMaterial3D_6k402")
+
+[node name="ZCone" type="MeshInstance3D" parent="Head/Axes/ZAxis" index="1" unique_id=342909811]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 1.1)
+mesh = SubResource("CylinderMesh_l78dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_yoh8s")
+
+[node name="Axes2" type="Node3D" parent="Head" index="1" unique_id=1881817589]
+transform = Transform3D(4.6677012, 0.47763953, 1.7275381, -0.8220383, 4.8529396, 0.87932754, -1.5927289, -1.1049088, 4.6089444, 23.080927, 11.855165, -5.723747)
+
+[node name="YAxis" type="Node3D" parent="Head/Axes2" index="0" unique_id=1225710313]
+
+[node name="YCylinder" type="MeshInstance3D" parent="Head/Axes2/YAxis" index="0" unique_id=777127675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CylinderMesh_3a4lj")
+surface_material_override/0 = SubResource("StandardMaterial3D_wrppk")
+
+[node name="YCone" type="MeshInstance3D" parent="Head/Axes2/YAxis" index="1" unique_id=2014768773]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("CylinderMesh_l78dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_wrppk")
+
+[node name="XAxis" type="Node3D" parent="Head/Axes2" index="1" unique_id=627659109]
+
+[node name="XCylinder" type="MeshInstance3D" parent="Head/Axes2/XAxis" index="0" unique_id=449329192]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("CylinderMesh_3a4lj")
+surface_material_override/0 = SubResource("StandardMaterial3D_3a4lj")
+
+[node name="XCone" type="MeshInstance3D" parent="Head/Axes2/XAxis" index="1" unique_id=146504591]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 1.1, 0, 0)
+mesh = SubResource("CylinderMesh_l78dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_l78dr")
+
+[node name="ZAxis" type="Node3D" parent="Head/Axes2" index="2" unique_id=24023186]
+
+[node name="ZCylinder" type="MeshInstance3D" parent="Head/Axes2/ZAxis" index="0" unique_id=1682111762]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.5)
+mesh = SubResource("CylinderMesh_3a4lj")
+surface_material_override/0 = SubResource("StandardMaterial3D_6k402")
+
+[node name="ZCone" type="MeshInstance3D" parent="Head/Axes2/ZAxis" index="1" unique_id=749918213]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 1.1)
+mesh = SubResource("CylinderMesh_l78dr")
+surface_material_override/0 = SubResource("StandardMaterial3D_yoh8s")
+
+[node name="StraightArrow" parent="Head" index="2" unique_id=221790380 instance=ExtResource("4_kmx03")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3.8538256, 1.43291, 0)
+visible = false
+
+[node name="YawArrows" type="Node3D" parent="Head" index="3" unique_id=1204320568]
+visible = false
+
+[node name="CurvedArrow1" parent="Head/YawArrows" index="0" unique_id=264141313 instance=ExtResource("3_1qaum")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.4404354)
+
+[node name="CurvedArrow2" parent="Head/YawArrows" index="1" unique_id=1593856632 instance=ExtResource("3_1qaum")]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, -6.4404354)
+
+[node name="PitchArrows" type="Node3D" parent="Head" index="4" unique_id=1613346829]
+visible = false
+
+[node name="CurvedArrow3" parent="Head/PitchArrows" index="0" unique_id=2113935491 instance=ExtResource("3_1qaum")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 6.650533, 0)
+
+[node name="CurvedArrow4" parent="Head/PitchArrows" index="1" unique_id=253982034 instance=ExtResource("3_1qaum")]
+transform = Transform3D(-1, 8.742278e-08, 0, 3.8213714e-15, 4.371139e-08, -1, -8.742278e-08, -1, -4.371139e-08, 0, 6.650533, 0)
+
+[node name="forward axis" type="Label3D" parent="Head" index="5" unique_id=1936549520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5787015, 2.129393, 6.9007214e-08)
+text = "forward axis
+-------->"
+font_size = 144
+horizontal_alignment = 0
+
+[node name="UP axis" type="Label3D" parent="Head" index="6" unique_id=1718967617]
+transform = Transform3D(-4.3711374e-08, -1, -4.371139e-08, 1, -4.371139e-08, 4.371139e-08, -4.3711402e-08, -4.371139e-08, 1, -0.5819988, 3.1557307, -2.5439993e-08)
+text = "UP
+
+-------->"
+font_size = 144
+horizontal_alignment = 0
+
+[node name="3rd unnamed axis" type="Label3D" parent="Head" index="7" unique_id=774205699]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0319033, 1.5919255, 2.0649314)
+text = "3rd unnamed axis
+<--------"
+font_size = 144
+horizontal_alignment = 2

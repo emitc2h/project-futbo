@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://c5odptar8rapj" path="res://scripts/enemies/scout/states/scout_targeting_states.gd" id="10_gt8hr"]
 [ext_resource type="Script" uid="uid://brf0q8s1o47pd" path="res://scripts/enemies/scout/states/scout_spinner_states.gd" id="11_kfrjq"]
 [ext_resource type="Script" uid="uid://b82igppwpb1ft" path="res://scripts/enemies/scout/states/scout_behavior_states.gd" id="13_vqfky"]
+[ext_resource type="PackedScene" uid="uid://dlhol3ht3l4ji" path="res://scenes/debug/axes.tscn" id="16_64ian"]
 [ext_resource type="Script" uid="uid://42v13ykhymos" path="res://scripts/enemies/scout/scout_repulsor_field.gd" id="16_rwhje"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_df6tb"]
@@ -472,6 +473,9 @@ motion_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode" unique_id=1017328439]
 shape = SubResource("SphereShape3D_df6tb")
+
+[node name="Axes" parent="CharNode" unique_id=421101617 instance=ExtResource("16_64ian")]
+transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
 
 [node name="RigidNode" type="RigidBody3D" parent="." unique_id=802826361]
 collision_layer = 0
