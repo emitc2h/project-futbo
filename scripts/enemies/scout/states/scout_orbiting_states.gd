@@ -12,12 +12,18 @@ extends Node
 
 @export_group("Parameters")
 @export_subgroup("Orbit trajectory")
+## Speed multiplier minimum when the scout is orbiting
 @export var orbit_speed_factor_min: float = 0.6
+## Speed multiplier maximum when the scout is orbiting
 @export var orbit_speed_factor_max: float = 1.0
+## Minimum orbit radius
 @export var orbit_radius_min: float = 1.4
+## Maximum orbit radius
 @export var orbit_radius_max: float = 3.6
-@export var orbit_angle_min_rad: float = 0.1
-@export var orbit_angle_max_rad: float = 0.4
+## Minimum tilt angle for orbit (0 means horizontal, 1 means vertical)
+@export var orbit_angle_min: float = 0.0
+## Maximum tilt angle for orbit (0 means horizontal, 1 means vertical)
+@export var orbit_angle_max: float = 0.4
 
 @export_subgroup("Looping triggers")
 ## Maximum number of collisions with other scouts allowed before engaging in looping.
@@ -29,9 +35,13 @@ extends Node
 ## How far away from the player should the scout be to trigger looping. Meant to prevent orbit decay.
 @export var max_orbit_distances: float = 2.4
 @export_subgroup("Looping trajectory")
+## Minimum vertical distance to travel when looping
 @export var looping_vertical_min: float = 3.0
+## Maximum vertical distance to travel when looping
 @export var looping_vertical_max: float = 7.5
+## Minimum horizontal distance to travel when looping
 @export var looping_horizontal_min: float = 5.0
+## Maximum horizontal distance to travel when looping
 @export var looping_horizontal_max: float = 10.0
 
 
@@ -78,7 +88,7 @@ func _on_targeting_state_entered() -> void:
 	_is_orbit_motion_clockwise = randi_range(0, 1)
 	_speed_modifier = randf_range(orbit_speed_factor_min, orbit_speed_factor_max)
 	_orbit_size = randf_range(orbit_radius_min, orbit_radius_max)
-	_orbit_angle = randf_range(orbit_angle_min_rad, orbit_angle_max_rad)
+	_orbit_angle = randf_range(orbit_angle_min, orbit_angle_max)
 
 
 func _on_targeting_state_physics_processing(delta: float) -> void:
@@ -92,16 +102,16 @@ func _on_targeting_state_physics_processing(delta: float) -> void:
 	## First, make the char node look directly at the target to set the velocities
 	char_node.look_at(scout.targeting_states.target.global_position)
 	
-	## Start with the perpendicular motion component
+	## Start with the tangential motion component
 	var final_velocity: Vector3 = (2 * int(_is_orbit_motion_clockwise) - 1) * char_node.transform.basis.x * scout.targeting_speed * _speed_modifier
 	
 	## Add vertical motion component
 	final_velocity += char_node.transform.basis.y * sin(char_node.rotation.y) * _orbit_angle * scout.targeting_speed * _speed_modifier
 	
-	## Add the axial motion component
+	## Add the radial motion component
 	var distance_to_target: float = char_node.global_position.distance_to(scout.targeting_states.target.global_position)
 	var orbit_correction_factor: float = (_orbit_size - distance_to_target)
-	final_velocity += char_node.transform.basis.z * orbit_correction_factor * scout.targeting_speed
+	final_velocity += char_node.transform.basis.z * orbit_correction_factor
 	
 	## Normalize back velocity
 	final_velocity = final_velocity.normalized() * scout.targeting_speed * _speed_modifier
