@@ -9,9 +9,14 @@ extends Node3D
 @export var outer_radius: float = 1.0
 @export var max_force: float = 150.0
 @export var force_dampening: float = 6.0
+@export var min_scout_collision_reporting_force: float = 10.0
 
 ## Internal parameters
 var _raycasts: Array[RayCast3D]
+var _scout_collision_reported: bool = false
+
+## Signals
+signal colliding_with_other_scout
 
 func _ready() -> void:
 	for child in get_children():
@@ -35,6 +40,7 @@ func sync_collision_mask_to(node: CollisionObject3D) -> void:
 
 func get_repulsion_force() -> Vector3:
 	var cumulative_force_vector: Vector3 = Vector3.ZERO
+	_scout_collision_reported = false
 	
 	for raycast in _raycasts:
 		raycast.force_update_transform()
@@ -43,6 +49,11 @@ func get_repulsion_force() -> Vector3:
 		if not raycast.is_colliding():
 			continue
 		
+		var collider: Node3D = raycast.get_collider() as Node3D
+		if collider.is_in_group("ScoutGroup"):
+			if not _scout_collision_reported:
+				_scout_collision_reported = true
+		
 		var space_vector: Vector3 = raycast.get_collision_point() - self.global_position
 		var space_vector_length: float = space_vector.length() - inner_radius
 		
@@ -50,5 +61,8 @@ func get_repulsion_force() -> Vector3:
 		var force_magnitude: float = -max_force * exp(-force_dampening * space_vector_length)
 		
 		cumulative_force_vector += force_magnitude * space_vector.normalized()
+		
+	if _scout_collision_reported and cumulative_force_vector.length() > min_scout_collision_reporting_force:
+		colliding_with_other_scout.emit()
 	
 	return cumulative_force_vector

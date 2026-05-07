@@ -10,23 +10,24 @@ extends Node
 @export var transition_to_orbit_distance: float = 3.0
 
 ## States Enum
-enum State {ENTRANCE = 0, ORBIT = 1, ACTION = 2}
-var state: State = State.ENTRANCE
+enum State {GO_TO_PLAYER = 0, ORBIT = 1, ACTION = 2}
+var state: State = State.GO_TO_PLAYER
 
 ## State transition constants
+const TRANS_TO_GO_TO_PLAYER: String = "Behavior: go to player"
 const TRANS_TO_ORBIT: String = "Behavior: to orbit"
 const TRANS_TO_ACTION: String = "Behavior: to action"
 
 
 # entrance state
 #----------------------------------------
-func _on_entrance_state_entered() -> void:
-	state = State.ENTRANCE
+func _on_go_to_player_state_entered() -> void:
+	state = State.GO_TO_PLAYER
 	scout.movement_states.set_player_as_out_of_plane_movement_target()
 	sc.send_event(ScoutMovementStates.TRANS_TO_OUT_OF_PLANE_MOVEMENT)
 
 
-func _on_entrance_state_physics_processing(_delta: float) -> void:
+func _on_go_to_player_state_physics_processing(_delta: float) -> void:
 	var distance_to_player: float = scout.health_states.char_node.global_position.distance_to(Representations.player_target_marker.global_position)
 	if distance_to_player < transition_to_orbit_distance:
 		sc.send_event(TRANS_TO_ORBIT)
