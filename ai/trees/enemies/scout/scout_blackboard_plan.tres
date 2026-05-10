@@ -1,0 +1,28 @@
+[gd_resource type="BlackboardPlan" format=3 uid="uid://dupmdgx7dv6q3"]
+
+[resource]
+var/scout_hivemind_num_scouts/name = &"scout_hivemind_num_scouts"
+var/scout_hivemind_num_scouts/type = 2
+var/scout_hivemind_num_scouts/value = 0
+var/scout_hivemind_num_scouts/hint = 0
+var/scout_hivemind_num_scouts/hint_string = ""
+var/scout_hivemind_scout_is_in_left_nest/name = &"scout_hivemind_scout_is_in_left_nest"
+var/scout_hivemind_scout_is_in_left_nest/type = 1
+var/scout_hivemind_scout_is_in_left_nest/value = false
+var/scout_hivemind_scout_is_in_left_nest/hint = 0
+var/scout_hivemind_scout_is_in_left_nest/hint_string = ""
+var/scout_hivemind_scout_is_in_right_nest/name = &"scout_hivemind_scout_is_in_right_nest"
+var/scout_hivemind_scout_is_in_right_nest/type = 1
+var/scout_hivemind_scout_is_in_right_nest/value = false
+var/scout_hivemind_scout_is_in_right_nest/hint = 0
+var/scout_hivemind_scout_is_in_right_nest/hint_string = ""
+var/scout_hivemind_num_scouts_in_gameplay_plane/name = &"scout_hivemind_num_scouts_in_gameplay_plane"
+var/scout_hivemind_num_scouts_in_gameplay_plane/type = 2
+var/scout_hivemind_num_scouts_in_gameplay_plane/value = 0
+var/scout_hivemind_num_scouts_in_gameplay_plane/hint = 0
+var/scout_hivemind_num_scouts_in_gameplay_plane/hint_string = ""
+var/scout_hivemind_num_incapacitated_scouts/name = &"scout_hivemind_num_incapacitated_scouts"
+var/scout_hivemind_num_incapacitated_scouts/type = 2
+var/scout_hivemind_num_incapacitated_scouts/value = 0
+var/scout_hivemind_num_incapacitated_scouts/hint = 0
+var/scout_hivemind_num_incapacitated_scouts/hint_string = ""

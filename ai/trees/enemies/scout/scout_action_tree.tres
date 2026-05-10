@@ -1,0 +1,74 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://blwwnm880my0m"]
+
+[ext_resource type="BlackboardPlan" uid="uid://dupmdgx7dv6q3" path="res://ai/trees/enemies/scout/scout_blackboard_plan.tres" id="1_thnlf"]
+[ext_resource type="Script" uid="uid://cjmnub711g5c3" path="res://ai/tasks/scout/scout_claim_nest.gd" id="2_6fvay"]
+[ext_resource type="Script" uid="uid://cgcm8lvptokrh" path="res://ai/tasks/scout/scout_go_to_nest_action.gd" id="3_d8kv2"]
+[ext_resource type="Script" uid="uid://cbtiv2xat8tg5" path="res://ai/tasks/scout/scout_track_player_from_nest_action.gd" id="4_6tmvf"]
+[ext_resource type="Script" uid="uid://baehs65vff1d7" path="res://ai/tasks/scout/scout_beam_attack_action.gd" id="5_6fvay"]
+
+[sub_resource type="BTCondition" id="BTCondition_qfs1s"]
+script = ExtResource("2_6fvay")
+action = "Claim"
+nest = "RIGHT"
+
+[sub_resource type="BTAction" id="BTAction_qfs1s"]
+script = ExtResource("3_d8kv2")
+nest = "RIGHT"
+
+[sub_resource type="BTAction" id="BTAction_pu0lf"]
+script = ExtResource("4_6tmvf")
+duration = 10.0
+
+[sub_resource type="BTAction" id="BTAction_txmbn"]
+script = ExtResource("5_6fvay")
+
+[sub_resource type="BTParallel" id="BTParallel_oq7v7"]
+children = [SubResource("BTAction_pu0lf"), SubResource("BTAction_txmbn")]
+
+[sub_resource type="BTWait" id="BTWait_pu0lf"]
+duration = 0.5
+
+[sub_resource type="BTCondition" id="BTCondition_6fvay"]
+script = ExtResource("2_6fvay")
+action = "Release"
+nest = "RIGHT"
+
+[sub_resource type="BTSequence" id="BTSequence_pu0lf"]
+children = [SubResource("BTCondition_qfs1s"), SubResource("BTAction_qfs1s"), SubResource("BTParallel_oq7v7"), SubResource("BTWait_pu0lf"), SubResource("BTCondition_6fvay")]
+
+[sub_resource type="BTCondition" id="BTCondition_pu0lf"]
+script = ExtResource("2_6fvay")
+action = "Claim"
+nest = "LEFT"
+
+[sub_resource type="BTAction" id="BTAction_oq7v7"]
+script = ExtResource("3_d8kv2")
+nest = "LEFT"
+
+[sub_resource type="BTAction" id="BTAction_32ags"]
+script = ExtResource("4_6tmvf")
+duration = 10.0
+
+[sub_resource type="BTAction" id="BTAction_mve8f"]
+script = ExtResource("5_6fvay")
+
+[sub_resource type="BTParallel" id="BTParallel_1jv7r"]
+children = [SubResource("BTAction_32ags"), SubResource("BTAction_mve8f")]
+
+[sub_resource type="BTWait" id="BTWait_qyrdu"]
+duration = 0.5
+
+[sub_resource type="BTCondition" id="BTCondition_1y8f4"]
+script = ExtResource("2_6fvay")
+action = "Release"
+nest = "LEFT"
+
+[sub_resource type="BTSequence" id="BTSequence_72ifh"]
+children = [SubResource("BTCondition_pu0lf"), SubResource("BTAction_oq7v7"), SubResource("BTParallel_1jv7r"), SubResource("BTWait_qyrdu"), SubResource("BTCondition_1y8f4")]
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_6fvay"]
+children = [SubResource("BTSequence_pu0lf"), SubResource("BTSequence_72ifh")]
+
+[resource]
+blackboard_plan = ExtResource("1_thnlf")
+root_task = SubResource("BTProbabilitySelector_6fvay")

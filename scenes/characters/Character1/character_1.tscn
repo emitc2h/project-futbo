@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dhjmwpcfeiw67" path="res://assets/krita/assets/control_node/ControlNode_emission.png" id="4_lwllx"]
 [ext_resource type="Script" uid="uid://cvww34q43hede" path="res://scripts/characters/character1/character1_shield.gd" id="7_lwllx"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qqrog"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r1ga7"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("3_r1ga7")
@@ -20,7 +20,7 @@ asset = NodePath("Character1Asset")
 shield = NodePath("Shield")
 
 [node name="Character1Asset" parent="." index="0" unique_id=1179000165 instance=ExtResource("2_gnx71")]
-emitters_material = SubResource("ShaderMaterial_qqrog")
+emitters_material = SubResource("ShaderMaterial_r1ga7")
 
 [node name="Movement States" parent="State/Root/Damage/Able/Movement" parent_id_path=PackedInt32Array(1040835142) index="0" unique_id=1115440960 node_paths=PackedStringArray("state_map")]
 state_map = {

@@ -81,7 +81,9 @@ func enable() -> void:
 		sc.send_event(TRANS_TO_NONE)
 
 
-func lock_target() -> bool:
+func lock_target(target_node: Node3D = null) -> bool:
+	if target_node:
+		target_candidate = target_node
 	if target_candidate:
 		sc.send_event(TRANS_TO_ACQUIRED)
 		return true

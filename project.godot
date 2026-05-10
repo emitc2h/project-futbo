@@ -28,6 +28,7 @@ Constants="*res://scripts/globals/constants.gd"
 Aim="*res://scripts/globals/aim.gd"
 Representations="*res://scripts/globals/representations.gd"
 dbg="*res://scripts/globals/dbg.gd"
+ScoutHivemindUpdater="*uid://cjbwiqbey8v6t"
 
 [debug]
 
@@ -63,7 +64,8 @@ ControlNodeGroup=""
 DroneShieldGroup=""
 ScoutTargetGroup=""
 navigation_mesh_source_group=""
-ScoutGroup=""
+ScoutPhysicsGroup=""
+ScoutHivemindGroup=""
 
 [input]
 

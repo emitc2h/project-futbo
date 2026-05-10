@@ -50,12 +50,16 @@ func get_repulsion_force() -> Vector3:
 			continue
 		
 		var collider: Node3D = raycast.get_collider() as Node3D
-		if collider.is_in_group("ScoutGroup"):
+		if collider.is_in_group("ScoutPhysicsGroup"):
 			if not _scout_collision_reported:
 				_scout_collision_reported = true
 		
 		var space_vector: Vector3 = raycast.get_collision_point() - self.global_position
 		var space_vector_length: float = space_vector.length() - inner_radius
+		
+		## Add some perpendicular force when encountering the player
+		if collider.is_in_group("PlayerGroup"):
+			space_vector = space_vector.rotated(Vector3.UP, (outer_radius - space_vector_length) / outer_radius)
 		
 		## Force should be maximal when space_vector_length
 		var force_magnitude: float = -max_force * exp(-force_dampening * space_vector_length)

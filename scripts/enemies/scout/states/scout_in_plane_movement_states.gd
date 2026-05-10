@@ -5,6 +5,7 @@ extends Node
 @export_group("Dependencies")
 @export var scout: Scout
 @export var sc: StateChart
+@export var global_look_at_target: Marker3D
 @export var look_at_target: Marker3D
 
 ## States Enum
@@ -50,7 +51,7 @@ func _on_move_state_physics_processing(delta: float) -> void:
 	lerped_control_axis = Vector2(look_at_target.position.x, look_at_target.position.y)
 	
 	## Look at the marker
-	char_node.look_at(look_at_target.global_position, Vector3.FORWARD)
+	char_node.look_at(look_at_target.global_position)
 	
 	## move according to the movement vector too
 	char_node.velocity = char_node.velocity.lerp(control_axis_3D * scout.speed, scout.lerp_factor * delta)
@@ -75,9 +76,9 @@ func _on_target_state_physics_processing(delta: float) -> void:
 	var lerped_control_axis_3D: Vector3 = Vector3(lerped_control_axis.x, lerped_control_axis.y, 0.0)
 	
 	## Update the look_at_target with the actual target
-	look_at_target.global_position = look_at_target.global_position.lerp(scout.targeting_states.target.global_position, scout.lerp_factor * delta)
+	global_look_at_target.global_position = global_look_at_target.global_position.lerp(Representations.player_target_marker.global_position, scout.lerp_factor * delta)
 	
-	char_node.look_at(look_at_target.global_position, Vector3.FORWARD)
+	char_node.look_at(global_look_at_target.global_position)
 	
 	## move according to the movement vector too
 	char_node.velocity = lerped_control_axis_3D * scout.targeting_speed
