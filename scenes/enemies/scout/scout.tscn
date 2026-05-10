@@ -17,13 +17,17 @@
 [ext_resource type="Script" uid="uid://c5odptar8rapj" path="res://scripts/enemies/scout/states/scout_targeting_states.gd" id="10_gt8hr"]
 [ext_resource type="Script" uid="uid://brf0q8s1o47pd" path="res://scripts/enemies/scout/states/scout_spinner_states.gd" id="11_kfrjq"]
 [ext_resource type="Script" uid="uid://b82igppwpb1ft" path="res://scripts/enemies/scout/states/scout_behavior_states.gd" id="13_vqfky"]
+[ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/utilities/behavior_tree/behavior_manager.gd" id="15_ejave"]
 [ext_resource type="PackedScene" uid="uid://dlhol3ht3l4ji" path="res://scenes/debug/axes.tscn" id="16_64ian"]
 [ext_resource type="Script" uid="uid://42v13ykhymos" path="res://scripts/enemies/scout/scout_repulsor_field.gd" id="16_rwhje"]
+[ext_resource type="BehaviorTree" uid="uid://blwwnm880my0m" path="res://ai/trees/enemies/scout/scout_action_tree.tres" id="16_spt5b"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_spt5b"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_df6tb"]
 radius = 0.18212742
 
-[node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "health_states", "movement_states", "orbiting_states", "in_plane_movement_states", "engagement_states", "spinner_states", "physics_states", "targeting_states", "behavior_states")]
+[node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "health_states", "movement_states", "orbiting_states", "in_plane_movement_states", "engagement_states", "spinner_states", "physics_states", "targeting_states", "behavior_states") groups=["ScoutHivemindGroup"]]
 script = ExtResource("1_7pd5h")
 asset = NodePath("TrackTransformContainer/ScoutAsset")
 health_states = NodePath("State/Health/Health States")
@@ -64,6 +68,8 @@ scout = NodePath("../../../../..")
 sc = NodePath("../../../..")
 look_at_target = NodePath("../../../../../GlobalLookAtTarget")
 
+[node name="EnterPlaneTimer" type="Timer" parent="State/Health/Active/Movement/Movement States" unique_id=822187191]
+
 [node name="out of plane movement" type="Node" parent="State/Health/Active/Movement" unique_id=452473126]
 script = ExtResource("4_aew6m")
 
@@ -73,16 +79,27 @@ to = NodePath("../../orbiting")
 event = &"Movement: to orbiting"
 delay_in_seconds = "0.0"
 
+[node name="to enter plane" type="Node" parent="State/Health/Active/Movement/out of plane movement" unique_id=1327303982]
+script = ExtResource("7_df6tb")
+to = NodePath("../../enter plane")
+event = &"Movement: to enter plane"
+delay_in_seconds = "0.0"
+
 [node name="orbiting" type="Node" parent="State/Health/Active/Movement" unique_id=1967160758]
 script = ExtResource("3_we078")
 initial_state = NodePath("targeting")
 
-[node name="Orbiting States" type="Node" parent="State/Health/Active/Movement/orbiting" unique_id=1695305889 node_paths=PackedStringArray("scout", "sc", "look_at_target", "repulsor_field")]
+[node name="Orbiting States" type="Node" parent="State/Health/Active/Movement/orbiting" unique_id=1695305889 node_paths=PackedStringArray("scout", "sc", "cs", "look_at_target", "repulsor_field", "state_map")]
 script = ExtResource("9_cewjn")
 scout = NodePath("../../../../../..")
 sc = NodePath("../../../../..")
+cs = NodePath("..")
 look_at_target = NodePath("../../../../../../GlobalLookAtTarget")
 repulsor_field = NodePath("../../../../../../TrackPositionContainer/RepulsorField")
+state_map = {
+0: NodePath("../targeting"),
+1: NodePath("../looping")
+}
 
 [node name="NumScoutCollisionDecayTimer" type="Timer" parent="State/Health/Active/Movement/orbiting/Orbiting States" unique_id=1551090416]
 
@@ -98,26 +115,30 @@ delay_in_seconds = "0.0"
 [node name="looping" type="Node" parent="State/Health/Active/Movement/orbiting" unique_id=1517480347]
 script = ExtResource("4_aew6m")
 
-[node name="to in plane movement" type="Node" parent="State/Health/Active/Movement/orbiting" unique_id=1327303982]
-script = ExtResource("7_df6tb")
-to = NodePath("../../in plane movement")
-event = &"Movement: to in plane movement"
-delay_in_seconds = "0.0"
-
 [node name="to out of plane movement" type="Node" parent="State/Health/Active/Movement/orbiting" unique_id=110518394]
 script = ExtResource("7_df6tb")
 to = NodePath("../../out of plane movement")
 event = &"Movement: to out of plane movement"
 delay_in_seconds = "0.0"
 
+[node name="enter plane" type="Node" parent="State/Health/Active/Movement" unique_id=2025128141]
+script = ExtResource("4_aew6m")
+
+[node name="to in plane movement" type="Node" parent="State/Health/Active/Movement/enter plane" unique_id=544200219]
+script = ExtResource("7_df6tb")
+to = NodePath("../../in plane movement")
+event = &"Movement: to in plane movement"
+delay_in_seconds = "0.0"
+
 [node name="in plane movement" type="Node" parent="State/Health/Active/Movement" unique_id=1135090203]
 script = ExtResource("3_we078")
-initial_state = NodePath("move")
+initial_state = NodePath("target")
 
-[node name="In Plane Movement States" type="Node" parent="State/Health/Active/Movement/in plane movement" unique_id=80772804 node_paths=PackedStringArray("scout", "sc", "look_at_target")]
+[node name="In Plane Movement States" type="Node" parent="State/Health/Active/Movement/in plane movement" unique_id=80772804 node_paths=PackedStringArray("scout", "sc", "global_look_at_target", "look_at_target")]
 script = ExtResource("9_c0mby")
 scout = NodePath("../../../../../..")
 sc = NodePath("../../../../..")
+global_look_at_target = NodePath("../../../../../../GlobalLookAtTarget")
 look_at_target = NodePath("../../../../../../TrackPositionContainer/LocalLookAtTarget")
 
 [node name="move" type="Node" parent="State/Health/Active/Movement/in plane movement" unique_id=1194203162]
@@ -369,10 +390,13 @@ delay_in_seconds = "0.0"
 script = ExtResource("3_we078")
 initial_state = NodePath("go to player")
 
-[node name="Behavior States" type="Node" parent="State/Health/Active/Behavior" unique_id=1821230603 node_paths=PackedStringArray("scout", "sc")]
+[node name="Behavior States" type="Node" parent="State/Health/Active/Behavior" unique_id=1821230603 node_paths=PackedStringArray("scout", "sc", "action_bt_player")]
 script = ExtResource("13_vqfky")
 scout = NodePath("../../../../..")
 sc = NodePath("../../../..")
+action_bt_player = NodePath("../action/BehaviorManager/BTPlayer")
+
+[node name="TimeToActionTimer" type="Timer" parent="State/Health/Active/Behavior/Behavior States" unique_id=16520569]
 
 [node name="go to player" type="Node" parent="State/Health/Active/Behavior" unique_id=1271839183]
 script = ExtResource("4_aew6m")
@@ -406,6 +430,16 @@ script = ExtResource("7_df6tb")
 to = NodePath("../../orbit")
 event = &"Behavior: to orbit"
 delay_in_seconds = "0.0"
+
+[node name="BehaviorManager" type="Node" parent="State/Health/Active/Behavior/action" unique_id=114063590]
+script = ExtResource("15_ejave")
+metadata/_custom_type_script = "uid://d4epqky6heqvb"
+
+[node name="BTPlayer" type="BTPlayer" parent="State/Health/Active/Behavior/action/BehaviorManager" unique_id=796278441]
+behavior_tree = ExtResource("16_spt5b")
+agent_node = NodePath("../../../../../../..")
+active = false
+blackboard_plan = SubResource("BlackboardPlan_spt5b")
 
 [node name="Incapacitated" type="Node" parent="State/Health" unique_id=1564326338]
 script = ExtResource("2_7pd5h")
@@ -469,7 +503,7 @@ delay_in_seconds = "0.0"
 [node name="Dead" type="Node" parent="State/Health" unique_id=952136227]
 script = ExtResource("4_aew6m")
 
-[node name="CharNode" type="CharacterBody3D" parent="." unique_id=621400243 groups=["ScoutGroup"]]
+[node name="CharNode" type="CharacterBody3D" parent="." unique_id=621400243 groups=["ScoutPhysicsGroup"]]
 collision_layer = 256
 collision_mask = 823
 motion_mode = 1
@@ -481,7 +515,7 @@ shape = SubResource("SphereShape3D_df6tb")
 transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
 visible = false
 
-[node name="RigidNode" type="RigidBody3D" parent="." unique_id=802826361 groups=["ScoutGroup"]]
+[node name="RigidNode" type="RigidBody3D" parent="." unique_id=802826361 groups=["ScoutPhysicsGroup"]]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("8_fwegx")
@@ -571,6 +605,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 
 [connection signal="state_entered" from="State/Health/Active" to="State/Health/Health States" method="_on_active_state_entered"]
 [connection signal="state_physics_processing" from="State/Health/Active" to="State/Health/Health States" method="_on_active_state_physics_processing"]
+[connection signal="timeout" from="State/Health/Active/Movement/Movement States/EnterPlaneTimer" to="State/Health/Active/Movement/Movement States" method="_on_enter_plane_timer_timeout"]
 [connection signal="state_entered" from="State/Health/Active/Movement/out of plane movement" to="State/Health/Active/Movement/Movement States" method="_on_out_of_plane_movement_state_entered"]
 [connection signal="state_physics_processing" from="State/Health/Active/Movement/out of plane movement" to="State/Health/Active/Movement/Movement States" method="_on_out_of_plane_movement_state_physics_processing"]
 [connection signal="state_entered" from="State/Health/Active/Movement/orbiting" to="State/Health/Active/Movement/Movement States" method="_on_orbiting_state_entered"]
@@ -579,7 +614,10 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 [connection signal="state_entered" from="State/Health/Active/Movement/orbiting/looping" to="State/Health/Active/Movement/orbiting/Orbiting States" method="_on_looping_state_entered"]
 [connection signal="state_exited" from="State/Health/Active/Movement/orbiting/looping" to="State/Health/Active/Movement/orbiting/Orbiting States" method="_on_looping_state_exited"]
 [connection signal="state_physics_processing" from="State/Health/Active/Movement/orbiting/looping" to="State/Health/Active/Movement/orbiting/Orbiting States" method="_on_looping_state_physics_processing"]
+[connection signal="state_entered" from="State/Health/Active/Movement/enter plane" to="State/Health/Active/Movement/Movement States" method="_on_enter_plane_state_entered"]
+[connection signal="state_physics_processing" from="State/Health/Active/Movement/enter plane" to="State/Health/Active/Movement/Movement States" method="_on_enter_plane_state_physics_processing"]
 [connection signal="state_entered" from="State/Health/Active/Movement/in plane movement" to="State/Health/Active/Movement/Movement States" method="_on_in_plane_movement_state_entered"]
+[connection signal="state_exited" from="State/Health/Active/Movement/in plane movement" to="State/Health/Active/Movement/Movement States" method="_on_in_plane_movement_state_exited"]
 [connection signal="state_entered" from="State/Health/Active/Movement/in plane movement/move" to="State/Health/Active/Movement/in plane movement/In Plane Movement States" method="_on_move_state_entered"]
 [connection signal="state_physics_processing" from="State/Health/Active/Movement/in plane movement/move" to="State/Health/Active/Movement/in plane movement/In Plane Movement States" method="_on_move_state_physics_processing"]
 [connection signal="state_entered" from="State/Health/Active/Movement/in plane movement/target" to="State/Health/Active/Movement/in plane movement/In Plane Movement States" method="_on_target_state_entered"]
@@ -602,9 +640,11 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 [connection signal="state_entered" from="State/Health/Active/Spinner/off" to="State/Health/Active/Spinner/Spinner States" method="_on_off_state_entered"]
 [connection signal="state_entered" from="State/Health/Active/Spinner/charging" to="State/Health/Active/Spinner/Spinner States" method="_on_charging_state_entered"]
 [connection signal="state_entered" from="State/Health/Active/Spinner/fire" to="State/Health/Active/Spinner/Spinner States" method="_on_fire_state_entered"]
+[connection signal="timeout" from="State/Health/Active/Behavior/Behavior States/TimeToActionTimer" to="State/Health/Active/Behavior/Behavior States" method="_on_time_to_action_timer_timeout"]
 [connection signal="state_entered" from="State/Health/Active/Behavior/go to player" to="State/Health/Active/Behavior/Behavior States" method="_on_go_to_player_state_entered"]
 [connection signal="state_physics_processing" from="State/Health/Active/Behavior/go to player" to="State/Health/Active/Behavior/Behavior States" method="_on_go_to_player_state_physics_processing"]
 [connection signal="state_entered" from="State/Health/Active/Behavior/orbit" to="State/Health/Active/Behavior/Behavior States" method="_on_orbit_state_entered"]
 [connection signal="state_entered" from="State/Health/Active/Behavior/action" to="State/Health/Active/Behavior/Behavior States" method="_on_action_state_entered"]
+[connection signal="behavior_tree_finished" from="State/Health/Active/Behavior/action/BehaviorManager/BTPlayer" to="State/Health/Active/Behavior/Behavior States" method="_on_action_bt_player_behavior_tree_finished"]
 [connection signal="state_entered" from="State/Health/Incapacitated" to="State/Health/Health States" method="_on_incapacitated_state_entered"]
 [connection signal="state_entered" from="State/Health/Dead" to="State/Health/Health States" method="_on_dead_state_entered"]

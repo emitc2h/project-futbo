@@ -5,8 +5,12 @@ extends Node
 @export_group("Dependencies")
 @export var scout: Scout
 @export var sc: StateChart
+@export var cs: CompoundState
 @export var look_at_target: Marker3D
 @export var repulsor_field: ScoutRepulsorField
+
+@export_group("State Mapping")
+@export var state_map: Dictionary[State, StateChartState]
 
 @onready var num_scout_collision_decay_timer: Timer = $NumScoutCollisionDecayTimer
 
@@ -21,9 +25,9 @@ extends Node
 ## Maximum orbit radius
 @export var orbit_radius_max: float = 3.6
 ## Minimum tilt angle for orbit (0 means horizontal, 1 means vertical)
-@export var orbit_angle_min: float = 0.0
+@export var orbit_angle_min: float = 0.1
 ## Maximum tilt angle for orbit (0 means horizontal, 1 means vertical)
-@export var orbit_angle_max: float = 0.4
+@export var orbit_angle_max: float = 0.5
 
 @export_subgroup("Looping triggers")
 ## Maximum number of collisions with other scouts allowed before engaging in looping.
@@ -83,7 +87,6 @@ func _ready() -> void:
 #----------------------------------------
 func _on_targeting_state_entered() -> void:
 	state = State.TARGETING
-	scout.targeting_states.lock_target()
 	scout.quick_open()
 	_is_orbit_motion_clockwise = randi_range(0, 1)
 	_speed_modifier = randf_range(orbit_speed_factor_min, orbit_speed_factor_max)
@@ -96,11 +99,13 @@ func _on_targeting_state_physics_processing(delta: float) -> void:
 	_exhaust_intensity = lerp(_exhaust_intensity, 0.0, scout.lerp_factor * delta)
 	scout.asset.set_exhaust_intensity(_exhaust_intensity)
 	
+	var player_pos: Vector3 = Representations.player_target_marker.global_position
+	
 	## Update the look_at_target with the actual target
-	look_at_target.global_position = look_at_target.global_position.lerp(scout.targeting_states.target.global_position, scout.lerp_factor * delta)
+	look_at_target.global_position = look_at_target.global_position.lerp(player_pos, scout.lerp_factor * delta)
 	
 	## First, make the char node look directly at the target to set the velocities
-	char_node.look_at(scout.targeting_states.target.global_position)
+	char_node.look_at(player_pos)
 	
 	## Start with the tangential motion component
 	var final_velocity: Vector3 = (2 * int(_is_orbit_motion_clockwise) - 1) * char_node.transform.basis.x * scout.targeting_speed * _speed_modifier
@@ -109,7 +114,7 @@ func _on_targeting_state_physics_processing(delta: float) -> void:
 	final_velocity += char_node.transform.basis.y * sin(char_node.rotation.y) * _orbit_angle * scout.targeting_speed * _speed_modifier
 	
 	## Add the radial motion component
-	var distance_to_target: float = char_node.global_position.distance_to(scout.targeting_states.target.global_position)
+	var distance_to_target: float = char_node.global_position.distance_to(player_pos)
 	var orbit_correction_factor: float = (_orbit_size - distance_to_target)
 	final_velocity += char_node.transform.basis.z * orbit_correction_factor
 	
@@ -147,7 +152,7 @@ func _on_looping_state_entered() -> void:
 	loop_endpoint_pos = loop_endpoint_pos.rotated(Vector3.UP, randf_range(0.0, 2 * PI))
 	
 	## Put the loop_endpoint_pos in global space
-	loop_endpoint_pos += scout.targeting_states.target.global_position
+	loop_endpoint_pos += Representations.player_target_marker.global_position
 	
 	## Record the looping distance to establish a criteria for when the scout heads back
 	## Reduce the looping distance a bit to make sure the scout never actually reaches it
@@ -216,3 +221,10 @@ func _on_num_scout_collision_decay_timer_timeout() -> void:
 	if _num_scout_collsions > 0:
 		_num_scout_collsions -= 1
 	num_scout_collision_decay_timer.start()
+
+
+#=======================================================
+# CONTROLS
+#=======================================================
+func set_initial_state(new_initial_state: State) -> void:
+	cs._initial_state = state_map[new_initial_state]

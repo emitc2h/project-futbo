@@ -31,20 +31,42 @@ extends Node3D
 
 @onready var anim_state: AnimationNodeStateMachinePlayback = asset.anim_state
 
+## Settable parameters
+var in_left_nest: bool = false
+var in_right_nest: bool = false
+
+
+## Movement Controls
+signal go_to_nest_finished(id: int)
+func go_to_nest(nest: Enums.Direction, id: int = 0) -> void:
+	## Select the nest to target and set it as the out of plane movement target
+	movement_states.set_nest_as_out_of_plane_target(nest)
+	
+	## Engage out of plane movement
+	sc.send_event(movement_states.TRANS_TO_OUT_OF_PLANE_MOVEMENT)
+	
+	## Await for the scout to be close enough to the next to begin "parking"
+	await movement_states.enter_plane_ready
+	sc.send_event(movement_states.TRANS_TO_ENTER_PLANE)
+	
+	## Once the scout is done parking, say so
+	await movement_states.has_entered_plane
+	go_to_nest_finished.emit(id)
+
 
 ## Engagement Controls
 ## ---------------------------------------
 signal open_finished(id: int)
 func open(id: int = 0) -> void:
 	if not anim_state.get_current_node() in ["idle", "thrust idle", "open", "quick open"]:
-		sc.send_event(engagement_states.TRANS_TO_OPEN)
+		sc.send_event(engagement_states.TRANS_TO_OPENING)
 		await engagement_states.open_finished
 	open_finished.emit(id)
 
 
 signal quick_open_finished(id: int)
 func quick_open(id: int = 0) -> void:
-	if not anim_state.get_current_node() in ["idle", "thrust idle", "quick open"]:
+	if not anim_state.get_current_node() in ["idle", "thrust idle", "quick open", "open"]:
 		sc.send_event(engagement_states.TRANS_TO_QUICK_OPEN)
 		await engagement_states.quick_open_finished
 	quick_open_finished.emit(id)
@@ -53,7 +75,7 @@ func quick_open(id: int = 0) -> void:
 signal close_finished(id: int)
 func close(id: int = 0) -> void:
 	if not anim_state.get_current_node() in ["closed", "close", "quick close"]:
-		sc.send_event(engagement_states.TRANS_TO_CLOSE)
+		sc.send_event(engagement_states.TRANS_TO_CLOSING)
 		await engagement_states.close_finished
 	close_finished.emit(id)
 
