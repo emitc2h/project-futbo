@@ -21,9 +21,6 @@ const TRANS_TO_RIGID: String = "Physics: to rigid"
 @onready var track_transform_container: Node3D = ball.get_node("TrackTransformContainer")
 @onready var track_position_container: Node3D = ball.get_node("TrackPositionContainer")
 
-@onready var collision_shape_char: CollisionShape3D = ball.get_node("CharNode/CollisionShape3D")
-@onready var collision_shape_rigid: CollisionShape3D = ball.get_node("RigidNode/CollisionShape3D")
-
 var do_not_transfer_y_velocity_to_rigid: bool = false
 
 

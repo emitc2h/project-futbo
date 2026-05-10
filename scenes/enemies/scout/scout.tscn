@@ -18,7 +18,6 @@
 [ext_resource type="Script" uid="uid://brf0q8s1o47pd" path="res://scripts/enemies/scout/states/scout_spinner_states.gd" id="11_kfrjq"]
 [ext_resource type="Script" uid="uid://b82igppwpb1ft" path="res://scripts/enemies/scout/states/scout_behavior_states.gd" id="13_vqfky"]
 [ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/utilities/behavior_tree/behavior_manager.gd" id="15_ejave"]
-[ext_resource type="PackedScene" uid="uid://dlhol3ht3l4ji" path="res://scenes/debug/axes.tscn" id="16_64ian"]
 [ext_resource type="Script" uid="uid://42v13ykhymos" path="res://scripts/enemies/scout/scout_repulsor_field.gd" id="16_rwhje"]
 [ext_resource type="BehaviorTree" uid="uid://blwwnm880my0m" path="res://ai/trees/enemies/scout/scout_action_tree.tres" id="16_spt5b"]
 
@@ -448,10 +447,16 @@ script = ExtResource("2_7pd5h")
 script = ExtResource("3_we078")
 initial_state = NodePath("rigid")
 
-[node name="Physics States" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=763292476 node_paths=PackedStringArray("scout", "sc")]
+[node name="Physics States" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=763292476 node_paths=PackedStringArray("scout", "sc", "cs", "state_map")]
 script = ExtResource("5_we078")
 scout = NodePath("../../../../..")
 sc = NodePath("../../../..")
+cs = NodePath("..")
+state_map = {
+0: NodePath("../char"),
+1: NodePath("../rigid"),
+2: NodePath("../ragdoll")
+}
 
 [node name="rigid" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=626551392]
 script = ExtResource("4_aew6m")
@@ -471,6 +476,9 @@ script = ExtResource("7_df6tb")
 to = NodePath("../../rigid")
 event = &"Physics: to rigid"
 delay_in_seconds = "0.0"
+
+[node name="ragdoll" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=431214698]
+script = ExtResource("4_aew6m")
 
 [node name="Charge" type="Node" parent="State/Health/Incapacitated" unique_id=1496430415]
 script = ExtResource("3_we078")
@@ -511,13 +519,9 @@ motion_mode = 1
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharNode" unique_id=1017328439]
 shape = SubResource("SphereShape3D_df6tb")
 
-[node name="Axes" parent="CharNode" unique_id=421101617 instance=ExtResource("16_64ian")]
-transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
-visible = false
-
 [node name="RigidNode" type="RigidBody3D" parent="." unique_id=802826361 groups=["ScoutPhysicsGroup"]]
-collision_layer = 0
-collision_mask = 0
+collision_layer = 256
+collision_mask = 823
 script = ExtResource("8_fwegx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode" unique_id=2057423356]
@@ -647,4 +651,11 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 [connection signal="state_entered" from="State/Health/Active/Behavior/action" to="State/Health/Active/Behavior/Behavior States" method="_on_action_state_entered"]
 [connection signal="behavior_tree_finished" from="State/Health/Active/Behavior/action/BehaviorManager/BTPlayer" to="State/Health/Active/Behavior/Behavior States" method="_on_action_bt_player_behavior_tree_finished"]
 [connection signal="state_entered" from="State/Health/Incapacitated" to="State/Health/Health States" method="_on_incapacitated_state_entered"]
+[connection signal="state_entered" from="State/Health/Incapacitated/Physics/rigid" to="State/Health/Incapacitated/Physics/Physics States" method="_on_rigid_state_entered"]
+[connection signal="state_exited" from="State/Health/Incapacitated/Physics/rigid" to="State/Health/Incapacitated/Physics/Physics States" method="_on_rigid_state_exited"]
+[connection signal="state_physics_processing" from="State/Health/Incapacitated/Physics/rigid" to="State/Health/Incapacitated/Physics/Physics States" method="_on_rigid_state_physics_processing"]
+[connection signal="state_entered" from="State/Health/Incapacitated/Physics/char" to="State/Health/Incapacitated/Physics/Physics States" method="_on_char_state_entered"]
+[connection signal="state_exited" from="State/Health/Incapacitated/Physics/char" to="State/Health/Incapacitated/Physics/Physics States" method="_on_char_state_exited"]
+[connection signal="state_physics_processing" from="State/Health/Incapacitated/Physics/char" to="State/Health/Incapacitated/Physics/Physics States" method="_on_char_state_physics_processing"]
+[connection signal="state_entered" from="State/Health/Incapacitated/Physics/ragdoll" to="State/Health/Incapacitated/Physics/Physics States" method="_on_ragdoll_state_entered"]
 [connection signal="state_entered" from="State/Health/Dead" to="State/Health/Health States" method="_on_dead_state_entered"]
