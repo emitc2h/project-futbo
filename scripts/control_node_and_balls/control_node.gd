@@ -141,9 +141,9 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 			var scout: Scout = body.get_parent()
 			
 			## Compute colliding normal
-			var normal: Vector3 = (physics_states.rigid_node.global_position - scout.physics_states.get_global_position()).normalized()
+			var normal: Vector3 = (scout.physics_states.get_global_position() - physics_states.rigid_node.global_position).normalized()
 			dbg.log("collision force? " + str(normal))
-			scout.get_hit(Vector3.ZERO)
+			scout.get_hit(normal * 3.0)
 		
 	## If the control node isn't powered up, 
 	else:

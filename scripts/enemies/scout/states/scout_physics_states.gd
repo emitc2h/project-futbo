@@ -23,13 +23,17 @@ const TRANS_TO_RAGDOLL: String = "Physics: to ragdoll"
 @onready var char_node: CharacterBody3D = scout.get_node("CharNode")
 @onready var rigid_node: InertNode = scout.get_node("RigidNode")
 
+@onready var collision_shape_char: CollisionShape3D = scout.get_node("CharNode/CollisionShape3D")
+@onready var collision_shape_rigid: CollisionShape3D = scout.get_node("RigidNode/CollisionShape3D")
+
 @onready var track_transform_container: Node3D = scout.get_node("TrackTransformContainer")
 @onready var track_position_container: Node3D = scout.get_node("TrackPositionContainer")
 
-
 func _ready() -> void:
-	char_node.set_collision_layer_value(9, true)
-	rigid_node.set_collision_layer_value(9, false)
+	#char_node.set_collision_layer_value(9, true)
+	#rigid_node.set_collision_layer_value(9, false)
+	collision_shape_rigid.disabled = true
+	collision_shape_char.disabled = false
 
 
 func _physics_process(_delta: float) -> void:
@@ -45,7 +49,8 @@ func _on_char_state_entered() -> void:
 	char_node.transform = rigid_node.transform
 	
 	## Turn on collision shape
-	char_node.set_collision_layer_value(9, true)
+	# char_node.set_collision_layer_value(9, true)
+	collision_shape_char.disabled = false
 
 
 func _on_char_state_physics_processing(_delta: float) -> void:
@@ -62,7 +67,8 @@ func _on_char_state_physics_processing(_delta: float) -> void:
 
 func _on_char_state_exited() -> void:
 	## Turn off collision shape
-	char_node.set_collision_layer_value(9, false)
+	# char_node.set_collision_layer_value(9, false)
+	collision_shape_char.disabled = true
 
 
 # rigid state
@@ -78,7 +84,8 @@ func _on_rigid_state_entered() -> void:
 	char_node.velocity = Vector3.ZERO
 	
 	## Enable rigid node collisions
-	rigid_node.set_collision_layer_value(9, true)
+	# rigid_node.set_collision_layer_value(9, true)
+	collision_shape_rigid.disabled = false
 
 
 func _on_rigid_state_physics_processing(_delta: float) -> void:
@@ -92,7 +99,8 @@ func _on_rigid_state_physics_processing(_delta: float) -> void:
 
 func _on_rigid_state_exited() -> void:
 	## Turn off collision shape
-	rigid_node.set_collision_layer_value(9, false)
+	# rigid_node.set_collision_layer_value(9, false)
+	collision_shape_rigid.disabled = true
 	
 	## Put the rigid node to sleep
 	rigid_node.sleep()

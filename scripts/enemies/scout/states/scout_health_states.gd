@@ -23,10 +23,13 @@ const TRANS_TO_DEAD: String = "Health: to dead"
 @onready var track_transform_container: Node3D = scout.get_node("TrackTransformContainer")
 @onready var track_position_container: Node3D = scout.get_node("TrackPositionContainer")
 
+@onready var char_collision_shape: CollisionShape3D = scout.get_node("CharNode/CollisionShape3D")
+@onready var rigid_collision_shape: CollisionShape3D = scout.get_node("RigidNode/CollisionShape3D")
+
 
 func _ready() -> void:
-	char_node.set_collision_layer_value(9, true)
-	rigid_node.set_collision_layer_value(9, false)
+	char_collision_shape.disabled = false
+	rigid_collision_shape.disabled = true
 
 
 # active state
@@ -36,8 +39,7 @@ func _on_active_state_entered() -> void:
 
 	## active state is always char
 	char_node.transform = rigid_node.transform
-	char_node.set_collision_layer_value(9, true)
-	rigid_node.set_collision_layer_value(9, false)
+	char_collision_shape.disabled = false
 
 
 func _on_active_state_physics_processing(delta: float) -> void:
@@ -55,6 +57,10 @@ func _on_active_state_physics_processing(delta: float) -> void:
 	rigid_node.transform = char_node.transform
 	
 	## Active state delegates the movement definition to the Movement States
+
+
+func _on_active_state_exited() -> void:
+	char_collision_shape.disabled = true
 
 
 # incapacitated state

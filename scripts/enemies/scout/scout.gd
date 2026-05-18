@@ -129,4 +129,4 @@ func get_hit(force_vector: Vector3) -> void:
 	sc.send_event(health_states.TRANS_TO_INCAPACITATED)
 	
 	## Transfer momentum
-	## physics_states.rigid_node.set_impulse(force_vector)
+	physics_states.rigid_node.set_impulse(force_vector)

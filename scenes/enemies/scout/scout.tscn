@@ -26,6 +26,10 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_df6tb"]
 radius = 0.18212742
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ejave"]
+rough = true
+bounce = 0.2
+
 [node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "health_states", "movement_states", "orbiting_states", "in_plane_movement_states", "engagement_states", "spinner_states", "physics_states", "targeting_states", "behavior_states") groups=["ScoutHivemindGroup"]]
 script = ExtResource("1_7pd5h")
 asset = NodePath("TrackTransformContainer/ScoutAsset")
@@ -522,6 +526,8 @@ shape = SubResource("SphereShape3D_df6tb")
 [node name="RigidNode" type="RigidBody3D" parent="." unique_id=802826361 groups=["ScoutPhysicsGroup"]]
 collision_layer = 256
 collision_mask = 823
+physics_material_override = SubResource("PhysicsMaterial_ejave")
+angular_damp = 1.0
 script = ExtResource("8_fwegx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode" unique_id=2057423356]
@@ -608,6 +614,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 [node name="GlobalLookAtTarget" type="Marker3D" parent="." unique_id=526682536]
 
 [connection signal="state_entered" from="State/Health/Active" to="State/Health/Health States" method="_on_active_state_entered"]
+[connection signal="state_exited" from="State/Health/Active" to="State/Health/Health States" method="_on_active_state_exited"]
 [connection signal="state_physics_processing" from="State/Health/Active" to="State/Health/Health States" method="_on_active_state_physics_processing"]
 [connection signal="timeout" from="State/Health/Active/Movement/Movement States/EnterPlaneTimer" to="State/Health/Active/Movement/Movement States" method="_on_enter_plane_timer_timeout"]
 [connection signal="state_entered" from="State/Health/Active/Movement/out of plane movement" to="State/Health/Active/Movement/Movement States" method="_on_out_of_plane_movement_state_entered"]

@@ -7,8 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cno2tfxkcdwjx" path="res://scenes/camera/camera_controller.tscn" id="5_ll16v"]
 [ext_resource type="PackedScene" uid="uid://br5xii21hsbeo" path="res://scenes/characters/Character1/character_1.tscn" id="6_c7aqb"]
 [ext_resource type="Script" uid="uid://c5ypw4nstaeac" path="res://scripts/player_controller.gd" id="7_404y3"]
-[ext_resource type="Material" uid="uid://1eaiuw1yi4yx" path="res://assets/deprecated/3D/Act1/materials/buildings/bricks.tres" id="8_gp53o"]
-[ext_resource type="Script" uid="uid://b4skhtstjhduw" path="res://prototypes/scout_loop_test/blocks.gd" id="8_hya5b"]
 [ext_resource type="PackedScene" uid="uid://d1xrh1hfob7p5" path="res://scenes/vegetation/trees/pineTree1/pine_tree.tscn" id="9_pa7r3"]
 [ext_resource type="PackedScene" uid="uid://jdyxgjn13fhr" path="res://scenes/vegetation/trees/tree1/tree_bradford_pear.tscn" id="10_pabad"]
 [ext_resource type="Shader" uid="uid://cpb5j5g4ss8rb" path="res://shaders/SwayingLeaves.tres" id="11_61ckh"]
@@ -81,11 +79,6 @@ uv1_scale = Vector3(300, 300, 300)
 [sub_resource type="PlaneMesh" id="PlaneMesh_y4atg"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_5yoqd"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_4630x"]
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_eqkmv"]
-points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
 
 [node name="ScoutLoopTestScene" type="Node3D" unique_id=62581022]
 process_mode = 1
@@ -215,6 +208,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.766129, 0)
 [node name="Scout" parent="." unique_id=1167301137 instance=ExtResource("21_rkvpr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.040514, 9.364317, -14.396991)
 
+[node name="Scout2" parent="." unique_id=458724637 instance=ExtResource("21_rkvpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.417366, 2.0635538, -0.6346264)
+
+[node name="Scout3" parent="." unique_id=811592692 instance=ExtResource("21_rkvpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.245295, 2.0635538, 11.35909)
+
+[node name="Scout4" parent="." unique_id=1417745854 instance=ExtResource("21_rkvpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.970727, 2.0635538, 8.994978)
+
+[node name="Scout5" parent="." unique_id=1325518231 instance=ExtResource("21_rkvpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4220805, 9.620175, 7.399905)
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=357249718]
 transform = Transform3D(1000, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_hi8lg")
@@ -226,167 +231,3 @@ collision_mask = 261
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1315804199]
 shape = SubResource("WorldBoundaryShape3D_5yoqd")
-
-[node name="Blocks" type="Node3D" parent="." unique_id=528383762]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.448973, -0.021655083, 0)
-script = ExtResource("8_hya5b")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Blocks" unique_id=797167399]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.539924, 1.56718, -0.0020504)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D" unique_id=2135062205]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D" unique_id=300083993]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="Blocks" unique_id=569081846]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -0.257867, 1.00949, -0.0020504)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D2" unique_id=916427759]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D2" unique_id=718888245]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D6" type="StaticBody3D" parent="Blocks" unique_id=208850563]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.07867, 0.43629, -0.0020504)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D6" unique_id=1295426205]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D6" unique_id=593282955]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D7" type="StaticBody3D" parent="Blocks" unique_id=1904440482]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.89916, -0.136931, -0.0020504)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D7" unique_id=1464931824]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D7" unique_id=1773648160]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="Blocks" unique_id=593157262]
-transform = Transform3D(0.56816, 0.822918, 0, -0.822918, 0.56816, 0, 0, 0, 1, 1.52786, 0.115338, 0)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D3" unique_id=1527039089]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D3" unique_id=323902699]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D8" type="StaticBody3D" parent="Blocks" unique_id=1442980432]
-transform = Transform3D(0.56816, 0.822918, 0, -0.822918, 0.56816, 0, 0, 0, 1, 1.02304, 0.862669, 0)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks/StaticBody3D8" unique_id=334896584]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks/StaticBody3D8" unique_id=505395608]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="Blocks2" type="Node3D" parent="." unique_id=460270086]
-transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 6.386567, 3.5477352, 0)
-script = ExtResource("8_hya5b")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Blocks2" unique_id=1605925071]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, 0.539924, 1.56718, -0.0020504)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D" unique_id=308071884]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D" unique_id=890445467]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="Blocks2" unique_id=1275271829]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -0.257867, 1.00949, -0.0020504)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D2" unique_id=1286086551]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D2" unique_id=1501623204]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D6" type="StaticBody3D" parent="Blocks2" unique_id=2067671539]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.07867, 0.43629, -0.0020504)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D6" unique_id=156823431]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D6" unique_id=1810952138]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D7" type="StaticBody3D" parent="Blocks2" unique_id=133802803]
-transform = Transform3D(0.820342, -0.571874, 0, 0.571874, 0.820342, 0, 0, 0, 1, -1.89916, -0.136931, -0.0020504)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D7" unique_id=1682956058]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D7" unique_id=649697427]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="Blocks2" unique_id=123644603]
-transform = Transform3D(0.56816, 0.822918, 0, -0.822918, 0.56816, 0, 0, 0, 1, 1.52786, 0.115338, 0)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D3" unique_id=2078978273]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D3" unique_id=1715612901]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
-
-[node name="StaticBody3D8" type="StaticBody3D" parent="Blocks2" unique_id=1172724837]
-transform = Transform3D(0.56816, 0.822918, 0, -0.822918, 0.56816, 0, 0, 0, 1, 1.02304, 0.862669, 0)
-collision_layer = 514
-collision_mask = 261
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Blocks2/StaticBody3D8" unique_id=415836149]
-mesh = SubResource("BoxMesh_4630x")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("8_gp53o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocks2/StaticBody3D8" unique_id=58486505]
-shape = SubResource("ConvexPolygonShape3D_eqkmv")
