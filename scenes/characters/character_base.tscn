@@ -506,7 +506,7 @@ shape = SubResource("CapsuleShape3D_x41nu")
 [node name="JumpBufferTimer" type="Timer" parent="." unique_id=132934896]
 wait_time = 0.05
 
-[node name="TargetMarker" type="Marker3D" parent="." unique_id=1483925568 groups=["PlayerGroup"]]
+[node name="TargetMarker" type="Marker3D" parent="." unique_id=1483925568 groups=["Debug", "PlayerGroup"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00116658, 1.06277, 0)
 
 [node name="JumpRaycast" type="RayCast3D" parent="." unique_id=1574921125]

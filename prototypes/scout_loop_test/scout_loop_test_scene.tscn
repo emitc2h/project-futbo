@@ -198,7 +198,6 @@ transform = Transform3D(0.108607, 0, 0.994085, 0, 1, 0, -0.994085, 0, 0.108607, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2464328, 0.250523, 0)
 
 [node name="DebugTool" parent="." unique_id=988042807 instance=ExtResource("20_4ywmp")]
-max_running_logs = 100
 is_visible = false
 visible_only_on_pause = true
 

@@ -83,6 +83,12 @@ var _z_tracking_enabled: bool = true
 @export var movement_speed: float = 5.0
 @export var look_sensitivity: float = 1.0
 
+@export_group("Orbit Mode")
+@export var min_orbit_distance: float = 1.0
+@export var max_orbit_distance: float = 10.0
+@export var orbit_speed: float = 5.0
+@export var orbit_zoom_speed: float = 3.0
+
 ## States Enum
 enum State {TRACKING = 0, ANIMATED = 1, FLY = 2}
 var state: State = State.TRACKING
@@ -91,14 +97,25 @@ var state: State = State.TRACKING
 const TRANS_TO_TRACKING: String = "to tracking"
 const TRANS_TO_ANIMATED: String = "to animated"
 const TRANS_TO_FLY: String = "to fly"
+const TRANS_TO_ORBIT: String = "to orbit"
 
 var camera_initial_position: Vector3
+
+## Internal variables
+var _orbit_target: Node3D
+# Cache transforms for tracking state
+var _pos_node_transform: Transform3D
+var _yaw_node_transform: Transform3D
+var _pitch_node_transform: Transform3D
 
 
 func _ready() -> void:
 	Signals.update_zoom.connect(_change_zoom)
 	Signals.debug_on.connect(_on_debug_on)
 	Signals.debug_off.connect(_on_debug_off)
+	Signals.set_orbit_target.connect(_on_set_orbit_target)
+	Signals.orbit_on.connect(_on_orbit_on)
+	Signals.orbit_off.connect(_on_orbit_off)
 	
 	if sync_to_subject_on_ready:
 		global_position = subject.global_position
@@ -112,6 +129,16 @@ func _process(_delta: float) -> void:
 
 # tracking state
 #----------------------------------------
+func _on_tracking_state_entered() -> void:
+	if _pos_node_transform:
+		_camera_pos.transform = _pos_node_transform
+	if _yaw_node_transform:
+		_camera_yaw.transform = _yaw_node_transform
+	if _pitch_node_transform:
+		_camera_pitch.transform = _pitch_node_transform
+
+
+
 func _on_tracking_state_processing(delta: float) -> void:
 	_camera_pos.global_position.x = lerp(_camera_pos.global_position.x, subject.global_position.x, lerp_x * delta)
 	_camera_pos.global_position.y = lerp(_camera_pos.global_position.y, subject.global_position.y, lerp_y * delta)
@@ -121,20 +148,14 @@ func _on_tracking_state_processing(delta: float) -> void:
 	zoom = lerp(zoom, zoom_target, lerp_zoom * delta)
 
 
-# fly state
-#----------------------------------------
-var _pos_node_transform: Transform3D
-var _yaw_node_transform: Transform3D
-var _pitch_node_transform: Transform3D
-
-
-func _on_fly_state_entered() -> void:
-	## If we go to fly mode, cache the transforms so they can be recovered when leaving fly mode
+func _on_tracking_state_exited() -> void:
 	_pos_node_transform = _camera_pos.transform
 	_yaw_node_transform = _camera_yaw.transform
 	_pitch_node_transform = _camera_pitch.transform
 
 
+# fly state
+#----------------------------------------
 func _on_fly_state_processing(delta: float) -> void:
 	var yaw_axis: float = Input.get_axis("aim_left", "aim_right")
 	_camera_yaw.rotation.y -= yaw_axis * delta * look_sensitivity
@@ -153,11 +174,48 @@ func _on_fly_state_processing(delta: float) -> void:
 	_camera_yaw.position += movement_direction * delta * movement_speed
 
 
-func _on_fly_state_exited() -> void:
-	## Recover the cached transforms
-	_camera_pos.transform = _pos_node_transform
-	_camera_yaw.transform = _yaw_node_transform
-	_camera_pitch.transform = _pitch_node_transform
+
+# orbit state
+#----------------------------------------
+func _on_orbit_state_entered() -> void:
+	## Initialize orbit, line up all the rig nodes
+	## In orbit mode, the roles of the yaw and pitch nodes are reversed w.r.t. fly mode
+	_camera_pos.global_position = _orbit_target.global_position
+	_camera_pos.rotation = Vector3.ZERO
+	
+	_camera_yaw.position = Vector3.ZERO
+	_camera_yaw.rotation = Vector3.ZERO
+	
+	_camera_pitch.position = Vector3.ZERO
+	_camera_pitch.rotation = Vector3.ZERO
+	
+	_camera_pitch.position.z = (min_orbit_distance + max_orbit_distance) / 2.0
+	
+	
+
+
+func _on_orbit_state_processing(delta: float) -> void:
+	_camera_pos.global_position = _orbit_target.global_position
+	_camera.look_at(_orbit_target.global_position)
+	
+	var yaw_axis: float = Input.get_axis("aim_left", "aim_right")
+	_camera_pos.rotation.y -= yaw_axis * delta * look_sensitivity
+	
+	var pitch_axis: float = Input.get_axis("aim_up", "aim_down")
+	if _camera_yaw.rotation.x > PI/2:
+		_camera_yaw.rotation.x = PI/2
+	elif _camera_yaw.rotation.x < -PI/2:
+		_camera_yaw.rotation.x = -PI/2
+	else:
+		_camera_yaw.rotation.x -= pitch_axis * delta * look_sensitivity
+	
+	var distance_axis: float = Input.get_axis("move_up", "move_down")
+	if _camera_pitch.position.z > max_orbit_distance:
+		_camera_pitch.position.z = max_orbit_distance
+	elif _camera_pitch.position.z < min_orbit_distance:
+		_camera_pitch.position.z = min_orbit_distance
+	else:
+		_camera_pitch.position.z += distance_axis * delta * orbit_zoom_speed
 
 
 # signal handling
@@ -172,3 +230,15 @@ func _on_debug_on() -> void:
 
 func _on_debug_off() -> void:
 	sc.send_event(TRANS_TO_TRACKING)
+
+
+func _on_orbit_on() -> void:
+	sc.send_event(TRANS_TO_ORBIT)
+
+
+func _on_orbit_off() -> void:
+	sc.send_event(TRANS_TO_FLY)
+
+
+func _on_set_orbit_target(node: Node3D) -> void:
+	_orbit_target = node

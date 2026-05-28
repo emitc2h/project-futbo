@@ -6,8 +6,6 @@
 process_mode = 3
 script = ExtResource("1_rtcbt")
 active = true
-max_running_logs = null
-visible_only_on_pause = null
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1803242381]
 custom_minimum_size = Vector2(450, 400)
@@ -88,6 +86,34 @@ wait_time = 0.05
 
 [node name="AdvanceAllowedTimer" type="Timer" parent="." unique_id=902099639]
 wait_time = 0.3
+
+[node name="PanelContainer2" type="PanelContainer" parent="." unique_id=691731992]
+layout_direction = 2
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -166.0
+offset_top = -70.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer2" unique_id=834678447]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="OrbitNodeName" type="Label" parent="PanelContainer2/MarginContainer" unique_id=1558938808]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 2
 
 [connection signal="timeout" from="AdvanceTimer" to="." method="_on_advance_timer_timeout"]
 [connection signal="timeout" from="AdvanceAllowedTimer" to="." method="_on_advance_allowed_timer_timeout"]

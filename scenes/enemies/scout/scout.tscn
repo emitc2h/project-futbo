@@ -533,7 +533,7 @@ script = ExtResource("8_fwegx")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode" unique_id=2057423356]
 shape = SubResource("SphereShape3D_df6tb")
 
-[node name="TrackPositionContainer" type="Node3D" parent="." unique_id=1495225801]
+[node name="TrackPositionContainer" type="Node3D" parent="." unique_id=1495225801 groups=["Debug"]]
 
 [node name="LocalLookAtTarget" type="Marker3D" parent="TrackPositionContainer" unique_id=1832714374]
 

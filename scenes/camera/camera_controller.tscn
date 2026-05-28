@@ -63,6 +63,27 @@ to = NodePath("../../animated")
 event = &"to animated"
 delay_in_seconds = "0.0"
 
+[node name="to orbit" type="Node" parent="StateChart/Root/fly" unique_id=616380011]
+script = ExtResource("5_vhp2f")
+to = NodePath("../../orbit")
+event = &"to orbit"
+delay_in_seconds = "0.0"
+
+[node name="orbit" type="Node" parent="StateChart/Root" unique_id=1701468836]
+script = ExtResource("4_6kach")
+
+[node name="to fly" type="Node" parent="StateChart/Root/orbit" unique_id=1294666229]
+script = ExtResource("5_vhp2f")
+to = NodePath("../../fly")
+event = &"to fly"
+delay_in_seconds = "0.0"
+
+[node name="to tracking" type="Node" parent="StateChart/Root/orbit" unique_id=944005893]
+script = ExtResource("5_vhp2f")
+to = NodePath("../../tracking")
+event = &"to tracking"
+delay_in_seconds = "0.0"
+
 [node name="TargetPosition" type="Node3D" parent="." unique_id=319133271]
 
 [node name="CameraYaw" type="Node3D" parent="TargetPosition" unique_id=656872006]
@@ -76,8 +97,9 @@ cull_mask = 31775
 current = true
 fov = 38.0
 
+[connection signal="state_entered" from="StateChart/Root/tracking" to="." method="_on_tracking_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/tracking" to="." method="_on_tracking_state_exited"]
 [connection signal="state_processing" from="StateChart/Root/tracking" to="." method="_on_tracking_state_processing"]
-[connection signal="state_entered" from="StateChart/Root/fly" to="." method="_on_fly_state_entered"]
-[connection signal="state_exited" from="StateChart/Root/fly" to="." method="_on_fly_state_exited"]
 [connection signal="state_processing" from="StateChart/Root/fly" to="." method="_on_fly_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/orbit" to="." method="_on_orbit_state_entered"]
+[connection signal="state_processing" from="StateChart/Root/orbit" to="." method="_on_orbit_state_processing"]

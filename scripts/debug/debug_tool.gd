@@ -10,7 +10,11 @@ extends CanvasLayer
 @onready var advance_timer: Timer = $AdvanceTimer
 @onready var advance_allowed_timer: Timer = $AdvanceAllowedTimer
 
+@onready var node_name_label: Label = $PanelContainer2/MarginContainer/OrbitNodeName
+
 var paused: bool = false
+var orbit_mode: bool = false
+var orbit_mode_target_idx: int = 0
 var advance_one_tick: bool = false
 var process_one_tick: bool = false
 var waiting_for_next_advance: bool = false
@@ -29,13 +33,14 @@ var pause_log_array_idx: int = 0
 @export var max_running_logs: int = 100
 var running_log_array: PackedStringArray = []
 
+@warning_ignore("shadowed_variable_base_class")
 @export var is_visible: bool = true
 @export var visible_only_on_pause: bool = false
 
 
 func _ready() -> void:
-	self.visible = is_visible and active
-	main_container.visible = is_visible and !visible_only_on_pause
+	node_name_label.visible = false
+	main_container.visible = is_visible and active and !visible_only_on_pause
 	Signals.debug_pause.connect(_pause)
 	Signals.debug_log.connect(_on_debug_log)
 	Signals.debug_advance.connect(_on_debug_advance)
@@ -112,6 +117,34 @@ func _input(event: InputEvent) -> void:
 		pause_log_array_idx -= 1
 		if pause_log_array_idx < 0:
 			pause_log_array_idx = 0
+	
+	if event.is_action_pressed("jump"):
+		if paused:
+			orbit_mode = !orbit_mode
+			if orbit_mode:
+				node_name_label.visible = true
+				Signals.set_orbit_target.emit(Representations.player_target_marker)
+				node_name_label.text = Representations.player_target_marker.get_owner().name
+				Signals.orbit_on.emit()
+			else:
+				node_name_label.visible = false
+				Signals.orbit_off.emit()
+	
+	if event.is_action_pressed("select_node_previous"):
+		orbit_mode_target_idx -= 1
+		if orbit_mode_target_idx < 0:
+			orbit_mode_target_idx = get_tree().get_nodes_in_group("Debug").size() - 1
+		var target_node: Node3D = get_tree().get_nodes_in_group("Debug")[orbit_mode_target_idx]
+		Signals.set_orbit_target.emit(target_node)
+		node_name_label.text = target_node.get_owner().name
+	
+	if event.is_action_pressed("select_node_next"):
+		orbit_mode_target_idx += 1
+		if orbit_mode_target_idx >= get_tree().get_nodes_in_group("Debug").size():
+			orbit_mode_target_idx = 0
+		var target_node: Node3D = get_tree().get_nodes_in_group("Debug")[orbit_mode_target_idx]
+		Signals.set_orbit_target.emit(target_node)
+		node_name_label.text = target_node.get_owner().name
 	
 	_update_pause_header()
 	_update_pause_label()
