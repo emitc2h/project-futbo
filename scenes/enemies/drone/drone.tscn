@@ -730,7 +730,7 @@ script = ExtResource("14_efc27")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode" unique_id=746144462]
 shape = SubResource("SphereShape3D_md0p7")
 
-[node name="TrackPositionContainer" type="Node3D" parent="." unique_id=1171277265]
+[node name="TrackPositionContainer" type="Node3D" parent="." unique_id=1171277265 groups=["Debug"]]
 
 [node name="Distortion" type="MeshInstance3D" parent="TrackPositionContainer" unique_id=810540809]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

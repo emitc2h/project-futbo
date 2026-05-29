@@ -166,7 +166,7 @@ func _on_char_state_physics_processing(delta: float) -> void:
 		bounce_velocity = -1.5 * char_node.velocity
 		do_bounce = true
 	
-	## nodes tha must follow the char node
+	## nodes that must follow the char node
 	track_transform_container.transform = char_node.transform
 	track_position_container.position = char_node.position
 	

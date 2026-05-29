@@ -10,6 +10,7 @@ extends CanvasLayer
 @onready var advance_timer: Timer = $AdvanceTimer
 @onready var advance_allowed_timer: Timer = $AdvanceAllowedTimer
 
+@onready var node_name_panel_container: PanelContainer = $PanelContainer2
 @onready var node_name_label: Label = $PanelContainer2/MarginContainer/OrbitNodeName
 
 var paused: bool = false
@@ -39,7 +40,7 @@ var running_log_array: PackedStringArray = []
 
 
 func _ready() -> void:
-	node_name_label.visible = false
+	node_name_panel_container.visible = false
 	main_container.visible = is_visible and active and !visible_only_on_pause
 	Signals.debug_pause.connect(_pause)
 	Signals.debug_log.connect(_on_debug_log)
@@ -118,19 +119,19 @@ func _input(event: InputEvent) -> void:
 		if pause_log_array_idx < 0:
 			pause_log_array_idx = 0
 	
-	if event.is_action_pressed("jump"):
+	if event.is_action_pressed("debug_orbit_mode_toggle"):
 		if paused:
 			orbit_mode = !orbit_mode
 			if orbit_mode:
-				node_name_label.visible = true
+				node_name_panel_container.visible = true
 				Signals.set_orbit_target.emit(Representations.player_target_marker)
 				node_name_label.text = Representations.player_target_marker.get_owner().name
 				Signals.orbit_on.emit()
 			else:
-				node_name_label.visible = false
+				node_name_panel_container.visible = false
 				Signals.orbit_off.emit()
 	
-	if event.is_action_pressed("select_node_previous"):
+	if event.is_action_pressed("debug_select_node_previous"):
 		orbit_mode_target_idx -= 1
 		if orbit_mode_target_idx < 0:
 			orbit_mode_target_idx = get_tree().get_nodes_in_group("Debug").size() - 1
@@ -138,7 +139,7 @@ func _input(event: InputEvent) -> void:
 		Signals.set_orbit_target.emit(target_node)
 		node_name_label.text = target_node.get_owner().name
 	
-	if event.is_action_pressed("select_node_next"):
+	if event.is_action_pressed("debug_select_node_next"):
 		orbit_mode_target_idx += 1
 		if orbit_mode_target_idx >= get_tree().get_nodes_in_group("Debug").size():
 			orbit_mode_target_idx = 0
