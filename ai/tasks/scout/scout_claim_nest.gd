@@ -24,27 +24,18 @@ func _setup() -> void:
 
 
 func _tick(_delta: float) -> Status:
-	if action == CLAIM:
-		match(nest):
-			LEFT:
-				if Representations.scout_hivemind_representation.scout_is_in_left_nest:
+	match(action):
+		CLAIM:
+			match(nest):
+				LEFT:
+					if scout.claim_nest(Enums.Direction.LEFT):
+						return SUCCESS
 					return FAILURE
-				else:
-					Representations.scout_hivemind_representation.scout_is_in_left_nest = true
-					return SUCCESS
-			RIGHT:
-				if Representations.scout_hivemind_representation.scout_is_in_right_nest:
+				RIGHT:
+					if scout.claim_nest(Enums.Direction.RIGHT):
+						return SUCCESS
 					return FAILURE
-				else:
-					Representations.scout_hivemind_representation.scout_is_in_right_nest = true
-					return SUCCESS
-	else:
-		## Ideally I would check that the same scout who clamed the nest is also the one release it
-		match(nest):
-			LEFT:
-				Representations.scout_hivemind_representation.scout_is_in_left_nest = false
-				return SUCCESS
-			RIGHT:
-				Representations.scout_hivemind_representation.scout_is_in_right_nest = false
-				return SUCCESS
+		RELEASE:
+			scout.exit_nest()
+			return SUCCESS
 	return FAILURE

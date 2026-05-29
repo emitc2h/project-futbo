@@ -130,3 +130,36 @@ func get_hit(force_vector: Vector3) -> void:
 	
 	## Transfer momentum
 	physics_states.rigid_node.set_impulse(force_vector)
+	
+	## Free the nests
+	exit_nest()
+
+
+## Hivemind interactions
+## ---------------------------------------
+func claim_nest(nest: Enums.Direction) -> bool:
+	match(nest):
+		Enums.Direction.LEFT:
+			if not Representations.scout_hivemind_representation.scout_is_in_left_nest:
+				in_left_nest = true
+				Representations.scout_hivemind_representation.scout_is_in_left_nest = true
+				return true
+			return false
+		Enums.Direction.RIGHT:
+			if not Representations.scout_hivemind_representation.scout_is_in_right_nest:
+				in_right_nest = true
+				Representations.scout_hivemind_representation.scout_is_in_right_nest = true
+				return true
+			return false
+		_:
+			return false
+
+
+func exit_nest() -> void:
+	if in_left_nest:
+		Representations.scout_hivemind_representation.scout_is_in_left_nest = false
+		in_left_nest = false
+	if in_right_nest:
+		Representations.scout_hivemind_representation.scout_is_in_right_nest = false
+		in_right_nest = false
+		
