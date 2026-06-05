@@ -61,8 +61,9 @@ func _on_rigid_state_physics_processing(_delta: float) -> void:
 
 func _on_rigid_state_exited() -> void:
 	## Disable rigid node collisions
-	## Better to manipulate the collision layer than disabling the collision shape entirely. I'm not sure why, but this
-	## is more reliable. The raycast doesn't like re-enabled collision shapes for some reason.
+	## Better to manipulate the collision layer than disabling the collision
+	## shape entirely. I'm not sure why, but this is more reliable. The raycast
+	## doesn't like re-enabled collision shapes for some reason.
 	rigid_node.set_collision_layer_value(3, false)
 	
 	## Put the rigid node to sleep
@@ -92,4 +93,4 @@ func _on_char_state_physics_processing(_delta: float) -> void:
 
 func _on_char_state_exited() -> void:
 	## Disable char node collisions
-	char_node.set_collision_layer_value(3, false)
+	char_node.set_collision_layer_value(3, false) 

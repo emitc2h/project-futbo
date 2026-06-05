@@ -207,18 +207,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.766129, 0)
 [node name="Scout" parent="." unique_id=1167301137 instance=ExtResource("21_rkvpr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.040514, 9.364317, -14.396991)
 
-[node name="Scout2" parent="." unique_id=458724637 instance=ExtResource("21_rkvpr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.417366, 2.0635538, -0.6346264)
-
-[node name="Scout3" parent="." unique_id=811592692 instance=ExtResource("21_rkvpr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.245295, 2.0635538, 11.35909)
-
-[node name="Scout4" parent="." unique_id=1417745854 instance=ExtResource("21_rkvpr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.970727, 2.0635538, 8.994978)
-
-[node name="Scout5" parent="." unique_id=1325518231 instance=ExtResource("21_rkvpr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4220805, 9.620175, 7.399905)
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=357249718]
 transform = Transform3D(1000, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_hi8lg")
