@@ -122,6 +122,13 @@ signal debug_advance
 signal debug_on
 @warning_ignore("unused_signal")
 signal debug_off
+@warning_ignore("unused_signal")
+signal set_orbit_target(node: Node3D)
+@warning_ignore("unused_signal")
+signal orbit_on
+@warning_ignore("unused_signal")
+signal orbit_off
+
 
 
 ## ===================================== ##

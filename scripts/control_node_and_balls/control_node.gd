@@ -93,19 +93,30 @@ func _on_control_node_impulse(impulse_vector: Vector3) -> void:
 
 
 func _on_rigid_node_body_entered(body: Node) -> void:
+	## Enables the attractor if the control node bounces against the Drone's shield, so the player
+	## can more easily recall it
 	if body.is_in_group("DroneShieldGroup"):
 		attractor_states.enable()
 
 	var hit_strength: float = get_ball_velocity().length()
 	bounce_strength = hit_strength / 5.0
 	
+	## Handle collisions when the control node's power is ON
 	if power_states.state == power_states.State.ON:
+		
+		## HANDLE DRONE
+		## --------------------------------------
+		
+		## If a powered-up control node hits the drone shield, tell the shield to react
 		if body.is_in_group("DroneShieldGroup"):
 			var drone_shield: DroneShield = body as DroneShield
-			drone_shield.look_at(get_ball_position(), Vector3.UP)
+			drone_shield.look_at(get_ball_position())
 			drone_shield.hit()
 			return
 		
+		## If a powered-up control node hits the Drone's ragdoll collision shapes:
+		##    - the drone takes small-damage and if the hit registers, blow the control node
+		##    - Otherwise, just bounce the control node
 		if body.is_in_group("DroneGroup"):
 			if body is DroneBone:
 				var drone: Drone = body.drone
@@ -114,17 +125,30 @@ func _on_rigid_node_body_entered(body: Node) -> void:
 				else:
 					asset.bounce(bounce_strength)
 	
+		## Do the same as above, except when also hitting the control node's RigidBody or CharacterBody
 		if body.get_parent() is Drone:
 			var drone: Drone = body.get_parent()
-			if drone.get_hit(hit_strength):
+			if drone.get_hit(hit_strength * (1 + charge_states.state)):
 				sc.send_event(power_states.TRANS_TO_BLOW)
 			else:
 				asset.bounce(bounce_strength)
 		else:
 			asset.bounce(bounce_strength)
+			
+		## HANDLE SCOUT
+		## --------------------------------------
+		if body.is_in_group("ScoutPhysicsGroup"):
+			var scout: Scout = body.get_parent()
+			
+			## Compute colliding normal
+			var normal: Vector3 = (scout.physics_states.get_global_position() - physics_states.rigid_node.global_position).normalized()
+			scout.get_hit(normal * 3.0)
+		
+	## If the control node isn't powered up, 
 	else:
+		## The drone shield reacts, but doesn't charge up the control node
 		if body.is_in_group("DroneShieldGroup"):
 			var drone_shield: DroneShield = body as DroneShield
-			drone_shield.look_at(get_ball_position(), Vector3.UP)
+			drone_shield.look_at(get_ball_position())
 			drone_shield.hit(false)
 			return

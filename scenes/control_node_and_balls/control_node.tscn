@@ -812,17 +812,19 @@ delay_in_seconds = "0.0"
 wisps_particles = NodePath("../../TrackPositionContainer/WispParticles3D")
 ready_sphere = NodePath("../../TrackPositionContainer/ControlNodeReadySphere")
 
-[node name="DirectionRay" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="0" unique_id=474420284 instance=ExtResource("4_bt07l")]
+[node name="TrackPositionContainer" parent="." index="4" unique_id=1272077454 groups=["Debug"]]
 
-[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="1" unique_id=1357196390]
+[node name="DirectionRay" parent="TrackPositionContainer" index="0" unique_id=474420284 instance=ExtResource("4_bt07l")]
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="TrackPositionContainer" index="1" unique_id=1357196390]
 strength = 65.0
 attenuation = 2.0
 cull_mask = 4293918721
 radius = 10.0
 
-[node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="2" unique_id=839800057]
+[node name="GPUParticlesCollisionSphere3D" type="GPUParticlesCollisionSphere3D" parent="TrackPositionContainer" index="2" unique_id=839800057]
 
-[node name="WispParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="3" unique_id=1297073081]
+[node name="WispParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" index="3" unique_id=1297073081]
 emitting = false
 amount = 200
 lifetime = 1.2
@@ -835,14 +837,14 @@ trail_lifetime = 1.0
 process_material = SubResource("ParticleProcessMaterial_1t0mc")
 draw_pass_1 = SubResource("QuadMesh_ygoor")
 
-[node name="LightningParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="4" unique_id=542149814]
+[node name="LightningParticles3D" type="GPUParticles3D" parent="TrackPositionContainer" index="4" unique_id=542149814]
 amount = 10
 amount_ratio = 0.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_hlhvm")
 draw_pass_1 = SubResource("ArrayMesh_r313a")
 
-[node name="Shield" type="StaticBody3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="5" unique_id=926592741 groups=["ControlNodeShieldGroup"]]
+[node name="Shield" type="StaticBody3D" parent="TrackPositionContainer" index="5" unique_id=926592741 groups=["ControlNodeShieldGroup"]]
 collision_layer = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrackPositionContainer/Shield" index="0" unique_id=680185923]
@@ -850,7 +852,7 @@ visible = false
 shape = SubResource("SphereShape3D_tehyq")
 debug_color = Color(0.031590424, 0.4735664, 0.4680773, 1)
 
-[node name="WarpEffect" type="Node3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="6" unique_id=2013159024]
+[node name="WarpEffect" type="Node3D" parent="TrackPositionContainer" index="6" unique_id=2013159024]
 visible = false
 
 [node name="WarpMesh" type="MeshInstance3D" parent="TrackPositionContainer/WarpEffect" index="0" unique_id=1789322013]
@@ -870,9 +872,9 @@ light_intensity_lumens = 1000000.0
 light_color = Color(0.50980395, 0.7019608, 1, 1)
 light_cull_mask = 4294967291
 
-[node name="TargetMarker" type="Marker3D" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="7" unique_id=573054401 groups=["ControlNodeGroup"]]
+[node name="TargetMarker" type="Marker3D" parent="TrackPositionContainer" index="7" unique_id=573054401 groups=["ControlNodeGroup"]]
 
-[node name="ControlNodeReadySphere" parent="TrackPositionContainer" parent_id_path=PackedInt32Array(1272077454) index="8" unique_id=1359818039 instance=ExtResource("20_yiu5s")]
+[node name="ControlNodeReadySphere" parent="TrackPositionContainer" index="8" unique_id=1359818039 instance=ExtResource("20_yiu5s")]
 visible = false
 
 [node name="StreakAsset" parent="." index="5" unique_id=354313872 instance=ExtResource("21_yiu5s")]

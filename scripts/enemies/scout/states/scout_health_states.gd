@@ -23,13 +23,13 @@ const TRANS_TO_DEAD: String = "Health: to dead"
 @onready var track_transform_container: Node3D = scout.get_node("TrackTransformContainer")
 @onready var track_position_container: Node3D = scout.get_node("TrackPositionContainer")
 
-@onready var collision_shape_char: CollisionShape3D = scout.get_node("CharNode/CollisionShape3D")
-@onready var collision_shape_rigid: CollisionShape3D = scout.get_node("RigidNode/CollisionShape3D")
+@onready var char_collision_shape: CollisionShape3D = scout.get_node("CharNode/CollisionShape3D")
+@onready var rigid_collision_shape: CollisionShape3D = scout.get_node("RigidNode/CollisionShape3D")
 
 
 func _ready() -> void:
-	collision_shape_rigid.disabled = true
-	collision_shape_char.disabled = false
+	char_collision_shape.disabled = false
+	rigid_collision_shape.disabled = true
 
 
 # active state
@@ -39,8 +39,7 @@ func _on_active_state_entered() -> void:
 
 	## active state is always char
 	char_node.transform = rigid_node.transform
-	collision_shape_rigid.disabled = true
-	collision_shape_char.disabled = false
+	char_collision_shape.disabled = false
 
 
 func _on_active_state_physics_processing(delta: float) -> void:
@@ -60,10 +59,17 @@ func _on_active_state_physics_processing(delta: float) -> void:
 	## Active state delegates the movement definition to the Movement States
 
 
+func _on_active_state_exited() -> void:
+	char_collision_shape.disabled = true
+
+
 # incapacitated state
 #----------------------------------------
 func _on_incapacitated_state_entered() -> void:
 	state = State.INCAPACITATED
+	
+	## Incapacitated state is always expected to be entered when in plane movement
+	rigid_node.set_axis_lock(PhysicsServer3D.BodyAxis.BODY_AXIS_LINEAR_Z, true)
 	
 	## Incapacitated state delegates the physics mode to the Physics states
 

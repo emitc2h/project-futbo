@@ -21,9 +21,6 @@ const TRANS_TO_RIGID: String = "Physics: to rigid"
 @onready var track_transform_container: Node3D = ball.get_node("TrackTransformContainer")
 @onready var track_position_container: Node3D = ball.get_node("TrackPositionContainer")
 
-@onready var collision_shape_char: CollisionShape3D = ball.get_node("CharNode/CollisionShape3D")
-@onready var collision_shape_rigid: CollisionShape3D = ball.get_node("RigidNode/CollisionShape3D")
-
 var do_not_transfer_y_velocity_to_rigid: bool = false
 
 
@@ -64,8 +61,9 @@ func _on_rigid_state_physics_processing(_delta: float) -> void:
 
 func _on_rigid_state_exited() -> void:
 	## Disable rigid node collisions
-	## Better to manipulate the collision layer than disabling the collision shape entirely. I'm not sure why, but this
-	## is more reliable. The raycast doesn't like re-enabled collision shapes for some reason.
+	## Better to manipulate the collision layer than disabling the collision
+	## shape entirely. I'm not sure why, but this is more reliable. The raycast
+	## doesn't like re-enabled collision shapes for some reason.
 	rigid_node.set_collision_layer_value(3, false)
 	
 	## Put the rigid node to sleep
@@ -95,4 +93,4 @@ func _on_char_state_physics_processing(_delta: float) -> void:
 
 func _on_char_state_exited() -> void:
 	## Disable char node collisions
-	char_node.set_collision_layer_value(3, false)
+	char_node.set_collision_layer_value(3, false) 

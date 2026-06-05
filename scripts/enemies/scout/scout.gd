@@ -25,9 +25,9 @@ extends Node3D
 @export var behavior_states: ScoutBehaviorStates
 
 @export_group("Movement Parameters")
-@export var speed: float = 6.0
-@export var targeting_speed: float = 3.0
-@export var lerp_factor: float = 5.0
+@export var speed: float = 7.0
+@export var targeting_speed: float = 3.5
+@export var lerp_factor: float = 4.0
 
 @onready var anim_state: AnimationNodeStateMachinePlayback = asset.anim_state
 
@@ -37,6 +37,7 @@ var in_right_nest: bool = false
 
 
 ## Movement Controls
+## ---------------------------------------
 signal go_to_nest_finished(id: int)
 func go_to_nest(nest: Enums.Direction, id: int = 0) -> void:
 	## Select the nest to target and set it as the out of plane movement target
@@ -112,3 +113,53 @@ func fire(id: int = 0) -> void:
 		fire_finished.emit(id)
 	else:
 		fire_finished.emit(id)
+
+
+## Damage Controls
+## ---------------------------------------
+func get_hit(force_vector: Vector3) -> void:
+	## Turn off engines immediately
+	asset.set_exhaust_intensity(0.0)
+	
+	## Close the scout quickly
+	quick_close()
+	
+	## Turn rigid
+	physics_states.set_initial_state(physics_states.State.RIGID)
+	sc.send_event(health_states.TRANS_TO_INCAPACITATED)
+	
+	## Transfer momentum
+	physics_states.rigid_node.set_impulse(force_vector)
+	
+	## Free the nests
+	exit_nest()
+
+
+## Hivemind interactions
+## ---------------------------------------
+func claim_nest(nest: Enums.Direction) -> bool:
+	match(nest):
+		Enums.Direction.LEFT:
+			if not Representations.scout_hivemind_representation.scout_is_in_left_nest:
+				in_left_nest = true
+				Representations.scout_hivemind_representation.scout_is_in_left_nest = true
+				return true
+			return false
+		Enums.Direction.RIGHT:
+			if not Representations.scout_hivemind_representation.scout_is_in_right_nest:
+				in_right_nest = true
+				Representations.scout_hivemind_representation.scout_is_in_right_nest = true
+				return true
+			return false
+		_:
+			return false
+
+
+func exit_nest() -> void:
+	if in_left_nest:
+		Representations.scout_hivemind_representation.scout_is_in_left_nest = false
+		in_left_nest = false
+	if in_right_nest:
+		Representations.scout_hivemind_representation.scout_is_in_right_nest = false
+		in_right_nest = false
+		
