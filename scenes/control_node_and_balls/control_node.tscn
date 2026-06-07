@@ -110,9 +110,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1ei8v")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_tehyq"]
-radius = 1.8
-
 [sub_resource type="QuadMesh" id="QuadMesh_1t0mc"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hlhvm"]
@@ -689,12 +686,11 @@ script = ExtResource("3_02qb1")
 initial_state = NodePath("off")
 metadata/_custom_type_script = "uid://bhy7it06w5oxr"
 
-[node name="Shield States" type="Node" parent="State/Root/Power/On/Shield" index="0" unique_id=1718732260 node_paths=PackedStringArray("control_node", "asset", "sc", "shield_collision")]
+[node name="Shield States" type="Node" parent="State/Root/Power/On/Shield" index="0" unique_id=1718732260 node_paths=PackedStringArray("control_node", "asset", "sc")]
 script = ExtResource("10_tehyq")
 control_node = NodePath("../../../../../..")
 asset = NodePath("../../../../../../TrackTransformContainer/ControlNodeAsset")
 sc = NodePath("../../../../..")
-shield_collision = NodePath("../../../../../../TrackPositionContainer/Shield")
 
 [node name="off" type="Node" parent="State/Root/Power/On/Shield" index="1" unique_id=206097436]
 script = ExtResource("4_0jkta")
@@ -805,6 +801,7 @@ event = &"Power: to off"
 delay_in_seconds = "0.0"
 
 [node name="RigidNode" parent="." index="1" unique_id=1496620994 groups=["ControlNodeGroup"]]
+max_contacts_reported = 1
 
 [node name="CharNode" parent="." index="2" unique_id=1687242209 groups=["ControlNodeGroup"]]
 
@@ -844,15 +841,7 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_hlhvm")
 draw_pass_1 = SubResource("ArrayMesh_r313a")
 
-[node name="Shield" type="StaticBody3D" parent="TrackPositionContainer" index="5" unique_id=926592741 groups=["ControlNodeShieldGroup"]]
-collision_layer = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrackPositionContainer/Shield" index="0" unique_id=680185923]
-visible = false
-shape = SubResource("SphereShape3D_tehyq")
-debug_color = Color(0.031590424, 0.4735664, 0.4680773, 1)
-
-[node name="WarpEffect" type="Node3D" parent="TrackPositionContainer" index="6" unique_id=2013159024]
+[node name="WarpEffect" type="Node3D" parent="TrackPositionContainer" index="5" unique_id=2013159024]
 visible = false
 
 [node name="WarpMesh" type="MeshInstance3D" parent="TrackPositionContainer/WarpEffect" index="0" unique_id=1789322013]
@@ -872,9 +861,9 @@ light_intensity_lumens = 1000000.0
 light_color = Color(0.50980395, 0.7019608, 1, 1)
 light_cull_mask = 4294967291
 
-[node name="TargetMarker" type="Marker3D" parent="TrackPositionContainer" index="7" unique_id=573054401 groups=["ControlNodeGroup"]]
+[node name="TargetMarker" type="Marker3D" parent="TrackPositionContainer" index="6" unique_id=573054401 groups=["ControlNodeGroup"]]
 
-[node name="ControlNodeReadySphere" parent="TrackPositionContainer" index="8" unique_id=1359818039 instance=ExtResource("20_yiu5s")]
+[node name="ControlNodeReadySphere" parent="TrackPositionContainer" index="7" unique_id=1359818039 instance=ExtResource("20_yiu5s")]
 visible = false
 
 [node name="StreakAsset" parent="." index="5" unique_id=354313872 instance=ExtResource("21_yiu5s")]

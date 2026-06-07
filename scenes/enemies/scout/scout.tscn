@@ -30,6 +30,9 @@ radius = 0.18212742
 rough = true
 bounce = 0.2
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ejave"]
+size = Vector3(0.1, 0.1, 0.20185547)
+
 [node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "health_states", "movement_states", "orbiting_states", "in_plane_movement_states", "engagement_states", "spinner_states", "physics_states", "targeting_states", "behavior_states") groups=["ScoutHivemindGroup"]]
 script = ExtResource("1_7pd5h")
 asset = NodePath("TrackTransformContainer/ScoutAsset")
@@ -526,12 +529,27 @@ shape = SubResource("SphereShape3D_df6tb")
 [node name="RigidNode" type="RigidBody3D" parent="." unique_id=802826361 groups=["ScoutPhysicsGroup"]]
 collision_layer = 256
 collision_mask = 823
+mass = 3.0
 physics_material_override = SubResource("PhysicsMaterial_ejave")
-angular_damp = 1.0
+contact_monitor = true
+max_contacts_reported = 1
+angular_damp = 2.0
 script = ExtResource("8_fwegx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidNode" unique_id=2057423356]
 shape = SubResource("SphereShape3D_df6tb")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidNode" unique_id=1922128479]
+transform = Transform3D(0.70710677, -0.70710677, 0, 0.70235956, 0.70235956, 0.11568265, -0.081799984, -0.081799984, 0.9932864, 0, -0.09774262, 0.11259116)
+shape = SubResource("BoxShape3D_ejave")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="RigidNode" unique_id=1215295471]
+transform = Transform3D(-0.96181464, -0.2547078, -0.100184105, 0.2611926, -0.96355224, -0.05784133, -0.081799984, -0.081799984, 0.9932864, 0.08464759, 0.048871316, 0.11259116)
+shape = SubResource("BoxShape3D_ejave")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="RigidNode" unique_id=224404755]
+transform = Transform3D(0.2547078, 0.96181464, 0.100184105, -0.96355224, 0.2611926, -0.05784133, -0.081799984, -0.081799984, 0.9932864, -0.08464759, 0.048871316, 0.11259116)
+shape = SubResource("BoxShape3D_ejave")
 
 [node name="TrackPositionContainer" type="Node3D" parent="." unique_id=1495225801 groups=["Debug"]]
 
@@ -666,3 +684,4 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 [connection signal="state_physics_processing" from="State/Health/Incapacitated/Physics/char" to="State/Health/Incapacitated/Physics/Physics States" method="_on_char_state_physics_processing"]
 [connection signal="state_entered" from="State/Health/Incapacitated/Physics/ragdoll" to="State/Health/Incapacitated/Physics/Physics States" method="_on_ragdoll_state_entered"]
 [connection signal="state_entered" from="State/Health/Dead" to="State/Health/Health States" method="_on_dead_state_entered"]
+[connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]

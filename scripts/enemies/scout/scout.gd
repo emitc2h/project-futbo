@@ -117,19 +117,17 @@ func fire(id: int = 0) -> void:
 
 ## Damage Controls
 ## ---------------------------------------
-func get_hit(force_vector: Vector3) -> void:
-	## Turn off engines immediately
-	asset.set_exhaust_intensity(0.0)
-	
+func get_hit() -> void:
+	## Nothing to do if scout is already incapacitated
+	if health_states.state == ScoutHealthStates.State.INCAPACITATED:
+		return
+		
 	## Close the scout quickly
 	quick_close()
 	
 	## Turn rigid
 	physics_states.set_initial_state(physics_states.State.RIGID)
 	sc.send_event(health_states.TRANS_TO_INCAPACITATED)
-	
-	## Transfer momentum
-	physics_states.rigid_node.set_impulse(force_vector)
 	
 	## Free the nests
 	exit_nest()
@@ -162,4 +160,3 @@ func exit_nest() -> void:
 	if in_right_nest:
 		Representations.scout_hivemind_representation.scout_is_in_right_nest = false
 		in_right_nest = false
-		

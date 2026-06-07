@@ -47,14 +47,20 @@ func _on_active_state_physics_processing(delta: float) -> void:
 	var repulsor_field_force: Vector3 = repulsor_field.get_repulsion_force()
 	char_node.velocity += repulsor_field_force * delta
 	
-	char_node.move_and_slide()
+	## Scout should bounce on collisions
+	var collision: KinematicCollision3D = char_node.move_and_collide(char_node.velocity * delta)
+	if collision:
+		var collider: Node3D = collision.get_collider(0) as Node3D
+		char_node.velocity = char_node.velocity.bounce(collision.get_normal())
+		if collider.is_in_group("ControlNodeGroup"):
+			char_node.velocity *= 5.0
 	
 	## nodes that must follow the char node
 	track_transform_container.transform = char_node.transform
 	track_position_container.position = char_node.position
 	
 	## rigid node follows char node
-	rigid_node.transform = char_node.transform
+	# rigid_node.transform = char_node.transform
 	
 	## Active state delegates the movement definition to the Movement States
 
@@ -67,6 +73,10 @@ func _on_active_state_exited() -> void:
 #----------------------------------------
 func _on_incapacitated_state_entered() -> void:
 	state = State.INCAPACITATED
+	
+	## Turn off engines and spinner immediately
+	scout.asset.set_exhaust_intensity(0.0)
+	scout.asset.discharge_spinners()
 	
 	## Incapacitated state is always expected to be entered when in plane movement
 	rigid_node.set_axis_lock(PhysicsServer3D.BodyAxis.BODY_AXIS_LINEAR_Z, true)

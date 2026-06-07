@@ -40,6 +40,10 @@ func fire_spinners(duration: float) -> void:
 	plasma_bolt.fire()
 
 
+func discharge_spinners() -> void:
+	spinner_animation.turn_off()
+
+
 ## Signals
 ## ---------------------------------------
 func _on_anim_state_finished(anim_name: String) -> void:

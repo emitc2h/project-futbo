@@ -79,7 +79,7 @@ func _on_closing_state_exited() -> void:
 #--------------------------------------
 func _on_quick_close_state_entered() -> void:
 	state = State.QUICK_CLOSE
-	asset.anim_state.travel("quick close")
+	asset.anim_state.start("quick close")
 
 
 func _on_quick_close_state_exited() -> void:

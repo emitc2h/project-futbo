@@ -6,7 +6,6 @@ extends Node
 @export var control_node: ControlNode
 @export var asset: ControlNodeAsset
 @export var sc: StateChart
-@export var shield_collision: StaticBody3D
 
 ## States Enum
 enum State {OFF = 0, EXPANDING = 1, ON = 2, DISSIPATING = 3}
@@ -43,9 +42,6 @@ func _ready() -> void:
 	Signals.dribbling_exited.connect(_on_player_dribbling_exited)
 	Signals.player_moved.connect(_on_player_moved)
 	control_node.power_states.control_node_power_is_on.connect(_on_power_is_on)
-	
-	## Disable the shield collision shape by default
-	shield_collision.set_collision_layer_value(6, false)
 
 
 # off state
@@ -84,16 +80,10 @@ func _on_on_state_entered() -> void:
 	## Shield being on means charge 0, 1 and 2 should reflect the expanded state after hit
 	control_node.charge_states.set_shield_state_anim(true)
 	
-	shield_collision.set_collision_layer_value(6, true)
-	
 	## Disable the spinning animation
 	control_node.control_node_control_states.spins_during_dribble = false
 	
 	Representations.control_node_representation.shield_expanded = true
-
-
-func _on_on_state_exited() -> void:
-	shield_collision.set_collision_layer_value(6, false)
 
 
 # dissipating state

@@ -30,8 +30,9 @@ const TRANS_TO_RAGDOLL: String = "Physics: to ragdoll"
 @onready var track_position_container: Node3D = scout.get_node("TrackPositionContainer")
 
 func _ready() -> void:
-	char_node.set_collision_layer_value(9, true)
-	rigid_node.set_collision_layer_value(9, false)
+	## Assume Char mode
+	char_collision_shape.disabled = false
+	rigid_collision_shape.disabled = true
 
 
 # char state
@@ -55,7 +56,7 @@ func _on_char_state_physics_processing(_delta: float) -> void:
 	track_position_container.position = char_node.position
 	
 	## rigid node follows char node
-	rigid_node.transform = char_node.transform
+	# rigid_node.transform = char_node.transform
 
 
 func _on_char_state_exited() -> void:
@@ -85,7 +86,7 @@ func _on_rigid_state_physics_processing(_delta: float) -> void:
 	track_position_container.position = rigid_node.position
 	
 	## char node follows rigid node
-	char_node.transform = rigid_node.transform
+	# char_node.transform = rigid_node.transform
 
 
 func _on_rigid_state_exited() -> void:

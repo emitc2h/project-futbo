@@ -90,6 +90,7 @@ script = ExtResource("1_rkvpr")
 subject = NodePath("../Character1")
 
 [node name="Character1" parent="." unique_id=952580078 groups=["PlayerGroup", "ScoutTargetGroup"] instance=ExtResource("6_c7aqb")]
+is_player = true
 
 [node name="PlayerController" type="Node" parent="Character1" unique_id=1566425451 node_paths=PackedStringArray("character")]
 script = ExtResource("7_404y3")
@@ -206,6 +207,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.766129, 0)
 
 [node name="Scout" parent="." unique_id=1167301137 instance=ExtResource("21_rkvpr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.040514, 9.364317, -14.396991)
+
+[node name="Scout2" parent="." unique_id=1172660727 instance=ExtResource("21_rkvpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.040514, 3.3848429, 2.208909)
+
+[node name="Scout3" parent="." unique_id=1759989058 instance=ExtResource("21_rkvpr")]
+transform = Transform3D(-0.004729774, 0, -0.9999888, 0, 1, 0, 0.9999888, 0, -0.004729774, 16.878899, 7.5747843, -6.05477)
+
+[node name="Scout4" parent="." unique_id=1035883129 instance=ExtResource("21_rkvpr")]
+transform = Transform3D(-0.004729774, 0, -0.9999888, 0, 1, 0, 0.9999888, 0, -0.004729774, 0.27318478, 1.5953102, -6.1333117)
+
+[node name="Scout5" parent="." unique_id=751291121 instance=ExtResource("21_rkvpr")]
+transform = Transform3D(-0.004729774, 0, -0.9999888, 0, 1, 0, 0.9999888, 0, -0.004729774, 0.27318478, 1.5953102, 3.2578912)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=357249718]
 transform = Transform3D(1000, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)

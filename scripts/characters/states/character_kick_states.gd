@@ -167,9 +167,11 @@ func _on_kick_zone_body_exited(body: Node3D) -> void:
 # CONTROLS
 #=======================================================
 func kick() -> void:
-	## Disallow kicking while running backward
-	if not character.direction_states.running_backward(character.grounded_states.left_right_axis):
-		sc.send_event(TRANS_TO_KICK)
+	sc.send_event(TRANS_TO_KICK)
+	### Disallow kicking while running backward
+	#if not character.direction_states.running_backward(character.grounded_states.left_right_axis):
+		#sc.send_event(TRANS_TO_KICK)
+		#return 
 
 
 func engage_long_kick_intent() -> void:
