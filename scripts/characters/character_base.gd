@@ -19,7 +19,8 @@ extends CharacterBody3D
 @export var shield: CharacterShield
 
 ## Settable Parameters
-var is_player: bool = false
+@export_group("Flags")
+@export var is_player: bool = false
 
 ## Internal references
 @onready var sc: StateChart = $State

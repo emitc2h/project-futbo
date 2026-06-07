@@ -104,7 +104,7 @@ axis_lock_angular_y = true
 physics_material_override = ExtResource("9_qsj31")
 can_sleep = false
 contact_monitor = true
-max_contacts_reported = 1
+max_contacts_reported = 5
 angular_damp = 3.0
 script = ExtResource("10_k38ye")
 
