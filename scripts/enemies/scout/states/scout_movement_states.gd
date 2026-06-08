@@ -11,7 +11,7 @@ extends Node
 
 @export_group("Parameters")
 @export var enter_plane_duration: float = 1.0
-@export var enter_plane_distance: float = 1.0
+@export var enter_plane_distance: float = 1.2
 @export var nest_distance: float = 3.0
 
 
@@ -63,7 +63,7 @@ func _on_out_of_plane_movement_state_physics_processing(delta: float) -> void:
 	update_out_of_plane_movement_target()
 	
 	## Check if enter plane ready
-	if abs(char_node.global_position.distance_to(out_of_plane_movement_target)) < enter_plane_distance:
+	if char_node.global_position.distance_to(out_of_plane_movement_target) < enter_plane_distance:
 		if not is_enter_plane_ready:
 			is_enter_plane_ready = true
 			enter_plane_ready.emit()
@@ -107,9 +107,6 @@ func _on_enter_plane_state_entered() -> void:
 		.set_ease(Tween.EASE_OUT)\
 		.set_trans(Tween.TRANS_QUAD)\
 		.from(char_node.global_position.z)
-		
-	enter_plane_distance_to_nest_x = abs(char_node.global_position.x - out_of_plane_movement_target.x)
-	enter_plane_distance_to_nest_y = abs(char_node.global_position.y - out_of_plane_movement_target.y)
 	
 	enter_plane_timer.start()
 
@@ -128,8 +125,17 @@ func _on_enter_plane_state_physics_processing(delta: float) -> void:
 	## Move the char_node toward the destination node along the xy-plane only
 	update_out_of_plane_movement_target()
 	
-	char_node.velocity.x = (out_of_plane_movement_target.x - char_node.global_position.x) / (enter_plane_distance_to_nest_x + 1.0)
-	char_node.velocity.y = (out_of_plane_movement_target.y - char_node.global_position.y) / (enter_plane_distance_to_nest_y + 1.0)
+	var scout_pos: Vector2 = Vector2(char_node.global_position.x, char_node.global_position.y)
+	var target_pos: Vector2 = Vector2(out_of_plane_movement_target.x, out_of_plane_movement_target.y)
+	
+	var distance_vec: Vector2 = target_pos - scout_pos
+	var velocity_vec: Vector2 = distance_vec.normalized() * scout.speed
+	var distance: float = distance_vec.length()
+	if distance < 1.0:
+		velocity_vec *= (distance * distance)
+	
+	char_node.velocity.x = velocity_vec.x
+	char_node.velocity.y = velocity_vec.y
 
 
 # in plane movement state
@@ -174,7 +180,7 @@ func set_node_as_out_of_plane_movement_target(node: Node3D) -> void:
 
 func set_nest_as_out_of_plane_target(nest: Enums.Direction) -> void:
 	set_player_as_out_of_plane_movement_target()
-	player_target_offset_y = randf_range(0.0, 1.5)
+	player_target_offset_y = randf_range(0.0, 1.3)
 	match(nest):
 		Enums.Direction.LEFT:
 			player_target_offset_x = -nest_distance

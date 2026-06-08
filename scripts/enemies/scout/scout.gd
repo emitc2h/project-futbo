@@ -35,6 +35,9 @@ extends Node3D
 var in_left_nest: bool = false
 var in_right_nest: bool = false
 
+func _ready() -> void:
+	Signals.debug_advance.connect(_on_debug_advance)
+
 
 ## Movement Controls
 ## ---------------------------------------
@@ -153,6 +156,29 @@ func claim_nest(nest: Enums.Direction) -> bool:
 			return false
 
 
+func _identify_nearest_nest() -> Enums.Direction:
+	var rel_x_to_player: float = movement_states.char_node.global_position.x - Representations.player_target_marker.global_position.x
+	if rel_x_to_player > 0:
+		return Enums.Direction.RIGHT
+	return Enums.Direction.LEFT
+
+
+## Returns the claimed nest, NONE if no nests claimed
+func claim_nearest_nest() -> Enums.Direction:
+	var nearest_nest: Enums.Direction = _identify_nearest_nest()
+	if claim_nest(nearest_nest):
+		return nearest_nest
+	# If claiming the nearest nest fails, claim the other nest
+	match(nearest_nest):
+		Enums.Direction.LEFT:
+			if claim_nest(Enums.Direction.RIGHT):
+				return Enums.Direction.RIGHT
+		Enums.Direction.RIGHT:
+			if claim_nest(Enums.Direction.LEFT):
+				return Enums.Direction.LEFT
+	return Enums.Direction.NONE
+
+
 func exit_nest() -> void:
 	if in_left_nest:
 		Representations.scout_hivemind_representation.scout_is_in_left_nest = false
@@ -160,3 +186,25 @@ func exit_nest() -> void:
 	if in_right_nest:
 		Representations.scout_hivemind_representation.scout_is_in_right_nest = false
 		in_right_nest = false
+
+#region debugging
+func generate_state_report() -> String:
+	var output: String = ""
+	output += "Health : " + health_states.State.keys()[health_states.state] + "\n"
+	output += "Movement : " + movement_states.State.keys()[movement_states.state] + "\n"
+	output += "Orbiting : " + orbiting_states.State.keys()[orbiting_states.state] + "\n"
+	output += "In-plane Movement : " + in_plane_movement_states.State.keys()[in_plane_movement_states.state] + "\n"
+	output += "Engagement : " + engagement_states.State.keys()[engagement_states.state] + "\n"
+	output += "Spinner : " + spinner_states.State.keys()[spinner_states.state] + "\n"
+	output += "Physics : " + physics_states.State.keys()[physics_states.state] + "\n"
+	output += "Targeting : " + targeting_states.State.keys()[targeting_states.state] + "\n"
+	output += "Behavior : " + behavior_states.State.keys()[behavior_states.state] + "\n"
+	output += "===================================\n"
+	output += "Animation tree node: " + anim_state.get_current_node()\
+			 + " (fading : " + anim_state.get_fading_from_node() + ")"
+	return output
+
+
+func _on_debug_advance() -> void:
+	Signals.debug_log.emit(generate_state_report())
+#endregion

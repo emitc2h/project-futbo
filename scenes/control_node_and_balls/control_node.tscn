@@ -112,6 +112,9 @@ shadow_mesh = SubResource("ArrayMesh_1ei8v")
 
 [sub_resource type="QuadMesh" id="QuadMesh_1t0mc"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_yiu5s"]
+radius = 1.8
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hlhvm"]
 animation = &"control_node_shield_animations/state - power off - emitters off"
 
@@ -686,11 +689,12 @@ script = ExtResource("3_02qb1")
 initial_state = NodePath("off")
 metadata/_custom_type_script = "uid://bhy7it06w5oxr"
 
-[node name="Shield States" type="Node" parent="State/Root/Power/On/Shield" index="0" unique_id=1718732260 node_paths=PackedStringArray("control_node", "asset", "sc")]
+[node name="Shield States" type="Node" parent="State/Root/Power/On/Shield" index="0" unique_id=1718732260 node_paths=PackedStringArray("control_node", "asset", "sc", "shield_collision")]
 script = ExtResource("10_tehyq")
 control_node = NodePath("../../../../../..")
 asset = NodePath("../../../../../../TrackTransformContainer/ControlNodeAsset")
 sc = NodePath("../../../../..")
+shield_collision = NodePath("../../../../../../TrackPositionContainer/ShieldCollision")
 
 [node name="off" type="Node" parent="State/Root/Power/On/Shield" index="1" unique_id=206097436]
 script = ExtResource("4_0jkta")
@@ -801,7 +805,6 @@ event = &"Power: to off"
 delay_in_seconds = "0.0"
 
 [node name="RigidNode" parent="." index="1" unique_id=1496620994 groups=["ControlNodeGroup"]]
-max_contacts_reported = 1
 
 [node name="CharNode" parent="." index="2" unique_id=1687242209 groups=["ControlNodeGroup"]]
 
@@ -865,6 +868,13 @@ light_cull_mask = 4294967291
 
 [node name="ControlNodeReadySphere" parent="TrackPositionContainer" index="7" unique_id=1359818039 instance=ExtResource("20_yiu5s")]
 visible = false
+
+[node name="ShieldCollision" type="StaticBody3D" parent="TrackPositionContainer" index="8" unique_id=1774592701 groups=["ControlNodeShieldGroup"]]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrackPositionContainer/ShieldCollision" index="0" unique_id=31248993]
+shape = SubResource("SphereShape3D_yiu5s")
 
 [node name="StreakAsset" parent="." index="5" unique_id=354313872 instance=ExtResource("21_yiu5s")]
 
