@@ -59,9 +59,6 @@ func _on_active_state_physics_processing(delta: float) -> void:
 	track_transform_container.transform = char_node.transform
 	track_position_container.position = char_node.position
 	
-	## rigid node follows char node
-	# rigid_node.transform = char_node.transform
-	
 	## Active state delegates the movement definition to the Movement States
 
 
