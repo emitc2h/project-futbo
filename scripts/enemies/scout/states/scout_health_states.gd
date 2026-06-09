@@ -7,6 +7,11 @@ extends Node
 @export var sc: StateChart
 @export var repulsor_field: ScoutRepulsorField
 
+@export_group("Physics Flags")
+@export_flags_3d_physics var active_layer: int
+@export_flags_3d_physics var active_mask: int
+
+
 ## States Enum
 enum State {ACTIVE = 0, INCAPACITATED = 1, DEAD = 2}
 var state: State = State.ACTIVE
@@ -28,8 +33,10 @@ const TRANS_TO_DEAD: String = "Health: to dead"
 
 
 func _ready() -> void:
-	char_collision_shape.disabled = false
-	rigid_collision_shape.disabled = true
+	char_node.collision_layer = active_layer
+	char_node.collision_mask = active_mask
+	rigid_node.collision_layer = 0
+	rigid_node.sleep()
 
 
 # active state
@@ -39,7 +46,10 @@ func _on_active_state_entered() -> void:
 
 	## active state is always char
 	char_node.transform = rigid_node.transform
-	char_collision_shape.disabled = false
+	char_node.collision_layer = active_layer
+	char_node.collision_mask = active_mask
+	
+	char_node.motion_mode = CharacterBody3D.MOTION_MODE_FLOATING
 
 
 func _on_active_state_physics_processing(delta: float) -> void:
@@ -63,7 +73,8 @@ func _on_active_state_physics_processing(delta: float) -> void:
 
 
 func _on_active_state_exited() -> void:
-	char_collision_shape.disabled = true
+	char_node.collision_layer = 0
+	char_node.collision_mask = 0
 
 
 # incapacitated state
@@ -71,14 +82,29 @@ func _on_active_state_exited() -> void:
 func _on_incapacitated_state_entered() -> void:
 	state = State.INCAPACITATED
 	
+	## Start acting as a ball
+	char_node.add_to_group("BallGroup")
+	rigid_node.add_to_group("BallGroup")
+	
+	char_node.motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
+	
 	## Turn off engines and spinner immediately
 	scout.asset.set_exhaust_intensity(0.0)
 	scout.asset.discharge_spinners()
 	
 	## Incapacitated state is always expected to be entered when in plane movement
 	rigid_node.set_axis_lock(PhysicsServer3D.BodyAxis.BODY_AXIS_LINEAR_Z, true)
+	char_node.set_axis_lock(PhysicsServer3D.BodyAxis.BODY_AXIS_LINEAR_Z, true)
 	
 	## Incapacitated state delegates the physics mode to the Physics states
+
+
+func _on_incapacitated_state_exited() -> void:
+	char_node.remove_from_group("BallGroup")
+	rigid_node.remove_from_group("BallGroup")
+	
+	rigid_node.set_axis_lock(PhysicsServer3D.BodyAxis.BODY_AXIS_LINEAR_Z, false)
+	char_node.set_axis_lock(PhysicsServer3D.BodyAxis.BODY_AXIS_LINEAR_Z, false)
 
 
 # dead state

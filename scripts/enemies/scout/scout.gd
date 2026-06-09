@@ -1,7 +1,9 @@
 class_name Scout
-extends Node3D
+extends Ball
 
-@onready var sc: StateChart = $State
+## Overrides
+var scout_control_states: ScoutControlStates
+var scout_physics_states: ScoutPhysicsStates
 
 ## asset
 @export_group("Assets")
@@ -16,7 +18,6 @@ extends Node3D
 @export var in_plane_movement_states: ScoutInPlaneMovementStates
 @export var engagement_states: ScoutEngagementStates
 @export var spinner_states: ScoutSpinnerStates
-@export var physics_states: ScoutPhysicsStates
 
 @export_subgroup("Monitoring State Machines")
 @export var targeting_states: ScoutTargetingStates
@@ -36,6 +37,8 @@ var in_left_nest: bool = false
 var in_right_nest: bool = false
 
 func _ready() -> void:
+	scout_control_states = control_states as ScoutControlStates
+	scout_physics_states = physics_states as ScoutPhysicsStates
 	Signals.debug_advance.connect(_on_debug_advance)
 
 

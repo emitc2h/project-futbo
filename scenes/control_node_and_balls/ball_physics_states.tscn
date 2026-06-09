@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bbhqx3eyo6e2y"]
+
+[ext_resource type="Script" uid="uid://bhy7it06w5oxr" path="res://addons/godot_state_charts/compound_state.gd" id="1_pwsno"]
+[ext_resource type="Script" uid="uid://c4v4mvc2ioxvi" path="res://scripts/control_node_and_balls/states/ball_physics_states.gd" id="2_jqyrx"]
+[ext_resource type="Script" uid="uid://b2onxl0bnlyi7" path="res://addons/godot_state_charts/atomic_state.gd" id="3_d35ai"]
+[ext_resource type="Script" uid="uid://g3cjsxu4h2a2" path="res://addons/godot_state_charts/transition.gd" id="4_1gs8x"]
+
+[node name="Physics" type="Node" unique_id=1935221397]
+script = ExtResource("1_pwsno")
+initial_state = NodePath("rigid")
+
+[node name="Physics States" type="Node" parent="." unique_id=59212035]
+script = ExtResource("2_jqyrx")
+
+[node name="rigid" type="Node" parent="." unique_id=1598487035]
+script = ExtResource("3_d35ai")
+
+[node name="to char" type="Node" parent="rigid" unique_id=2063365211]
+script = ExtResource("4_1gs8x")
+to = NodePath("../../char")
+event = &"Physics: to char"
+delay_in_seconds = "0.0"
+
+[node name="char" type="Node" parent="." unique_id=900770199]
+script = ExtResource("3_d35ai")
+
+[node name="to rigid" type="Node" parent="char" unique_id=1570563415]
+script = ExtResource("4_1gs8x")
+to = NodePath("../../rigid")
+event = &"Physics: to rigid"
+delay_in_seconds = "0.0"
+
+[connection signal="state_entered" from="rigid" to="Physics States" method="_on_rigid_state_entered"]
+[connection signal="state_exited" from="rigid" to="Physics States" method="_on_rigid_state_exited"]
+[connection signal="state_physics_processing" from="rigid" to="Physics States" method="_on_rigid_state_physics_processing"]
+[connection signal="state_entered" from="char" to="Physics States" method="_on_char_state_entered"]
+[connection signal="state_exited" from="char" to="Physics States" method="_on_char_state_exited"]
+[connection signal="state_physics_processing" from="char" to="Physics States" method="_on_char_state_physics_processing"]

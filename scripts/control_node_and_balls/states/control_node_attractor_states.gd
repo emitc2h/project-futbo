@@ -55,9 +55,11 @@ func _on_timer_timeout() -> void:
 
 
 func _on_control_node_attractor(destination: Vector3) -> void:
+	## Control node needs to be ON
 	if not control_node.power_states.state == control_node.power_states.State.ON:
 		return
 	
+	## Rigid Node needs to be in control (not dribbled/char)
 	if not control_node.control_node_physics_states.state == control_node.control_node_physics_states.State.RIGID:
 		return
 	

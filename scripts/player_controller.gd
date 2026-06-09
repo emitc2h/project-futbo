@@ -29,7 +29,8 @@ func _physics_process(delta: float) -> void:
 		character.unlock_direction_faced(left_right_axis)
 	
 	if Input.is_action_pressed("dribble"):
-		if character.damage_states.state == character.damage_states.State.ABLE:
+		if character.damage_states.state == CharacterDamageStates.State.ABLE and \
+		character.dribble_states.state == CharacterDribbleStates.State.NOT_DRIBBLING:
 			Signals.control_node_attractor.emit(character.global_position)
 	
 	if character.direction_states.locked:
@@ -56,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	## Jumping
 	if Input.is_action_just_pressed("jump"):
 		character.jump()
-		if character.dribble_states.state == character.dribble_states.State.DRIBBLING:
+		if character.dribble_states.state == CharacterDribbleStates.State.DRIBBLING:
 			pass
 	
 	## BALL CONTROLS
@@ -78,6 +79,6 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("dribble"):
 		character.dribble_states.disengage_dribble_intent()
 	
-	if character.dribble_states.state == character.dribble_states.State.NOT_DRIBBLING:
+	if character.dribble_states.state == CharacterDribbleStates.State.NOT_DRIBBLING:
 		if Input.is_action_just_pressed("warp"):
 			Signals.player_requests_warp.emit()

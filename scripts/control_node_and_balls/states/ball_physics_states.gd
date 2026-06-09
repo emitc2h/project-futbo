@@ -5,9 +5,19 @@ extends Node
 @export_group("Dependencies")
 @export var ball: Ball
 @export var sc: StateChart
+@export var cs: CompoundState
 
-## States Enum
-enum State {RIGID = 0, CHAR = 1, WARPING = 2}
+@export_group("State Mapping")
+@export var state_map: Dictionary[State, StateChartState]
+
+@export_group("Physics Flags")
+@export_flags_3d_physics var rigid_collision_layer: int
+@export_flags_3d_physics var rigid_collision_mask: int
+@export_flags_3d_physics var char_collision_layer: int
+@export_flags_3d_physics var char_collision_mask: int
+
+## States Enum, includes states for inheritors since we can't extend enums
+enum State {RIGID = 0, CHAR = 1, WARPING = 2, RAGDOLL = 3}
 var state: State = State.RIGID
 
 ## State transition constants
@@ -25,9 +35,11 @@ var do_not_transfer_y_velocity_to_rigid: bool = false
 
 
 func _ready() -> void:
-	## Otherwise both might be enabled
-	rigid_node.set_collision_layer_value(3, true)
-	char_node.set_collision_layer_value(3, false)
+	## Initial state is RIGID
+	rigid_node.collision_layer = rigid_collision_layer
+	rigid_node.collision_mask = rigid_collision_mask
+	char_node.collision_layer = 0
+	char_node.collision_mask = 0
 
 
 # rigid state
@@ -47,7 +59,8 @@ func _on_rigid_state_entered() -> void:
 	char_node.velocity = Vector3.ZERO
 	
 	## Enable rigid node collisions
-	rigid_node.set_collision_layer_value(3, true)
+	rigid_node.collision_layer = rigid_collision_layer
+	rigid_node.collision_mask = rigid_collision_mask
 
 
 func _on_rigid_state_physics_processing(_delta: float) -> void:
@@ -61,7 +74,8 @@ func _on_rigid_state_exited() -> void:
 	## Better to manipulate the collision layer than disabling the collision
 	## shape entirely. I'm not sure why, but this is more reliable. The raycast
 	## doesn't like re-enabled collision shapes for some reason.
-	rigid_node.set_collision_layer_value(3, false)
+	rigid_node.collision_layer = 0
+	rigid_node.collision_mask = 0
 	
 	## Put the rigid node to sleep
 	rigid_node.sleep()
@@ -76,7 +90,8 @@ func _on_char_state_entered() -> void:
 	char_node.transform = rigid_node.transform
 
 	## Enable char node collisions
-	char_node.set_collision_layer_value(3, true)
+	char_node.collision_layer = char_collision_layer
+	char_node.collision_mask = char_collision_mask
 
 
 func _on_char_state_physics_processing(_delta: float) -> void:
@@ -87,4 +102,23 @@ func _on_char_state_physics_processing(_delta: float) -> void:
 
 func _on_char_state_exited() -> void:
 	## Disable char node collisions
-	char_node.set_collision_layer_value(3, false) 
+	char_node.collision_layer = 0
+	char_node.collision_mask = 0
+
+
+#=======================================================
+# UTILITIES
+#=======================================================
+func get_global_position() -> Vector3:
+	match(state):
+		State.CHAR:
+			return char_node.global_position
+		_:
+			return rigid_node.global_position
+
+
+#=======================================================
+# CONTROLS
+#=======================================================
+func set_initial_state(new_initial_state: State) -> void:
+	cs._initial_state = state_map[new_initial_state]
