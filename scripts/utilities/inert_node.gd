@@ -13,11 +13,13 @@ var impulse_to_set: Vector3
 
 func sleep() -> void:
 	self.set_freeze_enabled(true)
+	self.freeze = true
 	self.can_sleep = true
 	self.sleeping = true
 
 
 func wake_up() -> void:
+	self.freeze = false
 	self.set_freeze_enabled(false)
 	self.can_sleep = false
 	self.sleeping = false

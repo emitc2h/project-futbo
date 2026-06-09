@@ -95,7 +95,7 @@ signal control_node_shield_dissipating(available_charges: int)
 @warning_ignore("unused_signal")
 signal control_node_impulse(vector: Vector3)
 @warning_ignore("unused_signal")
-signal control_node_attractor(destination: Vector3, delta: float)
+signal control_node_attractor(destination: Vector3)
 
 
 ## ===================================== ##

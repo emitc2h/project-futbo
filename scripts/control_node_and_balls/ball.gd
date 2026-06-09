@@ -5,7 +5,7 @@ extends Node3D
 @onready var sc: StateChart = $State
 
 ## state machines
-@export_group("State Machines")
+@export_group("Ball State Machines")
 @export var physics_states: BallPhysicsStates
 @export var control_states: BallControlStates
 
@@ -35,12 +35,12 @@ func impulse(force_vector: Vector3) -> void:
 
 func kick(force_vector: Vector3) -> void:
 	physics_states.do_not_transfer_y_velocity_to_rigid = true
-	self.impulse(force_vector)
+	self.impulse(force_vector * physics_states.rigid_node.mass)
 
 
 func long_kick(force_vector: Vector3) -> void:
 	physics_states.do_not_transfer_y_velocity_to_rigid = true
-	self.impulse(force_vector)
+	self.impulse(force_vector * physics_states.rigid_node.mass)
 
 
 func own(player_id: int) -> void:

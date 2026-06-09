@@ -20,6 +20,9 @@
 [ext_resource type="Script" uid="uid://d4epqky6heqvb" path="res://scripts/utilities/behavior_tree/behavior_manager.gd" id="15_ejave"]
 [ext_resource type="Script" uid="uid://42v13ykhymos" path="res://scripts/enemies/scout/scout_repulsor_field.gd" id="16_rwhje"]
 [ext_resource type="BehaviorTree" uid="uid://blwwnm880my0m" path="res://ai/trees/enemies/scout/scout_action_tree.tres" id="16_spt5b"]
+[ext_resource type="PackedScene" uid="uid://bbhqx3eyo6e2y" path="res://scenes/control_node_and_balls/ball_physics_states.tscn" id="17_ejave"]
+[ext_resource type="PackedScene" uid="uid://dfx3vrmo5370v" path="res://scenes/control_node_and_balls/ball_control_states.tscn" id="17_spt5b"]
+[ext_resource type="Script" uid="uid://c7auhx45k2gth" path="res://scripts/enemies/scout/states/scout_control_states.gd" id="18_whohw"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_spt5b"]
 
@@ -33,7 +36,7 @@ bounce = 0.2
 [sub_resource type="BoxShape3D" id="BoxShape3D_ejave"]
 size = Vector3(0.1, 0.1, 0.20185547)
 
-[node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "health_states", "movement_states", "orbiting_states", "in_plane_movement_states", "engagement_states", "spinner_states", "physics_states", "targeting_states", "behavior_states") groups=["ScoutHivemindGroup"]]
+[node name="Scout" type="Node3D" unique_id=1167301137 node_paths=PackedStringArray("asset", "health_states", "movement_states", "orbiting_states", "in_plane_movement_states", "engagement_states", "spinner_states", "targeting_states", "behavior_states", "physics_states", "control_states") groups=["ScoutHivemindGroup"]]
 script = ExtResource("1_7pd5h")
 asset = NodePath("TrackTransformContainer/ScoutAsset")
 health_states = NodePath("State/Health/Health States")
@@ -42,9 +45,10 @@ orbiting_states = NodePath("State/Health/Active/Movement/orbiting/Orbiting State
 in_plane_movement_states = NodePath("State/Health/Active/Movement/in plane movement/In Plane Movement States")
 engagement_states = NodePath("State/Health/Active/Engagement/Engagement States")
 spinner_states = NodePath("State/Health/Active/Spinner/Spinner States")
-physics_states = NodePath("State/Health/Incapacitated/Physics/Physics States")
 targeting_states = NodePath("State/Health/Active/Monitoring/Targeting/Targeting States")
 behavior_states = NodePath("State/Health/Active/Behavior/Behavior States")
+physics_states = NodePath("State/Health/Incapacitated/Physics/Physics States")
+control_states = NodePath("State/Health/Incapacitated/Control/Control States")
 
 [node name="State" type="Node" parent="." unique_id=922787194]
 script = ExtResource("1_kyxrd")
@@ -60,6 +64,8 @@ script = ExtResource("5_l8itl")
 scout = NodePath("../../..")
 sc = NodePath("../..")
 repulsor_field = NodePath("../../../TrackPositionContainer/RepulsorField")
+active_layer = 256
+active_mask = 823
 
 [node name="Active" type="Node" parent="State/Health" unique_id=1414050109]
 script = ExtResource("2_7pd5h")
@@ -450,39 +456,31 @@ blackboard_plan = SubResource("BlackboardPlan_spt5b")
 [node name="Incapacitated" type="Node" parent="State/Health" unique_id=1564326338]
 script = ExtResource("2_7pd5h")
 
-[node name="Physics" type="Node" parent="State/Health/Incapacitated" unique_id=1876206439]
-script = ExtResource("3_we078")
-initial_state = NodePath("rigid")
+[node name="Control" parent="State/Health/Incapacitated" unique_id=778894285 instance=ExtResource("17_spt5b")]
 
-[node name="Physics States" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=763292476 node_paths=PackedStringArray("scout", "sc", "cs", "state_map")]
+[node name="Control States" parent="State/Health/Incapacitated/Control" index="0" unique_id=1340031296 node_paths=PackedStringArray("scout", "ball", "sc")]
+script = ExtResource("18_whohw")
+scout = NodePath("../../../../..")
+ball = NodePath("../../../../..")
+sc = NodePath("../../../..")
+
+[node name="Physics" parent="State/Health/Incapacitated" unique_id=1935221397 instance=ExtResource("17_ejave")]
+
+[node name="Physics States" parent="State/Health/Incapacitated/Physics" index="0" unique_id=59212035 node_paths=PackedStringArray("scout", "ball", "sc", "cs", "state_map")]
 script = ExtResource("5_we078")
 scout = NodePath("../../../../..")
+ball = NodePath("../../../../..")
 sc = NodePath("../../../..")
 cs = NodePath("..")
 state_map = {
-0: NodePath("../char"),
-1: NodePath("../rigid"),
-2: NodePath("../ragdoll")
+0: NodePath("../rigid"),
+1: NodePath("../char"),
+3: NodePath("../ragdoll")
 }
-
-[node name="rigid" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=626551392]
-script = ExtResource("4_aew6m")
-
-[node name="to char" type="Node" parent="State/Health/Incapacitated/Physics/rigid" unique_id=1196579030]
-script = ExtResource("7_df6tb")
-to = NodePath("../../char")
-event = &"Physics: to char"
-delay_in_seconds = "0.0"
-
-[node name="char" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=2114126000]
-script = ExtResource("4_aew6m")
-metadata/_custom_type_script = "uid://b2onxl0bnlyi7"
-
-[node name="to rigid" type="Node" parent="State/Health/Incapacitated/Physics/char" unique_id=723078513]
-script = ExtResource("7_df6tb")
-to = NodePath("../../rigid")
-event = &"Physics: to rigid"
-delay_in_seconds = "0.0"
+rigid_collision_layer = 4
+rigid_collision_mask = 3855
+char_collision_layer = 4
+char_collision_mask = 1802
 
 [node name="ragdoll" type="Node" parent="State/Health/Incapacitated/Physics" unique_id=431214698]
 script = ExtResource("4_aew6m")
@@ -529,7 +527,7 @@ shape = SubResource("SphereShape3D_df6tb")
 [node name="RigidNode" type="RigidBody3D" parent="." unique_id=802826361 groups=["ScoutPhysicsGroup"]]
 collision_layer = 256
 collision_mask = 823
-mass = 3.0
+mass = 2.5
 physics_material_override = SubResource("PhysicsMaterial_ejave")
 contact_monitor = true
 max_contacts_reported = 1
@@ -676,12 +674,9 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 [connection signal="state_entered" from="State/Health/Active/Behavior/action" to="State/Health/Active/Behavior/Behavior States" method="_on_action_state_entered"]
 [connection signal="behavior_tree_finished" from="State/Health/Active/Behavior/action/BehaviorManager/BTPlayer" to="State/Health/Active/Behavior/Behavior States" method="_on_action_bt_player_behavior_tree_finished"]
 [connection signal="state_entered" from="State/Health/Incapacitated" to="State/Health/Health States" method="_on_incapacitated_state_entered"]
-[connection signal="state_entered" from="State/Health/Incapacitated/Physics/rigid" to="State/Health/Incapacitated/Physics/Physics States" method="_on_rigid_state_entered"]
-[connection signal="state_exited" from="State/Health/Incapacitated/Physics/rigid" to="State/Health/Incapacitated/Physics/Physics States" method="_on_rigid_state_exited"]
-[connection signal="state_physics_processing" from="State/Health/Incapacitated/Physics/rigid" to="State/Health/Incapacitated/Physics/Physics States" method="_on_rigid_state_physics_processing"]
-[connection signal="state_entered" from="State/Health/Incapacitated/Physics/char" to="State/Health/Incapacitated/Physics/Physics States" method="_on_char_state_entered"]
-[connection signal="state_exited" from="State/Health/Incapacitated/Physics/char" to="State/Health/Incapacitated/Physics/Physics States" method="_on_char_state_exited"]
-[connection signal="state_physics_processing" from="State/Health/Incapacitated/Physics/char" to="State/Health/Incapacitated/Physics/Physics States" method="_on_char_state_physics_processing"]
-[connection signal="state_entered" from="State/Health/Incapacitated/Physics/ragdoll" to="State/Health/Incapacitated/Physics/Physics States" method="_on_ragdoll_state_entered"]
+[connection signal="state_exited" from="State/Health/Incapacitated" to="State/Health/Health States" method="_on_incapacitated_state_exited"]
 [connection signal="state_entered" from="State/Health/Dead" to="State/Health/Health States" method="_on_dead_state_entered"]
 [connection signal="body_entered" from="RigidNode" to="." method="_on_rigid_node_body_entered"]
+
+[editable path="State/Health/Incapacitated/Control"]
+[editable path="State/Health/Incapacitated/Physics"]

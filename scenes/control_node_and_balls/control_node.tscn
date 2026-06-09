@@ -514,19 +514,22 @@ shield_states = NodePath("State/Root/Power/On/Shield/Shield States")
 attractor_states = NodePath("State/Root/Power/On/Attractor/Attractor States")
 asset = NodePath("TrackTransformContainer/ControlNodeAsset")
 
-[node name="State" parent="." index="0" unique_id=519012250]
-track_in_editor = true
-
-[node name="Physics States" parent="State/Root/Physics" parent_id_path=PackedInt32Array(1982961813) index="0" unique_id=1891427015]
+[node name="Physics States" parent="State/Root/Physics" parent_id_path=PackedInt32Array(1935221397) index="0" unique_id=59212035 node_paths=PackedStringArray("cs", "state_map")]
 script = ExtResource("3_hlhvm")
+cs = NodePath("..")
+state_map = {
+0: NodePath("../rigid"),
+1: NodePath("../char"),
+2: NodePath("../warping")
+}
 
-[node name="to warping" type="Node" parent="State/Root/Physics/rigid" parent_id_path=PackedInt32Array(377283055) index="1" unique_id=2008611418]
+[node name="to warping" type="Node" parent="State/Root/Physics/rigid" parent_id_path=PackedInt32Array(1935221397, 1598487035) index="1" unique_id=2008611418]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../warping")
 event = &"Physics: to warping"
 delay_in_seconds = "0.0"
 
-[node name="warping" type="Node" parent="State/Root/Physics" parent_id_path=PackedInt32Array(1982961813) index="3" unique_id=1891087493]
+[node name="warping" type="Node" parent="State/Root/Physics" parent_id_path=PackedInt32Array(1935221397) index="3" unique_id=1891087493]
 script = ExtResource("4_0jkta")
 
 [node name="to rigid" type="Node" parent="State/Root/Physics/warping" index="0" unique_id=893190128]
@@ -535,19 +538,19 @@ to = NodePath("../../rigid")
 event = &"Physics: to rigid"
 delay_in_seconds = "0.0"
 
-[node name="Control States" parent="State/Root/Control" parent_id_path=PackedInt32Array(848782415) index="0" unique_id=1436877134 node_paths=PackedStringArray("streak")]
+[node name="Control States" parent="State/Root/Control" parent_id_path=PackedInt32Array(778894285) index="0" unique_id=1340031296 node_paths=PackedStringArray("streak")]
 script = ExtResource("3_qi4cr")
 shot_speed = 50.0
 shot_range = 10.0
 streak = NodePath("../../../../StreakAsset")
 
-[node name="to shot" type="Node" parent="State/Root/Control/free" parent_id_path=PackedInt32Array(1922926925) index="2" unique_id=2056589612]
+[node name="to shot" type="Node" parent="State/Root/Control/free" parent_id_path=PackedInt32Array(778894285, 893156065) index="2" unique_id=2056589612]
 script = ExtResource("5_qi4cr")
 to = NodePath("../../shot")
 event = &"Control: free to shot"
 delay_in_seconds = "0.0"
 
-[node name="shot" type="Node" parent="State/Root/Control" parent_id_path=PackedInt32Array(848782415) index="4" unique_id=356420402]
+[node name="shot" type="Node" parent="State/Root/Control" parent_id_path=PackedInt32Array(778894285) index="4" unique_id=356420402]
 script = ExtResource("4_0jkta")
 
 [node name="to free" type="Node" parent="State/Root/Control/shot" index="0" unique_id=1630017085]
@@ -927,3 +930,6 @@ metadata/_custom_type_script = "uid://r4dihe2vx3dk"
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/On/Charge/Charge States" method="_on_animation_state_finished"]
 [connection signal="anim_state_finished" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/On/Shield/Shield States" method="_on_animation_state_finished"]
 [connection signal="anim_state_started" from="AnimationTree/AnimationStateChangeTracker" to="State/Root/Power/On/Shield/Shield States" method="_on_animation_state_started"]
+
+[editable path="State/Root/Physics"]
+[editable path="State/Root/Control"]
